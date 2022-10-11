@@ -1,6 +1,7 @@
-import { Button } from "./src/button/";
+import { ShyClassTree } from "./src/ShyClassTree";
+import { ShyTimeLine } from "./src/ShyTimeLine";
 import { App } from "vue";
-export { Button };
+export { ShyClassTree, ShyTimeLine };
 
 export default {
   install(app: App) {},
