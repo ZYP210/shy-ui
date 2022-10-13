@@ -2,11 +2,12 @@
   <div class="box-main">
     <ShyClassTree :data="data" @onSearch="onSearch" @treeSelect="treeSelect" :treeOption="treeOption" />
     <ShyTimeLine :data="shyTimeLineData" />
+    <ShySteps :option="stepOption" @change="stepChange" />
   </div>
 </template>
 <script lang="ts" setup>
 import { reactive } from "vue";
-import { ShyClassTree, ShyTimeLine } from "3h1-ui";
+import { ShyClassTree, ShyTimeLine, ShySteps } from "3h1-ui";
 
 const treeOption = {
   showLine: false,
@@ -55,6 +56,27 @@ const treeSelect = (data: any) => {
   console.log(data);
 };
 
+const stepOption = {
+  columns: [
+    {
+      title: "第一步",
+      value: 0,
+    },
+    {
+      title: "第二步",
+      value: 1,
+    },
+    {
+      title: "第三步",
+      value: 2,
+    },
+  ],
+};
+
+const stepChange = (data: number) => {
+  console.log(data);
+};
+
 const shyTimeLineData = [
   {
     color: "red",
@@ -94,6 +116,6 @@ const shyTimeLineData = [
 </script>
 <style lang="less" scoped>
 .box-main {
-  width: 200px;
+  width: 600px;
 }
 </style>

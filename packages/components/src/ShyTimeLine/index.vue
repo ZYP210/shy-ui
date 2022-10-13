@@ -22,7 +22,7 @@ interface itemContent {
 interface dataItem {
   color?: string;
   dotIcon?: string;
-  position: string | "left";
+  position?: string | "left";
   content: Array<itemContent>;
 }
 
