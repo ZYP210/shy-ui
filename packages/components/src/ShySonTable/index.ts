@@ -1,3 +1,3 @@
-import ShySteps from "./index.vue";
+import ShySonTable from "./index.vue";
 
-export { ShySteps };
+export { ShySonTable };
