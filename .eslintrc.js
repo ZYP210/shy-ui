@@ -28,6 +28,7 @@ module.exports = {
       }
     ],
     'vue/no-setup-props-destructure': 0,
-    'no-undef': 0
+    'no-undef': 0,
+    '@typescript-eslint/ban-ts-comment': 0
   }
 }

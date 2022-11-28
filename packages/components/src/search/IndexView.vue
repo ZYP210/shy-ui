@@ -2,12 +2,22 @@
   <div class="shy-search">
     <a-row>
       <a-col :span="18">
-        <ShyForm v-model="form" :column="searchColumn" />
+        <ShyForm v-model="form" :column="currentColumn" />
       </a-col>
       <a-col :span="6">
         <div class="button-wrapper">
-          <a-button class="button-search" type="primary">查询</a-button>
-          <a-button>重置</a-button>
+          <a-button class="button-search" type="primary">
+            查询
+            <template #icon>
+              <search-outlined />
+            </template>
+          </a-button>
+          <a-button>
+            <template #icon>
+              <clear-outlined />
+            </template>
+            重置
+          </a-button>
         </div>
       </a-col>
     </a-row>
@@ -22,16 +32,23 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { reactive, ref, watchEffect } from 'vue'
 import { computed } from 'vue'
 import ShyForm from '../ShyForm/IndexView.vue'
-import { DownOutlined, UpOutlined } from '@ant-design/icons-vue'
+import {
+  DownOutlined,
+  UpOutlined,
+  SearchOutlined,
+  ClearOutlined
+} from '@ant-design/icons-vue'
 
 interface Props {
   column: { label: string; span?: number }[]
 }
 const props = withDefaults(defineProps<Props>(), { column: () => [] })
+const form = reactive({})
 
+// 切换展示收缩
 // 搜索列
 const searchColumn = computed(() => {
   return props.column.map((item) => {
@@ -39,14 +56,24 @@ const searchColumn = computed(() => {
     return item
   })
 })
-const baseColumn = computed(() => {})
-
-const form = reactive({})
-
+const baseColumn = computed(() => {
+  return searchColumn.value.length >= 3
+    ? searchColumn.value.slice(0, 3)
+    : searchColumn.value
+})
+const currentColumn = ref()
 const isExpanded = ref(false)
 const expandEvent = () => {
   isExpanded.value = !isExpanded.value
 }
+watchEffect(() => {
+  if (isExpanded.value) {
+    currentColumn.value = searchColumn.value
+  } else {
+    currentColumn.value = baseColumn.value
+  }
+})
+//
 const isExpandFlag = computed(() => {
   return searchColumn.value.length >= 3 ? true : false
 })

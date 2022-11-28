@@ -13,6 +13,9 @@
   ],
   "author": "",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "vxe-table": "^4.3.6",
+    "xe-utils": "^3.5.7"
+  },
   "typings": "lib/index.d.ts"
 }
