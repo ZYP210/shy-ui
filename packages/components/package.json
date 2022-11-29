@@ -1,19 +1,24 @@
 {
   "name": "3h1-ui",
-  "version": "1.0.6",
+  "version": "1.0.16",
   "description": "",
-  "main": "index.ts",
-  "module": "index.ts",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build"
   },
+  "files": [
+    "es",
+    "lib"
+  ],
   "keywords": [
     "shy-ui"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "ant-design-vue": "^3.2.13",
     "vxe-table": "^4.3.6",
     "xe-utils": "^3.5.7"
   },

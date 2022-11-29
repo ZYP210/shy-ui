@@ -1,62 +1,16 @@
 <template>
   <div class="box-main">
-    <s-table @add-event="hadnleAdd" :column="column" :data="data">
-      <template #a="{ row }">{{ row.a }}</template>
-      <template #menuLeft>
-        <a-button>123</a-button>
-      </template>
-
-      <template #menuRight>
-        <a-button>插槽1</a-button>
-        <a-button>插槽2</a-button>
-      </template>
-    </s-table>
+    <s-page v-model:page="page"></s-page>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 
-const hadnleAdd = (a) => {
-  console.log('a', a)
-}
-const column = [
-  {
-    title: '账号',
-    dataIndex: 'a',
-    slot: true
-  },
-  {
-    title: '用户姓名',
-    dataIndex: 'b'
-  },
-  {
-    title: '年龄',
-    dataIndex: 'c'
-  }
-]
-
-const data = [
-  {
-    a: 1,
-    b: 2,
-    c: 3
-  },
-  {
-    a: 1,
-    b: 2,
-    c: 3
-  },
-  {
-    a: 1,
-    b: 2,
-    c: 3
-  },
-  {
-    a: 1,
-    b: 2,
-    c: 3
-  }
-]
+const page = ref({
+  current: 2,
+  pageSize: 20,
+  total: 100
+})
 </script>
 
 <style lang="less" scoped>

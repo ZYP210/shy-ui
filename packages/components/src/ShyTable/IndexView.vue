@@ -1,81 +1,46 @@
 <template>
-  <div class="shy-table">
-    <div class="shy-menu">
-      <div class="menu-left">
-        <a-space align="center">
-          <a-button type="primary" @click="addEvent">
-            <template #icon>
-              <plus-outlined />
-            </template>
-            新增
-          </a-button>
-
-          <a-button @click="removeEvent">
-            <template #icon>
-              <delete-outlined />
-            </template>
-            删除
-          </a-button>
-          <slot name="menuLeft"></slot>
-        </a-space>
-      </div>
-      <div class="menu-right">
-        <a-space>
-          <slot name="menuRight"></slot>
-          <a-button class="btn-setting">
-            <template #icon>
-              <setting-outlined :style="{ fontSize: '16px' }" />
-            </template>
-            <TooltipView />
-          </a-button>
-        </a-space>
-      </div>
-    </div>
-
-    <div class="table-wrapper">
-      <vxe-table
-        ref="tableRef"
+  <vxe-table
+    class="shy-table"
+    ref="tableRef"
+    align="center"
+    :height="props.height || undefined"
+    :data="data"
+    border
+    show-overflow="tooltip"
+    :column-config="{ resizable: true }"
+    :row-config="{ height: props.rowHeight }"
+    @checkbox-all="checkboxChangeEvent"
+    @checkbox-change="checkboxChangeEvent"
+    size="small"
+  >
+    <vxe-column type="checkbox" width="60" v-if="isCheckbox"></vxe-column>
+    <vxe-column type="seq" width="60" title="序号" align="center"></vxe-column>
+    <template v-for="(column, index) in props.column" :key="index">
+      <vxe-column
+        :field="column.dataIndex"
+        :title="column.title"
+        :width="column?.width || undefined"
         align="center"
-        :height="props.height || undefined"
-        :data="data"
-        border
-        show-overflow="tooltip"
-        :column-config="{ resizable: true }"
-        :row-config="{ height: props.rowHeight }"
-        @checkbox-all="checkboxChangeEvent"
-        @checkbox-change="checkboxChangeEvent"
-        size="small"
       >
-        <vxe-column type="checkbox" width="60" v-if="isCheckbox"></vxe-column>
-        <vxe-column
-          type="seq"
-          width="60"
-          title="序号"
-          align="center"
-        ></vxe-column>
-        <template v-for="(column, index) in props.column" :key="index">
-          <vxe-column
-            :field="column.dataIndex"
-            :title="column.title"
-            :width="column?.width || undefined"
-            align="center"
-          >
-            <template #default="{ row }" v-if="column?.slot === true">
-              <slot :name="column.dataIndex" v-bind="{ row }">插槽已开启</slot>
-            </template>
-          </vxe-column>
+        <template #default="{ row }" v-if="column?.slot === true">
+          <slot :name="column.dataIndex" v-bind="{ row }">插槽已开启</slot>
         </template>
-        <vxe-column align="center" title="操作" :width="props.menuWidth">
-          <template #default="{ row }">
-            <ButtonGroup
-              :data="buttonList"
-              @click-event="buttonClickEvent($event, row)"
-            />
-          </template>
-        </vxe-column>
-      </vxe-table>
-    </div>
-  </div>
+      </vxe-column>
+    </template>
+    <vxe-column
+      align="center"
+      title="操作"
+      v-if="props.isMenu"
+      :width="props.menuWidth"
+    >
+      <template #default="{ row }">
+        <ButtonGroup
+          :data="buttonList"
+          @click-event="buttonClickEvent($event, row)"
+        />
+      </template>
+    </vxe-column>
+  </vxe-table>
 </template>
 
 <script setup lang="ts">
@@ -83,24 +48,9 @@ import { ref, reactive, watchEffect } from 'vue'
 import 'xe-utils'
 import 'vxe-table/lib/style.css'
 import { VxeTable, VxeColumn, VxeTableInstance } from 'vxe-table'
-import {
-  PlusOutlined,
-  DeleteOutlined,
-  SettingOutlined
-} from '@ant-design/icons-vue'
+
 import ButtonGroup from './ButtonGroup.vue'
 import TooltipView from './TooltipView.vue'
-
-import {
-  Space as ASpace,
-  Button as AButton,
-  Form as AForm,
-  FormItem as AFormItem,
-  Input as AInput,
-  Row as ARow,
-  Col as ACol,
-  Popconfirm as APopconfirm
-} from 'ant-design-vue'
 
 const emits = defineEmits([
   'page-change',
@@ -133,6 +83,7 @@ interface Props {
   rowHeight?: number
   height?: string | undefined
   menuWidth?: number
+  isMenu?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -140,7 +91,8 @@ const props = withDefaults(defineProps<Props>(), {
   height: undefined,
   data: () => [],
   rowHeight: 40,
-  menuWidth: 160
+  menuWidth: 160,
+  isMenu: false
 })
 
 const buttonList = [
@@ -195,12 +147,6 @@ const checkboxChangeEvent = () => {
 
 <style scoped lang="less">
 .shy-table {
-  display: flex;
-  overflow: hidden;
-  height: 100%;
-  background-color: #fff;
-  flex-flow: column nowrap;
-
   &::v-deep(.vxe-table--body) {
     .vxe-cell {
       font-size: 14px;
@@ -226,39 +172,5 @@ const checkboxChangeEvent = () => {
   align-items: center;
   height: 50px;
   flex: none;
-}
-
-.shy-search {
-  overflow: hidden;
-  margin-bottom: 16px;
-  height: 0;
-  transition: height 0.5s ease-out;
-  flex: none;
-}
-
-.shy-page {
-  flex: none;
-}
-
-.table-wrapper {
-  flex: 1 1 0;
-  overflow: hidden;
-}
-
-.ant-form-item {
-  margin: 0 !important;
-}
-
-.menu-left {
-  flex: 0 0 50%;
-}
-
-.menu-right {
-  position: relative;
-  text-align: right;
-}
-
-.btn-setting {
-  position: relative;
 }
 </style>

@@ -24,11 +24,12 @@ module.exports = {
     'prettier/prettier': [
       'error',
       {
-        endOfLine: 'auto'
+        endOfLine: 'auto',
+        semi: false
       }
     ],
     'vue/no-setup-props-destructure': 0,
     'no-undef': 0,
     '@typescript-eslint/ban-ts-comment': 0
   }
-}
+};
