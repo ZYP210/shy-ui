@@ -56,14 +56,12 @@ importers:
 
   examples:
     specifiers:
-      3h1-ui: workspace:^1.0.9
+      3h1-ui: workspace:^1.0.17
       '@ant-design/icons-vue': ^6.1.0
-      ant-design-vue: ^3.2.13
       axios: ^1.1.2
     dependencies:
       3h1-ui: link:../packages/components
       '@ant-design/icons-vue': 6.1.0
-      ant-design-vue: 3.2.13
       axios: 1.1.2
 
   packages/components:
