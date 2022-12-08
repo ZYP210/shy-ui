@@ -1,43 +1,42 @@
 <template>
   <div class="box-main">
-    <s-search :column="searchColumn"></s-search>
-    <s-table :column="tableColumn" :data="tableData"></s-table>
-    <s-page :page="page"></s-page>
+    <a-button @click="clickEvent">显示人物选择器</a-button>
+    <user-select
+      ref="userRef"
+      :deptFun="deptFun"
+      :userFun="userFun"
+      @confirm="confirmEvent"
+    >
+    </user-select>
   </div>
 </template>
 <script lang="ts" setup>
-import { ref, reactive, watchEffect } from 'vue'
+import { ref } from 'vue'
+import axios from './plugins/axios.js'
+const deptFun = async () => {
+  try {
+    const res = await axios({ url: '/api/blade-system/dept/list' })
+    return res.data.data
+  } catch {}
+}
 
-const form = ref({ a: 1, b: 2, c: 3 })
-const column = [
-  {
-    label: '表单1',
-    prop: 'a'
-  },
-  {
-    label: '表单1',
-    prop: 'b'
-  },
-  {
-    label: '表单1',
-    prop: 'c'
-  }
-]
-const tableData = ref([{ a: 1 }])
-const tableColumn = [
-  {
-    title: 'a',
-    dataIndex: 'a'
-  }
-]
-const searchColumn = [
-  {
-    label: 'a',
-    prop: 'a'
-  }
-]
+const userFun = async (deptId = undefined) => {
+  try {
+    const res = await axios({ url: '/api/blade-user/page', params: { deptId } })
+    return res.data.data.records
+  } catch {}
+}
 
-const page = ref({ current: 1, pageSize: 10, total: 100 })
+deptFun()
+
+const userRef = ref()
+const clickEvent = () => {
+  userRef.value.open()
+}
+
+const confirmEvent = (list) => {
+  console.log('list', list)
+}
 </script>
 
 <style lang="less" scoped>
