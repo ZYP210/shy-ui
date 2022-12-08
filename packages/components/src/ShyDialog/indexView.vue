@@ -33,7 +33,7 @@ const close = () => {
 const emit = defineEmits(['confirm', 'cancel'])
 
 const confirmEvent = () => {
-  emit('confirm')
+  emit('confirm', { close })
 }
 
 const cancelEvent = () => {

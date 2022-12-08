@@ -29,7 +29,11 @@
             <TabPane key="2" tab="成员"></TabPane>
             <TabPane key="3" tab="组织"></TabPane>
           </Tabs>
-          <Input class="flex-input" placeholder="搜索"></Input>
+          <Input
+            class="flex-input"
+            placeholder="搜索"
+            @change="inputChangeEvent"
+          ></Input>
         </div>
 
         <div class="user-wrapper">
@@ -103,20 +107,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   userFun: () => {
-    return [
-      {
-        name: '包磊',
-        id: 1
-      },
-      {
-        name: '李金玉',
-        id: 2
-      },
-      {
-        name: '马婷婷',
-        id: 3
-      }
-    ]
+    return []
   },
   deptFun: () => {
     return [
@@ -125,27 +116,7 @@ const props = withDefaults(defineProps<Props>(), {
         key: '0-0',
         id: '0-0',
 
-        children: [
-          {
-            title: '数管中心',
-            key: '0-0-0',
-            id: '0-0-0',
-            children: [
-              {
-                title: 'leaf',
-                key: '0-0-0-0',
-                id: '0-0-0-0'
-              },
-              { title: 'leaf', key: '0-0-0-1', id: '0-0-0-1' }
-            ]
-          },
-          {
-            title: '控制中心',
-            key: '0-0-1',
-            id: '0-0-1',
-            children: [{ key: '0-0-1-0', id: '0-0-1-0', title: 'sss' }]
-          }
-        ]
+        children: []
       }
     ]
   }
@@ -153,7 +124,9 @@ const props = withDefaults(defineProps<Props>(), {
 
 // 加载数据
 const activeKey = ref('1')
+const inputChangeEvent = (value) => {}
 
+// 格式化组织代码
 const format = (list: any) => {
   let array
   array = list.map((item: any) => {
@@ -170,6 +143,8 @@ const format = (list: any) => {
 
   return array
 }
+
+// 加载人物与组织函数
 const loadKv = async () => {
   try {
     const res = await props.deptFun()
@@ -199,7 +174,7 @@ const getOrganizationName = (list) => {
 const titleMap = computed(() => {
   const obj: any = {}
 
-  allUserList.value.forEach((item) => {
+  allUserList.value.forEach((item: { id: string; name: string }) => {
     obj[item.id] = item.name
   })
 
@@ -215,7 +190,7 @@ const activeChangeEvent = (value) => {
 // 组织架构
 const selectedKeys = ref([])
 const userSelected = ref([])
-const userList = ref([[]])
+const userList = ref<{ name: string; id: string }[]>([])
 const organization = ref([])
 
 const loadUser = async (deptId) => {
@@ -232,8 +207,8 @@ const selectChangeEvent = (value) => {
 }
 
 //成员
-const allUserList = ref([])
-const allUserSelected = ref([])
+const allUserList = ref<{ name: string; id: string }[]>([])
+const allUserSelected = ref<string[]>([])
 
 //组织
 const organizationChecked = ref([])
@@ -302,21 +277,27 @@ const dialogRef = ref()
 const open = () => {
   dialogRef.value.open()
 }
-const emit = defineEmits(['confirm'])
-// 确定取消
-const confirmEvent = () => {
-  console.log('1', 1)
+const emit = defineEmits(['confirm', 'cancel'])
+
+// 确定点击事件
+const confirmEvent = ({ close }) => {
   emit('confirm', tagList.value)
+  close()
 }
+
+// 取消点击事件
+const cancelEvent = () => {
+  resetFields()
+  emit('cancel')
+}
+
+// 重置数据
 const resetFields = () => {
   nextTick(() => {
     userSelected.value = []
     allUserSelected.value = []
     organizationChecked.value = []
   })
-}
-const cancelEvent = () => {
-  resetFields()
 }
 defineExpose({ open })
 </script>

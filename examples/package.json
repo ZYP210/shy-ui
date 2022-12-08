@@ -10,9 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "3h1-ui": "workspace:^1.0.29",
+    "3h1-ui": "workspace:^1.0.32",
     "@ant-design/icons-vue": "^6.1.0",
     "ant-design-vue": "^3.2.15",
-    "axios": "^1.2.1"
+    "axios": "^1.2.1",
+    "vue-router": "^4.1.6"
   }
 }

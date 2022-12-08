@@ -12,12 +12,14 @@
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
-import axios from './plugins/axios.js'
+import axios from '/@/plugins/axios'
 const deptFun = async () => {
   try {
     const res = await axios({ url: '/api/blade-system/dept/list' })
     return res.data.data
-  } catch {}
+  } catch (err) {
+    console.log('err', err)
+  }
 }
 
 const userFun = async (deptId = undefined) => {
