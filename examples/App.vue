@@ -1,16 +1,42 @@
 <template>
   <div class="box-main">
-    <s-page v-model:page="page"></s-page>
+    <a-button @click="clickEvent">显示人物选择器</a-button>
+    <user-select
+      ref="userRef"
+      :deptFun="deptFun"
+      :userFun="userFun"
+      @confirm="confirmEvent"
+    >
+    </user-select>
   </div>
 </template>
 <script lang="ts" setup>
 import { ref } from 'vue'
+import axios from './plugins/axios.js'
+const deptFun = async () => {
+  try {
+    const res = await axios({ url: '/api/blade-system/dept/list' })
+    return res.data.data
+  } catch {}
+}
 
-const page = ref({
-  current: 2,
-  pageSize: 20,
-  total: 100
-})
+const userFun = async (deptId = undefined) => {
+  try {
+    const res = await axios({ url: '/api/blade-user/page', params: { deptId } })
+    return res.data.data.records
+  } catch {}
+}
+
+deptFun()
+
+const userRef = ref()
+const clickEvent = () => {
+  userRef.value.open()
+}
+
+const confirmEvent = (list) => {
+  console.log('list', list)
+}
 </script>
 
 <style lang="less" scoped>
