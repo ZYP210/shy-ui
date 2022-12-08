@@ -1,6 +1,7 @@
 <template>
   <ConfigProvider :locale="zhCN">
     <a-pagination
+      class="shy-page"
       v-model:current="current"
       v-model:pageSize="pageSize"
       :total="total"
@@ -8,7 +9,7 @@
       show-size-changer
       hideOnSinglePage
       @change="changeEvent"
-    />
+    ></a-pagination>
   </ConfigProvider>
 </template>
 <script lang="ts" setup>
@@ -27,7 +28,7 @@ const props = withDefaults(defineProps<Props>(), {
     return {
       current: 1,
       pageSize: 10,
-      total: 50
+      total: 100
     }
   }
 })
@@ -53,3 +54,10 @@ const changeEvent = (current: number, pageSize: number) => {
   })
 }
 </script>
+
+<style scoped lang="less">
+.shy-page {
+  margin-top: 10px;
+  text-align: right;
+}
+</style>

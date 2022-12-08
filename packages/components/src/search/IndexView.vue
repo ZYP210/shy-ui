@@ -2,17 +2,21 @@
   <div class="shy-search">
     <a-row>
       <a-col :span="18">
-        <ShyForm v-model="form" :column="currentColumn" />
+        <ShyForm v-model:form="form" :column="currentColumn" />
       </a-col>
       <a-col :span="6">
         <div class="button-wrapper">
-          <a-button class="button-search" type="primary">
+          <a-button
+            class="button-search"
+            type="primary"
+            @click="searchChangeEvent"
+          >
             查询
             <template #icon>
               <search-outlined />
             </template>
           </a-button>
-          <a-button>
+          <a-button @click="searchResetEvent">
             <template #icon>
               <clear-outlined />
             </template>
@@ -46,7 +50,8 @@ interface Props {
   column: { label: string; span?: number }[]
 }
 const props = withDefaults(defineProps<Props>(), { column: () => [] })
-const form = reactive({})
+const emit = defineEmits(['search-change'])
+const form = ref({})
 
 // 切换展示收缩
 // 搜索列
@@ -75,12 +80,26 @@ watchEffect(() => {
 })
 //
 const isExpandFlag = computed(() => {
-  return searchColumn.value.length >= 3 ? true : false
+  return searchColumn.value.length > 3 ? true : false
 })
 const iconStyle = {
   fontSize: '7px',
   color: '#919191'
 }
+
+const getForm = () => {
+  return form.value
+}
+
+const searchChangeEvent = () => {
+  emit('search-change', form.value)
+}
+const searchResetEvent = () => {
+  form.value = {}
+  emit('search-change', {})
+}
+
+defineExpose({ getForm })
 </script>
 
 <style scoped lang="less">

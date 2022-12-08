@@ -13,17 +13,23 @@
     @checkbox-change="checkboxChangeEvent"
     size="small"
   >
-    <vxe-column type="checkbox" width="60" v-if="isCheckbox"></vxe-column>
-    <vxe-column type="seq" width="60" title="序号" align="center"></vxe-column>
+    <vxe-column type="checkbox" width="60" v-if="props.isCheckbox"></vxe-column>
+    <vxe-column
+      type="seq"
+      width="60"
+      title="序号"
+      align="center"
+      v-if="props.isIndex"
+    ></vxe-column>
     <template v-for="(column, index) in props.column" :key="index">
       <vxe-column
-        :field="column.dataIndex"
-        :title="column.title"
+        :field="column.prop"
+        :title="column.label"
         :width="column?.width || undefined"
         align="center"
       >
         <template #default="{ row }" v-if="column?.slot === true">
-          <slot :name="column.dataIndex" v-bind="{ row }">插槽已开启</slot>
+          <slot :name="column.prop" v-bind="{ row }">插槽已开启</slot>
         </template>
       </vxe-column>
     </template>
@@ -62,8 +68,8 @@ const emits = defineEmits([
   'view'
 ])
 interface Column {
-  dataIndex: string
-  title: string
+  prop: string
+  label: string
   searchSpan?: number
   search?: boolean
   type?: string
@@ -78,21 +84,23 @@ interface Column {
 
 interface Props {
   isCheckbox?: boolean
+  isIndex?: boolean
+  isMenu?: boolean
   column: Column[]
   data: any[]
   rowHeight?: number
   height?: string | undefined
   menuWidth?: number
-  isMenu?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isCheckbox: true,
+  isIndex: true,
+  isMenu: true,
   height: undefined,
   data: () => [],
   rowHeight: 40,
-  menuWidth: 160,
-  isMenu: false
+  menuWidth: 160
 })
 
 const buttonList = [
