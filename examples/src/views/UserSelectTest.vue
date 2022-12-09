@@ -22,11 +22,16 @@ const deptFun = async () => {
   }
 }
 
-const userFun = async (deptId = undefined) => {
+const userFun = async (deptId = undefined, realName = undefined) => {
   try {
-    const res = await axios({ url: '/api/blade-user/page', params: { deptId } })
+    const res = await axios({
+      url: '/api/blade-user/page',
+      params: { deptId, realName }
+    })
     return res.data.data.records
-  } catch {}
+  } catch (err) {
+    console.log('err', err)
+  }
 }
 
 deptFun()

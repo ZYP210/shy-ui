@@ -25,13 +25,27 @@
             v-model:activeKey="activeKey"
             @change="activeChangeEvent"
           >
-            <TabPane key="1" tab="组织架构"></TabPane>
-            <TabPane key="2" tab="成员"></TabPane>
-            <TabPane key="3" tab="组织"></TabPane>
+            <TabPane
+              v-if="props.type === 'user' || props.type === 'all'"
+              key="1"
+              tab="组织架构"
+            ></TabPane>
+            <TabPane
+              v-if="props.type === 'user' || props.type === 'all'"
+              key="2"
+              tab="成员"
+            ></TabPane>
+            <TabPane
+              v-if="props.type === 'org' || props.type === 'all'"
+              key="3"
+              tab="组织"
+            ></TabPane>
           </Tabs>
           <Input
+            v-if="activeKey !== '3'"
             class="flex-input"
             placeholder="搜索"
+            v-model:value="userName"
             @change="inputChangeEvent"
           ></Input>
         </div>
@@ -60,8 +74,8 @@
             </CheckboxGroup>
           </div>
           <div class="all-user" v-else-if="activeKey === '2'">
-            <CheckboxGroup v-model:value="allUserSelected">
-              <template v-for="(item, index) in allUserList" :key="index">
+            <CheckboxGroup v-model:value="userSelected">
+              <template v-for="(item, index) in userList" :key="index">
                 <div class="tree-row">
                   <div>
                     {{ item.name }}
@@ -88,7 +102,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, computed, nextTick } from 'vue'
+import { ref, watchEffect, computed, nextTick, watch } from 'vue'
 import {
   Tabs,
   TabPane,
@@ -103,6 +117,7 @@ import ShyDialog from '../ShyDialog/indexView.vue'
 interface Props {
   userFun: any
   deptFun: any
+  type: 'user' | 'org' | 'all'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -119,12 +134,25 @@ const props = withDefaults(defineProps<Props>(), {
         children: []
       }
     ]
-  }
+  },
+  type: 'all'
 })
 
 // 加载数据
 const activeKey = ref('1')
-const inputChangeEvent = (value) => {}
+//
+watch(
+  () => props.type,
+  (value) => {
+    if (value === 'all' || value === 'user') {
+      activeKey.value = '1'
+    } else if (value === 'org') {
+      activeKey.value = '3'
+    }
+  }
+)
+
+const userName = ref('')
 
 // 格式化组织代码
 const format = (list: any) => {
@@ -184,7 +212,13 @@ const titleMap = computed(() => {
 })
 
 const activeChangeEvent = (value) => {
-  console.log('value', value)
+  if (value === '1') {
+    loadUser(selectedKeys.value[0], userName.value)
+  }
+  if (value === '2') {
+    // selectedKeys.value = []
+    loadUser(undefined, userName.value)
+  }
 }
 
 // 组织架构
@@ -193,9 +227,9 @@ const userSelected = ref([])
 const userList = ref<{ name: string; id: string }[]>([])
 const organization = ref([])
 
-const loadUser = async (deptId) => {
+const loadUser = async (deptId = undefined, realName = undefined) => {
   try {
-    const res = await props.userFun(deptId)
+    const res = await props.userFun(deptId, realName)
     userList.value = res
   } catch (err) {
     console.log('err', err)
@@ -203,10 +237,17 @@ const loadUser = async (deptId) => {
 }
 const selectChangeEvent = (value) => {
   const deptId = value[0]
-  loadUser(deptId)
+  loadUser(deptId, userName.value)
+}
+const inputChangeEvent = () => {
+  if (activeKey.value === '2') {
+    loadUser(undefined, userName.value)
+  } else {
+    loadUser(selectedKeys.value[0], userName.value)
+  }
 }
 
-//成员
+//全部成员
 const allUserList = ref<{ name: string; id: string }[]>([])
 const allUserSelected = ref<string[]>([])
 
@@ -226,11 +267,11 @@ const closeEvent = (id: string, type: 1 | 2 | 3) => {
 
     userSelected.value.splice(index, 1)
   } else if (type === 2) {
-    const index = allUserSelected.value.findIndex((item) => {
+    const index = userSelected.value.findIndex((item) => {
       return item === id
     })
 
-    allUserSelected.value.splice(index, 1)
+    userSelected.value.splice(index, 1)
   } else if (type === 3) {
     const index = organizationChecked.value.findIndex((item) => {
       return item === id
@@ -252,14 +293,14 @@ watchEffect(() => {
     })
   })
 
-  allUserSelected.value.forEach((item) => {
-    tagList.value.push({
-      id: item,
-      color: '#108ee9',
-      type: 2,
-      name: titleMap.value[item]
-    })
-  })
+  // allUserSelected.value.forEach((item) => {
+  //   tagList.value.push({
+  //     id: item,
+  //     color: '#108ee9',
+  //     type: 2,
+  //     name: titleMap.value[item]
+  //   })
+  // })
 
   organizationChecked.value.forEach((item) => {
     tagList.value.push({
@@ -337,10 +378,14 @@ defineExpose({ open })
 }
 
 .user-wrapper {
+  overflow: auto;
+  height: 300px;
+
   .tree-select {
     display: flex;
     justify-content: space-between;
     overflow: hidden;
+    height: 300px;
 
     .tree-item {
       flex: 1 1 0 !important;
@@ -387,7 +432,7 @@ defineExpose({ open })
   overflow: auto;
   padding: 8px;
   margin-bottom: 15px;
-  height: 150px;
+  height: 80px;
   border: 1px solid #d9d9d9;
 }
 </style>

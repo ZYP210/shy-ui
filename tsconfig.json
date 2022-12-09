@@ -1,13 +1,29 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "jsx": "preserve",
-    "strict": false,
-    "target": "ES2015",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
     "module": "ESNext",
-    "skipLibCheck": true,
-    "esModuleInterop": true,
     "moduleResolution": "Node",
-    "lib": ["esnext", "dom"]
-  }
+    "strict": false,
+    "jsx": "preserve",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "lib": ["ESNext", "DOM"],
+    "skipLibCheck": true,
+    "noEmit": true,
+    "baseUrl": "./",
+    "paths": {
+      "/@/*": ["src/*"]
+    }
+  },
+
+  "include": [
+    "types/**/*.ts",
+    "packages/**/*.ts",
+    "packages/**/*.d.ts",
+    "packages/**/*.tsx",
+    "packages/**/*.vue"
+  ],
+  "exclude": ["node_modules", "dist", "**/*.js"]
 }
