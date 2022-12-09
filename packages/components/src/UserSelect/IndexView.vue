@@ -117,7 +117,7 @@ import ShyDialog from '../ShyDialog/indexView.vue'
 interface Props {
   userFun: any
   deptFun: any
-  type: 'user' | 'org' | 'all'
+  type?: 'user' | 'org' | 'all'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -283,7 +283,6 @@ const closeEvent = (id: string, type: 1 | 2 | 3) => {
 
 watchEffect(() => {
   tagList.value = []
-
   userSelected.value.forEach((item) => {
     tagList.value.push({
       id: item,
