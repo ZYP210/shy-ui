@@ -5,6 +5,9 @@
 
 import ShyDialog from './src/ShyDialog/indexView.vue'
 import UserSelect from './src/UserSelect/IndexView.vue'
+
+import a from './src/components/Modal'
+
 import 'ant-design-vue/dist/antd.min.css'
 
 import { App } from 'vue'
@@ -19,5 +22,6 @@ export default {
     // app.component('s-page', ShyPage)
     app.component('s-dialog', ShyDialog)
     app.component('user-select', UserSelect)
+    // app.component('basic-modal', BasicModal)
   }
 }

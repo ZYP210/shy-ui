@@ -61,29 +61,26 @@
               >
               </Tree>
             </div>
-
-            <CheckboxGroup class="tree-item" v-model:value="userSelected">
+            <div class="tree-item">
               <template v-for="(item, index) in userList" :key="index">
                 <div class="tree-row">
                   <div>
                     {{ item.name }}
                   </div>
-                  <Checkbox :value="item.id"></Checkbox>
+                  <Checkbox v-model:checked="checkMap[item.id]"></Checkbox>
                 </div>
               </template>
-            </CheckboxGroup>
+            </div>
           </div>
           <div class="all-user" v-else-if="activeKey === '2'">
-            <CheckboxGroup v-model:value="userSelected">
-              <template v-for="(item, index) in userList" :key="index">
-                <div class="tree-row">
-                  <div>
-                    {{ item.name }}
-                  </div>
-                  <Checkbox :value="item.id"></Checkbox>
+            <template v-for="(item, index) in userList" :key="index">
+              <div class="tree-row">
+                <div>
+                  {{ item.name }}
                 </div>
-              </template>
-            </CheckboxGroup>
+                <Checkbox v-model:checked="checkMap[item.id]"></Checkbox>
+              </div>
+            </template>
           </div>
           <div class="all-organization" v-else>
             <Tree
@@ -102,7 +99,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, computed, nextTick, watch } from 'vue'
+import { ref, watchEffect, computed, nextTick, watch, reactive } from 'vue'
 import {
   Tabs,
   TabPane,
@@ -180,6 +177,10 @@ const loadKv = async () => {
     const res2 = await props.userFun()
     userList.value = res2
     allUserList.value = res2
+
+    res2.forEach((user) => {
+      checkMap[user.id] = false
+    })
   } catch (err) {
     console.log('err', err)
   }
@@ -226,6 +227,7 @@ const selectedKeys = ref([])
 const userSelected = ref([])
 const userList = ref<{ name: string; id: string }[]>([])
 const organization = ref([])
+const checkMap = reactive({})
 
 const loadUser = async (deptId = undefined, realName = undefined) => {
   try {
@@ -261,17 +263,9 @@ const tagList = ref<
 
 const closeEvent = (id: string, type: 1 | 2 | 3) => {
   if (type === 1) {
-    const index = userSelected.value.findIndex((item) => {
-      return item === id
-    })
-
-    userSelected.value.splice(index, 1)
+    checkMap[id] = false
   } else if (type === 2) {
-    const index = userSelected.value.findIndex((item) => {
-      return item === id
-    })
-
-    userSelected.value.splice(index, 1)
+    console.log('2标记')
   } else if (type === 3) {
     const index = organizationChecked.value.findIndex((item) => {
       return item === id
@@ -281,25 +275,20 @@ const closeEvent = (id: string, type: 1 | 2 | 3) => {
   }
 }
 
+// 根据 checkMap organizationChecked 修改tagList
 watchEffect(() => {
   tagList.value = []
-  userSelected.value.forEach((item) => {
-    tagList.value.push({
-      id: item,
-      color: '#108ee9',
-      type: 1,
-      name: titleMap.value[item]
-    })
-  })
 
-  // allUserSelected.value.forEach((item) => {
-  //   tagList.value.push({
-  //     id: item,
-  //     color: '#108ee9',
-  //     type: 2,
-  //     name: titleMap.value[item]
-  //   })
-  // })
+  Object.keys(checkMap).forEach((key) => {
+    if (checkMap[key]) {
+      tagList.value.push({
+        id: key,
+        color: '#108ee9',
+        type: 1,
+        name: titleMap.value[key]
+      })
+    }
+  })
 
   organizationChecked.value.forEach((item) => {
     tagList.value.push({
@@ -334,9 +323,10 @@ const cancelEvent = () => {
 // 重置数据
 const resetFields = () => {
   nextTick(() => {
-    userSelected.value = []
-    allUserSelected.value = []
     organizationChecked.value = []
+    Object.keys(checkMap).forEach((key) => {
+      checkMap[key] = false
+    })
   })
 }
 defineExpose({ open })

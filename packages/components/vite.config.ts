@@ -1,6 +1,12 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
+import { resolve } from 'path'
+
+function pathResolve(dir: string) {
+  return resolve(process.cwd(), '.', dir)
+}
+
 export default defineConfig({
   build: {
     target: 'modules',
@@ -58,5 +64,23 @@ export default defineConfig({
       outputDir: 'lib',
       tsConfigFilePath: '../../tsconfig.json'
     })
-  ]
+  ],
+  resolve: {
+    alias: [
+      // {
+      //   find: 'vue-i18n',
+      //   replacement: 'vue-i18n/dist/vue-i18n.cjs.js'
+      // },
+      // /@/xxxx => src/xxxx
+      {
+        find: /\/@\//,
+        replacement: pathResolve('src') + '/'
+      },
+      // /#/xxxx => types/xxxx
+      {
+        find: /\/#\//,
+        replacement: pathResolve('types') + '/'
+      }
+    ]
+  }
 })
