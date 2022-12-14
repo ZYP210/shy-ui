@@ -7,6 +7,7 @@
       :userFun="userFun"
       @confirm="confirmEvent"
       selectType="single"
+      type="user"
     >
     </user-select>
   </div>

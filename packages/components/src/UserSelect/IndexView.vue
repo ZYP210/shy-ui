@@ -108,12 +108,35 @@
             </div>
           </div>
           <div class="all-user" v-else-if="activeKey === '2'">
+            <div class="spin" v-if="spinning">
+              <a-spin />
+            </div>
             <template v-if="props.selectType === 'single'">
-              <template v-for="(item, index) in userList" :key="index">
-                <CheckboxGroup
-                  v-model:value="userSelected"
-                  @change="checkUserSingleEvent"
-                >
+              <a-empty v-if="userList.length === 0" />
+              <template v-else>
+                <template v-for="(item, index) in userList" :key="index">
+                  <CheckboxGroup
+                    v-model:value="userSelected"
+                    @change="checkUserSingleEvent"
+                  >
+                    <div class="tree-row">
+                      <div
+                        style="cursor: pointer"
+                        @click="checkClickEvent(item.id)"
+                      >
+                        {{ item.name }}
+                      </div>
+                      <Checkbox v-model:value="item.id"></Checkbox>
+                    </div>
+                  </CheckboxGroup>
+                </template>
+              </template>
+            </template>
+            <template v-else>
+              <a-empty v-if="userList.length === 0" />
+
+              <template v-else>
+                <template v-for="(item, index) in userList" :key="index">
                   <div class="tree-row">
                     <div
                       style="cursor: pointer"
@@ -121,22 +144,9 @@
                     >
                       {{ item.name }}
                     </div>
-                    <Checkbox v-model:value="item.id"></Checkbox>
+                    <Checkbox v-model:checked="checkMap[item.id]"></Checkbox>
                   </div>
-                </CheckboxGroup>
-              </template>
-            </template>
-            <template v-else>
-              <template v-for="(item, index) in userList" :key="index">
-                <div class="tree-row">
-                  <div
-                    style="cursor: pointer"
-                    @click="checkClickEvent(item.id)"
-                  >
-                    {{ item.name }}
-                  </div>
-                  <Checkbox v-model:checked="checkMap[item.id]"></Checkbox>
-                </div>
+                </template>
               </template>
             </template>
           </div>
