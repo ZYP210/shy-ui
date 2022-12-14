@@ -407,7 +407,6 @@ const closeEvent = (id: string, type: 1 | 2 | 3) => {
   } else {
     if (type === 1) {
       checkMap[id] = false
-    } else if (type === 2) {
     } else if (type === 3) {
       const index = organizationChecked.value.findIndex((item) => {
         return item === id
