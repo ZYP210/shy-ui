@@ -58,7 +58,7 @@ importers:
 
   examples:
     specifiers:
-      3h1-ui: workspace:^1.0.46
+      3h1-ui: workspace:^1.0.47
       '@ant-design/icons-vue': ^6.1.0
       ant-design-vue: ^3.2.15
       axios: ^1.2.1

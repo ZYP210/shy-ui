@@ -6,6 +6,7 @@
       :deptFun="deptFun"
       :userFun="userFun"
       @confirm="confirmEvent"
+      selectType="single"
     >
     </user-select>
   </div>

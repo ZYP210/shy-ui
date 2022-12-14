@@ -28,17 +28,23 @@
             @change="activeChangeEvent"
           >
             <TabPane
-              v-if="props.type === 'user' || props.type === 'all'"
+              v-if="
+                tabType === 'user' || tabType === 'all' || tabType === 'other'
+              "
               key="1"
               tab="组织架构"
             ></TabPane>
             <TabPane
-              v-if="props.type === 'user' || props.type === 'all'"
+              v-if="
+                tabType === 'user' || tabType === 'all' || tabType === 'other'
+              "
               key="2"
               tab="成员"
             ></TabPane>
             <TabPane
-              v-if="props.type === 'org' || props.type === 'all'"
+              v-if="
+                tabType === 'org' || tabType === 'all' || tabType === 'other'
+              "
               key="3"
               tab="组织"
             ></TabPane>
@@ -63,29 +69,91 @@
               >
               </Tree>
             </div>
-            <div class="tree-item">
+            <div class="tree-item relative">
+              <div class="spin" v-if="spinning">
+                <a-spin />
+              </div>
+              <template v-if="props.selectType === 'single'">
+                <template v-if="userList.length === 0">
+                  <a-empty />
+                </template>
+                <template v-else v-for="(item, index) in userList" :key="index">
+                  <CheckboxGroup
+                    class="w-100"
+                    v-model:value="userSelected"
+                    @change="checkUserSingleEvent"
+                  >
+                    <div class="tree-row">
+                      <div @click="checkClickEvent(item.id)">
+                        {{ item.name }}
+                      </div>
+                      <Checkbox v-model:value="item.id"></Checkbox>
+                    </div>
+                  </CheckboxGroup>
+                </template>
+              </template>
+
+              <template v-else>
+                <a-empty v-if="userList.length === 0" />
+
+                <template v-else v-for="(item, index) in userList" :key="index">
+                  <div class="tree-row">
+                    <div @click="checkClickEvent(item.id)">
+                      {{ item.name }}
+                    </div>
+                    <Checkbox v-model:checked="checkMap[item.id]"></Checkbox>
+                  </div>
+                </template>
+              </template>
+            </div>
+          </div>
+          <div class="all-user" v-else-if="activeKey === '2'">
+            <template v-if="props.selectType === 'single'">
+              <template v-for="(item, index) in userList" :key="index">
+                <CheckboxGroup
+                  v-model:value="userSelected"
+                  @change="checkUserSingleEvent"
+                >
+                  <div class="tree-row">
+                    <div
+                      style="cursor: pointer"
+                      @click="checkClickEvent(item.id)"
+                    >
+                      {{ item.name }}
+                    </div>
+                    <Checkbox v-model:value="item.id"></Checkbox>
+                  </div>
+                </CheckboxGroup>
+              </template>
+            </template>
+            <template v-else>
               <template v-for="(item, index) in userList" :key="index">
                 <div class="tree-row">
-                  <div>
+                  <div
+                    style="cursor: pointer"
+                    @click="checkClickEvent(item.id)"
+                  >
                     {{ item.name }}
                   </div>
                   <Checkbox v-model:checked="checkMap[item.id]"></Checkbox>
                 </div>
               </template>
-            </div>
-          </div>
-          <div class="all-user" v-else-if="activeKey === '2'">
-            <template v-for="(item, index) in userList" :key="index">
-              <div class="tree-row">
-                <div>
-                  {{ item.name }}
-                </div>
-                <Checkbox v-model:checked="checkMap[item.id]"></Checkbox>
-              </div>
             </template>
           </div>
           <div class="all-organization" v-else>
             <Tree
+              v-if="props.selectType === 'single'"
+              :selectable="false"
+              :autoExpandParent="true"
+              checkable
+              :tree-data="organization"
+              v-model:checkedKeys="singleCheckedKeys"
+              :checkStrictly="true"
+              @check="checkSingleEvent"
+            >
+            </Tree>
+            <Tree
+              v-else
               :selectable="false"
               :autoExpandParent="true"
               checkable
@@ -115,10 +183,13 @@ import ShyDialog from '../ShyDialog/indexView.vue'
 import { BasicModal, useModal } from '../Modal/'
 
 interface Props {
-  userFun: any
-  deptFun: any
-  type?: 'user' | 'org' | 'all'
+  userFun: any // 人物请求函数
+  deptFun: any // 不猛请求函数
+  type?: 'user' | 'org' | 'all' // 类别 人物选择 组织选择 全部选择
+  selectType?: 'single' | 'multiple' // 单选/多选
 }
+
+const spinning = ref(false)
 
 const props = withDefaults(defineProps<Props>(), {
   userFun: () => {
@@ -135,12 +206,14 @@ const props = withDefaults(defineProps<Props>(), {
       }
     ]
   },
-  type: 'all'
+  type: 'all',
+  selectType: 'multiple'
 })
 
 // 加载数据
 const activeKey = ref('1')
 //
+const tabType = ref()
 watch(
   () => props.type,
   (value) => {
@@ -148,8 +221,18 @@ watch(
       activeKey.value = '1'
     } else if (value === 'org') {
       activeKey.value = '3'
+      console.log('3', 3)
+    } else {
+      activeKey.value = '1'
     }
-  }
+
+    if (value === 'all' || value === 'user' || value === 'org') {
+      tabType.value = value
+    } else {
+      tabType.value = 'other'
+    }
+  },
+  { immediate: true }
 )
 
 const userName = ref('')
@@ -175,6 +258,7 @@ const format = (list: any) => {
 // 加载人物与组织函数
 const loadKv = async () => {
   try {
+    spinning.value = true
     const res = await props.deptFun()
     organization.value = format(res)
     const res2 = await props.userFun()
@@ -184,8 +268,10 @@ const loadKv = async () => {
     res2.forEach((user) => {
       checkMap[user.id] = false
     })
+    spinning.value = false
   } catch (err) {
     console.log('err', err)
+    spinning.value = false
   }
 }
 loadKv()
@@ -227,16 +313,19 @@ const activeChangeEvent = (value) => {
 
 // 组织架构
 const selectedKeys = ref([])
-const userSelected = ref([])
 const userList = ref<{ name: string; id: string }[]>([])
 const organization = ref([])
 const checkMap = reactive({})
+const lastSelected = ref([])
 
 const loadUser = async (deptId = undefined, realName = undefined) => {
   try {
+    spinning.value = true
     const res = await props.userFun(deptId, realName)
     userList.value = res
+    spinning.value = false
   } catch (err) {
+    spinning.value = false
     console.log('err', err)
   }
 }
@@ -252,12 +341,57 @@ const inputChangeEvent = () => {
   }
 }
 
+const checkClickEvent = (id) => {
+  if (props.selectType === 'single') {
+    nextTick(() => {
+      singleCheckedKeys.value.checked = []
+    })
+    if (id === userSelected.value[0]) {
+      userSelected.value = []
+    } else {
+      userSelected.value = [id]
+    }
+    curKey.value = userSelected.value
+  } else {
+    checkMap[id] = !checkMap[id]
+  }
+}
+
 //全部成员
 const allUserList = ref<{ name: string; id: string }[]>([])
 const allUserSelected = ref<string[]>([])
 
 //组织
-const organizationChecked = ref([])
+const organizationChecked = ref<any>([])
+
+// 人物单选
+const userSelected = ref([])
+// 选中的组织
+const singleCheckedKeys = ref<any>({ checked: [] })
+
+// 当前key
+const curKey = ref([])
+
+// 组织选择
+const checkSingleEvent = (keys, { checked, node }) => {
+  nextTick(() => {
+    userSelected.value = []
+  })
+  if (checked) {
+    singleCheckedKeys.value.checked = [node.key]
+
+    curKey.value = singleCheckedKeys.value.checked
+  }
+}
+
+// 人物
+const checkUserSingleEvent = (value) => {
+  nextTick(() => {
+    singleCheckedKeys.value.checked = []
+  })
+
+  curKey.value = userSelected.value
+}
 
 // 已选择tags
 const tagList = ref<
@@ -265,43 +399,62 @@ const tagList = ref<
 >([])
 
 const closeEvent = (id: string, type: 1 | 2 | 3) => {
-  if (type === 1) {
-    checkMap[id] = false
-  } else if (type === 2) {
-    console.log('2标记')
-  } else if (type === 3) {
-    const index = organizationChecked.value.findIndex((item) => {
-      return item === id
+  if (props.selectType === 'single') {
+    console.log('1', 1)
+    nextTick(() => {
+      userSelected.value = []
+      curKey.value = []
+      singleCheckedKeys.value.checked = []
     })
+  } else {
+    if (type === 1) {
+      checkMap[id] = false
+    } else if (type === 2) {
+      console.log('2标记')
+    } else if (type === 3) {
+      const index = organizationChecked.value.findIndex((item) => {
+        return item === id
+      })
 
-    organizationChecked.value.splice(index, 1)
+      organizationChecked.value.splice(index, 1)
+    }
   }
 }
 
-// 根据 checkMap organizationChecked 修改tagList
+// 根据 checkMap organizationChecked selectType 修改tagList
 watchEffect(() => {
   tagList.value = []
-
-  Object.keys(checkMap).forEach((key) => {
-    if (checkMap[key]) {
-      tagList.value.push({
-        id: key,
-        color: '#108ee9',
-        type: 1,
-        name: titleMap.value[key]
-      })
-    }
-  })
-
-  organizationChecked.value.forEach((item) => {
-    tagList.value.push({
-      id: item,
-      color: '#87d068',
-      type: 3,
-
-      name: titleMap.value[item]
+  if (props.selectType === 'multiple') {
+    Object.keys(checkMap).forEach((key) => {
+      if (checkMap[key]) {
+        tagList.value.push({
+          id: key,
+          color: '#108ee9',
+          type: 1,
+          name: titleMap.value[key]
+        })
+      }
     })
-  })
+
+    organizationChecked.value.forEach((item) => {
+      tagList.value.push({
+        id: item,
+        color: '#87d068',
+        type: 3,
+
+        name: titleMap.value[item]
+      })
+    })
+  } else {
+    curKey.value.forEach((item) => {
+      tagList.value.push({
+        id: item,
+        color: '#87d068',
+        type: 1,
+        name: titleMap.value[item]
+      })
+    })
+  }
 })
 
 // dialog 显示隐藏
@@ -333,8 +486,12 @@ const resetFields = () => {
     Object.keys(checkMap).forEach((key) => {
       checkMap[key] = false
     })
+    userSelected.value = []
+    singleCheckedKeys.value.checked = []
+    curKey.value = []
   })
 }
+
 defineExpose({ open })
 </script>
 
@@ -391,6 +548,7 @@ defineExpose({ open })
         display: flex;
         justify-content: space-between;
         align-items: center;
+        cursor: pointer;
       }
 
       &:first-child {
@@ -429,5 +587,28 @@ defineExpose({ open })
   margin-bottom: 15px;
   height: 80px;
   border: 1px solid #d9d9d9;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.spin {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #fff;
+  border-radius: 4px;
+}
+
+.relative {
+  position: relative;
 }
 </style>
