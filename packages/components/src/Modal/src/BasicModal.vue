@@ -93,14 +93,11 @@ export default defineComponent({
     'update:visible'
   ],
   setup(props, { emit, attrs }) {
-    console.log('props', props)
     const visibleRef = ref(false)
     const propsRef = ref<Partial<ModalProps> | null>(null)
     const modalWrapperRef = ref<any>(null)
     // const { prefixCls } = useDesign('basic-modal')
     const prefixCls = 'shy-basic-modal'
-
-    console.log('previxCls', prefixCls)
 
     // modal   Bottom and top height
     const extHeightRef = ref(0)
@@ -159,7 +156,6 @@ export default defineComponent({
         visible: unref(visibleRef),
         wrapClassName: unref(getWrapClassName)
       }
-      console.log('attr', attr)
       if (unref(fullScreenRef)) {
         return omit(attr, ['height', 'title'])
       }

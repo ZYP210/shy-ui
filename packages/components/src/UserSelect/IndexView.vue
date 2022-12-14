@@ -221,7 +221,6 @@ watch(
       activeKey.value = '1'
     } else if (value === 'org') {
       activeKey.value = '3'
-      console.log('3', 3)
     } else {
       activeKey.value = '1'
     }
@@ -400,7 +399,6 @@ const tagList = ref<
 
 const closeEvent = (id: string, type: 1 | 2 | 3) => {
   if (props.selectType === 'single') {
-    console.log('1', 1)
     nextTick(() => {
       userSelected.value = []
       curKey.value = []
@@ -410,7 +408,6 @@ const closeEvent = (id: string, type: 1 | 2 | 3) => {
     if (type === 1) {
       checkMap[id] = false
     } else if (type === 2) {
-      console.log('2标记')
     } else if (type === 3) {
       const index = organizationChecked.value.findIndex((item) => {
         return item === id

@@ -119,8 +119,6 @@ const buttonList = [
 ]
 
 const buttonClickEvent = (key, row) => {
-  console.log('key', key)
-  console.log('row', row)
   //@ts-ignore
   emits('add-event', 1)
 }

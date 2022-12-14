@@ -15,7 +15,6 @@ import { App } from 'vue'
 
 export { ShyDialog, UserSelect, BasicModal, useModal }
 
-console.log('BasicModal', BasicModal)
 export default {
   install(app: App) {
     // app.component('s-search', ShySearch)

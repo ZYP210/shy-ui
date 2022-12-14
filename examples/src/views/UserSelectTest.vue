@@ -18,9 +18,7 @@ const deptFun = async () => {
   try {
     const res = await request({ url: '/api/blade-system/dept/list' })
     return res.data.data
-  } catch (err) {
-    console.log('err', err)
-  }
+  } catch (err) {}
 }
 
 const userFun = async (deptId = undefined, realName = undefined) => {
@@ -30,9 +28,7 @@ const userFun = async (deptId = undefined, realName = undefined) => {
       params: { deptId, realName }
     })
     return res.data.data.records
-  } catch (err) {
-    console.log('err', err)
-  }
+  } catch (err) {}
 }
 
 deptFun()
@@ -42,9 +38,7 @@ const clickEvent = () => {
   userRef.value.open()
 }
 
-const confirmEvent = (list) => {
-  console.log('list', list)
-}
+const confirmEvent = (list) => {}
 </script>
 
 <style lang="less" scoped>

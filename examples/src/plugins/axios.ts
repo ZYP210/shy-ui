@@ -10,11 +10,9 @@ const getToken = async () => {
     method: 'post',
     url: '/api/blade-auth/oauth/token?tenantId=000000&password=21232f297a57a5a743894a0e4a801fc3&username=admin&grant_type=password&scope=all&deptId=&roleId=&type=account&key=d7e87ad6-412f-462a-95a7-41da009446f0&code=undefined'
   })
-  console.log('token', token)
   return token
 }
 
-// console.log('getToken()', )
 getToken()
 
 const request = axios.create()
