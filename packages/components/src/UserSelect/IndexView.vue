@@ -1,9 +1,11 @@
 <template>
-  <ShyDialog
-    ref="dialogRef"
-    width="50vw"
+  <BasicModal
+    @register="registerModal"
+    :width="600"
     title="任务选择器"
-    @confirm="confirmEvent"
+    ok-text="确认"
+    cancel-text="取消"
+    @ok="confirmEvent"
     @cancel="cancelEvent"
   >
     <div class="user-select">
@@ -95,7 +97,7 @@
         </div>
       </div>
     </div>
-  </ShyDialog>
+  </BasicModal>
 </template>
 
 <script setup lang="ts">
@@ -110,6 +112,7 @@ import {
   CheckboxGroup
 } from 'ant-design-vue'
 import ShyDialog from '../ShyDialog/indexView.vue'
+import { BasicModal, useModal } from '../Modal/'
 
 interface Props {
   userFun: any
@@ -302,16 +305,19 @@ watchEffect(() => {
 })
 
 // dialog 显示隐藏
+const [registerModal, { openModal }] = useModal()
+
 const dialogRef = ref()
 const open = () => {
-  dialogRef.value.open()
+  // dialogRef.value.open()
+  openModal(true, {})
 }
 const emit = defineEmits(['confirm', 'cancel'])
 
 // 确定点击事件
-const confirmEvent = ({ close }) => {
+const confirmEvent = () => {
   emit('confirm', tagList.value)
-  close()
+  cancelEvent()
 }
 
 // 取消点击事件

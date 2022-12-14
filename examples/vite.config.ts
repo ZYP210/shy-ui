@@ -1,13 +1,14 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
 }
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [vue(), vueJsx()],
   server: {
     proxy: {
       '/api': {

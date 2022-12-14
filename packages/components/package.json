@@ -1,6 +1,6 @@
 {
   "name": "3h1-ui",
-  "version": "1.0.45",
+  "version": "1.0.46",
   "description": "",
   "main": "index.ts",
   "scripts": {
@@ -19,6 +19,8 @@
   "dependencies": {
     "@vueuse/core": "^9.6.0",
     "ant-design-vue": "^3.2.13",
+    "lodash-es": "^4.17.21",
+    "vue-i18n": "^9.2.2",
     "vxe-table": "^4.3.6",
     "xe-utils": "^3.5.7"
   },
