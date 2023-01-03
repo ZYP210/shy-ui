@@ -32,14 +32,14 @@ const userFun = async (deptId = undefined, realName = undefined) => {
   } catch (err) {}
 }
 
-deptFun()
-
 const userRef = ref()
 const clickEvent = () => {
   userRef.value.open()
 }
 
-const confirmEvent = (list) => {}
+const confirmEvent = (list) => {
+  console.log('list', list)
+}
 </script>
 
 <style lang="less" scoped>

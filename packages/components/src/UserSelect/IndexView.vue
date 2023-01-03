@@ -71,11 +71,11 @@
             </div>
             <div class="tree-item relative">
               <div class="spin" v-if="spinning">
-                <a-spin />
+                <Spin />
               </div>
               <template v-if="props.selectType === 'single'">
                 <template v-if="userList.length === 0">
-                  <a-empty />
+                  <Empty />
                 </template>
                 <template v-else v-for="(item, index) in userList" :key="index">
                   <CheckboxGroup
@@ -94,7 +94,7 @@
               </template>
 
               <template v-else>
-                <a-empty v-if="userList.length === 0" />
+                <Empty v-if="userList.length === 0" />
 
                 <template v-else v-for="(item, index) in userList" :key="index">
                   <div class="tree-row">
@@ -109,10 +109,10 @@
           </div>
           <div class="all-user" v-else-if="activeKey === '2'">
             <div class="spin" v-if="spinning">
-              <a-spin />
+              <Spin />
             </div>
             <template v-if="props.selectType === 'single'">
-              <a-empty v-if="userList.length === 0" />
+              <Empty v-if="userList.length === 0" />
               <template v-else>
                 <template v-for="(item, index) in userList" :key="index">
                   <CheckboxGroup
@@ -133,7 +133,7 @@
               </template>
             </template>
             <template v-else>
-              <a-empty v-if="userList.length === 0" />
+              <Empty v-if="userList.length === 0" />
 
               <template v-else>
                 <template v-for="(item, index) in userList" :key="index">
@@ -187,7 +187,9 @@ import {
   Tree,
   Tag,
   Checkbox,
-  CheckboxGroup
+  CheckboxGroup,
+  Spin,
+  Empty
 } from 'ant-design-vue'
 import ShyDialog from '../ShyDialog/indexView.vue'
 import { BasicModal, useModal } from '../Modal/'
@@ -283,7 +285,6 @@ const loadKv = async () => {
     spinning.value = false
   }
 }
-loadKv()
 
 const getOrganizationName = (list) => {
   let obj: any = {}
@@ -469,6 +470,8 @@ const [registerModal, { openModal }] = useModal()
 const dialogRef = ref()
 const open = () => {
   // dialogRef.value.open()
+  loadKv()
+
   openModal(true, {})
 }
 const emit = defineEmits(['confirm', 'cancel'])
@@ -476,6 +479,7 @@ const emit = defineEmits(['confirm', 'cancel'])
 // 确定点击事件
 const confirmEvent = () => {
   emit('confirm', tagList.value)
+  openModal(false)
   cancelEvent()
 }
 
