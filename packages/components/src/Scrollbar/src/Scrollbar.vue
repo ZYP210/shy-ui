@@ -26,9 +26,8 @@
   </div>
 </template>
 <script lang="ts">
-import { addResizeListener, removeResizeListener } from './evnet'
-import componentSetting from './componentSetting'
-const { scrollbar } = componentSetting
+import { addResizeListener, removeResizeListener } from '@shy-plugins/utils'
+
 import { toObject } from './util'
 import {
   defineComponent,
@@ -49,7 +48,7 @@ export default defineComponent({
   props: {
     native: {
       type: Boolean,
-      default: scrollbar?.native ?? false
+      default: false
     },
     wrapStyle: {
       type: [String, Array],

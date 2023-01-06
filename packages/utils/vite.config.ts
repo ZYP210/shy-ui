@@ -23,7 +23,11 @@ export default defineConfig({
         'vue',
         'vxe-table',
         'xe-utils',
-        'ant-design-vue'
+        'ant-design-vue',
+        'vue-router',
+        'resize-observer-polyfill',
+        'vue-json-pretty',
+        'vue-json-pretty/lib/styles.css'
         // 'ant-design-vue/dist/antd.css',
         // 'ant-design-vue/es/locale/zh_CN'
       ],
@@ -50,7 +54,7 @@ export default defineConfig({
       ]
     },
     lib: {
-      entry: './index.ts',
+      entry: './main.ts',
       formats: ['es', 'cjs']
     }
   },

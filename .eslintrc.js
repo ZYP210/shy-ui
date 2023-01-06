@@ -32,6 +32,8 @@ module.exports = {
     'no-undef': 0,
     '@typescript-eslint/ban-ts-comment': 0,
     'vue/multi-word-component-names': 0,
-    '@typescript-eslint/ban-types': 0
+    '@typescript-eslint/ban-types': 0,
+    'vue/prefer-import-from-vue': 0,
+    '@typescript-eslint/no-empty-function': 0
   }
 }

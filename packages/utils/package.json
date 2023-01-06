@@ -1,18 +1,24 @@
 {
-  "name": "utils",
+  "name": "@shy-plugins/utils",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vue/shared": "^3.2.45",
     "@vueuse/core": "^9.6.0",
+    "ant-design-vue": "^3.2.15",
     "crypto-js": "^4.1.1",
     "lodash-es": "^4.17.21",
+    "resize-observer-polyfill": "^1.5.1",
+    "vue-router": "^4.1.6",
+    "vue-types": "^5.0.2",
     "vue-use": "^0.2.0"
   }
 }

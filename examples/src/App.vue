@@ -3,4 +3,9 @@
 </template>
 <script lang="ts" setup></script>
 
-<!-- <style lang="less" scoped></style> -->
+<style lang="less">
+html,
+body {
+  height: 100%;
+}
+</style>

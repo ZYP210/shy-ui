@@ -1,0 +1,17 @@
+{
+  "name": "@shy-plugins/use",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "@shy-plugins/utils": "workspace:^1.0.0",
+    "ant-design-vue": "^3.2.15"
+  }
+}

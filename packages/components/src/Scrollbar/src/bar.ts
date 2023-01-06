@@ -8,7 +8,7 @@ import {
   inject,
   Ref
 } from 'vue'
-import { on, off } from './domUtils'
+import { on, off } from '@shy-plugins/utils'
 
 import { renderThumbStyle, BAR_MAP } from './util'
 
