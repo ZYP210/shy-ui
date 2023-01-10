@@ -1,6 +1,6 @@
-import pageFooter from './src/PageFooter.vue'
-import pageWrapper from './src/PageWrapper.vue'
+import PageFooter from './src/PageFooter.vue'
+import PageWrapper from './src/PageWrapper.vue'
 
-export { pageFooter, pageWrapper }
+export { PageFooter, PageWrapper }
 
 export const PageWrapperFixedHeightKey = 'PageWrapperFixedHeight'

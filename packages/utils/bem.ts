@@ -1,4 +1,5 @@
-import { prefixCls } from './settings/designSetting'
+// import { prefixCls } from './settings/designSetting'
+const prefixCls = 'shy'
 
 type Mod = string | { [key: string]: any }
 type Mods = Mod | Mod[]

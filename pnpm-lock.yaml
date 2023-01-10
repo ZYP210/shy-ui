@@ -102,6 +102,7 @@ importers:
       codemirror: 5.65.3
       cropperjs: ^1.5.13
       lodash-es: ^4.17.21
+      sortablejs: ^1.15.0
       vue-i18n: ^9.2.2
       vue-json-pretty: ^2.2.3
       vxe-table: ^4.3.6
@@ -118,6 +119,7 @@ importers:
       codemirror: 5.65.3
       cropperjs: 1.5.13
       lodash-es: 4.17.21
+      sortablejs: 1.15.0
       vue-i18n: 9.2.2
       vue-json-pretty: 2.2.3
       vxe-table: 4.3.6_xe-utils@3.5.7
@@ -4093,6 +4095,10 @@ packages:
       use: 3.1.1
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /sortablejs/1.15.0:
+    resolution: {integrity: sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==}
     dev: false
 
   /source-map-js/1.0.2:

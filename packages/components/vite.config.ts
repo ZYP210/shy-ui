@@ -28,7 +28,8 @@ export default defineConfig({
         '@logicflow/extension',
         '@shy-plugins/use',
         '@shy-plugins/utils',
-        '@zxcvbn-ts/core'
+        '@zxcvbn-ts/core',
+        'sortablejs'
         // 'ant-design-vue/dist/antd.css',
         // 'ant-design-vue/es/locale/zh_CN'
       ],

@@ -33,6 +33,10 @@ export * from './src/Description'
 
 export * from './src/Form'
 // export * from './src/Drawer'
+
+import { PageFooter, PageWrapper } from './src/Page'
+export { PageFooter, PageWrapper }
+
 import { useDrawer, useDrawerInner, BasicDrawer } from './src/Drawer'
 export { useDrawer, useDrawerInner, BasicDrawer }
 
@@ -41,7 +45,16 @@ export { FlowChart }
 
 import { StrengthMeter } from './src/StrengthMeter'
 
-// export * from './src/Form'
+import {
+  BasicTable,
+  TableAction,
+  EditTableHeaderIcon,
+  TableImg,
+  TableDict
+} from './src/Table'
+export * from './src/Table'
+
+export * from './src/ContextMenu'
 
 import {
   FadeTransition,
@@ -139,5 +152,13 @@ export default {
     app.component('FlowChart', FlowChart)
     app.component('FlowChart', FlowChart)
     app.component('StrengthMeter', StrengthMeter)
+    app.component('PageFooter', PageFooter)
+    app.component('PageWrapper', PageWrapper)
+    app.component('BasicTable', BasicTable)
+
+    app.component('TableImg', TableImg)
+    app.component('TableAction', TableAction)
+    app.component('EditTableHeaderIcon', EditTableHeaderIcon)
+    app.component('TableDict', TableDict)
   }
 }

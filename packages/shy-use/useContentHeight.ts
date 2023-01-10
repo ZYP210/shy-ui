@@ -1,5 +1,5 @@
 import { ComputedRef, isRef, nextTick, Ref, ref, unref, watch } from 'vue'
-import { onMountedOrActivated } from './onMountedOrActivated'
+import { onMountedOrActivated } from './core/onMountedOrActivated'
 import { useWindowSizeFn } from './useWindowSizeFn'
 import { useLayoutHeight } from './useContentViewHeight'
 

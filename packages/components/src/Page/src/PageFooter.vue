@@ -11,14 +11,15 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
+// import { useMenuSetting } from '/@/hooks/setting/useMenuSetting'
 
 export default defineComponent({
   name: 'PageFooter',
   inheritAttrs: false,
   setup() {
     const prefixCls = 'shy-page-footer'
-    const { getCalcContentWidth } = useMenuSetting()
+    const getCalcContentWidth = '300px'
+    // const { getCalcContentWidth } = useMenuSetting()
     return { prefixCls, getCalcContentWidth }
   }
 })
