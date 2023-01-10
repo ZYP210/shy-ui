@@ -13,6 +13,7 @@
     "3h1-ui": "workspace:^1.0.55",
     "@ant-design/icons-vue": "^6.1.0",
     "@iconify/iconify": "^3.0.1",
+    "@shy-plugins/use": "workspace:^1.0.0",
     "ant-design-vue": "^3.2.15",
     "axios": "^1.2.1",
     "vite-plugin-purge-icons": "^0.9.2",

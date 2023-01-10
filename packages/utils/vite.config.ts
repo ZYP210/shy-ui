@@ -27,7 +27,11 @@ export default defineConfig({
         'vue-router',
         'resize-observer-polyfill',
         'vue-json-pretty',
-        'vue-json-pretty/lib/styles.css'
+        'vue-json-pretty/lib/styles.css',
+        '@logicflow/core',
+        '@logicflow/extension',
+        '@shy-plugins/use',
+        '@shy-plugins/utils'
         // 'ant-design-vue/dist/antd.css',
         // 'ant-design-vue/es/locale/zh_CN'
       ],

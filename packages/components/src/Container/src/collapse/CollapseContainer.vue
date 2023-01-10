@@ -33,12 +33,11 @@ import { ref } from 'vue'
 import { isNil } from 'lodash-es'
 // component
 import { Skeleton } from 'ant-design-vue'
-import { CollapseTransition } from '/@/components/Transition'
+import { CollapseTransition } from '../../../Transition'
 import CollapseHeader from './CollapseHeader.vue'
-import { triggerWindowResize } from '/@/utils/event'
+import { triggerWindowResize } from '@shy-plugins/utils'
 // hook
-import { useTimeoutFn } from '/@/hooks/core/useTimeout'
-import { useDesign } from '/@/hooks/web/useDesign'
+import { useTimeoutFn } from '@shy-plugins/use'
 
 const props = defineProps({
   title: { type: String, default: '' },
@@ -67,8 +66,7 @@ const props = defineProps({
 
 const show = ref(true)
 
-const { prefixCls } = useDesign('collapse-container')
-
+const prefixCls = 'shy-collapse-container'
 /**
  * @description: Handling development events
  */

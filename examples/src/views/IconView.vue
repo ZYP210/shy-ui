@@ -1,5 +1,5 @@
 <template>
-  <Icon icon="gg:loadbar-doc" :size="24"></Icon>
+  <Icon icon="ri:24-hours-fill" :size="24"></Icon>
 
   <div>
     <SvgIcon size="14" name="sun" />

@@ -11,10 +11,11 @@ import { BasicModal, useModal } from './src/Modal'
 import {
   LazyContainer,
   ScrollContainer,
-  ScrollActionType
+  ScrollActionType,
+  CollapseContainer
 } from './src/Container'
 
-import { BasicTitle, BasicHelp } from './src/Basic'
+import { BasicTitle, BasicHelp, BasicArrow } from './src/Basic'
 
 import { Icon, SvgIcon, IconPicker } from './src/Icon'
 
@@ -22,6 +23,41 @@ import { BasicButton, PopConfirmButton } from './src/Button'
 
 import { CodeEditor, JsonPreview } from './src/CodeEditor'
 
+import { CountButton, CountdownInput } from './src/CountDown'
+import { ClickOutSide } from './src/ClickOutSide'
+import { CountTo } from './src/CountTo'
+import { CropperImage, AvatarCropper } from './src/Cropper'
+
+import { useDescription, Description } from './src/Description'
+export * from './src/Description'
+
+export * from './src/Form'
+// export * from './src/Drawer'
+import { useDrawer, useDrawerInner, BasicDrawer } from './src/Drawer'
+export { useDrawer, useDrawerInner, BasicDrawer }
+
+import { FlowChart } from './src/FlowChart'
+export { FlowChart }
+
+import { StrengthMeter } from './src/StrengthMeter'
+
+// export * from './src/Form'
+
+import {
+  FadeTransition,
+  ScaleTransition,
+  SlideYTransition,
+  ScrollYTransition,
+  SlideYReverseTransition,
+  ScrollYReverseTransition,
+  SlideXTransition,
+  ScrollXTransition,
+  SlideXReverseTransition,
+  ScrollXReverseTransition,
+  ScaleRotateTransition,
+  ExpandXTransition,
+  ExpandTransition
+} from './src/Transition'
 import 'ant-design-vue/dist/antd.min.css'
 import './src/style/index.less'
 
@@ -42,7 +78,31 @@ export {
   BasicButton,
   PopConfirmButton,
   CodeEditor,
-  JsonPreview
+  JsonPreview,
+  CountButton,
+  CountdownInput,
+  ClickOutSide,
+  CountTo,
+  CropperImage,
+  AvatarCropper,
+  BasicArrow,
+  FadeTransition,
+  ScaleTransition,
+  SlideYTransition,
+  ScrollYTransition,
+  SlideYReverseTransition,
+  ScrollYReverseTransition,
+  SlideXTransition,
+  ScrollXTransition,
+  SlideXReverseTransition,
+  ScrollXReverseTransition,
+  ScaleRotateTransition,
+  ExpandXTransition,
+  ExpandTransition,
+  CollapseContainer,
+  useDescription,
+  Description,
+  StrengthMeter
 }
 export type { ScrollActionType }
 
@@ -66,5 +126,18 @@ export default {
     app.component('PopConfirmButton', PopConfirmButton)
     app.component('CodeEditor', CodeEditor)
     app.component('JsonPreview', JsonPreview)
+    app.component('CountButton', CountButton)
+    app.component('CountdownInput', CountdownInput)
+    app.component('ClickOutSide', ClickOutSide)
+    app.component('CountTo', CountTo)
+    app.component('CropperImage', CropperImage)
+    app.component('AvatarCropper', AvatarCropper)
+    app.component('BasicArrow', BasicArrow)
+    app.component('CollapseContainer', CollapseContainer)
+    app.component('Description', Description)
+    app.component('BasicDrawer', BasicDrawer)
+    app.component('FlowChart', FlowChart)
+    app.component('FlowChart', FlowChart)
+    app.component('StrengthMeter', StrengthMeter)
   }
 }

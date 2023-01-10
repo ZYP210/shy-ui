@@ -50,6 +50,66 @@ const routes = [
     path: '/CodeEditor',
     title: 'CodeEditor',
     component: () => import('../views/CodeEditor.vue')
+  },
+  {
+    path: '/CountDown',
+    title: 'CountDown',
+    component: () => import('../views/CountDown.vue')
+  },
+  {
+    path: '/CountDownInput',
+    title: 'CountDownInput',
+    component: () => import('../views/CountDownInput.vue')
+  },
+  {
+    path: '/ClickOutSide',
+    title: 'ClickOutSide',
+    component: () => import('../views/ClickOutSide.vue')
+  },
+  {
+    path: '/CountTo',
+    title: 'CountTo',
+    component: () => import('../views/CountTo.vue')
+  },
+  {
+    path: '/Cropper',
+    title: 'Cropper',
+    component: () => import('../views/Cropper.vue')
+  },
+  {
+    path: '/Transition',
+    title: 'Transition',
+    component: () => import('../views/Transition.vue')
+  },
+  {
+    path: '/CollapseContainer',
+    title: 'CollapseContainer',
+    component: () => import('../views/CollapseContainer.vue')
+  },
+  {
+    path: '/Description',
+    title: 'Description',
+    component: () => import('../views/Description.vue')
+  },
+  {
+    path: '/Drawer',
+    title: 'Drawer',
+    component: () => import('../views/Drawer.vue')
+  },
+  {
+    path: '/FlowChart',
+    title: 'FlowChart',
+    component: () => import('../views/FlowChart.vue')
+  },
+  {
+    path: '/StrengthMeter',
+    title: 'StrengthMeter',
+    component: () => import('../views/StrengthMeter.vue')
+  },
+  {
+    path: '/Form',
+    title: 'Form',
+    component: () => import('../views/Form.vue')
   }
 ]
 

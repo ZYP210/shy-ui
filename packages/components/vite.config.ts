@@ -23,7 +23,12 @@ export default defineConfig({
         'vue',
         'vxe-table',
         'xe-utils',
-        'ant-design-vue'
+        'ant-design-vue',
+        '@logicflow/core',
+        '@logicflow/extension',
+        '@shy-plugins/use',
+        '@shy-plugins/utils',
+        '@zxcvbn-ts/core'
         // 'ant-design-vue/dist/antd.css',
         // 'ant-design-vue/es/locale/zh_CN'
       ],
