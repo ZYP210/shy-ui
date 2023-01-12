@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 import { resolve } from 'path'
 import vueJsx from '@vitejs/plugin-vue-jsx'
+import { generateModifyVars } from './build/generate/generateModifyVars'
 
 function pathResolve(dir: string) {
   return resolve(process.cwd(), '.', dir)
@@ -29,7 +30,9 @@ export default defineConfig({
         '@shy-plugins/use',
         '@shy-plugins/utils',
         '@zxcvbn-ts/core',
-        'sortablejs'
+        'sortablejs',
+        'lodash-es',
+        'virtual:svg-icons-names'
         // 'ant-design-vue/dist/antd.css',
         // 'ant-design-vue/es/locale/zh_CN'
       ],
@@ -90,5 +93,13 @@ export default defineConfig({
         replacement: pathResolve('types') + '/'
       }
     ]
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        modifyVars: generateModifyVars(),
+        javascriptEnabled: true
+      }
+    }
   }
 })

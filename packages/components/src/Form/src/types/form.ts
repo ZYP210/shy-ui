@@ -3,7 +3,7 @@ import type { VNode } from 'vue'
 import type { ButtonProps as AntdButtonProps } from '../../../Button'
 import type { FormItem } from './formItem'
 import type { ColEx, ComponentType } from './index'
-import type { TableActionType } from '../../../Table/src/types/table'
+import type { TableActionType } from '../../../Table'
 import type { CSSProperties } from 'vue'
 import type { RowProps } from 'ant-design-vue/lib/grid/Row'
 

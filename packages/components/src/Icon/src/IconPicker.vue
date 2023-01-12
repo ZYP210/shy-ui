@@ -185,8 +185,6 @@ function handleSearchChange(e: ChangeEvent) {
 }
 </script>
 <style lang="less">
-@import url('../../style/var.less');
-
 @prefix-cls: ~'@{namespace}-icon-picker';
 
 .@{prefix-cls} {

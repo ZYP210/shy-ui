@@ -1,8 +1,8 @@
 @tree-prefix-cls: ~'@{namespace}-tree';
 
 .@{tree-prefix-cls} {
-  background-color: @component-background;
   padding: 20px;
+  background-color: @component-background;
 
   .ant-tree-node-content-wrapper {
     position: relative;
@@ -10,8 +10,8 @@
     .ant-tree-title {
       position: absolute;
       left: 0;
-      width: 100%;
       overflow: hidden;
+      width: 100%;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
@@ -21,8 +21,8 @@
     position: relative;
     display: flex;
     align-items: center;
-    width: 100%;
     padding-right: 10px;
+    width: 100%;
 
     &:hover {
       .@{tree-prefix-cls}__action {

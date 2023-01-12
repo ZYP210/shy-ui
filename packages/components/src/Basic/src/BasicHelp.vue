@@ -96,7 +96,6 @@ export default defineComponent({
 })
 </script>
 <style lang="less">
-@import url('../../style/var.less');
 @prefix-cls: ~'@{namespace}-basic-help';
 
 .@{prefix-cls} {

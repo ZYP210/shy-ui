@@ -103,8 +103,6 @@ export default defineComponent({
 })
 </script>
 <style lang="less">
-@import url('../../style/var.less');
-
 .app-iconify {
   display: inline-block;
   // vertical-align: middle;

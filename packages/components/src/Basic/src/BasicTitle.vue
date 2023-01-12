@@ -46,8 +46,6 @@ const getClass = computed(() => [
 ])
 </script>
 <style lang="less" scoped>
-@import url('../../style/var.less');
-
 @prefix-cls: ~'@{namespace}-basic-title';
 
 .@{prefix-cls} {

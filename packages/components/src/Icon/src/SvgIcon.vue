@@ -51,8 +51,6 @@ export default defineComponent({
 })
 </script>
 <style lang="less" scoped>
-@import url('../../style/var.less');
-
 @prefix-cls: ~'@{namespace}-svg-icon';
 
 .@{prefix-cls} {
