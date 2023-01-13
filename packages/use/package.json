@@ -1,0 +1,23 @@
+{
+  "name": "@shy-plugins/use",
+  "version": "1.0.3",
+  "description": "",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "file": [
+    "es",
+    "lib"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ant-design/icons-vue": "^6.1.0",
+    "@shy-plugins/utils": "^1.0.3",
+    "ant-design-vue": "^3.2.15"
+  }
+}

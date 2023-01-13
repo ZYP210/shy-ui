@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-// import dts from 'vite-plugin-dts'
+import dts from 'vite-plugin-dts'
 import { resolve } from 'path'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
@@ -21,15 +21,14 @@ export default defineConfig({
       //忽略打包vue文件
       external: [
         'vue',
+        'vxe-table',
+        'xe-utils',
         'ant-design-vue',
-        'vue-router',
-        'resize-observer-polyfill',
-        'vue-json-pretty',
-        '@logicflow/core',
-        '@logicflow/extension',
-        '@shy-plugins/use'
+        '@ant-design/icons-vue',
+        '@shy-plugins/utils'
+        // 'ant-design-vue/dist/antd.css',
+        // 'ant-design-vue/es/locale/zh_CN'
       ],
-      input: ['./index.ts'],
       output: [
         {
           format: 'es',
@@ -38,7 +37,7 @@ export default defineConfig({
           //让打包目录和我们目录对应
           preserveModules: false,
           //配置打包根目录
-          dir: 'dist/es',
+          dir: 'es',
           preserveModulesRoot: 'src'
         },
         {
@@ -47,7 +46,7 @@ export default defineConfig({
           //让打包目录和我们目录对应
           preserveModules: false,
           //配置打包根目录
-          dir: 'dist/lib',
+          dir: 'lib',
           preserveModulesRoot: 'src'
         }
       ]
@@ -59,17 +58,16 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    vueJsx()
-    // dts({
-    //   outputDir: 'dist/es',
-    //   //指定使用的tsconfig.json为我们整个项目根目录下掉,如果不配置,你也可以在components下新建tsconfig.json
-    //   tsConfigFilePath: '../../tsconfig.json'
-    // }),
-    // //因为这个插件默认打包到es下，我们想让lib目录下也生成声明文件需要再配置一个
-    // dts({
-    //   outputDir: 'dist/lib',
-    //   tsConfigFilePath: '../../tsconfig.json'
-    // })
+    vueJsx(),
+    dts({
+      //指定使用的tsconfig.json为我们整个项目根目录下掉,如果不配置,你也可以在components下新建tsconfig.json
+      tsConfigFilePath: '../../tsconfig.json'
+    }),
+    //因为这个插件默认打包到es下，我们想让lib目录下也生成声明文件需要再配置一个
+    dts({
+      outputDir: 'lib',
+      tsConfigFilePath: '../../tsconfig.json'
+    })
   ],
   resolve: {
     alias: [

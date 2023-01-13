@@ -8,9 +8,8 @@
     />
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { CollapseContainer, BasicForm, FormSchema } from '3h1-ui'
+<script lang="ts" setup>
+import { BasicForm, FormSchema } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 const schemas: FormSchema[] = [
   {
@@ -29,17 +28,9 @@ const schemas: FormSchema[] = [
     }
   }
 ]
+const { createMessage } = useMessage()
 
-export default defineComponent({
-  components: { BasicForm, CollapseContainer },
-  setup() {
-    const { createMessage } = useMessage()
-    return {
-      schemas,
-      handleSubmit: (values: any) => {
-        createMessage.success('click search,values:' + JSON.stringify(values))
-      }
-    }
-  }
-})
+const handleSubmit = (values: any) => {
+  createMessage.success('click search,values:' + JSON.stringify(values))
+}
 </script>

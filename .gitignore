@@ -1,4 +1,4 @@
 node_modules
-packages/components/es
-packages/components/lib
-packages/components/node_modules
+packages/ui/es
+packages/ui/lib
+packages/ui/node_modules

@@ -1,0 +1,113 @@
+@border-color: #cecece4d;
+
+@prefix-cls: ~'@{namespace}-basic-table';
+
+[data-theme='dark'] {
+  .ant-table-tbody > tr:hover.ant-table-row-selected > td,
+  .ant-table-tbody > tr.ant-table-row-selected td {
+    background-color: #262626;
+  }
+}
+
+[data-theme='light'] {
+  .@{prefix-cls} > .ant-table-wrapper {
+    border: 1px solid rgb(239 239 245);
+    box-shadow: 0 20px 27px rgb(0 0 0 / 5%);
+  }
+
+  .@{prefix-cls}-form-container > .ant-form {
+    border: 1px solid rgb(239 239 245);
+    box-shadow: 0 20px 27px rgb(107 106 106 / 5%);
+  }
+}
+
+.@{prefix-cls} {
+  max-width: 100%;
+  height: 100%;
+
+  &-row__striped {
+    td {
+      background-color: @app-content-background;
+    }
+  }
+
+  &-form-container {
+    padding: 10px;
+
+    .ant-form {
+      position: relative;
+      padding: 12px 10px 6px;
+      width: 100%;
+      // margin-bottom: 10px;
+      background-color: @component-background;
+      border-radius: 12px;
+    }
+  }
+
+  .ant-tag {
+    margin-right: 0;
+  }
+
+  .ant-table-wrapper {
+    padding: 6px;
+    background-color: @component-background;
+    border-radius: 12px;
+
+    .ant-table-title {
+      padding: 0 0 8px !important;
+      min-height: 40px;
+    }
+
+    .ant-table.ant-table-bordered .ant-table-title {
+      border: none !important;
+    }
+  }
+
+  .ant-table {
+    overflow-x: hidden;
+    width: 100%;
+
+    &-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 6px;
+      border-bottom: none;
+    }
+
+    //.ant-table-tbody > tr.ant-table-row-selected td {
+    //background-color: fade(@primary-color, 8%) !important;
+    //}
+  }
+
+  .ant-pagination {
+    margin: 10px 0 0;
+  }
+
+  .ant-table-footer {
+    padding: 0;
+
+    .ant-table-wrapper {
+      padding: 0;
+    }
+
+    table {
+      border: none !important;
+    }
+
+    .ant-table-body {
+      overflow-x: hidden !important;
+      //  overflow-y: scroll !important;
+    }
+
+    td {
+      padding: 12px 8px;
+    }
+  }
+
+  &--inset {
+    .ant-table-wrapper {
+      padding: 0;
+    }
+  }
+}

@@ -1,0 +1,135 @@
+<template>
+  <div
+    style="width: 100%"
+    v-if="showActionButtonGroup"
+    :style="{ textAlign: actionColOpt.style.textAlign }"
+  >
+    <FormItem class="shy-form-action">
+      <slot name="resetBefore"></slot>
+      <BasicButton
+        type="default"
+        class="mr-2"
+        v-bind="getResetBtnOptions"
+        @click="resetAction"
+        preIcon="ant-design:sync-outlined"
+        v-if="showResetButton"
+      >
+        {{ getResetBtnOptions.text }}
+      </BasicButton>
+      <slot name="submitBefore"></slot>
+
+      <BasicButton
+        type="primary"
+        class="mr-2"
+        v-bind="getSubmitBtnOptions"
+        @click="submitAction"
+        preIcon="ant-design:search-outlined"
+        v-if="showSubmitButton"
+      >
+        {{ getSubmitBtnOptions.text }}
+      </BasicButton>
+
+      <slot name="advanceBefore"></slot>
+      <!-- <Button
+        type="link"
+        size="small"
+        @click="toggleAdvanced"
+        v-if="showAdvancedButton && !hideAdvanceBtn"
+      >
+        {{ isAdvanced ? t('component.form.putAway') : t('component.form.unfold') }}
+        <BasicArrow class="ml-1" :expand="!isAdvanced" up />
+      </Button> -->
+      <slot name="advanceAfter"></slot>
+    </FormItem>
+  </div>
+</template>
+<script lang="ts">
+import type { ColEx } from '../types/index'
+//import type { ButtonProps } from 'ant-design-vue/es/button/buttonTypes';
+import { defineComponent, computed, PropType } from 'vue'
+import { Form, Col } from 'ant-design-vue'
+import { BasicButton, ButtonProps } from '../../../Button'
+// import { BasicArrow } from '/@/components/Basic';
+import { useFormContext } from '../hooks/useFormContext'
+import { propTypes } from '@shy-plugins/utils'
+
+type ButtonOptions = Partial<ButtonProps> & { text: string }
+
+export default defineComponent({
+  name: 'BasicFormAction',
+  components: {
+    FormItem: Form.Item,
+    BasicButton,
+    [Col.name]: Col
+  },
+  props: {
+    showActionButtonGroup: propTypes.bool.def(true),
+    showResetButton: propTypes.bool.def(true),
+    showSubmitButton: propTypes.bool.def(true),
+    showAdvancedButton: propTypes.bool.def(true),
+    resetButtonOptions: {
+      type: Object as PropType<ButtonOptions>,
+      default: () => ({})
+    },
+    submitButtonOptions: {
+      type: Object as PropType<ButtonOptions>,
+      default: () => ({})
+    },
+    actionColOptions: {
+      type: Object as PropType<Partial<ColEx>>,
+      default: () => ({})
+    },
+    actionSpan: propTypes.number.def(6),
+    isAdvanced: propTypes.bool,
+    hideAdvanceBtn: propTypes.bool
+  },
+  emits: ['toggle-advanced'],
+  setup(props) {
+    const actionColOpt = computed(() => {
+      const { showAdvancedButton, actionSpan: span, actionColOptions } = props
+      const actionSpan = 24 - span
+      const advancedSpanObj = showAdvancedButton
+        ? { span: actionSpan < 6 ? 24 : actionSpan }
+        : {}
+      const actionColOpt: Partial<ColEx> = {
+        style: { textAlign: 'right' },
+        span: showAdvancedButton ? 6 : 4,
+        ...advancedSpanObj,
+        ...actionColOptions
+      }
+      return actionColOpt
+    })
+
+    const getResetBtnOptions = computed((): ButtonOptions => {
+      return Object.assign(
+        {
+          text: '重置'
+        },
+        props.resetButtonOptions
+      )
+    })
+
+    const getSubmitBtnOptions = computed(() => {
+      return Object.assign(
+        {
+          text: '查询'
+        },
+        props.submitButtonOptions
+      )
+    })
+
+    // function toggleAdvanced() {
+    //   emit('toggle-advanced');
+    // }
+
+    return {
+      actionColOpt,
+      getResetBtnOptions,
+      getSubmitBtnOptions,
+      // toggleAdvanced,
+      ...useFormContext()
+    }
+  }
+})
+</script>
+<style lang="less" scoped></style>
