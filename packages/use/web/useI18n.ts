@@ -184,7 +184,6 @@ export const useI18n = () => {
 
   const t = (key) => {
     const keyList = key.split('.')
-
     return getValue(keyList, zh)
   }
 

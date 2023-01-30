@@ -1,11 +1,15 @@
 {
   "name": "3h1-ui",
-  "version": "1.0.69",
+  "version": "1.0.83",
   "description": "",
-  "main": "lib/index.js",
-  "module": "es/index.js",
+  "main": "index.ts",
+  "module": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "major": "npm version major",
+    "minor": "npm version minor",
+    "patch": "npm version patch",
+    "publish": "npm publish",
     "build": "vite build",
     "build:less": "esno build/buildLess"
   },

@@ -44,8 +44,8 @@
     "vue": "^3.2.40"
   },
   "dependencies": {
-    "3h1-ui": "workspace:^1.0.66",
-    "@shy-plugins/use": "workspace:^1.0.2",
-    "@shy-plugins/utils": "workspace:^1.0.13"
+    "3h1-ui": "workspace:1.0.72",
+    "@shy-plugins/use": "workspace:1.0.3",
+    "@shy-plugins/utils": "workspace:1.0.14"
   }
 }

@@ -6,11 +6,11 @@ const routes = [
   //   title: '人物选择器',
   //   component: () => import('../views/UserSelectTest.vue')
   // },
-  // {
-  //   path: '/modal-view',
-  //   title: '人物选择器',
-  //   component: () => import('../views/ModalView.vue')
-  // },
+  {
+    path: '/modal-view',
+    title: '人物选择器',
+    component: () => import('../views/ModalView.vue')
+  },
   // {
   //   path: '/scrollBar',
   //   title: '滚动条',

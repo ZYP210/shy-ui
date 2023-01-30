@@ -25,15 +25,16 @@
 import { defineComponent } from 'vue'
 
 import { basicProps } from '../props'
+
 export default defineComponent({
   name: 'BasicModalFooter',
   props: basicProps,
   emits: ['ok', 'cancel'],
+
   setup(_, { emit }) {
     function handleOk(e: Event) {
       emit('ok', e)
     }
-
     function handleCancel(e: Event) {
       emit('cancel', e)
     }
