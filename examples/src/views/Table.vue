@@ -10,7 +10,7 @@
       :striped="true"
       :bordered="true"
       :pagination="{ pageSize: 20 }"
-      :useSearchForm="false"
+      :useSearchForm="true"
     >
       <template #toolbar>
         <a-button type="primary"> 操作按钮 </a-button>
@@ -35,8 +35,6 @@ const data = [{ a: 1 }]
 
 <style scoped>
 .p4 {
-  padding: 10px;
-
   /* height: 100%; */
   background-color: #f0f0f0;
 }
