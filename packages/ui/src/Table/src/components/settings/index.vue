@@ -1,9 +1,7 @@
 <template>
   <div class="table-settings">
-    <RedoSetting
-      v-if="getSetting.redo"
-      :getPopupContainer="getTableContainer"
-    />
+    <ShowSearchSetting :getPopupContainer="getTableContainer" />
+
     <SizeSetting
       v-if="getSetting.size"
       :getPopupContainer="getTableContainer"
@@ -27,6 +25,8 @@ import ColumnSetting from './ColumnSetting.vue'
 import SizeSetting from './SizeSetting.vue'
 import RedoSetting from './RedoSetting.vue'
 import FullScreenSetting from './FullScreenSetting.vue'
+import ShowSearchSetting from './ShowSearchSetting.vue'
+
 // import { useI18n } from '/@/hooks/web/useI18n'
 import { useTableContext } from '../../hooks/useTableContext'
 
@@ -35,8 +35,9 @@ export default defineComponent({
   components: {
     ColumnSetting,
     SizeSetting,
-    RedoSetting,
-    FullScreenSetting
+    // RedoSetting,
+    FullScreenSetting,
+    ShowSearchSetting
   },
   props: {
     setting: {

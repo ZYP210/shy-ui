@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "3h1-ui": "workspace:*",
     "@ant-design/icons-vue": "^6.1.0",
     "@iconify/iconify": "^3.0.1",
     "@shy-plugins/use": "workspace:^1.0.0",

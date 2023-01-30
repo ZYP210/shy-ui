@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4">
+  <div class="p4">
     <BasicTable
       title="基础示例"
       titleHelpMessage="温馨提醒"
@@ -10,26 +10,18 @@
       :striped="true"
       :bordered="true"
       :pagination="{ pageSize: 20 }"
+      :useSearchForm="false"
     >
       <template #toolbar>
         <a-button type="primary"> 操作按钮 </a-button>
       </template>
     </BasicTable>
-    <BasicModal
-      :loading="false"
-      :visible="true"
-      title="999"
-      :maskClosable="false"
-      :width="600"
-    >
-    </BasicModal>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { defineComponent, ref } from 'vue'
 import { BasicTable } from '3h1-ui'
-import { useModal, BasicModal } from '3h1-ui'
 
 const columns = [
   {
@@ -40,3 +32,12 @@ const columns = [
 
 const data = [{ a: 1 }]
 </script>
+
+<style scoped>
+.p4 {
+  padding: 10px;
+
+  /* height: 100%; */
+  background-color: #f0f0f0;
+}
+</style>
