@@ -16,8 +16,6 @@
       </template>
     </BasicTable>
     <BasicModal
-      cancel-text="取消"
-      ok-text="确定"
       :loading="false"
       :visible="true"
       title="999"

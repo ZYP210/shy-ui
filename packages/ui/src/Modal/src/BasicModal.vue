@@ -156,6 +156,7 @@ export default defineComponent({
         visible: unref(visibleRef),
         wrapClassName: unref(getWrapClassName)
       }
+
       if (unref(fullScreenRef)) {
         return omit(attr, ['height', 'title'])
       }

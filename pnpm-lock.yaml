@@ -107,6 +107,8 @@ importers:
       '@logicflow/core': ^1.1.31
       '@logicflow/extension': ^1.1.31
       '@purge-icons/generated': ^0.9.0
+      '@shy-plugins/use': workspace:*
+      '@shy-plugins/utils': workspace:*
       '@vueuse/core': ^9.6.0
       '@zxcvbn-ts/core': ^2.1.0
       ant-design-vue: ^3.2.13
@@ -123,6 +125,8 @@ importers:
       '@logicflow/core': 1.1.31
       '@logicflow/extension': 1.1.31
       '@purge-icons/generated': 0.9.0
+      '@shy-plugins/use': link:../use
+      '@shy-plugins/utils': link:../utils
       '@vueuse/core': 9.6.0
       '@zxcvbn-ts/core': 2.1.0
       ant-design-vue: 3.2.15
@@ -139,7 +143,7 @@ importers:
   packages/use:
     specifiers:
       '@ant-design/icons-vue': ^6.1.0
-      '@shy-plugins/utils': ^1.0.3
+      '@shy-plugins/utils': workspace:*
       ant-design-vue: ^3.2.15
     dependencies:
       '@ant-design/icons-vue': 6.1.0

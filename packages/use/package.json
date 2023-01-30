@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
-    "@shy-plugins/utils": "^1.0.3",
+    "@shy-plugins/utils": "workspace:*",
     "ant-design-vue": "^3.2.15"
   }
 }

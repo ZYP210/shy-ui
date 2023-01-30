@@ -22,7 +22,7 @@ export default defineComponent({
     const onCancel = (e: Event) => {
       emit('cancel', e)
     }
-
+    
     return () => {
       const propsData = { ...unref(attrs), ...props, onCancel } as Recordable
       return <Modal {...propsData}>{extendSlots(slots)}</Modal>
