@@ -33,13 +33,12 @@ export function useForm(props?: Props): UseFormReturnType {
     return form as FormActionType
   }
 
-  function register(instance: FormActionType, isProdMode = false) {
-    isProdMode &&
-      onUnmounted(() => {
-        formRef.value = null
-        loadedRef.value = null
-      })
-    if (unref(loadedRef) && isProdMode && instance === unref(formRef)) return
+  function register(instance: FormActionType) {
+    onUnmounted(() => {
+      formRef.value = null
+      loadedRef.value = null
+    })
+    if (unref(loadedRef) && instance === unref(formRef)) return
 
     formRef.value = instance
     loadedRef.value = true

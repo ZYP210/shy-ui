@@ -15,7 +15,7 @@ import {
   toRaw,
   computed
 } from 'vue'
-import { isFunction, error, isProdMode } from '@shy-plugins/utils'
+import { isFunction, error } from '@shy-plugins/utils'
 import { tryOnUnmounted } from '@vueuse/core'
 import { isEqual } from 'lodash-es'
 
@@ -37,14 +37,13 @@ export function useDrawer(): UseDrawerReturnType {
   const uid = ref<string>('')
 
   function register(drawerInstance: DrawerInstance, uuid: string) {
-    isProdMode() &&
-      tryOnUnmounted(() => {
-        drawer.value = null
-        loaded.value = null
-        dataTransferRef[unref(uid)] = null
-      })
+    tryOnUnmounted(() => {
+      drawer.value = null
+      loaded.value = null
+      dataTransferRef[unref(uid)] = null
+    })
 
-    if (unref(loaded) && isProdMode() && drawerInstance === unref(drawer)) {
+    if (unref(loaded) && drawerInstance === unref(drawer)) {
       return
     }
     uid.value = uuid
@@ -118,10 +117,9 @@ export const useDrawerInner = (callbackFn?: Fn): UseDrawerInnerReturnType => {
   }
 
   const register = (modalInstance: DrawerInstance, uuid: string) => {
-    isProdMode() &&
-      tryOnUnmounted(() => {
-        drawerInstanceRef.value = null
-      })
+    tryOnUnmounted(() => {
+      drawerInstanceRef.value = null
+    })
 
     uidRef.value = uuid
     drawerInstanceRef.value = modalInstance

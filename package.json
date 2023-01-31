@@ -43,9 +43,5 @@
     "vite-plugin-dts": "^1.7.1",
     "vue": "^3.2.40"
   },
-  "dependencies": {
-    "3h1-ui": "workspace:1.0.72",
-    "@shy-plugins/use": "workspace:1.0.3",
-    "@shy-plugins/utils": "workspace:1.0.14"
-  }
+  "dependencies": {}
 }

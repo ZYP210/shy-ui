@@ -1,5 +1,5 @@
 <template>
-  <CountdownInput class="a" v-model:value="value" />
+  <CountdownInput class="abc" v-model:value="value" />
 </template>
 <script lang="ts" setup>
 import { CountdownInput } from '3h1-ui'
