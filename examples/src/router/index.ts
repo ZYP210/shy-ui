@@ -42,11 +42,11 @@ const routes = [
     title: 'BasicHelp',
     component: () => import('../views/BasicHelp.vue')
   },
-  // {
-  //   path: '/IconView',
-  //   title: 'IconView',
-  //   component: () => import('../views/IconView.vue')
-  // },
+  {
+    path: '/IconView',
+    title: 'IconView',
+    component: () => import('../views/IconView.vue')
+  },
   {
     path: '/ButtonView',
     title: 'ButtonView',
