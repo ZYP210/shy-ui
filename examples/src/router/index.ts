@@ -6,7 +6,11 @@ const routes = [
   //   title: '人物选择器',
   //   component: () => import('../views/UserSelectTest.vue')
   // },
-
+  {
+    path: '/Loading',
+    title: 'Loading',
+    component: () => import('../views/Loading.vue')
+  },
   {
     path: '/Page',
     title: 'yemian',
