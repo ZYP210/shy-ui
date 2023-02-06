@@ -1,0 +1,26 @@
+{
+  "name": "@shy-plugins/qrcode",
+  "version": "1.0.2",
+  "description": "生成二维码",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
+    "patch": "npm version patch",
+    "deploy": "vite build && npm publish"
+  },
+  "files": [
+    "lib",
+    "es"
+  ],
+  "keywords": [
+    "qrcode"
+  ],
+  "author": "shy",
+  "license": "ISC",
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "qrcode": "^1.5.1"
+  }
+}

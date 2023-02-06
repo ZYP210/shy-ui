@@ -7,6 +7,16 @@ const routes = [
   //   component: () => import('../views/UserSelectTest.vue')
   // },
   {
+    path: '/Tinymce',
+    title: 'Tinymce',
+    component: () => import('../views/Tinymce.vue')
+  },
+  {
+    path: '/Qrcode',
+    title: 'Qrcode',
+    component: () => import('../views/Qrcode.vue')
+  },
+  {
     path: '/Loading',
     title: 'Loading',
     component: () => import('../views/Loading.vue')
@@ -111,11 +121,11 @@ const routes = [
   //   title: 'FlowChart',
   //   component: () => import('../views/FlowChart.vue')
   // },
-  // {
-  //   path: '/StrengthMeter',
-  //   title: 'StrengthMeter',
-  //   component: () => import('../views/StrengthMeter.vue')
-  // },
+  {
+    path: '/StrengthMeter',
+    title: 'StrengthMeter',
+    component: () => import('../views/StrengthMeter.vue')
+  },
   {
     path: '/Form',
     title: 'Form',

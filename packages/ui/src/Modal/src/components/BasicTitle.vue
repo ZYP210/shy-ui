@@ -12,7 +12,7 @@
 import type { PropType } from 'vue'
 import { useSlots, computed } from 'vue'
 import BasicHelp from './BasicHelp.vue'
-import { useDesign } from '../hooks/useDesign'
+// import { useDesign } from '../hooks/useDesign'
 
 const props = defineProps({
   /**
