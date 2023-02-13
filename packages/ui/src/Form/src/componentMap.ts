@@ -33,6 +33,8 @@ import { StrengthMeter } from '../../StrengthMeter'
 import { IconPicker } from '../../Icon'
 import { CountdownInput } from '../../CountDown'
 
+import Table from './components/Table.vue'
+
 const componentMap = new Map<ComponentType, Component>()
 
 componentMap.set('Input', Input)
@@ -68,6 +70,7 @@ componentMap.set('TimePicker', TimePicker)
 componentMap.set('StrengthMeter', StrengthMeter)
 componentMap.set('IconPicker', IconPicker)
 componentMap.set('InputCountDown', CountdownInput)
+componentMap.set('Table', Table)
 
 // componentMap.set('Upload', BasicUpload)
 componentMap.set('Divider', Divider)
