@@ -31,7 +31,18 @@
                   v-for="icon in getPaginationList"
                   :key="icon"
                   :class="currentSelect === icon ? 'border border-primary' : ''"
-                  class="p-2 w-1/8 cursor-pointer mr-1 mt-1 flex justify-center items-center border border-solid hover:border-primary"
+                  class="
+                    p-2
+                    w-1/8
+                    cursor-pointer
+                    mr-1
+                    mt-1
+                    flex
+                    justify-center
+                    items-center
+                    border border-solid
+                    hover:border-primary
+                  "
                   @click="handleClick(icon)"
                   :title="icon"
                 >
@@ -90,7 +101,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { useCopyToClipboard } from '@shy-plugins/use'
 import { useMessage } from '@shy-plugins/use'
 
-import svgIcons from 'virtual:svg-icons-names'
+// import svgIcons from 'virtual:svg-icons-names'
 
 // 没有使用别名引入，是因为WebStorm当前版本还不能正确识别，会报unused警告
 const AInput = Input
@@ -111,7 +122,8 @@ function getIcons() {
 }
 
 function getSvgIcons() {
-  return svgIcons.map((icon) => icon.replace('icon-', ''))
+  // return svgIcons.map((icon) => icon.replace('icon-', ''))
+  return []
 }
 
 interface Props {

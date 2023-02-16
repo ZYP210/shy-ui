@@ -3,7 +3,7 @@
     ref="refCropper"
     :src="img"
     @cropend="handleCropend"
-    style="width: 40vw;"
+    style="width: 40vw"
   />
 </template>
 <script lang="ts">

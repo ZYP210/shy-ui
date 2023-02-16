@@ -77,7 +77,7 @@ import { deepMerge } from './utils'
 import { basicProps } from './props'
 import { useFullScreen } from './hooks/useModalFullScreen'
 import { omit } from 'lodash-es'
-import { useDesign } from './hooks/useDesign'
+// import { useDesign } from './hooks/useDesign'
 
 export default defineComponent({
   name: 'BasicModal',

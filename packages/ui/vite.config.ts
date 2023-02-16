@@ -40,7 +40,8 @@ export default defineConfig({
         'codemirror',
         'vite-plugin-purge-icons',
         'ant-design-vue/dist/antd.css',
-        'ant-design-vue/es/locale/zh_CN'
+        'ant-design-vue/es/locale/zh_CN',
+        'qrcode'
       ],
       output: [
         {

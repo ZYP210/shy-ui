@@ -35,18 +35,13 @@ export function useTable(tableProps?: Props): [
 
   let stopWatch: WatchStopHandle
 
-  function register(
-    instance: TableActionType,
-    formInstance: UseTableMethod,
-    isProdMode = false
-  ) {
-    isProdMode &&
-      onUnmounted(() => {
-        tableRef.value = null
-        loadedRef.value = null
-      })
+  function register(instance: TableActionType, formInstance: UseTableMethod) {
+    onUnmounted(() => {
+      tableRef.value = null
+      loadedRef.value = null
+    })
 
-    if (unref(loadedRef) && isProdMode && instance === unref(tableRef)) return
+    if (unref(loadedRef) && instance === unref(tableRef)) return
 
     tableRef.value = instance
     formRef.value = formInstance

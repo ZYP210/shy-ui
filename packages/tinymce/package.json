@@ -1,0 +1,25 @@
+{
+  "name": "@shy-plugins/tinymce",
+  "version": "1.0.3",
+  "description": "富文本编辑器",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
+    "patch": "npm version patch",
+    "deploy": "vite build && npm publish"
+  },
+  "files": [
+    "lib",
+    "es"
+  ],
+  "keywords": [
+    "富文本编辑器"
+  ],
+  "author": "shy",
+  "license": "ISC",
+  "dependencies": {
+    "tinymce": "^5.10.3"
+  }
+}

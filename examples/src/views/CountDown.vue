@@ -1,5 +1,5 @@
 <template>
-  <CountButton a="1" :value="a" :count="10" />
+  <CountButton a="1" :value="a" :count="20" />
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
@@ -9,7 +9,7 @@ export default defineComponent({
   components: { CountButton },
   data() {
     return {
-      a: 10
+      a: 5
     }
   }
 })

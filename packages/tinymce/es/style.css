@@ -1,0 +1,18 @@
+.'shy-tinymce-img-upload'[data-v-ae7e1a6f] {
+  position: absolute;
+  top: 4px;
+  right: 10px;
+  z-index: 20;
+}
+.'shy-tinymce-img-upload'.fullscreen[data-v-ae7e1a6f] {
+  position: fixed;
+  z-index: 10000;
+}
+.shy-tinymce-container {
+  position: relative;
+  line-height: normal;
+}
+.shy-tinymce-container textarea {
+  z-index: -1;
+  visibility: hidden;
+}
