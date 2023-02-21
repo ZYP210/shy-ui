@@ -14,7 +14,7 @@
       </div>
     </template>
 
-    <template #bodyCell="{ column, record }">
+    <template #bodyCell="{ column, record,index }">
       <Form v-if="column.dataIndex !== 'index'">
         <FormItem>
           <Select
@@ -37,6 +37,14 @@
           <Input v-else v-model:value="record[column.dataIndex]" />
         </FormItem>
       </Form>
+
+      <div v-else class="delete-wrapper">
+        <span class="delete-index">{{ index + 1 }}</span>
+
+        <div class="delete-item" @click="rowClickEvent(index)">
+          <Icon icon="ant-design:delete-filled" color="#fff" />
+        </div>
+      </div>
     </template>
   </Table>
 </template>
@@ -53,7 +61,7 @@ import {
 } from 'ant-design-vue'
 import { ref, unref, computed, watch } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
-
+import {Icon} from '../../../Icon'
 const emit = defineEmits(['update:value'])
 
 const props = defineProps({
@@ -75,6 +83,7 @@ const getColumns = computed(() => {
     title: '序号',
     dataIndex: 'index',
     customRender: ({ index }: { index: number }) => {
+      console.log('index',index)
       return `${index + 1}`
     },
     width: 50,
@@ -87,6 +96,12 @@ const plusClickEvent = () => {
   //   console.log('state', unref(state))
   state.value.push({})
 }
+
+const rowClickEvent = (index) => {
+  state.value = unref(state).filter((item, i) => {
+      return index !== i;
+    });
+  };
 
 // const getData = () => {
 //   return unref(data)
@@ -135,4 +150,34 @@ defineExpose({})
 .table-children::v-deep(.ant-form-item) {
   margin-bottom: 0 !important;
 }
+
+.delete-wrapper {
+    height: 100%;
+
+    &:hover {
+      .delete-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .delete-index {
+        display: none;
+      }
+    }
+
+    .delete-item {
+      background-color: red;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      display: none;
+      cursor: pointer;
+    }
+
+    .delete-index {
+      display: inline-block;
+    }
+  }
 </style>

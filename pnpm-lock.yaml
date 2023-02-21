@@ -117,7 +117,10 @@ importers:
       qrcode: 1.5.1
 
   packages/tinymce:
-    specifiers: {}
+    specifiers:
+      tinymce: ^5.10.3
+    dependencies:
+      tinymce: 5.10.7
 
   packages/ui:
     specifiers:
@@ -4901,6 +4904,10 @@ packages:
   /through/2.3.8:
     resolution: {integrity: sha1-DdTJ/6q8NXlgsbckEV1+Doai4fU=}
     dev: true
+
+  /tinymce/5.10.7:
+    resolution: {integrity: sha512-9UUjaO0R7FxcFo0oxnd1lMs7H+D0Eh+dDVo5hKbVe1a+VB0nit97vOqlinj+YwgoBDt6/DSCUoWqAYlLI8BLYA==}
+    dev: false
 
   /to-fast-properties/2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
