@@ -1,6 +1,9 @@
 <template>
   <div class="table-settings">
-    <ShowSearchSetting :getPopupContainer="getTableContainer" />
+    <ShowSearchSetting
+      v-if="getBindValues.useSearchForm"
+      :getPopupContainer="getTableContainer"
+    />
 
     <SizeSetting
       v-if="getSetting.size"
@@ -68,7 +71,9 @@ export default defineComponent({
       return table ? unref(table.wrapRef) : document.body
     }
 
-    return { getSetting, handleColumnChange, getTableContainer }
+    const { getBindValues } = useTableContext()
+
+    return { getSetting, handleColumnChange, getTableContainer, getBindValues }
   }
 })
 </script>

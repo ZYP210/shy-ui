@@ -10,7 +10,6 @@
       :striped="true"
       :bordered="true"
       :pagination="{ pageSize: 20 }"
-      :useSearchForm="true"
     >
       <template #toolbar>
         <a-button type="primary"> 操作按钮 </a-button>
