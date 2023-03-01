@@ -29,7 +29,6 @@ const attrs = useAttrs({ excludeDefaultKeys: false })
 const getButtonClass = computed(() => {
   const { color, disabled } = props
 
-  console.log('color', color)
   return [
     {
       [`ant-btn-${color}`]: !!color,

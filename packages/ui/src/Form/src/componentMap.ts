@@ -34,6 +34,7 @@ import { IconPicker } from '../../Icon'
 import { CountdownInput } from '../../CountDown'
 
 import Table from './components/Table.vue'
+import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
 
 const componentMap = new Map<ComponentType, Component>()
 
@@ -61,6 +62,8 @@ componentMap.set('Cascader', Cascader)
 componentMap.set('Slider', Slider)
 componentMap.set('Rate', Rate)
 componentMap.set('ApiTransfer', ApiTransfer)
+
+componentMap.set('ApiModalSelect', ApiModalSelect)
 
 componentMap.set('DatePicker', DatePicker)
 componentMap.set('MonthPicker', DatePicker.MonthPicker)

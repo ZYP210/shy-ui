@@ -7,8 +7,6 @@
       :actionColOptions="{ span: 24 }"
       @submit="handleSubmit"
     />
-
-    <TableChildren :value="data" :columns="columns" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -62,6 +60,12 @@ const schemas: FormSchema[] = [
         }
       ]
     }
+  },
+  {
+    field: '选择弹框',
+    label: '选择弹框',
+    component: 'ApiModalSelect',
+    componentProps: {}
   }
 ]
 const { createMessage } = useMessage()
