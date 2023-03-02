@@ -45,7 +45,6 @@ export default defineComponent({
     // const { prefixCls } = useDesign('basic-modal-close')
     const prefixCls = 'shy-basic-modal-close'
 
-    console.log('prefixCls', prefixCls)
     const { t } = useI18n()
 
     const getClass = computed(() => {

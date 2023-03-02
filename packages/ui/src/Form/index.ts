@@ -14,5 +14,6 @@ export { default as ApiRadioGroup } from './src/components/ApiRadioGroup.vue'
 export { default as ApiCascader } from './src/components/ApiCascader.vue'
 export { default as ApiTransfer } from './src/components/ApiTransfer.vue'
 export { default as TableChildren } from './src/components/Table.vue'
+export { default as ApiModalSelect } from './src/components/ApiModalSelect/ApiModalSelect.vue'
 
 export { BasicForm }

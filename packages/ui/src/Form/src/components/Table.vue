@@ -14,7 +14,7 @@
       </div>
     </template>
 
-    <template #bodyCell="{ column, record,index }">
+    <template #bodyCell="{ column, record, index }">
       <Form v-if="column.dataIndex !== 'index'">
         <FormItem>
           <Select
@@ -61,7 +61,7 @@ import {
 } from 'ant-design-vue'
 import { ref, unref, computed, watch } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
-import {Icon} from '../../../Icon'
+import { Icon } from '../../../Icon'
 const emit = defineEmits(['update:value'])
 
 const props = defineProps({
@@ -83,7 +83,6 @@ const getColumns = computed(() => {
     title: '序号',
     dataIndex: 'index',
     customRender: ({ index }: { index: number }) => {
-      console.log('index',index)
       return `${index + 1}`
     },
     width: 50,
@@ -93,23 +92,14 @@ const getColumns = computed(() => {
 })
 
 const plusClickEvent = () => {
-  //   console.log('state', unref(state))
   state.value.push({})
 }
 
 const rowClickEvent = (index) => {
   state.value = unref(state).filter((item, i) => {
-      return index !== i;
-    });
-  };
-
-// const getData = () => {
-//   return unref(data)
-// }
-
-// const setData = (value) => {
-//   data.value = value
-// }
+    return index !== i
+  })
+}
 
 const loadKv = () => {
   const columns: any = props.columns
@@ -152,32 +142,32 @@ defineExpose({})
 }
 
 .delete-wrapper {
-    height: 100%;
+  height: 100%;
 
-    &:hover {
-      .delete-item {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .delete-index {
-        display: none;
-      }
-    }
-
+  &:hover {
     .delete-item {
-      background-color: red;
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      text-align: center;
-      display: none;
-      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .delete-index {
-      display: inline-block;
+      display: none;
     }
   }
+
+  .delete-item {
+    background-color: red;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    display: none;
+    cursor: pointer;
+  }
+
+  .delete-index {
+    display: inline-block;
+  }
+}
 </style>

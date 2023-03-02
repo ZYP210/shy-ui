@@ -37,8 +37,6 @@ const getButtonClass = computed(() => {
   ]
 })
 
-console.log('getButtonClass', getButtonClass.value)
-
 // get inherit binding value
 const getBindValue = computed(() => ({ ...unref(attrs), ...props }))
 </script>

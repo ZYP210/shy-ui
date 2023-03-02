@@ -164,13 +164,6 @@ export function useTableScroll(
         (tableEl.querySelector('.ant-table-title') as HTMLElement)
           ?.offsetHeight ?? 0
 
-      console.log(
-        wrapHeight -
-          formHeight -
-          headerCellHeight -
-          tablePadding -
-          paginationMargin
-      )
       bottomIncludeBody =
         wrapHeight -
         formHeight -

@@ -63,7 +63,7 @@ componentMap.set('Slider', Slider)
 componentMap.set('Rate', Rate)
 componentMap.set('ApiTransfer', ApiTransfer)
 
-componentMap.set('ApiModalSelect', ApiModalSelect)
+// componentMap.set('ApiModalSelect', ApiModalSelect)
 
 componentMap.set('DatePicker', DatePicker)
 componentMap.set('MonthPicker', DatePicker.MonthPicker)

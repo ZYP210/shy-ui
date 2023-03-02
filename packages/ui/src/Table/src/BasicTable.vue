@@ -284,8 +284,6 @@ export default defineComponent({
     const getWrapperClass = computed(() => {
       const values = unref(getBindValues)
 
-      console.log('values', values)
-
       return [
         prefixCls,
         attrs.class,
