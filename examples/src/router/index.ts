@@ -140,6 +140,11 @@ const routes = [
     path: '/Tree',
     title: 'Tree',
     component: () => import('../views/Tree.vue')
+  },
+  {
+    path: '/Gantt',
+    title: 'Gantt',
+    component: () => import('../views/Gantt.vue')
   }
 ]
 
