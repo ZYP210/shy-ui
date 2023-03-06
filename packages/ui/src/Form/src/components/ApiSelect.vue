@@ -5,6 +5,8 @@
     @change="handleChange"
     :options="getOptions"
     v-model:value="state"
+    :filter-option="filterOption"
+    show-search
   >
     <template #[item]="data" v-for="item in Object.keys($slots)">
       <slot :name="item" v-bind="data || {}"></slot>
@@ -163,7 +165,19 @@ export default defineComponent({
       emitData.value = args
     }
 
-    return { state, attrs, getOptions, loading, handleFetch, handleChange }
+    const filterOption = (input: string, option: any) => {
+      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    }
+
+    return {
+      state,
+      attrs,
+      getOptions,
+      loading,
+      handleFetch,
+      handleChange,
+      filterOption
+    }
   }
 })
 </script>

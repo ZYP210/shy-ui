@@ -72,7 +72,7 @@ export default defineComponent({
 
     const getComponentsProps = computed(() => {
       const { schema, tableAction, formModel, formActionType } = props
-      let { componentProps = {} } = schema
+      let { componentProps = {} as any } = schema
       if (isFunction(componentProps)) {
         componentProps =
           componentProps({ schema, tableAction, formModel, formActionType }) ??
@@ -84,6 +84,25 @@ export default defineComponent({
           plain: true
         })
       }
+      if (schema.component === 'Input') {
+        const showCount = componentProps?.showCount === undefined?true:componentProps.showCount
+        const maxlength = componentProps?.maxlength === undefined?100:componentProps.maxlength
+        componentProps = Object.assign({  }, componentProps, {
+          showCount,maxlength
+        })
+      }
+
+      if (schema.component === 'Select') {
+        componentProps = Object.assign({  }, componentProps, {
+          showSearch:true,
+           filterOption :(input: string, option: any) => {
+      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+    }
+        })
+      }
+
+     
+
       return componentProps as Recordable
     })
 

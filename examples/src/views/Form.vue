@@ -35,21 +35,61 @@ const tree = {
 }
 
 const schemas: FormSchema[] = [
-  // {
-  //   field: 'field',
-  //   component: 'Input',
-  //   label: '字段1',
-  //   colProps: {
-  //     span: 8
-  //   },
-  //   defaultValue: '1',
-  //   componentProps: {
-  //     placeholder: '自定义placeholder',
-  //     onChange: (e) => {
-  //       console.log(e)
-  //     }
-  //   }
-  // },
+  {
+    field: 'field',
+    component: 'Input',
+    label: '字段1',
+    colProps: {
+      span: 8
+    },
+    defaultValue: '1',
+
+    componentProps: {
+      placeholder: '自定义placeholder',
+      onChange: (e) => {
+        console.log(e)
+      }
+    }
+  },
+  {
+    field: 'ApiSelect',
+    label: 'ApiSelect',
+    component: 'ApiSelect',
+    colProps: { span: 8 },
+    componentProps: {
+      api: () =>
+        new Promise((resolve) =>
+          resolve([
+            { label: 'a', value: '1' },
+            { label: 'b', value: '2' },
+            { label: 'c', value: '3' },
+            { label: 'd', value: '4' },
+            { label: 'e', value: '5' },
+            { label: '中文', value: '6' },
+            { label: '英文', value: '7' },
+            { label: '德文', value: '8' }
+          ])
+        )
+    }
+  },
+  {
+    field: 'select',
+    label: 'select',
+    component: 'Select',
+    colProps: { span: 8 },
+    componentProps: {
+      options: [
+        { label: 'a', value: '1' },
+        { label: 'b', value: '2' },
+        { label: 'c', value: '3' },
+        { label: 'd', value: '4' },
+        { label: 'e', value: '5' },
+        { label: '中文', value: '6' },
+        { label: '英文', value: '7' },
+        { label: '德文', value: '8' }
+      ]
+    }
+  },
   // {
   //   field: 'table',
   //   label: 'table',
