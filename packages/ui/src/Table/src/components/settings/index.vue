@@ -1,7 +1,10 @@
 <template>
   <div class="table-settings">
     <ShowSearchSetting
-      v-if="getBindValues.useSearchForm"
+      v-if="
+        getBindValues?.formConfig?.schemas &&
+        getBindValues?.formConfig?.schemas?.length !== 0
+      "
       :getPopupContainer="getTableContainer"
     />
 

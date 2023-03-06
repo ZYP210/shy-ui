@@ -10,6 +10,8 @@
       :striped="true"
       :bordered="true"
       :pagination="{ pageSize: 20 }"
+      :formConfig="formConfig"
+      :useSearchForm="true"
     >
       <template #toolbar>
         <a-button type="primary"> 操作按钮 </a-button>
@@ -29,6 +31,9 @@ const columns = [
   }
 ]
 
+const formConfig = {
+  schemas: [{ label: 'a', field: 'a', component: 'Input' }]
+}
 const data = [{ a: 1 }]
 </script>
 
