@@ -120,7 +120,7 @@ const schemas: FormSchema[] = [
             { label: 'e', value: '5' }
           ])
         ),
-      fieldsName: { key: 'value', title: 'label' }
+      fieldsName: { label: 'value', value: 'label' }
     }
   },
   // {
