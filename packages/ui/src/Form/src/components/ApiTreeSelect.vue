@@ -89,10 +89,10 @@ export default defineComponent({
 
     const filterTreeNode = (input, node) => {
       if (
-        typeof node[getAttrs.value?.fieldsName?.label || 'label'] === 'string'
+        typeof node[getAttrs.value?.fieldNames?.label || 'label'] === 'string'
       ) {
         if (
-          node[getAttrs.value?.fieldsName?.label || 'label'].indexOf(input) !==
+          node[getAttrs.value?.fieldNames?.label || 'label'].indexOf(input) !==
           -1
         ) {
           return true
@@ -101,7 +101,7 @@ export default defineComponent({
         }
       } else {
         if (
-          node[getAttrs.value?.fieldsName?.label || 'label'].indexOf(input) !==
+          node[getAttrs.value?.fieldNames?.label || 'label'].indexOf(input) !==
           -1
         ) {
           return true

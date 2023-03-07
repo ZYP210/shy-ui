@@ -100,27 +100,27 @@ const schemas: FormSchema[] = [
         new Promise((resolve) =>
           resolve([
             {
-              label: 'a',
-              value: '1',
+              name: 'a',
+              id: '1',
               children: [
-                { label: 'b', value: '2' },
-                { label: 'c', value: '3' }
+                { name: 'b', id: '2' },
+                { name: 'c', id: '3' }
               ]
             },
 
             {
-              label: 'd',
-              value: '4',
+              name: 'd',
+              id: '4',
               children: [
-                { label: '中文', value: '6' },
-                { label: '英文', value: '7' },
-                { label: '德文', value: '8' }
+                { name: '中文', id: '6' },
+                { name: '英文', id: '7' },
+                { name: '德文', id: '8' }
               ]
             },
-            { label: 'e', value: '5' }
+            { name: 'e', id: '5' }
           ])
         ),
-      fieldsName: { label: 'value', value: 'label' }
+      fieldNames: { label: 'name', value: 'id' }
     }
   },
   // {
