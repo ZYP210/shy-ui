@@ -1,5 +1,10 @@
 <template>
-  <a-tree-select v-bind="getAttrs" @change="handleChange">
+  <a-tree-select
+    v-bind="getAttrs"
+    @change="handleChange"
+    show-search
+    :filterTreeNode="filterTreeNode"
+  >
     <template #[item]="data" v-for="item in Object.keys($slots)">
       <slot :name="item" v-bind="data || {}"></slot>
     </template>
@@ -81,7 +86,24 @@ export default defineComponent({
       isFirstLoaded.value = true
       emit('options-change', treeData.value)
     }
-    return { getAttrs, loading, handleChange }
+
+    const filterTreeNode = (input, node) => {
+      if (typeof node.label === 'string') {
+        if (node.label.indexOf(input) !== -1) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        if (node.label.indexOf(input) !== -1) {
+          return true
+        } else {
+          return false
+        }
+      }
+    }
+
+    return { getAttrs, loading, handleChange, filterTreeNode }
   }
 })
 </script>
