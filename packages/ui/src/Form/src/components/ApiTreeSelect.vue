@@ -88,14 +88,22 @@ export default defineComponent({
     }
 
     const filterTreeNode = (input, node) => {
-      if (typeof node.label === 'string') {
-        if (node.label.indexOf(input) !== -1) {
+      if (
+        typeof node[getAttrs.value?.fieldsName?.title || 'title'] === 'string'
+      ) {
+        if (
+          node[getAttrs.value?.fieldsName?.title || 'title'].indexOf(input) !==
+          -1
+        ) {
           return true
         } else {
           return false
         }
       } else {
-        if (node.label.indexOf(input) !== -1) {
+        if (
+          node[getAttrs.value?.fieldsName?.title || 'title'].indexOf(input) !==
+          -1
+        ) {
           return true
         } else {
           return false
