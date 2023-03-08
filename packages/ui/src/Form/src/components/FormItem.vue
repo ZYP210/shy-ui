@@ -93,10 +93,12 @@ export default defineComponent({
       }
 
       if (schema.component === 'Select') {
+        console.log('componentProps',componentProps)
+        const label = componentProps?.fieldNames?.label || 'label'
         componentProps = Object.assign({  }, componentProps, {
           showSearch:true,
            filterOption :(input: string, option: any) => {
-      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      return option[label].toLowerCase().indexOf(input.toLowerCase()) >= 0
     }
         })
       }

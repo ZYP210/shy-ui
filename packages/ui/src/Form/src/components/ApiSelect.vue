@@ -166,7 +166,9 @@ export default defineComponent({
     }
 
     const filterOption = (input: string, option: any) => {
-      return option.label.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      const label = attrs.value?.fieldNames?.label || 'label'
+      console.log('label', label)
+      return option[label].toLowerCase().indexOf(input.toLowerCase()) >= 0
     }
 
     return {

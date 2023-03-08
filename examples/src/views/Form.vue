@@ -73,8 +73,49 @@ const schemas: FormSchema[] = [
     }
   },
   {
+    field: 'ApiSelectFieldNames',
+    label: 'ApiSelectFieldNames',
+    component: 'ApiSelect',
+    colProps: { span: 8 },
+    componentProps: {
+      api: () =>
+        new Promise((resolve) =>
+          resolve([
+            { name: 'a', id: '1' },
+            { name: 'b', id: '2' },
+            { name: 'c', id: '3' },
+            { name: 'd', id: '4' },
+            { name: 'e', id: '5' },
+            { name: '中文', id: '6' },
+            { name: '英文', id: '7' },
+            { name: '德文', id: '8' }
+          ])
+        ),
+      fieldNames: { label: 'name', value: 'id' }
+    }
+  },
+  {
     field: 'select',
     label: 'select',
+    component: 'Select',
+    colProps: { span: 8 },
+    componentProps: {
+      options: [
+        { name: 'a', id: '1' },
+        { name: 'b', id: '2' },
+        { name: 'c', id: '3' },
+        { name: 'd', id: '4' },
+        { name: 'e', id: '5' },
+        { name: '中文', id: '6' },
+        { name: '英文', id: '7' },
+        { name: '德文', id: '8' }
+      ],
+      fieldNames: { label: 'name', value: 'id' }
+    }
+  },
+  {
+    field: 'selectFieldsNames',
+    label: 'selectFieldsNames',
     component: 'Select',
     colProps: { span: 8 },
     componentProps: {
@@ -123,6 +164,7 @@ const schemas: FormSchema[] = [
       fieldNames: { label: 'name', value: 'id' }
     }
   },
+
   // {
   //   field: 'table',
   //   label: 'table',
