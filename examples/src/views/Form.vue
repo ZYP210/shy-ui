@@ -165,35 +165,35 @@ const schemas: FormSchema[] = [
     }
   },
 
-  // {
-  //   field: 'table',
-  //   label: 'table',
-  //   component: 'Table',
-  //   componentProps: {
-  //     columns: [
-  //       {
-  //         title: 'a',
-  //         dataIndex: 'a'
-  //       },
-  //       {
-  //         title: 'b',
-  //         dataIndex: 'b'
-  //       },
-  //       {
-  //         title: 'c',
-  //         dataIndex: 'c'
-  //       },
-  //       {
-  //         title: 'd',
-  //         dataIndex: 'd'
-  //       },
-  //       {
-  //         title: 'e',
-  //         dataIndex: 'e'
-  //       }
-  //     ]
-  //   }
-  // },
+  {
+    field: 'table',
+    label: 'table',
+    component: 'Table',
+    componentProps: {
+      columns: [
+        {
+          title: 'a',
+          dataIndex: 'a'
+        },
+        {
+          title: 'b',
+          dataIndex: 'b'
+        },
+        {
+          title: 'c',
+          dataIndex: 'c'
+        },
+        {
+          title: 'd',
+          dataIndex: 'd'
+        },
+        {
+          title: 'e',
+          dataIndex: 'e'
+        }
+      ]
+    }
+  },
   {
     field: 'c',
     label: '选择弹框',
