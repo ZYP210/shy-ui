@@ -202,7 +202,7 @@ const schemas: FormSchema[] = [
   }
 ]
 const { createMessage } = useMessage()
-const [registerForm, { setFieldsValue, getFieldsValue }] = useForm({
+const [registerForm, { setFieldsValue, getFieldsValue, validate }] = useForm({
   schemas
 })
 
@@ -241,9 +241,9 @@ const handleSubmit = (values: any) => {
   createMessage.success('click search,values:' + JSON.stringify(values))
 }
 
-const handleGetForm = () => {
-  const values = getFieldsValue()
+const handleGetForm = async () => {
+  const values = await validate()
 
-  console.log('values', values)
+  // console.log('values', values)
 }
 </script>

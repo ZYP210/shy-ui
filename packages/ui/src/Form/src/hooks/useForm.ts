@@ -120,7 +120,14 @@ export function useForm(props?: Props): UseFormReturnType {
 
     validate: async (nameList?: NamePath[]): Promise<Recordable> => {
       const form = await getForm()
-      return form.validate(nameList)
+      const value = await form.validate(nameList)
+      Object.keys(value).forEach((key) => {
+        if (value[key] === undefined) {
+          console.log('key', key)
+          value[key] = ''
+        }
+      })
+      return value
     },
 
     validateFields: async (nameList?: NamePath[]): Promise<Recordable> => {
