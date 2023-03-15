@@ -35,6 +35,7 @@
             v-model:value="record[column.dataIndex]"
             :min="column.min"
             :max="column.max"
+            :precision="column.precision || 2"
           />
 
           <Input v-else v-model:value="record[column.dataIndex]" />
