@@ -21,6 +21,7 @@
             v-if="column.type === 'select'"
             v-model:value="record[column.dataIndex]"
             :options="column.dicData"
+            :mode="column.mode"
           />
 
           <DatePicker
@@ -32,6 +33,8 @@
           <InputNumber
             v-else-if="column.type === 'number'"
             v-model:value="record[column.dataIndex]"
+            :min="column.min"
+            :max="column.max"
           />
 
           <Input v-else v-model:value="record[column.dataIndex]" />
@@ -92,7 +95,7 @@ const getColumns = computed(() => {
 })
 
 const plusClickEvent = () => {
-  state.value.push({})
+  state.value.unshift({})
 }
 
 const rowClickEvent = (index) => {
