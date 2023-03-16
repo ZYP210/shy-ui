@@ -22,6 +22,8 @@
             v-model:value="record[column.dataIndex]"
             :options="column.dicData"
             :mode="column.mode"
+            :max-tag-count="column.maxTagCount"
+            :max-tag-text-length="column.maxTagTextLength"
           />
 
           <DatePicker
