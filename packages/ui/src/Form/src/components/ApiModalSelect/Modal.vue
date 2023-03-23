@@ -1,6 +1,6 @@
 <template>
   <BasicModal
-    title="title"
+    :title="props.title"
     width="80%"
     @register="register"
     @ok="handleComfirm"
@@ -18,6 +18,14 @@ import DeptTree from './DeptTree.vue'
 import Table from './Table.vue'
 import { inject, ref, unref } from 'vue'
 
+const props = defineProps({
+  title: {
+    type: String,
+    required: true,
+    default: 'title'
+  }
+})
+
 const [register, { closeModal }] = useModalInner((data) => {})
 
 const getTreeProps = inject('getTreeProps')
@@ -32,14 +40,10 @@ const handleSelect = (key) => {
 const emit = defineEmits(['confirm', 'register'])
 
 const handleComfirm = () => {
-  const { selectedRowKeys } = tableRef.value.getRowSelection()
   const rows = tableRef.value.getSelectRows()
-
-  const labelList = rows.map((item) => {
-    return item[unref(getTableProps).fieldNames.label]
-  })
   closeModal()
-  emit('confirm', selectedRowKeys, labelList)
+
+  emit('confirm', rows)
 }
 </script>
 

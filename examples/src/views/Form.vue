@@ -8,7 +8,10 @@
       @submit="handleSubmit"
     >
       <template #ApiModalSelect="{ model, field }">
-        <ApiModalSelect v-model:value="model[field]" />
+        <ApiModalSelect
+          v-model:value="model[field]"
+          :fieldNames="{ label: 'a', value: 'id' }"
+        />
       </template>
     </BasicForm>
   </div>
@@ -25,6 +28,8 @@ import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
 import { onMounted } from 'vue'
 import { ref } from 'vue'
+
+const a = ref('')
 
 const tree = {
   api: () => {
@@ -198,7 +203,10 @@ const schemas: FormSchema[] = [
     field: 'c',
     label: '选择弹框',
     component: 'Input',
-    slot: 'ApiModalSelect'
+    slot: 'ApiModalSelect',
+    componentProps: {
+      autoLink: false
+    }
   }
 ]
 const { createMessage } = useMessage()

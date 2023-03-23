@@ -7,14 +7,16 @@
         </div>
       </template>
     </Input>
+    <FormItemRest>
+      <Modal :title="title" @register="register" @confirm="handleConfirm" />
+    </FormItemRest>
   </div>
-  <Modal @register="register" @confirm="handleConfirm" />
 </template>
 
 <script setup lang="ts">
 import { useRuleFormItem } from '@shy-plugins/use'
 import { watch, ref, computed, provide, unref } from 'vue'
-import { Input } from 'ant-design-vue'
+import { Input, FormItemRest } from 'ant-design-vue'
 import { SmallDashOutlined } from '@ant-design/icons-vue'
 import { useModal } from '../../../../Modal'
 import Modal from './Modal.vue'
@@ -26,7 +28,7 @@ const props = defineProps({
   title: {
     default: 'title'
   },
-  table: {
+  tableComponentProps: {
     type: Object,
     default: () => ({
       api: () =>
@@ -44,7 +46,12 @@ const props = defineProps({
             { a: 1, b: 2, c: 3, d: 4, id: '10' }
           ])
         }),
-      fieldNames: { label: 'a', value: 'id' }
+      columns: [
+        { title: 'a', dataIndex: 'a' },
+        { title: 'b', dataIndex: 'b' },
+        { title: 'c', dataIndex: 'c' },
+        { title: 'd', dataIndex: 'd' }
+      ]
     })
   },
   tree: {
@@ -66,6 +73,13 @@ const props = defineProps({
           ])
         })
     })
+  },
+  selectMode: {
+    default: 'single',
+    type: String
+  },
+  fieldNames: {
+    default: { label: 'name', value: 'id' }
   }
 })
 
@@ -74,17 +88,22 @@ const [register, { openModal }] = useModal()
 const emitData = ref([])
 const label = ref('')
 const [state] = useRuleFormItem(props, 'value', 'change', emitData)
-const emit = defineEmits(['update:value'])
+const emit = defineEmits(['update:value', 'change'])
 
 const getTreeProps = computed(() => {
   return { ...props.tree }
 })
 const getTableProps = computed(() => {
-  return { ...props.table }
+  return { ...props.tableComponentProps }
+})
+
+const getSelectMode = computed(() => {
+  return props.selectMode
 })
 
 provide('getTreeProps', getTreeProps)
 provide('getTableProps', getTableProps)
+provide('getSelectMode', getSelectMode)
 
 watch(
   () => state.value,
@@ -97,10 +116,25 @@ const handleClick = () => {
   openModal(true, {})
 }
 
-const handleConfirm = (list, labelList) => {
-  state.value = list.join(',')
-  label.value = labelList.join(',')
+const handleConfirm = (rows) => {
+  state.value = rows
+    .map((item) => {
+      return item[props.fieldNames.value]
+    })
+    .join(',')
+
+  label.value = rows
+    .map((item) => {
+      return item[props.fieldNames.label]
+    })
+    .join(',')
 }
+
+const getLabel = () => {
+  return unref(label)
+}
+
+defineExpose({ getLabel })
 </script>
 
 <style scoped lang="less">
