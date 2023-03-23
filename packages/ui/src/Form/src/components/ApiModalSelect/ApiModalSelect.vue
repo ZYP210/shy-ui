@@ -134,7 +134,11 @@ const getLabel = () => {
   return unref(label)
 }
 
-defineExpose({ getLabel })
+const setLabel = (value) => {
+  label.value = value
+}
+
+defineExpose({ getLabel, setLabel })
 </script>
 
 <style scoped lang="less">
