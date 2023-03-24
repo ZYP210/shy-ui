@@ -1,6 +1,6 @@
 <template>
   <div class="api-modal-select">
-    <Input v-model:value="label" readonly>
+    <Input v-model:value="state" :readonly="props.readonly">
       <template #addonAfter>
         <div class="btn-wrapper" @click="handleClick">
           <SmallDashOutlined />
@@ -80,6 +80,10 @@ const props = defineProps({
   },
   fieldNames: {
     default: { label: 'name', value: 'id' }
+  },
+  readonly: {
+    default: false,
+    type: Boolean
   }
 })
 
@@ -88,7 +92,7 @@ const [register, { openModal }] = useModal()
 const emitData = ref([])
 const label = ref('')
 const [state] = useRuleFormItem(props, 'value', 'change', emitData)
-const emit = defineEmits(['update:value', 'change'])
+const emit = defineEmits(['update:value', 'change', 'modal-confirm'])
 
 const getTreeProps = computed(() => {
   return { ...props.tree }
@@ -128,6 +132,7 @@ const handleConfirm = (rows) => {
       return item[props.fieldNames.label]
     })
     .join(',')
+  emit('modal-confirm', rows)
 }
 
 const getLabel = () => {

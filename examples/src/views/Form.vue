@@ -11,6 +11,7 @@
         <ApiModalSelect
           v-model:value="model[field]"
           :fieldNames="{ label: 'a', value: 'id' }"
+          @modal-confirm="handleModalChange"
         />
       </template>
     </BasicForm>
@@ -217,7 +218,8 @@ const [registerForm, { setFieldsValue, getFieldsValue, validate }] = useForm({
 onMounted(() => {
   setFieldsValue({
     field: 123,
-    table: [{ a: 1, b: 2, c: 3 }]
+    table: [{ a: 1, b: 2, c: 3 }],
+    c: '123'
   })
 })
 
@@ -253,5 +255,9 @@ const handleGetForm = async () => {
   const values = await validate()
 
   // console.log('values', values)
+}
+
+const handleModalChange = (rows) => {
+  console.log('rows', rows)
 }
 </script>
