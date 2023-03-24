@@ -207,7 +207,8 @@ const schemas: FormSchema[] = [
     slot: 'ApiModalSelect',
     componentProps: {
       autoLink: false
-    }
+    },
+    required: true
   }
 ]
 const { createMessage } = useMessage()

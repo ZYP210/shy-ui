@@ -5,9 +5,11 @@
     @register="register"
     @ok="handleComfirm"
   >
-    <div class="wrapper">
+    <div class="wrapper overflow-hidden">
       <DeptTree v-bind="getTreeProps" class="tree" @select="handleSelect" />
-      <Table v-bind="getTableProps" ref="tableRef" class="table" />
+      <div class="table-wrapper">
+        <Table v-bind="getTableProps" ref="tableRef" />
+      </div>
     </div>
   </BasicModal>
 </template>
@@ -56,7 +58,8 @@ const handleComfirm = () => {
   flex: none;
 }
 
-.table {
-  flex: auto;
+.table-wrapper {
+  flex: 1 1 0%;
+  overflow: hidden;
 }
 </style>

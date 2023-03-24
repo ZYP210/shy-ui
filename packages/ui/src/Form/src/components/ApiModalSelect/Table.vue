@@ -1,5 +1,5 @@
 <template>
-  <BasicTable class="flex-1" @register="registerTable"> </BasicTable>
+  <BasicTable @register="registerTable"> </BasicTable>
 </template>
 <script lang="ts" setup>
 import { inject, unref } from 'vue'
@@ -14,15 +14,16 @@ const [registerTable, tableAction] = useTable({
   columns: [],
   rowSelection: { type: 'radio' },
   clickToRowSelect: true,
-  useSearchForm: true,
   formConfig: {
     labelWidth: 80,
     schemas: []
   },
   showIndexColumn: true,
-  isCanResizeParent: true,
+  // isCanResizeParent: true,
+  resizeHeightOffset: 200,
   canResize: true,
   searchInfo: {},
+  useSearchForm: false,
   ...unref(getTableProps)
 })
 

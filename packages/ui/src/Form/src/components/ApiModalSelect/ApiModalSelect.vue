@@ -1,6 +1,10 @@
 <template>
   <div class="api-modal-select">
-    <Input v-model:value="state" :readonly="props.readonly">
+    <Input
+      v-model:value="state"
+      :readonly="props.readonly"
+      @change="handleChange"
+    >
       <template #addonAfter>
         <div class="btn-wrapper" @click="handleClick">
           <SmallDashOutlined />
@@ -133,6 +137,10 @@ const handleConfirm = (rows) => {
     })
     .join(',')
   emit('modal-confirm', rows)
+}
+
+function handleChange(_, ...args) {
+  emitData.value = args
 }
 
 const getLabel = () => {
