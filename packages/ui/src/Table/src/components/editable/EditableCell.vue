@@ -115,6 +115,8 @@ export default defineComponent({
       }
       upEditDynamicDisabled(record, column, value)
       return {
+        showSize:true,
+        maxLength:100,
         size: 'small',
         getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
         placeholder: createPlaceholderMessage(unref(getComponent)),
