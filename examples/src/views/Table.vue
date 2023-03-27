@@ -27,7 +27,9 @@ import { BasicTable } from '3h1-ui'
 const columns = [
   {
     title: '123',
-    dataIndex: 'a'
+    dataIndex: 'a',
+    editRow: true,
+    editComponent: 'Input'
   }
 ]
 
