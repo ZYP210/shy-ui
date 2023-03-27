@@ -3,7 +3,6 @@ import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 import { resolve } from 'path'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import { generateModifyVars } from './build/generate/generateModifyVars'
 import PurgeIcons from 'vite-plugin-purge-icons'
 
 function pathResolve(dir: string) {
@@ -105,7 +104,6 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       less: {
-        modifyVars: generateModifyVars(),
         javascriptEnabled: true
       }
     }
