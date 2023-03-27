@@ -1,6 +1,6 @@
 {
   "name": "3h1-ui",
-  "version": "1.1.121",
+  "version": "1.1.122",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -41,7 +41,7 @@
     "vxe-table": "^4.3.6",
     "xe-utils": "^3.5.7"
   },
-  "types": "lib/index.d.ts",
+  "types": "lib/ui/index.d.ts",
   "devDependencies": {
     "vite-plugin-windicss": "^1.8.10",
     "windicss": "^3.5.6"
