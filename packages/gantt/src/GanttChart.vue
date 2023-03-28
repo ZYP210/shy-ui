@@ -21,10 +21,10 @@
         :style="headerStyle"
       >
         <div class="svg-container">
-          <current-line
+          <!-- <current-line
             :minTime="minTime"
             :secondWidth="secondWidth"
-          ></current-line>
+          ></current-line> -->
 
           <template v-for="(svg, index) in svgList" :key="index">
             <div class="gantt-chart-item">
@@ -97,13 +97,13 @@ const allTime = computed(() => {
 const minTime = computed(() => {
   return allTime.value.reduce((acc, cur) => {
     return cur.startTime < acc ? cur.startTime : acc
-  }, allTime.value[0].startTime)
+  }, allTime.value[0]?.startTime || undefined)
 })
 // 最大时间
 const maxTime = computed(() => {
   return allTime.value.reduce((acc, cur) => {
     return cur.endTime > acc ? cur.endTime : acc
-  }, allTime.value[0].endTime)
+  }, allTime.value[0]?.endTime || undefined)
 })
 
 // 每秒宽度
@@ -112,16 +112,30 @@ const secondWidth = computed(() => {
 })
 
 const blockLength = computed(() => {
-  return (
-    Math.floor(
-      (maxTime.value - minTime.value) / (timeInterval.value * 60 * 60)
-    ) + 2
-  )
+  if (maxTime.value && minTime.value) {
+    const blockLength =
+      Math.floor(
+        (maxTime.value - minTime.value) / (timeInterval.value * 60 * 60)
+      ) + 2
+
+    return blockLength
+  } else {
+    return 15
+  }
 })
 
 // 总宽度
 const totalWidth = computed(() => {
-  return blockWidth.value * blockLength.value
+  if (blockLength.value) {
+    return blockWidth.value * blockLength.value
+  } else {
+    return 0
+  }
+})
+watchEffect(() => {
+  totalWidth.value
+  blockLength.value
+  totalWidth.value
 })
 // 总高度
 const totalHeight = computed(() => {
@@ -140,7 +154,9 @@ const headerStyle = reactive({
   transform: 'translateY(0)',
   width: `${totalWidth.value}px`
 })
-
+watchEffect(() => {
+  headerStyle.width = `${totalWidth.value}px`
+})
 const handleScrollEvent = (event, type: 'x' | 'y') => {
   emit('scroll-y', ganttChartBodyRef.value.scrollTop)
 }
@@ -161,6 +177,7 @@ const blocks = computed(() => {
     }
     blocks.push(obj)
   }
+
   return blocks
 })
 
