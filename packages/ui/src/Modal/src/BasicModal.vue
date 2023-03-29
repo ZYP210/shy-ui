@@ -151,7 +151,6 @@ export default defineComponent({
 
     const getBindValue = computed((): Recordable => {
       const attr = {
-        maskClosable: false,
         ...attrs,
         ...unref(getMergeProps),
         visible: unref(visibleRef),
