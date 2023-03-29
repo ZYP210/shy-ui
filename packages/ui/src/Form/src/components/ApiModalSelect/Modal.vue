@@ -28,14 +28,18 @@ const props = defineProps({
   }
 })
 
-const [register, { closeModal }] = useModalInner((data) => {})
+const [register, { closeModal }] = useModalInner(async () => {
+  await tableRef.value.clearSelectedRowKeys()
+})
 
 const getTreeProps = inject('getTreeProps')
 const getTableProps: any = inject('getTableProps')
 
 const tableRef = ref()
 const handleSelect = (key) => {
-  tableRef.value.setProps({ searchInfo: { deptId: key } })
+  tableRef.value.setProps({
+    searchInfo: { [unref(getTableProps).searchKey]: key }
+  })
   tableRef.value.reload()
 }
 

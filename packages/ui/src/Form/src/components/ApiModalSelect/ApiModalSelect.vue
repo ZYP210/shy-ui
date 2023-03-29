@@ -55,7 +55,8 @@ const props = defineProps({
         { title: 'b', dataIndex: 'b' },
         { title: 'c', dataIndex: 'c' },
         { title: 'd', dataIndex: 'd' }
-      ]
+      ],
+      searchKey: 'deptId'
     })
   },
   tree: {
