@@ -6,7 +6,12 @@
     @ok="handleComfirm"
   >
     <div class="wrapper overflow-hidden">
-      <DeptTree v-bind="getTreeProps" class="tree" @select="handleSelect" />
+      <DeptTree
+        v-bind="getTreeProps"
+        class="tree"
+        ref="treeRef"
+        @select="handleSelect"
+      />
       <div class="table-wrapper">
         <Table v-bind="getTableProps" ref="tableRef" />
       </div>
@@ -30,12 +35,15 @@ const props = defineProps({
 
 const [register, { closeModal }] = useModalInner(async () => {
   await tableRef.value.clearSelectedRowKeys()
+  tableRef.value.reload()
+  treeRef.value.reload()
 })
 
 const getTreeProps = inject('getTreeProps')
 const getTableProps: any = inject('getTableProps')
 
 const tableRef = ref()
+const treeRef = ref()
 const handleSelect = (key) => {
   tableRef.value.setProps({
     searchInfo: { [unref(getTableProps).searchKey]: key }

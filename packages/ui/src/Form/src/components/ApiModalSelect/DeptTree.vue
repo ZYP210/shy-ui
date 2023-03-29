@@ -42,7 +42,6 @@ const props = defineProps({
     default: () => ({ label: 'title', value: 'key' })
   }
 })
-console.log('props', props)
 
 async function fetch() {
   const res = await props.api()
@@ -53,7 +52,13 @@ function handleSelect(keys: string) {
   emit('select', keys[0])
 }
 
+const reload = async () => {
+  await fetch()
+}
+
 onMounted(() => {
   fetch()
 })
+
+defineExpose({ reload })
 </script>
