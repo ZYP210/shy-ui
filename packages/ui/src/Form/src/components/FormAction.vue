@@ -18,16 +18,25 @@
       </BasicButton>
       <slot name="submitBefore"></slot>
 
-      <BasicButton
+      <Button
         type="primary"
         class="mr-2"
-        v-bind="getSubmitBtnOptions"
+        v-bind="{ ...getSubmitBtnOptions }"
         @click="submitAction"
-        preIcon="ant-design:search-outlined"
         v-if="showSubmitButton"
       >
+        <template #icon>
+          <SearchOutlined
+            style="
+              line-height: 14px;
+              transform: translateY(3px);
+              font-size: 14px;
+              box-sizing: border-box;
+            "
+          />
+        </template>
         {{ getSubmitBtnOptions.text }}
-      </BasicButton>
+      </Button>
 
       <slot name="advanceBefore"></slot>
       <!-- <Button
@@ -52,7 +61,9 @@ import { BasicButton, ButtonProps } from '../../../Button'
 // import { BasicArrow } from '/@/components/Basic';
 import { useFormContext } from '../hooks/useFormContext'
 import { propTypes } from '@shy-plugins/utils'
-
+import { watchEffect } from 'vue'
+import { SearchOutlined } from '@ant-design/icons-vue'
+import { Button } from 'ant-design-vue'
 type ButtonOptions = Partial<ButtonProps> & { text: string }
 
 export default defineComponent({
@@ -60,7 +71,9 @@ export default defineComponent({
   components: {
     FormItem: Form.Item,
     BasicButton,
-    [Col.name]: Col
+    [Col.name]: Col,
+    Button,
+    SearchOutlined
   },
   props: {
     showActionButtonGroup: propTypes.bool.def(true),
@@ -82,7 +95,7 @@ export default defineComponent({
     actionSpan: propTypes.number.def(6),
     isAdvanced: propTypes.bool,
     hideAdvanceBtn: propTypes.bool
-  },
+  } as any,
   emits: ['toggle-advanced'],
   setup(props) {
     const actionColOpt = computed(() => {
@@ -118,6 +131,20 @@ export default defineComponent({
       )
     })
 
+    const getPreIcon = computed(() => {
+      console.log('getSubmitBtnOptions.value', getSubmitBtnOptions.value)
+      if (getSubmitBtnOptions.value.loading) {
+        return undefined
+      } else {
+        return 'ant-design:search-outlined'
+      }
+    })
+
+    watchEffect(() => {
+      getPreIcon.value
+      console.log(' getPreIcon.value', getPreIcon.value)
+    })
+
     // function toggleAdvanced() {
     //   emit('toggle-advanced');
     // }
@@ -127,7 +154,8 @@ export default defineComponent({
       getResetBtnOptions,
       getSubmitBtnOptions,
       // toggleAdvanced,
-      ...useFormContext()
+      ...useFormContext(),
+      getPreIcon
     }
   }
 })

@@ -366,5 +366,5 @@ export default defineComponent({
       ...formActionType
     }
   }
-})
+} as any)
 </script>

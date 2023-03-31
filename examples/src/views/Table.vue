@@ -3,15 +3,7 @@
     <BasicTable
       title="基础示例"
       titleHelpMessage="温馨提醒"
-      :columns="columns"
-      :dataSource="data"
-      :canResize="true"
-      :loading="false"
-      :striped="true"
-      :bordered="true"
-      :pagination="{ pageSize: 20 }"
-      :formConfig="formConfig"
-      :useSearchForm="true"
+      @register="register"
     >
       <template #toolbar>
         <a-button type="primary"> 操作按钮 </a-button>
@@ -22,8 +14,7 @@
 
 <script lang="ts" setup>
 import { defineComponent, ref } from 'vue'
-import { BasicTable } from '3h1-ui'
-
+import { BasicTable, useTable } from '3h1-ui'
 const columns = [
   {
     title: '123',
@@ -32,6 +23,17 @@ const columns = [
     editComponent: 'Input'
   }
 ]
+const [register] = useTable({
+  api: () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve([{ a: 1 }])
+      }, 1000)
+    })
+  },
+  columns: columns as any,
+  useSearchForm: true
+})
 
 const formConfig = {
   schemas: [{ label: 'a', field: 'a', component: 'Input' }]
