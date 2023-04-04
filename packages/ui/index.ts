@@ -1,3 +1,7 @@
+import 'virtual:windi-base.css'
+import 'virtual:windi-components.css'
+import 'virtual:windi-utilities.css'
+
 export * from './src/Form'
 export * from './src/Container'
 export * from './src/Table'

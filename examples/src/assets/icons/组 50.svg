@@ -1,0 +1,17 @@
+<svg id="组_50" data-name="组 50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="19" height="18" viewBox="0 0 19 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1890ff;
+      }
+
+      .cls-2 {
+        fill: #f6a800;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <image id="矢量智能对象" x="2" y="2" width="14" height="15" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAAAPCAYAAADUFP50AAABHklEQVQokZWSvUoDQRSFv0hQQyxkGwOCKEnQTrEQrQwpRIigZXwGWx/ATguLPIqlhURRIRFbC4WwrCmC+ANplEzIZmVkVm7G3RAPDHPncL6ZO8MkMpXgBZjhf2olDXQHnI+I7gHLSbOou5nE0bB0089SeGvocl6CUuuAA4wL772qSrcyZINLQC3qxBu1lQXcOPAR2AAmpdkJUp+1btGVXlSrE8C0WD/Uu4VGJ0gNhGxwEbiyPO9abS/Yu9vgE7AGpIXXrKrSn7Z+wXbf4dnP6XHv9XJ4fh6vl9fzVLvv7Ijs3AC4+voRcd0fHQAntjkWlxYKX2UfODb1xShgqFngELgEdsNWN4FKDKB/ktapgfR9vzTYAlbMGKYzoAwogG/1tUds1OV/5QAAAABJRU5ErkJggg=="/>
+  <rect id="矩形_818" data-name="矩形 818" class="cls-1" width="19" height="18"/>
+  <path id="矩形_819" data-name="矩形 819" class="cls-2" d="M103,766h9l-2,7-7,1v-8Z" transform="translate(-99 -762)"/>
+</svg>

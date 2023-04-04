@@ -4,7 +4,7 @@ import App from './App.vue'
 import 'ant-design-vue/dist/antd.min.css'
 // import shyUi from '3h1-ui'
 import router from './router/index'
-// import '3h1-ui/es/style.min.css'
+import '3h1-ui/es/style.css'
 
 // 注册windicss
 import 'virtual:windi-base.css'

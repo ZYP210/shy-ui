@@ -1,0 +1,17 @@
+<svg id="组_35" data-name="组 35" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="21" viewBox="0 0 20 21">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1890ff;
+      }
+
+      .cls-2 {
+        fill: #f6a800;
+        fill-rule: evenodd;
+      }
+    </style>
+  </defs>
+  <image id="矢量智能对象" x="3" y="3" width="15" height="17" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAARCAYAAAACCvahAAABrUlEQVQ4jYXTS0iVYRAG4OdYhKdo1cYggtzkIrAwQrDSTdCuoDC7SJvIgoSSDNJAiSDofoHAWrUoo1Zt2rRIKMFFVkRl0QUCBTdtBEWMOvHVHDke/kPv5vtnvnln5nvnn1zNtYIMNOMCNuAZuvG2PKyqzF6JexjCOjzBZrzCLazIIi9GFz5hHx5gLXbG+QhH8RnHIv4vuQ5vcBlfsAV7MR6Jx8Peiu+4GZ3UVUWV1ejARrzIEgHP0YAjWJOel8rXY+BbTW4SeyJZloo57ErVaycLSZeO4ptncQj3S8QqRX34H+J4xC9Q+wCuoik0uIJa3MBo+NN9a9aopkLx9RjGCXxFZ9jJ3xVxmXNOeIcWnAm7N+zkX4AsshDsfXx/qCDgPHlZhSSVsLxIHsPB3qmBvtlCPv8fUv7uTGcf2lNnibwfE4Mzh/t3/Hg59vpn4+6S1hN+/zNyrQPTpz6enbreH39de3GrqnESp3MKS7dVPx5qy9/paVgyvB1PR+eazt2e7m4emWuZwXlcSrMuX8lVuIg2/MIIGrEIg7GaE+WCFVG6BIm4Kc60lmnb5onwB8wmdfwEsVsZAAAAAElFTkSuQmCC"/>
+  <rect id="矩形_812" data-name="矩形 812" class="cls-1" width="20" height="21"/>
+  <path id="矩形_813" data-name="矩形 813" class="cls-2" d="M86,719H97v7s-2.131,3-5,3c-2.62,0-6-3-6-3v-7Z" transform="translate(-81 -711)"/>
+</svg>

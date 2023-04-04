@@ -1,0 +1,24 @@
+<svg id="组_53" data-name="组 53" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="18" viewBox="0 0 20 18">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1890ff;
+      }
+
+      .cls-2 {
+        fill: #f6a800;
+      }
+    </style>
+    <image id="image" width="15" height="14" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA8AAAAOCAYAAADwikbvAAABBklEQVQokZXSvyvFURjH8df3+sok2W7Z7mYzmywykE3+AjJajMpwh2sRZqOUssji13+gWEySSVz5kUgS9dXRufV1fd3ufZbzec75vJ/nPJ2TlFezdUzhQ/vRg+0U0xi4Kidf7aKVetaNhxLekQcTDGEYGSYwiK6c5zOclQoKz+IMBzHfwjkWmo3NcOh6GfUhRrEbfaFA0goew3HUc1HPxHwP463gE9SinoxrA1jDaSv4ERdRb+AeOzEP49zkzam/cYQqXrGMJYSn2W92po3ulXrW2LvGInpxG2d9LmjyA79hBS9FBswX7PWFEQI8Ep+kaIT/InyqWgDusNkB+Ova4Tf1d0zy9A0pADaeLyDl5QAAAABJRU5ErkJggg=="/>
+  </defs>
+  <g id="组_39" data-name="组 39">
+    <use id="矢量智能对象" x="2" y="2" xlink:href="#image"/>
+    <rect id="矩形_847" data-name="矩形 847" class="cls-1" width="20" height="18"/>
+    <rect id="矩形_846" data-name="矩形 846" class="cls-2" x="4" y="3" width="11" height="8"/>
+  </g>
+  <g id="组_39_拷贝" data-name="组 39 拷贝">
+    <use id="矢量智能对象-2" data-name="矢量智能对象" x="2" y="2" xlink:href="#image"/>
+    <rect id="矩形_847-2" data-name="矩形 847" class="cls-1" width="20" height="18"/>
+    <rect id="矩形_846-2" data-name="矩形 846" class="cls-2" x="4" y="3" width="11" height="8"/>
+  </g>
+</svg>

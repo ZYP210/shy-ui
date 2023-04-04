@@ -2,11 +2,13 @@
   <Icon icon="ri:24-hours-fill" :size="24"></Icon>
 
   <div>
-    <SvgIcon size="14" name="sun" />
+    <SvgIcon size="14" name="51" />
     <SvgIcon size="14" name="moon" />
   </div>
 
-  <IconPicker :pageSize="30" :copy="true" />
+  <div class="w-300px">
+    <IconPicker mode="svg" :pageSize="30" :copy="true" />
+  </div>
 </template>
 
 <script>
