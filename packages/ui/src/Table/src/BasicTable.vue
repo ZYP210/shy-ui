@@ -25,6 +25,7 @@
         :rowClassName="getRowClassName"
         v-show="getEmptyDataIsShowTable"
         @change="handleTableChange"
+        @resizeColumn="handleResizeColumn"
         class="enter-x"
       >
         <template
@@ -259,6 +260,7 @@ export default defineComponent({
       const dataSource = unref(getDataSourceRef)
       let propsData: Recordable = {
         ...attrs,
+
         customRow,
         ...unref(getProps),
         ...unref(getHeaderProps),
@@ -267,7 +269,10 @@ export default defineComponent({
         tableLayout: 'fixed',
         rowSelection: unref(getRowSelectionRef),
         rowKey: unref(getRowKey),
-        columns: toRaw(unref(getViewColumns)),
+        columns: toRaw(unref(getViewColumns)).map((item) => {
+          item.resizable = true
+          return item
+        }),
         pagination: toRaw(unref(getPaginationInfo)),
         dataSource,
         footer: unref(getFooterProps),
@@ -349,6 +354,10 @@ export default defineComponent({
 
     emit('register', tableAction, formActions)
 
+    const handleResizeColumn = (w, col) => {
+      col.width = w
+    }
+
     return {
       formRef,
       tableElRef,
@@ -366,8 +375,9 @@ export default defineComponent({
       replaceFormSlotKey,
       getFormSlotKeys,
       getWrapperClass,
-      columns: getViewColumns
+      columns: getViewColumns,
+      handleResizeColumn
     }
   }
-})
+} as any)
 </script>

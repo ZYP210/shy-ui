@@ -21,6 +21,12 @@ const columns = [
     dataIndex: 'a',
     editRow: true,
     editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'b',
+    editRow: true,
+    editComponent: 'Input'
   }
 ]
 const [register] = useTable({
