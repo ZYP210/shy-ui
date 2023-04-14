@@ -132,7 +132,6 @@ export default defineComponent({
     })
 
     const getPreIcon = computed(() => {
-      console.log('getSubmitBtnOptions.value', getSubmitBtnOptions.value)
       if (getSubmitBtnOptions.value.loading) {
         return undefined
       } else {
@@ -142,7 +141,6 @@ export default defineComponent({
 
     watchEffect(() => {
       getPreIcon.value
-      console.log(' getPreIcon.value', getPreIcon.value)
     })
 
     // function toggleAdvanced() {

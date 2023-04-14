@@ -38,6 +38,12 @@
         <template #headerCell="{ column }">
           <HeaderCell :column="column" />
         </template>
+
+        <template #emptyText>
+          <div class="flex justify-center items-center" :style="{ height: `${getHeight.y - 40}px` }">
+            <Empty />
+          </div>
+        </template>
         <!-- 增加对antdv3.x兼容 -->
         <template #bodyCell="data">
           <slot name="bodyCell" v-bind="data || {}"></slot>
@@ -66,7 +72,7 @@ import {
   inject,
   watchEffect
 } from 'vue'
-import { Table } from 'ant-design-vue'
+import { Table,Empty } from 'ant-design-vue'
 import { BasicForm, useForm } from '../../Form'
 import { PageWrapperFixedHeightKey } from '../../Page'
 import HeaderCell from './components/HeaderCell.vue'
@@ -95,7 +101,8 @@ export default defineComponent({
   components: {
     Table,
     BasicForm,
-    HeaderCell
+    HeaderCell,
+    Empty
   },
   props: basicProps,
   emits: [
@@ -358,6 +365,10 @@ export default defineComponent({
       col.width = w
     }
 
+    const getHeight = computed(() => {
+      return unref(getScrollRef)
+    })
+
     return {
       formRef,
       tableElRef,
@@ -376,7 +387,8 @@ export default defineComponent({
       getFormSlotKeys,
       getWrapperClass,
       columns: getViewColumns,
-      handleResizeColumn
+      handleResizeColumn,
+      getHeight
     }
   }
 } as any)

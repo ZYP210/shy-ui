@@ -33,7 +33,7 @@ const [register] = useTable({
   api: () => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve([{ a: 1 }])
+        resolve([{a:1}])
       }, 1000)
     })
   },
