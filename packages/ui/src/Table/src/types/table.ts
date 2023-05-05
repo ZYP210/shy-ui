@@ -9,7 +9,7 @@ import { VueNode } from '@shy-plugins/utils'
 //TODO enum
 // import { RoleEnum } from '/@/enums/roleEnum'
 
-enum RoleEnum {
+export enum RoleEnum {
   // super admin
   SUPER = 'super',
 

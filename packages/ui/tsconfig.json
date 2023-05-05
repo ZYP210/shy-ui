@@ -14,8 +14,11 @@
     "skipLibCheck": true,
     "noEmit": true,
     "baseUrl": "./",
+    "types": ["vue-types","csstype"],
+    "typeRoots": ["./node_modules/@types/", "./types"],
     "paths": {
-      "/@/*": ["src/*"]
+      "/@/*": ["src/*"],
+      "csstype":["/Users/yu/Work/shy-ui/node_modules/.pnpm/csstype@3.1.2/node_modules/csstype/index"]
     }
   },
 
@@ -27,5 +30,5 @@
     "./**/*.vue",
     "*.d.ts"
   ],
-  "exclude": ["node_modules", "dist", "**/*.js"]
+  "exclude": [ "dist", "**/*.js"]
 }

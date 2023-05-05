@@ -2,7 +2,7 @@ import { ButtonProps } from 'ant-design-vue/es/button/buttonTypes'
 import { TooltipProps } from 'ant-design-vue/es/tooltip/Tooltip'
 // import { RoleEnum } from '/@/enums/roleEnum'
 
-enum RoleEnum {
+export enum RoleEnum {
   // super admin
   SUPER = 'super',
 

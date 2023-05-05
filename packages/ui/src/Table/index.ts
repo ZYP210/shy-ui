@@ -6,6 +6,7 @@ export { default as TableDict } from './src/components/TableDict.vue'
 
 import './src/style/index.less'
 
+
 export * from './src/types/table'
 export * from './src/types/pagination'
 export * from './src/types/tableAction'

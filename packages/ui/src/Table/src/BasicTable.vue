@@ -40,7 +40,10 @@
         </template>
 
         <template #emptyText>
-          <div class="flex justify-center items-center" :style="{ height: `${getHeight.y - 40}px` }">
+          <div
+            class="flex justify-center items-center"
+            :style="{ height: `${getHeight.y as number - 40}px` }"
+          >
             <Empty />
           </div>
         </template>
@@ -72,12 +75,11 @@ import {
   inject,
   watchEffect
 } from 'vue'
-import { Table,Empty } from 'ant-design-vue'
+import { Empty, Table } from 'ant-design-vue'
 import { BasicForm, useForm } from '../../Form'
 import { PageWrapperFixedHeightKey } from '../../Page'
 import HeaderCell from './components/HeaderCell.vue'
 import { InnerHandlers } from './types/table'
-
 import { usePagination } from './hooks/usePagination'
 import { useColumns } from './hooks/useColumns'
 import { useDataSource } from './hooks/useDataSource'
@@ -96,6 +98,7 @@ import { useTableForm } from './hooks/useTableForm'
 import { omit } from 'lodash-es'
 import { basicProps } from './props'
 import { warn, isFunction } from '@shy-plugins/utils'
+import type {} from 'csstype'
 
 export default defineComponent({
   components: {
@@ -197,7 +200,7 @@ export default defineComponent({
       emit
     )
 
-    function handleTableChange(...args) {
+    function handleTableChange(...args: any[]) {
       onTableChange.call(undefined, ...args)
       emit('change', ...args)
       // 解决通过useTable注册onChange时不起作用的问题
@@ -361,7 +364,7 @@ export default defineComponent({
 
     emit('register', tableAction, formActions)
 
-    const handleResizeColumn = (w, col) => {
+    const handleResizeColumn = (w: any, col: { width: any }) => {
       col.width = w
     }
 
@@ -382,7 +385,7 @@ export default defineComponent({
       wrapRef,
       tableAction,
       redoHeight,
-      getFormProps: getFormProps as any,
+      getFormProps: getFormProps as unknown,
       replaceFormSlotKey,
       getFormSlotKeys,
       getWrapperClass,
@@ -391,5 +394,5 @@ export default defineComponent({
       getHeight
     }
   }
-} as any)
+})
 </script>
