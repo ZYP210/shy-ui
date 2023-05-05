@@ -158,61 +158,81 @@ function copyTextToClipboard(input, { target = document.body } = {}) {
 }
 var _a;
 const isClient = typeof window !== "undefined";
+const noop = () => {
+};
 isClient && ((_a = window == null ? void 0 : window.navigator) == null ? void 0 : _a.userAgent) && /iP(ad|hone|od)/.test(window.navigator.userAgent);
 function resolveUnref(r) {
   return typeof r === "function" ? r() : unref(r);
 }
 function createFilterWrapper(filter, fn) {
   function wrapper(...args) {
-    filter(() => fn.apply(this, args), { fn, thisArg: this, args });
+    return new Promise((resolve, reject) => {
+      Promise.resolve(filter(() => fn.apply(this, args), { fn, thisArg: this, args })).then(resolve).catch(reject);
+    });
   }
   return wrapper;
 }
 function debounceFilter(ms, options = {}) {
   let timer;
   let maxTimer;
+  let lastRejector = noop;
+  const _clearTimeout = (timer2) => {
+    clearTimeout(timer2);
+    lastRejector();
+    lastRejector = noop;
+  };
   const filter = (invoke) => {
     const duration = resolveUnref(ms);
     const maxDuration = resolveUnref(options.maxWait);
     if (timer)
-      clearTimeout(timer);
+      _clearTimeout(timer);
     if (duration <= 0 || maxDuration !== void 0 && maxDuration <= 0) {
       if (maxTimer) {
-        clearTimeout(maxTimer);
+        _clearTimeout(maxTimer);
         maxTimer = null;
       }
-      return invoke();
+      return Promise.resolve(invoke());
     }
-    if (maxDuration && !maxTimer) {
-      maxTimer = setTimeout(() => {
-        if (timer)
-          clearTimeout(timer);
+    return new Promise((resolve, reject) => {
+      lastRejector = options.rejectOnCancel ? reject : resolve;
+      if (maxDuration && !maxTimer) {
+        maxTimer = setTimeout(() => {
+          if (timer)
+            _clearTimeout(timer);
+          maxTimer = null;
+          resolve(invoke());
+        }, maxDuration);
+      }
+      timer = setTimeout(() => {
+        if (maxTimer)
+          _clearTimeout(maxTimer);
         maxTimer = null;
-        invoke();
-      }, maxDuration);
-    }
-    timer = setTimeout(() => {
-      if (maxTimer)
-        clearTimeout(maxTimer);
-      maxTimer = null;
-      invoke();
-    }, duration);
+        resolve(invoke());
+      }, duration);
+    });
   };
   return filter;
 }
-function throttleFilter(ms, trailing = true, leading = true) {
+function throttleFilter(ms, trailing = true, leading = true, rejectOnCancel = false) {
   let lastExec = 0;
   let timer;
   let isLeading = true;
+  let lastRejector = noop;
+  let lastValue;
   const clear = () => {
     if (timer) {
       clearTimeout(timer);
       timer = void 0;
+      lastRejector();
+      lastRejector = noop;
     }
   };
-  const filter = (invoke) => {
+  const filter = (_invoke) => {
     const duration = resolveUnref(ms);
     const elapsed = Date.now() - lastExec;
+    const invoke = () => {
+      return lastValue = _invoke();
+    };
     clear();
     if (duration <= 0) {
       lastExec = Date.now();
@@ -222,24 +242,28 @@ function throttleFilter(ms, trailing = true, leading = true) {
       lastExec = Date.now();
       invoke();
     } else if (trailing) {
-      timer = setTimeout(() => {
-        lastExec = Date.now();
-        isLeading = true;
-        clear();
-        invoke();
-      }, duration - elapsed);
+      return new Promise((resolve, reject) => {
+        lastRejector = rejectOnCancel ? reject : resolve;
+        timer = setTimeout(() => {
+          lastExec = Date.now();
+          isLeading = true;
+          resolve(invoke());
+          clear();
+        }, duration - elapsed);
+      });
     }
     if (!leading && !timer)
       timer = setTimeout(() => isLeading = true, duration);
     isLeading = false;
+    return lastValue;
   };
   return filter;
 }
 function useDebounceFn(fn, ms = 200, options = {}) {
   return createFilterWrapper(debounceFilter(ms, options), fn);
 }
-function useThrottleFn(fn, ms = 200, trailing = false, leading = true) {
-  return createFilterWrapper(throttleFilter(ms, trailing, leading), fn);
+function useThrottleFn(fn, ms = 200, trailing = false, leading = true, rejectOnCancel = false) {
+  return createFilterWrapper(throttleFilter(ms, trailing, leading, rejectOnCancel), fn);
 }
 function tryOnMounted(fn, sync = true) {
   if (getCurrentInstance())
