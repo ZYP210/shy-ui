@@ -30,61 +30,7 @@ const columns = [
   },
   {
     title: '123',
-    dataIndex: 'a',
-    editRow: true,
-    editComponent: 'Input'
-  },
-  {
-    title: '123',
-    dataIndex: 'b',
-    editRow: true,
-    editComponent: 'Input'
-  },
-  {
-    title: '123',
-    dataIndex: 'a',
-    editRow: true,
-    editComponent: 'Input'
-  },
-  {
-    title: '123',
-    dataIndex: 'b',
-    editRow: true,
-    editComponent: 'Input'
-  },
-  {
-    title: '123',
-    dataIndex: 'a',
-    editRow: true,
-    editComponent: 'Input'
-  },
-  {
-    title: '123',
-    dataIndex: 'b',
-    editRow: true,
-    editComponent: 'Input'
-  },
-  {
-    title: '123',
-    dataIndex: 'a',
-    editRow: true,
-    editComponent: 'Input'
-  },
-  {
-    title: '123',
-    dataIndex: 'b',
-    editRow: true,
-    editComponent: 'Input'
-  },
-  {
-    title: '123',
-    dataIndex: 'a',
-    editRow: true,
-    editComponent: 'Input'
-  },
-  {
-    title: '123',
-    dataIndex: 'b',
+    dataIndex: 'c',
     editRow: true,
     editComponent: 'Input'
   }
@@ -98,7 +44,9 @@ const [register] = useTable({
     })
   },
   columns: columns as any,
-  useSearchForm: true
+  useSearchForm: true,
+  showIndexColumn: true,
+  rowSelection: {}
 })
 
 const formConfig = {

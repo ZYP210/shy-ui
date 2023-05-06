@@ -281,16 +281,19 @@ export default defineComponent({
         rowKey: unref(getRowKey),
         // @ts-ignore
         columns: toRaw(unref(getViewColumns)).map((item, index) => {
-          if (index !== unref(getViewColumns).length - 1) {
-            item.resizable = true
-          }
-          if (
-            !Object.prototype.hasOwnProperty.call(item, 'width') &&
-            item.dataIndex !== 'index' &&
-            item.dataIndex !== 'action'
-          ) {
-            item.width = 80
-          }
+          // if (index !== unref(getViewColumns).length - 1) {
+          //   item.resizable = true
+          // }
+          // if (item.flag === 'INDEX') {
+          //   item.maxWidth = 50
+          // }
+          // if (
+          //   !Object.prototype.hasOwnProperty.call(item, 'width') &&
+          //   item.flag !== 'INDEX' &&
+          //   item.dataIndex !== 'action'
+          // ) {
+          //   item.width = 80
+          // }
           return item
         }),
         pagination: toRaw(unref(getPaginationInfo)),
