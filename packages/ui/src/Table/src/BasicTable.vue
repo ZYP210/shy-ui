@@ -285,7 +285,6 @@ export default defineComponent({
             item.resizable = true
           }
           if (!Object.prototype.hasOwnProperty.call(item, 'width')) {
-            console.log(item)
             item.width = 80
           }
           return item
@@ -373,7 +372,6 @@ export default defineComponent({
 
     const handleResizeColumn = (w: unknown, col: { width: unknown }) => {
       col.width = w
-      console.log(w)
     }
 
     const getHeight = computed(() => {
