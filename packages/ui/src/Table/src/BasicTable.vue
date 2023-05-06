@@ -284,7 +284,11 @@ export default defineComponent({
           if (index !== unref(getViewColumns).length - 1) {
             item.resizable = true
           }
-          if (!Object.prototype.hasOwnProperty.call(item, 'width')) {
+          if (
+            !Object.prototype.hasOwnProperty.call(item, 'width') &&
+            item.dataIndex !== 'index' &&
+            item.dataIndex !== 'action'
+          ) {
             item.width = 80
           }
           return item

@@ -77,18 +77,9 @@ import {
 import { ref, unref, computed, watch } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 import { Icon } from '../../../Icon'
-import { onMounted } from 'vue'
 const emit = defineEmits(['update:value'])
 
-const listFormRefs = ref([])
-
-onMounted(() => {
-  listFormRefs.value.forEach((ref) => {
-    console.log(ref)
-    const res = ref.getFieldsValue()
-    console.log(res)
-  })
-})
+const listFormRefs = ref<unknown[]>([])
 
 const props = defineProps({
   columns: {
@@ -149,12 +140,11 @@ watch(
 
 const validate = async () => {
   try {
-    listFormRefs.value.forEach((ref) => {
-      console.log(ref)
-      ref.validate()
-    })
+    for (let formRef of listFormRefs.value as { validate: () => {} }[]) {
+      await formRef.validate()
+    }
   } catch {
-    return new Error()
+    throw new Error('校验失败')
   }
 }
 

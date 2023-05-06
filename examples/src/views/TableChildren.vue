@@ -39,8 +39,12 @@ const data = [
   { a: 1, b: 2, c: 3 }
 ]
 const tableRef = ref()
-const handleValidate = () => {
-  tableRef.value.validate()
+const handleValidate = async () => {
+  try {
+    await tableRef.value.validate()
+  } catch {
+    console.log('error')
+  }
 }
 </script>
 <style lang="less" scoped></style>
