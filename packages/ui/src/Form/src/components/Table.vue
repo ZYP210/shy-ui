@@ -15,34 +15,43 @@
     </template>
 
     <template #bodyCell="{ column, record, index }">
-      <Form v-if="column.dataIndex !== 'index'">
-        <FormItem>
-          <Select
-            v-if="column.type === 'select'"
-            v-model:value="record[column.dataIndex]"
-            :options="column.dicData"
-            :mode="column.mode"
-            :max-tag-count="column.maxTagCount"
-            :max-tag-text-length="column.maxTagTextLength"
-          />
+      <template v-if="column.dataIndex !== 'index'">
+        <Form
+          :model="record"
+          :ref="
+            (el) => {
+              if (el) listFormRefs.push(el)
+            }
+          "
+        >
+          <FormItem :rules="column?.rules || []" :name="column.dataIndex">
+            <Select
+              v-if="column.type === 'select'"
+              v-model:value="record[column.dataIndex]"
+              :options="column.dicData"
+              :mode="column.mode"
+              :max-tag-count="column.maxTagCount"
+              :max-tag-text-length="column.maxTagTextLength"
+            />
 
-          <DatePicker
-            v-else-if="column.type === 'datePicker'"
-            v-model:value="record[column.dataIndex]"
-            valueFormat="YYYY-MM-DD HH:mm:ss"
-            :showTime="true"
-          />
-          <InputNumber
-            v-else-if="column.type === 'number'"
-            v-model:value="record[column.dataIndex]"
-            :min="column.min"
-            :max="column.max"
-            :precision="column.precision ?? 2"
-          />
+            <DatePicker
+              v-else-if="column.type === 'datePicker'"
+              v-model:value="record[column.dataIndex]"
+              valueFormat="YYYY-MM-DD HH:mm:ss"
+              :showTime="true"
+            />
+            <InputNumber
+              v-else-if="column.type === 'number'"
+              v-model:value="record[column.dataIndex]"
+              :min="column.min"
+              :max="column.max"
+              :precision="column.precision ?? 2"
+            />
 
-          <Input v-else v-model:value="record[column.dataIndex]" />
-        </FormItem>
-      </Form>
+            <Input v-else v-model:value="record[column.dataIndex]" />
+          </FormItem>
+        </Form>
+      </template>
 
       <div v-else class="delete-wrapper">
         <span class="delete-index">{{ index + 1 }}</span>
@@ -68,7 +77,18 @@ import {
 import { ref, unref, computed, watch } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 import { Icon } from '../../../Icon'
+import { onMounted } from 'vue'
 const emit = defineEmits(['update:value'])
+
+const listFormRefs = ref([])
+
+onMounted(() => {
+  listFormRefs.value.forEach((ref) => {
+    console.log(ref)
+    const res = ref.getFieldsValue()
+    console.log(res)
+  })
+})
 
 const props = defineProps({
   columns: {
@@ -81,7 +101,7 @@ const props = defineProps({
   }
 })
 
-const emitData = ref<any[]>([])
+const emitData = ref<unknown[]>([])
 const [state] = useRuleFormItem(props, 'value', 'change', emitData)
 
 const getColumns = computed(() => {
@@ -94,7 +114,7 @@ const getColumns = computed(() => {
     width: 50,
     align: 'center'
   }
-  return [indexColumn, ...props.columns] as any
+  return [indexColumn, ...props.columns] as unknown
 })
 
 const plusClickEvent = () => {
@@ -127,7 +147,18 @@ watch(
   }
 )
 
-defineExpose({})
+const validate = async () => {
+  try {
+    listFormRefs.value.forEach((ref) => {
+      console.log(ref)
+      ref.validate()
+    })
+  } catch {
+    return new Error()
+  }
+}
+
+defineExpose({ validate })
 </script>
 
 <style scoped lang="less">

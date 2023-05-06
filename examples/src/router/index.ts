@@ -150,6 +150,11 @@ const routes = [
     path: '/Process',
     title: 'Process',
     component: () => import('../views/Process.vue')
+  },
+  {
+    path: '/TableChildren',
+    title: 'TableChildren',
+    component: () => import('../views/TableChildren.vue')
   }
 ]
 

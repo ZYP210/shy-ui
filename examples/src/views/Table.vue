@@ -27,13 +27,73 @@ const columns = [
     dataIndex: 'b',
     editRow: true,
     editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'a',
+    editRow: true,
+    editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'b',
+    editRow: true,
+    editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'a',
+    editRow: true,
+    editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'b',
+    editRow: true,
+    editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'a',
+    editRow: true,
+    editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'b',
+    editRow: true,
+    editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'a',
+    editRow: true,
+    editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'b',
+    editRow: true,
+    editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'a',
+    editRow: true,
+    editComponent: 'Input'
+  },
+  {
+    title: '123',
+    dataIndex: 'b',
+    editRow: true,
+    editComponent: 'Input'
   }
 ]
 const [register] = useTable({
   api: () => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve([{a:1}])
+        resolve([{ a: 1 }])
       }, 1000)
     })
   },

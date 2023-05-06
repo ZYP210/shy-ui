@@ -179,7 +179,7 @@ export default defineComponent({
           if (!Array.isArray(defaultValue)) {
             schema.defaultValue = dateUtil(defaultValue)
           } else {
-            const def: any[] = []
+            const def: unknown[] = []
             defaultValue.forEach((item) => {
               def.push(dateUtil(item))
             })
@@ -240,7 +240,9 @@ export default defineComponent({
       formModel,
       getSchema,
       defaultValueRef,
+      //@ts-ignore
       formElRef: formElRef as Ref<FormActionType>,
+      //@ts-ignore
       schemaRef: schemaRef as Ref<FormSchema[]>,
       handleFormValues
     })

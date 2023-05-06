@@ -279,8 +279,14 @@ export default defineComponent({
         tableLayout: 'fixed',
         rowSelection: unref(getRowSelectionRef),
         rowKey: unref(getRowKey),
-        columns: toRaw(unref(getViewColumns)).map((item) => {
-          item.resizable = true
+        // @ts-ignore
+        columns: toRaw(unref(getViewColumns)).map((item, index) => {
+          if (index !== unref(getViewColumns).length - 1) {
+            item.resizable = true
+          }
+          if (!Object.prototype.hasOwnProperty.call(item, 'width')) {
+            item.width = 80
+          }
           return item
         }),
         pagination: toRaw(unref(getPaginationInfo)),
@@ -364,8 +370,9 @@ export default defineComponent({
 
     emit('register', tableAction, formActions)
 
-    const handleResizeColumn = (w: any, col: { width: any }) => {
+    const handleResizeColumn = (w: unknown, col: { width: unknown }) => {
       col.width = w
+      console.log(w)
     }
 
     const getHeight = computed(() => {
