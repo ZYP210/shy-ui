@@ -285,6 +285,7 @@ export default defineComponent({
             item.resizable = true
           }
           if (!Object.prototype.hasOwnProperty.call(item, 'width')) {
+            console.log(item)
             item.width = 80
           }
           return item
