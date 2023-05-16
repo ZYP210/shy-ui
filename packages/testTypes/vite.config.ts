@@ -31,7 +31,6 @@ export default defineConfig({
         '@shy-plugins/utils',
         '@zxcvbn-ts/core',
         'sortablejs',
-        'lodash-es',
         'virtual:svg-icons-names',
         '@logicflow/core',
         '@purge-icons/generated',
