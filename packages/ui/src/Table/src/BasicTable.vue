@@ -1,61 +1,55 @@
 <template>
   <div ref="wrapRef" :class="getWrapperClass">
-    <div class="shy-page">
-      <BasicForm
-        ref="formRef"
-        submitOnReset
-        v-bind="getFormProps"
-        v-if="getBindValues.useSearchForm"
-        :tableAction="tableAction"
-        @register="registerForm"
-        @submit="handleSearchInfoChange"
-        @advanced-change="redoHeight"
+    <BasicForm
+      ref="formRef"
+      submitOnReset
+      v-bind="getFormProps"
+      v-if="getBindValues.useSearchForm"
+      :tableAction="tableAction"
+      @register="registerForm"
+      @submit="handleSearchInfoChange"
+      @advanced-change="redoHeight"
+    >
+      <template
+        #[replaceFormSlotKey(item)]="data"
+        v-for="item in getFormSlotKeys"
       >
-        <template
-          #[replaceFormSlotKey(item)]="data"
-          v-for="item in getFormSlotKeys"
-        >
-          <slot :name="item" v-bind="data || {}"></slot>
-        </template>
-      </BasicForm>
+        <slot :name="item" v-bind="data || {}"></slot>
+      </template>
+    </BasicForm>
 
-      <Table
-        ref="tableElRef"
-        v-bind="getBindValues"
-        :rowClassName="getRowClassName"
-        v-show="getEmptyDataIsShowTable"
-        @change="handleTableChange"
-        @resizeColumn="handleResizeColumn"
-        class="enter-x"
-      >
-        <template
-          #[item]="data"
-          v-for="item in Object.keys($slots)"
-          :key="item"
-        >
-          <slot :name="item" v-bind="data || {}"></slot>
-        </template>
-        <template #headerCell="{ column }">
-          <HeaderCell :column="column" />
-        </template>
+    <Table
+      ref="tableElRef"
+      v-bind="getBindValues"
+      :rowClassName="getRowClassName"
+      v-show="getEmptyDataIsShowTable"
+      @change="handleTableChange"
+      @resizeColumn="handleResizeColumn"
+      class="enter-x"
+    >
+      <template #[item]="data" v-for="item in Object.keys($slots)" :key="item">
+        <slot :name="item" v-bind="data || {}"></slot>
+      </template>
+      <template #headerCell="{ column }">
+        <HeaderCell :column="column" />
+      </template>
 
-        <template #emptyText>
-          <div
-            class="flex justify-center items-center"
-            :style="{ height: `${getHeight.y as number - 40}px` }"
-          >
-            <Empty />
-          </div>
-        </template>
-        <!-- 增加对antdv3.x兼容 -->
-        <template #bodyCell="data">
-          <slot name="bodyCell" v-bind="data || {}"></slot>
-        </template>
-        <!--      <template #[`header-${column.dataIndex}`] v-for="(column, index) in columns" :key="index">-->
-        <!--        <HeaderCell :column="column" />-->
-        <!--      </template>-->
-      </Table>
-    </div>
+      <template #emptyText>
+        <div
+          class="flex justify-center items-center"
+          :style="{ height: `${getHeight.y as number - 40}px` }"
+        >
+          <Empty />
+        </div>
+      </template>
+      <!-- 增加对antdv3.x兼容 -->
+      <template #bodyCell="data">
+        <slot name="bodyCell" v-bind="data || {}"></slot>
+      </template>
+      <!--      <template #[`header-${column.dataIndex}`] v-for="(column, index) in columns" :key="index">-->
+      <!--        <HeaderCell :column="column" />-->
+      <!--      </template>-->
+    </Table>
   </div>
 </template>
 <script lang="ts">
@@ -280,20 +274,7 @@ export default defineComponent({
         rowSelection: unref(getRowSelectionRef),
         rowKey: unref(getRowKey),
         // @ts-ignore
-        columns: toRaw(unref(getViewColumns)).map((item, index) => {
-          // if (index !== unref(getViewColumns).length - 1) {
-          //   item.resizable = true
-          // }
-          // if (item.flag === 'INDEX') {
-          //   item.maxWidth = 50
-          // }
-          // if (
-          //   !Object.prototype.hasOwnProperty.call(item, 'width') &&
-          //   item.flag !== 'INDEX' &&
-          //   item.dataIndex !== 'action'
-          // ) {
-          //   item.width = 80
-          // }
+        columns: toRaw(unref(getViewColumns)).map((item) => {
           return item
         }),
         pagination: toRaw(unref(getPaginationInfo)),

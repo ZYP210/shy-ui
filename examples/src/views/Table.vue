@@ -1,5 +1,5 @@
 <template>
-  <div class="p4">
+  <div class="pl-15px pr-15px overflow-hidden h-full">
     <BasicTable
       title="基础示例"
       titleHelpMessage="温馨提醒"
@@ -39,7 +39,11 @@ const [register] = useTable({
   api: () => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        resolve([{ a: 1 }])
+        let data = []
+        for (let i = 0; i < 100; i++) {
+          data.push({ a: 1 })
+        }
+        resolve(data)
       }, 1000)
     })
   },
