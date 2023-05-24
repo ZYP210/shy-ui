@@ -4,7 +4,7 @@ import App from './App.vue'
 import 'ant-design-vue/dist/antd.min.css'
 // import shyUi from '3h1-ui'
 import router from './router/index'
-import '3h1-ui/es/style.css'
+// import '3h1-ui/es/style.css'
 
 // 注册windicss
 import 'virtual:windi-base.css'
@@ -17,4 +17,5 @@ import 'virtual:svg-icons-register'
 
 const app = createApp(App)
 
-app.use(router).use(Antd).mount('#app')
+// app.use(router).use(Antd).
+app.use(Antd).use(router).mount('#app')

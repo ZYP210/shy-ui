@@ -11,13 +11,13 @@
 
 [data-theme='light'] {
   .@{prefix-cls} > .ant-table-wrapper {
-    border: 1px solid rgb(239 239 245);
-    box-shadow: 0 20px 27px rgb(0 0 0 / 5%);
+    // border: 1px solid rgb(239 239 245);
+    // box-shadow: 0 20px 27px rgb(0 0 0 / 5%);
   }
 
   .@{prefix-cls}-form-container > .ant-form {
-    border: 1px solid rgb(239 239 245);
-    box-shadow: 0 20px 27px rgb(107 106 106 / 5%);
+    // border: 1px solid rgb(239 239 245);
+    // box-shadow: 0 20px 27px rgb(107 106 106 / 5%);
   }
 }
 
@@ -98,7 +98,8 @@
 
     .ant-table-body {
       overflow-x: hidden !important;
-      //  overflow-y: scroll !important;
+      overflow-y: scroll !important;
+      padding-right: 7px;
     }
 
     td {
@@ -115,9 +116,5 @@
   .ant-table-container {
     border-bottom: 1px solid #f0f0f0;
     border-right: 1px solid #f0f0f0;
-  }
-
-  .ant-table-body {
-    overflow: auto !important;
   }
 }

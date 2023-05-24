@@ -50,7 +50,18 @@ const [register] = useTable({
   columns: columns as any,
   useSearchForm: true,
   showIndexColumn: true,
-  rowSelection: {}
+  actionColumn: {
+    title: '操作'
+  },
+  rowSelection: {},
+  formConfig: {
+    schemas: [
+      { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
+      { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
+      { label: 'a', field: 'c', component: 'Input', colProps: { span: 8 } },
+      { label: 'a', field: 'd', component: 'Input', colProps: { span: 8 } }
+    ]
+  }
 })
 
 const formConfig = {

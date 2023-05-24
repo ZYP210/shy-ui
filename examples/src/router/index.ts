@@ -155,6 +155,11 @@ const routes = [
     path: '/TableChildren',
     title: 'TableChildren',
     component: () => import('../views/TableChildren.vue')
+  },
+  {
+    path: '/TableAnt',
+    title: 'TableChildren',
+    component: () => import('../views/TableAnt.vue')
   }
 ]
 
@@ -162,5 +167,7 @@ const router = createRouter({
   routes,
   history: createWebHistory()
 })
+
+console.log(router)
 
 export default router
