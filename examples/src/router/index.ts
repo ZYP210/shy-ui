@@ -160,6 +160,11 @@ const routes = [
     path: '/TableAnt',
     title: 'TableChildren',
     component: () => import('../views/TableAnt.vue')
+  },
+  {
+    path: '/TablePlus',
+    title: 'TableChildren',
+    component: () => import('../views/TablePlus.vue')
   }
 ]
 

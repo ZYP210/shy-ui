@@ -13,7 +13,6 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent, ref } from 'vue'
 import { BasicTable, useTable } from '3h1-ui'
 const columns = [
   {

@@ -1,0 +1,38 @@
+@prefix-cls: ~'shy-basic-table-plus';
+
+.@{prefix-cls} {
+  &-wrapper {
+    display: flex;
+    flex-flow: column nowrap;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  &-toolbar {
+    height: 50px;
+    flex:none;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    & > button,& > div {
+      margin-right: 10px;
+    }
+  }
+
+  &-search {
+    flex:none;
+  }
+
+  &-body {
+    flex:1 1 auto;
+    overflow: hidden;
+  }
+
+  &-pagination {
+    flex:none;
+    padding: 5px 0;
+    //overflow: hidden;
+    text-align: right;
+  }
+}

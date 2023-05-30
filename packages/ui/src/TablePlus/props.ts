@@ -11,11 +11,16 @@ export const basicProps: VxeTableProps = {
   // 序号设置
   seqConfig: {},
   // 高度
-  height: 'auto',
-  autoResize: true
+  height: 'auto'
+  // autoResize: true
 }
 
 export const basicColumn: VxeColumnProps = {
   showHeaderOverflow: 'tooltip',
-  showOverflow: 'tooltip'
+  showOverflow: 'tooltip',
+  align: 'center'
+}
+
+export const basicFormConfig = {
+  labelWidth: 80
 }

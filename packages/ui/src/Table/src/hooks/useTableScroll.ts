@@ -57,7 +57,6 @@ export function useTableScroll(
   let paginationEl: HTMLElement | null
   let footerEl: HTMLElement | null
   let bodyEl: HTMLElement | null
-
   async function calcTableHeight() {
     const {
       resizeHeightOffset,
