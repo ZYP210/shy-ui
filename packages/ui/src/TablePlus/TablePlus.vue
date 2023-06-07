@@ -5,9 +5,10 @@
         @register="registerForm"
         @submit="handleSearchFormSubmit"
         @reset="handleSearchFormSubmit"
+        v-bind="getFormConfig"
       ></BasicForm>
     </div>
-    <div :class="getClassName('toolbar')">
+    <div v-if="getProps.isShowToolbar" :class="getClassName('toolbar')">
       <slot name="toolbar"> </slot>
     </div>
     <div :class="getClassName('body')">
@@ -18,6 +19,9 @@
         @checkbox-all="handleCheckboxChange"
         @checkbox-change="handleCheckboxChange"
         @radio-change="handleRadioChange"
+        :edit-config="{ trigger: 'manual', mode: 'row' }"
+        :row-config="{ isHover: true }"
+        show-overflow
       >
         <vxe-column
           v-if="getProps.configRowSelection.type === 'checkbox'"
@@ -27,29 +31,30 @@
         />
         <vxe-column v-else type="radio" width="60" align="center" />
 
-        <vxe-column
-          type="seq"
-          width="60"
-          align="center"
-          title="序号"
-        ></vxe-column>
+        <vxe-column type="seq" width="60" align="center" title="序号" />
+
         <template v-for="(column, index) in getColumns" :key="index">
-          <vxe-column v-bind="column">
+          <vxe-column v-bind="column" :edit-render="{}">
             <template #default="config">
               <slot :name="column.field" v-bind="config">{{
                 config.row[column.field]
               }}</slot>
             </template>
+
+            <template #edit="config">{{ config }}</template>
           </vxe-column>
         </template>
 
         <vxe-column
+          v-if="getProps.isShowAction"
           title="操作"
           field="action"
           align="center"
           v-bind="getProps.actionColumn"
         >
-          <slot name="action"></slot>
+          <template #default="config">
+            <slot name="action" v-bind="config"></slot>
+          </template>
         </vxe-column>
       </vxe-table>
     </div>
@@ -78,20 +83,24 @@ import { VxeTable, VxeColumn, VxeColumnProps } from 'vxe-table'
 import { basicColumn, basicFormConfig, basicProps } from './props'
 import { Pagination } from 'ant-design-vue'
 import { usePagination } from './hooks/usePagination'
+import { onMounted } from 'vue'
 
 const emits = defineEmits(['register', 'selection-change'])
 
 interface Props {
   api?: any
-  columns: VxeColumnProps[]
-  isSeq?: boolean
+  columns?: VxeColumnProps[]
+  isShowSeq?: boolean
   isCompatible?: boolean
   actionColumn?: VxeColumnProps
   isShowSearch?: boolean
   isShowRowSelection?: boolean
-  isShowAction: boolean
+  isShowAction?: boolean
+  isShowToolbar?: boolean
+  isImmediate?: boolean
   configRowSelection: any
   formConfig?: any
+  searchInfo?: any
 }
 
 const prefixCls = 'shy-basic-table-plus'
@@ -104,14 +113,17 @@ const getClassName = (className) => {
 
 const props = withDefaults(defineProps<Props>(), {
   columns: () => [] as VxeColumnProps[],
-  isSeq: true,
+  isShowSeq: true,
   isShowSearch: true,
   isShowAction: true,
+  isShowToolbar: true,
   formConfig: {},
   isCompatible: false,
   configRowSelection: {
     type: 'checkbox'
   },
+  isImmediate: true,
+  searchInfo: {},
   actionColumn: () => {
     return {
       title: '操作',
@@ -164,17 +176,16 @@ const handlePageChange = (current, pageSize) => {
 // form
 const getFormConfig = computed(() => {
   return {
-    ...props.formConfig,
+    ...getProps.value.formConfig,
     showAdvancedButton: true
   }
 })
 
-const [registerForm] = useForm({
+const [registerForm, { setProps: setPropsForm }] = useForm({
   ...basicFormConfig,
   ...getFormConfig.value
 })
 
-const searchInfo = ref({})
 const formSearch = ref({})
 // 查询点击事件
 const handleSearchFormSubmit = (form) => {
@@ -184,7 +195,7 @@ const handleSearchFormSubmit = (form) => {
 
 const params = computed(() => {
   return {
-    ...searchInfo.value,
+    ...getProps.value.searchInfo,
     ...formSearch.value,
     current: page.current,
     size: page.pageSize
@@ -205,8 +216,10 @@ const reload = async () => {
   }
 }
 
-watch(getProps, () => {
-  reload()
+onMounted(() => {
+  if (getProps.value.isImmediate) {
+    reload()
+  }
 })
 
 // checkbox radio
@@ -229,12 +242,18 @@ const getRowSelection = () => {
   }
 }
 
+const setEditByRow = (row) => {
+  console.log(tableRef.value)
+  tableRef.value && tableRef.value.setEditRow(row)
+}
+
 // register
 const tableAction = {
   reload,
   setTableData,
   setProps,
-  getRowSelection
+  getRowSelection,
+  setEditByRow
 }
 
 emits('register', tableAction, {})

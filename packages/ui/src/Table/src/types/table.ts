@@ -138,6 +138,7 @@ export interface TableActionType {
     dataIndex: string | undefined,
     value: BasicColumn
   ) => void
+  setEditByRow: any
 }
 
 export interface FetchSetting {

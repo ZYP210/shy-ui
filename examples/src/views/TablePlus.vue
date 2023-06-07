@@ -6,9 +6,10 @@
         <a-button>1</a-button>
       </template>
 
-      <template #action>
+      <template #action="{ row }">
         <!--        <a-button>123</a-button>-->
-        1233
+
+        <Button @click="handleEditClick(row)"> edit</Button>
       </template>
 
       <template #a="{ row }">{{ row }}</template>
@@ -18,6 +19,8 @@
 
 <script setup lang="ts">
 import { TablePlus, useTablePlus } from '3h1-ui'
+import { onMounted } from 'vue'
+import { Button } from 'ant-design-vue'
 
 const columns = [
   { title: 'a', dataIndex: 'a', width: 100 },
@@ -62,14 +65,25 @@ const formConfig = {
   ]
 }
 
-const [register, { getRowSelection }] = useTablePlus({
-  api: getList,
-  columns,
-  formConfig,
-  isShowSearch: false
+const [register, { getRowSelection, setProps, reload, setEditByRow }] =
+  useTablePlus({
+    api: getList,
+    columns,
+    formConfig,
+    isImmediate: false
+  })
+
+onMounted(() => {
+  setProps({ searchInfo: { id: 1 } })
+  reload()
 })
 
 const handleClick = () => {
   const records = getRowSelection()
+}
+
+const handleEditClick = (row) => {
+  console.log(setEditByRow)
+  setEditByRow(row)
 }
 </script>

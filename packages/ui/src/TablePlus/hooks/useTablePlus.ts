@@ -3,7 +3,7 @@ import { error, getDynamicProps } from '@shy-plugins/utils'
 import { ref, onUnmounted, unref } from 'vue'
 import { TableActionType } from '/@/Table'
 
-export function useTablePlus(tableProps) {
+export function useTablePlus(tableProps): any {
   const tableRef = ref(null)
   const formRef = ref(null)
 
@@ -31,9 +31,11 @@ export function useTablePlus(tableProps) {
 
   const methods = {
     reload: () => getTableInstance().reload(),
-    setProps: (props) => getTableInstance().setProps(props),
+    setProps: (props) =>
+      getTableInstance().setProps({ ...tableProps, ...props }),
     setTableData: (data) => getTableInstance().setTableData(data),
-    getRowSelection: () => getTableInstance().getRowSelection()
+    getRowSelection: () => getTableInstance().getRowSelection(),
+    setEditByRow: () => getTableInstance().setEditByRow()
   }
 
   return [register, methods]
