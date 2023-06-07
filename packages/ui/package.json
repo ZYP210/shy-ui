@@ -1,8 +1,9 @@
 {
   "name": "3h1-ui",
-  "version": "1.2.0-beta.15",
+  "version": "1.2.0-beta.16",
   "description": "",
-  "main": "index.ts",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "major": "npm version major",
