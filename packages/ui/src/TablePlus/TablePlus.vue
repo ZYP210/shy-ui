@@ -19,7 +19,6 @@
         @checkbox-all="handleCheckboxChange"
         @checkbox-change="handleCheckboxChange"
         @radio-change="handleRadioChange"
-        :edit-config="{ trigger: 'click', mode: 'cell' }"
         :row-config="{ isHover: true }"
         show-overflow
         :column-config="{ resizable: true }"
@@ -35,14 +34,14 @@
         <vxe-column type="seq" width="60" align="center" title="序号" />
 
         <template v-for="(column, index) in getColumns" :key="index">
-          <vxe-column v-bind="column" :edit-render="{}">
+          <vxe-column v-bind="column">
             <template #default="config">
               <slot :name="column.field" v-bind="config">{{
                 config.row[column.field]
               }}</slot>
             </template>
 
-            <template #edit="config">{{ config }}</template>
+            <!-- <template #edit="config">{{ config }}</template> -->
           </vxe-column>
         </template>
 
@@ -182,7 +181,7 @@ const getFormConfig = computed(() => {
   }
 })
 
-const [registerForm, { setProps: setPropsForm }] = useForm({
+const [registerForm, formActions] = useForm({
   ...basicFormConfig,
   ...getFormConfig.value
 })
@@ -257,6 +256,6 @@ const tableAction = {
   setEditByRow
 }
 
-emits('register', tableAction, {})
+emits('register', tableAction, formActions)
 </script>
 <style lang="less" scoped></style>

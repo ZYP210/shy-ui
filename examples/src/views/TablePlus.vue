@@ -65,7 +65,7 @@ const formConfig = {
   ]
 }
 
-const [register, { getRowSelection, setProps, reload, setEditByRow }] =
+const [register, { getRowSelection, setProps, reload, setEditByRow, getForm }] =
   useTablePlus({
     api: getList,
     columns,
@@ -76,6 +76,9 @@ const [register, { getRowSelection, setProps, reload, setEditByRow }] =
 onMounted(() => {
   setProps({ searchInfo: { id: 1 } })
   reload()
+
+  const actions = getForm()
+  console.log(actions)
 })
 
 const handleClick = () => {

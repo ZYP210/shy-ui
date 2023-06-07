@@ -2,6 +2,7 @@
 import { error, getDynamicProps } from '@shy-plugins/utils'
 import { ref, onUnmounted, unref } from 'vue'
 import { TableActionType } from '/@/Table'
+import { FormActionType } from '/@/Form/src/types/form'
 
 export function useTablePlus(tableProps): any {
   const tableRef = ref(null)
@@ -35,7 +36,10 @@ export function useTablePlus(tableProps): any {
       getTableInstance().setProps({ ...tableProps, ...props }),
     setTableData: (data) => getTableInstance().setTableData(data),
     getRowSelection: () => getTableInstance().getRowSelection(),
-    setEditByRow: () => getTableInstance().setEditByRow()
+    setEditByRow: () => getTableInstance().setEditByRow(),
+    getForm: () => {
+      return unref(formRef) as unknown as FormActionType
+    }
   }
 
   return [register, methods]
