@@ -36,12 +36,10 @@
         <template v-for="(column, index) in getColumns" :key="index">
           <vxe-column v-bind="column">
             <template #default="config">
-              <slot :name="column.field" v-bind="config">{{
-                config.row[column.field]
-              }}</slot>
+              <slot :name="column.field" v-bind="config">
+                {{ config.row[column.field] }}
+              </slot>
             </template>
-
-            <!-- <template #edit="config">{{ config }}</template> -->
           </vxe-column>
         </template>
 
@@ -101,6 +99,7 @@ interface Props {
   configRowSelection: any
   formConfig?: any
   searchInfo?: any
+  transSearchInfoBeforeReload: any
 }
 
 const prefixCls = 'shy-basic-table-plus'
@@ -129,6 +128,11 @@ const props = withDefaults(defineProps<Props>(), {
       title: '操作',
       field: 'action',
       width: 60
+    }
+  },
+  transSearchInfoBeforeReload: {
+    default: (form) => {
+      return form
     }
   }
 })
@@ -189,7 +193,8 @@ const [registerForm, formActions] = useForm({
 const formSearch = ref({})
 // 查询点击事件
 const handleSearchFormSubmit = (form) => {
-  formSearch.value = form
+  formSearch.value = getProps.value.transSearchInfoBeforeReload(form)
+
   reload()
 }
 

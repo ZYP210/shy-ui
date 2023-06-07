@@ -70,7 +70,11 @@ const [register, { getRowSelection, setProps, reload, setEditByRow, getForm }] =
     api: getList,
     columns,
     formConfig,
-    isImmediate: false
+    isImmediate: false,
+    transSearchInfoBeforeReload: (form) => {
+      // console.log(form)
+      return { a: form.a }
+    }
   })
 
 onMounted(() => {
