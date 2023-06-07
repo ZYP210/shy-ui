@@ -19,9 +19,10 @@
         @checkbox-all="handleCheckboxChange"
         @checkbox-change="handleCheckboxChange"
         @radio-change="handleRadioChange"
-        :edit-config="{ trigger: 'manual', mode: 'row' }"
+        :edit-config="{ trigger: 'click', mode: 'cell' }"
         :row-config="{ isHover: true }"
         show-overflow
+        :column-config="{ resizable: true }"
       >
         <vxe-column
           v-if="getProps.configRowSelection.type === 'checkbox'"
