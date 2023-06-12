@@ -51,7 +51,6 @@ import { PopConfirmButton } from '../../../Button'
 import { Dropdown } from '../../../Dropdown'
 import { useDesign } from '@shy-plugins/use'
 import { useTableContext } from '../hooks/useTableContext'
-// import { usePermission } from '/@/hooks/web/usePermission'
 import { isBoolean, isFunction, isString, propTypes } from '@shy-plugins/utils'
 import { ACTION_COLUMN_FLAG } from '../const'
 
@@ -85,9 +84,6 @@ export default defineComponent({
       table = useTableContext()
     }
 
-    // const { hasPermission } = usePermission()
-    const hasPermission = (key: any) => true
-
     function isIfShow(action: ActionItem): boolean {
       const ifShow = action.ifShow
 
@@ -105,7 +101,7 @@ export default defineComponent({
     const getActions = computed(() => {
       return (toRaw(props.actions) || [])
         .filter((action) => {
-          return hasPermission(action.auth) && isIfShow(action)
+          return isIfShow(action)
         })
         .map((action) => {
           const { popConfirm } = action
@@ -125,7 +121,7 @@ export default defineComponent({
 
     const getDropdownList = computed((): any[] => {
       const list = (toRaw(props.dropDownActions) || []).filter((action) => {
-        return hasPermission(action.auth) && isIfShow(action)
+        return isIfShow(action)
       })
       return list.map((action, index) => {
         const { label, popConfirm } = action

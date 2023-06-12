@@ -22,6 +22,7 @@
         :row-config="{ isHover: true }"
         show-overflow
         :column-config="{ resizable: true }"
+        :edit-config="{ trigger: 'manual', mode: 'row' }"
       >
         <vxe-column
           v-if="getProps.configRowSelection.type === 'checkbox'"
@@ -31,13 +32,49 @@
         />
         <vxe-column v-else type="radio" width="60" align="center" />
 
-        <vxe-column type="seq" width="60" align="center" title="序号" />
+        <vxe-column
+          v-if="getProps.isShowSeq"
+          type="seq"
+          width="60"
+          align="center"
+          title="序号"
+        />
 
         <template v-for="(column, index) in getColumns" :key="index">
-          <vxe-column v-bind="column">
+          <vxe-column
+            v-bind="column"
+            :edit-render="column?.editRender || undefined"
+          >
             <template #default="config">
               <slot :name="column.field" v-bind="config">
-                {{ config.row[column.field] }}
+                <template v-if="config.row._isEdit && column?.isEdit">
+                  <CellComponent
+                    v-bind="column?.editProps || {}"
+                    v-model:value="config.row[column.field]"
+                  />
+                </template>
+
+                <template v-else>
+                  <span
+                    v-if="
+                      (column?.isEdit &&
+                        column?.editProps?.component === 'Select') ||
+                      column?.editProps?.component === 'ApiSelect'
+                    "
+                  >
+                    <CellComponent
+                      v-bind="column?.editProps || {}"
+                      v-model:value="config.row[column.field]"
+                      :bordered="false"
+                      :showArrow="false"
+                      :open="false"
+                      :popoverVisible="false"
+                    />
+                  </span>
+                  <span v-else>
+                    {{ config.row[column.field] }}
+                  </span>
+                </template>
               </slot>
             </template>
           </vxe-column>
@@ -51,7 +88,21 @@
           v-bind="getProps.actionColumn"
         >
           <template #default="config">
-            <slot name="action" v-bind="config"></slot>
+            <div class="flex items-center justify-center">
+              <slot name="action" v-bind="config">
+                <ButtonGroupEdit
+                  v-if="getProps.isUseDefaultEditAction"
+                  :row="config.row"
+                  @edit-ensure="handleEditEnsure(config.row)"
+                  @edit-cancel="handleEditCancel(config.row)"
+                  @updateStatusEdit="
+                    (isEdit) => {
+                      config.row._isEdit = isEdit
+                    }
+                  "
+                />
+              </slot>
+            </div>
           </template>
         </vxe-column>
       </vxe-table>
@@ -74,16 +125,22 @@
   </div>
 </template>
 <script lang="ts" setup>
-import 'vxe-table/lib/style.css'
-import { useSlots, useAttrs, computed, ref, watch, unref, toRaw } from 'vue'
+import { useSlots, useAttrs, computed, ref, toRaw } from 'vue'
 import { BasicForm, useForm } from '../Form'
-import { VxeTable, VxeColumn, VxeColumnProps } from 'vxe-table'
+import { VxeColumnProps } from 'vxe-table'
 import { basicColumn, basicFormConfig, basicProps } from './props'
 import { Pagination } from 'ant-design-vue'
 import { usePagination } from './hooks/usePagination'
-import { onMounted } from 'vue'
+import { useTableData } from './hooks/useTableData'
+import { CellComponent } from './components/editable/CellComponent'
+import ButtonGroupEdit from './components/ButtonGroupEdit.vue'
 
-const emits = defineEmits(['register', 'selection-change'])
+const emits = defineEmits([
+  'register',
+  'selection-change',
+  'row-ensure',
+  'row-cancel'
+])
 
 interface Props {
   api?: any
@@ -94,12 +151,14 @@ interface Props {
   isShowSearch?: boolean
   isShowRowSelection?: boolean
   isShowAction?: boolean
+  isUseDefaultEditAction?: boolean
   isShowToolbar?: boolean
   isImmediate?: boolean
-  configRowSelection: any
+  configRowSelection?: any
   formConfig?: any
   searchInfo?: any
-  transSearchInfoBeforeReload: any
+  transSearchInfoBeforeReload?: any
+  isUseEdit?: boolean
 }
 
 const prefixCls = 'shy-basic-table-plus'
@@ -115,6 +174,7 @@ const props = withDefaults(defineProps<Props>(), {
   isShowSeq: true,
   isShowSearch: true,
   isShowAction: true,
+  isUseDefaultEditAction: false,
   isShowToolbar: true,
   formConfig: {},
   isCompatible: false,
@@ -127,7 +187,7 @@ const props = withDefaults(defineProps<Props>(), {
     return {
       title: '操作',
       field: 'action',
-      width: 60
+      width: 150
     }
   },
   transSearchInfoBeforeReload: {
@@ -208,23 +268,9 @@ const params = computed(() => {
 })
 
 // dataSource
-
-const dataSource = ref([])
-const setTableData = (data) => {
-  dataSource.value = data
-}
-const reload = async () => {
-  if (getProps.value?.api) {
-    const res = await getProps.value.api(params.value)
-    setTableData(res.records)
-    setPage({ total: res?.total || 0 })
-  }
-}
-
-onMounted(() => {
-  if (getProps.value.isImmediate) {
-    reload()
-  }
+const { dataSource, setTableData, reload } = useTableData(getProps, {
+  setPage,
+  params
 })
 
 // checkbox radio
@@ -248,8 +294,18 @@ const getRowSelection = () => {
 }
 
 const setEditByRow = (row) => {
-  console.log(tableRef.value)
-  tableRef.value && tableRef.value.setEditRow(row)
+  row._isEdit = true
+}
+
+const cancelEditByRow = (row) => {
+  row._isEdit = false
+}
+
+const handleEditEnsure = (row) => {
+  emits('row-ensure', row)
+}
+const handleEditCancel = (row) => {
+  emits('row-cancel', row)
 }
 
 // register
@@ -258,7 +314,8 @@ const tableAction = {
   setTableData,
   setProps,
   getRowSelection,
-  setEditByRow
+  setEditByRow,
+  cancelEditByRow
 }
 
 emits('register', tableAction, formActions)

@@ -36,10 +36,11 @@ export function useTablePlus(tableProps): any {
       getTableInstance().setProps({ ...tableProps, ...props }),
     setTableData: (data) => getTableInstance().setTableData(data),
     getRowSelection: () => getTableInstance().getRowSelection(),
-    setEditByRow: () => getTableInstance().setEditByRow(),
+    setEditByRow: (row) => getTableInstance().setEditByRow(row),
     getForm: () => {
       return unref(formRef) as unknown as FormActionType
-    }
+    },
+    cancelEditByRow: (row) => getTableInstance().cancelEditByRow(row)
   }
 
   return [register, methods]

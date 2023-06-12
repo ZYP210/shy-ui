@@ -15,7 +15,9 @@ import 'virtual:windi-utilities.css'
 // 注册本地svg
 import 'virtual:svg-icons-register'
 
+import { TablePlus } from '3h1-ui'
+
 const app = createApp(App)
 
 // app.use(router).use(Antd).
-app.use(Antd).use(router).mount('#app')
+app.use(Antd).use(router).use(TablePlus, { a: 1 }).mount('#app')

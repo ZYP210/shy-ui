@@ -6,25 +6,40 @@
         <a-button>1</a-button>
       </template>
 
-      <template #action="{ row }">
-        <!--        <a-button>123</a-button>-->
+      <!--      <template #action="{ row }">-->
+      <!--        &lt;!&ndash;        <a-button>123</a-button>&ndash;&gt;-->
 
-        <Button @click="handleEditClick(row)"> edit</Button>
-      </template>
-
-      <template #a="{ row }">{{ row }}</template>
+      <!--        <Button @click="handleEditClick(row)">edit</Button>-->
+      <!--      </template>-->
     </TablePlus>
   </div>
 </template>
 
 <script setup lang="ts">
-import { TablePlus, useTablePlus } from '3h1-ui'
+import { useTablePlus } from '3h1-ui'
 import { onMounted } from 'vue'
 import { Button } from 'ant-design-vue'
 
 const columns = [
-  { title: 'a', dataIndex: 'a', width: 100 },
-  { title: 'b', field: 'b', width: 100 },
+  {
+    title: 'a',
+    field: 'a',
+    width: 100,
+    isEdit: true,
+    editProps: {
+      component: 'Select',
+      rule: [{ required: true }],
+      options: [{ label: 'a', value: 1 }]
+    },
+    editRender: {}
+  },
+  {
+    title: 'b',
+    field: 'b',
+    width: 100,
+    isEdit: true,
+    editProps: { component: 'Input', required: true }
+  },
   { title: 'c', field: 'c', width: 100 },
   { title: 'd', field: 'd' },
   { title: 'e', field: 'e' },
@@ -40,7 +55,7 @@ const columns = [
 
 const getList = (params = {}) => {
   const list = []
-  for (let i = 0; i < 110; i++) {
+  for (let i = 0; i < 11000; i++) {
     list.push({
       a: 1,
       b: 2,
@@ -71,6 +86,7 @@ const [register, { getRowSelection, setProps, reload, setEditByRow, getForm }] =
     columns,
     formConfig,
     isImmediate: false,
+    isUseDefaultEditAction: true,
     transSearchInfoBeforeReload: (form) => {
       // console.log(form)
       return { a: form.a }
@@ -90,7 +106,7 @@ const handleClick = () => {
 }
 
 const handleEditClick = (row) => {
-  console.log(setEditByRow)
+  console.log('1', row)
   setEditByRow(row)
 }
 </script>
