@@ -124,8 +124,9 @@
     </template>
   </div>
 </template>
+
 <script lang="ts" setup>
-import { useSlots, useAttrs, computed, ref, toRaw } from 'vue'
+import { useSlots, useAttrs, computed, ref, toRaw, watchEffect } from 'vue'
 import { BasicForm, useForm } from '../Form'
 import { VxeColumnProps } from 'vxe-table'
 import { basicColumn, basicFormConfig, basicProps } from './props'
@@ -142,7 +143,7 @@ const emits = defineEmits([
   'row-cancel'
 ])
 
-interface Props {
+type Props = {
   api?: any
   columns?: VxeColumnProps[]
   isShowSeq?: boolean
@@ -166,9 +167,7 @@ const prefixCls = 'shy-basic-table-plus'
 const getClassName = (className) => {
   return `${prefixCls}-${className}`
 }
-
 // props
-
 const props = withDefaults(defineProps<Props>(), {
   columns: () => [] as VxeColumnProps[],
   isShowSeq: true,
@@ -190,15 +189,16 @@ const props = withDefaults(defineProps<Props>(), {
       width: 150
     }
   },
-  transSearchInfoBeforeReload: {
-    default: (form) => {
+  transSearchInfoBeforeReload: () => {
+    return (form) => {
       return form
     }
   }
 })
 const innerProps = ref({})
 const getProps = computed(() => {
-  const tempProps = { ...props, ...innerProps.value }
+  const tempProps: any = { ...props, ...innerProps.value }
+
   if (tempProps.isCompatible) {
     tempProps.columns.forEach((column) => {
       column.field = column.dataIndex
@@ -219,11 +219,11 @@ const getBindValues = computed(() => {
   return {
     ...basicProps,
     ...attrs,
-    ...getProps
+    ...getProps.value
   }
 })
 
-const getColumns = computed(() => {
+const getColumns: any = computed(() => {
   return getProps.value.columns.map((item) => {
     return { ...basicColumn, ...item }
   })
@@ -268,10 +268,13 @@ const params = computed(() => {
 })
 
 // dataSource
-const { dataSource, setTableData, reload } = useTableData(getProps, {
-  setPage,
-  params
-})
+const { dataSource, setTableData, reload, getTableData } = useTableData(
+  getProps,
+  {
+    setPage,
+    params
+  }
+)
 
 // checkbox radio
 const tableRef = ref()
@@ -315,9 +318,11 @@ const tableAction = {
   setProps,
   getRowSelection,
   setEditByRow,
-  cancelEditByRow
+  cancelEditByRow,
+  getTableData
 }
 
 emits('register', tableAction, formActions)
 </script>
+
 <style lang="less" scoped></style>

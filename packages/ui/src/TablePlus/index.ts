@@ -17,7 +17,6 @@ function useTable(app: App) {
 
 const withInstall = <T>(comp: T) => {
   ;(comp as SFCWithInstall<T>).install = (app: App, options) => {
-    console.log(options)
     //注册组件
     app.use(useTable)
     app.component('TablePlus', comp)

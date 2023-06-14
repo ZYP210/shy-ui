@@ -140,6 +140,7 @@ export interface TableActionType {
   ) => void
   setEditByRow?: any
   cancelEditByRow?: any
+  getTableData?: any
 }
 
 export interface FetchSetting {

@@ -40,7 +40,8 @@ export function useTablePlus(tableProps): any {
     getForm: () => {
       return unref(formRef) as unknown as FormActionType
     },
-    cancelEditByRow: (row) => getTableInstance().cancelEditByRow(row)
+    cancelEditByRow: (row) => getTableInstance().cancelEditByRow(row),
+    getTableData: () => getTableInstance().getTableData()
   }
 
   return [register, methods]

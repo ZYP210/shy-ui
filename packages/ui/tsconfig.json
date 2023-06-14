@@ -5,7 +5,6 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "strict": false,
-    "declaration": true,
     "jsx": "preserve",
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -16,6 +15,7 @@
     "baseUrl": "./",
     "types": ["vue-types", "vue"],
     "typeRoots": ["./node_modules/@types/", "./types"],
+    "declaration": false,
     "paths": {
       "/@/*": ["src/*"],
       "csstype": [

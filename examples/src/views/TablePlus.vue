@@ -87,26 +87,17 @@ const [register, { getRowSelection, setProps, reload, setEditByRow, getForm }] =
     formConfig,
     isImmediate: false,
     isUseDefaultEditAction: true,
-    transSearchInfoBeforeReload: (form) => {
-      // console.log(form)
-      return { a: form.a }
-    }
+    mergeCells: [{ row: 0, col: 1, rowspan: 2, colspan: 1 }]
   })
 
 onMounted(() => {
   setProps({ searchInfo: { id: 1 } })
   reload()
-
-  const actions = getForm()
-  console.log(actions)
 })
 
-const handleClick = () => {
-  const records = getRowSelection()
-}
+const handleClick = () => {}
 
 const handleEditClick = (row) => {
-  console.log('1', row)
   setEditByRow(row)
 }
 </script>
