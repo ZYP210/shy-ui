@@ -14,8 +14,8 @@
     "noEmit": true,
     "baseUrl": "./",
     "types": ["vue-types", "vue"],
-    "typeRoots": ["./node_modules/@types/", "./types"],
-    "declaration": false,
+    // "typeRoots": ["./node_modules/@types/", "./types"],
+    "declaration": true,
     "paths": {
       "/@/*": ["src/*"],
       "csstype": [
