@@ -107,7 +107,7 @@
         </vxe-column>
       </vxe-table>
     </div>
-    <template v-if="page.total !== 0">
+    <template v-if="page.total !== 0 && getProps.isShowPagination">
       <div :class="getClassName('pagination')">
         <Pagination
           size="small"
@@ -152,6 +152,7 @@ type Props = {
   isShowSearch?: boolean
   isShowRowSelection?: boolean
   isShowAction?: boolean
+  isShowPagination?: boolean
   isUseDefaultEditAction?: boolean
   isShowToolbar?: boolean
   isImmediate?: boolean
@@ -175,6 +176,7 @@ const props = withDefaults(defineProps<Props>(), {
   isShowAction: true,
   isUseDefaultEditAction: false,
   isShowToolbar: true,
+  isShowPagination: true,
   formConfig: {},
   isCompatible: false,
   configRowSelection: {
