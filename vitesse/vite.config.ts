@@ -21,22 +21,22 @@ import WebfontDownload from 'vite-plugin-webfont-dl'
 export default defineConfig({
   resolve: {
     alias: {
-      '~/': `${path.resolve(__dirname, 'src')}/`,
-    },
+      '~/': `${path.resolve(__dirname, 'src')}/`
+    }
   },
 
   plugins: [
     VueMacros({
       plugins: {
         vue: Vue({
-          include: [/\.vue$/, /\.md$/],
-        }),
-      },
+          include: [/\.vue$/, /\.md$/]
+        })
+      }
     }),
 
     // https://github.com/hannoeru/vite-plugin-pages
     Pages({
-      extensions: ['vue', 'md'],
+      extensions: ['vue', 'md']
     }),
 
     // https://github.com/JohnCampionJr/vite-plugin-vue-layouts
@@ -49,14 +49,11 @@ export default defineConfig({
         'vue-router',
         'vue-i18n',
         '@vueuse/head',
-        '@vueuse/core',
+        '@vueuse/core'
       ],
       dts: 'src/auto-imports.d.ts',
-      dirs: [
-        'src/composables',
-        'src/stores',
-      ],
-      vueTemplate: true,
+      dirs: ['src/composables', 'src/stores'],
+      vueTemplate: true
     }),
 
     // https://github.com/antfu/unplugin-vue-components
@@ -65,7 +62,7 @@ export default defineConfig({
       extensions: ['vue', 'md'],
       // allow auto import and register components used in markdown
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-      dts: 'src/components.d.ts',
+      dts: 'src/components.d.ts'
     }),
 
     // https://github.com/antfu/unocss
@@ -82,17 +79,17 @@ export default defineConfig({
         md.use(Shiki, {
           theme: {
             light: 'vitesse-light',
-            dark: 'vitesse-dark',
-          },
+            dark: 'vitesse-dark'
+          }
         })
         md.use(LinkAttributes, {
           matcher: (link: string) => /^https?:\/\//.test(link),
           attrs: {
             target: '_blank',
-            rel: 'noopener',
-          },
+            rel: 'noopener'
+          }
         })
-      },
+      }
     }),
 
     // https://github.com/antfu/vite-plugin-pwa
@@ -107,21 +104,21 @@ export default defineConfig({
           {
             src: '/pwa-192x192.png',
             sizes: '192x192',
-            type: 'image/png',
+            type: 'image/png'
+          },
+          {
+            src: '/pwa-512x512.png',
+            sizes: '512x512',
+            type: 'image/png'
           },
           {
             src: '/pwa-512x512.png',
             sizes: '512x512',
             type: 'image/png',
-          },
-          {
-            src: '/pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable',
-          },
-        ],
-      },
+            purpose: 'any maskable'
+          }
+        ]
+      }
     }),
 
     // https://github.com/intlify/bundle-tools/tree/main/packages/unplugin-vue-i18n
@@ -129,14 +126,14 @@ export default defineConfig({
       runtimeOnly: true,
       compositionOnly: true,
       fullInstall: true,
-      include: [path.resolve(__dirname, 'locales/**')],
+      include: [path.resolve(__dirname, 'locales/**')]
     }),
 
     // https://github.com/feat-agency/vite-plugin-webfont-dl
     WebfontDownload(),
 
     // https://github.com/webfansplz/vite-plugin-vue-devtools
-    VueDevTools(),
+    VueDevTools()
   ],
 
   // https://github.com/vitest-dev/vitest
@@ -144,8 +141,8 @@ export default defineConfig({
     include: ['test/**/*.test.ts'],
     environment: 'jsdom',
     deps: {
-      inline: ['@vue', '@vueuse', 'vue-demi'],
-    },
+      inline: ['@vue', '@vueuse', 'vue-demi']
+    }
   },
 
   // https://github.com/antfu/vite-ssg
@@ -153,15 +150,15 @@ export default defineConfig({
     script: 'async',
     formatting: 'minify',
     crittersOptions: {
-      reduceInlineStyles: false,
+      reduceInlineStyles: false
     },
     onFinished() {
       generateSitemap()
-    },
+    }
   },
 
   ssr: {
     // TODO: workaround until they support native ESM
-    noExternal: ['workbox-window', /vue-i18n/],
-  },
+    noExternal: ['workbox-window', /vue-i18n/]
+  }
 })

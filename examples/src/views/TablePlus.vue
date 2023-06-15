@@ -87,7 +87,10 @@ const [register, { getRowSelection, setProps, reload, setEditByRow, getForm }] =
     formConfig,
     isImmediate: false,
     isUseDefaultEditAction: true,
-    mergeCells: [{ row: 0, col: 1, rowspan: 2, colspan: 1 }]
+    mergeCells: [{ row: 0, col: 1, rowspan: 2, colspan: 1 }],
+    transSearchInfoBeforeReload: (form) => {
+      return { a: 1 }
+    }
   })
 
 onMounted(() => {

@@ -1,4 +1,5 @@
 {
+  "name": "vite-example",
   "type": "module",
   "private": true,
   "packageManager": "pnpm@8.5.1",

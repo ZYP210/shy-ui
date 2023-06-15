@@ -9,7 +9,7 @@
     "postinstall": "husky install",
     "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
     "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md}\"",
-    "build": "vite build"
+    "buildUi": "cd packages/ui&&vite build"
   },
   "keywords": [],
   "author": "",
