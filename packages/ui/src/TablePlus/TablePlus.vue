@@ -25,12 +25,23 @@
         :edit-config="{ trigger: 'manual', mode: 'row' }"
       >
         <vxe-column
-          v-if="getProps.configRowSelection.type === 'checkbox'"
+          v-if="
+            getProps?.configRowSelection?.type === 'checkbox' &&
+            getProps?.isShowRowSelection
+          "
           type="checkbox"
           width="60"
           align="center"
         />
-        <vxe-column v-else type="radio" width="60" align="center" />
+        <vxe-column
+          v-if="
+            getProps?.configRowSelection?.type === 'radio' &&
+            getProps?.isShowRowSelection
+          "
+          type="radio"
+          width="60"
+          align="center"
+        />
 
         <vxe-column
           v-if="getProps.isShowSeq"
@@ -174,6 +185,7 @@ const props = withDefaults(defineProps<Props>(), {
   isShowSeq: true,
   isShowSearch: true,
   isShowAction: true,
+  isShowRowSelection: true,
   isUseDefaultEditAction: false,
   isShowToolbar: true,
   isShowPagination: true,

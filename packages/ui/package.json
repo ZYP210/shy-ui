@@ -1,6 +1,6 @@
 {
   "name": "3h1-ui",
-  "version": "2.1.0",
+  "version": "2.1.2",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -10,7 +10,7 @@
     "minor": "npm version minor",
     "patch": "npm version patch",
     "deploy": "npm run build && npm publish",
-    "build": "vite build",
+    "build": "export NODE_OPTIONS=--max_old_space_size=8096&&vite build",
     "build:less": "esno build/buildLess"
   },
   "files": [
