@@ -1,12 +1,17 @@
 <template>
   <div :class="getClassName('wrapper')">
-    <div v-if="getProps.isShowSearch" :class="getClassName('search')">
-      <BasicForm
-        @register="registerForm"
-        @submit="handleSearchFormSubmit"
-        @reset="handleSearchFormSubmit"
-      ></BasicForm>
-    </div>
+    <template v-if="getProps.isShowSearch">
+      <div :class="getClassName('search')">
+        <BasicForm
+          v-bind="getFormConfig"
+          @register="registerForm"
+          @submit="handleSearchFormSubmit"
+          @reset="handleSearchFormSubmit"
+          @advanced-change="() => {}"
+        >
+        </BasicForm>
+      </div>
+    </template>
     <div v-if="getProps.isShowToolbar" :class="getClassName('toolbar')">
       <slot name="toolbar"> </slot>
     </div>
@@ -139,7 +144,7 @@
 import { useSlots, useAttrs, computed, ref, toRaw, watchEffect } from 'vue'
 import { BasicForm, useForm } from '../Form'
 import { VxeColumnProps, VxeTable, VxeColumn } from 'vxe-table'
-import { basicColumn, basicFormConfig, basicProps } from './props'
+import { basicColumn, basicProps } from './props'
 import { Pagination } from 'ant-design-vue'
 import { usePagination } from './hooks/usePagination'
 import { useTableData } from './hooks/useTableData'
@@ -258,10 +263,7 @@ const getFormConfig = computed(() => {
   }
 })
 
-const [registerForm, formActions] = useForm({
-  ...basicFormConfig,
-  ...getFormConfig.value
-})
+const [registerForm, formActions] = useForm()
 
 const formSearch = ref({})
 // 查询点击事件
