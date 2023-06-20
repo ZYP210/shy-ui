@@ -43,7 +43,8 @@ import {
   unref,
   nextTick,
   toRaw,
-  getCurrentInstance
+  getCurrentInstance,
+  watchEffect
 } from 'vue'
 import { Drawer } from 'ant-design-vue'
 import { isFunction, isNumber, deepMerge } from '@shy-plugins/utils'
@@ -76,7 +77,14 @@ export default defineComponent({
     instance && emit('register', drawerInstance, instance.uid)
 
     const getMergeProps = computed((): DrawerProps => {
-      return deepMerge(toRaw(props), unref(propsRef))
+      return {
+        ...deepMerge(toRaw(props), unref(propsRef)),
+        ...{ title: props.title }
+      }
+    })
+
+    watchEffect(() => {
+      getMergeProps.value
     })
 
     const getProps = computed((): DrawerProps => {

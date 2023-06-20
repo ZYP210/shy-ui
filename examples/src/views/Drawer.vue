@@ -1,20 +1,18 @@
 <template>
-  <BasicDrawer
-    @register="register"
-    v-bind="$attrs"
-    title="Drawer Title"
-    width="50%"
-  >
-    Drawer Info.
-  </BasicDrawer>
+  <BasicButton @click="handleClick">打开drawer</BasicButton>
+  <Drawer @register="register"> </Drawer>
 </template>
 <script lang="ts" setup>
-import { BasicDrawer, useDrawer } from '3h1-ui'
-import { onMounted } from 'vue'
+import { BasicButton, BasicDrawer, useDrawer } from '3h1-ui'
+import { onMounted, ref } from 'vue'
+import Drawer from './Drawer/Drawer.vue'
 
 const [register, { openDrawer }] = useDrawer()
 
-onMounted(() => {
-  openDrawer(true)
-})
+let index = 0
+const title = ref()
+const handleClick = () => {
+  title.value = index++
+  openDrawer(true, { title: title.value.toString() })
+}
 </script>
