@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import { useTablePlus } from '3h1-ui'
+import { useTablePlus, TablePlus } from '3h1-ui'
 import { onMounted } from 'vue'
 import { Button } from 'ant-design-vue'
 
@@ -85,6 +85,7 @@ const [register, { getRowSelection, setProps, reload, setEditByRow, getForm }] =
     api: getList,
     columns,
     formConfig,
+    columnSeq: { fixed: 'left' },
     isImmediate: false,
     isUseDefaultEditAction: true,
     mergeCells: [{ row: 0, col: 1, rowspan: 2, colspan: 1 }],

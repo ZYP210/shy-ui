@@ -5,3 +5,5 @@ packages/use/es
 packages/use/lib
 
 packages/ui/node_modules
+
+examples/dist

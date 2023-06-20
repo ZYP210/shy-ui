@@ -28,6 +28,7 @@
         :column-config="{ resizable: true }"
       >
         <vxe-column
+          fixed="left"
           v-if="
             getProps?.configRowSelection?.type === 'checkbox' &&
             getProps?.isShowRowSelection
@@ -37,6 +38,7 @@
           align="center"
         />
         <vxe-column
+          fixed="left"
           v-if="
             getProps?.configRowSelection?.type === 'radio' &&
             getProps?.isShowRowSelection
@@ -52,6 +54,7 @@
           width="60"
           align="center"
           title="序号"
+          v-bind="getProps.columnSeq"
         />
 
         <template v-for="(column, index) in getColumns" :key="index">
@@ -175,6 +178,7 @@ type Props = {
   searchInfo?: any
   transSearchInfoBeforeReload?: any
   isUseEdit?: boolean
+  columnSeq: any
 }
 
 const prefixCls = 'shy-basic-table-plus'
@@ -205,6 +209,9 @@ const props = withDefaults(defineProps<Props>(), {
       field: 'action',
       width: 150
     }
+  },
+  columnSeq: () => {
+    return {}
   },
   transSearchInfoBeforeReload: () => {
     return (form) => {
