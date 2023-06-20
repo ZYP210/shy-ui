@@ -26,7 +26,6 @@
         :row-config="{ isHover: true }"
         show-overflow
         :column-config="{ resizable: true }"
-        :edit-config="{ trigger: 'manual', mode: 'row' }"
       >
         <vxe-column
           v-if="
