@@ -5,7 +5,6 @@
         @register="registerForm"
         @submit="handleSearchFormSubmit"
         @reset="handleSearchFormSubmit"
-        v-bind="getFormConfig"
       ></BasicForm>
     </div>
     <div v-if="getProps.isShowToolbar" :class="getClassName('toolbar')">
@@ -139,7 +138,7 @@
 <script lang="ts" setup>
 import { useSlots, useAttrs, computed, ref, toRaw, watchEffect } from 'vue'
 import { BasicForm, useForm } from '../Form'
-import { VxeColumnProps } from 'vxe-table'
+import { VxeColumnProps, VxeTable, VxeColumn } from 'vxe-table'
 import { basicColumn, basicFormConfig, basicProps } from './props'
 import { Pagination } from 'ant-design-vue'
 import { usePagination } from './hooks/usePagination'
