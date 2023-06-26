@@ -8,6 +8,8 @@
       <template #toolbar>
         <a-button type="primary"> 操作按钮 </a-button>
       </template>
+
+      <template #submitBefore="data">{{ data }}</template>
     </BasicTable>
   </div>
 </template>

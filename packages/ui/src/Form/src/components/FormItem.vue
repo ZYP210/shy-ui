@@ -419,6 +419,11 @@ export default defineComponent({
 
       const { baseColProps = {} } = props.formProps
       const realColProps = { ...baseColProps, ...colProps }
+      if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+        // 当前设备是移动设备
+        realColProps.span = realColProps?.padSpan || 24
+      }
+
       const { isIfShow, isShow } = getShow()
       const values = unref(getValues)
 
