@@ -1,26 +1,26 @@
 <template>
-  <div class="p-4">
+  <div class="p-4 w-600px">
     <Description
       title="基础示例"
-      :collapseOptions="{ canExpand: true, helpMessage: 'help me' }"
-      :column="3"
+      @register="register"
       :data="mockData"
       :schema="schema"
-    />
-    <Description @register="register" class="mt-4" />
+    >
+      <template #usernameLabel>1</template>
+      <template #usernameValue>2</template>
+    </Description>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { Alert } from 'ant-design-vue'
+<script lang="ts" setup>
 import { Description, DescItem, useDescription } from '3h1-ui'
+
 const mockData: any = {
   username: 'test',
   nickName: 'VB',
   age: 123,
   phone: '15695909xxx',
   email: '190848757@qq.com',
-  addr: '厦门市思明区',
+  addr: '厦门市思明区厦门市思明区厦门市思明区厦门市思明区厦门市思明区厦门市思明区厦门市思明区厦门市思明区厦门市思明区',
   sex: '男',
   certy: '3504256199xxxxxxxxx',
   tag: 'orange'
@@ -28,37 +28,30 @@ const mockData: any = {
 const schema: DescItem[] = [
   {
     field: 'username',
-    label: '用户名'
+    label: '用户名',
+    colProps: { span: 8 }
   },
   {
     field: 'nickName',
     label: '昵称',
-    render: (curVal, data) => {
-      return `${data.username}-${curVal}`
-    }
+    colProps: { span: 8 }
   },
   {
     field: 'phone',
-    label: '联系电话'
+    label: '联系电话',
+    colProps: { span: 8 }
   },
   {
     field: 'email',
-    label: '邮箱'
+    label: '邮箱',
+    colProps: { span: 8 }
   },
   {
     field: 'addr',
-    label: '地址'
+    label: '地址',
+    colProps: { span: 8 }
   }
 ]
-export default defineComponent({
-  components: { Description, Alert },
-  setup() {
-    const [register] = useDescription({
-      title: 'useDescription',
-      data: mockData,
-      schema: schema
-    })
-    return { mockData, schema, register }
-  }
-})
+
+const [register] = useDescription({ data: mockData, schema })
 </script>

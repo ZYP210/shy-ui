@@ -1,41 +1,14 @@
-import type { VNode, CSSProperties } from 'vue'
-import type { CollapseContainerOptions } from '../../Container'
-import type { DescriptionsProps } from 'ant-design-vue/es/descriptions/index'
-
 export interface DescItem {
-  labelMinWidth?: number
-  contentMinWidth?: number
-  labelStyle?: CSSProperties
   field: string
-  label: string | VNode | JSX.Element
-  // Merge column
-  span?: number
-  show?: (...arg: any) => boolean
-  // render
-  render?: (
-    val: any,
-    data: Recordable
-  ) => VNode | undefined | JSX.Element | Element | string | number
+  label: string
+  colProps?: { span?: number }
 }
 
-export interface DescriptionProps extends DescriptionsProps {
-  // Whether to include the collapse component
-  useCollapse?: boolean
-  /**
-   * item configuration
-   * @type DescItem
-   */
+export interface DescriptionProps {
   schema: DescItem[]
-  /**
-   * 数据
-   * @type object
-   */
   data: Recordable
-  /**
-   * Built-in CollapseContainer component configuration
-   * @type CollapseContainerOptions
-   */
-  collapseOptions?: CollapseContainerOptions
+  labelWidth?: number
+  isShowColon?: boolean
 }
 
 export interface DescInstance {

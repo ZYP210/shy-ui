@@ -1,0 +1,31 @@
+@prefix-cls: ~'shy-basic-description';
+
+.@{prefix-cls} {
+  &-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+  &-label {
+    color: #797a7a;
+    display: inline-block;
+    text-align: right;
+    margin-right: 5px;
+    font-size: 14px;
+    flex: none;
+  }
+
+  &-value {
+    display: inline-block;
+    flex: auto;
+    overflow-wrap: anywhere;
+  }
+
+  &-row {
+    display: flex;
+    margin: 8px 0;
+    overflow: hidden;
+  }
+}
