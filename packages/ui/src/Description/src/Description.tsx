@@ -17,39 +17,43 @@ export default defineComponent({
 
     const innerProps = ref(null)
     const setDescProps = (props) => {
-      innerProps.value = props
+      innerProps.value = { ...innerProps.value, ...props }
     }
 
-    const rows = getProps.value.schema.map((item: Schema) => {
-      return (
-        <div
-          class={`${prefixCls}-row`}
-          style={{
-            flex: `0 0 ${((item?.colProps?.span || basicColProps) / 24) * 100}%`
-          }}
-        >
-          <span
+    const rows = computed(() => {
+      return getProps.value.schema.map((item: Schema) => {
+        return (
+          <div
+            class={`${prefixCls}-row`}
             style={{
-              width: `${getProps.value.labelWidth}px`
+              flex: `0 0 ${
+                ((item?.colProps?.span || basicColProps) / 24) * 100
+              }%`
             }}
-            class={`${prefixCls}-label`}
           >
-            {slots[`${item.field}Label`]
-              ? slots[`${item.field}Label`]()
-              : item.label}
-            {getProps.value?.isShowColon ? ':' : ''}
-          </span>
+            <span
+              style={{
+                width: `${getProps.value.labelWidth}px`
+              }}
+              class={`${prefixCls}-label`}
+            >
+              {slots[`${item.field}Label`]
+                ? slots[`${item.field}Label`]()
+                : item.label}
+              {getProps.value?.isShowColon ? ':' : ''}
+            </span>
 
-          <span class={`${prefixCls}-value`}>
-            {slots[`${item.field}Value`]
-              ? slots[`${item.field}Value`]()
-              : getProps.value.data[item.field]}
-          </span>
-        </div>
-      )
+            <span class={`${prefixCls}-value`}>
+              {slots[`${item.field}Value`]
+                ? slots[`${item.field}Value`]()
+                : getProps.value.data[item.field]}
+            </span>
+          </div>
+        )
+      })
     })
 
     emit('register', { setDescProps })
-    return () => <div class={`${prefixCls}-wrapper`}>{rows}</div>
+    return () => <div class={`${prefixCls}-wrapper`}>{rows.value}</div>
   }
 })
