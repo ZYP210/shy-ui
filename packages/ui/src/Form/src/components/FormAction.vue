@@ -25,18 +25,19 @@
         @click="submitAction"
         v-if="showSubmitButton"
       >
-        <template #icon>
-          <SearchOutlined
-            style="
-              line-height: 14px;
-              transform: translateY(3px);
-              font-size: 14px;
-              box-sizing: border-box;
-            "
-          />
-        </template>
         {{ getSubmitBtnOptions.text }}
       </Button>
+
+      <slot name="resetBefore"></slot>
+      <BasicButton
+        type="default"
+        class="mr-2"
+        v-bind="getResetBtnOptions"
+        @click="resetAction"
+        v-if="showResetButton"
+      >
+        {{ getResetBtnOptions.text }}
+      </BasicButton>
 
       <slot name="advanceBefore"></slot>
       <!-- <Button
@@ -127,7 +128,10 @@ export default defineComponent({
         {
           text: '查询'
         },
-        props.submitButtonOptions
+        {
+          ...props.submitButtonOptions,
+          loading: false
+        }
       )
     })
 
