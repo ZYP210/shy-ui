@@ -94,6 +94,12 @@
                 </template>
               </slot>
             </template>
+
+            <template #header>
+              <slot :name="`${column.field}Header`" v-bind="{ column }">
+                {{ column.title }}
+              </slot>
+            </template>
           </vxe-column>
         </template>
 
