@@ -16,7 +16,8 @@ export const useTableData = (getProps, { setPage, params }) => {
   const reload = async () => {
     if (getProps.value?.api) {
       const res = await getProps.value.api(params.value)
-      setTableData(res.records)
+      console.log('1', getProps.value.transDataAfterReload(res))
+      setTableData(getProps.value.transDataAfterReload(res))
       setPage({ total: res?.total || 0 })
     }
   }

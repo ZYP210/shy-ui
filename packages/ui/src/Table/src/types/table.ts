@@ -141,6 +141,10 @@ export interface TableActionType {
   setEditByRow?: any
   cancelEditByRow?: any
   getTableData?: any
+  getTreeExpandRecords?: any
+  setAllTreeExpand?: any
+  clearTreeExpand?: any
+  setTreeExpand?: any
 }
 
 export interface FetchSetting {

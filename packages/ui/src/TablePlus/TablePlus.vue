@@ -23,7 +23,6 @@
         @checkbox-all="handleCheckboxChange"
         @checkbox-change="handleCheckboxChange"
         @radio-change="handleRadioChange"
-        :row-config="{ isHover: true }"
         show-overflow
         :column-config="{ resizable: true }"
       >
@@ -185,6 +184,7 @@ type Props = {
   transSearchInfoBeforeReload?: any
   isUseEdit?: boolean
   columnSeq: any
+  transDataAfterReload?: any
 }
 
 const prefixCls = 'shy-basic-table-plus'
@@ -223,11 +223,15 @@ const props = withDefaults(defineProps<Props>(), {
     return (form) => {
       return form
     }
+  },
+  transDataAfterReload: () => {
+    return (res) => res.records
   }
 })
 const innerProps = ref({})
 const getProps = computed(() => {
   const tempProps: any = { ...props, ...innerProps.value }
+  console.log('1', props)
 
   if (tempProps.isCompatible) {
     tempProps.columns.forEach((column) => {
@@ -251,6 +255,14 @@ const getBindValues = computed(() => {
     ...attrs,
     ...getProps.value
   }
+})
+
+watchEffect(() => {
+  getBindValues.value
+  console.log(
+    '🚀 ~ file: TablePlus.vue:263 ~ watchEffect ~ getBindValues:',
+    getBindValues.value
+  )
 })
 
 const getColumns: any = computed(() => {
@@ -337,6 +349,22 @@ const handleEditCancel = (row) => {
   emits('row-cancel', row)
 }
 
+const getTreeExpandRecords = () => {
+  return toRaw(tableRef.value.getTreeExpandRecords())
+}
+
+const setAllTreeExpand = () => {
+  return toRaw(tableRef.value.setAllTreeExpand(true))
+}
+
+const clearTreeExpand = () => {
+  return toRaw(tableRef.value.clearTreeExpand())
+}
+
+const setTreeExpand = (rows, checked) => {
+  return toRaw(tableRef.value.setTreeExpand(rows, checked))
+}
+
 // register
 const tableAction = {
   reload,
@@ -345,7 +373,11 @@ const tableAction = {
   getRowSelection,
   setEditByRow,
   cancelEditByRow,
-  getTableData
+  getTableData,
+  getTreeExpandRecords,
+  setAllTreeExpand,
+  clearTreeExpand,
+  setTreeExpand
 }
 
 emits('register', tableAction, formActions)

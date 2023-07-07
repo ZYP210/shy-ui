@@ -41,7 +41,12 @@ export function useTablePlus(tableProps): any {
       return unref(formRef) as unknown as FormActionType
     },
     cancelEditByRow: (row) => getTableInstance().cancelEditByRow(row),
-    getTableData: () => getTableInstance().getTableData()
+    getTableData: () => getTableInstance().getTableData(),
+    getTreeExpandRecords: () => getTableInstance().getTreeExpandRecords(),
+    setAllTreeExpand: () => getTableInstance().setAllTreeExpand(),
+    clearTreeExpand: () => getTableInstance().clearTreeExpand(),
+    setTreeExpand: (rows, checked) =>
+      getTableInstance().setTreeExpand(rows, checked)
   }
 
   return [register, methods]

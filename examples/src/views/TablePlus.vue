@@ -1,16 +1,10 @@
 <template>
   <div class="p-30px h-full overflow-hidden">
-    <TablePlus @register="register">
+    <TablePlus @register="register" @selection-change="handleSelectionChange">
       <template #toolbar>
         <a-button @click="handleClick">123</a-button>
         <a-button>1</a-button>
       </template>
-
-      <!--      <template #action="{ row }">-->
-      <!--        &lt;!&ndash;        <a-button>123</a-button>&ndash;&gt;-->
-
-      <!--        <Button @click="handleEditClick(row)">edit</Button>-->
-      <!--      </template>-->
     </TablePlus>
   </div>
 </template>
@@ -25,20 +19,12 @@ const columns = [
     title: 'a',
     field: 'a',
     width: 100,
-    isEdit: true,
-    editProps: {
-      component: 'Select',
-      rule: [{ required: true }],
-      options: [{ label: 'a', value: 1 }]
-    },
-    editRender: {}
+    treeNode: true
   },
   {
     title: 'b',
     field: 'b',
-    width: 100,
-    isEdit: true,
-    editProps: { component: 'Input', required: true }
+    width: 100
   },
   { title: 'c', field: 'c', width: 100 },
   { title: 'd', field: 'd' },
@@ -55,12 +41,22 @@ const columns = [
 
 const getList = (params = {}) => {
   const list = []
-  for (let i = 0; i < 11000; i++) {
+  for (let i = 0; i < 1; i++) {
     list.push({
+      id: i,
       a: 1,
       b: 2,
       c: 3,
-      d: 4
+      d: 4,
+      children: [
+        {
+          id: i + 'c',
+          a: 1,
+          b: 2,
+          c: 3,
+          d: 4
+        }
+      ]
     })
   }
   return new Promise((resolve) => {
@@ -80,6 +76,10 @@ const formConfig = {
   ]
 }
 
+const handleSelectionChange = (value) => {
+  console.log('select', value)
+}
+
 const [register, { getRowSelection, setProps, reload, setEditByRow, getForm }] =
   useTablePlus({
     api: getList,
@@ -87,11 +87,8 @@ const [register, { getRowSelection, setProps, reload, setEditByRow, getForm }] =
     formConfig,
     columnSeq: { fixed: 'left' },
     isImmediate: false,
-    isUseDefaultEditAction: true,
-    mergeCells: [{ row: 0, col: 1, rowspan: 2, colspan: 1 }],
-    transSearchInfoBeforeReload: (form) => {
-      return { a: 1 }
-    }
+    rowConfig: { keyField: 'id' },
+    treeConfig: { expandRowKeys: [0] }
   })
 
 onMounted(() => {
@@ -100,8 +97,4 @@ onMounted(() => {
 })
 
 const handleClick = () => {}
-
-const handleEditClick = (row) => {
-  setEditByRow(row)
-}
 </script>
