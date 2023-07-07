@@ -1,40 +1,14 @@
 <template>
-  <div class="p-15px overflow-auto h-full bg-black flex">
-    <div class="w-600px mr-100px">
-      <BasicTable
-        title="基础示例"
-        titleHelpMessage="温馨提醒"
-        @register="register"
-      >
-        <template #toolbar>
-          <a-button type="primary"> 操作按钮 </a-button>
-        </template>
-
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex === 'action'">
-            <TableAction :actions="getActions()"></TableAction>
-          </template>
-        </template>
-      </BasicTable>
-    </div>
-
-    <div class="w-600px">
-      <BasicTable
-        title="基础示例"
-        titleHelpMessage="温馨提醒"
-        @register="register2"
-      >
-        <template #toolbar>
-          <a-button type="primary"> 操作按钮 </a-button>
-        </template>
-
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex === 'action'">
-            <TableAction :actions="getActions()"></TableAction>
-          </template>
-        </template>
-      </BasicTable>
-    </div>
+  <div class="p4">
+    <BasicTable
+      title="基础示例"
+      titleHelpMessage="温馨提醒"
+      @register="register"
+    >
+      <template #toolbar>
+        <a-button type="primary"> 操作按钮 </a-button>
+      </template>
+    </BasicTable>
   </div>
 </template>
 
@@ -48,33 +22,23 @@ const schemas = [
 ]
 const columns = [
   {
-    title: 'a',
-    dataIndex: 'a',
-    editRow: true,
-    editComponent: 'Input'
+    title: '姓名',
+    dataIndex: 'name'
   },
   {
-    title: 'b',
-    dataIndex: 'b',
-    editRow: true,
-    editComponent: 'Input'
+    title: '性别',
+    dataIndex: 'sex'
   },
   {
-    title: 'c',
-    dataIndex: 'c',
-    editRow: true,
-    editComponent: 'Input'
+    title: '年龄',
+    dataIndex: 'age'
   }
 ]
 const [register] = useTable({
   api: () => {
     return new Promise((resolve) => {
       setTimeout(() => {
-        let data = []
-        for (let i = 0; i < 100; i++) {
-          data.push({ a: 1, b: 2, c: 3 })
-        }
-        resolve(data)
+        resolve([{ name: 1 }, { sex: 2 }, { age: 3 }])
       }, 1000)
     })
   },
@@ -91,89 +55,6 @@ const [register] = useTable({
     schemas
   }
 })
-
-const [register2] = useTable({
-  api: () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        let data = []
-        for (let i = 0; i < 100; i++) {
-          data.push({ a: 1, b: 2, c: 3 })
-        }
-        resolve(data)
-      }, 1000)
-    })
-  },
-  columns: columns as any,
-  useSearchForm: true,
-  showIndexColumn: true,
-  actionColumn: {
-    title: '操作',
-    dataIndex: 'action',
-    align: 'center'
-  },
-  rowSelection: {},
-  formConfig: {
-    schemas
-  }
-})
-
-const getActions = () => {
-  return [
-    {
-      label: '查看',
-      onClick: () => {
-        console.log('view')
-      }
-    },
-    {
-      label: '修改',
-      onClick: () => {
-        console.log('update')
-      }
-    },
-    {
-      label: '删除',
-      popConfirm: {
-        title: '是否删除',
-        confirm: () => {
-          console.log('remove')
-        }
-      }
-    }
-  ]
-}
-
-const getDropDownActions = () => {
-  return [
-    {
-      label: '查看',
-      onClick: () => {
-        console.log('view')
-      }
-    },
-    {
-      label: '修改',
-      onClick: () => {
-        console.log('update')
-      }
-    },
-    {
-      label: '删除',
-      popConfirm: {
-        title: '是否删除',
-        confirm: () => {
-          console.log('remove')
-        }
-      }
-    }
-  ]
-}
-
-const formConfig = {
-  schemas: [{ label: 'a', field: 'a', component: 'Input' }]
-}
-const data = [{ a: 1 }]
 </script>
 
 <style scoped>

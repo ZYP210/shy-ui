@@ -1,55 +1,70 @@
 <template>
-  <div ref="wrapRef" :class="getWrapperClass" style="background-color: #fff">
-    <BasicForm
-      ref="formRef"
-      submitOnReset
-      v-bind="getFormProps"
-      v-if="getBindValues.useSearchForm"
-      :tableAction="tableAction"
-      @register="registerForm"
-      @submit="handleSearchInfoChange"
-      @advanced-change="redoHeight"
-    >
-      <template
-        #[replaceFormSlotKey(item)]="data"
-        v-for="item in getFormSlotKeys"
+  <div ref="wrapRef" :class="getWrapperClass" style="position: relative">
+    <div class="shy-page">
+      <BasicForm
+        ref="formRef"
+        submitOnReset
+        v-bind="getFormProps"
+        v-if="getBindValues.useSearchForm"
+        :tableAction="tableAction"
+        @register="registerForm"
+        @submit="handleSearchInfoChange"
+        @advanced-change="redoHeight"
       >
-        <slot :name="item" v-bind="data || {}"></slot>
-      </template>
-    </BasicForm>
-
-    <Table
-      ref="tableElRef"
-      v-bind="getBindValues"
-      :rowClassName="getRowClassName"
-      v-show="getEmptyDataIsShowTable"
-      @change="handleTableChange"
-      @resizeColumn="handleResizeColumn"
-      class="enter-x"
-    >
-      <template #[item]="data" v-for="item in Object.keys($slots)" :key="item">
-        <slot :name="item" v-bind="data || {}"></slot>
-      </template>
-      <template #headerCell="{ column }">
-        <HeaderCell :column="column" />
-      </template>
-
-      <template #emptyText>
-        <div
-          class="flex justify-center items-center"
-          :style="{ height: `${getHeight.y as number - 40}px` }"
+        <template
+          #[replaceFormSlotKey(item)]="data"
+          v-for="item in getFormSlotKeys"
         >
-          <Empty />
-        </div>
-      </template>
-      <!-- 增加对antdv3.x兼容 -->
-      <template #bodyCell="data">
-        <slot name="bodyCell" v-bind="data || {}"></slot>
-      </template>
-      <!--      <template #[`header-${column.dataIndex}`] v-for="(column, index) in columns" :key="index">-->
-      <!--        <HeaderCell :column="column" />-->
-      <!--      </template>-->
-    </Table>
+          <slot :name="item" v-bind="data || {}"></slot>
+        </template>
+
+        <template #advancedSearch>
+          <BasicButton @click="handleAdvancedSearch">高级搜索</BasicButton>
+        </template>
+      </BasicForm>
+
+      <TableAdvancedSearch
+        :schemasAdvancedSearch="schemasAdvancedSearch"
+        v-if="isVisibleAdvancedSearch"
+      />
+
+      <Table
+        ref="tableElRef"
+        v-bind="getBindValues"
+        :rowClassName="getRowClassName"
+        v-show="getEmptyDataIsShowTable"
+        @change="handleTableChange"
+        @resizeColumn="handleResizeColumn"
+        class="enter-x"
+      >
+        <template
+          #[item]="data"
+          v-for="item in Object.keys($slots)"
+          :key="item"
+        >
+          <slot :name="item" v-bind="data || {}"></slot>
+        </template>
+        <template #headerCell="{ column }">
+          <HeaderCell :column="column" />
+        </template>
+
+        <template #emptyText>
+          <div
+            class="flex justify-center items-center"
+            :style="{ height: `${getHeight.y as number - 40}px` }"
+          >
+            <Empty />
+          </div>
+        </template>
+        <!-- 增加对antdv3.x兼容 -->
+        <template #bodyCell="data">
+          <slot name="bodyCell" v-bind="data || {}"></slot>
+        </template>
+        <!--      <template #[`header-${column.dataIndex}`] v-for="(column, index) in columns" :key="index">-->
+        <!--        <HeaderCell :column="column" />-->
+        <!--      </template>-->
+      </Table>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -73,6 +88,7 @@ import { Empty, Table } from 'ant-design-vue'
 import { BasicForm, useForm } from '../../Form'
 import { PageWrapperFixedHeightKey } from '../../Page'
 import HeaderCell from './components/HeaderCell.vue'
+import { BasicButton } from '../../Button'
 import { InnerHandlers } from './types/table'
 import { usePagination } from './hooks/usePagination'
 import { useColumns } from './hooks/useColumns'
@@ -88,6 +104,8 @@ import { useTableExpand } from './hooks/useTableExpand'
 import { createTableContext } from './hooks/useTableContext'
 import { useTableFooter } from './hooks/useTableFooter'
 import { useTableForm } from './hooks/useTableForm'
+import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
+import { useAdvancedSearch } from './hooks/useAdvancedSearch'
 
 import { omit } from 'lodash-es'
 import { basicProps } from './props'
@@ -99,7 +117,9 @@ export default defineComponent({
     Table,
     BasicForm,
     HeaderCell,
-    Empty
+    Empty,
+    BasicButton,
+    TableAdvancedSearch
   },
   props: basicProps,
   emits: [
@@ -367,6 +387,12 @@ export default defineComponent({
       return unref(getScrollRef)
     })
 
+    const handleAdvancedSearch = () => {
+      isVisibleAdvancedSearch.value = true
+    }
+    const { isVisibleAdvancedSearch, schemasAdvancedSearch } =
+      useAdvancedSearch({ getProps })
+
     return {
       formRef,
       tableElRef,
@@ -386,7 +412,10 @@ export default defineComponent({
       getWrapperClass,
       columns: getViewColumns,
       handleResizeColumn,
-      getHeight
+      getHeight,
+      isVisibleAdvancedSearch,
+      handleAdvancedSearch,
+      schemasAdvancedSearch
     }
   }
 })

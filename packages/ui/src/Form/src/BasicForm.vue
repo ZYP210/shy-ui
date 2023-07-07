@@ -36,7 +36,8 @@
           'resetBefore',
           'submitBefore',
           'advanceBefore',
-          'advanceAfter'
+          'advanceAfter',
+          'advancedSearch'
         ]"
       >
         <slot :name="item" v-bind="data || {}"></slot>

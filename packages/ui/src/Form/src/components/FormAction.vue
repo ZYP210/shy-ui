@@ -5,16 +5,7 @@
     :style="{ textAlign: actionColOpt.style.textAlign }"
   >
     <FormItem class="shy-form-action">
-      <slot name="resetBefore"></slot>
-      <BasicButton
-        type="default"
-        class="mr-2"
-        v-bind="getResetBtnOptions"
-        @click="resetAction"
-        v-if="showResetButton"
-      >
-        {{ getResetBtnOptions.text }}
-      </BasicButton>
+      <slot name="advancedSearch">123</slot>
       <slot name="submitBefore"></slot>
 
       <Button
