@@ -80,18 +80,23 @@ const handleSelectionChange = (value) => {
   console.log('select', value)
 }
 
-const [register, { getRowSelection, setProps, reload, setEditByRow, getForm }] =
-  useTablePlus({
-    api: getList,
-    columns,
-    formConfig,
-    columnSeq: { fixed: 'left' },
-    isImmediate: false,
-    rowConfig: { keyField: 'id' },
-    treeConfig: { expandRowKeys: [0] }
-  })
+const [
+  register,
+  { getRowSelection, setProps, reload, setEditByRow, getForm, getVxeTableRef }
+] = useTablePlus({
+  api: getList,
+  columns,
+  formConfig,
+  columnSeq: { fixed: 'left' },
+  isImmediate: false,
+  rowConfig: { keyField: 'id' },
+  treeConfig: { expandRowKeys: [0] }
+})
 
 onMounted(() => {
+  const a = getVxeTableRef()
+  console.log('a', a.value)
+
   setProps({ searchInfo: { id: 1 } })
   reload()
 })

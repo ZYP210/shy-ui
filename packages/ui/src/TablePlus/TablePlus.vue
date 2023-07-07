@@ -365,6 +365,10 @@ const setTreeExpand = (rows, checked) => {
   return toRaw(tableRef.value.setTreeExpand(rows, checked))
 }
 
+const getVxeTableRef = () => {
+  return tableRef.value
+}
+
 // register
 const tableAction = {
   reload,
@@ -377,7 +381,8 @@ const tableAction = {
   getTreeExpandRecords,
   setAllTreeExpand,
   clearTreeExpand,
-  setTreeExpand
+  setTreeExpand,
+  getVxeTableRef
 }
 
 emits('register', tableAction, formActions)
