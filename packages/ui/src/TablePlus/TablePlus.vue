@@ -231,7 +231,6 @@ const props = withDefaults(defineProps<Props>(), {
 const innerProps = ref({})
 const getProps = computed(() => {
   const tempProps: any = { ...props, ...innerProps.value }
-  console.log('1', props)
 
   if (tempProps.isCompatible) {
     tempProps.columns.forEach((column) => {
@@ -255,14 +254,6 @@ const getBindValues = computed(() => {
     ...attrs,
     ...getProps.value
   }
-})
-
-watchEffect(() => {
-  getBindValues.value
-  console.log(
-    '🚀 ~ file: TablePlus.vue:263 ~ watchEffect ~ getBindValues:',
-    getBindValues.value
-  )
 })
 
 const getColumns: any = computed(() => {
@@ -369,6 +360,16 @@ const getVxeTableRef = () => {
   return tableRef.value
 }
 
+const setSelectRowByKeys = (keys, checked) => {
+  const records = tableRef.value.getTableData()
+  const rows = []
+  keys.forEach((key) => {
+    const row = tableRef.value.getRowById(key)
+    rows.push(row)
+  })
+  tableRef.value.setCheckboxRow(rows, checked)
+}
+
 // register
 const tableAction = {
   reload,
@@ -382,7 +383,8 @@ const tableAction = {
   setAllTreeExpand,
   clearTreeExpand,
   setTreeExpand,
-  getVxeTableRef
+  getVxeTableRef,
+  setSelectRowByKeys
 }
 
 emits('register', tableAction, formActions)

@@ -47,7 +47,9 @@ export function useTablePlus(tableProps): any {
     clearTreeExpand: () => getTableInstance().clearTreeExpand(),
     setTreeExpand: (rows, checked) =>
       getTableInstance().setTreeExpand(rows, checked),
-    getVxeTableRef: () => getTableInstance().getVxeTableRef()
+    getVxeTableRef: () => getTableInstance().getVxeTableRef(),
+    setSelectRowByKeys: (keys, checked) =>
+      getTableInstance().setSelectRowByKeys(keys, checked)
   }
 
   return [register, methods]

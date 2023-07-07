@@ -146,6 +146,7 @@ export interface TableActionType {
   clearTreeExpand?: any
   setTreeExpand?: any
   getVxeTableRef: any
+  setSelectRowByKeys?: any
 }
 
 export interface FetchSetting {

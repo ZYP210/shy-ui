@@ -41,7 +41,7 @@ const columns = [
 
 const getList = (params = {}) => {
   const list = []
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < 10; i++) {
     list.push({
       id: i,
       a: 1,
@@ -51,6 +51,13 @@ const getList = (params = {}) => {
       children: [
         {
           id: i + 'c',
+          a: 1,
+          b: 2,
+          c: 3,
+          d: 4
+        },
+        {
+          id: i + 'd',
           a: 1,
           b: 2,
           c: 3,
@@ -76,13 +83,19 @@ const formConfig = {
   ]
 }
 
-const handleSelectionChange = (value) => {
-  console.log('select', value)
-}
+const handleSelectionChange = (value) => {}
 
 const [
   register,
-  { getRowSelection, setProps, reload, setEditByRow, getForm, getVxeTableRef }
+  {
+    getRowSelection,
+    setProps,
+    reload,
+    setEditByRow,
+    getForm,
+    getVxeTableRef,
+    setSelectRowByKeys
+  }
 ] = useTablePlus({
   api: getList,
   columns,
@@ -93,12 +106,10 @@ const [
   treeConfig: { expandRowKeys: [0] }
 })
 
-onMounted(() => {
-  const a = getVxeTableRef()
-  console.log('a', a.value)
-
+onMounted(async () => {
   setProps({ searchInfo: { id: 1 } })
-  reload()
+  await reload()
+  setSelectRowByKeys(['0c'], true)
 })
 
 const handleClick = () => {}
