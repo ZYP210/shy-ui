@@ -9,28 +9,32 @@
         <a-button type="primary"> 操作按钮 </a-button>
       </template>
 
-      <template #submitBefore="data">{{ data }}</template>
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'action'">
+          <TableAction :actions="getActions()"></TableAction>
+        </template>
+      </template>
     </BasicTable>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { BasicTable, useTable } from '3h1-ui'
+import { useTable, TableAction } from '3h1-ui'
 const columns = [
   {
-    title: '123',
+    title: 'a',
     dataIndex: 'a',
     editRow: true,
     editComponent: 'Input'
   },
   {
-    title: '123',
+    title: 'b',
     dataIndex: 'b',
     editRow: true,
     editComponent: 'Input'
   },
   {
-    title: '123',
+    title: 'c',
     dataIndex: 'c',
     editRow: true,
     editComponent: 'Input'
@@ -42,7 +46,7 @@ const [register] = useTable({
       setTimeout(() => {
         let data = []
         for (let i = 0; i < 100; i++) {
-          data.push({ a: 1 })
+          data.push({ a: 1, b: 2, c: 3 })
         }
         resolve(data)
       }, 1000)
@@ -52,7 +56,10 @@ const [register] = useTable({
   useSearchForm: true,
   showIndexColumn: true,
   actionColumn: {
-    title: '操作'
+    title: '操作',
+    dataIndex: 'action',
+    width: 160,
+    align: 'center'
   },
   rowSelection: {},
   formConfig: {
@@ -64,6 +71,58 @@ const [register] = useTable({
     ]
   }
 })
+
+const getActions = () => {
+  return [
+    {
+      label: '查看',
+      onClick: () => {
+        console.log('view')
+      }
+    },
+    {
+      label: '修改',
+      onClick: () => {
+        console.log('update')
+      }
+    },
+    {
+      label: '删除',
+      popConfirm: {
+        title: '是否删除',
+        confirm: () => {
+          console.log('remove')
+        }
+      }
+    }
+  ]
+}
+
+const getDropDownActions = () => {
+  return [
+    {
+      label: '查看',
+      onClick: () => {
+        console.log('view')
+      }
+    },
+    {
+      label: '修改',
+      onClick: () => {
+        console.log('update')
+      }
+    },
+    {
+      label: '删除',
+      popConfirm: {
+        title: '是否删除',
+        confirm: () => {
+          console.log('remove')
+        }
+      }
+    }
+  ]
+}
 
 const formConfig = {
   schemas: [{ label: 'a', field: 'a', component: 'Input' }]

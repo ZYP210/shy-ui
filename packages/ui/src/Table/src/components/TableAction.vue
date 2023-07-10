@@ -32,7 +32,7 @@
       :trigger="['hover']"
       :dropMenuList="getDropdownList"
       popconfirm
-      v-if="dropDownActions && getDropdownList.length > 0"
+      v-if="getDropdownList.length > 0"
     >
       <slot name="more"></slot>
       <a-button type="link" size="small" v-if="!$slots.more">
@@ -75,7 +75,11 @@ export default defineComponent({
     },
     divider: propTypes.bool.def(true),
     outside: propTypes.bool,
-    stopButtonPropagation: propTypes.bool.def(false)
+    stopButtonPropagation: propTypes.bool.def(false),
+    showCount: {
+      type: Number,
+      default: () => 2
+    }
   },
   setup(props) {
     const { prefixCls } = useDesign('basic-table-action')
@@ -100,8 +104,8 @@ export default defineComponent({
 
     const getActions = computed(() => {
       return (toRaw(props.actions) || [])
-        .filter((action) => {
-          return isIfShow(action)
+        .filter((action, index) => {
+          return isIfShow(action) && index < props.showCount
         })
         .map((action) => {
           const { popConfirm } = action
@@ -120,8 +124,8 @@ export default defineComponent({
     })
 
     const getDropdownList = computed((): any[] => {
-      const list = (toRaw(props.dropDownActions) || []).filter((action) => {
-        return isIfShow(action)
+      const list = (toRaw(props.actions) || []).filter((action, index) => {
+        return isIfShow(action) && index >= props.showCount
       })
       return list.map((action, index) => {
         const { label, popConfirm } = action

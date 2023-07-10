@@ -11,7 +11,6 @@
         class="mr-2"
         v-bind="getResetBtnOptions"
         @click="resetAction"
-        preIcon="ant-design:sync-outlined"
         v-if="showResetButton"
       >
         {{ getResetBtnOptions.text }}
@@ -27,17 +26,6 @@
       >
         {{ getSubmitBtnOptions.text }}
       </Button>
-
-      <slot name="resetBefore"></slot>
-      <BasicButton
-        type="default"
-        class="mr-2"
-        v-bind="getResetBtnOptions"
-        @click="resetAction"
-        v-if="showResetButton"
-      >
-        {{ getResetBtnOptions.text }}
-      </BasicButton>
 
       <slot name="advanceBefore"></slot>
       <!-- <Button

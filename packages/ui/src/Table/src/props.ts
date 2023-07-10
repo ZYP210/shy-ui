@@ -1,4 +1,5 @@
 import type { PropType } from 'vue'
+import { reactive } from 'vue'
 import type { PaginationProps } from './types/pagination'
 import type {
   BasicColumn,
@@ -19,7 +20,7 @@ import {
 } from './const'
 import { propTypes } from '@shy-plugins/utils'
 
-export const basicProps = {
+export const basicProps = reactive({
   clickToRowSelect: { type: Boolean, default: true },
   isTreeTable: Boolean,
   tableSetting: propTypes.shape<TableSetting>({}),
@@ -159,4 +160,10 @@ export const basicProps = {
     type: String as PropType<SizeType>,
     default: DEFAULT_SIZE
   }
+})
+
+export const basicPropChange = (options) => {
+  Object.keys(options).forEach((name) => {
+    basicProps[name] = options[name]
+  })
 }

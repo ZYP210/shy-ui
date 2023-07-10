@@ -82,8 +82,12 @@ export const DEFAULT_SORT_FN = defaultSortFn
 export const DEFAULT_FILTER_FN = defaultFilterFn
 
 //  Default layout of table cells
-export const DEFAULT_ALIGN = 'center'
+export let DEFAULT_ALIGN = 'left'
 
 export const INDEX_COLUMN_FLAG = 'INDEX'
 
 export const ACTION_COLUMN_FLAG = 'ACTION'
+
+export const setConstConfig = (config) => {
+  DEFAULT_ALIGN = config.align
+}

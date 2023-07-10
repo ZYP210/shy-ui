@@ -15,6 +15,7 @@ export function useTableForm(
     const { submitButtonOptions } = formConfig || {}
     return {
       showAdvancedButton: true,
+      rowProps: { gutter: 20 },
       ...formConfig,
       submitButtonOptions: {
         loading: unref(getLoading),
