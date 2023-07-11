@@ -4,7 +4,7 @@ import { computed, defineComponent, toRefs, unref } from 'vue'
 import type { FormActionType, FormProps, FormSchema } from '../types/form'
 import type { ValidationRule } from 'ant-design-vue/lib/form/Form'
 import type { TableActionType } from '../../../Table'
-import { Col, Divider, Form } from 'ant-design-vue'
+import { Col, Form } from 'ant-design-vue'
 import { componentMap } from '../componentMap'
 import { BasicHelp } from '../../..//Basic'
 import { isBoolean, isFunction, isNull, getSlot } from '@shy-plugins/utils'
@@ -12,6 +12,7 @@ import { isBoolean, isFunction, isNull, getSlot } from '@shy-plugins/utils'
 import { createPlaceholderMessage, setComponentRuleType } from '../helper'
 import { cloneDeep, upperFirst } from 'lodash-es'
 import { useItemLabelWidth } from '../hooks/useLabelWidth'
+import Divider from './Divider'
 
 export default defineComponent({
   name: 'BasicFormItem',
@@ -72,6 +73,7 @@ export default defineComponent({
 
     const getComponentsProps = computed(() => {
       const { schema, tableAction, formModel, formActionType } = props
+
       let { componentProps = {} as any } = schema
       if (isFunction(componentProps)) {
         componentProps =
@@ -81,28 +83,34 @@ export default defineComponent({
       if (schema.component === 'Divider') {
         componentProps = Object.assign({ type: 'horizontal' }, componentProps, {
           orientation: 'left',
-          plain: true
+          plain: true,
+          label: schema?.label || ''
         })
       }
       if (schema.component === 'Input') {
-        const showCount = componentProps?.showCount === undefined?true:componentProps.showCount
-        const maxlength = componentProps?.maxlength === undefined?100:componentProps.maxlength
-        componentProps = Object.assign({  }, componentProps, {
-          showCount,maxlength
+        const showCount =
+          componentProps?.showCount === undefined
+            ? true
+            : componentProps.showCount
+        const maxlength =
+          componentProps?.maxlength === undefined
+            ? 100
+            : componentProps.maxlength
+        componentProps = Object.assign({}, componentProps, {
+          showCount,
+          maxlength
         })
       }
 
       if (schema.component === 'Select') {
         const label = componentProps?.fieldNames?.label || 'label'
-        componentProps = Object.assign({  }, componentProps, {
-          showSearch:true,
-           filterOption :(input: string, option: any) => {
-      return option[label].toLowerCase().indexOf(input.toLowerCase()) >= 0
-    }
+        componentProps = Object.assign({}, componentProps, {
+          showSearch: true,
+          filterOption: (input: string, option: any) => {
+            return option[label].toLowerCase().indexOf(input.toLowerCase()) >= 0
+          }
         })
       }
-
-     
 
       return componentProps as Recordable
     })

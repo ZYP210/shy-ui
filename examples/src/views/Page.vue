@@ -1,9 +1,21 @@
 <template>
-  <PageWrapper dense contentFullHeight contentClass="flex"></PageWrapper>
+  <PageSecond
+    title="测试"
+    :isShowCancelButton="true"
+    @click-return="handleClickReturn"
+  >
+    <template #beforeCancelButton>1</template>
+    <template #afterCancelButton>1</template>
+    <template #beforeConfirmButton>1</template>
+  </PageSecond>
 </template>
 
 <script setup lang="ts">
-import { PageWrapper } from '3h1-ui'
+import { PageSecond } from '3h1-ui'
+
+const handleClickReturn = () => {
+  console.log(1)
+}
 </script>
 
 <style scoped></style>

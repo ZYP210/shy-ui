@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-15px pr-15px overflow-hidden h-full">
+  <div class="p-15px overflow-hidden h-full bg-black">
     <BasicTable
       title="基础示例"
       titleHelpMessage="温馨提醒"
@@ -58,7 +58,6 @@ const [register] = useTable({
   actionColumn: {
     title: '操作',
     dataIndex: 'action',
-    width: 160,
     align: 'center'
   },
   rowSelection: {},

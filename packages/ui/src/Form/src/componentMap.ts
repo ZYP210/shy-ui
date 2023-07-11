@@ -17,9 +17,9 @@ import {
   TimePicker,
   TreeSelect,
   Slider,
-  Rate,
-  Divider
+  Rate
 } from 'ant-design-vue'
+import Divider from './components/Divider'
 
 import ApiRadioGroup from './components/ApiRadioGroup.vue'
 import RadioButtonGroup from './components/RadioButtonGroup.vue'
@@ -35,6 +35,8 @@ import { CountdownInput } from '../../CountDown'
 
 import Table from './components/Table.vue'
 import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
+
+console.log(Divider)
 
 const componentMap = new Map<ComponentType, Component>()
 

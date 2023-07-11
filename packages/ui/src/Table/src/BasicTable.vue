@@ -1,5 +1,5 @@
 <template>
-  <div ref="wrapRef" :class="getWrapperClass">
+  <div ref="wrapRef" :class="getWrapperClass" style="background-color: #fff">
     <BasicForm
       ref="formRef"
       submitOnReset
@@ -300,6 +300,7 @@ export default defineComponent({
         attrs.class,
         {
           [`${prefixCls}-form-container`]: values.useSearchForm,
+          [`${prefixCls}-table-wrapper`]: values.useTableWrapper,
           [`${prefixCls}--inset`]: values.inset
         }
       ]

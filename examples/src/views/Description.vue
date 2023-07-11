@@ -22,14 +22,22 @@ const mockData: any = {
 }
 const schema: DescItem[] = [
   {
+    label: '基本信息',
+    component: 'Group'
+  },
+  {
     field: 'username',
     label: '用户名',
-    colProps: { span: 8 }
+    colProps: { span: 12 }
   },
   {
     field: 'nickName',
     label: '昵称',
-    colProps: { span: 8 }
+    colProps: { span: 12 }
+  },
+  {
+    label: '用户信息',
+    component: 'Divider'
   },
   {
     field: 'phone',

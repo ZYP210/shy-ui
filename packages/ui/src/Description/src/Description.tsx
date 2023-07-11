@@ -1,5 +1,7 @@
 import { computed, defineComponent, ref } from 'vue'
 import { basicProps, Schema, basicColProps } from './props'
+import { Divider } from 'ant-design-vue'
+import DescriptionGroup from './DescriptionGroup'
 
 export default defineComponent({
   name: 'Description',
@@ -22,34 +24,44 @@ export default defineComponent({
 
     const rows = computed(() => {
       return getProps.value.schema.map((item: Schema) => {
-        return (
-          <div
-            class={`${prefixCls}-row`}
-            style={{
-              flex: `0 0 ${
-                ((item?.colProps?.span || basicColProps) / 24) * 100
-              }%`
-            }}
-          >
-            <span
+        if (item?.component === 'Divider') {
+          return <Divider></Divider>
+        } else if (item?.component === 'Group') {
+          return (
+            <div style={{ flex: '0 0 100%' }}>
+              <DescriptionGroup label={item?.label}></DescriptionGroup>
+            </div>
+          )
+        } else {
+          return (
+            <div
+              class={`${prefixCls}-row`}
               style={{
-                width: `${getProps.value.labelWidth}px`
+                flex: `0 0 ${
+                  ((item?.colProps?.span || basicColProps) / 24) * 100
+                }%`
               }}
-              class={`${prefixCls}-label`}
             >
-              {slots[`${item.field}Label`]
-                ? slots[`${item.field}Label`]()
-                : item.label}
-              {getProps.value?.isShowColon ? ':' : ''}
-            </span>
+              <span
+                style={{
+                  width: `${getProps.value.labelWidth}px`
+                }}
+                class={`${prefixCls}-label`}
+              >
+                {slots[`${item.field}Label`]
+                  ? slots[`${item.field}Label`]()
+                  : item.label}
+                {getProps.value?.isShowColon ? ':' : ''}
+              </span>
 
-            <span class={`${prefixCls}-value`}>
-              {slots[`${item.field}Value`]
-                ? slots[`${item.field}Value`]()
-                : getProps.value.data[item.field]}
-            </span>
-          </div>
-        )
+              <span class={`${prefixCls}-value`}>
+                {slots[`${item.field}Value`]
+                  ? slots[`${item.field}Value`]()
+                  : getProps.value.data[item.field]}
+              </span>
+            </div>
+          )
+        }
       })
     })
 

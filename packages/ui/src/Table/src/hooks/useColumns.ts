@@ -23,7 +23,8 @@ import {
   ACTION_COLUMN_FLAG,
   DEFAULT_ALIGN,
   INDEX_COLUMN_FLAG,
-  PAGE_SIZE
+  PAGE_SIZE,
+  ACTION_COLUMN_WIDTH
 } from '../const'
 
 function handleItem(item: BasicColumn, ellipsis: boolean) {
@@ -120,6 +121,7 @@ function handleActionColumn(
     columns.push({
       ...columns[hasIndex],
       fixed: 'right',
+      width: ACTION_COLUMN_WIDTH,
       ...actionColumn,
       flag: ACTION_COLUMN_FLAG
     })

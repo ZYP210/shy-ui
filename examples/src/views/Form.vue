@@ -201,6 +201,12 @@ const schemas: FormSchema[] = [
     }
   },
   {
+    field: 'z',
+    label: 'Divider',
+    component: 'Divider',
+    colProps: { span: 24 }
+  },
+  {
     field: 'c',
     label: '选择弹框',
     component: 'Input',

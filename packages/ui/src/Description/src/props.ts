@@ -1,11 +1,12 @@
 import { PropType } from 'vue'
 
 export interface Schema {
-  label: string
-  field: string
+  label?: string
+  field?: string
   colProps?: {
     span: number
   }
+  component?: 'Divider' | 'Group'
 }
 export const basicColProps = 24
 

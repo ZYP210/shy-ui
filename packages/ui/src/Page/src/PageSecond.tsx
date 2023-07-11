@@ -1,0 +1,63 @@
+import { defineComponent } from 'vue'
+import { ArrowLeftOutlined } from '@ant-design/icons-vue'
+import { BasicButton } from '../../Button'
+import { Space } from 'ant-design-vue'
+
+const prefixCls = 'shy-basic-page-second'
+
+export default defineComponent({
+  props: {
+    title: {
+      type: String,
+      default: () => 'Title'
+    },
+    isShowCancelButton: {
+      type: Boolean,
+      default: () => true
+    },
+    isShowConfirmButton: {
+      type: Boolean,
+      default: () => true
+    }
+  },
+  emits: ['click-return'],
+  setup(props, { slots, emit }) {
+    const handleClick = () => {
+      emit('click-return')
+    }
+
+    return () => (
+      <div class={`${prefixCls}-wrapper`}>
+        <div class={`${prefixCls}-header`}>
+          <ArrowLeftOutlined
+            class={`${prefixCls}-header-icon`}
+            onClick={handleClick}
+          />
+          <div class={`${prefixCls}-header-title`}>{props.title}</div>
+        </div>
+
+        <div class={`${prefixCls}-body`}>{slots.default?.()}</div>
+
+        <div class={`${prefixCls}-footer`}>
+          <Space>
+            {slots.beforeCancelButton?.()}
+
+            {props.isShowCancelButton ? (
+              <BasicButton size="small">取消</BasicButton>
+            ) : null}
+
+            {slots.afterCancelButton?.()}
+
+            {props.isShowConfirmButton ? (
+              <BasicButton type="primary" size="small">
+                确定
+              </BasicButton>
+            ) : null}
+
+            {slots.beforeConfirmButton?.()}
+          </Space>
+        </div>
+      </div>
+    )
+  }
+})
