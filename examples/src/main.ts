@@ -19,8 +19,4 @@ import { BasicTable } from '3h1-ui'
 
 const app = createApp(App)
 
-app
-  .use(router)
-  .use(Antd)
-  .use(BasicTable, { bordered: false, striped: false })
-  .mount('#app')
+app.use(router).use(Antd).use(BasicTable, {}).mount('#app')

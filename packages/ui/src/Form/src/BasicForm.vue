@@ -54,7 +54,7 @@
       <span :class="`${prefixCls}-toggle-left__line`"></span>
       <span :class="`${prefixCls}-toggle-right__line`"></span>
       <span :class="getToggleClass" @click="handleToggleAdvanced"
-        ><DownOutlined :style="{ fontSize: '10px', color: '#AED0FA ' }"
+        ><DownOutlined :style="{ fontSize: '10px', color: '#2991ff ' }"
       /></span>
     </div>
   </slot>

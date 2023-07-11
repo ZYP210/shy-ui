@@ -109,9 +109,9 @@ export function useTableScroll(
     if (!headEl) return
 
     // Table height from bottom height-custom offset
-    let paddingHeight = 32
+    let paddingHeight = 30
     // Pager height
-    let paginationHeight = 2
+    let paginationHeight = 10
     if (!isBoolean(pagination) && tableData.length !== 0) {
       paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement
       if (paginationEl) {
@@ -137,7 +137,7 @@ export function useTableScroll(
 
     let headerHeight = 0
     if (headEl) {
-      headerHeight = (headEl as HTMLElement).offsetHeight
+      headerHeight = (headEl as HTMLElement).offsetHeight + 1
     }
 
     let bottomIncludeBody = 0
@@ -181,6 +181,7 @@ export function useTableScroll(
       footerHeight -
       headerHeight
     height = (height > maxHeight! ? (maxHeight as number) : height) ?? height
+
     setHeight(height)
 
     bodyEl!.style.height = `${height}px`

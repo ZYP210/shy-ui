@@ -35,7 +35,7 @@ export const basicProps = reactive({
   },
   showTableSetting: { type: Boolean, default: true },
   autoCreateKey: { type: Boolean, default: true },
-  striped: { type: Boolean, default: true },
+  striped: { type: Boolean, default: false },
   showSummary: Boolean,
   summaryFunc: {
     type: [Function, Array] as PropType<(...arg: any[]) => any[]>,
@@ -133,7 +133,7 @@ export const basicProps = reactive({
     >,
     default: ''
   },
-  bordered: propTypes.bool.def(true),
+  bordered: propTypes.bool.def(false),
   pagination: {
     type: [Object, Boolean] as PropType<PaginationProps | boolean>,
     default: null

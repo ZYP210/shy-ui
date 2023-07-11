@@ -10,13 +10,26 @@ export function useTableForm(
   fetch: (opt?: FetchParams | undefined) => Promise<void>,
   getLoading: ComputedRef<boolean | undefined>
 ) {
+  const getFormConfig = computed(() => {
+    const { formConfig } = unref(propsRef)
+    formConfig?.schemas.forEach((item) => {
+      if (item.component === 'Input') {
+        item.componentProps = {
+          showCount: false,
+          ...(item?.componentProps || {})
+        }
+      }
+    })
+
+    return formConfig
+  })
   const getFormProps = computed((): Partial<FormProps> => {
     const { formConfig } = unref(propsRef)
     const { submitButtonOptions } = formConfig || {}
     return {
       showAdvancedButton: true,
       rowProps: { gutter: 20 },
-      ...formConfig,
+      ...getFormConfig.value,
       submitButtonOptions: {
         loading: unref(getLoading),
         ...submitButtonOptions
