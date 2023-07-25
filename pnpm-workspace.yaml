@@ -3,3 +3,5 @@ packages:
   - 'examples'
   - 'vitesse'
   - 'demo'
+  - 'saber-admin'
+  - 'vue2-example'

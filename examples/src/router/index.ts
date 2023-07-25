@@ -165,6 +165,11 @@ const routes = [
     path: '/TablePlus',
     title: 'TableChildren',
     component: () => import('../views/TablePlus.vue')
+  },
+  {
+    path: '/AiMap',
+    title: 'AiMap',
+    component: () => import('../views/AiMap.vue')
   }
 ]
 

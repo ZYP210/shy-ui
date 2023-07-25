@@ -1,25 +1,51 @@
 <template>
-  <div class="p-15px overflow-hidden h-full bg-black">
-    <BasicTable
-      title="基础示例"
-      titleHelpMessage="温馨提醒"
-      @register="register"
-    >
-      <template #toolbar>
-        <a-button type="primary"> 操作按钮 </a-button>
-      </template>
-
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'action'">
-          <TableAction :actions="getActions()"></TableAction>
+  <div class="p-15px overflow-auto h-full bg-black flex">
+    <div class="w-600px mr-100px">
+      <BasicTable
+        title="基础示例"
+        titleHelpMessage="温馨提醒"
+        @register="register"
+      >
+        <template #toolbar>
+          <a-button type="primary"> 操作按钮 </a-button>
         </template>
-      </template>
-    </BasicTable>
+
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.dataIndex === 'action'">
+            <TableAction :actions="getActions()"></TableAction>
+          </template>
+        </template>
+      </BasicTable>
+    </div>
+
+    <div class="w-600px">
+      <BasicTable
+        title="基础示例"
+        titleHelpMessage="温馨提醒"
+        @register="register2"
+      >
+        <template #toolbar>
+          <a-button type="primary"> 操作按钮 </a-button>
+        </template>
+
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.dataIndex === 'action'">
+            <TableAction :actions="getActions()"></TableAction>
+          </template>
+        </template>
+      </BasicTable>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { useTable, TableAction } from '3h1-ui'
+const schemas = [
+  { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
+  { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } }
+  // { label: 'a', field: 'c', component: 'Input', colProps: { span: 8 } },
+  // { label: 'a', field: 'd', component: 'Input', colProps: { span: 8 } }
+]
 const columns = [
   {
     title: 'a',
@@ -62,12 +88,33 @@ const [register] = useTable({
   },
   rowSelection: {},
   formConfig: {
-    schemas: [
-      { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
-      { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
-      { label: 'a', field: 'c', component: 'Input', colProps: { span: 8 } },
-      { label: 'a', field: 'd', component: 'Input', colProps: { span: 8 } }
-    ]
+    schemas
+  }
+})
+
+const [register2] = useTable({
+  api: () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        let data = []
+        for (let i = 0; i < 100; i++) {
+          data.push({ a: 1, b: 2, c: 3 })
+        }
+        resolve(data)
+      }, 1000)
+    })
+  },
+  columns: columns as any,
+  useSearchForm: true,
+  showIndexColumn: true,
+  actionColumn: {
+    title: '操作',
+    dataIndex: 'action',
+    align: 'center'
+  },
+  rowSelection: {},
+  formConfig: {
+    schemas
   }
 })
 
