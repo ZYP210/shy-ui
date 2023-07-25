@@ -12,7 +12,8 @@ export function useTableForm(
 ) {
   const getFormConfig = computed(() => {
     const { formConfig } = unref(propsRef)
-    formConfig?.schemas.forEach((item) => {
+    const temp = JSON.parse(JSON.stringify(formConfig))
+    temp?.schemas.forEach((item) => {
       if (item.component === 'Input') {
         item.componentProps = {
           showCount: false,
@@ -21,11 +22,12 @@ export function useTableForm(
       }
     })
 
-    return formConfig
+    return temp
   })
   const getFormProps = computed((): Partial<FormProps> => {
     const { formConfig } = unref(propsRef)
     const { submitButtonOptions } = formConfig || {}
+
     return {
       showAdvancedButton: true,
       rowProps: { gutter: 20 },

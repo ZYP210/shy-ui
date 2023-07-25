@@ -260,8 +260,6 @@ export default defineComponent({
       handleSearchInfoChange
     } = useTableForm(getProps, slots, fetch, getLoading)
 
-    console.log('1', getFormProps.value)
-
     const getBindValues = computed(() => {
       const dataSource = unref(getDataSourceRef)
       let propsData: Recordable = {

@@ -36,8 +36,6 @@ import { CountdownInput } from '../../CountDown'
 import Table from './components/Table.vue'
 import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
 
-console.log(Divider)
-
 const componentMap = new Map<ComponentType, Component>()
 
 componentMap.set('Input', Input)
