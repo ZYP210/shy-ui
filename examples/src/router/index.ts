@@ -170,6 +170,11 @@ const routes = [
     path: '/AiMap',
     title: 'AiMap',
     component: () => import('../views/AiMap.vue')
+  },
+  {
+    path: '/AdvancedSearch',
+    title: 'AdvancedSearch',
+    component: () => import('../views/AdvancedSearch.vue')
   }
 ]
 
