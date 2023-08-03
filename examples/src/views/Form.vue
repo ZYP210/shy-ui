@@ -54,168 +54,171 @@ const schemas: FormSchema[] = [
       placeholder: '自定义placeholder',
       onChange: (e) => {
         console.log(e)
+      },
+      onInput: (e) => {
+        console.log(1)
       }
     }
-  },
-  {
-    field: 'ApiSelect',
-    label: 'ApiSelect',
-    component: 'ApiSelect',
-    colProps: { span: 8 },
-    componentProps: {
-      api: () =>
-        new Promise((resolve) =>
-          resolve([
-            { label: 'a', value: '1' },
-            { label: 'b', value: '2' },
-            { label: 'c', value: '3' },
-            { label: 'd', value: '4' },
-            { label: 'e', value: '5' },
-            { label: '中文', value: '6' },
-            { label: '英文', value: '7' },
-            { label: '德文', value: '8' }
-          ])
-        )
-    }
-  },
-  {
-    field: 'ApiSelectFieldNames',
-    label: 'ApiSelectFieldNames',
-    component: 'ApiSelect',
-    colProps: { span: 8 },
-    componentProps: {
-      api: () =>
-        new Promise((resolve) =>
-          resolve([
-            { name: 'a', id: '1' },
-            { name: 'b', id: '2' },
-            { name: 'c', id: '3' },
-            { name: 'd', id: '4' },
-            { name: 'e', id: '5' },
-            { name: '中文', id: '6' },
-            { name: '英文', id: '7' },
-            { name: '德文', id: '8' }
-          ])
-        ),
-      fieldNames: { label: 'name', value: 'id' }
-    }
-  },
-  {
-    field: 'select',
-    label: 'select',
-    component: 'Select',
-    colProps: { span: 8 },
-    componentProps: {
-      options: [
-        { name: 'a', id: '1' },
-        { name: 'b', id: '2' },
-        { name: 'c', id: '3' },
-        { name: 'd', id: '4' },
-        { name: 'e', id: '5' },
-        { name: '中文', id: '6' },
-        { name: '英文', id: '7' },
-        { name: '德文', id: '8' }
-      ],
-      fieldNames: { label: 'name', value: 'id' }
-    }
-  },
-  {
-    field: 'selectFieldsNames',
-    label: 'selectFieldsNames',
-    component: 'Select',
-    colProps: { span: 8 },
-    componentProps: {
-      options: [
-        { label: 'a', value: '1' },
-        { label: 'b', value: '2' },
-        { label: 'c', value: '3' },
-        { label: 'd', value: '4' },
-        { label: 'e', value: '5' },
-        { label: '中文', value: '6' },
-        { label: '英文', value: '7' },
-        { label: '德文', value: '8' }
-      ]
-    }
-  },
-  {
-    field: 'ApiTreeSelect',
-    label: 'ApiTreeSelect',
-    component: 'ApiTreeSelect',
-    colProps: { span: 8 },
-    componentProps: {
-      api: () =>
-        new Promise((resolve) =>
-          resolve([
-            {
-              name: 'a',
-              id: '1',
-              children: [
-                { name: 'b', id: '2' },
-                { name: 'c', id: '3' }
-              ]
-            },
-
-            {
-              name: 'd',
-              id: '4',
-              children: [
-                { name: '中文', id: '6' },
-                { name: '英文', id: '7' },
-                { name: '德文', id: '8' }
-              ]
-            },
-            { name: 'e', id: '5' }
-          ])
-        ),
-      fieldNames: { label: 'name', value: 'id' }
-    }
-  },
-
-  {
-    field: 'table',
-    label: 'table',
-    component: 'Table',
-    componentProps: {
-      columns: [
-        {
-          title: 'a',
-          dataIndex: 'a'
-        },
-        {
-          title: 'b',
-          dataIndex: 'b'
-        },
-        {
-          title: 'c',
-          dataIndex: 'c'
-        },
-        {
-          title: 'd',
-          dataIndex: 'd'
-        },
-        {
-          title: 'e',
-          dataIndex: 'e'
-        }
-      ]
-    }
-  },
-  {
-    field: 'z',
-    label: 'Divider',
-    component: 'Divider',
-    colProps: { span: 24 }
-  },
-  {
-    field: 'c',
-    label: '选择弹框',
-    component: 'Input',
-    slot: 'ApiModalSelect',
-    componentProps: {
-      autoLink: false
-    },
-    required: true
   }
+  // {
+  //   field: 'ApiSelect',
+  //   label: 'ApiSelect',
+  //   component: 'ApiSelect',
+  //   colProps: { span: 8 },
+  //   componentProps: {
+  //     api: () =>
+  //       new Promise((resolve) =>
+  //         resolve([
+  //           { label: 'a', value: '1' },
+  //           { label: 'b', value: '2' },
+  //           { label: 'c', value: '3' },
+  //           { label: 'd', value: '4' },
+  //           { label: 'e', value: '5' },
+  //           { label: '中文', value: '6' },
+  //           { label: '英文', value: '7' },
+  //           { label: '德文', value: '8' }
+  //         ])
+  //       )
+  //   }
+  // },
+  // {
+  //   field: 'ApiSelectFieldNames',
+  //   label: 'ApiSelectFieldNames',
+  //   component: 'ApiSelect',
+  //   colProps: { span: 8 },
+  //   componentProps: {
+  //     api: () =>
+  //       new Promise((resolve) =>
+  //         resolve([
+  //           { name: 'a', id: '1' },
+  //           { name: 'b', id: '2' },
+  //           { name: 'c', id: '3' },
+  //           { name: 'd', id: '4' },
+  //           { name: 'e', id: '5' },
+  //           { name: '中文', id: '6' },
+  //           { name: '英文', id: '7' },
+  //           { name: '德文', id: '8' }
+  //         ])
+  //       ),
+  //     fieldNames: { label: 'name', value: 'id' }
+  //   }
+  // },
+  // {
+  //   field: 'select',
+  //   label: 'select',
+  //   component: 'Select',
+  //   colProps: { span: 8 },
+  //   componentProps: {
+  //     options: [
+  //       { name: 'a', id: '1' },
+  //       { name: 'b', id: '2' },
+  //       { name: 'c', id: '3' },
+  //       { name: 'd', id: '4' },
+  //       { name: 'e', id: '5' },
+  //       { name: '中文', id: '6' },
+  //       { name: '英文', id: '7' },
+  //       { name: '德文', id: '8' }
+  //     ],
+  //     fieldNames: { label: 'name', value: 'id' }
+  //   }
+  // },
+  // {
+  //   field: 'selectFieldsNames',
+  //   label: 'selectFieldsNames',
+  //   component: 'Select',
+  //   colProps: { span: 8 },
+  //   componentProps: {
+  //     options: [
+  //       { label: 'a', value: '1' },
+  //       { label: 'b', value: '2' },
+  //       { label: 'c', value: '3' },
+  //       { label: 'd', value: '4' },
+  //       { label: 'e', value: '5' },
+  //       { label: '中文', value: '6' },
+  //       { label: '英文', value: '7' },
+  //       { label: '德文', value: '8' }
+  //     ]
+  //   }
+  // },
+  // {
+  //   field: 'ApiTreeSelect',
+  //   label: 'ApiTreeSelect',
+  //   component: 'ApiTreeSelect',
+  //   colProps: { span: 8 },
+  //   componentProps: {
+  //     api: () =>
+  //       new Promise((resolve) =>
+  //         resolve([
+  //           {
+  //             name: 'a',
+  //             id: '1',
+  //             children: [
+  //               { name: 'b', id: '2' },
+  //               { name: 'c', id: '3' }
+  //             ]
+  //           },
+  //
+  //           {
+  //             name: 'd',
+  //             id: '4',
+  //             children: [
+  //               { name: '中文', id: '6' },
+  //               { name: '英文', id: '7' },
+  //               { name: '德文', id: '8' }
+  //             ]
+  //           },
+  //           { name: 'e', id: '5' }
+  //         ])
+  //       ),
+  //     fieldNames: { label: 'name', value: 'id' }
+  //   }
+  // },
+  //
+  // {
+  //   field: 'table',
+  //   label: 'table',
+  //   component: 'Table',
+  //   componentProps: {
+  //     columns: [
+  //       {
+  //         title: 'a',
+  //         dataIndex: 'a'
+  //       },
+  //       {
+  //         title: 'b',
+  //         dataIndex: 'b'
+  //       },
+  //       {
+  //         title: 'c',
+  //         dataIndex: 'c'
+  //       },
+  //       {
+  //         title: 'd',
+  //         dataIndex: 'd'
+  //       },
+  //       {
+  //         title: 'e',
+  //         dataIndex: 'e'
+  //       }
+  //     ]
+  //   }
+  // },
+  // {
+  //   field: 'z',
+  //   label: 'Divider',
+  //   component: 'Divider',
+  //   colProps: { span: 24 }
+  // },
+  // {
+  //   field: 'c',
+  //   label: '选择弹框',
+  //   component: 'Input',
+  //   slot: 'ApiModalSelect',
+  //   componentProps: {
+  //     autoLink: false
+  //   },
+  //   required: true
+  // }
 ]
 const { createMessage } = useMessage()
 const [registerForm, { setFieldsValue, getFieldsValue, validate }] = useForm({

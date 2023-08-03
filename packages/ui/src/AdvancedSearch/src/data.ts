@@ -86,3 +86,14 @@ export const searchTypeString = searchType.filter((item) => {
 export const searchTypeDate = searchType.filter((item) => {
   return ['eq', 'gt', 'ge', 'lt', 'le', 'bt'].includes(item.value)
 })
+
+export const searchTypeSelect = [{ label: '等于', value: 'eq' }]
+
+export const getGlobalAdvancedType = (fieldList, value) => {
+  const temp = {}
+  fieldList.forEach((field) => {
+    temp[`${field}-op`] = 'ct'
+    temp[field] = value
+  })
+  return temp
+}

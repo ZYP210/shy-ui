@@ -17,53 +17,55 @@
         >
           <slot :name="item" v-bind="data || {}"></slot>
         </template>
-
-        <template #advancedSearch>
-          <BasicButton @click="handleAdvancedSearch">高级搜索</BasicButton>
-        </template>
       </BasicForm>
+      <div class="relative">
+        <TableAdvancedSearch
+          v-show="isVisibleAdvancedSearch"
+          :schemasAdvancedSearch="schemasAdvancedSearch"
+          @ensure="handleAdvancedEnsure"
+        ></TableAdvancedSearch>
 
-      <TableAdvancedSearch
-        :schemasAdvancedSearch="schemasAdvancedSearch"
-        v-if="isVisibleAdvancedSearch"
-      />
-
-      <Table
-        ref="tableElRef"
-        v-bind="getBindValues"
-        :rowClassName="getRowClassName"
-        v-show="getEmptyDataIsShowTable"
-        @change="handleTableChange"
-        @resizeColumn="handleResizeColumn"
-        class="enter-x"
-      >
-        <template
-          #[item]="data"
-          v-for="item in Object.keys($slots)"
-          :key="item"
+        <TableGlobalSearch
+          v-show="isVisibleGlobalSearch"
+          :schemasAdvancedSearch="schemasAdvancedSearchString"
+        />
+        <Table
+          ref="tableElRef"
+          v-bind="getBindValues"
+          :rowClassName="getRowClassName"
+          v-show="getEmptyDataIsShowTable"
+          @change="handleTableChange"
+          @resizeColumn="handleResizeColumn"
+          class="enter-x"
         >
-          <slot :name="item" v-bind="data || {}"></slot>
-        </template>
-        <template #headerCell="{ column }">
-          <HeaderCell :column="column" />
-        </template>
-
-        <template #emptyText>
-          <div
-            class="flex justify-center items-center"
-            :style="{ height: `${getHeight.y as number - 40}px` }"
+          <template
+            #[item]="data"
+            v-for="item in Object.keys($slots)"
+            :key="item"
           >
-            <Empty />
-          </div>
-        </template>
-        <!-- 增加对antdv3.x兼容 -->
-        <template #bodyCell="data">
-          <slot name="bodyCell" v-bind="data || {}"></slot>
-        </template>
-        <!--      <template #[`header-${column.dataIndex}`] v-for="(column, index) in columns" :key="index">-->
-        <!--        <HeaderCell :column="column" />-->
-        <!--      </template>-->
-      </Table>
+            <slot :name="item" v-bind="data || {}"></slot>
+          </template>
+          <template #headerCell="{ column }">
+            <HeaderCell :column="column" />
+          </template>
+
+          <template #emptyText>
+            <div
+              class="flex justify-center items-center"
+              :style="{ height: `${getHeight.y as number - 40}px` }"
+            >
+              <Empty />
+            </div>
+          </template>
+          <!-- 增加对antdv3.x兼容 -->
+          <template #bodyCell="data">
+            <slot name="bodyCell" v-bind="data || {}"></slot>
+          </template>
+          <!--      <template #[`header-${column.dataIndex}`] v-for="(column, index) in columns" :key="index">-->
+          <!--        <HeaderCell :column="column" />-->
+          <!--      </template>-->
+        </Table>
+      </div>
     </div>
   </div>
 </template>
@@ -104,22 +106,24 @@ import { useTableExpand } from './hooks/useTableExpand'
 import { createTableContext } from './hooks/useTableContext'
 import { useTableFooter } from './hooks/useTableFooter'
 import { useTableForm } from './hooks/useTableForm'
-import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
 import { useAdvancedSearch } from './hooks/useAdvancedSearch'
 
 import { omit } from 'lodash-es'
 import { basicProps } from './props'
 import { warn, isFunction } from '@shy-plugins/utils'
 import type {} from 'csstype'
+import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
+import TableGlobalSearch from './components/TableGlobalSearch.vue'
 
 export default defineComponent({
   components: {
+    TableAdvancedSearch,
     Table,
     BasicForm,
     HeaderCell,
     Empty,
     BasicButton,
-    TableAdvancedSearch
+    TableGlobalSearch
   },
   props: basicProps,
   emits: [
@@ -209,7 +213,8 @@ export default defineComponent({
         setLoading,
         setPagination,
         getFieldsValue: formActions.getFieldsValue,
-        clearSelectedRowKeys
+        clearSelectedRowKeys,
+        getCurSearchParams
       },
       emit
     )
@@ -294,13 +299,13 @@ export default defineComponent({
         rowSelection: unref(getRowSelectionRef),
         rowKey: unref(getRowKey),
         // @ts-ignore
-        columns: toRaw(unref(getViewColumns)).map((item) => {
-          return item
-        }),
+        columns: toRaw(unref(getViewColumns)),
         pagination: toRaw(unref(getPaginationInfo)),
         dataSource,
         footer: unref(getFooterProps),
-        ...unref(getExpandOption)
+        ...unref(getExpandOption),
+        // 默认项
+        showSorterTooltip: false
       }
       // if (slots.expandedRowRender) {
       //   propsData = omit(propsData, 'scroll');
@@ -331,6 +336,31 @@ export default defineComponent({
       }
       return !!unref(getDataSourceRef).length
     })
+
+    // 高级搜索
+    const {
+      schemasAdvancedSearch,
+      schemasAdvancedSearchString,
+      isVisibleAdvancedSearch,
+      openAdvancedSearch,
+      closeAdvancedSearch,
+      handleAdvancedEnsure,
+      openGlobalSearch,
+      closeGlobalSearch,
+      isVisibleGlobalSearch,
+      setGlobalSearchType,
+      getGlobalSearchType,
+      setGlobalSchemas,
+      getGlobalSchemas,
+      setGlobalSearchValue,
+      getGlobalSearchValue,
+      setCurSearchParams,
+      getCurSearchParams: getCurSearchParamsHooks
+    } = useAdvancedSearch({ getProps, reload })
+
+    function getCurSearchParams() {
+      return getCurSearchParamsHooks()
+    }
 
     function setProps(props: Partial<BasicTableProps>) {
       innerPropsRef.value = { ...unref(innerPropsRef), ...props }
@@ -373,7 +403,25 @@ export default defineComponent({
         return unref(getBindValues).size as SizeType
       }
     }
-    createTableContext({ ...tableAction, wrapRef, getBindValues })
+    createTableContext({
+      ...tableAction,
+      wrapRef,
+      getBindValues,
+      openAdvancedSearch,
+      closeAdvancedSearch,
+      isVisibleAdvancedSearch,
+      openGlobalSearch,
+      closeGlobalSearch,
+      isVisibleGlobalSearch,
+      setGlobalSearchType,
+      getGlobalSearchType,
+      setGlobalSchemas,
+      getGlobalSchemas,
+      setGlobalSearchValue,
+      getGlobalSearchValue,
+      setCurSearchParams,
+      getCurSearchParams
+    })
 
     expose(tableAction)
 
@@ -386,12 +434,6 @@ export default defineComponent({
     const getHeight = computed(() => {
       return unref(getScrollRef)
     })
-
-    const handleAdvancedSearch = () => {
-      isVisibleAdvancedSearch.value = true
-    }
-    const { isVisibleAdvancedSearch, schemasAdvancedSearch } =
-      useAdvancedSearch({ getProps })
 
     return {
       formRef,
@@ -413,9 +455,11 @@ export default defineComponent({
       columns: getViewColumns,
       handleResizeColumn,
       getHeight,
+      schemasAdvancedSearch,
       isVisibleAdvancedSearch,
-      handleAdvancedSearch,
-      schemasAdvancedSearch
+      handleAdvancedEnsure,
+      isVisibleGlobalSearch,
+      schemasAdvancedSearchString
     }
   }
 })

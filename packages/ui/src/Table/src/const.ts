@@ -27,9 +27,9 @@ const componentSetting = {
       if (field && order) {
         return {
           // The sort field passed to the backend you
-          field,
+          sort: field,
           // Sorting method passed to the background asc/desc
-          order
+          order: order === 'ascend' ? 'asc' : 'desc'
         }
       } else {
         return {}

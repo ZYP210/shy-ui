@@ -26,16 +26,31 @@ const columns = [
     dataIndex: 'name'
   },
   {
-    title: '性别',
-    dataIndex: 'sex'
+    title: '年龄',
+    dataIndex: 'age',
+    advancedType: 'number'
+  },
+
+  {
+    title: '生日',
+    dataIndex: 'birth',
+    advancedType: 'date'
   },
   {
-    title: '年龄',
-    dataIndex: 'age'
-  }
+    title: '爱好',
+    dataIndex: 'fav',
+    advancedType: 'select',
+    componentProps: {
+      options: [{ label: 1, value: 1 }]
+    }
+  },
+  { title: '字符串1', dataIndex: 'string1' },
+  { title: '字符串2', dataIndex: 'string2' },
+  { title: '字符串3', dataIndex: 'string3' }
 ]
 const [register] = useTable({
-  api: () => {
+  api: (params) => {
+    console.log('params', params)
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([{ name: 1 }, { sex: 2 }, { age: 3 }])
@@ -43,7 +58,8 @@ const [register] = useTable({
     })
   },
   columns: columns as any,
-  useSearchForm: true,
+  useSearchForm: false,
+  useAdvancedSearch: true,
   showIndexColumn: true,
   actionColumn: {
     title: '操作',

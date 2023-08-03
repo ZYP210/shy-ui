@@ -1,6 +1,6 @@
 <script lang="tsx">
 import type { PropType, Ref } from 'vue'
-import { computed, defineComponent, toRefs, unref } from 'vue'
+import { computed, defineComponent, toRefs, unref, ref } from 'vue'
 import type { FormActionType, FormProps, FormSchema } from '../types/form'
 import type { ValidationRule } from 'ant-design-vue/lib/form/Form'
 import type { TableActionType } from '../../../Table'
@@ -71,6 +71,8 @@ export default defineComponent({
       }
     })
 
+    const flag = ref(0)
+
     const getComponentsProps = computed(() => {
       const { schema, tableAction, formModel, formActionType } = props
 
@@ -88,18 +90,21 @@ export default defineComponent({
         })
       }
       if (schema.component === 'Input') {
-        const showCount =
-          componentProps?.showCount === undefined
-            ? true
-            : componentProps.showCount
-        const maxlength =
-          componentProps?.maxlength === undefined
-            ? 100
-            : componentProps.maxlength
-        componentProps = Object.assign({}, componentProps, {
-          showCount,
-          maxlength
-        })
+        componentProps.onInputEvent = (e) => {
+          flag.value += 1
+
+          componentProps.maxlength =
+            componentProps?.maxlength === undefined
+              ? 100
+              : componentProps.maxlength
+
+          if (!getValues.value.model[getValues.value.schema.field]) {
+            componentProps.showCount = true
+          } else {
+            componentProps.showCount = false
+          }
+        }
+        flag.value
       }
 
       if (schema.component === 'Select') {
@@ -326,15 +331,21 @@ export default defineComponent({
         ...on,
         ...bindValue
       }
+      console.log(compAttr)
+
+      const handleInput = (e) => {
+        compAttr.onInputEvent(e)
+      }
 
       if (!renderComponentContent) {
-        return <Comp {...compAttr} />
+        return <Comp {...compAttr} onInput={handleInput} />
       }
       const compSlot = isFunction(renderComponentContent)
         ? { ...renderComponentContent(unref(getValues)) }
         : {
             default: () => renderComponentContent
           }
+
       return <Comp {...compAttr}>{compSlot}</Comp>
     }
 

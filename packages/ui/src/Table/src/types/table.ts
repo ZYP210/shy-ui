@@ -147,6 +147,20 @@ export interface TableActionType {
   setTreeExpand?: any
   getVxeTableRef: any
   setSelectRowByKeys?: any
+  openAdvancedSearch?: any
+  closeAdvancedSearch?: any
+  isVisibleAdvancedSearch?: any
+  isVisibleGlobalSearch?: any
+  closeGlobalSearch?: any
+  openGlobalSearch?: any
+  setGlobalSearchType?: any
+  getGlobalSearchType?: any
+  getGlobalSchemas?: any
+  setGlobalSchemas?: any
+  setGlobalSearchValue?: any
+  getGlobalSearchValue?: any
+  setCurSearchParams?: any
+  getCurSearchParams?: any
 }
 
 export interface FetchSetting {
@@ -212,6 +226,7 @@ export interface BasicTableProps<T = any> {
   defSort?: Recordable
   // 使用搜索表单
   useSearchForm?: boolean
+  useAdvancedSearch?: boolean
   // 表单配置
   formConfig?: Partial<FormProps>
   // 列配置

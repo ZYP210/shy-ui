@@ -1,5 +1,12 @@
 <template>
   <div class="table-settings">
+    <GlobalSearch v-if="getBindValues.useAdvancedSearch" />
+
+    <AdvancedSearchSetting
+      v-if="getBindValues.useAdvancedSearch"
+      :getPopupContainer="getTableContainer"
+    />
+
     <ShowSearchSetting
       v-if="
         getBindValues?.formConfig?.schemas &&
@@ -32,18 +39,22 @@ import SizeSetting from './SizeSetting.vue'
 import RedoSetting from './RedoSetting.vue'
 import FullScreenSetting from './FullScreenSetting.vue'
 import ShowSearchSetting from './ShowSearchSetting.vue'
+import AdvancedSearchSetting from './AdvancedSearchSetting.vue'
 
 // import { useI18n } from '/@/hooks/web/useI18n'
 import { useTableContext } from '../../hooks/useTableContext'
+import GlobalSearch from './GlobalSearch.vue'
 
 export default defineComponent({
   name: 'TableSetting',
   components: {
+    GlobalSearch,
     ColumnSetting,
     SizeSetting,
     // RedoSetting,
     FullScreenSetting,
-    ShowSearchSetting
+    ShowSearchSetting,
+    AdvancedSearchSetting
   },
   props: {
     setting: {
@@ -82,6 +93,8 @@ export default defineComponent({
 </script>
 <style lang="less">
 .table-settings {
+  display: flex;
+  align-items: center;
   & > * {
     margin-right: 12px;
   }

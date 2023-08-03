@@ -1,44 +1,24 @@
 <template>
   <div class="shy-basic-table-advanced-search">
-    <Row>
-      <template v-for="schema in schemasAdvancedSearch" :key="schema.field">
-        <Col :span="12">
-          <Row align="middle" style="margin-bottom: 10px">
-            <Col flex="0">
-              <div style="width: 40px; text-align: left">
-                {{ schema.label }}
-              </div>
-            </Col>
-            <Col flex="1" style="margin-right: 10px">
-              <Select style="width: 100%" :options="kvStringOperator"></Select>
-            </Col>
-            <Col flex="1" style="margin-right: 10px">
-              <Input />
-            </Col>
-
-            <Col style="width: 120px">
-              <Radio>忽略大小写</Radio>
-            </Col>
-          </Row>
-        </Col>
-      </template>
-    </Row>
-
+    <AdvancedSearch
+      ref="advancedSearchRef"
+      :schemas="schemasAdvancedSearch"
+    ></AdvancedSearch>
     <div class="shy-basic-table-advanced-search-footer">
       <Space>
-        <BasicButton type="primary">确定</BasicButton>
-        <BasicButton>取消</BasicButton>
-        <BasicButton>重置</BasicButton>
+        <BasicButton type="primary" @click="handleEnsure">搜索</BasicButton>
+        <BasicButton @click="handleReset">重置</BasicButton>
       </Space>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Select, Input, Row, Col, Space, Radio } from 'ant-design-vue'
-import { useAdvancedSearchKv } from '../hooks/useAdvancedSearch'
+import { Space } from 'ant-design-vue'
 import { BasicButton } from '../../../Button'
-export default {
+import { AdvancedSearch } from '../../../AdvancedSearch/'
+import { defineComponent, ref } from 'vue'
+export default defineComponent({
   props: {
     schemasAdvancedSearch: {
       default: () => [],
@@ -46,22 +26,24 @@ export default {
     }
   },
   components: {
-    Select,
-    Input,
-    Row,
-    Col,
     BasicButton,
     Space,
-    Radio
+    AdvancedSearch
   },
-  setup(props, e) {
-    console.log('e', e)
-    const { getKvOperator } = useAdvancedSearchKv()
-    const { kvStringOperator } = getKvOperator()
+  emits: ['ensure'],
+  setup(props, { emit }) {
+    const advancedSearchRef = ref()
 
-    return {
-      kvStringOperator
+    const handleEnsure = () => {
+      const form = advancedSearchRef.value.getSearchFrom()
+      emit('ensure', form)
     }
+
+    const handleReset = () => {
+      advancedSearchRef.value.resetFields()
+    }
+
+    return { handleEnsure, handleReset, advancedSearchRef }
   }
-}
+})
 </script>

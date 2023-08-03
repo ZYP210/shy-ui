@@ -84,6 +84,8 @@ export const basicProps = reactive({
   },
   // 使用搜索表单
   useSearchForm: propTypes.bool,
+  //使用高级搜索
+  useAdvancedSearch: propTypes.bool.def(false),
   // 使用表格内边距
   useTableWrapper: propTypes.bool.def(true),
   // 表单配置

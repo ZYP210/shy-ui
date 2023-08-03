@@ -22,20 +22,97 @@ export enum OperatorEnum {
   // 'ny' = '不为空'
 }
 
-export const useAdvancedSearch = ({ getProps }) => {
+export const useAdvancedSearch = ({ getProps, reload }) => {
   const isVisibleAdvancedSearch = ref(false)
   const schemasAdvancedSearch = computed(() => {
     return getProps.value.columns.map((column) => {
       return {
         label: column.title,
-        field: column.field
+        field: column.dataIndex,
+        type: column?.advancedType || 'string',
+        component: column?.component || 'Input',
+        componentProps: column?.componentProps || {}
       }
     })
   })
 
+  const schemasAdvancedSearchString = computed(() => {
+    return schemasAdvancedSearch.value.filter((item) => {
+      return item.type === 'string'
+    })
+  })
+
+  const openAdvancedSearch = () => {
+    isVisibleAdvancedSearch.value = true
+  }
+  const closeAdvancedSearch = () => {
+    isVisibleAdvancedSearch.value = false
+  }
+
+  const handleAdvancedEnsure = (form) => {
+    setCurSearchParams(form)
+    reload({ searchInfo: form })
+  }
+
+  const globalSearchType = ref(1)
+  const isVisibleGlobalSearch = ref(false)
+
+  const openGlobalSearch = () => {
+    isVisibleGlobalSearch.value = true
+  }
+  const closeGlobalSearch = () => {
+    isVisibleGlobalSearch.value = false
+  }
+  const setGlobalSearchType = (value) => {
+    globalSearchType.value = value
+  }
+
+  const getGlobalSearchType = () => {
+    return globalSearchType.value
+  }
+  const curGlobalSchemas = ref([])
+  const setGlobalSchemas = (value) => {
+    curGlobalSchemas.value = value
+  }
+  const getGlobalSchemas = () => {
+    return curGlobalSchemas.value
+  }
+  const curGlobalSearchValue = ref('')
+  const setGlobalSearchValue = (value) => {
+    curGlobalSearchValue.value = value
+  }
+
+  const getGlobalSearchValue = () => {
+    return curGlobalSearchValue.value
+  }
+
+  const curSearchParams = ref({})
+
+  const setCurSearchParams = (value) => {
+    curSearchParams.value = value
+  }
+  const getCurSearchParams = () => {
+    return curSearchParams.value
+  }
   return {
     isVisibleAdvancedSearch,
-    schemasAdvancedSearch
+    schemasAdvancedSearch,
+    openAdvancedSearch,
+    closeAdvancedSearch,
+    handleAdvancedEnsure,
+    setGlobalSearchType,
+    getGlobalSearchType,
+    openGlobalSearch,
+    closeGlobalSearch,
+    isVisibleGlobalSearch,
+    curGlobalSearchValue,
+    setGlobalSchemas,
+    getGlobalSchemas,
+    setGlobalSearchValue,
+    getGlobalSearchValue,
+    setCurSearchParams,
+    getCurSearchParams,
+    schemasAdvancedSearchString
   }
 }
 

@@ -1,31 +1,43 @@
 <template>
   <div class="shy-ui-advanced-search">
-    <Form :model="form" ref="formRef">
+    <div class="shy-ui-advanced-search-add">
+      <PlusCircleOutlined></PlusCircleOutlined>
+      <div style="margin-left: 8px" @click="handleAdd">新增条件</div>
+    </div>
+    <Form :model="schemasCurrent" ref="formRef">
       <Row>
-        <template v-for="(schema, index) in schemas" :key="index">
+        <template v-for="(schema, index) in schemasCurrent" :key="index">
           <Col v-bind="schema?.colProps || { span: 24 }">
             <div class="shy-ui-advanced-search-item-wrapper">
               <FormItem
                 class="shy-ui-advanced-search-item-op"
-                :label="schema.label"
                 :name="`${schema.field}-op`"
               >
                 <Select
-                  v-model:value="form[`${schema.field}-op`]"
+                  v-model:value="schema.field"
                   style="width: 120px"
-                  :options="getSearchType(schema?.type)"
+                  :options="dicColumn"
+                  @change="handleFieldChange(schema)"
                 ></Select>
               </FormItem>
               <FormItem
-                class="shy-ui-advanced-search-item-value"
-                :name="schema.field"
+                class="shy-ui-advanced-search-item-op"
+                :name="`${schema.field}-op`"
               >
-                <template v-if="schema?.type === 'number'">
-                  <template v-if="form[`${schema.field}-op`] === 'bt'">
+                <Select
+                  v-model:value="schema.op"
+                  style="width: 120px"
+                  :options="getSearchType(schema?.field)"
+                  :defaultValue="getSearchType(schema?.field)[0]?.value || ''"
+                ></Select>
+              </FormItem>
+              <FormItem class="shy-ui-advanced-search-item-value">
+                <template v-if="getTypeByField(schema?.field) === 'number'">
+                  <template v-if="schema.op === 'bt'">
                     <div class="shy-ui-advanced-search-item-value-range">
                       <FormItem>
                         <InputNumber
-                          v-model:value.number="form[`${schema.field}-1`]"
+                          v-model:value.number="schema[`${schema.field}-1`]"
                         />
                       </FormItem>
                       <div style="flex: 0; width: 40px; margin-right: 8px">
@@ -33,7 +45,7 @@
                       </div>
                       <FormItem>
                         <InputNumber
-                          v-model:value.number="form[`${schema.field}-2`]"
+                          v-model:value.number="schema[`${schema.field}-2`]"
                         />
                       </FormItem>
                     </div>
@@ -42,17 +54,19 @@
                   <template v-else>
                     <InputNumber
                       style="width: 200px"
-                      v-model:value.number="form[schema.field]"
+                      v-model:value.number="schema[schema.field]"
                     />
                   </template>
                 </template>
 
-                <template v-else-if="schema?.type === 'date'">
-                  <template v-if="form[`${schema.field}-op`] === 'bt'">
+                <template v-else-if="getTypeByField(schema?.field) === 'date'">
+                  <template v-if="schema.op === 'bt'">
                     <div class="shy-ui-advanced-search-item-value-range">
                       <FormItem>
                         <DatePicker
-                          v-model:value.number="form[`${schema.field}-1`]"
+                          v-model:value="schema[`${schema.field}-1`]"
+                          value-format="YYYY-MM-DD 00:00:00"
+                          format="YYYY-MM-DD"
                         />
                       </FormItem>
                       <div style="flex: 0; width: 40px; margin-right: 8px">
@@ -60,35 +74,64 @@
                       </div>
                       <FormItem>
                         <DatePicker
-                          v-model:value.number="form[`${schema.field}-2`]"
+                          v-model:value="schema[`${schema.field}-2`]"
+                          value-format="YYYY-MM-DD 00:00:00"
+                          format="YYYY-MM-DD"
                         />
                       </FormItem>
                     </div>
                   </template>
 
                   <template v-else>
-                    <DatePicker v-model:value="form[schema.field]"></DatePicker>
+                    <DatePicker
+                      v-model:value="schema[schema.field]"
+                      value-format="YYYY-MM-DD HH:mm:ss"
+                    ></DatePicker>
                   </template>
                 </template>
 
+                <template
+                  v-else-if="getTypeByField(schema?.field) === 'select'"
+                >
+                  <FormItem>
+                    <Select
+                      v-model:value.number="schema[`${schema.field}`]"
+                      v-bind="getComponentPropsByField(schema.field)"
+                    />
+                  </FormItem>
+                </template>
+
                 <template v-else>
-                  <Input v-model:value="form[schema.field]" />
+                  <Input
+                    v-model:value="schema[schema.field]"
+                    v-if="getComponent(schema.field) === 'Input'"
+                    v-bind="getComponentPropsByField(schema.field)"
+                  />
+                  <Select
+                    v-else
+                    v-model:value="schema[schema.field]"
+                    v-bind="getComponentPropsByField(schema.field)"
+                  ></Select>
                 </template>
               </FormItem>
-              <div>
-                <slot :name="schema.field"></slot>
+              <div
+                v-if="schemasCurrent.length !== 1"
+                style="margin-left: 8px; cursor: pointer"
+                @click="handleMinus(index)"
+              >
+                <MinusCircleTwoTone />
               </div>
             </div>
           </Col>
         </template>
       </Row>
     </Form>
-    <div>
+    <!-- <div>
       <Space>
         <BasicButton type="primary" @click="handleSearch">查询</BasicButton>
         <BasicButton @click="handleReset">重置</BasicButton>
       </Space>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -109,9 +152,11 @@ import {
   searchType,
   searchTypeString,
   searchTypeNumber,
-  searchTypeDate
+  searchTypeDate,
+  searchTypeSelect
 } from './data'
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
+import { PlusCircleOutlined, MinusCircleTwoTone } from '@ant-design/icons-vue'
 import { BasicButton } from '../../Button/'
 
 const props = defineProps({
@@ -135,7 +180,47 @@ const form = reactive({})
 
 const formRef = ref()
 
-const getSearchType = (type: 'number' | 'string' | 'date' = 'string') => {
+const schemasCurrent = reactive([])
+if (props.schemas.length !== 0)
+  schemasCurrent.push({ field: props.schemas[0].field, op: 'eq' })
+
+const dicColumn = computed(() => {
+  const temp = []
+  props.schemas.forEach((schama) => {
+    const flag = schemasCurrent.find((item) => {
+      return item.field === schama.field
+    })
+
+    temp.push({
+      label: schama.label,
+      value: schama.field,
+      disabled: !!flag
+    })
+  })
+  return temp
+})
+
+const handleAdd = () => {
+  const item = dicColumn.value.find((item) => {
+    return item.disabled === false
+  })
+  schemasCurrent.push({ field: item?.value || '', op: 'eq' })
+}
+
+const handleMinus = (index) => {
+  schemasCurrent.splice(index, 1)
+}
+
+const handleFieldChange = (schema) => {
+  Object.keys(schema).forEach((key) => {
+    if (key === 'field') return
+    delete schema[key]
+  })
+  schema.op = 'eq'
+}
+
+const getSearchType = (field: string) => {
+  const type = getTypeByField(field)
   switch (type) {
     case 'number':
       return searchTypeNumber
@@ -143,16 +228,73 @@ const getSearchType = (type: 'number' | 'string' | 'date' = 'string') => {
       return searchTypeString
     case 'date':
       return searchTypeDate
+    case 'select':
+      return searchTypeSelect
   }
 }
 
-const handleSearch = () => {
-  console.log('form', form)
+const getComponent = (field: string) => {
+  const column = props.schemas.find((schema) => {
+    return schema.field === field
+  })
+  return column?.component || 'Input'
 }
 
-const handleReset = () => {
+const getTypeByField = (field: string) => {
+  const column = props.schemas.find((schema) => {
+    return schema.field === field
+  })
+  const type: 'number' | 'string' | 'date' | 'select' = column?.type || 'string'
+  return type
+}
+const getComponentPropsByField = (field: string) => {
+  const column = props.schemas.find((schema) => {
+    return schema.field === field
+  })
+  return column?.componentProps || {}
+}
+
+// 按钮事件
+// const handleSearch = () => {
+//   console.log('form', form)
+// }
+
+// const handleReset = () => {
+//   formRef.value.resetFields()
+// }
+
+const getSearchFrom = () => {
+  let form = {}
+  schemasCurrent.forEach((item) => {
+    let temp = {}
+    if (item.op === 'bt') {
+      temp = {
+        [`${item.field}-1`]: item[`${item.field}-1`],
+        [`${item.field}-2`]: item[`${item.field}-2`],
+        [`${item.field}-op`]: item.op
+      }
+    } else {
+      temp = {
+        [item.field]: item[item.field],
+        [`${item.field}-op`]: item.op
+      }
+    }
+
+    form = { ...form, ...temp }
+  })
+  return form
+}
+
+const resetFields = () => {
+  schemasCurrent.splice(0, schemasCurrent.length)
+  schemasCurrent.push({ field: props.schemas[0].field })
   formRef.value.resetFields()
 }
+
+defineExpose({
+  getSearchFrom,
+  resetFields
+})
 </script>
 
 <style scoped></style>

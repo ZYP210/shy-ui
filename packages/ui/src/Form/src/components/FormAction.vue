@@ -5,7 +5,16 @@
     :style="{ textAlign: actionColOpt.style.textAlign }"
   >
     <FormItem class="shy-form-action">
-      <slot name="advancedSearch">123</slot>
+      <slot name="resetBefore"></slot>
+      <BasicButton
+        type="default"
+        class="mr-2"
+        v-bind="getResetBtnOptions"
+        @click="resetAction"
+        v-if="showResetButton"
+      >
+        {{ getResetBtnOptions.text }}
+      </BasicButton>
       <slot name="submitBefore"></slot>
 
       <Button
@@ -25,7 +34,9 @@
         @click="toggleAdvanced"
         v-if="showAdvancedButton && !hideAdvanceBtn"
       >
-        {{ isAdvanced ? t('component.form.putAway') : t('component.form.unfold') }}
+        {{
+          isAdvanced ? t('component.form.putAway') : t('component.form.unfold')
+        }}
         <BasicArrow class="ml-1" :expand="!isAdvanced" up />
       </Button> -->
       <slot name="advanceAfter"></slot>

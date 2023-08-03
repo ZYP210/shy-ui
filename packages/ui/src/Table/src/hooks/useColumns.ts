@@ -206,6 +206,13 @@ export function useColumns(
         if ((edit || editRow) && !isDefaultAction) {
           column.customRender = renderEditCell(column)
         }
+        if (propsRef.value.useAdvancedSearch) {
+          if (column.flag === 'INDEX' || column.flag === 'ACTION') {
+            column.sorter = false
+          } else {
+            column.sorter = true
+          }
+        }
         return reactive(column)
       })
   })

@@ -15,6 +15,7 @@ import { useTimeoutFn } from '@shy-plugins/use'
 import { buildUUID, isFunction, isBoolean } from '@shy-plugins/utils'
 import { get, cloneDeep, merge } from 'lodash-es'
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const'
+import { useTableContext } from './useTableContext'
 
 interface ActionType {
   getPaginationInfo: ComputedRef<boolean | PaginationProps>
@@ -23,6 +24,7 @@ interface ActionType {
   getFieldsValue: () => Recordable
   clearSelectedRowKeys: () => void
   tableData: Ref<Recordable[]>
+  getCurSearchParams?: any
 }
 
 interface SearchState {
@@ -37,7 +39,8 @@ export function useDataSource(
     setLoading,
     getFieldsValue,
     clearSelectedRowKeys,
-    tableData
+    tableData,
+    getCurSearchParams
   }: ActionType,
   emit: EmitType
 ) {
@@ -79,6 +82,7 @@ export function useDataSource(
       const sortInfo = sortFn(sorter)
       searchState.sortInfo = sortInfo
       params.sortInfo = sortInfo
+      params.searchInfo = getCurSearchParams()
     }
 
     if (filters && isFunction(filterFn)) {
