@@ -4,6 +4,30 @@ import { unref, computed } from 'vue'
 import type { FormProps } from '../../../Form'
 import { isFunction } from '@shy-plugins/utils'
 
+function deepCopy(obj) {
+  if (typeof obj !== 'object' || obj === null) {
+    return obj // 如果是基本类型或 null，则直接返回
+  }
+
+  let copy
+
+  if (Array.isArray(obj)) {
+    copy = []
+    for (let i = 0; i < obj.length; i++) {
+      copy[i] = deepCopy(obj[i])
+    }
+  } else {
+    copy = {}
+    for (let key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        copy[key] = deepCopy(obj[key])
+      }
+    }
+  }
+
+  return copy
+}
+
 export function useTableForm(
   propsRef: ComputedRef<BasicTableProps>,
   slots: Slots,
@@ -12,7 +36,7 @@ export function useTableForm(
 ) {
   const getFormConfig = computed(() => {
     const { formConfig } = unref(propsRef)
-    const temp = JSON.parse(JSON.stringify(formConfig))
+    const temp = deepCopy(formConfig)
     temp?.schemas.forEach((item) => {
       if (item.component === 'Input') {
         item.componentProps = {
