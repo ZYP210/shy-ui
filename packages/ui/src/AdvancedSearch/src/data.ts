@@ -92,8 +92,9 @@ export const searchTypeSelect = [{ label: '等于', value: 'eq' }]
 export const getGlobalAdvancedType = (fieldList, value) => {
   const temp = {}
   fieldList.forEach((field) => {
-    temp[`${field}-op`] = 'ct'
-    temp[field] = value
+    temp[`${field}.${field}-op`] = 'ct'
+    temp[`${field}.${field}`] = value
   })
+  temp.gexpr = fieldList.join('|')
   return temp
 }
