@@ -65,6 +65,17 @@ export default defineComponent({
     const clickOutside = (e) => {
       if (document.querySelector('.table-settings').contains(e.target)) return
       if (tableAdvancedSearchWrapperRef.value.contains(e.target)) return
+      const selectList = document.getElementsByClassName('ant-select-dropdown')
+      const pickList = document.getElementsByClassName('ant-picker-dropdown')
+      const domList = [...Array.from(selectList), ...Array.from(pickList)]
+
+      const flag =
+        domList?.length &&
+        domList.some((dom) => {
+          return dom.contains(e.target)
+        })
+      if (flag) return
+
       table.closeAdvancedSearch()
     }
 
