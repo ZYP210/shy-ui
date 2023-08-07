@@ -331,10 +331,9 @@ export default defineComponent({
         ...on,
         ...bindValue
       }
-      console.log(compAttr)
 
       const handleInput = (e) => {
-        compAttr.onInputEvent(e)
+        compAttr?.onInputEvent && compAttr.onInputEvent(e)
       }
 
       if (!renderComponentContent) {

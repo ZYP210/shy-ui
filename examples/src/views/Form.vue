@@ -42,24 +42,40 @@ const tree = {
 
 const schemas: FormSchema[] = [
   {
-    field: 'field',
-    component: 'Input',
-    label: '字段1',
-    colProps: {
-      span: 8
-    },
-    defaultValue: '1',
-
+    field: 'type',
+    label: '类型',
+    component: 'RadioButtonGroup',
+    defaultValue: 1,
     componentProps: {
-      placeholder: '自定义placeholder',
-      onChange: (e) => {
-        console.log(e)
-      },
-      onInput: (e) => {
-        console.log(1)
+      options: [
+        { label: '资源', value: 1 },
+        { label: '菜单', value: 2 }
+      ],
+      onChange: (e: any) => {
+        console.log('888888', e)
       }
     }
   }
+
+  // {
+  //   field: 'field',
+  //   component: 'Input',
+  //   label: '字段1',
+  //   colProps: {
+  //     span: 8
+  //   },
+  //   defaultValue: '1',
+
+  //   componentProps: {
+  //     placeholder: '自定义placeholder',
+  //     onChange: (e) => {
+  //       console.log(e)
+  //     },
+  //     onInput: (e) => {
+  //       console.log(1)
+  //     }
+  //   }
+  // }
   // {
   //   field: 'ApiSelect',
   //   label: 'ApiSelect',

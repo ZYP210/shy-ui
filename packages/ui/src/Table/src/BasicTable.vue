@@ -114,6 +114,7 @@ import { warn, isFunction } from '@shy-plugins/utils'
 import type {} from 'csstype'
 import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
 import TableGlobalSearch from './components/TableGlobalSearch.vue'
+import { onMounted } from 'vue'
 
 export default defineComponent({
   components: {

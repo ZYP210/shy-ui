@@ -1,5 +1,5 @@
 <template>
-  <div class="shy-ui-advanced-search">
+  <div class="shy-ui-advanced-search" ref="advancedSearchRef">
     <div class="shy-ui-advanced-search-add">
       <PlusCircleOutlined></PlusCircleOutlined>
       <div style="margin-left: 8px" @click="handleAdd">新增条件</div>
@@ -178,6 +178,8 @@ const props = defineProps({
 
 const form = reactive({})
 
+const advancedSearchRef = ref()
+
 const formRef = ref()
 
 const schemasCurrent = reactive([])
@@ -293,7 +295,8 @@ const resetFields = () => {
 
 defineExpose({
   getSearchFrom,
-  resetFields
+  resetFields,
+  advancedSearchRef
 })
 </script>
 

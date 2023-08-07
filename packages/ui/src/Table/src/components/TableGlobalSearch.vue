@@ -1,5 +1,9 @@
 <template>
-  <div class="shy-basic-table-global-search">
+  <div
+    class="shy-basic-table-global-search"
+    :style="setStyle()"
+    ref="globalSearchWrapperRef"
+  >
     <div
       class="shy-basic-table-global-search-item-global"
       :class="{ 'selected-bg': curSelected === 1 }"
@@ -35,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch, onMounted, onUnmounted } from 'vue'
 import { Checkbox, CheckboxGroup } from 'ant-design-vue'
 import { CheckOutlined } from '@ant-design/icons-vue'
 import { useTableContext } from '../hooks/useTableContext'
@@ -102,13 +106,41 @@ export default defineComponent({
       advancedSearchRef.value.resetFields()
     }
 
+    const setStyle = () => {
+      const dom = document.querySelector('.table-settings')
+      if (dom) {
+        return { left: `${dom.offsetLeft}px` }
+      } else {
+        return {}
+      }
+    }
+
+    const globalSearchWrapperRef = ref()
+    const clickOutside = (e) => {
+      if (document.querySelector('.table-settings').contains(e.target)) return
+
+      if (globalSearchWrapperRef.value.contains(e.target)) return
+
+      table.closeGlobalSearch()
+    }
+
+    onMounted(() => {
+      document.addEventListener('click', clickOutside)
+    })
+
+    onUnmounted(() => {
+      document.removeEventListener('click', clickOutside)
+    })
+
     return {
       handleReset,
       advancedSearchRef,
       fieldList,
       curSelected,
       handleSelectedClick,
-      handleCheckboxChange
+      handleCheckboxChange,
+      setStyle,
+      globalSearchWrapperRef
     }
   }
 })

@@ -10,7 +10,7 @@
   </Tooltip>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, nextTick } from 'vue'
 import { Tooltip } from 'ant-design-vue'
 import { FilterOutlined } from '@ant-design/icons-vue'
 import { useTableContext } from '../../hooks/useTableContext'
@@ -26,8 +26,10 @@ export default defineComponent({
     const { isVisibleAdvancedSearch, closeGlobalSearch } = useTableContext()
 
     const handleIconClick = () => {
-      isVisibleAdvancedSearch.value = !isVisibleAdvancedSearch.value
-      closeGlobalSearch()
+      nextTick(() => {
+        isVisibleAdvancedSearch.value = !isVisibleAdvancedSearch.value
+        closeGlobalSearch()
+      })
     }
 
     return { isVisibleAdvancedSearch, handleIconClick }

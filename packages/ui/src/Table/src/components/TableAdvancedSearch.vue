@@ -1,5 +1,9 @@
 <template>
-  <div class="shy-basic-table-advanced-search">
+  <div
+    class="shy-basic-table-advanced-search"
+    ref="tableAdvancedSearchWrapperRef"
+    :style="setStyle()"
+  >
     <AdvancedSearch
       ref="advancedSearchRef"
       :schemas="schemasAdvancedSearch"
@@ -17,7 +21,10 @@
 import { Space } from 'ant-design-vue'
 import { BasicButton } from '../../../Button'
 import { AdvancedSearch } from '../../../AdvancedSearch/'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import { useTableContext } from '../hooks/useTableContext'
+import { nextTick } from 'vue'
+import { onUnmounted } from 'vue'
 export default defineComponent({
   props: {
     schemasAdvancedSearch: {
@@ -34,6 +41,17 @@ export default defineComponent({
   setup(props, { emit }) {
     const advancedSearchRef = ref()
 
+    const table = useTableContext()
+
+    const setStyle = () => {
+      const dom = document.querySelector('.table-settings')
+      if (dom) {
+        return { left: `${dom.offsetLeft - 370}px` }
+      } else {
+        return {}
+      }
+    }
+
     const handleEnsure = () => {
       const form = advancedSearchRef.value.getSearchFrom()
       emit('ensure', form)
@@ -43,7 +61,28 @@ export default defineComponent({
       advancedSearchRef.value.resetFields()
     }
 
-    return { handleEnsure, handleReset, advancedSearchRef }
+    const tableAdvancedSearchWrapperRef = ref()
+    const clickOutside = (e) => {
+      if (document.querySelector('.table-settings').contains(e.target)) return
+      if (tableAdvancedSearchWrapperRef.value.contains(e.target)) return
+      table.closeAdvancedSearch()
+    }
+
+    onMounted(() => {
+      document.addEventListener('click', clickOutside)
+    })
+
+    onUnmounted(() => {
+      document.removeEventListener('click', clickOutside)
+    })
+
+    return {
+      handleEnsure,
+      handleReset,
+      advancedSearchRef,
+      setStyle,
+      tableAdvancedSearchWrapperRef
+    }
   }
 })
 </script>
