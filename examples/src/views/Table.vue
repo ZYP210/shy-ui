@@ -1,5 +1,5 @@
 <template>
-  <div class="p4">
+  <div class="p-10px h-full bg-black">
     <BasicTable
       title="基础示例"
       titleHelpMessage="温馨提醒"

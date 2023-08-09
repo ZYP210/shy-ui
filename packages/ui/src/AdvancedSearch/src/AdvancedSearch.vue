@@ -116,10 +116,23 @@
               </FormItem>
               <div
                 v-if="schemasCurrent.length !== 1"
-                style="margin-left: 8px; cursor: pointer"
-                @click="handleMinus(index)"
+                style="margin-left: 8px; cursor: pointer; position: relative"
+                class="shy-ui-advanced-minus-icon"
               >
-                <MinusCircleTwoTone />
+                <div
+                  style="
+                    position: absolute;
+                    width: 14px;
+                    height: 14px;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                  "
+                  class="shy-basic-minus-icon"
+                  @click="handleMinus(index)"
+                ></div>
+                <MinusCircleTwoTone class="shy-ui-advanced-minus-icon" />
               </div>
             </div>
           </Col>

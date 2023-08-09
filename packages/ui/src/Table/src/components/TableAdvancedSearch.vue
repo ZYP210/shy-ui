@@ -63,10 +63,14 @@ export default defineComponent({
 
     const tableAdvancedSearchWrapperRef = ref()
     const clickOutside = (e) => {
-      if (document.querySelector('.table-settings').contains(e.target)) return
       if (tableAdvancedSearchWrapperRef.value.contains(e.target)) return
+
+      if (document.querySelector('.table-settings').contains(e.target)) return
+      if (e.target.classList.contains('shy-basic-minus-icon')) return
+
       const selectList = document.getElementsByClassName('ant-select-dropdown')
       const pickList = document.getElementsByClassName('ant-picker-dropdown')
+
       const domList = [...Array.from(selectList), ...Array.from(pickList)]
 
       const flag =

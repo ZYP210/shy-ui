@@ -1,6 +1,6 @@
 <template>
   <div ref="wrapRef" :class="getWrapperClass" style="position: relative">
-    <div class="shy-page">
+    <div class="shy-page" style="padding: 0">
       <BasicForm
         ref="formRef"
         submitOnReset

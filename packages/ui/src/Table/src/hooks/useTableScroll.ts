@@ -109,7 +109,8 @@ export function useTableScroll(
     if (!headEl) return
 
     // Table height from bottom height-custom offset
-    let paddingHeight = 30
+
+    let paddingHeight = propsRef.value.useTableWrapper ? 20 : 10
     // Pager height
     let paginationHeight = 10
     if (!isBoolean(pagination) && tableData.length !== 0) {
