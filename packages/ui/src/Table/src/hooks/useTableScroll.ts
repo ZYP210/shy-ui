@@ -113,7 +113,7 @@ export function useTableScroll(
     let paddingHeight = propsRef.value.useTableWrapper ? 20 : 10
     // Pager height
     let paginationHeight = 10
-    if (!isBoolean(pagination) && tableData.length !== 0) {
+    if (!!isBoolean(pagination) && tableData.length !== 0) {
       paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement
       if (paginationEl) {
         const offsetHeight = paginationEl.offsetHeight
@@ -182,6 +182,7 @@ export function useTableScroll(
       footerHeight -
       headerHeight
     height = (height > maxHeight! ? (maxHeight as number) : height) ?? height
+    height = Math.ceil(height)
 
     setHeight(height)
 

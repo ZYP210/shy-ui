@@ -16,9 +16,9 @@
 import { useTable, TableAction } from '3h1-ui'
 const schemas = [
   { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
-  { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } }
-  // { label: 'a', field: 'c', component: 'Input', colProps: { span: 8 } },
-  // { label: 'a', field: 'd', component: 'Input', colProps: { span: 8 } }
+  { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
+  { label: 'a', field: 'c', component: 'Input', colProps: { span: 8 } },
+  { label: 'a', field: 'd', component: 'Input', colProps: { span: 8 } }
 ]
 const columns = [
   {
@@ -50,7 +50,6 @@ const columns = [
 ]
 const [register] = useTable({
   api: (params) => {
-    console.log('params', params)
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([{ name: 1 }, { sex: 2 }, { age: 3 }])
@@ -58,9 +57,10 @@ const [register] = useTable({
     })
   },
   columns: columns as any,
-  useSearchForm: false,
+  useSearchForm: true,
   useAdvancedSearch: true,
   showIndexColumn: true,
+  // pagination: true,
   actionColumn: {
     title: '操作',
     dataIndex: 'action',

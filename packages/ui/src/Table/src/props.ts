@@ -138,7 +138,7 @@ export const basicProps = reactive({
   bordered: propTypes.bool.def(false),
   pagination: {
     type: [Object, Boolean] as PropType<PaginationProps | boolean>,
-    default: null
+    default: true
   },
   loading: propTypes.bool,
   rowClassName: {
