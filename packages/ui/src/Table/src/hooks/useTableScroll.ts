@@ -123,7 +123,7 @@ export function useTableScroll(
         paginationHeight += 24
       }
     } else {
-      paginationHeight = -8
+      paginationHeight = 0
     }
 
     let footerHeight = 0
@@ -181,12 +181,21 @@ export function useTableScroll(
       paginationHeight -
       footerHeight -
       headerHeight
-    height = (height > maxHeight! ? (maxHeight as number) : height) ?? height
-    height = Math.ceil(height)
+    height = height > maxHeight ? (maxHeight as number) : height
+    height = Math.floor(height)
+
+    // console.log('bottomIncludeBody', bottomIncludeBody)
+    // console.log('resizeHeightOffset', resizeHeightOffset)
+    // console.log('paddingHeight', paddingHeight)
+    // console.log('paginationHeight', paginationHeight)
+    // console.log('footerHeight', footerHeight)
+    // console.log('headerHeight', headerHeight)
+
+    // console.log('height', height)
 
     setHeight(height)
 
-    bodyEl!.style.height = `${height}px`
+    bodyEl.style.height = `${height}px`
   }
   useWindowSizeFn(calcTableHeight, 280)
   onMountedOrActivated(() => {
@@ -220,12 +229,14 @@ export function useTableScroll(
 
     const table = unref(tableElRef)
     const tableWidth = table?.$el?.offsetWidth ?? 0
+    const tableData = unref(getDataSourceRef)
     return tableWidth > width ? '100%' : width
   })
 
   const getScrollRef = computed(() => {
-    const tableHeight = unref(tableHeightRef)
+    const tableHeight = tableHeightRef.value as number
     const { canResize, scroll } = unref(propsRef)
+
     return {
       x: unref(getScrollX),
       y: canResize ? tableHeight : null,

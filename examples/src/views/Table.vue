@@ -1,14 +1,17 @@
 <template>
-  <div class="p-10px h-full bg-black">
-    <BasicTable
-      title="基础示例"
-      titleHelpMessage="温馨提醒"
-      @register="register"
-    >
-      <template #toolbar>
-        <a-button type="primary"> 操作按钮 </a-button>
-      </template>
-    </BasicTable>
+  <div class="flex flex-col bg-black">
+    <div class="h-80px flex-none"></div>
+    <div class="flex-auto p-10px">
+      <BasicTable
+        title="基础示例"
+        titleHelpMessage="温馨提醒"
+        @register="register"
+      >
+        <template #toolbar>
+          <a-button type="primary"> 操作按钮 </a-button>
+        </template>
+      </BasicTable>
+    </div>
   </div>
 </template>
 
@@ -50,11 +53,31 @@ const columns = [
 ]
 const [register] = useTable({
   api: (params) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([{ name: 1 }, { sex: 2 }, { age: 3 }])
-      }, 1000)
-    })
+    // return new Promise((resolve) => {
+    //   setTimeout(() => {
+    //     resolve([
+    //       { name: 1 },
+    //       { sex: 2 },
+    //       { age: 3 },
+    //       { name: 1 },
+    //       { sex: 2 },
+    //       { age: 3 },
+    //       { name: 1 },
+    //       { sex: 2 },
+    //       { age: 3 },
+    //       { name: 1 },
+    //       { sex: 2 },
+    //       { age: 3 },
+    //       { name: 1 },
+    //       { sex: 2 },
+    //       { age: 3 },
+    //       { name: 1 },
+    //       { sex: 2 },
+    //       { age: 3 }
+    //     ])
+    //   }, 1000)
+    // })
+    return []
   },
   columns: columns as any,
   useSearchForm: true,

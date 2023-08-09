@@ -52,7 +52,7 @@
           <template #emptyText>
             <div
               class="flex justify-center items-center"
-              :style="{ height: `${getHeight.y as number - 40}px` }"
+              :style="{ height: `${getHeight.y as number - 41}px`, }"
             >
               <Empty />
             </div>
