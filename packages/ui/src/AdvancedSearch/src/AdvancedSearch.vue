@@ -75,7 +75,7 @@
                       <FormItem>
                         <DatePicker
                           v-model:value="schema[`${schema.field}-2`]"
-                          value-format="YYYY-MM-DD 00:00:00"
+                          value-format="YYYY-MM-DD 23:59:59"
                           format="YYYY-MM-DD"
                         />
                       </FormItem>

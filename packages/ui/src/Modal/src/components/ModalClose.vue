@@ -1,11 +1,7 @@
 <template>
   <div :class="getClass">
     <template v-if="canFullscreen">
-      <Tooltip
-        :title="t('component.modal.restore')"
-        placement="bottom"
-        v-if="fullScreen"
-      >
+      <Tooltip title="还原" placement="bottom" v-if="fullScreen">
         <FullscreenExitOutlined role="full" @click="handleFullScreen" />
       </Tooltip>
       <Tooltip title="全屏" placement="bottom" v-else>
