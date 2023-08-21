@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import WindiCSS from 'vite-plugin-windicss'
+import Components from 'unplugin-vue-components/vite'
+import AutoImport from 'unplugin-auto-import/vite'
 
 import PurgeIcons from 'vite-plugin-purge-icons'
 import { generateModifyVars } from './build/generateModifyVars'
@@ -22,12 +24,21 @@ export function configSvgIconsPlugin(isBuild = false) {
     symbolId: 'icon-[dir]-[name]'
   })
 
-  console.log('svgIconsPlugin', svgIconsPlugin)
   return svgIconsPlugin
 }
 
 export default defineConfig({
-  plugins: [vue(), vueJsx(), WindiCSS(), PurgeIcons(), configSvgIconsPlugin()],
+  plugins: [
+    vue(),
+    vueJsx(),
+    Components({
+      dts: true
+    }),
+    AutoImport({}),
+    WindiCSS(),
+    PurgeIcons(),
+    configSvgIconsPlugin()
+  ],
   server: {
     proxy: {
       '/api': {

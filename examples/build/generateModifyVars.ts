@@ -9,8 +9,6 @@ export function generateModifyVars(dark = false) {
   const palettes = generateAntColors(primaryColor)
   const primary = palettes[5]
 
-  console.log('primary', primary)
-
   const primaryColorObj: Record<string, string> = {}
 
   for (let index = 0; index < 10; index++) {

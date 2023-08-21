@@ -7,3 +7,6 @@ packages/use/lib
 packages/ui/node_modules
 
 examples/dist
+*/**/auto-imports.d.ts
+*/**/components.d.ts
+

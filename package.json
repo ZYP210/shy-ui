@@ -4,12 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint-staged": "lint-staged",
-    "postinstall": "husky install",
-    "lint": "eslint . --ext .vue,.js,.ts,.jsx,.tsx --fix",
-    "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md}\"",
-    "buildUi": "cd packages/ui&&vite build"
+    "dev:example": "node ./release.js&&pnpm -C examples dev",
+    "publish:ui": "node ./release-publish.js&&pnpm -C packages/ui build&&pnpm -C packages/ui publish"
   },
   "keywords": [],
   "author": "",
@@ -43,6 +39,8 @@
     "stylelint-less": "^1.0.6",
     "stylelint-order": "^5.0.0",
     "typescript": "^4.8.4",
+    "unplugin-auto-import": "^0.16.2",
+    "unplugin-vue-components": "^0.24.1",
     "vite": "^3.1.4",
     "vite-plugin-dts": "^1.7.1",
     "vue": "^3.2.40"
