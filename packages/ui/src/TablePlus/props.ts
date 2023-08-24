@@ -1,8 +1,9 @@
 // 用于规定vxe-table默认props
 import { VxeTableProps, VxeColumnProps } from 'vxe-table'
 export const basicProps: VxeTableProps = {
-  border: true,
-  size: 'small',
+  border: false,
+  size: 'mini',
+  align: 'left',
   // 行设置
   rowConfig: {
     isHover: true,
@@ -11,14 +12,19 @@ export const basicProps: VxeTableProps = {
   // 序号设置
   seqConfig: {},
   // 高度
-  height: 'auto'
+  height: 'auto',
   // autoResize: true
+  headerCellStyle: {
+    backgroundColor: '#fafafa',
+    color: 'rgba(0, 0, 0, 0.85)'
+  }
 }
 
 export const basicColumn: VxeColumnProps = {
   showHeaderOverflow: 'tooltip',
   showOverflow: 'tooltip',
-  align: 'center'
+  align: 'left',
+  visible: true
 }
 
 export const basicFormConfig = {

@@ -18,25 +18,19 @@ const columns = [
   {
     title: 'a',
     field: 'a',
-    width: 100,
+    width: 300,
     treeNode: true
   },
   {
     title: 'b',
     field: 'b',
-    width: 100
+    width: 300
   },
-  { title: 'c', field: 'c', width: 100 },
-  { title: 'd', field: 'd' },
-  { title: 'e', field: 'e' },
-  { title: 'f', field: 'f' },
-  { title: 'g', field: 'g' },
-  { title: 'g', field: 'g1' },
-  { title: 'g', field: 'g2' },
-  { title: 'g', field: 'g3' },
-  { title: 'g', field: 'g4' },
-  { title: 'g', field: 'g5' },
-  { title: 'g', field: 'g6' }
+  { title: 'c', field: 'c', width: 300 },
+  { title: 'd', field: 'd', width: 300 },
+  { title: 'e', field: 'e', width: 300 },
+  { title: 'f', field: 'f', width: 300 },
+  { title: 'g', field: 'g', width: 300 }
 ]
 
 const getList = (params = {}) => {

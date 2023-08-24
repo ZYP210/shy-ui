@@ -13,7 +13,13 @@
       </div>
     </template>
     <div v-if="getProps.isShowToolbar" :class="getClassName('toolbar')">
-      <slot name="toolbar"> </slot>
+      <div :class="getClassName('toolbar-left')">
+        <slot name="toolbar"> </slot>
+      </div>
+      <div :class="getClassName('toolbar-right')">
+        <slot name="tableSetting"></slot>
+        <TableSetting />
+      </div>
     </div>
     <div :class="getClassName('body')">
       <vxe-table
@@ -56,7 +62,7 @@
           v-bind="getProps.columnSeq"
         />
 
-        <template v-for="(column, index) in getColumns" :key="index">
+        <template v-for="(column, index) in getColumnsRef" :key="index">
           <vxe-column
             v-bind="column"
             :edit-render="column?.editRender || undefined"
@@ -148,7 +154,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useSlots, useAttrs, computed, ref, toRaw, watchEffect } from 'vue'
+import {
+  useSlots,
+  useAttrs,
+  computed,
+  ref,
+  toRaw,
+  watchEffect,
+  unref
+} from 'vue'
 import { BasicForm, useForm } from '../Form'
 import { VxeColumnProps, VxeTable, VxeColumn } from 'vxe-table'
 import { basicColumn, basicProps } from './props'
@@ -157,6 +171,10 @@ import { usePagination } from './hooks/usePagination'
 import { useTableData } from './hooks/useTableData'
 import { CellComponent } from './components/editable/CellComponent'
 import ButtonGroupEdit from './components/ButtonGroupEdit.vue'
+import { createTableContext } from './hooks/useTableContext'
+import TableSetting from './components/settings/index.vue'
+import { deepMergeObjects } from '@shy-plugins/utils'
+import { useColumns } from './hooks/useColumns'
 
 const emits = defineEmits([
   'register',
@@ -213,7 +231,8 @@ const props = withDefaults(defineProps<Props>(), {
     return {
       title: '操作',
       field: 'action',
-      width: 150
+      width: 150,
+      fixed: 'right'
     }
   },
   columnSeq: () => {
@@ -242,24 +261,14 @@ const getProps = computed(() => {
   }
 })
 const setProps = (props) => {
-  innerProps.value = props
+  innerProps.value = deepMergeObjects(innerProps.value, props)
 }
 
 const attrs = useAttrs()
 const slots = useSlots()
 
 const getBindValues = computed(() => {
-  return {
-    ...basicProps,
-    ...attrs,
-    ...getProps.value
-  }
-})
-
-const getColumns: any = computed(() => {
-  return getProps.value.columns.map((item) => {
-    return { ...basicColumn, ...item }
-  })
+  return deepMergeObjects(basicProps, attrs, getProps.value)
 })
 
 // pagination
@@ -370,11 +379,22 @@ const setSelectRowByKeys = (keys, checked) => {
   tableRef.value.setCheckboxRow(rows, checked)
 }
 
+const {
+  getColumnsRef,
+  getColumns,
+  hideColumn,
+  showColumn,
+  resetColumn,
+  refreshColumn
+} = useColumns(getProps, tableRef)
+
 // register
 const tableAction = {
   reload,
   setTableData,
   setProps,
+  getProps,
+  getBindValues,
   getRowSelection,
   setEditByRow,
   cancelEditByRow,
@@ -384,8 +404,18 @@ const tableAction = {
   clearTreeExpand,
   setTreeExpand,
   getVxeTableRef,
-  setSelectRowByKeys
+  setSelectRowByKeys,
+  getSize: () => {
+    return unref(getBindValues).size
+  },
+  getColumns,
+  hideColumn,
+  showColumn,
+  resetColumn,
+  refreshColumn
 }
+
+createTableContext({ ...tableAction })
 
 emits('register', tableAction, formActions)
 </script>

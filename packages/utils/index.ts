@@ -24,3 +24,5 @@ export * from './src/types'
 export * from './src/uuid'
 export * from './src/validate'
 export * from './src/index'
+
+export * from './src/custom'
