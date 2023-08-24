@@ -24,8 +24,8 @@ export default defineComponent({
     const { t } = useI18n()
 
     function redo() {
-      const useSearchForm = unref(table.getBindValues).useSearchForm
-      table.setProps({ useSearchForm: !useSearchForm })
+      const isShowSearch = unref(table.getBindValues).isShowSearch
+      table.setProps({ isShowSearch: !isShowSearch })
     }
 
     return { redo, t }

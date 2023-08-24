@@ -3,7 +3,7 @@
     <template #title>
       <span>显隐搜索</span>
     </template>
-    <BarsOutlined @click="redo" />
+    <bars-outlined @click="redo" />
   </Tooltip>
 </template>
 <script lang="ts">
