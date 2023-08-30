@@ -1,14 +1,9 @@
 import { ButtonProps } from 'ant-design-vue/es/button/buttonTypes'
 import { TooltipProps } from 'ant-design-vue/es/tooltip/Tooltip'
+import { RoleEnum } from './table'
+
 // import { RoleEnum } from '/@/enums/roleEnum'
 
-export enum RoleEnum {
-  // super admin
-  SUPER = 'super',
-
-  // tester
-  TEST = 'test'
-}
 export interface ActionItem extends ButtonProps {
   onClick?: Fn
   label?: string

@@ -14,9 +14,13 @@ type RetInstance = Omit<Instance, 'getBindValues'> & {
 }
 
 export function createTableContext(instance: Instance) {
+  console.log('key')
+  console.log(instance)
+
   provide(key, instance)
 }
 
 export function useTableContext(): RetInstance {
+  // console.log(key)
   return inject(key) as RetInstance
 }

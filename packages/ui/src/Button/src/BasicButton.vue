@@ -1,9 +1,13 @@
 <template>
-  <Button v-bind="getBindValue" :class="getButtonClass" @click="onClick">
+  <Button v-bind="getBindValue" :class="getButtonClass" @click="props.onClick">
     <template #default="data">
-      <Icon :icon="preIcon" v-if="preIcon" :size="iconSize" />
+      <Icon :icon="props.preIcon" v-if="props.preIcon" :size="props.iconSize" />
       <slot v-bind="data || {}"></slot>
-      <Icon :icon="postIcon" v-if="postIcon" :size="iconSize" />
+      <Icon
+        :icon="props.postIcon"
+        v-if="props.postIcon"
+        :size="props.iconSize"
+      />
     </template>
   </Button>
 </template>
@@ -17,6 +21,7 @@ export default defineComponent({
   inheritAttrs: false
 })
 </script>
+
 <script lang="ts" setup>
 import { computed, unref } from 'vue'
 import { Icon } from '../../Icon'

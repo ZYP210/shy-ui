@@ -16,7 +16,7 @@ import {
 } from '@ant-design/icons-vue'
 import { useFullscreen } from '@vueuse/core'
 import { useI18n } from '@shy-plugins/use'
-import { useTableContext } from '../../hooks/useTableContext'
+import { useTableContext } from '../../../Table/src/hooks/useTableContext'
 
 export default defineComponent({
   name: 'FullScreenSetting',

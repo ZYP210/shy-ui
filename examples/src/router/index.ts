@@ -175,6 +175,11 @@ const routes = [
     path: '/AdvancedSearch',
     title: 'AdvancedSearch',
     component: () => import('../views/AdvancedSearch.vue')
+  },
+  {
+    path: '/TableAction',
+    title: 'TableAction',
+    component: () => import('../views/TableAction.vue')
   }
 ]
 

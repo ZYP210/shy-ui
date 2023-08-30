@@ -41,27 +41,29 @@
     </Dropdown>
   </div>
 </template>
+
 <script lang="ts">
 import { defineComponent, PropType, computed, toRaw, unref } from 'vue'
-import { MoreOutlined } from '@ant-design/icons-vue'
 import { Divider, Tooltip, TooltipProps } from 'ant-design-vue'
 import { Icon } from '../../../Icon'
-import { ActionItem, TableActionType } from '../../index'
+import { ActionItem } from '../../src/types/tableAction'
+import { TableActionType } from '../../src/types/table'
 import { PopConfirmButton } from '../../../Button'
 import { Dropdown } from '../../../Dropdown'
 import { useDesign } from '@shy-plugins/use'
 import { useTableContext } from '../hooks/useTableContext'
 import { isBoolean, isFunction, isString, propTypes } from '@shy-plugins/utils'
 import { ACTION_COLUMN_FLAG } from '../const'
+import { MoreOutlined } from '@ant-design/icons-vue'
 
 export default defineComponent({
   name: 'TableAction',
   components: {
+    MoreOutlined,
     Icon,
     PopConfirmButton,
     Divider,
     Dropdown,
-    MoreOutlined,
     Tooltip
   },
   props: {
@@ -78,9 +80,10 @@ export default defineComponent({
     stopButtonPropagation: propTypes.bool.def(false),
     showCount: {
       type: Number,
-      default: () => 2
+      default: () => 3
     }
   },
+
   setup(props) {
     const { prefixCls } = useDesign('basic-table-action')
     let table: Partial<TableActionType> = {}
@@ -105,7 +108,11 @@ export default defineComponent({
     const getActions = computed(() => {
       return (toRaw(props.actions) || [])
         .filter((action, index) => {
-          return isIfShow(action) && index < props.showCount
+          if (props.actions?.length === props.showCount) {
+            return isIfShow(action)
+          } else {
+            return isIfShow(action) && index <= props.showCount - 2
+          }
         })
         .map((action) => {
           const { popConfirm } = action
@@ -125,7 +132,11 @@ export default defineComponent({
 
     const getDropdownList = computed((): any[] => {
       const list = (toRaw(props.actions) || []).filter((action, index) => {
-        return isIfShow(action) && index >= props.showCount
+        if (props.actions.length === props.showCount) {
+          return false
+        } else {
+          return isIfShow(action) && index >= props.showCount - 1
+        }
       })
       return list.map((action, index) => {
         const { label, popConfirm } = action
@@ -178,6 +189,7 @@ export default defineComponent({
   }
 })
 </script>
+
 <style lang="less">
 @prefix-cls: ~'@{namespace}-basic-table-action';
 

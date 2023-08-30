@@ -11,7 +11,7 @@ import { defineComponent, unref } from 'vue'
 import { Tooltip } from 'ant-design-vue'
 import { BarsOutlined } from '@ant-design/icons-vue'
 import { useI18n } from '@shy-plugins/use'
-import { useTableContext } from '../../hooks/useTableContext'
+import { useTableContext } from '../../../Table/src/hooks/useTableContext'
 
 export default defineComponent({
   name: 'RedoSetting',

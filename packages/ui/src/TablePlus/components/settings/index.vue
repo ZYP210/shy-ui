@@ -25,13 +25,16 @@
 </template>
 <script lang="ts">
 import type { PropType } from 'vue'
-import type { TableSetting, ColumnChangeParam } from '../../types/table'
+import type {
+  TableSetting,
+  ColumnChangeParam
+} from '../../../Table/src/types/table'
 import { defineComponent, computed, unref } from 'vue'
 import ColumnSetting from './ColumnSetting.vue'
 import SizeSetting from './SizeSetting.vue'
 import FullScreenSetting from './FullScreenSetting.vue'
 import ShowSearchSetting from './ShowSearchSetting.vue'
-import { useTableContext } from '../../hooks/useTableContext'
+import { useTableContext } from '../../../Table/src/hooks/useTableContext'
 
 export default defineComponent({
   name: 'TableSetting',

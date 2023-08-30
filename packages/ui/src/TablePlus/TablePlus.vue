@@ -171,7 +171,7 @@ import { usePagination } from './hooks/usePagination'
 import { useTableData } from './hooks/useTableData'
 import { CellComponent } from './components/editable/CellComponent'
 import ButtonGroupEdit from './components/ButtonGroupEdit.vue'
-import { createTableContext } from './hooks/useTableContext'
+import { createTableContext } from '../Table/src/hooks/useTableContext'
 import TableSetting from './components/settings/index.vue'
 import { deepMergeObjects } from '@shy-plugins/utils'
 import { useColumns } from './hooks/useColumns'
@@ -283,7 +283,8 @@ const handlePageChange = (current, pageSize) => {
 const getFormConfig = computed(() => {
   return {
     ...getProps.value.formConfig,
-    showAdvancedButton: true
+    showAdvancedButton: true,
+    rowProps: { gutter: 20 }
   }
 })
 

@@ -39,41 +39,216 @@ import type {
 
 declare module 'vue-router/auto/routes' {
   export interface RouteNamedMap {
-    '/BasicHelp': RouteRecordInfo<'/BasicHelp', '/BasicHelp', Record<never, never>, Record<never, never>>,
-    '/BasicTitle': RouteRecordInfo<'/BasicTitle', '/BasicTitle', Record<never, never>, Record<never, never>>,
-    '/ButtonView': RouteRecordInfo<'/ButtonView', '/ButtonView', Record<never, never>, Record<never, never>>,
-    '/ClickOutSide': RouteRecordInfo<'/ClickOutSide', '/ClickOutSide', Record<never, never>, Record<never, never>>,
-    '/CodeEditor': RouteRecordInfo<'/CodeEditor', '/CodeEditor', Record<never, never>, Record<never, never>>,
-    '/CollapseContainer': RouteRecordInfo<'/CollapseContainer', '/CollapseContainer', Record<never, never>, Record<never, never>>,
-    '/CountDown': RouteRecordInfo<'/CountDown', '/CountDown', Record<never, never>, Record<never, never>>,
-    '/CountDownInput': RouteRecordInfo<'/CountDownInput', '/CountDownInput', Record<never, never>, Record<never, never>>,
-    '/CountTo': RouteRecordInfo<'/CountTo', '/CountTo', Record<never, never>, Record<never, never>>,
-    '/Cropper': RouteRecordInfo<'/Cropper', '/Cropper', Record<never, never>, Record<never, never>>,
-    '/Description': RouteRecordInfo<'/Description', '/Description', Record<never, never>, Record<never, never>>,
-    '/Drawer': RouteRecordInfo<'/Drawer', '/Drawer', Record<never, never>, Record<never, never>>,
-    '/Drawer/Drawer': RouteRecordInfo<'/Drawer/Drawer', '/Drawer/Drawer', Record<never, never>, Record<never, never>>,
-    '/FlowChart': RouteRecordInfo<'/FlowChart', '/FlowChart', Record<never, never>, Record<never, never>>,
-    '/Form': RouteRecordInfo<'/Form', '/Form', Record<never, never>, Record<never, never>>,
-    '/Gantt': RouteRecordInfo<'/Gantt', '/Gantt', Record<never, never>, Record<never, never>>,
-    '/IconView': RouteRecordInfo<'/IconView', '/IconView', Record<never, never>, Record<never, never>>,
-    '/LazyContainer': RouteRecordInfo<'/LazyContainer', '/LazyContainer', Record<never, never>, Record<never, never>>,
-    '/Loading': RouteRecordInfo<'/Loading', '/Loading', Record<never, never>, Record<never, never>>,
-    '/ModalView': RouteRecordInfo<'/ModalView', '/ModalView', Record<never, never>, Record<never, never>>,
-    '/Page': RouteRecordInfo<'/Page', '/Page', Record<never, never>, Record<never, never>>,
-    '/Process': RouteRecordInfo<'/Process', '/Process', Record<never, never>, Record<never, never>>,
-    '/Qrcode': RouteRecordInfo<'/Qrcode', '/Qrcode', Record<never, never>, Record<never, never>>,
-    '/ScrollBar': RouteRecordInfo<'/ScrollBar', '/ScrollBar', Record<never, never>, Record<never, never>>,
-    '/ScrollContainer': RouteRecordInfo<'/ScrollContainer', '/ScrollContainer', Record<never, never>, Record<never, never>>,
-    '/SearchTest': RouteRecordInfo<'/SearchTest', '/SearchTest', Record<never, never>, Record<never, never>>,
-    '/StrengthMeter': RouteRecordInfo<'/StrengthMeter', '/StrengthMeter', Record<never, never>, Record<never, never>>,
-    '/Table': RouteRecordInfo<'/Table', '/Table', Record<never, never>, Record<never, never>>,
-    '/TableAnt': RouteRecordInfo<'/TableAnt', '/TableAnt', Record<never, never>, Record<never, never>>,
-    '/TableChildren': RouteRecordInfo<'/TableChildren', '/TableChildren', Record<never, never>, Record<never, never>>,
-    '/TablePlus': RouteRecordInfo<'/TablePlus', '/TablePlus', Record<never, never>, Record<never, never>>,
-    '/Tinymce': RouteRecordInfo<'/Tinymce', '/Tinymce', Record<never, never>, Record<never, never>>,
-    '/Transition': RouteRecordInfo<'/Transition', '/Transition', Record<never, never>, Record<never, never>>,
-    '/Tree': RouteRecordInfo<'/Tree', '/Tree', Record<never, never>, Record<never, never>>,
-    '/UserSelectTest': RouteRecordInfo<'/UserSelectTest', '/UserSelectTest', Record<never, never>, Record<never, never>>,
+    '/BasicHelp': RouteRecordInfo<
+      '/BasicHelp',
+      '/BasicHelp',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/BasicTitle': RouteRecordInfo<
+      '/BasicTitle',
+      '/BasicTitle',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/ButtonView': RouteRecordInfo<
+      '/ButtonView',
+      '/ButtonView',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/ClickOutSide': RouteRecordInfo<
+      '/ClickOutSide',
+      '/ClickOutSide',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/CodeEditor': RouteRecordInfo<
+      '/CodeEditor',
+      '/CodeEditor',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/CollapseContainer': RouteRecordInfo<
+      '/CollapseContainer',
+      '/CollapseContainer',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/CountDown': RouteRecordInfo<
+      '/CountDown',
+      '/CountDown',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/CountDownInput': RouteRecordInfo<
+      '/CountDownInput',
+      '/CountDownInput',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/CountTo': RouteRecordInfo<
+      '/CountTo',
+      '/CountTo',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Cropper': RouteRecordInfo<
+      '/Cropper',
+      '/Cropper',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Description': RouteRecordInfo<
+      '/Description',
+      '/Description',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Drawer': RouteRecordInfo<
+      '/Drawer',
+      '/Drawer',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Drawer/Drawer': RouteRecordInfo<
+      '/Drawer/Drawer',
+      '/Drawer/Drawer',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/FlowChart': RouteRecordInfo<
+      '/FlowChart',
+      '/FlowChart',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Form': RouteRecordInfo<
+      '/Form',
+      '/Form',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Gantt': RouteRecordInfo<
+      '/Gantt',
+      '/Gantt',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/IconView': RouteRecordInfo<
+      '/IconView',
+      '/IconView',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/LazyContainer': RouteRecordInfo<
+      '/LazyContainer',
+      '/LazyContainer',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Loading': RouteRecordInfo<
+      '/Loading',
+      '/Loading',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/ModalView': RouteRecordInfo<
+      '/ModalView',
+      '/ModalView',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Page': RouteRecordInfo<
+      '/Page',
+      '/Page',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Process': RouteRecordInfo<
+      '/Process',
+      '/Process',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Qrcode': RouteRecordInfo<
+      '/Qrcode',
+      '/Qrcode',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/ScrollBar': RouteRecordInfo<
+      '/ScrollBar',
+      '/ScrollBar',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/ScrollContainer': RouteRecordInfo<
+      '/ScrollContainer',
+      '/ScrollContainer',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/SearchTest': RouteRecordInfo<
+      '/SearchTest',
+      '/SearchTest',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/StrengthMeter': RouteRecordInfo<
+      '/StrengthMeter',
+      '/StrengthMeter',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Table': RouteRecordInfo<
+      '/Table',
+      '/Table',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/TableAnt': RouteRecordInfo<
+      '/TableAnt',
+      '/TableAnt',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/TableChildren': RouteRecordInfo<
+      '/TableChildren',
+      '/TableChildren',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/TablePlus': RouteRecordInfo<
+      '/TablePlus',
+      '/TablePlus',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Tinymce': RouteRecordInfo<
+      '/Tinymce',
+      '/Tinymce',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Transition': RouteRecordInfo<
+      '/Transition',
+      '/Transition',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/Tree': RouteRecordInfo<
+      '/Tree',
+      '/Tree',
+      Record<never, never>,
+      Record<never, never>
+    >
+    '/UserSelectTest': RouteRecordInfo<
+      '/UserSelectTest',
+      '/UserSelectTest',
+      Record<never, never>,
+      Record<never, never>
+    >
   }
 }
 
@@ -86,29 +261,39 @@ declare module 'vue-router/auto' {
    * Type safe version of `RouteLocationNormalized` (the type of `to` and `from` in navigation guards).
    * Allows passing the name of the route to be passed as a generic.
    */
-  export type RouteLocationNormalized<Name extends keyof RouteNamedMap = keyof RouteNamedMap> = RouteLocationNormalizedTypedList<RouteNamedMap>[Name]
+  export type RouteLocationNormalized<
+    Name extends keyof RouteNamedMap = keyof RouteNamedMap
+  > = RouteLocationNormalizedTypedList<RouteNamedMap>[Name]
 
   /**
    * Type safe version of `RouteLocationNormalizedLoaded` (the return type of `useRoute()`).
    * Allows passing the name of the route to be passed as a generic.
    */
-  export type RouteLocationNormalizedLoaded<Name extends keyof RouteNamedMap = keyof RouteNamedMap> = RouteLocationNormalizedLoadedTypedList<RouteNamedMap>[Name]
+  export type RouteLocationNormalizedLoaded<
+    Name extends keyof RouteNamedMap = keyof RouteNamedMap
+  > = RouteLocationNormalizedLoadedTypedList<RouteNamedMap>[Name]
 
   /**
    * Type safe version of `RouteLocationResolved` (the returned route of `router.resolve()`).
    * Allows passing the name of the route to be passed as a generic.
    */
-  export type RouteLocationResolved<Name extends keyof RouteNamedMap = keyof RouteNamedMap> = RouteLocationResolvedTypedList<RouteNamedMap>[Name]
+  export type RouteLocationResolved<
+    Name extends keyof RouteNamedMap = keyof RouteNamedMap
+  > = RouteLocationResolvedTypedList<RouteNamedMap>[Name]
 
   /**
    * Type safe version of `RouteLocation` . Allows passing the name of the route to be passed as a generic.
    */
-  export type RouteLocation<Name extends keyof RouteNamedMap = keyof RouteNamedMap> = RouteLocationTypedList<RouteNamedMap>[Name]
+  export type RouteLocation<
+    Name extends keyof RouteNamedMap = keyof RouteNamedMap
+  > = RouteLocationTypedList<RouteNamedMap>[Name]
 
   /**
    * Type safe version of `RouteLocationRaw` . Allows passing the name of the route to be passed as a generic.
    */
-  export type RouteLocationRaw<Name extends keyof RouteNamedMap = keyof RouteNamedMap> =
+  export type RouteLocationRaw<
+    Name extends keyof RouteNamedMap = keyof RouteNamedMap
+  > =
     | RouteLocationAsString<RouteNamedMap>
     | RouteLocationAsRelativeTypedList<RouteNamedMap>[Name]
     | RouteLocationAsPathTypedList<RouteNamedMap>[Name]
@@ -116,19 +301,27 @@ declare module 'vue-router/auto' {
   /**
    * Generate a type safe params for a route location. Requires the name of the route to be passed as a generic.
    */
-  export type RouteParams<Name extends keyof RouteNamedMap> = RouteNamedMap[Name]['params']
+  export type RouteParams<Name extends keyof RouteNamedMap> =
+    RouteNamedMap[Name]['params']
   /**
    * Generate a type safe raw params for a route location. Requires the name of the route to be passed as a generic.
    */
-  export type RouteParamsRaw<Name extends keyof RouteNamedMap> = RouteNamedMap[Name]['paramsRaw']
+  export type RouteParamsRaw<Name extends keyof RouteNamedMap> =
+    RouteNamedMap[Name]['paramsRaw']
 
   export function useRouter(): RouterTyped
-  export function useRoute<Name extends keyof RouteNamedMap = keyof RouteNamedMap>(name?: Name): RouteLocationNormalizedLoadedTypedList<RouteNamedMap>[Name]
+  export function useRoute<
+    Name extends keyof RouteNamedMap = keyof RouteNamedMap
+  >(name?: Name): RouteLocationNormalizedLoadedTypedList<RouteNamedMap>[Name]
 
   export const useLink: UseLinkFnTyped<RouteNamedMap>
 
-  export function onBeforeRouteLeave(guard: NavigationGuard<RouteNamedMap>): void
-  export function onBeforeRouteUpdate(guard: NavigationGuard<RouteNamedMap>): void
+  export function onBeforeRouteLeave(
+    guard: NavigationGuard<RouteNamedMap>
+  ): void
+  export function onBeforeRouteUpdate(
+    guard: NavigationGuard<RouteNamedMap>
+  ): void
 
   export const RouterLink: RouterLinkTyped<RouteNamedMap>
   export const RouterLinkProps: RouterLinkPropsTyped<RouteNamedMap>
@@ -138,25 +331,25 @@ declare module 'vue-router/auto' {
   export function defineLoader<
     P extends Promise<any>,
     Name extends keyof RouteNamedMap = keyof RouteNamedMap,
-    isLazy extends boolean = false,
+    isLazy extends boolean = false
   >(
     name: Name,
     loader: (route: RouteLocationNormalizedLoaded<Name>) => P,
-    options?: _DefineLoaderOptions<isLazy>,
+    options?: _DefineLoaderOptions<isLazy>
   ): _DataLoader<Awaited<P>, isLazy>
   export function defineLoader<
     P extends Promise<any>,
-    isLazy extends boolean = false,
+    isLazy extends boolean = false
   >(
     loader: (route: RouteLocationNormalizedLoaded) => P,
-    options?: _DefineLoaderOptions<isLazy>,
+    options?: _DefineLoaderOptions<isLazy>
   ): _DataLoader<Awaited<P>, isLazy>
 
   export {
     _definePage as definePage,
     _HasDataLoaderMeta as HasDataLoaderMeta,
     _setupDataFetchingGuard as setupDataFetchingGuard,
-    _stopDataFetchingScope as stopDataFetchingScope,
+    _stopDataFetchingScope as stopDataFetchingScope
   } from 'unplugin-vue-router/runtime'
 }
 
