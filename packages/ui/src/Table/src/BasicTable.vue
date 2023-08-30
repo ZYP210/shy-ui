@@ -27,7 +27,7 @@
 
         <TableGlobalSearch
           v-show="isVisibleGlobalSearch"
-          :schemasAdvancedSearch="schemasAdvancedSearchString"
+          :schemasAdvancedSearch="schemasAdvancedSearchGlobal"
         />
         <Table
           ref="tableElRef"
@@ -342,6 +342,7 @@ export default defineComponent({
     const {
       schemasAdvancedSearch,
       schemasAdvancedSearchString,
+      schemasAdvancedSearchGlobal,
       isVisibleAdvancedSearch,
       openAdvancedSearch,
       closeAdvancedSearch,
@@ -460,7 +461,8 @@ export default defineComponent({
       isVisibleAdvancedSearch,
       handleAdvancedEnsure,
       isVisibleGlobalSearch,
-      schemasAdvancedSearchString
+      schemasAdvancedSearchString,
+      schemasAdvancedSearchGlobal
     }
   }
 })

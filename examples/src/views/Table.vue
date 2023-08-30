@@ -31,7 +31,8 @@ const columns = [
   {
     title: '年龄',
     dataIndex: 'age',
-    advancedType: 'number'
+    advancedType: 'number',
+    globalShow: false
   },
 
   {
@@ -79,6 +80,11 @@ const [register] = useTable({
     // })
     return []
   },
+  beforeFetch: (params) => {
+    console.log(params)
+    return params
+  },
+  searchInfo: { a: 1 },
   columns: columns as any,
   useSearchForm: true,
   useAdvancedSearch: true,

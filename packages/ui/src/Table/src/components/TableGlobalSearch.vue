@@ -70,6 +70,7 @@ export default defineComponent({
     table.setGlobalSchemas(props.schemasAdvancedSearch)
     const handleSelectedClick = (value: 1 | 2) => {
       curSelected.value = value
+
       if (value === 1) {
         table.setGlobalSchemas(props.schemasAdvancedSearch)
         const searchValue = table.getGlobalSearchValue()
@@ -118,9 +119,7 @@ export default defineComponent({
     const globalSearchWrapperRef = ref()
     const clickOutside = (e) => {
       if (document.querySelector('.table-settings').contains(e.target)) return
-
       if (globalSearchWrapperRef.value.contains(e.target)) return
-
       table.closeGlobalSearch()
     }
 
