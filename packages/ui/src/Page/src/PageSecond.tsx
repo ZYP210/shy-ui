@@ -18,6 +18,10 @@ export default defineComponent({
     isShowConfirmButton: {
       type: Boolean,
       default: () => true
+    },
+    isShowFooter: {
+      type: Boolean,
+      default: () => false
     }
   },
   emits: ['click-return'],
@@ -25,6 +29,7 @@ export default defineComponent({
     const handleClick = () => {
       emit('click-return')
     }
+    console.log(1)
 
     return () => (
       <div class={`${prefixCls}-wrapper`}>
@@ -33,30 +38,33 @@ export default defineComponent({
             class={`${prefixCls}-header-icon`}
             onClick={handleClick}
           />
-          <div class={`${prefixCls}-header-title`}>{props.title}</div>
+          <div class={`${prefixCls}-header-title`}>
+            {slots?.title ? slots?.title() : props.title}
+          </div>
         </div>
-
         <div class={`${prefixCls}-body`}>{slots.default?.()}</div>
 
-        <div class={`${prefixCls}-footer`}>
-          <Space>
-            {slots.beforeCancelButton?.()}
+        {props.isShowFooter ? (
+          <div class={`${prefixCls}-footer`}>
+            <Space>
+              {slots.beforeCancelButton?.()}
 
-            {props.isShowCancelButton ? (
-              <BasicButton size="small">取消</BasicButton>
-            ) : null}
+              {props.isShowCancelButton ? (
+                <BasicButton size="small">取消</BasicButton>
+              ) : null}
 
-            {slots.afterCancelButton?.()}
+              {slots.afterCancelButton?.()}
 
-            {props.isShowConfirmButton ? (
-              <BasicButton type="primary" size="small">
-                确定
-              </BasicButton>
-            ) : null}
+              {props.isShowConfirmButton ? (
+                <BasicButton type="primary" size="small">
+                  确定
+                </BasicButton>
+              ) : null}
 
-            {slots.beforeConfirmButton?.()}
-          </Space>
-        </div>
+              {slots.beforeConfirmButton?.()}
+            </Space>
+          </div>
+        ) : null}
       </div>
     )
   }

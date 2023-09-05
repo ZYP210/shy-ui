@@ -80,7 +80,7 @@ const askVersion = async() => {
   await askVersion()
   // 3. 将修改后的数据写回到JSON文件中
   const newData = JSON.stringify(jsonData, null, 2);
-  fs.writeFileSync(url, newData);
+ fs.writeFileSync(url, newData);
 })()
 
 

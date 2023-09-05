@@ -1,5 +1,6 @@
 // 用于规定vxe-table默认props
 import { VxeTableProps, VxeColumnProps } from 'vxe-table'
+
 export const basicProps: VxeTableProps = {
   border: false,
   size: 'mini',
@@ -17,6 +18,9 @@ export const basicProps: VxeTableProps = {
   headerCellStyle: {
     backgroundColor: '#fafafa',
     color: 'rgba(0, 0, 0, 0.85)'
+  },
+  sortConfig: {
+    showIcon: false
   }
 }
 
@@ -24,7 +28,8 @@ export const basicColumn: VxeColumnProps = {
   showHeaderOverflow: 'tooltip',
   showOverflow: 'tooltip',
   align: 'left',
-  visible: true
+  visible: true,
+  sortable: true
 }
 
 export const basicFormConfig = {

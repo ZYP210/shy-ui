@@ -102,7 +102,13 @@
 
             <template #header>
               <slot :name="`${column.field}Header`" v-bind="{ column }">
-                {{ column.title }}
+                <div style="display: flex; justify-content: space-between">
+                  <div>{{ column.title }}</div>
+                  <IconSort
+                    v-if="column?.sortable"
+                    @change="(type) => handleSortChange(column.field, type)"
+                  />
+                </div>
               </slot>
             </template>
           </vxe-column>
@@ -175,6 +181,8 @@ import { createTableContext } from '../Table/src/hooks/useTableContext'
 import TableSetting from './components/settings/index.vue'
 import { deepMergeObjects } from '@shy-plugins/utils'
 import { useColumns } from './hooks/useColumns'
+import { useSort } from './hooks/useSort'
+import IconSort from './components/Icon/Sort.vue'
 
 const emits = defineEmits([
   'register',
@@ -278,6 +286,12 @@ const handlePageChange = (current, pageSize) => {
   setPage({ current, pageSize })
   reload()
 }
+// sort
+const { formSearchSort, formSortStatus } = useSort()
+const handleSortChange = (field, type) => {
+  formSortStatus[field] = type
+  reload()
+}
 
 // form
 const getFormConfig = computed(() => {
@@ -301,6 +315,7 @@ const params = computed(() => {
   return {
     ...getProps.value.searchInfo,
     ...formSearch.value,
+    ...formSearchSort.value,
     current: page.current,
     size: page.pageSize
   }
