@@ -1,6 +1,10 @@
 <template>
   <div class="p-30px h-full overflow-hidden">
-    <TablePlus @register="register" @selection-change="handleSelectionChange">
+    <TablePlus
+      ref="aRef"
+      @register="register"
+      @selection-change="handleSelectionChange"
+    >
       <template #toolbar>
         <a-button @click="handleClick">123</a-button>
         <a-button>1</a-button>
@@ -15,7 +19,7 @@
 
 <script setup lang="ts">
 import { useTablePlus, TablePlus, TableAction } from '3h1-ui'
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { Button } from 'ant-design-vue'
 
 const actions = [
@@ -35,7 +39,7 @@ const actions = [
 
 const columns = [
   {
-    title: 'a',
+    title: '类型编号',
     field: 'a',
     width: 300,
     treeNode: true

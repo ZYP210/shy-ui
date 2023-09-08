@@ -17,7 +17,11 @@ export const basicProps: VxeTableProps = {
   // autoResize: true
   headerCellStyle: {
     backgroundColor: '#fafafa',
-    color: 'rgba(0, 0, 0, 0.85)'
+    color: 'rgba(0, 0, 0, 0.85)',
+    fontFamily: 'Arial, PuHuiTi !important',
+    fontWeight: 700,
+    fontSize: '12px',
+    fontFeatureSetting: 'tnum'
   },
   sortConfig: {
     showIcon: false
@@ -29,7 +33,7 @@ export const basicColumn: VxeColumnProps = {
   showOverflow: 'tooltip',
   align: 'left',
   visible: true,
-  sortable: true
+  sortable: false
 }
 
 export const basicFormConfig = {

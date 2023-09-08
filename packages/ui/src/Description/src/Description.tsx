@@ -2,6 +2,7 @@ import { computed, defineComponent, ref } from 'vue'
 import { basicProps, Schema, basicColProps } from './props'
 import { Divider } from 'ant-design-vue'
 import DescriptionGroup from './DescriptionGroup'
+import { CopyOutlined } from '@ant-design/icons-vue'
 
 export default defineComponent({
   name: 'Description',
@@ -20,6 +21,20 @@ export default defineComponent({
     const innerProps = ref(null)
     const setDescProps = (props) => {
       innerProps.value = { ...innerProps.value, ...props }
+    }
+
+    const copyToClipboard = async (text) => {
+      try {
+        // 将文本内容复制到系统剪贴板中
+        await navigator.clipboard.writeText(text)
+        console.log('Text copied to clipboard')
+      } catch (err) {
+        console.error('Failed to copy text: ', err)
+      }
+    }
+
+    const handleClick = (value) => {
+      copyToClipboard(value)
     }
 
     const rows = computed(() => {
@@ -58,6 +73,13 @@ export default defineComponent({
                 {slots[`${item.field}Value`]
                   ? slots[`${item.field}Value`]()
                   : getProps.value.data[item.field]}
+              </span>
+
+              <span
+                style="cursor:pointer"
+                onClick={() => handleClick(getProps.value.data[item.field])}
+              >
+                <CopyOutlined />
               </span>
             </div>
           )
