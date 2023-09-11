@@ -51,6 +51,7 @@ const handleInput = () => {
     const schemas = table.getGlobalSchemas().map((item) => {
       return item.field
     })
+    if (!globalSearchValue.value) return table.reload({ searchInfo: {} })
     if (type === 1) {
       const params = getGlobalAdvancedType(schemas, globalSearchValue.value)
       table.reload({ searchInfo: { ...params } })

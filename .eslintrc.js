@@ -35,6 +35,7 @@ module.exports = {
     '@typescript-eslint/ban-types': 0,
     'vue/prefer-import-from-vue': 0,
     '@typescript-eslint/no-empty-function': 0,
-    'vue/no-reserved-component-names': 0
+    'vue/no-reserved-component-names': 0,
+    "@typescript-eslint/no-explicit-any":0
   }
 }

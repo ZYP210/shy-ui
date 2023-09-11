@@ -18,5 +18,6 @@ export function createTableContext(instance: Instance) {
 }
 
 export function useTableContext(): RetInstance {
+  // console.log(key)
   return inject(key) as RetInstance
 }

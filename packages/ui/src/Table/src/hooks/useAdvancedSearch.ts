@@ -31,8 +31,18 @@ export const useAdvancedSearch = ({ getProps, reload }) => {
         field: column.dataIndex,
         type: column?.advancedType || 'string',
         component: column?.component || 'Input',
-        componentProps: column?.componentProps || {}
+        componentProps: column?.componentProps || {},
+        sortShow: column?.sortShow === undefined ? true : column.sortShow,
+        globalShow: column?.globalShow === undefined ? true : column.globalShow,
+        advancedShow:
+          column?.advancedShow === undefined ? true : column.advancedShow
       }
+    })
+  })
+
+  const schemasAdvancedSearchGlobal = computed(() => {
+    return schemasAdvancedSearch.value.filter((item) => {
+      return item.globalShow
     })
   })
 
@@ -112,7 +122,8 @@ export const useAdvancedSearch = ({ getProps, reload }) => {
     getGlobalSearchValue,
     setCurSearchParams,
     getCurSearchParams,
-    schemasAdvancedSearchString
+    schemasAdvancedSearchString,
+    schemasAdvancedSearchGlobal
   }
 }
 

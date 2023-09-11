@@ -210,7 +210,7 @@ export function useColumns(
           if (column.flag === 'INDEX' || column.flag === 'ACTION') {
             column.sorter = false
           } else {
-            column.sorter = true
+            column.sorter = column?.sorter === undefined ? true : column.sorter
           }
         }
         return reactive(column)

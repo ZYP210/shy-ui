@@ -1,124 +1,25 @@
-<template>
-  <Tooltip placement="top">
-    <template #title>
-      <span>列展示</span>
-    </template>
-    <Popover
-      placement="bottomLeft"
-      trigger="click"
-      :overlayClassName="`${prefixCls}__cloumn-list`"
-      @visible-change="handleVisibleChange"
-    >
-      <template #title>
-        <div :class="`${prefixCls}__popover-title`">
-          <Checkbox v-model:checked="checkAll" @change="onCheckAllChange">
-            列展示
-          </Checkbox>
-
-          <Checkbox
-            v-model:checked="checkIndex"
-            @change="handleIndexCheckChange"
-          >
-            序号列
-          </Checkbox>
-
-          <Checkbox
-            v-model:checked="checkSelect"
-            @change="handleSelectCheckChange"
-            :disabled="!defaultRowSelection"
-          >
-            勾选列
-          </Checkbox>
-
-          <a-button size="small" type="link" @click="reset"> 重置 </a-button>
-        </div>
-      </template>
-
-      <template #content>
-        <ScrollContainer>
-          <CheckboxGroup v-model:value="checkedList" ref="columnListRef">
-            <template v-for="item in plainOptions" :key="item.value">
-              <div
-                :class="`${prefixCls}__check-item`"
-                v-if="!('ifShow' in item && !item.ifShow)"
-              >
-                <DragOutlined class="table-column-drag-icon" />
-                <Checkbox :value="item.field">
-                  {{ item.title }}
-                </Checkbox>
-
-                <Tooltip
-                  placement="bottomLeft"
-                  :mouseLeaveDelay="0.4"
-                  :getPopupContainer="getPopupContainer"
-                >
-                  <template #title> 固定到左侧 </template>
-
-                  <Icon
-                    icon="line-md:arrow-align-left"
-                    :class="[
-                      `${prefixCls}__fixed-left`,
-                      {
-                        active: item.fixed === 'left',
-                        disabled: !checkedList.includes(item.field)
-                      }
-                    ]"
-                    @click="handleColumnFixed(item, 'left')"
-                  />
-                </Tooltip>
-                <Divider type="vertical" />
-                <Tooltip
-                  placement="bottomLeft"
-                  :mouseLeaveDelay="0.4"
-                  :getPopupContainer="getPopupContainer"
-                >
-                  <template #title> 固定到右侧 </template>
-                  <Icon
-                    icon="line-md:arrow-align-left"
-                    :class="[
-                      `${prefixCls}__fixed-right`,
-                      {
-                        active: item.fixed === 'right',
-                        disabled: !checkedList.includes(item.field)
-                      }
-                    ]"
-                    @click="handleColumnFixed(item, 'right')"
-                  />
-                </Tooltip>
-              </div>
-            </template>
-          </CheckboxGroup>
-        </ScrollContainer>
-      </template>
-      <SettingOutlined />
-    </Popover>
-  </Tooltip>
-</template>
 <script lang="ts">
 import {
   defineComponent,
   ref,
   reactive,
   toRefs,
-  watchEffect,
   nextTick,
   unref,
-  computed,
-  watch
+  watch,
+  onMounted
 } from 'vue'
 import { Tooltip, Popover, Checkbox, Divider } from 'ant-design-vue'
-import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface'
 import { SettingOutlined, DragOutlined } from '@ant-design/icons-vue'
 import { Icon } from '../../../Icon'
 import { ScrollContainer } from '../../../Container'
-import { useTableContext } from '../../hooks/useTableContext'
+import { useTableContext } from '../../../Table/src/hooks/useTableContext'
 import { useDesign } from '@shy-plugins/use'
-// import { useSortable } from '/@/hooks/web/useSortable';
 import { isNullAndUnDef } from '@shy-plugins/utils'
 import { cloneDeep } from 'lodash-es'
 import Sortablejs from 'sortablejs'
 import type Sortable from 'sortablejs'
-import { onMounted } from 'vue'
+import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface'
 
 interface State {
   checkAll: boolean
@@ -148,11 +49,9 @@ export default defineComponent({
   },
   emits: ['columns-change'],
 
-  setup(_, { emit, attrs }) {
+  setup() {
     const table: any = useTableContext()
-
     const defaultRowSelection = []
-
     const cachePlainOptions = ref<Options[]>([])
     const plainOptions = ref<Options[] | any>([])
     const plainSortOptions = ref<Options[] | any>([])
@@ -340,10 +239,108 @@ export default defineComponent({
       handleColumnFixed,
       getPopupContainer,
       handleVisibleChange
-    }
+    } as { prefixCls: any; handleVisibleChange: any }
   }
-})
+}) as any
 </script>
+
+<template>
+  <Tooltip placement="top">
+    <template #title>
+      <span>列展示</span>
+    </template>
+    <Popover
+      placement="bottomLeft"
+      trigger="click"
+      :overlayClassName="`${prefixCls}__cloumn-list`"
+      @visible-change="handleVisibleChange"
+    >
+      <template #title>
+        <div :class="`${prefixCls}__popover-title`">
+          <Checkbox v-model:checked="checkAll" @change="onCheckAllChange">
+            列展示
+          </Checkbox>
+
+          <Checkbox
+            v-model:checked="checkIndex"
+            @change="handleIndexCheckChange"
+          >
+            序号列
+          </Checkbox>
+
+          <Checkbox
+            v-model:checked="checkSelect"
+            @change="handleSelectCheckChange"
+            :disabled="!defaultRowSelection"
+          >
+            勾选列
+          </Checkbox>
+
+          <a-button size="small" type="link" @click="reset"> 重置 </a-button>
+        </div>
+      </template>
+
+      <template #content>
+        <ScrollContainer>
+          <CheckboxGroup v-model:value="checkedList" ref="columnListRef">
+            <template v-for="item in plainOptions" :key="item.value">
+              <div
+                :class="`${prefixCls}__check-item`"
+                v-if="!('ifShow' in item && !item.ifShow)"
+              >
+                <DragOutlined class="table-column-drag-icon" />
+                <Checkbox :value="item.field">
+                  {{ item.title }}
+                </Checkbox>
+
+                <Tooltip
+                  placement="bottomLeft"
+                  :mouseLeaveDelay="0.4"
+                  :getPopupContainer="getPopupContainer"
+                >
+                  <template #title> 固定到左侧 </template>
+
+                  <Icon
+                    icon="line-md:arrow-align-left"
+                    :class="[
+                      `${prefixCls}__fixed-left`,
+                      {
+                        active: item.fixed === 'left',
+                        disabled: !checkedList.includes(item.field)
+                      }
+                    ]"
+                    @click="handleColumnFixed(item, 'left')"
+                  />
+                </Tooltip>
+                <Divider type="vertical" />
+                <Tooltip
+                  placement="bottomLeft"
+                  :mouseLeaveDelay="0.4"
+                  :getPopupContainer="getPopupContainer"
+                >
+                  <template #title> 固定到右侧 </template>
+                  <Icon
+                    icon="line-md:arrow-align-left"
+                    :class="[
+                      `${prefixCls}__fixed-right`,
+                      {
+                        active: item.fixed === 'right',
+                        disabled: !checkedList.includes(item.field)
+                      }
+                    ]"
+                    @click="handleColumnFixed(item, 'right')"
+                  />
+                </Tooltip>
+              </div>
+            </template>
+          </CheckboxGroup>
+        </ScrollContainer>
+      </template>
+      <SettingOutlined />
+    </Popover>
+  </Tooltip>
+</template>
+
 <style lang="less">
 @prefix-cls: ~'@{namespace}-basic-column-setting';
 

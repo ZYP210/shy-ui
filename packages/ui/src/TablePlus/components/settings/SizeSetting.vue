@@ -35,7 +35,7 @@ import { defineComponent, ref } from 'vue'
 import { Tooltip, Dropdown, Menu } from 'ant-design-vue'
 import { ColumnHeightOutlined } from '@ant-design/icons-vue'
 import { useI18n } from '@shy-plugins/use'
-import { useTableContext } from '../../hooks/useTableContext'
+import { useTableContext } from '../../../Table/src/hooks/useTableContext'
 import { getPopupContainer } from '@shy-plugins/utils'
 
 export default defineComponent({

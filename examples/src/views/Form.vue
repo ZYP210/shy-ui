@@ -55,7 +55,7 @@ const schemas: FormSchema[] = [
         console.log('888888', e)
       }
     }
-  }
+  },
 
   // {
   //   field: 'field',
@@ -190,35 +190,35 @@ const schemas: FormSchema[] = [
   //   }
   // },
   //
-  // {
-  //   field: 'table',
-  //   label: 'table',
-  //   component: 'Table',
-  //   componentProps: {
-  //     columns: [
-  //       {
-  //         title: 'a',
-  //         dataIndex: 'a'
-  //       },
-  //       {
-  //         title: 'b',
-  //         dataIndex: 'b'
-  //       },
-  //       {
-  //         title: 'c',
-  //         dataIndex: 'c'
-  //       },
-  //       {
-  //         title: 'd',
-  //         dataIndex: 'd'
-  //       },
-  //       {
-  //         title: 'e',
-  //         dataIndex: 'e'
-  //       }
-  //     ]
-  //   }
-  // },
+  {
+    field: 'table',
+    label: 'table',
+    component: 'Table',
+    componentProps: {
+      columns: [
+        {
+          title: 'a',
+          dataIndex: 'a'
+        },
+        {
+          title: 'b',
+          dataIndex: 'b'
+        },
+        {
+          title: 'c',
+          dataIndex: 'c'
+        },
+        {
+          title: 'd',
+          dataIndex: 'd'
+        },
+        {
+          title: 'e',
+          dataIndex: 'e'
+        }
+      ]
+    }
+  }
   // {
   //   field: 'z',
   //   label: 'Divider',

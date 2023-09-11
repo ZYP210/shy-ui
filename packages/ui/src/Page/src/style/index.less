@@ -2,9 +2,12 @@
 
 .@{prefix-cls} {
   &-wrapper {
-    height: 100%;
-    padding: 15px;
+    display: flex;
     overflow: hidden;
+    padding: 0 15px;
+    height: 100%;
+    background-color: #fff;
+    flex-flow: column nowrap;
   }
 
   &-header {
@@ -12,6 +15,7 @@
     align-items: center;
     line-height: 40px;
     height: 40px;
+    flex: none;
 
     &-icon {
       font-size: 16px;
@@ -27,11 +31,12 @@
   }
 
   &-body {
-    height: calc(100% - 40px - 50px);
-    overflow: auto;
+    flex: auto;
+    overflow: hidden;
   }
 
   &-footer {
+    flex: none;
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
