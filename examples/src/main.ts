@@ -16,7 +16,11 @@ import 'virtual:windi-utilities.css'
 import 'virtual:svg-icons-register'
 
 import { BasicTable } from '3h1-ui'
+import { Plugin } from 'vue'
 
 const app = createApp(App)
 
-app.use(router).use(Antd).use(BasicTable, {}).mount('#app')
+app
+  .use(router)
+  .use(BasicTable as unknown as Plugin, {})
+  .mount('#app')
