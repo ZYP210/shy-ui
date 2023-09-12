@@ -84,11 +84,15 @@ export function useFormEvents({
       if (hasKey && fields.includes(key)) {
         // time type
         if (itemIsDateType(key)) {
+          console.log(1, key)
+
           if (Array.isArray(value)) {
             const arr: any[] = []
             for (const ele of value) {
-              arr.push(ele ? dateUtil(ele) : null)
+              arr.push(ele ? ele : null)
             }
+            console.log('arr', arr)
+
             formModel[key] = arr
           } else {
             const { componentProps } = schema || {}
