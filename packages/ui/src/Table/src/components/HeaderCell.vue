@@ -9,38 +9,37 @@
     :class="`${prefixCls}__help`"
   />
 </template>
+
 <script lang="ts">
-import type { PropType } from 'vue'
+export default {
+  name: 'TableHeaderCell'
+}
+</script>
+<script lang="ts" setup>
+// import type { PropType } from 'vue'
 import type { BasicColumn } from '../types/table'
-import { defineComponent, computed } from 'vue'
+import { computed } from 'vue'
 import { BasicHelp } from '../../../Basic'
 import EditTableHeaderCell from './EditTableHeaderIcon.vue'
 import { useDesign } from '@shy-plugins/use'
 
-export default defineComponent({
-  name: 'TableHeaderCell',
-  components: {
-    EditTableHeaderCell,
-    BasicHelp
-  },
-  props: {
-    column: {
-      type: Object as PropType<BasicColumn>,
-      default: () => ({})
-    }
-  },
-  setup(props) {
-    const { prefixCls } = useDesign('basic-table-header-cell')
+type Props = {
+  column: BasicColumn
+}
 
-    const getIsEdit = computed(() => !!props.column?.edit)
-    const getTitle = computed(
-      () => props.column?.customTitle || props.column?.title
-    )
-    const getHelpMessage = computed(() => props.column?.helpMessage)
-
-    return { prefixCls, getIsEdit, getTitle, getHelpMessage }
+const props = withDefaults(defineProps<Props>(), {
+  column: () => {
+    return {}
   }
 })
+
+const { prefixCls } = useDesign('basic-table-header-cell')
+
+const getIsEdit = computed(() => !!props.column?.edit)
+const getTitle = computed(
+  () => props.column?.customTitle || props.column?.title
+)
+const getHelpMessage = computed(() => props.column?.helpMessage)
 </script>
 <style lang="less">
 @prefix-cls: ~'@{namespace}-basic-table-header-cell';

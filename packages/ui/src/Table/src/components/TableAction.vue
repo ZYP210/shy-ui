@@ -43,7 +43,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, toRaw, unref } from 'vue'
+export default {
+  name: 'TableAction'
+}
+</script>
+
+<script lang="ts" setup>
+import { PropType, computed, toRaw, unref } from 'vue'
 import { Divider, Tooltip, TooltipProps } from 'ant-design-vue'
 import { Icon } from '../../../Icon'
 import { ActionItem } from '../../src/types/tableAction'
@@ -55,139 +61,116 @@ import { useTableContext } from '../hooks/useTableContext'
 import { isBoolean, isFunction, isString, propTypes } from '@shy-plugins/utils'
 import { ACTION_COLUMN_FLAG } from '../const'
 import { MoreOutlined } from '@ant-design/icons-vue'
+import type { PopconfirmProps } from 'ant-design-vue'
 
-export default defineComponent({
-  name: 'TableAction',
-  components: {
-    MoreOutlined,
-    Icon,
-    PopConfirmButton,
-    Divider,
-    Dropdown,
-    Tooltip
+const props = defineProps({
+  actions: {
+    type: Array as PropType<ActionItem[]>,
+    default: null
   },
-  props: {
-    actions: {
-      type: Array as PropType<ActionItem[]>,
-      default: null
-    },
-    dropDownActions: {
-      type: Array as PropType<ActionItem[]>,
-      default: null
-    },
-    divider: propTypes.bool.def(true),
-    outside: propTypes.bool,
-    stopButtonPropagation: propTypes.bool.def(false),
-    showCount: {
-      type: Number,
-      default: () => 3
-    }
+  dropDownActions: {
+    type: Array as PropType<ActionItem[]>,
+    default: null
   },
+  divider: propTypes.bool.def(true),
+  outside: propTypes.bool,
+  stopButtonPropagation: propTypes.bool.def(false),
+  showCount: {
+    type: Number,
+    default: () => 3
+  }
+})
 
-  setup(props) {
-    const { prefixCls } = useDesign('basic-table-action')
-    let table: Partial<TableActionType> = {}
-    if (!props.outside) {
-      table = useTableContext()
-    }
+const { prefixCls } = useDesign('basic-table-action')
+let table: Partial<TableActionType> = {}
+if (!props.outside) {
+  table = useTableContext()
+}
 
-    function isIfShow(action: ActionItem): boolean {
-      const ifShow = action.ifShow
+function isIfShow(action: ActionItem): boolean {
+  const ifShow = action.ifShow
 
-      let isIfShow = true
+  let isIfShow = true
 
-      if (isBoolean(ifShow)) {
-        isIfShow = ifShow
+  if (isBoolean(ifShow)) {
+    isIfShow = ifShow
+  }
+  if (isFunction(ifShow)) {
+    isIfShow = ifShow(action)
+  }
+  return isIfShow
+}
+
+const getActions = computed<Array<PopconfirmProps & ActionItem>>(() => {
+  return (toRaw(props.actions) || [])
+    .filter((action, index) => {
+      if (props.actions?.length === props.showCount) {
+        return isIfShow(action)
+      } else {
+        return isIfShow(action) && index <= props.showCount - 2
       }
-      if (isFunction(ifShow)) {
-        isIfShow = ifShow(action)
-      }
-      return isIfShow
-    }
-
-    const getActions = computed(() => {
-      return (toRaw(props.actions) || [])
-        .filter((action, index) => {
-          if (props.actions?.length === props.showCount) {
-            return isIfShow(action)
-          } else {
-            return isIfShow(action) && index <= props.showCount - 2
-          }
-        })
-        .map((action) => {
-          const { popConfirm } = action
-          return {
-            getPopupContainer: () =>
-              unref((table as any)?.wrapRef.value) ?? document.body,
-            type: 'link',
-            size: 'small',
-            ...action,
-            ...(popConfirm || {}),
-            onConfirm: popConfirm?.confirm,
-            onCancel: popConfirm?.cancel,
-            enable: !!popConfirm
-          }
-        })
     })
-
-    const getDropdownList = computed((): any[] => {
-      const list = (toRaw(props.actions) || []).filter((action, index) => {
-        if (props.actions.length === props.showCount) {
-          return false
-        } else {
-          return isIfShow(action) && index >= props.showCount - 1
-        }
-      })
-      return list.map((action, index) => {
-        const { label, popConfirm } = action
-        return {
-          ...action,
-          ...popConfirm,
-          onConfirm: popConfirm?.confirm,
-          onCancel: popConfirm?.cancel,
-          text: label,
-          divider: index < list.length - 1 ? props.divider : false
-        }
-      })
-    })
-
-    const getAlign = computed(() => {
-      const columns = (table as TableActionType)?.getColumns?.() || []
-      const actionColumn = columns.find(
-        (item) => item.flag === ACTION_COLUMN_FLAG
-      )
-      return actionColumn?.align ?? 'left'
-    })
-
-    function getTooltip(data: string | TooltipProps): TooltipProps {
+    .map((action) => {
+      const { popConfirm } = action
       return {
         getPopupContainer: () =>
           unref((table as any)?.wrapRef.value) ?? document.body,
-        placement: 'bottom',
-        ...(isString(data) ? { title: data } : data)
+        type: 'link',
+        size: 'small',
+        ...action,
+        ...(popConfirm || {}),
+        onConfirm: popConfirm?.confirm,
+        onCancel: popConfirm?.cancel,
+        enable: !!popConfirm
       }
-    }
-
-    function onCellClick(e: MouseEvent) {
-      if (!props.stopButtonPropagation) return
-      const path = e.composedPath() as HTMLElement[]
-      const isInButton = path.find((ele) => {
-        return ele.tagName?.toUpperCase() === 'BUTTON'
-      })
-
-      isInButton && e.stopPropagation()
-    }
-
-    return {
-      prefixCls,
-      getActions,
-      getDropdownList,
-      getAlign,
-      onCellClick,
-      getTooltip
-    }
-  }
+    })
 })
+
+const getDropdownList = computed((): any[] => {
+  const list = (toRaw(props.actions) || []).filter((action, index) => {
+    if (props.actions.length === props.showCount) {
+      return false
+    } else {
+      return isIfShow(action) && index >= props.showCount - 1
+    }
+  })
+  return list.map((action, index) => {
+    const { label, popConfirm } = action
+    return {
+      ...action,
+      ...popConfirm,
+      onConfirm: popConfirm?.confirm,
+      onCancel: popConfirm?.cancel,
+      text: label,
+      divider: index < list.length - 1 ? props.divider : false
+    }
+  })
+})
+
+const getAlign = computed(() => {
+  const columns = (table as TableActionType)?.getColumns?.() || []
+  const actionColumn = columns.find((item) => item.flag === ACTION_COLUMN_FLAG)
+  return actionColumn?.align ?? 'left'
+})
+
+function getTooltip(data: string | TooltipProps): TooltipProps {
+  return {
+    getPopupContainer: () =>
+      unref((table as any)?.wrapRef.value) ?? document.body,
+    placement: 'bottom',
+    ...(isString(data) ? { title: data } : data)
+  }
+}
+
+function onCellClick(e: MouseEvent) {
+  if (!props.stopButtonPropagation) return
+  const path = e.composedPath() as HTMLElement[]
+  const isInButton = path.find((ele) => {
+    return ele.tagName?.toUpperCase() === 'BUTTON'
+  })
+
+  isInButton && e.stopPropagation()
+}
 </script>
 
 <style lang="less">

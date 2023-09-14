@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite'
+import { defineConfig, Plugin } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import dts from 'vite-plugin-dts'
 import { resolve } from 'path'
@@ -72,8 +72,8 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    WindiCSS(),
-    PurgeIcons(),
+    WindiCSS() as unknown as Plugin,
+    PurgeIcons() as unknown as Plugin,
     dts({
       //指定使用的tsconfig.json为我们整个项目根目录下掉,如果不配置,你也可以在components下新建tsconfig.json
       tsConfigFilePath: './tsconfig.json'

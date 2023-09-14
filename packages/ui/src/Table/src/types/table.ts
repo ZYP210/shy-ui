@@ -456,7 +456,7 @@ export type CellFormat =
   | Map<string | number, any>
 
 // @ts-ignore
-export interface BasicColumn extends ColumnProps<Recordable> {
+export type BasicColumn = {
   children?: BasicColumn[]
   filters?: {
     text: string
@@ -511,7 +511,7 @@ export interface BasicColumn extends ColumnProps<Recordable> {
   }) => VNodeChild | JSX.Element
   // 动态 Disabled
   editDynamicDisabled?: boolean | ((record: Recordable) => boolean)
-}
+} & ColumnProps<Recordable>
 
 export type ColumnChangeParam = {
   dataIndex: string
@@ -521,4 +521,15 @@ export type ColumnChangeParam = {
 
 export interface InnerHandlers {
   onColumnsChange: (data: ColumnChangeParam[]) => void
+}
+
+export type schemasAdvancedSearch = {
+  label: string
+  field: number | string
+  type?: 'number' | 'string' | 'date' | 'select'
+  component?: ComponentType
+  componentProps?: object
+  sortShow?: boolean
+  globalShow?: boolean
+  advancedShow?: boolean
 }

@@ -1,4 +1,4 @@
-import type { FunctionalComponent, defineComponent } from 'vue'
+import type { FunctionalComponent } from 'vue'
 import type { ComponentType } from '../../types/componentType'
 import { componentMap } from '../../componentMap'
 
@@ -23,7 +23,7 @@ export const CellComponent: FunctionalComponent = (
   }: ComponentProps,
   { attrs }
 ) => {
-  const Comp = componentMap.get(component) as typeof defineComponent
+  const Comp = componentMap.get(component)
 
   const DefaultComp = h(Comp, attrs)
   if (!rule) {

@@ -29,9 +29,13 @@
                   style="width: 120px"
                   :options="getSearchType(schema?.field)"
                   :defaultValue="getSearchType(schema?.field)[0]?.value || ''"
+                  @change="handlSetValNull(schema)"
                 ></Select>
               </FormItem>
-              <FormItem class="shy-ui-advanced-search-item-value">
+              <FormItem
+                class="shy-ui-advanced-search-item-value"
+                v-if="!['nl', 'nn'].includes(schema.op)"
+              >
                 <template v-if="getTypeByField(schema?.field) === 'number'">
                   <template v-if="schema.op === 'bt'">
                     <div class="shy-ui-advanced-search-item-value-range">
@@ -94,7 +98,13 @@
                   v-else-if="getTypeByField(schema?.field) === 'select'"
                 >
                   <FormItem>
+                    <ApiSelect
+                      v-if="getComponent(schema.field) === 'ApiSelect'"
+                      v-model:value.number="schema[`${schema.field}`]"
+                      v-bind="getComponentPropsByField(schema.field)"
+                    />
                     <Select
+                      v-else
                       v-model:value.number="schema[`${schema.field}`]"
                       v-bind="getComponentPropsByField(schema.field)"
                     />
@@ -105,6 +115,11 @@
                   <Input
                     v-model:value="schema[schema.field]"
                     v-if="getComponent(schema.field) === 'Input'"
+                    v-bind="getComponentPropsByField(schema.field)"
+                  />
+                  <ApiSelect
+                    v-else-if="getComponent(schema.field) === 'ApiSelect'"
+                    v-model:value.number="schema[`${schema.field}`]"
                     v-bind="getComponentPropsByField(schema.field)"
                   />
                   <Select
@@ -154,54 +169,58 @@ import {
   Col,
   Select,
   Form,
-  Space,
   FormItem,
   Input,
-  FormItemRest,
   InputNumber,
   DatePicker
 } from 'ant-design-vue'
 import {
-  searchType,
   searchTypeString,
   searchTypeNumber,
   searchTypeDate,
-  searchTypeSelect
+  searchTypeSelect,
+  stringSearchTypeSelect
 } from './data'
 import { computed, reactive, ref } from 'vue'
 import { PlusCircleOutlined, MinusCircleTwoTone } from '@ant-design/icons-vue'
-import { BasicButton } from '../../Button/'
+import type { schemasAdvancedSearch } from '/@/Table/src/types/table'
+import ApiSelect from '../../Form/src/components/ApiSelect.vue'
 
-const props = defineProps({
-  schemas: {
-    default: () => [
-      {
-        label: '姓名',
-        field: 'name'
-      },
-      {
-        label: '年龄',
-        field: 'age',
-        type: 'number'
-      },
-      { label: '生日', field: 'birth', type: 'date' }
-    ]
-  }
+type Props = {
+  schemas: schemasAdvancedSearch[]
+}
+const props = withDefaults(defineProps<Props>(), {
+  schemas: () => [
+    {
+      label: '姓名',
+      field: 'name',
+      advancedShow: false
+    },
+    {
+      label: '年龄',
+      field: 'age',
+      type: 'number'
+    },
+    { label: '生日', field: 'birth', type: 'date' }
+  ]
 })
-
-const form = reactive({})
 
 const advancedSearchRef = ref()
 
 const formRef = ref()
 
 const schemasCurrent = reactive([])
-if (props.schemas.length !== 0)
-  schemasCurrent.push({ field: props.schemas[0].field, op: 'eq' })
+
+//判断是否是字符串搜索
+const isStringSearch = (item: any) => {
+  if (!item) return false
+  return item.type === 'string' && /select/i.test(item.component)
+}
 
 const dicColumn = computed(() => {
   const temp = []
   props.schemas.forEach((schama) => {
+    if (!schama.advancedShow) return
     const flag = schemasCurrent.find((item) => {
       return item.field === schama.field
     })
@@ -209,17 +228,32 @@ const dicColumn = computed(() => {
     temp.push({
       label: schama.label,
       value: schama.field,
-      disabled: !!flag
+      disabled: !!flag,
+      type: schama.type,
+      component: schama.component
     })
   })
+
   return temp
 })
+
+if (props.schemas.length !== 0) {
+  const firstSchema = dicColumn.value[0]
+  const op = isStringSearch(firstSchema) ? 'ct' : 'eq'
+  schemasCurrent.push({ field: firstSchema.value, op })
+}
 
 const handleAdd = () => {
   const item = dicColumn.value.find((item) => {
     return item.disabled === false
   })
-  schemasCurrent.push({ field: item?.value || '', op: 'eq' })
+
+  const column = props.schemas.find((schema) => {
+    return schema.field === item.value
+  })
+
+  const op = isStringSearch(column) ? 'ct' : 'eq'
+  schemasCurrent.push({ field: item?.value || '', op })
 }
 
 const handleMinus = (index) => {
@@ -231,7 +265,17 @@ const handleFieldChange = (schema) => {
     if (key === 'field') return
     delete schema[key]
   })
-  schema.op = 'eq'
+
+  const column = props.schemas.find((item) => {
+    return item.field === schema.field
+  })
+  schema.op = isStringSearch(column) ? 'ct' : 'eq'
+}
+
+const handlSetValNull = (schema) => {
+  if (['nl', 'nn'].includes(schema.op)) {
+    schema[schema.field] = ''
+  }
 }
 
 const getSearchType = (field: string) => {
@@ -245,6 +289,8 @@ const getSearchType = (field: string) => {
       return searchTypeDate
     case 'select':
       return searchTypeSelect
+    case 'stringSelect':
+      return stringSearchTypeSelect
   }
 }
 
@@ -259,8 +305,11 @@ const getTypeByField = (field: string) => {
   const column = props.schemas.find((schema) => {
     return schema.field === field
   })
+
+  const stringSelect = isStringSearch(column)
+
   const type: 'number' | 'string' | 'date' | 'select' = column?.type || 'string'
-  return type
+  return stringSelect ? 'stringSelect' : '' || type
 }
 const getComponentPropsByField = (field: string) => {
   const column = props.schemas.find((schema) => {
@@ -302,7 +351,7 @@ const getSearchFrom = () => {
 
 const resetFields = () => {
   schemasCurrent.splice(0, schemasCurrent.length)
-  schemasCurrent.push({ field: props.schemas[0].field })
+  schemasCurrent.push({ field: dicColumn.value[0].value })
   formRef.value.resetFields()
 }
 

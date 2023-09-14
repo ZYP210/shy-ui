@@ -23,13 +23,14 @@ import { BasicButton } from '../../../Button'
 import { AdvancedSearch } from '../../../AdvancedSearch/'
 import { defineComponent, onMounted, ref } from 'vue'
 import { useTableContext } from '../hooks/useTableContext'
-import { nextTick } from 'vue'
 import { onUnmounted } from 'vue'
+import { schemasAdvancedSearch } from '../types/table'
+
 export default defineComponent({
   props: {
     schemasAdvancedSearch: {
       default: () => [],
-      type: Array
+      type: Array as PropType<schemasAdvancedSearch[]>
     }
   },
   components: {
@@ -38,13 +39,13 @@ export default defineComponent({
     AdvancedSearch
   },
   emits: ['ensure'],
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const advancedSearchRef = ref()
 
     const table = useTableContext()
 
     const setStyle = () => {
-      const dom = document.querySelector('.table-settings')
+      const dom = document.querySelector<HTMLDivElement>('.table-settings')
       if (dom) {
         return { left: `${dom.offsetLeft - 370}px` }
       } else {

@@ -123,23 +123,23 @@ const buttonClickEvent = (key, row) => {
   emits('add-event', 1)
 }
 
-// add
-const addEvent = () => {
-  emits('add')
-}
-// remove
-const removeEvent = (row) => {
-  emits('remove', { row })
-}
+// // add
+// const addEvent = () => {
+//   emits('add')
+// }
+// // remove
+// const removeEvent = (row) => {
+//   emits('remove', { row })
+// }
 
-// edit
-const editEvent = (row) => {
-  emits('edit', { row })
-}
-// view
-const viewEvent = (row) => {
-  emits('view', { row })
-}
+// // edit
+// const editEvent = (row) => {
+//   emits('edit', { row })
+// }
+// // view
+// const viewEvent = (row) => {
+//   emits('view', { row })
+// }
 
 // 选中
 const tableRef = ref<VxeTableInstance>()

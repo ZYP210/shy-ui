@@ -108,7 +108,7 @@ export default defineComponent({
     }
 
     const setStyle = () => {
-      const dom = document.querySelector('.table-settings')
+      const dom = document.querySelector<HTMLDivElement>('.table-settings')
       if (dom) {
         return { left: `${dom.offsetLeft}px` }
       } else {

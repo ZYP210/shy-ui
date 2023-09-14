@@ -1,5 +1,5 @@
 import { computed, ref } from 'vue'
-
+import type { schemasAdvancedSearch } from '../types/table'
 export enum OperatorEnum {
   'eq' = '等于',
   'ne' = '不等于',
@@ -24,8 +24,8 @@ export enum OperatorEnum {
 
 export const useAdvancedSearch = ({ getProps, reload }) => {
   const isVisibleAdvancedSearch = ref(false)
-  const schemasAdvancedSearch = computed(() => {
-    return getProps.value.columns.map((column) => {
+  const schemasAdvancedSearch = computed<schemasAdvancedSearch[]>(() => {
+    return getProps.value.columns.map((column): schemasAdvancedSearch => {
       return {
         label: column.title,
         field: column.dataIndex,

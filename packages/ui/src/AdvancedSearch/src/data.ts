@@ -78,19 +78,20 @@ export const searchType = [
 ]
 
 export const searchTypeNumber = searchType.filter((item) => {
-  return ['eq', 'gt', 'ge', 'lt', 'le', 'bt'].includes(item.value)
+  return ['eq', 'gt', 'ge', 'lt', 'le', 'bt', 'nl', 'nn'].includes(item.value)
 })
 export const searchTypeString = searchType.filter((item) => {
-  return ['eq', 'ct', 'sw', 'ew'].includes(item.value)
+  return ['eq', 'ct', 'sw', 'ew', 'nl', 'nn'].includes(item.value)
 })
 export const searchTypeDate = searchType.filter((item) => {
-  return ['eq', 'gt', 'ge', 'lt', 'le', 'bt'].includes(item.value)
+  return ['eq', 'gt', 'ge', 'lt', 'le', 'bt', 'nl', 'nn'].includes(item.value)
 })
 
 export const searchTypeSelect = [{ label: '等于', value: 'eq' }]
+export const stringSearchTypeSelect = [{ label: '包含', value: 'ct' }]
 
 export const getGlobalAdvancedType = (fieldList, value) => {
-  const temp = {}
+  const temp: { [key: string]: unknown } = {}
   fieldList.forEach((field) => {
     temp[`${field}.${field}-op`] = 'ct'
     temp[`${field}.${field}`] = value
