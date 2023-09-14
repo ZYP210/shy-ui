@@ -20,6 +20,7 @@
 <script setup lang="ts">
 import { useTablePlus, TablePlus, TableAction } from '3h1-ui'
 import { onMounted, ref } from 'vue'
+import dayjs from 'dayjs'
 import { Button } from 'ant-design-vue'
 
 const actions = [
@@ -96,11 +97,16 @@ const formConfig = {
     { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
     { label: 'b', field: 'b', component: 'Input', colProps: { span: 8 } },
     { label: 'c', field: 'c', component: 'Input', colProps: { span: 8 } },
-    { label: 'd', field: 'd', component: 'Input', colProps: { span: 8 } }
+    { label: 'd', field: 'd', component: 'Input', colProps: { span: 8 } },
+    { label: 'e', field: 'e', component: 'RangePicker', colProps: { span: 8 } }
   ]
 }
 
 const handleSelectionChange = (value) => {}
+
+onMounted(() => {
+  getForm().setFieldsValue({ e: [dayjs(), dayjs()] })
+})
 
 const [
   register,

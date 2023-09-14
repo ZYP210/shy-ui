@@ -15,6 +15,8 @@
         />
       </template>
     </BasicForm>
+
+    <a-range-picker :value="timeRange" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -29,8 +31,10 @@ import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
 import { onMounted } from 'vue'
 import { ref } from 'vue'
+import dayjs from 'dayjs'
 
 const a = ref('')
+const timeRange = [dayjs(), dayjs()]
 
 const tree = {
   api: () => {
@@ -55,6 +59,12 @@ const schemas: FormSchema[] = [
         console.log('888888', e)
       }
     }
+  },
+
+  {
+    field: 'range',
+    label: '时间',
+    component: 'RangePicker'
   },
 
   // {
@@ -245,7 +255,8 @@ onMounted(() => {
   setFieldsValue({
     field: 123,
     table: [{ a: 1, b: 2, c: 3 }],
-    c: '123'
+    c: '123',
+    range: [dayjs('2023-09-01'), dayjs('2023-09-02')]
   })
 })
 

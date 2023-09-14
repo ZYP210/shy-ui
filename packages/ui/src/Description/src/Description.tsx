@@ -27,7 +27,6 @@ export default defineComponent({
       try {
         // 将文本内容复制到系统剪贴板中
         await navigator.clipboard.writeText(text)
-        console.log('Text copied to clipboard')
       } catch (err) {
         console.error('Failed to copy text: ', err)
       }
@@ -74,13 +73,14 @@ export default defineComponent({
                   ? slots[`${item.field}Value`]()
                   : getProps.value.data[item.field]}
               </span>
-
-              <span
-                style="cursor:pointer"
-                onClick={() => handleClick(getProps.value.data[item.field])}
-              >
-                <CopyOutlined />
-              </span>
+              {item?.isCopy ? (
+                <span
+                  style="cursor:pointer"
+                  onClick={() => handleClick(getProps.value.data[item.field])}
+                >
+                  <CopyOutlined />
+                </span>
+              ) : null}
             </div>
           )
         }
