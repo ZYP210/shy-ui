@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:example": "node ./release.js&&pnpm -C examples dev",
-    "publish:ui": "standard-version && pnpm -C packages/ui build",
+    "publish:ui": "node ./release.js",
     "build:utils": "pnpm -C packages/utils build"
   },
   "keywords": [],

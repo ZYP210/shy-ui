@@ -100,12 +100,12 @@
                   <FormItem>
                     <ApiSelect
                       v-if="getComponent(schema.field) === 'ApiSelect'"
-                      v-model:value.number="schema[`${schema.field}`]"
+                      v-model:value="schema[`${schema.field}`]"
                       v-bind="getComponentPropsByField(schema.field)"
                     />
                     <Select
                       v-else
-                      v-model:value.number="schema[`${schema.field}`]"
+                      v-model:value="schema[`${schema.field}`]"
                       v-bind="getComponentPropsByField(schema.field)"
                     />
                   </FormItem>
@@ -119,7 +119,7 @@
                   />
                   <ApiSelect
                     v-else-if="getComponent(schema.field) === 'ApiSelect'"
-                    v-model:value.number="schema[`${schema.field}`]"
+                    v-model:value="schema[`${schema.field}`]"
                     v-bind="getComponentPropsByField(schema.field)"
                   />
                   <Select

@@ -18,7 +18,7 @@ function deepCopy(obj) {
     }
   } else {
     copy = {}
-    for (let key in obj) {
+    for (const key in obj) {
       if (Object.prototype.hasOwnProperty.call(obj, key)) {
         copy[key] = deepCopy(obj[key])
       }
@@ -73,7 +73,7 @@ export function useTableForm(
 
   function replaceFormSlotKey(key: string) {
     if (!key) return ''
-    return key?.replace?.(/form\-/, '') ?? ''
+    return key?.replace?.(/form-/, '') ?? ''
   }
 
   function handleSearchInfoChange(info: Recordable) {

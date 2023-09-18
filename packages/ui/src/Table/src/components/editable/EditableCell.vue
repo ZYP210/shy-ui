@@ -56,7 +56,8 @@ export default defineComponent({
       default: ''
     },
     record: {
-      type: Object as PropType<EditRecordRow>
+      type: Object as PropType<EditRecordRow>,
+      default: () => ({} as EditRecordRow)
     },
     column: {
       type: Object as PropType<BasicColumn>,
@@ -430,7 +431,7 @@ export default defineComponent({
   },
   render() {
     return (
-      <div class={this.prefixCls}>
+      <div class={this.prefixCls} >
         <div
           v-show={!this.isEdit}
           class={{

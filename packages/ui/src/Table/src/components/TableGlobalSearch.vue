@@ -44,17 +44,18 @@ import { Checkbox, CheckboxGroup } from 'ant-design-vue'
 import { CheckOutlined } from '@ant-design/icons-vue'
 import { useTableContext } from '../hooks/useTableContext'
 import { getGlobalAdvancedType } from '../../../AdvancedSearch/'
+import { schemasAdvancedSearch } from '../types/table'
 
 export default defineComponent({
   props: {
     schemasAdvancedSearch: {
       default: () => [],
-      type: Array
+      type: Array as PropType<schemasAdvancedSearch[]>
     }
   },
   components: { CheckboxGroup, Checkbox, CheckOutlined },
   emits: ['ensure'],
-  setup(props, { emit }) {
+  setup(props) {
     const table = useTableContext()
     const advancedSearchRef = ref()
     const fieldList = ref([])

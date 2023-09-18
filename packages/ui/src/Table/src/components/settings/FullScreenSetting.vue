@@ -29,7 +29,7 @@ export default defineComponent({
   setup() {
     const table = useTableContext()
     const { t } = useI18n()
-    const { toggle, isFullscreen } = useFullscreen(table.wrapRef)
+    const { toggle, isFullscreen } = useFullscreen(table.wrapRef as any)
 
     return {
       toggle,

@@ -90,7 +90,7 @@ import { Empty, Table } from 'ant-design-vue'
 import { BasicForm, useForm } from '../../Form'
 import { PageWrapperFixedHeightKey } from '../../Page'
 import HeaderCell from './components/HeaderCell.vue'
-import { BasicButton } from '../../Button'
+// import { BasicButton } from '../../Button'
 import { InnerHandlers } from './types/table'
 import { usePagination } from './hooks/usePagination'
 import { useColumns } from './hooks/useColumns'
@@ -114,7 +114,7 @@ import { warn, isFunction } from '@shy-plugins/utils'
 import type {} from 'csstype'
 import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
 import TableGlobalSearch from './components/TableGlobalSearch.vue'
-import { onMounted } from 'vue'
+// import { onMounted } from 'vue'
 
 export default defineComponent({
   components: {
@@ -123,7 +123,6 @@ export default defineComponent({
     BasicForm,
     HeaderCell,
     Empty,
-    BasicButton,
     TableGlobalSearch
   },
   props: basicProps,

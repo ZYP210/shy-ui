@@ -140,7 +140,7 @@ export interface TableActionType {
   setAllTreeExpand?: any
   clearTreeExpand?: any
   setTreeExpand?: any
-  getVxeTableRef: any
+  getVxeTableRef?: any
   setSelectRowByKeys?: any
   openAdvancedSearch?: any
   closeAdvancedSearch?: any
