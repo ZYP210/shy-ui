@@ -5,6 +5,9 @@
       :isShowCancelButton="true"
       @click-return="handleClickReturn"
     >
+      <template #titleAfter>
+        <a-button>1</a-button>
+      </template>
       <template #beforeCancelButton>1</template>
       <template #afterCancelButton>1</template>
       <template #beforeConfirmButton>1</template>

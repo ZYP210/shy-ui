@@ -29,7 +29,6 @@ export default defineComponent({
     const handleClick = () => {
       emit('click-return')
     }
-    console.log(1)
 
     return () => (
       <div class={`${prefixCls}-wrapper`}>
@@ -39,7 +38,10 @@ export default defineComponent({
             onClick={handleClick}
           />
           <div class={`${prefixCls}-header-title`}>
-            {slots?.title ? slots?.title() : props.title}
+            <div style="margin-right:10px">
+              {slots?.title ? slots?.title() : props.title}
+            </div>
+            {slots?.titleAfter ? slots?.titleAfter() : null}
           </div>
         </div>
         <div class={`${prefixCls}-body`}>{slots.default?.()}</div>
