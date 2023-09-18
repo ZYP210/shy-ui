@@ -72,15 +72,15 @@ export default defineComponent({
                 {slots[`${item.field}Value`]
                   ? slots[`${item.field}Value`]()
                   : getProps.value.data[item.field]}
+                {item?.isCopy ? (
+                  <span
+                    style="cursor:pointer"
+                    onClick={() => handleClick(getProps.value.data[item.field])}
+                  >
+                    <CopyOutlined />
+                  </span>
+                ) : null}
               </span>
-              {item?.isCopy ? (
-                <span
-                  style="cursor:pointer"
-                  onClick={() => handleClick(getProps.value.data[item.field])}
-                >
-                  <CopyOutlined />
-                </span>
-              ) : null}
             </div>
           )
         }
