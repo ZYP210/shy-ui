@@ -1,7 +1,5 @@
 <script setup>
 import { AiMap } from '@shy-plugins/ai-map'
-
-console.log('1', AiMap)
 </script>
 
 <template>

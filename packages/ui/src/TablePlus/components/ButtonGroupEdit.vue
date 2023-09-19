@@ -1,12 +1,17 @@
 <template>
-  <TableAction :actions="getActions" :outside="true" />
+  <TableAction :actions="getActions" :show-count="4" :outside="true" />
 </template>
 
 <script setup lang="ts">
 import TableAction from '../../Table/src/components/TableAction.vue'
 import { computed } from 'vue'
 
-const emit = defineEmits(['updateStatusEdit', 'edit-ensure', 'edit-cancel'])
+const emit = defineEmits([
+  'updateStatusEdit',
+  'edit-ensure',
+  'edit-cancel',
+  'row-remove'
+])
 
 const props = defineProps({
   row: {
@@ -20,6 +25,13 @@ const getActions = computed(() => {
       label: '编辑',
       onClick: () => {
         emit('updateStatusEdit', true)
+      },
+      ifShow: props.row._isEdit === false
+    },
+    {
+      label: '删除',
+      onClick: () => {
+        emit('row-remove', true)
       },
       ifShow: props.row._isEdit === false
     },

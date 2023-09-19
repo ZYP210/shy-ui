@@ -9,6 +9,12 @@
           @reset="handleSearchFormSubmit"
           @advanced-change="() => {}"
         >
+          <template
+            #[replaceFormSlotKey(item)]="data"
+            v-for="item in getFormSlotKeys"
+          >
+            <slot :name="item" v-bind="data || {}"></slot>
+          </template>
         </BasicForm>
       </div>
     </template>
@@ -70,22 +76,33 @@
             <template #default="config">
               <slot :name="column.field" v-bind="config">
                 <template v-if="config.row._isEdit && column?.isEdit">
-                  <CellComponent
-                    v-bind="column?.editProps || {}"
-                    v-model:value="config.row[column.field]"
-                  />
+                  <template
+                    v-if="column?.editComponentProps?.component === 'Switch'"
+                  >
+                    <CellComponent
+                      v-bind="column?.editComponentProps || {}"
+                      v-model:checked="config.row[column.field]"
+                    />
+                  </template>
+
+                  <template v-else>
+                    <CellComponent
+                      v-bind="column?.editComponentProps || {}"
+                      v-model:value="config.row[column.field]"
+                    />
+                  </template>
                 </template>
 
                 <template v-else>
                   <span
                     v-if="
                       (column?.isEdit &&
-                        column?.editProps?.component === 'Select') ||
-                      column?.editProps?.component === 'ApiSelect'
+                        column?.editComponentProps?.component === 'Select') ||
+                      column?.editComponentProps?.component === 'ApiSelect'
                     "
                   >
                     <CellComponent
-                      v-bind="column?.editProps || {}"
+                      v-bind="column?.editComponentProps || {}"
                       v-model:value="config.row[column.field]"
                       :bordered="false"
                       :showArrow="false"
@@ -134,6 +151,7 @@
                       config.row._isEdit = isEdit
                     }
                   "
+                  @row-remove="handleRowRemove(config.row)"
                 />
               </slot>
             </div>
@@ -188,7 +206,8 @@ const emits = defineEmits([
   'register',
   'selection-change',
   'row-ensure',
-  'row-cancel'
+  'row-cancel',
+  'row-remove'
 ])
 
 type Props = {
@@ -302,6 +321,18 @@ const getFormConfig = computed(() => {
   }
 })
 
+const getFormSlotKeys = computed(() => {
+  const keys = Object.keys(slots)
+  return keys
+    .map((item) => (item.startsWith('form-') ? item : null))
+    .filter((item) => !!item) as string[]
+})
+
+function replaceFormSlotKey(key: string) {
+  if (!key) return ''
+  return key?.replace?.(/form-/, '') ?? ''
+}
+
 const [registerForm, formActions] = useForm()
 
 const formSearch = ref({})
@@ -322,16 +353,15 @@ const params = computed(() => {
 })
 
 // dataSource
-const { dataSource, setTableData, reload, getTableData } = useTableData(
-  getProps,
-  {
+const tableRef = ref()
+const { dataSource, setTableData, reload, getTableData, addTableData } =
+  useTableData(getProps, {
     setPage,
-    params
-  }
-)
+    params,
+    tableRef
+  })
 
 // checkbox radio
-const tableRef = ref()
 const handleCheckboxChange = () => {
   const records = tableRef.value.getCheckboxRecords()
   emits('selection-change', records)
@@ -363,6 +393,10 @@ const handleEditEnsure = (row) => {
 }
 const handleEditCancel = (row) => {
   emits('row-cancel', row)
+}
+
+const handleRowRemove = (row) => {
+  emits('row-remove', row)
 }
 
 const getTreeExpandRecords = () => {
@@ -428,7 +462,8 @@ const tableAction = {
   hideColumn,
   showColumn,
   resetColumn,
-  refreshColumn
+  refreshColumn,
+  addTableData
 }
 
 createTableContext({ ...tableAction })

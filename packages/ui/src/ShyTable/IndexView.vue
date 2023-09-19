@@ -146,7 +146,7 @@ const tableRef = ref<VxeTableInstance>()
 const checkboxChangeEvent = () => {
   const table = tableRef.value as VxeTableInstance
   const list = table.getCheckboxRecords()
-  console.log('list', list)
+
   emits('checkbox-change', list)
 }
 </script>

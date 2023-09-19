@@ -123,7 +123,6 @@ export function useForm(props?: Props): UseFormReturnType {
       const value = await form.validate(nameList)
       Object.keys(value).forEach((key) => {
         if (value[key] === undefined) {
-          console.log('key', key)
           value[key] = ''
         }
       })

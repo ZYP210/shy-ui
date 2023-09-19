@@ -1,6 +1,6 @@
 import { onMounted, ref } from 'vue'
 
-export const useTableData = (getProps, { setPage, params }) => {
+export const useTableData = (getProps, { setPage, params, tableRef }) => {
   const dataSource = ref([])
   const setTableData = (data) => {
     dataSource.value = data.map((item) => {
@@ -21,6 +21,15 @@ export const useTableData = (getProps, { setPage, params }) => {
     }
   }
 
+  const addTableData = (list = [{}]) => {
+    const temp = list.map((item) => {
+      item._isEdit = true
+      return item
+    })
+    dataSource.value.unshift(...temp)
+    tableRef.value.loadData(dataSource.value)
+  }
+
   onMounted(async () => {
     if (getProps.value.isImmediate) {
       await reload()
@@ -31,6 +40,7 @@ export const useTableData = (getProps, { setPage, params }) => {
     dataSource,
     setTableData,
     reload,
-    getTableData
+    getTableData,
+    addTableData
   }
 }

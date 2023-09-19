@@ -42,7 +42,6 @@ export const usePoint = (map) => {
     })
 
     MassMarkerLayer.value.on('click', (e) => {
-      console.log(onClick)
       onClick(e)
     })
 

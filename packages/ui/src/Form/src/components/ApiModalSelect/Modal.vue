@@ -48,7 +48,7 @@ const handleSelect = async (key) => {
   await tableRef.value.setProps({
     searchInfo: { [unref(getTableProps).searchKey]: key }
   })
-  console.log('unref(getTableProps).searchKey', unref(getTableProps).searchKey)
+
   tableRef.value.reload()
 }
 
