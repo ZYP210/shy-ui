@@ -9,6 +9,7 @@ export interface DescriptionProps {
   data: Recordable
   labelWidth?: number
   isShowColon?: boolean
+  labelAlign?: string
 }
 
 export interface DescInstance {

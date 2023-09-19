@@ -57,5 +57,9 @@ const schema: DescItem[] = [
   }
 ]
 
-const [register] = useDescription({ data: mockData, schema })
+const [register] = useDescription({
+  data: mockData,
+  schema,
+  labelAlign: 'left'
+})
 </script>

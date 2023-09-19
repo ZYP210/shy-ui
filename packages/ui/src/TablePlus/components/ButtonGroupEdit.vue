@@ -30,8 +30,11 @@ const getActions = computed(() => {
     },
     {
       label: '删除',
-      onClick: () => {
-        emit('row-remove', true)
+      popConfirm: {
+        title: '是否确认删除',
+        confirm: () => {
+          emit('row-remove', true)
+        }
       },
       ifShow: props.row._isEdit === false
     },

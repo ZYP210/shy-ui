@@ -7,6 +7,7 @@ export interface Schema {
     span: number
   }
   component?: 'Divider' | 'Group'
+  isCopy?: boolean
 }
 export const basicColProps = 24
 
@@ -14,6 +15,10 @@ export const basicProps = {
   schema: {
     type: Array as PropType<Schema[]>,
     default: () => [{ label: 'a', field: 'a' }]
+  },
+  labelAlign: {
+    type: String,
+    default: () => 'right'
   },
   labelWidth: {
     type: Number as PropType<number | string>,

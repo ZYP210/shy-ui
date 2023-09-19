@@ -58,7 +58,8 @@ export default defineComponent({
             >
               <span
                 style={{
-                  width: `${getProps.value.labelWidth}px`
+                  width: `${getProps.value.labelWidth}px`,
+                  textAlign: getProps.value.labelAlign
                 }}
                 class={`${prefixCls}-label`}
               >
@@ -74,10 +75,12 @@ export default defineComponent({
                   : getProps.value.data[item.field]}
                 {item?.isCopy ? (
                   <span
-                    style="cursor:pointer"
+                    style="cursor:pointer;margin-left:5px"
                     onClick={() => handleClick(getProps.value.data[item.field])}
                   >
-                    <CopyOutlined />
+                    <CopyOutlined
+                      style={{ color: '#458ef9', marginLeft: '5px' }}
+                    />
                   </span>
                 ) : null}
               </span>
