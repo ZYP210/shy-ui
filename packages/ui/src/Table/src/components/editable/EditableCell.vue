@@ -35,6 +35,7 @@ import {
 import { createPlaceholderMessage } from './helper'
 import { pick, set } from 'lodash-es'
 import { Spin } from 'ant-design-vue'
+import { watch } from 'vue'
 
 export default defineComponent({
   name: 'EditableCell',
@@ -49,6 +50,9 @@ export default defineComponent({
     clickOutside
   },
   props: {
+    zzz: {
+      type: Object
+    },
     value: {
       type: [String, Number, Boolean, Object] as PropType<
         string | number | boolean | Recordable
@@ -377,32 +381,36 @@ export default defineComponent({
       }
     }
 
-    if (props.record) {
-      initCbs('submitCbs', handleSubmit)
-      initCbs('validCbs', handleSubmiRule)
-      initCbs('cancelCbs', handleCancel)
+    const editHandler = () => {
+      if (props.record) {
+        initCbs('submitCbs', handleSubmit)
+        initCbs('validCbs', handleSubmiRule)
+        initCbs('cancelCbs', handleCancel)
 
-      if (props.column.dataIndex) {
-        if (!props.record.editValueRefs) props.record.editValueRefs = {}
-        props.record.editValueRefs[props.column.dataIndex as any] =
-          currentValueRef
-      }
-      /* eslint-disable  */
-      props.record.onCancelEdit = () => {
-        isArray(props.record?.cancelCbs) &&
-          props.record?.cancelCbs.forEach((fn) => fn())
-      }
-      /* eslint-disable */
-      props.record.onSubmitEdit = async () => {
-        if (isArray(props.record?.submitCbs)) {
-          if (!props.record?.onValid?.()) return
-          const submitFns = props.record?.submitCbs || []
-          submitFns.forEach((fn) => fn(false, false))
-          table.emit?.('edit-row-end')
-          return true
+        if (props.column.dataIndex) {
+          if (!props.record.editValueRefs) props.record.editValueRefs = {}
+          props.record.editValueRefs[props.column.dataIndex as any] =
+            currentValueRef
+        }
+        /* eslint-disable  */
+        props.record.onCancelEdit = () => {
+          isArray(props.record?.cancelCbs) &&
+            props.record?.cancelCbs.forEach((fn) => fn())
+        }
+        /* eslint-disable */
+        props.record.onSubmitEdit = async () => {
+          if (isArray(props.record?.submitCbs)) {
+            if (!props.record?.onValid?.()) return
+            const submitFns = props.record?.submitCbs || []
+            submitFns.forEach((fn) => fn(false, false))
+            table.emit?.('edit-row-end')
+            return true
+          }
         }
       }
     }
+
+    editHandler()
 
     return {
       isEdit,
@@ -426,12 +434,13 @@ export default defineComponent({
       getValues,
       handleEnter,
       handleSubmitClick,
-      spinning
+      spinning,
+      editHandler
     }
   },
   render() {
     return (
-      <div class={this.prefixCls} >
+      <div class={this.prefixCls}>
         <div
           v-show={!this.isEdit}
           class={{

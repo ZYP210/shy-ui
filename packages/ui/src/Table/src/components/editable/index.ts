@@ -1,6 +1,6 @@
 import type { BasicColumn } from '../../types/table'
 
-import { h, Ref } from 'vue'
+import { h, Ref, ref } from 'vue'
 
 import EditableCell from './EditableCell.vue'
 import { isArray } from '@shy-plugins/utils'
@@ -13,6 +13,8 @@ interface Params {
 
 export function renderEditCell(column: BasicColumn) {
   return ({ text: value, record, index }: Params) => {
+    const editableCellRef = ref()
+
     record.onValid = async () => {
       if (isArray(record?.validCbs)) {
         const validFns = (record?.validCbs || []).map((fn) => fn())
@@ -24,6 +26,7 @@ export function renderEditCell(column: BasicColumn) {
     }
 
     record.onEdit = async (edit: boolean, submit = false) => {
+      editableCellRef.value?.editHandler()
       if (!submit) {
         record.editable = edit
       }
@@ -45,6 +48,7 @@ export function renderEditCell(column: BasicColumn) {
     }
 
     return h(EditableCell, {
+      ref: editableCellRef,
       value,
       record,
       column,

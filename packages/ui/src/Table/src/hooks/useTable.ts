@@ -76,104 +76,104 @@ export function useTable(tableProps?: Props): [
     getForm: () => FormActionType
   } = {
     reload: async (opt?: FetchParams) => {
-      return await getTableInstance().reload(opt)
+      return await getTableInstance()?.reload(opt)
     },
     setProps: (props: Partial<BasicTableProps>) => {
-      getTableInstance().setProps(props)
+      getTableInstance()?.setProps(props)
     },
     redoHeight: () => {
-      getTableInstance().redoHeight()
+      getTableInstance()?.redoHeight()
     },
     setSelectedRows: (rows: Recordable[]) => {
-      return toRaw(getTableInstance().setSelectedRows(rows))
+      return toRaw(getTableInstance()?.setSelectedRows(rows))
     },
     setLoading: (loading: boolean) => {
-      getTableInstance().setLoading(loading)
+      getTableInstance()?.setLoading(loading)
     },
     getDataSource: () => {
-      return getTableInstance().getDataSource()
+      return getTableInstance()?.getDataSource()
     },
     getRawDataSource: () => {
-      return getTableInstance().getRawDataSource()
+      return getTableInstance()?.getRawDataSource()
     },
     getColumns: ({ ignoreIndex = false }: { ignoreIndex?: boolean } = {}) => {
-      const columns = getTableInstance().getColumns({ ignoreIndex }) || []
+      const columns = getTableInstance()?.getColumns({ ignoreIndex }) || []
       return toRaw(columns)
     },
     setColumns: (columns: BasicColumn[]) => {
-      getTableInstance().setColumns(columns)
+      getTableInstance()?.setColumns(columns)
     },
     setTableData: (values: any[]) => {
-      return getTableInstance().setTableData(values)
+      return getTableInstance()?.setTableData(values)
     },
     setPagination: (info: Partial<PaginationProps>) => {
-      return getTableInstance().setPagination(info)
+      return getTableInstance()?.setPagination(info)
     },
     deleteSelectRowByKey: (key: string) => {
-      getTableInstance().deleteSelectRowByKey(key)
+      getTableInstance()?.deleteSelectRowByKey(key)
     },
     getSelectRowKeys: () => {
-      return toRaw(getTableInstance().getSelectRowKeys())
+      return toRaw(getTableInstance()?.getSelectRowKeys())
     },
     getSelectRows: () => {
-      return toRaw(getTableInstance().getSelectRows())
+      return toRaw(getTableInstance()?.getSelectRows())
     },
     clearSelectedRowKeys: () => {
-      getTableInstance().clearSelectedRowKeys()
+      getTableInstance()?.clearSelectedRowKeys()
     },
     setSelectedRowKeys: (keys: string[] | number[]) => {
-      getTableInstance().setSelectedRowKeys(keys)
+      getTableInstance()?.setSelectedRowKeys(keys)
     },
     getPaginationRef: () => {
-      return getTableInstance().getPaginationRef()
+      return getTableInstance()?.getPaginationRef()
     },
     getSize: () => {
-      return toRaw(getTableInstance().getSize())
+      return toRaw(getTableInstance()?.getSize())
     },
     updateTableData: (index: number, key: string, value: any) => {
-      return getTableInstance().updateTableData(index, key, value)
+      return getTableInstance()?.updateTableData(index, key, value)
     },
     deleteTableDataRecord: (rowKey: string | number | string[] | number[]) => {
-      return getTableInstance().deleteTableDataRecord(rowKey)
+      return getTableInstance()?.deleteTableDataRecord(rowKey)
     },
     insertTableDataRecord: (
       record: Recordable | Recordable[],
       index?: number
     ) => {
-      return getTableInstance().insertTableDataRecord(record, index)
+      return getTableInstance()?.insertTableDataRecord(record, index)
     },
     updateTableDataRecord: (rowKey: string | number, record: Recordable) => {
-      return getTableInstance().updateTableDataRecord(rowKey, record)
+      return getTableInstance()?.updateTableDataRecord(rowKey, record)
     },
     findTableDataRecord: (rowKey: string | number) => {
-      return getTableInstance().findTableDataRecord(rowKey)
+      return getTableInstance()?.findTableDataRecord(rowKey)
     },
     getRowSelection: () => {
-      return toRaw(getTableInstance().getRowSelection())
+      return toRaw(getTableInstance()?.getRowSelection())
     },
     getCacheColumns: () => {
-      return toRaw(getTableInstance().getCacheColumns())
+      return toRaw(getTableInstance()?.getCacheColumns())
     },
     getForm: () => {
       return unref(formRef) as unknown as FormActionType
     },
     setShowPagination: async (show: boolean) => {
-      getTableInstance().setShowPagination(show)
+      getTableInstance()?.setShowPagination(show)
     },
     getShowPagination: () => {
-      return toRaw(getTableInstance().getShowPagination())
+      return toRaw(getTableInstance()?.getShowPagination())
     },
     expandAll: () => {
-      getTableInstance().expandAll()
+      getTableInstance()?.expandAll()
     },
     expandRows: (keys: string[]) => {
-      getTableInstance().expandRows(keys)
+      getTableInstance()?.expandRows(keys)
     },
     collapseAll: () => {
-      getTableInstance().collapseAll()
+      getTableInstance()?.collapseAll()
     },
     scrollTo: (pos: string) => {
-      getTableInstance().scrollTo(pos)
+      getTableInstance()?.scrollTo(pos)
     }
   }
 

@@ -29,7 +29,7 @@
                   style="width: 120px"
                   :options="getSearchType(schema?.field)"
                   :defaultValue="getSearchType(schema?.field)[0]?.value || ''"
-                  @change="handlSetValNull(schema)"
+                  @change="handleSetValNull(schema)"
                 ></Select>
               </FormItem>
               <FormItem
@@ -130,7 +130,7 @@
                 </template>
               </FormItem>
               <div
-                v-if="schemasCurrent.length !== 1"
+                v-if="schemasCurrent?.length !== 1"
                 style="margin-left: 8px; cursor: pointer; position: relative"
                 class="shy-ui-advanced-minus-icon"
               >
@@ -219,18 +219,18 @@ const isStringSearch = (item: any) => {
 
 const dicColumn = computed(() => {
   const temp = []
-  props.schemas.forEach((schama) => {
-    if (!schama.advancedShow) return
+  props.schemas.forEach((schema) => {
+    if (!schema.advancedShow) return
     const flag = schemasCurrent.find((item) => {
-      return item.field === schama.field
+      return item.field === schema.field
     })
 
     temp.push({
-      label: schama.label,
-      value: schama.field,
+      label: schema.label,
+      value: schema.field,
       disabled: !!flag,
-      type: schama.type,
-      component: schama.component
+      type: schema.type,
+      component: schema.component
     })
   })
 
@@ -240,7 +240,7 @@ const dicColumn = computed(() => {
 if (props.schemas.length !== 0) {
   const firstSchema = dicColumn.value[0]
   const op = isStringSearch(firstSchema) ? 'ct' : 'eq'
-  schemasCurrent.push({ field: firstSchema.value, op })
+  schemasCurrent.push({ field: firstSchema?.value, op })
 }
 
 const handleAdd = () => {
@@ -272,7 +272,7 @@ const handleFieldChange = (schema) => {
   schema.op = isStringSearch(column) ? 'ct' : 'eq'
 }
 
-const handlSetValNull = (schema) => {
+const handleSetValNull = (schema) => {
   if (['nl', 'nn'].includes(schema.op)) {
     schema[schema.field] = ''
   }
@@ -351,7 +351,7 @@ const getSearchFrom = () => {
 
 const resetFields = () => {
   schemasCurrent.splice(0, schemasCurrent.length)
-  schemasCurrent.push({ field: dicColumn.value[0].value })
+  schemasCurrent.push({ field: dicColumn.value[0]?.value })
   formRef.value.resetFields()
 }
 

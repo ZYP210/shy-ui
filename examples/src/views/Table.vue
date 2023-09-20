@@ -6,16 +6,32 @@
         title="基础示例"
         titleHelpMessage="温馨提醒"
         @register="register"
+        @selection-change="handleSelectChange"
       >
         <template #toolbar>
           <a-button type="primary"> 操作按钮 </a-button>
         </template>
 
-        <template #bodyCell="{ column }">
+        <template #bodyCell="{ column, record }">
           <template v-if="column.dataIndex === 'action'">
             <TableAction
-              :showCount="1"
-              :actions="[{ label: '编辑' }, { label: '编辑' }]"
+              :actions="[
+                {
+                  label: '编辑',
+                  onClick: handleEdit.bind(null, record)
+                },
+                {
+                  label: '保存',
+                  onClick: handleSave.bind(null, record)
+                },
+                {
+                  label: '取消',
+                  popConfirm: {
+                    title: '是否取消编辑',
+                    confirm: handleCancel.bind(null, record)
+                  }
+                }
+              ]"
             />
           </template>
         </template>
@@ -25,7 +41,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useTable, TableAction } from '3h1-ui'
+import { reject } from 'lodash-es'
+import { BasicTable, useTable, TableAction } from '3h1-ui'
+import { useMessage } from '@shy-plugins/use'
+import { cloneDeep } from 'lodash-es'
+const { createMessage } = useMessage()
+
 const schemas = [
   { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
   { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
@@ -34,113 +55,154 @@ const schemas = [
 ]
 const columns = [
   {
-    title: '年龄',
-    dataIndex: 'age',
-    advancedType: 'string',
-    component: 'ApiSelect',
-    globalShow: false,
-    componentProps: {
-      api: () => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve([
-              { label: '测试', value: 1 },
-              { label: '测试', value: 2 },
-              { label: '测试', value: 3 }
-            ])
-          }, 1000)
-        })
-      }
+    title: '产地范围',
+    dataIndex: 'rangePlace',
+    editRow: true,
+    editComponent: 'Select',
+    editComponentProps: {
+      options: [
+        { label: 1, value: 2 },
+        { label: 2, value: 3 }
+      ],
+      getPopupContainer: () => document.body
     }
-    // advancedShow: false
   },
   {
-    title: '姓名',
-    dataIndex: 'name',
-    advancedType: 'string',
-    component: 'ApiSelect'
+    title: '产地',
+    editRow: true,
+    dataIndex: 'place',
+    editComponent: 'Input',
+    customRender: ({ record }) => {
+      return record
+    }
   },
 
   {
-    title: '生日',
-    dataIndex: 'birth',
-    advancedType: 'date'
-  },
-  {
-    title: '爱好',
-    dataIndex: 'fav',
-    advancedType: 'select',
-    component: 'ApiSelect',
-    componentProps: {
-      api: () => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve([
-              { label: '测试', value: 1 },
-              { label: '测试', value: 2 },
-              { label: '测试', value: 3 }
-            ])
-          }, 1000)
-        })
-      }
+    title: '创建/更新时间',
+    dataIndex: 'createTime',
+    customRender: ({ text }) => {
+      return text
     }
-  },
-  {
-    title: '字符串1',
-    dataIndex: 'string1',
-    advancedType: 'string',
-    component: 'select'
-  },
-  { title: '字符串2', dataIndex: 'string2' },
-  { title: '字符串3', dataIndex: 'string3' }
+  }
 ]
-const [register] = useTable({
+const [
+  register,
+  {
+    reload,
+    setProps,
+    getDataSource,
+    setTableData /*getSelectRows, clearSelectedRowKeys*/
+  }
+] = useTable({
   api: () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([
-          { name: 1 },
-          { sex: 2 },
-          { age: 3 },
-          { name: 1 },
-          { sex: 2 },
-          { age: 3 },
-          { name: 1 },
-          { sex: 2 },
-          { age: 3 },
-          { name: 1 },
-          { sex: 2 },
-          { age: 3 },
-          { name: 1 },
-          { sex: 2 },
-          { age: 3 },
-          { name: 1 },
-          { sex: 2 },
-          { age: 3 }
-        ])
-      }, 1000)
+    return new Promise((reject) => {
+      reject([
+        {
+          id: '1704062192584458242',
+          status: 0,
+          rangePlace: '国产',
+          place: '上海',
+          createTime: 1695115061000
+        },
+        {
+          id: '1703938810197053441',
+          status: 0,
+          rangePlace: '国产',
+          place: '衡水',
+          createTime: 1695085645000
+        },
+        {
+          id: '1703680571205570561',
+          status: 0,
+          rangePlace: '国产',
+          place: '河北',
+          createTime: 1695024076000
+        },
+        {
+          id: '1703680511969415170',
+          status: 0,
+          rangePlace: '国产',
+          place: '重庆',
+          createTime: 1695024062000
+        },
+        {
+          id: '1703667719287689218',
+          status: 0,
+          rangePlace: '进口',
+          place: '新西兰',
+          createTime: 1695021012000
+        }
+      ])
     })
   },
-  beforeFetch: (params) => {
-    console.log(params)
-    return params
-  },
-  searchInfo: { a: 1 },
-  columns: columns as any,
+  rowKey: 'id',
+  columns,
+  rowSelection: { type: 'checkbox' },
+  clickToRowSelect: false,
   useSearchForm: true,
-  useAdvancedSearch: true,
-  showIndexColumn: true,
-  // pagination: true,
   actionColumn: {
-    title: '操作',
-    dataIndex: 'action',
-    align: 'center'
-  },
-  rowSelection: {},
-  formConfig: {
-    schemas
+    width: 150,
+    dataIndex: 'action'
   }
 })
+
+function handleSelectChange({ rows }) {
+  rows.forEach((item) => {
+    if (isMoreDisabled.submit && item.id.toString().indexOf('noSave') !== -1)
+      isMoreDisabled.submit = false
+    if (isMoreDisabled.open && item.status === -1) isMoreDisabled.open = false
+    if (isMoreDisabled.stop && item.status === 1) isMoreDisabled.stop = false
+    if (isMoreDisabled.del && item.status === 0) isMoreDisabled.del = false
+  })
+  const isFalse = Object.values(isMoreDisabled).filter((e) => {
+    return !e
+  })
+  if (isFalse.length > 1) {
+    Object.assign(isMoreDisabled, {
+      submit: true,
+      open: true,
+      stop: true,
+      del: true
+    })
+  }
+}
+
+const currentEditKeyRef = ref('')
+
+//保存&修改
+async function handleSave(record) {
+  const valid = await record.onValid?.()
+  if (!valid) {
+    createMessage.error('填写必填内容')
+    return
+  }
+  try {
+    const data = cloneDeep(record.editValueRefs)
+    if (record.id.toString().indexOf('noSave') !== -1) {
+      // await saveApi([data])
+    } else {
+      // await updateApi({ ...data, id: record.id })
+    }
+    const pass = await record.onEdit?.(false, true)
+    if (pass) {
+      // currentEditKeyRef.value = ''
+    }
+    createMessage.success('数据已保存')
+    reload()
+  } catch (error) {
+    createMessage.error('保存失败')
+  }
+}
+function handleEdit(record) {
+  currentEditKeyRef.value = record.key
+  record.onEdit?.(true)
+}
+function handleCancel(record) {
+  currentEditKeyRef.value = ''
+  record.onEdit?.(false, false)
+  if (record.id.toString().indexOf('noSave') == -1) return
+  getDataSource().shift()
+}
 </script>
 
 <style scoped>
