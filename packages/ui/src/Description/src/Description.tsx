@@ -26,7 +26,7 @@ export default defineComponent({
     const copyToClipboard = async (text) => {
       navigator.permissions
         .query({ name: 'clipboard-write' })
-        .then((permissionStatus) => {
+        .then(async (permissionStatus) => {
           if (permissionStatus.state === 'granted') {
             // 在这里调用您的复制代码
             try {
