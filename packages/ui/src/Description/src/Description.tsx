@@ -24,12 +24,19 @@ export default defineComponent({
     }
 
     const copyToClipboard = async (text) => {
-      try {
-        // 将文本内容复制到系统剪贴板中
-        await navigator.clipboard.writeText(text)
-      } catch (err) {
-        console.error('Failed to copy text: ', err)
-      }
+      navigator.permissions
+        .query({ name: 'clipboard-write' })
+        .then((permissionStatus) => {
+          if (permissionStatus.state === 'granted') {
+            // 在这里调用您的复制代码
+            try {
+              // 将文本内容复制到系统剪贴板中
+              await navigator.clipboard.writeText(text)
+            } catch (err) {
+              console.error('Failed to copy text: ', err)
+            }
+          }
+        })
     }
 
     const handleClick = (value) => {

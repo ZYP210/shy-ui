@@ -34,7 +34,8 @@ const schema: DescItem[] = [
   {
     field: 'nickName',
     label: '昵称',
-    colProps: { span: 12 }
+    colProps: { span: 12 },
+    isCopy: true
   },
   {
     label: '用户信息',
