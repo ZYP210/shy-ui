@@ -80,6 +80,8 @@
                     v-if="column?.editComponentProps?.component === 'Switch'"
                   >
                     <CellComponent
+                      :checkedValue="1"
+                      :unCheckedValue="0"
                       v-bind="column?.editComponentProps || {}"
                       v-model:checked="config.row[column.field]"
                     />
@@ -109,6 +111,15 @@
                       :open="false"
                       :popoverVisible="false"
                     />
+                  </span>
+
+                  <span
+                    v-else-if="
+                      column?.isEdit &&
+                      column?.editComponentProps?.component === 'Switch'
+                    "
+                  >
+                    <span>{{ getSwitchShowText(column, config.row) }}</span>
                   </span>
                   <span v-else>
                     {{ config.row[column.field] }}
@@ -360,6 +371,23 @@ const { dataSource, setTableData, reload, getTableData, addTableData } =
     params,
     tableRef
   })
+
+const getSwitchShowText = (column: any, row: any) => {
+  const {
+    unCheckedChildren = '否',
+    unCheckedValue = 0,
+    checkedChildren = '是',
+    checkedValue = 1
+  } = column?.editComponentProps || {}
+
+  if (row[column.field] == checkedValue) {
+    return checkedChildren
+  } else if (row[column.field] == unCheckedValue) {
+    return unCheckedChildren
+  } else {
+    return ''
+  }
+}
 
 // checkbox radio
 const handleCheckboxChange = () => {

@@ -46,7 +46,7 @@ const getList = (params = {}) => {
     list.push({
       id: i,
       a: 1,
-      b: 2,
+      b: 1,
       c: 3,
       d: 4
     })
