@@ -150,7 +150,7 @@
           v-bind="getProps.actionColumn"
         >
           <template #default="config">
-            <div class="flex items-center justify-center">
+            <div class="flex items-center">
               <slot name="action" v-bind="config">
                 <ButtonGroupEdit
                   v-if="getProps.isUseDefaultEditAction"
@@ -163,6 +163,7 @@
                     }
                   "
                   @row-remove="handleRowRemove(config.row)"
+                  :style="{ width: '100%' }"
                 />
               </slot>
             </div>
@@ -301,6 +302,11 @@ const getProps = computed(() => {
 const setProps = (props) => {
   innerProps.value = deepMergeObjects(innerProps.value, props)
 }
+
+// TODO
+// const getActionColumnAlign = computed(() => {
+//   return getProps?.actionColumn?.align ?? 'left'
+// })
 
 const attrs = useAttrs()
 const slots = useSlots()

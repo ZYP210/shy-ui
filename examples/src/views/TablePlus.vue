@@ -10,8 +10,8 @@
         <a-button>1</a-button>
       </template>
 
-      <template #action>
-        <TableAction :actions="actions" />
+      <template #action="{ row, column }">
+        <TableAction :actions="getActions(row)" :show-count="4" />
       </template>
     </TablePlus>
   </div>
@@ -23,20 +23,25 @@ import { onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
 import { Button } from 'ant-design-vue'
 
-const actions = [
-  {
-    label: '修改'
-  },
-  {
-    label: '查看'
-  },
-  {
-    label: '新增'
-  },
-  {
-    label: '测试'
-  }
-]
+const getActions = (row) => {
+  // console.log('column', column)
+
+  return [
+    {
+      label: '修改',
+      ifShow: row.id === 1
+    },
+    {
+      label: '查看'
+    },
+    {
+      label: '新增'
+    },
+    {
+      label: '测试'
+    }
+  ]
+}
 
 const columns = [
   {
@@ -126,7 +131,8 @@ const [
   columnSeq: { fixed: 'left' },
   isImmediate: false,
   rowConfig: { keyField: 'id' },
-  treeConfig: { expandRowKeys: [0] }
+  treeConfig: { expandRowKeys: [0] },
+  actionColumn: { width: 200 }
 })
 
 onMounted(async () => {
