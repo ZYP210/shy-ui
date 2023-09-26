@@ -31,14 +31,23 @@ const getActions = (row) => {
       label: '修改',
       ifShow: row.id === 1
     },
+    // {
+    //   label: '查看'
+    // },
+    // {
+    //   label: '新增'
+    // },
+    // {
+    //   label: '测试'
+    // },
     {
-      label: '查看'
-    },
-    {
-      label: '新增'
-    },
-    {
-      label: '测试'
+      auth: 'alarm_delete',
+      label: '删除',
+
+      popConfirm: {
+        title: '是否确认删除',
+        confirm: () => {}
+      }
     }
   ]
 }
