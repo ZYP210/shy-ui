@@ -1,31 +1,18 @@
+// tsconfig.json
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "useDefineForClassFields": true,
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "strict": false,
-    "declaration": true,
-    "jsx": "preserve",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "lib": ["ESNext", "DOM"],
-    "skipLibCheck": true,
-    "noEmit": true,
-    "baseUrl": "./",
-    "paths": {
-      "/@/*": ["src/*"]
-    },
-    "composite": false
-  },
+    "target": "es2022",
+    "moduleResolution": "node",
 
-  "include": [
-    "types/**/*.ts",
-    "packages/**/*.ts",
-    "packages/**/*.d.ts",
-    "packages/**/*.tsx",
-    "packages/**/*.vue"
-  ],
-  "exclude": ["node_modules", "dist", "**/*.js"]
+    // vite 会读取到这个 tsconfig 文件(位于工作空间根目录)，按照其推荐配置这两个选项
+    // https://cn.vitejs.dev/guide/features.html#typescript-compiler-options
+    "isolatedModules": true,
+    "useDefineForClassFields": true
+  },
+  "files": [],
+  "references": [
+    // 聚合 ts project
+    { "path": "./tsconfig.ui.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
 }

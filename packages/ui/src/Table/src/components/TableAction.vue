@@ -113,8 +113,7 @@ const getActions = computed<Array<PopconfirmProps & ActionItem>>(() => {
     .map((action) => {
       const { popConfirm } = action
       return {
-        getPopupContainer: () =>
-          unref((table as any)?.wrapRef.value) ?? document.body,
+        getPopupContainer: () => document.body,
         type: 'link',
         size: 'small',
         ...action,

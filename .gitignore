@@ -10,3 +10,4 @@ examples/dist
 */**/auto-imports.d.ts
 */**/components.d.ts
 
+dist

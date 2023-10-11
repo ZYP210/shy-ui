@@ -23,16 +23,16 @@ export default defineComponent({
       innerProps.value = { ...innerProps.value, ...props }
     }
 
-    const copyToClipboard = async (text) => {
-      try {
-        // 将文本内容复制到系统剪贴板中
-        await navigator.clipboard.writeText(text)
-      } catch (err) {
-        console.error('Failed to copy text: ', err)
-      }
+    function copyToClipboard(text: string) {
+      const textarea = document.createElement('textarea')
+      textarea.value = text
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
     }
 
-    const handleClick = (value) => {
+    const handleClick = (value: string) => {
       copyToClipboard(value)
     }
 

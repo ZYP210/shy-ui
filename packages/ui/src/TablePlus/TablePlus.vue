@@ -80,6 +80,8 @@
                     v-if="column?.editComponentProps?.component === 'Switch'"
                   >
                     <CellComponent
+                      :checkedValue="1"
+                      :unCheckedValue="0"
                       v-bind="column?.editComponentProps || {}"
                       v-model:checked="config.row[column.field]"
                     />
@@ -110,6 +112,15 @@
                       :popoverVisible="false"
                     />
                   </span>
+
+                  <span
+                    v-else-if="
+                      column?.isEdit &&
+                      column?.editComponentProps?.component === 'Switch'
+                    "
+                  >
+                    <span>{{ getSwitchShowText(column, config.row) }}</span>
+                  </span>
                   <span v-else>
                     {{ config.row[column.field] }}
                   </span>
@@ -139,7 +150,7 @@
           v-bind="getProps.actionColumn"
         >
           <template #default="config">
-            <div class="flex items-center justify-center">
+            <div class="flex items-center">
               <slot name="action" v-bind="config">
                 <ButtonGroupEdit
                   v-if="getProps.isUseDefaultEditAction"
@@ -152,6 +163,7 @@
                     }
                   "
                   @row-remove="handleRowRemove(config.row)"
+                  :style="{ width: '100%' }"
                 />
               </slot>
             </div>
@@ -291,6 +303,11 @@ const setProps = (props) => {
   innerProps.value = deepMergeObjects(innerProps.value, props)
 }
 
+// TODO
+// const getActionColumnAlign = computed(() => {
+//   return getProps?.actionColumn?.align ?? 'left'
+// })
+
 const attrs = useAttrs()
 const slots = useSlots()
 
@@ -360,6 +377,23 @@ const { dataSource, setTableData, reload, getTableData, addTableData } =
     params,
     tableRef
   })
+
+const getSwitchShowText = (column: any, row: any) => {
+  const {
+    unCheckedChildren = '否',
+    unCheckedValue = 0,
+    checkedChildren = '是',
+    checkedValue = 1
+  } = column?.editComponentProps || {}
+
+  if (row[column.field] == checkedValue) {
+    return checkedChildren
+  } else if (row[column.field] == unCheckedValue) {
+    return unCheckedChildren
+  } else {
+    return ''
+  }
+}
 
 // checkbox radio
 const handleCheckboxChange = () => {

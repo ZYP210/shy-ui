@@ -27,6 +27,6 @@ declare type ComponentRef<T extends HTMLElement = HTMLDivElement> =
 
 declare type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>
 
-declare module 'vue-types' {
-  // 这里添加 vue-types 模块的类型声明
-}
+// declare module 'vue-types' {
+//   // 这里添加 vue-types 模块的类型声明
+// }
