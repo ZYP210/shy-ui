@@ -137,6 +137,7 @@ const [
   },
   rowKey: 'id',
   columns,
+  pagination: { pageSize: 1 },
   rowSelection: { type: 'checkbox' },
   clickToRowSelect: false,
   useSearchForm: true,
@@ -146,26 +147,7 @@ const [
   }
 })
 
-function handleSelectChange({ rows }) {
-  rows.forEach((item) => {
-    if (isMoreDisabled.submit && item.id.toString().indexOf('noSave') !== -1)
-      isMoreDisabled.submit = false
-    if (isMoreDisabled.open && item.status === -1) isMoreDisabled.open = false
-    if (isMoreDisabled.stop && item.status === 1) isMoreDisabled.stop = false
-    if (isMoreDisabled.del && item.status === 0) isMoreDisabled.del = false
-  })
-  const isFalse = Object.values(isMoreDisabled).filter((e) => {
-    return !e
-  })
-  if (isFalse.length > 1) {
-    Object.assign(isMoreDisabled, {
-      submit: true,
-      open: true,
-      stop: true,
-      del: true
-    })
-  }
-}
+function handleSelectChange({ rows }) {}
 
 const currentEditKeyRef = ref('')
 
@@ -178,6 +160,8 @@ async function handleSave(record) {
   }
   try {
     const data = cloneDeep(record.editValueRefs)
+    console.log('1111', record.editValueRefs)
+
     if (record.id.toString().indexOf('noSave') !== -1) {
       // await saveApi([data])
     } else {
@@ -185,10 +169,9 @@ async function handleSave(record) {
     }
     const pass = await record.onEdit?.(false, true)
     if (pass) {
-      // currentEditKeyRef.value = ''
+      currentEditKeyRef.value = ''
     }
     createMessage.success('数据已保存')
-    reload()
   } catch (error) {
     createMessage.error('保存失败')
   }

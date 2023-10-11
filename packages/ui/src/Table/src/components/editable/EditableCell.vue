@@ -18,7 +18,6 @@ import {
 } from '@ant-design/icons-vue'
 import { CellComponent } from './CellComponent'
 
-// import { useDesign } from '/@/hooks/web/useDesign'
 import { useTableContext } from '../../hooks/useTableContext'
 
 import { clickOutside } from '../../../../directives'
@@ -35,7 +34,6 @@ import {
 import { createPlaceholderMessage } from './helper'
 import { pick, set } from 'lodash-es'
 import { Spin } from 'ant-design-vue'
-import { watch } from 'vue'
 
 export default defineComponent({
   name: 'EditableCell',
@@ -50,9 +48,6 @@ export default defineComponent({
     clickOutside
   },
   props: {
-    zzz: {
-      type: Object
-    },
     value: {
       type: [String, Number, Boolean, Object] as PropType<
         string | number | boolean | Recordable
@@ -75,7 +70,7 @@ export default defineComponent({
     const elRef = ref()
     const ruleVisible = ref(false)
     const ruleMessage = ref('')
-    const optionsRef = ref<LabelValueOptions>([])
+    const optionsRef = ref([])
     const currentValueRef = ref<any>(props.value)
     const defaultValueRef = ref<any>(props.value)
     const spinning = ref<boolean>(false)
@@ -107,21 +102,24 @@ export default defineComponent({
           : !!val
         : val
 
-      let compProps = props.column?.editComponentProps ?? {}
+      let compProps = props.column?.editComponentProps ?? ({} as any)
       const { record, column, index } = props
 
       if (isFunction(compProps)) {
         compProps = compProps({ text: val, record, column, index }) ?? {}
       }
+
+      // 用临时变量存储 onChange方法 用于 handleChange方法 获取，并删除原始onChange, 防止存在两个 onChange
+      compProps.onChangeTemp = compProps.onChange
+      delete compProps.onChange
+
       const component = unref(getComponent)
-      const apiSelectProps: Recordable = {}
+      const apiSelectProps: Record<string, any> = {}
       if (component === 'ApiSelect') {
         apiSelectProps.cache = true
       }
       upEditDynamicDisabled(record, column, value)
       return {
-        showCount: true,
-        maxlength: 100,
         size: 'small',
         getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
         placeholder: createPlaceholderMessage(unref(getComponent)),
@@ -164,7 +162,7 @@ export default defineComponent({
         return value
       }
 
-      const options: LabelValueOptions =
+      const options =
         unref(getComponentProps)?.options ?? (unref(optionsRef) || [])
       const option = options.find((item) => `${item.value}` === `${value}`)
 
@@ -217,15 +215,15 @@ export default defineComponent({
       if (!e) {
         currentValueRef.value = e
       } else if (component === 'Checkbox') {
-        currentValueRef.value = (e as ChangeEvent).target.checked
+        currentValueRef.value = e.target.checked
       } else if (component === 'Switch') {
         currentValueRef.value = e
       } else if (e?.target && Reflect.has(e.target, 'value')) {
-        currentValueRef.value = (e as ChangeEvent).target.value
+        currentValueRef.value = e.target.value
       } else if (isString(e) || isBoolean(e) || isNumber(e) || isArray(e)) {
         currentValueRef.value = e
       }
-      const onChange = unref(getComponentProps)?.onChange
+      const onChange = unref(getComponentProps)?.onChangeTemp
       if (onChange && isFunction(onChange)) onChange(...arguments)
 
       table.emit?.('edit-change', {
@@ -233,10 +231,10 @@ export default defineComponent({
         value: unref(currentValueRef),
         record: toRaw(props.record)
       })
-      handleSubmiRule()
+      handleSubmitRule()
     }
 
-    async function handleSubmiRule() {
+    async function handleSubmitRule() {
       const { column, record } = props
       const { editRule } = column
       const currentValue = unref(currentValueRef)
@@ -249,8 +247,8 @@ export default defineComponent({
           return false
         }
         if (isFunction(editRule)) {
-          const res = await editRule(currentValue, record as Recordable)
-          if (!!res) {
+          const res = await editRule(currentValue, record)
+          if (res) {
             ruleMessage.value = res
             ruleVisible.value = true
             return false
@@ -266,7 +264,7 @@ export default defineComponent({
 
     async function handleSubmit(needEmit = true, valid = true) {
       if (valid) {
-        const isPass = await handleSubmiRule()
+        const isPass = await handleSubmitRule()
         if (!isPass) return false
       }
 
@@ -350,7 +348,7 @@ export default defineComponent({
     }
 
     // only ApiSelect or TreeSelect
-    function handleOptionsChange(options: LabelValueOptions) {
+    function handleOptionsChange(options) {
       const { replaceFields } = unref(getComponentProps)
       const component = unref(getComponent)
       if (component === 'ApiTreeSelect') {
@@ -359,20 +357,20 @@ export default defineComponent({
           value = 'value',
           children = 'children'
         } = replaceFields || {}
-        let listOptions: Recordable[] = treeToList(options, { children })
+        let listOptions = treeToList(options, { children })
         listOptions = listOptions.map((item) => {
           return {
             label: item[title],
             value: item[value]
           }
         })
-        optionsRef.value = listOptions as LabelValueOptions
+        optionsRef.value = listOptions
       } else {
         optionsRef.value = options
       }
     }
 
-    function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle: Fn) {
+    function initCbs(cbs: 'submitCbs' | 'validCbs' | 'cancelCbs', handle) {
       if (props.record) {
         /* eslint-disable  */
         isArray(props.record[cbs])
@@ -381,36 +379,32 @@ export default defineComponent({
       }
     }
 
-    const editHandler = () => {
-      if (props.record) {
-        initCbs('submitCbs', handleSubmit)
-        initCbs('validCbs', handleSubmiRule)
-        initCbs('cancelCbs', handleCancel)
-
-        if (props.column.dataIndex) {
-          if (!props.record.editValueRefs) props.record.editValueRefs = {}
-          props.record.editValueRefs[props.column.dataIndex as any] =
-            currentValueRef
-        }
-        /* eslint-disable  */
-        props.record.onCancelEdit = () => {
-          isArray(props.record?.cancelCbs) &&
-            props.record?.cancelCbs.forEach((fn) => fn())
-        }
-        /* eslint-disable */
-        props.record.onSubmitEdit = async () => {
-          if (isArray(props.record?.submitCbs)) {
-            if (!props.record?.onValid?.()) return
-            const submitFns = props.record?.submitCbs || []
-            submitFns.forEach((fn) => fn(false, false))
-            table.emit?.('edit-row-end')
-            return true
-          }
+    if (props.record) {
+      initCbs('submitCbs', handleSubmit)
+      initCbs('validCbs', handleSubmitRule)
+      initCbs('cancelCbs', handleCancel)
+      if (props.column.dataIndex) {
+        if (!props.record.editValueRefs) props.record.editValueRefs = {}
+        props.record.editValueRefs[props.column.dataIndex as any] =
+          currentValueRef
+      }
+      /* eslint-disable  */
+      props.record.onCancelEdit = () => {
+        isArray(props.record?.cancelCbs) &&
+          props.record?.cancelCbs.forEach((fn) => fn())
+      }
+      /* eslint-disable */
+      props.record.onSubmitEdit = async () => {
+        if (isArray(props.record?.submitCbs)) {
+          if (!props.record?.onValid?.()) return
+          const submitFns = props.record?.submitCbs || []
+          submitFns.forEach((fn) => fn(false, false))
+          table.emit?.('edit-row-end')
+          return true
         }
       }
+      console.log(1111, props.record)
     }
-
-    editHandler()
 
     return {
       isEdit,
@@ -434,8 +428,7 @@ export default defineComponent({
       getValues,
       handleEnter,
       handleSubmitClick,
-      spinning,
-      editHandler
+      spinning
     }
   },
   render() {
@@ -460,9 +453,7 @@ export default defineComponent({
                   column: this.column,
                   index: this.index
                 })
-              : this.getValues
-              ? this.getValues
-              : '\u00A0'}
+              : this.getValues ?? '\u00A0'}
           </div>
           {!this.column.editRow && (
             <FormOutlined class={`${this.prefixCls}__normal-icon`} />
@@ -544,6 +535,7 @@ export default defineComponent({
 }
 .@{prefix-cls} {
   position: relative;
+  min-height: 24px; //设置高度让其始终可被hover
 
   &__wrapper {
     display: flex;
