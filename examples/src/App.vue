@@ -1,6 +1,6 @@
 <template>
   <div class="controlBox" :style="controlBoxStyle">
-    <div class="controlBox-btn" @click="showMenu">
+    <div class="controlBox-btn" @click="handleShowOrHide">
       {{ !flag ? 'MENU' : '⨉' }}
     </div>
     <div class="controlBox-title" :style="{ opacity: flag ? 1 : 0 }">
@@ -8,15 +8,18 @@
     </div>
     <div class="controlBox-inner" :style="{ opacity: flag ? 1 : 0 }">
       <div class="controlBox-inner-item" v-for="item in URL" :key="item">
-        <router-link :to="`/${item}`">{{ item }}</router-link>
+        <router-link @click="handleShowOrHide" :to="`/${item}`">
+          {{ item }}
+        </router-link>
       </div>
     </div>
   </div>
 
   <router-view></router-view>
 </template>
+
 <script lang="ts" setup>
-const URL = [
+const URL: string[] = [
   'AiMap',
   'AdvancedSearch',
   'BasicHelp',
@@ -56,20 +59,20 @@ const URL = [
   'Tree',
   'UserSelectTest'
 ]
-const controlBoxStyle = ref({
+const controlBoxStyle = reactive({
   top: '30px',
   width: '58px',
   height: '30px',
   borderRadius: '10%',
   padding: '0'
 })
-const flag = ref(false)
-const showMenu = () => {
-  controlBoxStyle.value.top = flag.value ? '30px' : '50%'
-  controlBoxStyle.value.width = flag.value ? '58px' : '1000px'
-  controlBoxStyle.value.height = flag.value ? '30px' : '600px'
-  controlBoxStyle.value.borderRadius = flag.value ? '10%' : '15px'
-  controlBoxStyle.value.padding = flag.value ? '0' : '15px'
+const flag = ref<boolean>(false)
+const handleShowOrHide = () => {
+  controlBoxStyle.top = flag.value ? '30px' : '50%'
+  controlBoxStyle.width = flag.value ? '58px' : '1000px'
+  controlBoxStyle.height = flag.value ? '30px' : '600px'
+  controlBoxStyle.borderRadius = flag.value ? '10%' : '15px'
+  controlBoxStyle.padding = flag.value ? '0' : '15px'
   flag.value = !flag.value
 }
 </script>
