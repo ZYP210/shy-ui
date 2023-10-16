@@ -114,10 +114,10 @@ export function useTable(tableProps?: Props): [
       getTableInstance().deleteSelectRowByKey(key)
     },
     getSelectRowKeys: () => {
-      return toRaw(getTableInstance().getSelectRowKeys())
+      return toRaw(getTableInstance()?.getSelectRowKeys())
     },
     getSelectRows: () => {
-      return toRaw(getTableInstance().getSelectRows())
+      return toRaw(getTableInstance()?.getSelectRows())
     },
     clearSelectedRowKeys: () => {
       getTableInstance().clearSelectedRowKeys()
