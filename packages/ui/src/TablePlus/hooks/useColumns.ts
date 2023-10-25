@@ -3,9 +3,17 @@ import { basicColumn } from '../props'
 import { deepMergeObjects } from '@shy-plugins/utils'
 
 export const useColumns = (getProps, tableRef) => {
+  // TODO 单层循环
   const getColumnsRef = computed(() => {
     return getProps.value.columns.map((column) => {
-      return deepMergeObjects(basicColumn, column)
+      if (column?.children) {
+        column.children = column.children.map((item) => {
+          return deepMergeObjects(basicColumn, item)
+        })
+        return column
+      } else {
+        return deepMergeObjects(basicColumn, column)
+      }
     })
   })
 

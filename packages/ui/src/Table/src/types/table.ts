@@ -156,6 +156,12 @@ export interface TableActionType {
   getGlobalSearchValue?: any
   setCurSearchParams?: any
   getCurSearchParams?: any
+  getProps?: any
+  hideColumn?: any
+  showColumn?: any
+  resetColumn?: any
+  refreshColumn?: any
+  addTableData?: any
 }
 
 export interface FetchSetting {

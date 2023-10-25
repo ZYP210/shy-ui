@@ -3,6 +3,7 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
+    "noImplicitAny": false,
     "jsx": "preserve",
     // 组件库依赖浏览器的 DOM API
     "lib": ["ESNext", "DOM", "DOM.Iterable"],

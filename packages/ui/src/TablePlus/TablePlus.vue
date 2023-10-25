@@ -68,8 +68,86 @@
           v-bind="getProps.columnSeq"
         />
 
-        <template v-for="(column, index) in getColumnsRef" :key="index">
+        <template v-for="column in getColumnsRef" :key="column.field">
+          <VxeColgroup v-if="column?.groupName" :title="column.groupName">
+            <template v-for="c in column.children" :key="c.field">
+              <vxe-column
+                title="a"
+                :field="c.field"
+                :edit-render="c?.editRender || undefined"
+              >
+                <template #default="config">
+                  <slot :name="c.field" v-bind="config">
+                    <template v-if="config.row._isEdit && column?.isEdit">
+                      <template
+                        v-if="c?.editComponentProps?.component === 'Switch'"
+                      >
+                        <CellComponent
+                          :checkedValue="1"
+                          :unCheckedValue="0"
+                          v-bind="c?.editComponentProps || {}"
+                          v-model:checked="config.row[c.field]"
+                        />
+                      </template>
+
+                      <template v-else>
+                        <CellComponent
+                          v-bind="c?.editComponentProps || {}"
+                          v-model:value="config.row[c.field]"
+                        />
+                      </template>
+                    </template>
+
+                    <template v-else>
+                      <span
+                        v-if="
+                          (c?.isEdit &&
+                            c?.editComponentProps?.component === 'Select') ||
+                          c?.editComponentProps?.component === 'ApiSelect'
+                        "
+                      >
+                        <CellComponent
+                          v-bind="c?.editComponentProps || {}"
+                          v-model:value="config.row[c.field]"
+                          :bordered="false"
+                          :showArrow="false"
+                          :open="false"
+                          :popoverVisible="false"
+                        />
+                      </span>
+
+                      <span
+                        v-else-if="
+                          c?.isEdit &&
+                          c?.editComponentProps?.component === 'Switch'
+                        "
+                      >
+                        <span>{{ getSwitchShowText(c, config.row) }}</span>
+                      </span>
+                      <span v-else>
+                        {{ config.row[c.field] }}
+                      </span>
+                    </template>
+                  </slot>
+                </template>
+
+                <template #header>
+                  <slot :name="`${c.field}Header`" v-bind="{ c }">
+                    <div style="display: flex; justify-content: space-between">
+                      <div>{{ c.title }}</div>
+                      <IconSort
+                        v-if="column?.sortable"
+                        @change="(type) => handleSortChange(column.field, type)"
+                      />
+                    </div>
+                  </slot>
+                </template>
+              </vxe-column>
+            </template>
+          </VxeColgroup>
+
           <vxe-column
+            v-else
             v-bind="column"
             :edit-render="column?.editRender || undefined"
           >
@@ -190,29 +268,25 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  useSlots,
-  useAttrs,
-  computed,
-  ref,
-  toRaw,
-  watchEffect,
-  unref
-} from 'vue'
+import { useSlots, useAttrs, computed, ref, toRaw, unref } from 'vue'
 import { BasicForm, useForm } from '../Form'
-import { VxeColumnProps, VxeTable, VxeColumn } from 'vxe-table'
-import { basicColumn, basicProps } from './props'
+import { VxeColumnProps, VxeTable, VxeColumn, VxeColgroup } from 'vxe-table'
+import { basicProps } from './props'
 import { Pagination } from 'ant-design-vue'
 import { usePagination } from './hooks/usePagination'
 import { useTableData } from './hooks/useTableData'
 import { CellComponent } from './components/editable/CellComponent'
 import ButtonGroupEdit from './components/ButtonGroupEdit.vue'
-import { createTableContext } from '../Table/src/hooks/useTableContext'
+import {
+  createTableContext,
+  Instance
+} from '../Table/src/hooks/useTableContext'
 import TableSetting from './components/settings/index.vue'
 import { deepMergeObjects } from '@shy-plugins/utils'
 import { useColumns } from './hooks/useColumns'
 import { useSort } from './hooks/useSort'
 import IconSort from './components/Icon/Sort.vue'
+import { watchEffect } from 'vue'
 
 const emits = defineEmits([
   'register',
@@ -454,8 +528,7 @@ const getVxeTableRef = () => {
 }
 
 const setSelectRowByKeys = (keys, checked) => {
-  const records = tableRef.value.getTableData()
-  const rows = []
+  const rows: any = []
   keys.forEach((key) => {
     const row = tableRef.value.getRowById(key)
     rows.push(row)
@@ -472,8 +545,12 @@ const {
   refreshColumn
 } = useColumns(getProps, tableRef)
 
+watchEffect(() => {
+  console.log('getColumnsRef', getColumnsRef.value)
+})
+
 // register
-const tableAction = {
+const tableAction: Instance = {
   reload,
   setTableData,
   setProps,
@@ -498,7 +575,7 @@ const tableAction = {
   resetColumn,
   refreshColumn,
   addTableData
-}
+} as Instance
 
 createTableContext({ ...tableAction })
 
