@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col">
-    <div class="h-80px flex-none"></div>
     <div class="flex-auto p-10px">
       <BasicTable
         title="基础示例"
