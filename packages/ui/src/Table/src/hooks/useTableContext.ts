@@ -4,7 +4,7 @@ import { provide, inject, ComputedRef } from 'vue'
 
 const key = Symbol('basic-table')
 
-type Instance = TableActionType & {
+export type Instance = TableActionType & {
   wrapRef: Ref<Nullable<HTMLElement>>
   getBindValues: ComputedRef<Recordable>
 }
@@ -18,6 +18,5 @@ export function createTableContext(instance: Instance) {
 }
 
 export function useTableContext(): RetInstance {
-  // console.log(key)
   return inject(key) as RetInstance
 }

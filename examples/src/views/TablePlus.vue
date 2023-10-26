@@ -61,14 +61,21 @@ const columns = [
   },
   {
     title: 'b',
-    field: 'b',
-    width: 300
+    field: 'b'
   },
-  { title: 'c', field: 'c', width: 300 },
-  { title: 'd', field: 'd', width: 300 },
-  { title: 'e', field: 'e', width: 300 },
-  { title: 'f', field: 'f', width: 300 },
-  { title: 'g', field: 'g', width: 300 }
+  // { title: 'c', field: 'c', width: 300 },
+  // { title: 'd', field: 'd', width: 300 },
+  // { title: 'e', field: 'e', width: 300 },
+  // { title: 'f', field: 'f', width: 300 },
+  // { title: 'g', field: 'g', width: 300 },
+  {
+    groupName: 'aa',
+    children: [
+      { title: '测试a', field: 'a-a', width: 100 },
+      { title: '测试b', field: 'a-b', width: 100 },
+      { title: '测试c', field: 'a-c', width: 100 }
+    ]
+  }
 ]
 
 const getList = (params = {}) => {

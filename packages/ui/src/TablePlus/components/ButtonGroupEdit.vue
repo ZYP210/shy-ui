@@ -26,7 +26,7 @@ const getActions = computed(() => {
       onClick: () => {
         emit('updateStatusEdit', true)
       },
-      ifShow: props.row._isEdit === false
+      ifShow: props?.row?._isEdit === false
     },
     {
       label: '删除',
