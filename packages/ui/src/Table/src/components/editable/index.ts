@@ -11,10 +11,11 @@ interface Params {
   index: number
 }
 
-let rowIndex = 0
-const isRefresh = ref(false)
+const rowIndex = ref(0)
 export function hasRefresh(isHover: boolean) {
-  isRefresh.value = isHover
+  if (isHover) {
+    rowIndex.value++
+  }
 }
 
 export function renderEditCell(column: BasicColumn) {
@@ -50,14 +51,12 @@ export function renderEditCell(column: BasicColumn) {
       return true
     }
 
-    unref(isRefresh) && rowIndex++
-
     return h(EditableCell, {
       value,
       record,
       column,
       index,
-      key: rowIndex
+      key: unref(rowIndex)
     })
   }
 }

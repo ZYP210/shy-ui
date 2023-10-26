@@ -46,12 +46,12 @@ import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
 const { createMessage } = useMessage()
 
-const schemas = [
-  { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
-  { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
-  { label: 'a', field: 'c', component: 'Input', colProps: { span: 8 } },
-  { label: 'a', field: 'd', component: 'Input', colProps: { span: 8 } }
-]
+// const schemas = [
+//   { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
+//   { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
+//   { label: 'a', field: 'c', component: 'Input', colProps: { span: 8 } },
+//   { label: 'a', field: 'd', component: 'Input', colProps: { span: 8 } }
+// ]
 const columns = [
   {
     title: '产地范围',
@@ -79,9 +79,37 @@ const columns = [
   {
     title: '创建/更新时间',
     dataIndex: 'createTime',
+    editRow: true,
     customRender: ({ text }) => {
       return text
     }
+  },
+  {
+    title: '厂家名称',
+    dataIndex: 'name',
+    editRow: true,
+    editRule: true
+  },
+  {
+    title: '电话',
+    dataIndex: 'phone',
+    editRow: true,
+    editRule: (text) => {
+      return new Promise((resolve) => {
+        if (!text) resolve('错误')
+        else resolve('')
+      })
+    }
+  },
+  {
+    title: '地址',
+    dataIndex: 'address',
+    editRow: true
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
   }
 ]
 const [
@@ -101,35 +129,54 @@ const [
           status: 0,
           rangePlace: '国产',
           place: '上海',
-          createTime: 1695115061000
+          createTime: 1695115061000,
+          name: 'zzz',
+          address: '1111',
+          remark: '999'
         },
         {
           id: '1703938810197053441',
           status: 0,
           rangePlace: '国产',
           place: '衡水',
-          createTime: 1695085645000
+          createTime: 1695085645000,
+          name: 'zzz',
+          phone: '1212121',
+          address: '1111',
+          remark: '999'
         },
         {
           id: '1703680571205570561',
           status: 0,
           rangePlace: '国产',
           place: '河北',
-          createTime: 1695024076000
+          createTime: 1695024076000,
+          name: 'zzz',
+          phone: '1212121',
+          address: '1111',
+          remark: '999'
         },
         {
           id: '1703680511969415170',
           status: 0,
           rangePlace: '国产',
           place: '重庆',
-          createTime: 1695024062000
+          createTime: 1695024062000,
+          name: 'zzz',
+          phone: '1212121',
+          address: '1111',
+          remark: '999'
         },
         {
           id: '1703667719287689218',
           status: 0,
           rangePlace: '进口',
           place: '新西兰',
-          createTime: 1695021012000
+          createTime: 1695021012000,
+          name: 'zzz',
+          phone: '1212121',
+          address: '1111',
+          remark: '999'
         }
       ])
     })
@@ -159,7 +206,6 @@ async function handleSave(record) {
   }
   try {
     const data = cloneDeep(record.editValueRefs)
-    console.log('1111', record.editValueRefs)
 
     if (record.id.toString().indexOf('noSave') !== -1) {
       // await saveApi([data])
@@ -171,6 +217,7 @@ async function handleSave(record) {
       currentEditKeyRef.value = ''
     }
     createMessage.success('数据已保存')
+    reload()
   } catch (error) {
     createMessage.error('保存失败')
   }
