@@ -1,6 +1,6 @@
 import type { BasicColumn } from '../../types/table'
 
-import { h, Ref, toRaw } from 'vue'
+import { h, Ref, toRaw, ref, unref } from 'vue'
 
 import EditableCell from './EditableCell.vue'
 import { isArray } from '@shy-plugins/utils'
@@ -9,6 +9,12 @@ interface Params {
   text: string
   record: Recordable
   index: number
+}
+
+let rowIndex = 0
+const isRefresh = ref(false)
+export function hasRefresh(isHover: boolean) {
+  isRefresh.value = isHover
 }
 
 export function renderEditCell(column: BasicColumn) {
@@ -44,11 +50,14 @@ export function renderEditCell(column: BasicColumn) {
       return true
     }
 
+    unref(isRefresh) && rowIndex++
+
     return h(EditableCell, {
       value,
       record,
       column,
-      index
+      index,
+      key: rowIndex
     })
   }
 }

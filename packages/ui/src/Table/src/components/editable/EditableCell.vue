@@ -403,7 +403,6 @@ export default defineComponent({
           return true
         }
       }
-      console.log(1111, props.record)
     }
 
     return {
