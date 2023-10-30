@@ -214,6 +214,9 @@ export default defineComponent({
 
     async function handleChange(e: any) {
       const component = unref(getComponent)
+      if (component === 'Input' && e.type === 'change') {
+        // console.log(e.target.value)
+      }
       if (!e) {
         currentValueRef.value = e
       } else if (component === 'Checkbox') {

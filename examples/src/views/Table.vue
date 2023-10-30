@@ -16,13 +16,22 @@
             <TableAction
               :actions="[
                 {
-                  label: '编辑',
+                  label: '编辑1',
                   onClick: handleEdit.bind(null, record)
                 },
                 {
                   label: '保存',
                   onClick: handleSave.bind(null, record)
                 },
+                {
+                  label: '编辑2',
+                  onClick: handleEdit.bind(null, record)
+                },
+                {
+                  label: '编辑3',
+                  onClick: handleEdit.bind(null, record)
+                },
+
                 {
                   label: '取消',
                   popConfirm: {
@@ -92,7 +101,8 @@ const columns = [
   },
   {
     title: '电话',
-    dataIndex: 'phone'
+    dataIndex: 'phone',
+    editRow: true
   },
   {
     title: '地址',
@@ -180,7 +190,7 @@ const [
   clickToRowSelect: false,
   useSearchForm: true,
   actionColumn: {
-    width: 150,
+    width: 250,
     dataIndex: 'action'
   }
 })

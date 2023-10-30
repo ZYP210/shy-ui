@@ -102,13 +102,19 @@ function isIfShow(action: ActionItem): boolean {
 }
 
 const getActions = computed<Array<PopconfirmProps & ActionItem>>(() => {
+  const cacheActions = []
   return (toRaw(props.actions) || [])
-    .filter((action, index) => {
-      if (props.actions?.length === props.showCount) {
-        return isIfShow(action)
-      } else {
-        return isIfShow(action) && index <= props.showCount - 2
-      }
+    .filter((action, _) => {
+      if (isIfShow(action) && cacheActions.length < props.showCount) {
+        cacheActions.push(action)
+        return true
+      } else return false
+      // return isIfShow(action) && cacheActions.length <= props.showCount
+      // if (props.actions?.length === props.showCount) {
+      //   return isIfShow(action)
+      // } else {
+      //   return isIfShow(action) && index <= props.showCount - 2
+      // }
     })
     .map((action) => {
       const { popConfirm } = action
@@ -126,12 +132,19 @@ const getActions = computed<Array<PopconfirmProps & ActionItem>>(() => {
 })
 
 const getDropdownList = computed((): any[] => {
+  const cacheActions = []
+
   const list = (toRaw(props.actions) || []).filter((action, index) => {
-    if (props.actions.length === props.showCount) {
+    if (isIfShow(action) && cacheActions.length < props.showCount) {
+      cacheActions.push(action)
       return false
-    } else {
-      return isIfShow(action) && index >= props.showCount - 1
-    }
+    } else if (isIfShow(action)) return true
+    // return isIfShow(action) && cacheActions.length > props.showCount
+    // if (props.actions.length === props.showCount) {
+    //   return false
+    // } else {
+    //   return isIfShow(action) && index >= props.showCount - 1
+    // }
   })
   return list.map((action, index) => {
     const { label, popConfirm } = action

@@ -1,6 +1,6 @@
 import type { BasicColumn } from '../../types/table'
 
-import { h, Ref, toRaw, ref, unref } from 'vue'
+import { h, Ref, toRaw } from 'vue'
 
 import EditableCell from './EditableCell.vue'
 import { isArray } from '@shy-plugins/utils'
