@@ -1,9 +1,9 @@
 {
   "name": "3h1-ui",
-  "version": "2.14.1",
+  "version": "2.14.4",
   "description": "",
-  "module": "",
-  "main": "index.ts",
+  "module": "es/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "major": "npm version major",
@@ -11,7 +11,8 @@
     "patch": "npm version patch",
     "deploy": "pnpm -v",
     "build": "export NODE_OPTIONS=--max_old_space_size=8096&&vite build",
-    "build:less": "esno build/buildLess"
+    "build:less": "esno build/buildLess",
+    "update:version": "tsx ../../scripts/update-version.ts"
   },
   "files": [
     "es",

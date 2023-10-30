@@ -92,14 +92,7 @@ const columns = [
   },
   {
     title: '电话',
-    dataIndex: 'phone',
-    editRow: true,
-    editRule: (text) => {
-      return new Promise((resolve) => {
-        if (!text) resolve('错误')
-        else resolve('')
-      })
-    }
+    dataIndex: 'phone'
   },
   {
     title: '地址',
@@ -183,7 +176,6 @@ const [
   },
   rowKey: 'id',
   columns,
-  pagination: { pageSize: 1 },
   rowSelection: { type: 'checkbox' },
   clickToRowSelect: false,
   useSearchForm: true,
