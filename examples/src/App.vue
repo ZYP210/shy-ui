@@ -1,16 +1,28 @@
 <template>
   <div class="controlBox" :style="controlBoxStyle">
-    <div class="controlBox-btn" @click="handleShowOrHide">
+    <div class="controlBox-btn" @click="handleSwitch">
       {{ !flag ? 'MENU' : '⨉' }}
     </div>
     <div class="controlBox-title" :style="{ opacity: flag ? 1 : 0 }">
       菜单导航
     </div>
     <div class="controlBox-inner" :style="{ opacity: flag ? 1 : 0 }">
-      <div class="controlBox-inner-item" v-for="item in URL" :key="item">
-        <router-link @click="handleShowOrHide" :to="`/${item}`">
-          {{ item }}
-        </router-link>
+      <div
+        class="controlBox-inner-item"
+        v-for="(item, index) in URLData"
+        :key="index"
+      >
+        <div class="controlBox-inner-item-title">{{ item.title }}</div>
+        <div class="controlBox-inner-item-link">
+          <router-link
+            @click="handleSwitch"
+            :to="`/${e}`"
+            v-for="(e, i) in item.urlAry"
+            :key="i"
+          >
+            {{ e }}
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -19,59 +31,21 @@
 </template>
 
 <script lang="ts" setup>
-const URL: string[] = [
-  'AiMap',
-  'AdvancedSearch',
-  'BasicHelp',
-  'BasicTitle',
-  'ButtonView',
-  'ClickOutSide',
-  'CodeEditor',
-  'CollapseContainer',
-  'CountDown',
-  'CountDownInput',
-  'CountTo',
-  'Cropper',
-  'Description',
-  'Drawer',
-  'FlowChart',
-  'Form',
-  'Gantt',
-  'IconView',
-  'LazyContainer',
-  'Loading',
-  'ModalView',
-  'Page',
-  'Process',
-  'Qrcode',
-  'ScrollBar',
-  'ScrollContainer',
-  'SearchTest',
-  'StrengthMeter',
-  'Table',
-  'TableAction',
-  'TableAnt',
-  'TableChildren',
-  'TablePlus',
-  'TablePlusEdit',
-  'Tinymce',
-  'Transition',
-  'Tree',
-  'UserSelectTest'
-]
+import { URLData } from '/@/database/menu.data'
+
 const controlBoxStyle = reactive({
   top: '30px',
   width: '58px',
   height: '30px',
-  borderRadius: '10%',
+  borderRadius: '5px',
   padding: '0'
 })
 const flag = ref<boolean>(false)
-const handleShowOrHide = () => {
+const handleSwitch = () => {
   controlBoxStyle.top = flag.value ? '30px' : '50%'
   controlBoxStyle.width = flag.value ? '58px' : '1000px'
   controlBoxStyle.height = flag.value ? '30px' : '600px'
-  controlBoxStyle.borderRadius = flag.value ? '10%' : '15px'
+  controlBoxStyle.borderRadius = flag.value ? '5px' : '15px'
   controlBoxStyle.padding = flag.value ? '0' : '15px'
   flag.value = !flag.value
 }
@@ -90,7 +64,7 @@ body {
   z-index: 999;
   background-color: rgba(230, 230, 230, 0.4);
   backdrop-filter: blur(8px);
-  border: 1px solid #eee;
+  border: 1px solid #cbcbcb;
   box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
   transition: all 0.8s cubic-bezier(0.25, 0.5, 0.1, 1);
   overflow: hidden;
@@ -119,14 +93,28 @@ body {
   &-inner {
     width: 970px;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
     transition: all 2s cubic-bezier(0.25, 0.5, 0.1, 1);
 
     &-item {
       text-align: center;
-      width: 150px;
       margin-bottom: 20px;
+
+      &-title {
+        color: #838383;
+        font-size: 12px;
+        margin: 10px 0;
+      }
+
+      &-link {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+
+        & > a {
+          margin: 5px 15px;
+        }
+      }
     }
   }
 }
