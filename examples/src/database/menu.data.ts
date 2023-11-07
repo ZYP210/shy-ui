@@ -35,12 +35,20 @@ export const URLData: MenuList[] = [
   },
   {
     title: '基础组件',
-    urlAry: ['BasicHelp', 'BasicTitle', 'ButtonView', 'IconView', 'Loading']
+    urlAry: [
+      'BasicHelp',
+      'BasicTitle',
+      'ButtonView',
+      'IconView',
+      'Loading',
+      'Label'
+    ]
   },
   {
     title: '布局',
     urlAry: [
       'Page',
+      'BasicContainer',
       'ClickOutSide',
       'CollapseContainer',
       'LazyContainer',

@@ -188,6 +188,15 @@ const [
   columns,
   rowSelection: { type: 'checkbox' },
   clickToRowSelect: false,
+  formConfig: {
+    schemas: [
+      {
+        label: '',
+        field: 'demo',
+        component: 'Input'
+      }
+    ]
+  },
   useSearchForm: true,
   actionColumn: {
     width: 250,
