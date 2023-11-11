@@ -28,7 +28,10 @@ const columns = [
     field: 'b',
     isEdit: true,
     editComponentProps: {
-      component: 'Switch'
+      component: 'ApiSelect',
+      api: () => {
+        return [{ label: 'a', value: 'a' }]
+      }
     }
   },
   { title: 'd', field: 'd', isEdit: true },
