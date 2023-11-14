@@ -49,7 +49,6 @@
 </template>
 
 <script lang="ts" setup>
-import { reject } from 'lodash-es'
 import { BasicTable, useTable, TableAction } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
@@ -124,7 +123,8 @@ const [
     setTableData /*getSelectRows, clearSelectedRowKeys*/
   }
 ] = useTable({
-  api: () => {
+  api: (params) => {
+    console.log('params', params)
     return new Promise((reject) => {
       reject([
         {

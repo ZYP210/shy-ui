@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev:example": "node ./release.js&&pnpm -C examples dev",
-    "publish:ui": "node ./release.js",
+    "publish:ui": "bash ./scripts/publish.sh",
     "update:version": "tsx scripts/update-version.ts",
     "build:utils": "pnpm -C packages/utils build"
   },

@@ -71,9 +71,13 @@ const columns = [
   {
     groupName: 'aa',
     children: [
-      { title: '测试a', field: 'a-a', width: 100 },
+      { title: '测试a', field: 'a-a', width: 100, sortable: true },
       { title: '测试b', field: 'a-b', width: 100 },
-      { title: '测试c', field: 'a-c', width: 100 }
+      { title: '测试c', field: 'a-c', width: 100 },
+      {
+        groupName: 'cc',
+        children: [{ title: '测试a', field: 'a-a', width: 100, sortable: true }]
+      }
     ]
   }
 ]
