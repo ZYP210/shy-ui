@@ -14,7 +14,7 @@ export const basicColProps = 24
 export const basicProps = {
   schema: {
     type: Array as PropType<Schema[]>,
-    default: () => [{ label: 'a', field: 'a' }]
+    default: () => []
   },
   labelAlign: {
     type: String,

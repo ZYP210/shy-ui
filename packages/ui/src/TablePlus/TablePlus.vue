@@ -199,7 +199,7 @@
 <script lang="ts" setup>
 import { useSlots, useAttrs, computed, ref, toRaw, unref } from 'vue'
 import { BasicForm, useForm } from '../Form'
-import { VxeColumnProps, VxeTable, VxeColumn, VxeColgroup } from 'vxe-table'
+import { VxeColumnProps, VxeTable, VxeColumn } from 'vxe-table'
 import { basicProps } from './props'
 import { Pagination } from 'ant-design-vue'
 import { usePagination } from './hooks/usePagination'
@@ -477,7 +477,7 @@ const {
 } = useColumns(getProps, tableRef)
 
 watchEffect(() => {
-  console.log('getColumnsRef', getColumnsRef.value)
+  // console.log('getColumnsRef', getColumnsRef.value)
 })
 
 // register

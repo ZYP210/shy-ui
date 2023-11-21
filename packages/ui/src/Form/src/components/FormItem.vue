@@ -48,7 +48,8 @@ export default defineComponent({
       type: Boolean
     }
   },
-  setup(props, { slots }) {
+  emits: ['clearCurrValidate'],
+  setup(props, { slots, emit }) {
     const { schema, formProps } = toRefs(props) as {
       schema: Ref<FormSchema>
       formProps: Ref<FormProps>
@@ -129,7 +130,7 @@ export default defineComponent({
         disabled = dynamicDisabled
       }
       if (isFunction(dynamicDisabled)) {
-        disabled = dynamicDisabled(unref(getValues))
+        disabled = dynamicDisabled(unref(getValues), globDisabled)
       }
       return disabled
     })
@@ -171,7 +172,7 @@ export default defineComponent({
         dynamicRules,
         required
       } = props.schema
-
+      emit('clearCurrValidate', unref(getValues).field)
       if (isFunction(dynamicRules)) {
         return dynamicRules(unref(getValues)) as ValidationRule[]
       }
@@ -290,7 +291,7 @@ export default defineComponent({
           const value = target ? (isCheck ? target.checked : target.value) : e
           props.setFormModel(field, value)
           //修改下拉选数据没有同步开始shy-edit
-          if (propsData[eventKey] && args.length > 1) {
+          if (propsData[eventKey] && args.length >= 1) {
             propsData[eventKey](...args)
           }
           //修改下拉选数据没有同步结束

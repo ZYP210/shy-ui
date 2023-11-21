@@ -60,12 +60,13 @@ const { createMessage } = useMessage()
 //   { label: 'a', field: 'c', component: 'Input', colProps: { span: 8 } },
 //   { label: 'a', field: 'd', component: 'Input', colProps: { span: 8 } }
 // ]
-const columns = [
+const columns: any[] = [
   {
     title: '产地范围',
     dataIndex: 'rangePlace',
     editRow: true,
     editComponent: 'Select',
+    width: 3500,
     editComponentProps: {
       options: [
         { label: 1, value: 2 },
@@ -114,6 +115,40 @@ const columns = [
     dataIndex: 'remark'
   }
 ]
+
+const searchFormSchema = [
+  {
+    label: '机构名称',
+    field: 'demo',
+    component: 'Input',
+    colProps: { span: 6 }
+  },
+  {
+    label: '机构名称',
+    field: 'demo',
+    component: 'Input',
+    colProps: { span: 6 }
+  },
+  {
+    label: '机构名称',
+    field: 'demo',
+    component: 'Input',
+    colProps: { span: 6 }
+  },
+  {
+    label: '机构名称',
+    field: 'demo',
+    component: 'Input',
+    colProps: { span: 6 }
+  },
+  {
+    label: '机构名称',
+    field: 'demo',
+    component: 'Input',
+    colProps: { span: 6 }
+  }
+]
+
 const [
   register,
   {
@@ -124,9 +159,8 @@ const [
   }
 ] = useTable({
   api: (params) => {
-    console.log('params', params)
-    return new Promise((reject) => {
-      reject([
+    return new Promise((resolve) => {
+      resolve([
         {
           id: '1704062192584458242',
           status: 0,
@@ -186,21 +220,16 @@ const [
   },
   rowKey: 'id',
   columns,
+  formConfig: {
+    schemas: searchFormSchema as any
+  },
   rowSelection: { type: 'checkbox' },
   clickToRowSelect: false,
-  formConfig: {
-    schemas: [
-      {
-        label: '',
-        field: 'demo',
-        component: 'Input'
-      }
-    ]
-  },
   useSearchForm: true,
   actionColumn: {
     width: 250,
-    dataIndex: 'action'
+    dataIndex: 'action',
+    fixed: 'right'
   }
 })
 

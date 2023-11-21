@@ -18,7 +18,7 @@ export default defineComponent({
       }
     })
 
-    const innerProps = ref(null)
+    const innerProps = ref<any>(null)
     const setDescProps = (props) => {
       innerProps.value = { ...innerProps.value, ...props }
     }
@@ -64,19 +64,21 @@ export default defineComponent({
                 class={`${prefixCls}-label`}
               >
                 {slots[`${item.field}Label`]
-                  ? slots[`${item.field}Label`]()
+                  ? slots[`${item.field}Label`]?.()
                   : item.label}
                 {getProps.value?.isShowColon ? ':' : ''}
               </span>
 
               <span class={`${prefixCls}-value`}>
                 {slots[`${item.field}Value`]
-                  ? slots[`${item.field}Value`]()
-                  : getProps.value.data[item.field]}
+                  ? slots[`${item.field}Value`]?.()
+                  : getProps.value.data[`${item.field}`]}
                 {item?.isCopy ? (
                   <span
                     style="cursor:pointer;margin-left:5px"
-                    onClick={() => handleClick(getProps.value.data[item.field])}
+                    onClick={() =>
+                      handleClick(getProps.value.data[`${item.field}`])
+                    }
                   >
                     <CopyOutlined
                       style={{ color: '#458ef9', marginLeft: '5px' }}
