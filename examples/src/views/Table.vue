@@ -116,38 +116,14 @@ const columns: any[] = [
   }
 ]
 
-const searchFormSchema = [
-  {
-    label: '机构名称',
-    field: 'demo',
-    component: 'Input',
-    colProps: { span: 6 }
-  },
-  {
-    label: '机构名称',
-    field: 'demo',
-    component: 'Input',
-    colProps: { span: 6 }
-  },
-  {
-    label: '机构名称',
-    field: 'demo',
-    component: 'Input',
-    colProps: { span: 6 }
-  },
-  {
-    label: '机构名称',
-    field: 'demo',
-    component: 'Input',
-    colProps: { span: 6 }
-  },
-  {
-    label: '机构名称',
-    field: 'demo',
+const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
+  return {
+    label: `demo${i}`,
+    field: `demo${i}`,
     component: 'Input',
     colProps: { span: 6 }
   }
-]
+})
 
 const [
   register,

@@ -87,7 +87,7 @@ export default defineComponent({
     isAdvanced: propTypes.bool,
     hideAdvanceBtn: propTypes.bool
   } as any,
-  emits: ['toggle-advanced'],
+  // emits: ['toggle-advanced'],
   setup(props) {
     const actionColOpt = computed(() => {
       const { showAdvancedButton, actionSpan: span, actionColOptions } = props

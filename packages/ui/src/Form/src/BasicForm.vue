@@ -26,11 +26,7 @@
         </FormItem>
       </template>
     </Row>
-    <FormAction
-      :class="`${prefixCls}-action`"
-      v-bind="getFormActionBindProps"
-      @toggle-advanced="handleToggleAdvanced"
-    >
+    <FormAction :class="`${prefixCls}-action`" v-bind="getFormActionBindProps">
       <template
         #[item]="data"
         v-for="item in [
@@ -113,7 +109,7 @@ export default defineComponent({
     const modalFn = useModalContext()
 
     const advanceState = reactive<AdvanceState>({
-      isAdvanced: false,
+      isAdvanced: true,
       hideAdvanceBtn: false,
       isLoad: false,
       actionSpan: 6
