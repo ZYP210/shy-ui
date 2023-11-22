@@ -64,28 +64,33 @@ const schemas: FormSchema[] = [
   {
     field: 'range',
     label: '时间',
-    component: 'RangePicker'
+    component: 'RangePicker',
+    componentProps: {
+      onChange: (e: any) => {
+        console.log('77777', e)
+      }
+    }
   },
 
-  // {
-  //   field: 'field',
-  //   component: 'Input',
-  //   label: '字段1',
-  //   colProps: {
-  //     span: 8
-  //   },
-  //   defaultValue: '1',
+  {
+    field: 'field',
+    component: 'Input',
+    label: '字段1',
+    colProps: {
+      span: 8
+    },
+    defaultValue: '1',
 
-  //   componentProps: {
-  //     placeholder: '自定义placeholder',
-  //     onChange: (e) => {
-  //       console.log(e)
-  //     },
-  //     onInput: (e) => {
-  //       console.log(1)
-  //     }
-  //   }
-  // }
+    componentProps: {
+      placeholder: '自定义placeholder',
+      onChange: (e) => {
+        console.log(e)
+      },
+      onInput: (e) => {
+        console.log(1)
+      }
+    }
+  },
   // {
   //   field: 'ApiSelect',
   //   label: 'ApiSelect',
