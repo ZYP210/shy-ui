@@ -62,6 +62,17 @@ const schemas: FormSchema[] = [
   },
 
   {
+    label: 'a',
+    field: 'a',
+    component: 'Input'
+  },
+  {
+    label: 'b',
+    field: 'b',
+    component: 'Input'
+  },
+
+  {
     field: 'range',
     label: '时间',
     component: 'RangePicker',
@@ -70,27 +81,27 @@ const schemas: FormSchema[] = [
         console.log('77777', e)
       }
     }
-  },
+  }
 
-  {
-    field: 'field',
-    component: 'Input',
-    label: '字段1',
-    colProps: {
-      span: 8
-    },
-    defaultValue: '1',
+  // {
+  //   field: 'field',
+  //   component: 'Input',
+  //   label: '字段1',
+  //   colProps: {
+  //     span: 8
+  //   },
+  //   defaultValue: '1',
 
-    componentProps: {
-      placeholder: '自定义placeholder',
-      onChange: (e) => {
-        console.log(e)
-      },
-      onInput: (e) => {
-        console.log(1)
-      }
-    }
-  },
+  //   componentProps: {
+  //     placeholder: '自定义placeholder',
+  //     onChange: (e) => {
+  //       console.log(e)
+  //     },
+  //     onInput: (e) => {
+  //       console.log(1)
+  //     }
+  //   }
+  // },
   // {
   //   field: 'ApiSelect',
   //   label: 'ApiSelect',
@@ -205,35 +216,35 @@ const schemas: FormSchema[] = [
   //   }
   // },
   //
-  {
-    field: 'table',
-    label: 'table',
-    component: 'Table',
-    componentProps: {
-      columns: [
-        {
-          title: 'a',
-          dataIndex: 'a'
-        },
-        {
-          title: 'b',
-          dataIndex: 'b'
-        },
-        {
-          title: 'c',
-          dataIndex: 'c'
-        },
-        {
-          title: 'd',
-          dataIndex: 'd'
-        },
-        {
-          title: 'e',
-          dataIndex: 'e'
-        }
-      ]
-    }
-  }
+  // {
+  //   field: 'table',
+  //   label: 'table',
+  //   component: 'Table',
+  //   componentProps: {
+  //     columns: [
+  //       {
+  //         title: 'a',
+  //         dataIndex: 'a'
+  //       },
+  //       {
+  //         title: 'b',
+  //         dataIndex: 'b'
+  //       },
+  //       {
+  //         title: 'c',
+  //         dataIndex: 'c'
+  //       },
+  //       {
+  //         title: 'd',
+  //         dataIndex: 'd'
+  //       },
+  //       {
+  //         title: 'e',
+  //         dataIndex: 'e'
+  //       }
+  //     ]
+  //   }
+  // }
   // {
   //   field: 'z',
   //   label: 'Divider',
@@ -252,7 +263,10 @@ const schemas: FormSchema[] = [
   // }
 ]
 const { createMessage } = useMessage()
-const [registerForm, { setFieldsValue, getFieldsValue, validate }] = useForm({
+const [
+  registerForm,
+  { setFieldsValue, getFieldsValue, validate, updateSchema }
+] = useForm({
   schemas
 })
 
@@ -288,6 +302,24 @@ const columns = [
     dataIndex: 'e'
   }
 ]
+
+const change = () => {
+  updateSchema([
+    {
+      field: 'a',
+      defaultValue: '111',
+      component: 'Select',
+      componentProps: {
+        disabled: true
+      }
+    },
+    {
+      field: 'b',
+      defaultValue: '222',
+      component: 'Select'
+    }
+  ])
+}
 
 const handleSubmit = (values: any) => {
   createMessage.success('click search,values:' + JSON.stringify(values))
