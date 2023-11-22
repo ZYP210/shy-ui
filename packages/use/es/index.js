@@ -38,6 +38,8 @@ function createConfirm(options) {
   const opt = {
     centered: true,
     icon: getIcon(iconType),
+    okText: "确定",
+    cancelText: "取消",
     ...options,
     content: renderContent(options)
   };
@@ -45,7 +47,7 @@ function createConfirm(options) {
 }
 const getBaseOptions = () => {
   return {
-    okText: "\u786E\u5B9A",
+    okText: "确定",
     centered: true
   };
 };
@@ -471,7 +473,6 @@ function useContentHeight(flag, anchorRef, subtractHeightRefs, substractSpaceRef
     });
   }
   function calcSubtractSpace(element, direction = "all") {
-    var _a2, _b, _c, _d;
     function numberPx(px) {
       return Number(px.replace(/[^\d]/g, ""));
     }
@@ -479,10 +480,10 @@ function useContentHeight(flag, anchorRef, subtractHeightRefs, substractSpaceRef
     const ZERO_PX = "0px";
     if (element) {
       const cssStyle = getComputedStyle(element);
-      const marginTop = numberPx((_a2 = cssStyle == null ? void 0 : cssStyle.marginTop) != null ? _a2 : ZERO_PX);
-      const marginBottom = numberPx((_b = cssStyle == null ? void 0 : cssStyle.marginBottom) != null ? _b : ZERO_PX);
-      const paddingTop = numberPx((_c = cssStyle == null ? void 0 : cssStyle.paddingTop) != null ? _c : ZERO_PX);
-      const paddingBottom = numberPx((_d = cssStyle == null ? void 0 : cssStyle.paddingBottom) != null ? _d : ZERO_PX);
+      const marginTop = numberPx((cssStyle == null ? void 0 : cssStyle.marginTop) ?? ZERO_PX);
+      const marginBottom = numberPx((cssStyle == null ? void 0 : cssStyle.marginBottom) ?? ZERO_PX);
+      const paddingTop = numberPx((cssStyle == null ? void 0 : cssStyle.paddingTop) ?? ZERO_PX);
+      const paddingBottom = numberPx((cssStyle == null ? void 0 : cssStyle.paddingBottom) ?? ZERO_PX);
       if (direction === "all") {
         subtractHeight += marginTop;
         subtractHeight += marginBottom;
@@ -505,7 +506,6 @@ function useContentHeight(flag, anchorRef, subtractHeightRefs, substractSpaceRef
     return element instanceof HTMLDivElement ? element : element.$el;
   }
   async function calcContentHeight() {
-    var _a2;
     if (!flag.value) {
       return;
     }
@@ -517,10 +517,10 @@ function useContentHeight(flag, anchorRef, subtractHeightRefs, substractSpaceRef
     const { bottomIncludeBody } = getViewportOffset(anchorEl);
     let substractHeight = 0;
     subtractHeightRefs.forEach((item) => {
-      var _a3, _b;
-      substractHeight += (_b = (_a3 = getEl(unref(item))) == null ? void 0 : _a3.offsetHeight) != null ? _b : 0;
+      var _a2;
+      substractHeight += ((_a2 = getEl(unref(item))) == null ? void 0 : _a2.offsetHeight) ?? 0;
     });
-    let substractSpaceHeight = (_a2 = calcSubtractSpace(anchorEl)) != null ? _a2 : 0;
+    let substractSpaceHeight = calcSubtractSpace(anchorEl) ?? 0;
     substractSpaceRefs.forEach((item) => {
       substractSpaceHeight += calcSubtractSpace(getEl(unref(item)));
     });
@@ -552,10 +552,10 @@ function useContentHeight(flag, anchorRef, subtractHeightRefs, substractSpaceRef
     }
     let height = bottomIncludeBody - unref(layoutFooterHeightRef) - unref(offsetHeightRef) - substractHeight - substractSpaceHeight - upwardSpaceHeight;
     const calcCompensationHeight = () => {
-      var _a3;
-      (_a3 = compensationHeight.elements) == null ? void 0 : _a3.forEach((item) => {
-        var _a4, _b;
-        height += (_b = (_a4 = getEl(unref(item))) == null ? void 0 : _a4.offsetHeight) != null ? _b : 0;
+      var _a2;
+      (_a2 = compensationHeight.elements) == null ? void 0 : _a2.forEach((item) => {
+        var _a3;
+        height += ((_a3 = getEl(unref(item))) == null ? void 0 : _a3.offsetHeight) ?? 0;
       });
     };
     if (compensationHeight.useLayoutFooter && unref(layoutFooterHeightRef) > 0) {
@@ -813,7 +813,11 @@ var hasOwnProperty$5 = objectProto$6.hasOwnProperty;
 function arrayLikeKeys(value, inherited) {
   var isArr = isArray$1(value), isArg = !isArr && isArguments$1(value), isBuff = !isArr && !isArg && isBuffer$1(value), isType = !isArr && !isArg && !isBuff && isTypedArray$1(value), skipIndexes = isArr || isArg || isBuff || isType, result = skipIndexes ? baseTimes(value.length, String) : [], length = result.length;
   for (var key in value) {
-    if ((inherited || hasOwnProperty$5.call(value, key)) && !(skipIndexes && (key == "length" || isBuff && (key == "offset" || key == "parent") || isType && (key == "buffer" || key == "byteLength" || key == "byteOffset") || isIndex(key, length)))) {
+    if ((inherited || hasOwnProperty$5.call(value, key)) && !(skipIndexes && // Safari 9 has enumerable `arguments.length` in strict mode.
+    (key == "length" || // Node.js 0.10 has enumerable non-index properties on buffers.
+    isBuff && (key == "offset" || key == "parent") || // PhantomJS 2 has enumerable non-index properties on typed arrays.
+    isType && (key == "buffer" || key == "byteLength" || key == "byteOffset") || // Skip index properties.
+    isIndex(key, length)))) {
       result.push(key);
     }
   }
@@ -1428,12 +1432,36 @@ var screenEnum = /* @__PURE__ */ ((screenEnum2) => {
   return screenEnum2;
 })(screenEnum || {});
 const screenMap = /* @__PURE__ */ new Map();
-screenMap.set("XS", 480);
-screenMap.set("SM", 576);
-screenMap.set("MD", 768);
-screenMap.set("LG", 992);
-screenMap.set("XL", 1200);
-screenMap.set("XXL", 1600);
+screenMap.set(
+  "XS",
+  480
+  /* XS */
+);
+screenMap.set(
+  "SM",
+  576
+  /* SM */
+);
+screenMap.set(
+  "MD",
+  768
+  /* MD */
+);
+screenMap.set(
+  "LG",
+  992
+  /* LG */
+);
+screenMap.set(
+  "XL",
+  1200
+  /* XL */
+);
+screenMap.set(
+  "XXL",
+  1600
+  /* XXL */
+);
 let globalScreenRef;
 let globalWidthRef;
 let globalRealWidthRef;
@@ -1446,15 +1474,33 @@ function useBreakpoint() {
   };
 }
 function createBreakpointListen(fn) {
-  const screenRef = ref("XL");
+  const screenRef = ref(
+    "XL"
+    /* XL */
+  );
   const realWidthRef = ref(window.innerWidth);
   function getWindowWidth() {
     const width = document.body.clientWidth;
-    const xs = screenMap.get("XS");
-    const sm = screenMap.get("SM");
-    const md = screenMap.get("MD");
-    const lg = screenMap.get("LG");
-    const xl = screenMap.get("XL");
+    const xs = screenMap.get(
+      "XS"
+      /* XS */
+    );
+    const sm = screenMap.get(
+      "SM"
+      /* SM */
+    );
+    const md = screenMap.get(
+      "MD"
+      /* MD */
+    );
+    const lg = screenMap.get(
+      "LG"
+      /* LG */
+    );
+    const xl = screenMap.get(
+      "XL"
+      /* XL */
+    );
     if (width < xs) {
       screenRef.value = "XS";
     } else if (width < sm) {
@@ -1477,6 +1523,7 @@ function createBreakpointListen(fn) {
       getWindowWidth();
       resizeFn();
     }
+    // wait: 100,
   });
   getWindowWidth();
   globalScreenRef = computed(() => unref(screenRef));
@@ -1505,166 +1552,168 @@ function useDesign(scope) {
     prefixCls: "shy"
   };
   return {
+    // prefixCls: computed(() => `${values.prefixCls}-${scope}`),
     prefixCls: `${values.prefixCls}-${scope}`,
     prefixVar: values.prefixCls
+    // style,
   };
 }
 const zh = {
   lang: {
-    shortWeekDays: ["\u4E00", "\u4E8C", "\u4E09", "\u56DB", "\u4E94", "\u516D", "\u65E5"],
+    shortWeekDays: ["一", "二", "三", "四", "五", "六", "日"],
     shortMonths: [
-      "1\u6708",
-      "2\u6708",
-      "3\u6708",
-      "4\u6708",
-      "5\u6708",
-      "6\u6708",
-      "7\u6708",
-      "8\u6708",
-      "9\u6708",
-      "10\u6708",
-      "11\u6708",
-      "12\u6708"
+      "1月",
+      "2月",
+      "3月",
+      "4月",
+      "5月",
+      "6月",
+      "7月",
+      "8月",
+      "9月",
+      "10月",
+      "11月",
+      "12月"
     ]
   },
   common: {
-    okText: "\u786E\u8BA4",
-    closeText: "\u5173\u95ED",
-    cancelText: "\u53D6\u6D88",
-    loadingText: "\u52A0\u8F7D\u4E2D...",
-    saveText: "\u4FDD\u5B58",
-    delText: "\u5220\u9664",
-    resetText: "\u91CD\u7F6E",
-    searchText: "\u641C\u7D22",
-    queryText: "\u67E5\u8BE2",
-    inputText: "\u8BF7\u8F93\u5165",
-    chooseText: "\u8BF7\u9009\u62E9",
-    redo: "\u5237\u65B0",
-    back: "\u8FD4\u56DE",
-    light: "\u4EAE\u8272\u4E3B\u9898",
-    dark: "\u9ED1\u6697\u4E3B\u9898"
+    okText: "确认",
+    closeText: "关闭",
+    cancelText: "取消",
+    loadingText: "加载中...",
+    saveText: "保存",
+    delText: "删除",
+    resetText: "重置",
+    searchText: "搜索",
+    queryText: "查询",
+    inputText: "请输入",
+    chooseText: "请选择",
+    redo: "刷新",
+    back: "返回",
+    light: "亮色主题",
+    dark: "黑暗主题"
   },
   component: {
     app: {
-      searchNotData: "\u6682\u65E0\u641C\u7D22\u7ED3\u679C",
-      toSearch: "\u786E\u8BA4",
-      toNavigate: "\u5207\u6362"
+      searchNotData: "暂无搜索结果",
+      toSearch: "确认",
+      toNavigate: "切换"
     },
     countdown: {
-      normalText: "\u83B7\u53D6\u9A8C\u8BC1\u7801",
-      sendText: "{0}\u79D2\u540E\u91CD\u65B0\u83B7\u53D6"
+      normalText: "获取验证码",
+      sendText: "{0}秒后重新获取"
     },
     cropper: {
-      selectImage: "\u9009\u62E9\u56FE\u7247",
-      uploadSuccess: "\u4E0A\u4F20\u6210\u529F",
-      modalTitle: "\u5934\u50CF\u4E0A\u4F20",
-      okText: "\u786E\u8BA4\u5E76\u4E0A\u4F20",
-      btn_reset: "\u91CD\u7F6E",
-      btn_rotate_left: "\u9006\u65F6\u9488\u65CB\u8F6C",
-      btn_rotate_right: "\u987A\u65F6\u9488\u65CB\u8F6C",
-      btn_scale_x: "\u6C34\u5E73\u7FFB\u8F6C",
-      btn_scale_y: "\u5782\u76F4\u7FFB\u8F6C",
-      btn_zoom_in: "\u653E\u5927",
-      btn_zoom_out: "\u7F29\u5C0F",
-      preview: "\u9884\u89C8"
+      selectImage: "选择图片",
+      uploadSuccess: "上传成功",
+      modalTitle: "头像上传",
+      okText: "确认并上传",
+      btn_reset: "重置",
+      btn_rotate_left: "逆时针旋转",
+      btn_rotate_right: "顺时针旋转",
+      btn_scale_x: "水平翻转",
+      btn_scale_y: "垂直翻转",
+      btn_zoom_in: "放大",
+      btn_zoom_out: "缩小",
+      preview: "预览"
     },
     drawer: {
-      loadingText: "\u52A0\u8F7D\u4E2D...",
-      cancelText: "\u5173\u95ED",
-      okText: "\u786E\u8BA4"
+      loadingText: "加载中...",
+      cancelText: "关闭",
+      okText: "确认"
     },
     excel: {
-      exportModalTitle: "\u5BFC\u51FA\u6570\u636E",
-      fileType: "\u6587\u4EF6\u7C7B\u578B",
-      fileName: "\u6587\u4EF6\u540D"
+      exportModalTitle: "导出数据",
+      fileType: "文件类型",
+      fileName: "文件名"
     },
     form: {
-      putAway: "\u6536\u8D77",
-      unfold: "\u5C55\u5F00",
-      maxTip: "\u5B57\u7B26\u6570\u5E94\u5C0F\u4E8E{0}\u4F4D",
-      apiSelectNotFound: "\u8BF7\u7B49\u5F85\u6570\u636E\u52A0\u8F7D\u5B8C\u6210..."
+      putAway: "收起",
+      unfold: "展开",
+      maxTip: "字符数应小于{0}位",
+      apiSelectNotFound: "请等待数据加载完成..."
     },
     icon: {
-      placeholder: "\u70B9\u51FB\u9009\u62E9\u56FE\u6807",
-      search: "\u641C\u7D22\u56FE\u6807",
-      copy: "\u590D\u5236\u56FE\u6807\u6210\u529F!"
+      placeholder: "点击选择图标",
+      search: "搜索图标",
+      copy: "复制图标成功!"
     },
     menu: {
-      search: "\u83DC\u5355\u641C\u7D22"
+      search: "菜单搜索"
     },
     modal: {
-      cancelText: "\u5173\u95ED",
-      okText: "\u786E\u8BA4",
-      close: "\u5173\u95ED",
-      maximize: "\u6700\u5927\u5316",
-      restore: "\u8FD8\u539F"
+      cancelText: "关闭",
+      okText: "确认",
+      close: "关闭",
+      maximize: "最大化",
+      restore: "还原"
     },
     table: {
-      settingDens: "\u5BC6\u5EA6",
-      settingDensDefault: "\u9ED8\u8BA4",
-      settingDensMiddle: "\u4E2D\u7B49",
-      settingDensSmall: "\u7D27\u51D1",
-      settingColumn: "\u5217\u8BBE\u7F6E",
-      settingColumnShow: "\u5217\u5C55\u793A",
-      settingIndexColumnShow: "\u5E8F\u53F7\u5217",
-      settingSelectColumnShow: "\u52FE\u9009\u5217",
-      settingFixedLeft: "\u56FA\u5B9A\u5230\u5DE6\u4FA7",
-      settingFixedRight: "\u56FA\u5B9A\u5230\u53F3\u4FA7",
-      settingFullScreen: "\u5168\u5C4F",
-      index: "\u5E8F\u53F7",
-      total: "\u5171 {total} \u6761\u6570\u636E"
+      settingDens: "密度",
+      settingDensDefault: "默认",
+      settingDensMiddle: "中等",
+      settingDensSmall: "紧凑",
+      settingColumn: "列设置",
+      settingColumnShow: "列展示",
+      settingIndexColumnShow: "序号列",
+      settingSelectColumnShow: "勾选列",
+      settingFixedLeft: "固定到左侧",
+      settingFixedRight: "固定到右侧",
+      settingFullScreen: "全屏",
+      index: "序号",
+      total: "共 {total} 条数据"
     },
     time: {
-      before: "\u524D",
-      after: "\u540E",
-      just: "\u521A\u521A",
-      seconds: "\u79D2",
-      minutes: "\u5206\u949F",
-      hours: "\u5C0F\u65F6",
-      days: "\u5929"
+      before: "前",
+      after: "后",
+      just: "刚刚",
+      seconds: "秒",
+      minutes: "分钟",
+      hours: "小时",
+      days: "天"
     },
     tree: {
-      selectAll: "\u9009\u62E9\u5168\u90E8",
-      unSelectAll: "\u53D6\u6D88\u9009\u62E9",
-      expandAll: "\u5C55\u5F00\u5168\u90E8",
-      unExpandAll: "\u6298\u53E0\u5168\u90E8",
-      checkStrictly: "\u5C42\u7EA7\u5173\u8054",
-      checkUnStrictly: "\u5C42\u7EA7\u72EC\u7ACB"
+      selectAll: "选择全部",
+      unSelectAll: "取消选择",
+      expandAll: "展开全部",
+      unExpandAll: "折叠全部",
+      checkStrictly: "层级关联",
+      checkUnStrictly: "层级独立"
     },
     upload: {
-      save: "\u4FDD\u5B58",
-      upload: "\u4E0A\u4F20",
-      imgUpload: "\u56FE\u7247\u4E0A\u4F20",
-      uploaded: "\u5DF2\u4E0A\u4F20",
-      operating: "\u64CD\u4F5C",
-      del: "\u5220\u9664",
-      download: "\u4E0B\u8F7D",
-      saveWarn: "\u8BF7\u7B49\u5F85\u6587\u4EF6\u4E0A\u4F20\u540E\uFF0C\u4FDD\u5B58!",
-      saveError: "\u6CA1\u6709\u4E0A\u4F20\u6210\u529F\u7684\u6587\u4EF6\uFF0C\u65E0\u6CD5\u4FDD\u5B58!",
-      preview: "\u9884\u89C8",
-      choose: "\u9009\u62E9\u6587\u4EF6",
-      accept: "\u652F\u6301{0}\u683C\u5F0F",
-      acceptUpload: "\u53EA\u80FD\u4E0A\u4F20{0}\u683C\u5F0F\u6587\u4EF6",
-      maxSize: "\u5355\u4E2A\u6587\u4EF6\u4E0D\u8D85\u8FC7{0}MB",
-      maxSizeMultiple: "\u53EA\u80FD\u4E0A\u4F20\u4E0D\u8D85\u8FC7{0}MB\u7684\u6587\u4EF6!",
-      maxNumber: "\u6700\u591A\u53EA\u80FD\u4E0A\u4F20{0}\u4E2A\u6587\u4EF6",
-      legend: "\u7565\u7F29\u56FE",
-      fileName: "\u6587\u4EF6\u540D",
-      fileSize: "\u6587\u4EF6\u5927\u5C0F",
-      fileStatue: "\u72B6\u6001",
-      startUpload: "\u5F00\u59CB\u4E0A\u4F20",
-      uploadSuccess: "\u4E0A\u4F20\u6210\u529F",
-      uploadError: "\u4E0A\u4F20\u5931\u8D25",
-      uploading: "\u4E0A\u4F20\u4E2D",
-      uploadWait: "\u8BF7\u7B49\u5F85\u6587\u4EF6\u4E0A\u4F20\u7ED3\u675F\u540E\u64CD\u4F5C",
-      reUploadFailed: "\u91CD\u65B0\u4E0A\u4F20\u5931\u8D25\u6587\u4EF6"
+      save: "保存",
+      upload: "上传",
+      imgUpload: "图片上传",
+      uploaded: "已上传",
+      operating: "操作",
+      del: "删除",
+      download: "下载",
+      saveWarn: "请等待文件上传后，保存!",
+      saveError: "没有上传成功的文件，无法保存!",
+      preview: "预览",
+      choose: "选择文件",
+      accept: "支持{0}格式",
+      acceptUpload: "只能上传{0}格式文件",
+      maxSize: "单个文件不超过{0}MB",
+      maxSizeMultiple: "只能上传不超过{0}MB的文件!",
+      maxNumber: "最多只能上传{0}个文件",
+      legend: "略缩图",
+      fileName: "文件名",
+      fileSize: "文件大小",
+      fileStatue: "状态",
+      startUpload: "开始上传",
+      uploadSuccess: "上传成功",
+      uploadError: "上传失败",
+      uploading: "上传中",
+      uploadWait: "请等待文件上传结束后操作",
+      reUploadFailed: "重新上传失败文件"
     },
     verify: {
-      error: "\u9A8C\u8BC1\u5931\u8D25\uFF01",
-      time: "\u9A8C\u8BC1\u6821\u9A8C\u6210\u529F,\u8017\u65F6{time}\u79D2\uFF01",
-      redoTip: "\u70B9\u51FB\u56FE\u7247\u53EF\u5237\u65B0",
-      dragText: "\u8BF7\u6309\u4F4F\u6ED1\u5757\u62D6\u52A8",
-      successText: "\u9A8C\u8BC1\u901A\u8FC7"
+      error: "验证失败！",
+      time: "验证校验成功,耗时{time}秒！",
+      redoTip: "点击图片可刷新",
+      dragText: "请按住滑块拖动",
+      successText: "验证通过"
     }
   }
 };
