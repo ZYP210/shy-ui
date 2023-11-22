@@ -74,6 +74,8 @@ function createConfirm(options: ModalOptionsEx): ConfirmOptions {
   const opt: ModalFuncProps = {
     centered: true,
     icon: getIcon(iconType),
+    okText: '确定',
+    cancelText: '取消',
     ...options,
     content: renderContent(options)
   }
