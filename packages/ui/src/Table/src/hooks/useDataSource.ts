@@ -300,7 +300,11 @@ export function useDataSource(
       }
       // 搜索加入判空去除搜索字段 开始shy
       const newval = Object.keys(params).reduce((prev, cur) => {
-        if (params[cur] !== undefined && params[cur] !== null)
+        if (
+          params[cur] !== undefined &&
+          params[cur] !== null &&
+          params[cur] !== ''
+        )
           prev[cur] = params[cur]
         return prev
       }, {})

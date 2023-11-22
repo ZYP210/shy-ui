@@ -55,9 +55,9 @@ export default defineComponent({
     const cachePlainOptions = ref<Options[]>([])
     const plainOptions = ref<Options[] | any>([])
     const plainSortOptions = ref<Options[] | any>([])
-    plainOptions.value = JSON.parse(JSON.stringify(getColumns()))
-    cachePlainOptions.value = JSON.parse(JSON.stringify(getColumns()))
-    plainSortOptions.value = JSON.parse(JSON.stringify(getColumns()))
+    plainOptions.value = cloneDeep(getColumns())
+    cachePlainOptions.value = cloneDeep(getColumns())
+    plainSortOptions.value = cloneDeep(getColumns())
 
     const columnListRef = ref<ComponentRef>(null)
 

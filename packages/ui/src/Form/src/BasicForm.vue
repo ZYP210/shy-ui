@@ -18,6 +18,7 @@
           :allDefaultValues="defaultValueRef"
           :formModel="formModel"
           :setFormModel="setFormModel"
+          @clearCurrValidate="clearCurrValidate"
         >
           <template #[item]="data" v-for="item in Object.keys($slots)">
             <slot :name="item" v-bind="data || {}"></slot>
@@ -25,11 +26,7 @@
         </FormItem>
       </template>
     </Row>
-    <FormAction
-      :class="`${prefixCls}-action`"
-      v-bind="getFormActionBindProps"
-      @toggle-advanced="handleToggleAdvanced"
-    >
+    <FormAction :class="`${prefixCls}-action`" v-bind="getFormActionBindProps">
       <template
         #[item]="data"
         v-for="item in [
@@ -54,9 +51,9 @@
     >
       <span :class="`${prefixCls}-toggle-left__line`"></span>
       <span :class="`${prefixCls}-toggle-right__line`"></span>
-      <span :class="getToggleClass" @click="handleToggleAdvanced"
-        ><DownOutlined :style="{ fontSize: '10px', color: '#2991ff ' }"
-      /></span>
+      <span :class="getToggleClass" @click="handleToggleAdvanced">
+        <DownOutlined :style="{ fontSize: '10px', color: '#2991ff ' }" />
+      </span>
     </div>
   </slot>
 </template>
@@ -112,7 +109,7 @@ export default defineComponent({
     const modalFn = useModalContext()
 
     const advanceState = reactive<AdvanceState>({
-      isAdvanced: false,
+      isAdvanced: true,
       hideAdvanceBtn: false,
       isLoad: false,
       actionSpan: 6
@@ -341,6 +338,10 @@ export default defineComponent({
       scrollToField: scrollToField
     }
 
+    const clearCurrValidate = (field: string) => {
+      clearValidate([field])
+    }
+
     onMounted(() => {
       initDefault()
       emit('register', formActionType)
@@ -366,7 +367,8 @@ export default defineComponent({
         (): Recordable => ({ ...getProps.value, ...advanceState })
       ),
       fieldsIsAdvancedMap,
-      ...formActionType
+      ...formActionType,
+      clearCurrValidate
     }
   }
 } as any)

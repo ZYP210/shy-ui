@@ -3,7 +3,7 @@ import type { BasicTableProps } from '../types/table'
 import { unref } from 'vue'
 import { ROW_KEY } from '../const'
 import { isString, isFunction } from '@shy-plugins/utils'
-import { hasRefresh } from '../components/editable/index'
+import { isNeedRefresh } from '../components/editable/index'
 interface Options {
   setSelectedRowKeys: (keys: string[]) => void
   getSelectRowKeys: () => string[]
@@ -40,7 +40,7 @@ export function useCustomRow(
   }: Options
 ) {
   const customRow = (record: Recordable, index: number) => {
-    hasRefresh(true)
+    isNeedRefresh()
     return {
       onClick: (e: Event) => {
         e?.stopPropagation()
@@ -84,23 +84,18 @@ export function useCustomRow(
           }
         }
         handleClick()
-        hasRefresh(false)
         emit('row-click', record, index, e)
       },
       onDblclick: (event: Event) => {
-        hasRefresh(false)
         emit('row-dbClick', record, index, event)
       },
       onContextmenu: (event: Event) => {
-        hasRefresh(false)
         emit('row-contextmenu', record, index, event)
       },
       onMouseenter: (event: Event) => {
-        hasRefresh(false)
         emit('row-mouseenter', record, index, event)
       },
       onMouseleave: (event: Event) => {
-        hasRefresh(false)
         emit('row-mouseleave', record, index, event)
       }
     }

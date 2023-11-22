@@ -120,6 +120,8 @@ export default defineComponent({
       }
       upEditDynamicDisabled(record, column, value)
       return {
+        // showCount: true,
+        maxlength: 100,
         size: 'small',
         getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
         placeholder: createPlaceholderMessage(unref(getComponent)),
@@ -212,6 +214,9 @@ export default defineComponent({
 
     async function handleChange(e: any) {
       const component = unref(getComponent)
+      if (component === 'Input' && e.type === 'change') {
+        // console.log(e.target.value)
+      }
       if (!e) {
         currentValueRef.value = e
       } else if (component === 'Checkbox') {

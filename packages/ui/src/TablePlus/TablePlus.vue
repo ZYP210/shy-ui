@@ -69,82 +69,11 @@
         />
 
         <template v-for="column in getColumnsRef" :key="column.field">
-          <VxeColgroup v-if="column?.groupName" :title="column.groupName">
-            <template v-for="c in column.children" :key="c.field">
-              <vxe-column
-                title="a"
-                :field="c.field"
-                :edit-render="c?.editRender || undefined"
-              >
-                <template #default="config">
-                  <slot :name="c.field" v-bind="config">
-                    <template v-if="config.row._isEdit && column?.isEdit">
-                      <template
-                        v-if="c?.editComponentProps?.component === 'Switch'"
-                      >
-                        <CellComponent
-                          :checkedValue="1"
-                          :unCheckedValue="0"
-                          v-bind="c?.editComponentProps || {}"
-                          v-model:checked="config.row[c.field]"
-                        />
-                      </template>
-
-                      <template v-else>
-                        <CellComponent
-                          v-bind="c?.editComponentProps || {}"
-                          v-model:value="config.row[c.field]"
-                        />
-                      </template>
-                    </template>
-
-                    <template v-else>
-                      <span
-                        v-if="
-                          (c?.isEdit &&
-                            c?.editComponentProps?.component === 'Select') ||
-                          c?.editComponentProps?.component === 'ApiSelect'
-                        "
-                      >
-                        <CellComponent
-                          v-bind="c?.editComponentProps || {}"
-                          v-model:value="config.row[c.field]"
-                          :bordered="false"
-                          :showArrow="false"
-                          :open="false"
-                          :popoverVisible="false"
-                        />
-                      </span>
-
-                      <span
-                        v-else-if="
-                          c?.isEdit &&
-                          c?.editComponentProps?.component === 'Switch'
-                        "
-                      >
-                        <span>{{ getSwitchShowText(c, config.row) }}</span>
-                      </span>
-                      <span v-else>
-                        {{ config.row[c.field] }}
-                      </span>
-                    </template>
-                  </slot>
-                </template>
-
-                <template #header>
-                  <slot :name="`${c.field}Header`" v-bind="{ c }">
-                    <div style="display: flex; justify-content: space-between">
-                      <div>{{ c.title }}</div>
-                      <IconSort
-                        v-if="column?.sortable"
-                        @change="(type) => handleSortChange(column.field, type)"
-                      />
-                    </div>
-                  </slot>
-                </template>
-              </vxe-column>
-            </template>
-          </VxeColgroup>
+          <TableColGroup
+            v-if="column?.groupName"
+            :column="column"
+            @handleSortChange="handleSortChange"
+          />
 
           <vxe-column
             v-else
@@ -270,13 +199,15 @@
 <script lang="ts" setup>
 import { useSlots, useAttrs, computed, ref, toRaw, unref } from 'vue'
 import { BasicForm, useForm } from '../Form'
-import { VxeColumnProps, VxeTable, VxeColumn, VxeColgroup } from 'vxe-table'
+import { VxeColumnProps, VxeTable, VxeColumn } from 'vxe-table'
 import { basicProps } from './props'
 import { Pagination } from 'ant-design-vue'
 import { usePagination } from './hooks/usePagination'
 import { useTableData } from './hooks/useTableData'
 import { CellComponent } from './components/editable/CellComponent'
 import ButtonGroupEdit from './components/ButtonGroupEdit.vue'
+import TableColGroup from './TableColGroup.vue'
+
 import {
   createTableContext,
   Instance
@@ -546,7 +477,7 @@ const {
 } = useColumns(getProps, tableRef)
 
 watchEffect(() => {
-  console.log('getColumnsRef', getColumnsRef.value)
+  // console.log('getColumnsRef', getColumnsRef.value)
 })
 
 // register

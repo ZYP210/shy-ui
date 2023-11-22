@@ -220,7 +220,10 @@ export interface FormSchema {
 
   dynamicDisabled?:
     | boolean
-    | ((renderCallbackParams: RenderCallbackParams) => boolean)
+    | ((
+        renderCallbackParams: RenderCallbackParams,
+        globDisabled?: boolean
+      ) => boolean)
 
   dynamicRules?: (renderCallbackParams: RenderCallbackParams) => Rule[]
 }

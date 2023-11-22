@@ -3,7 +3,7 @@ import type {
   DescInstance,
   UseDescReturnType
 } from './typing'
-import { ref, getCurrentInstance, unref } from 'vue'
+import { ref, getCurrentInstance, unref, onUnmounted, watch } from 'vue'
 
 export function useDescription(
   props?: Partial<DescriptionProps>
@@ -17,12 +17,25 @@ export function useDescription(
   const loaded = ref(false)
 
   function register(instance: DescInstance) {
-    if (unref(loaded)) {
-      return
-    }
+    onUnmounted(() => {
+      desc.value = null
+      loaded.value = false
+    })
+    if (unref(loaded) && instance === unref(desc)) return
+
     desc.value = instance
-    props && instance.setDescProps(props)
     loaded.value = true
+
+    watch(
+      () => props,
+      () => {
+        props && instance.setDescProps(props)
+      },
+      {
+        immediate: true,
+        deep: true
+      }
+    )
   }
 
   const methods: DescInstance = {

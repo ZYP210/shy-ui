@@ -21,6 +21,7 @@
   }
 }
 
+
 .@{prefix-cls} {
   overflow: hidden;
   width: 100%;
@@ -141,6 +142,11 @@
     }
   }
 
+  .shy-basic-form-input > .ant-col {
+    padding-left: 0 !important;
+    padding-right: 20px !important;
+  }
+
   &--inset {
     .ant-table-wrapper {
       padding: 0;
@@ -148,8 +154,10 @@
   }
 
   .ant-table-container {
-    border-bottom: 1px solid #f0f0f0;
-    border-right: 1px solid #f0f0f0;
+    border: 1px solid #f0f0f0;
+    // border-bottom: 1px solid #f0f0f0;
+    // border-right: 1px solid #f0f0f0;
+    // border-left: 1px solid #f0f0f0;
   }
 
   .hide-scrollbar-x {
@@ -223,4 +231,8 @@
       }
     }
   }
+}
+
+.ant-table-tbody tr td:empty::after{
+  content: '-' !important;
 }
