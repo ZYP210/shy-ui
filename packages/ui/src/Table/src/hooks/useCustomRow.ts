@@ -40,7 +40,8 @@ export function useCustomRow(
   }: Options
 ) {
   const customRow = (record: Recordable, index: number) => {
-    isNeedRefresh()
+    //每行只执行一次
+    index === 0 && isNeedRefresh()
     return {
       onClick: (e: Event) => {
         e?.stopPropagation()

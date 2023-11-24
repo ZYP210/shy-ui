@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col">
     <div class="flex-auto p-10px">
+      <a-button @click="pushApi">点我</a-button>
       <BasicTable
         title="基础示例"
         titleHelpMessage="温馨提醒"
@@ -16,22 +17,13 @@
             <TableAction
               :actions="[
                 {
-                  label: '编辑1',
+                  label: '编辑',
                   onClick: handleEdit.bind(null, record)
                 },
                 {
                   label: '保存',
                   onClick: handleSave.bind(null, record)
                 },
-                {
-                  label: '编辑2',
-                  onClick: handleEdit.bind(null, record)
-                },
-                {
-                  label: '编辑3',
-                  onClick: handleEdit.bind(null, record)
-                },
-
                 {
                   label: '取消',
                   popConfirm: {
@@ -66,7 +58,7 @@ const columns: any[] = [
     dataIndex: 'rangePlace',
     editRow: true,
     editComponent: 'Select',
-    width: 3500,
+    editRule: true,
     editComponentProps: {
       options: [
         { label: 1, value: 2 },
@@ -80,6 +72,7 @@ const columns: any[] = [
     editRow: true,
     dataIndex: 'place',
     editComponent: 'Input',
+    editRule: true,
     customRender: ({ record }) => {
       return record
     }
@@ -96,8 +89,7 @@ const columns: any[] = [
   {
     title: '厂家名称',
     dataIndex: 'name',
-    editRow: true,
-    editRule: true
+    editRow: true
   },
   {
     title: '电话',
@@ -140,7 +132,7 @@ const [
         {
           id: '1704062192584458242',
           status: 0,
-          rangePlace: '国产',
+          rangePlace: '',
           place: '上海',
           createTime: 1695115061000,
           name: 'zzz',
@@ -247,6 +239,13 @@ function handleCancel(record) {
   record.onEdit?.(false, false)
   if (record.id.toString().indexOf('noSave') == -1) return
   getDataSource().shift()
+}
+const pushApi = async () => {
+  const pass = await Promise.all(
+    getDataSource().map(async (item) => {
+      return await item.onValid()
+    })
+  )
 }
 </script>
 

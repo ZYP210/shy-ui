@@ -1,9 +1,10 @@
 import type { BasicColumn } from '../../types/table'
 
-import { h, Ref, toRaw } from 'vue'
+import { h, Ref, toRaw, ref } from 'vue'
 
 import EditableCell from './EditableCell.vue'
 import { isArray } from '@shy-plugins/utils'
+import { buildUUID } from '@shy-plugins/utils'
 
 interface Params {
   text: string
@@ -11,9 +12,9 @@ interface Params {
   index: number
 }
 
-let rowIndex = 0
+const uuId = ref()
 export function isNeedRefresh() {
-  rowIndex++
+  uuId.value = buildUUID()
 }
 
 export function renderEditCell(column: BasicColumn) {
@@ -54,7 +55,7 @@ export function renderEditCell(column: BasicColumn) {
       record,
       column,
       index,
-      key: rowIndex
+      uuId: uuId.value
     })
   }
 }

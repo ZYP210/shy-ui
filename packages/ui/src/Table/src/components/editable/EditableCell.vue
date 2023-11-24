@@ -10,7 +10,7 @@ import {
   watchEffect
 } from 'vue'
 import type { BasicColumn } from '../../types/table'
-import type { EditRecordRow } from './index'
+// import type { EditRecordRow } from './index'
 import {
   CheckOutlined,
   CloseOutlined,
@@ -34,6 +34,7 @@ import {
 import { createPlaceholderMessage } from './helper'
 import { pick, set } from 'lodash-es'
 import { Spin } from 'ant-design-vue'
+import { watch } from 'vue'
 
 export default defineComponent({
   name: 'EditableCell',
@@ -50,17 +51,20 @@ export default defineComponent({
   props: {
     value: {
       type: [String, Number, Boolean, Object] as PropType<
-        string | number | boolean | Recordable
+        string | number | boolean | Record<string, any>
       >,
       default: ''
     },
     record: {
-      type: Object as PropType<EditRecordRow>,
-      default: () => ({} as EditRecordRow)
+      type: Object as any
     },
     column: {
       type: Object as PropType<BasicColumn>,
-      default: () => ({} as BasicColumn)
+      default: () => ({})
+    },
+    uuId: {
+      type: String,
+      default: ''
     },
     index: propTypes.number
   },
@@ -97,7 +101,7 @@ export default defineComponent({
       const val = unref(currentValueRef)
 
       const value = isCheckValue
-        ? isNumber(val) && isBoolean(val)
+        ? isNumber(val) || isBoolean(val)
           ? val
           : !!val
         : val
@@ -214,9 +218,6 @@ export default defineComponent({
 
     async function handleChange(e: any) {
       const component = unref(getComponent)
-      if (component === 'Input' && e.type === 'change') {
-        // console.log(e.target.value)
-      }
       if (!e) {
         currentValueRef.value = e
       } else if (component === 'Checkbox') {
@@ -309,8 +310,8 @@ export default defineComponent({
           }
         }
       }
-
       set(record, dataKey, value)
+      defaultValueRef.value = value
       //const record = await table.updateTableData(index, dataKey, value);
       needEmit &&
         table.emit?.('edit-end', { record, index, key: dataKey, value })
@@ -384,31 +385,43 @@ export default defineComponent({
       }
     }
 
-    if (props.record) {
-      initCbs('submitCbs', handleSubmit)
-      initCbs('validCbs', handleSubmitRule)
-      initCbs('cancelCbs', handleCancel)
-      if (props.column.dataIndex) {
-        if (!props.record.editValueRefs) props.record.editValueRefs = {}
-        props.record.editValueRefs[props.column.dataIndex as any] =
-          currentValueRef
-      }
-      /* eslint-disable  */
-      props.record.onCancelEdit = () => {
-        isArray(props.record?.cancelCbs) &&
-          props.record?.cancelCbs.forEach((fn) => fn())
-      }
-      /* eslint-disable */
-      props.record.onSubmitEdit = async () => {
-        if (isArray(props.record?.submitCbs)) {
-          if (!props.record?.onValid?.()) return
-          const submitFns = props.record?.submitCbs || []
-          submitFns.forEach((fn) => fn(false, false))
-          table.emit?.('edit-row-end')
-          return true
+    const handleRecordEdit = () => {
+      if (props.record) {
+        initCbs('submitCbs', handleSubmit)
+        initCbs('validCbs', handleSubmitRule)
+        initCbs('cancelCbs', handleCancel)
+        if (props.column.dataIndex) {
+          if (!props.record.editValueRefs) props.record.editValueRefs = {}
+          props.record.editValueRefs[props.column.dataIndex as any] =
+            currentValueRef
+        }
+        /* eslint-disable  */
+        props.record.onCancelEdit = () => {
+          isArray(props.record?.cancelCbs) &&
+            props.record?.cancelCbs.forEach((fn) => fn())
+        }
+        /* eslint-disable */
+        props.record.onSubmitEdit = async () => {
+          if (isArray(props.record?.submitCbs)) {
+            if (!props.record?.onValid?.()) return
+            const submitFns = props.record?.submitCbs || []
+            submitFns.forEach((fn) => fn(false, false))
+            table.emit?.('edit-row-end')
+            return true
+          }
         }
       }
     }
+
+    watch(
+      () => props.uuId,
+      () => {
+        handleRecordEdit()
+      },
+      {
+        immediate: true
+      }
+    )
 
     return {
       isEdit,
@@ -500,7 +513,7 @@ export default defineComponent({
       </div>
     )
   }
-})
+}) as any
 </script>
 <style lang="less">
 @prefix-cls: ~'@{namespace}-editable-cell';

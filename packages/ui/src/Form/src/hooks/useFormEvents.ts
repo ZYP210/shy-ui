@@ -164,26 +164,31 @@ export function useFormEvents({
    * @description: Insert after a certain field, if not insert the last
    */
   async function appendSchemaByField(
-    schema: FormSchema,
+    schema: FormSchema | FormSchema[],
     prefixField?: string,
     first = false
   ) {
     const schemaList: FormSchema[] = cloneDeep(unref(getSchema))
-
-    const index = schemaList.findIndex((schema) => schema.field === prefixField)
-
-    if (!prefixField || index === -1 || first) {
-      first ? schemaList.unshift(schema) : schemaList.push(schema)
-      schemaRef.value = schemaList
-      _setDefaultValue(schema)
+    const addSchemaIds: string[] = Array.isArray(schema)
+      ? schema.map((item) => item.field)
+      : [schema.field]
+    if (schemaList.find((item) => addSchemaIds.includes(item.field))) {
+      error('There are schemas that have already been added')
       return
     }
-    if (index !== -1) {
-      schemaList.splice(index + 1, 0, schema)
+    const index = schemaList.findIndex((schema) => schema.field === prefixField)
+    const _schemaList = isObject(schema)
+      ? [schema as FormSchema]
+      : (schema as FormSchema[])
+    if (!prefixField || index === -1 || first) {
+      first
+        ? schemaList.unshift(..._schemaList)
+        : schemaList.push(..._schemaList)
+    } else if (index !== -1) {
+      schemaList.splice(index + 1, 0, ..._schemaList)
     }
-    _setDefaultValue(schema)
-
     schemaRef.value = schemaList
+    _setDefaultValue(schema)
   }
 
   async function resetSchema(
