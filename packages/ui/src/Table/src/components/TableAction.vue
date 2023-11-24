@@ -58,7 +58,13 @@ import { PopConfirmButton } from '../../../Button'
 import { Dropdown } from '../../../Dropdown'
 import { useDesign } from '@shy-plugins/use'
 import { useTableContext } from '../hooks/useTableContext'
-import { isBoolean, isFunction, isString, propTypes } from '@shy-plugins/utils'
+import {
+  isBoolean,
+  isFunction,
+  isNumber,
+  isString,
+  propTypes
+} from '@shy-plugins/utils'
 import { ACTION_COLUMN_FLAG } from '../const'
 import { MoreOutlined } from '@ant-design/icons-vue'
 import type { PopconfirmProps } from 'ant-design-vue'
@@ -95,6 +101,11 @@ function isIfShow(action: ActionItem): boolean {
   if (isBoolean(ifShow)) {
     isIfShow = ifShow
   }
+
+  if (isNumber(ifShow) || isString(ifShow)) {
+    isIfShow = !!ifShow
+  }
+
   if (isFunction(ifShow)) {
     isIfShow = ifShow(action)
   }
