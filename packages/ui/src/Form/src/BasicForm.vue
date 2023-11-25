@@ -166,20 +166,30 @@ export default defineComponent({
         const {
           defaultValue,
           component,
+          componentProps,
           isHandleDateDefaultValue = true
         } = schema
-        // handle date type
         if (
           isHandleDateDefaultValue &&
           defaultValue &&
+          component &&
           dateItemType.includes(component)
         ) {
+          const valueFormat = componentProps
+            ? componentProps['valueFormat']
+            : null
           if (!Array.isArray(defaultValue)) {
-            schema.defaultValue = dateUtil(defaultValue)
+            schema.defaultValue = valueFormat
+              ? dateUtil(defaultValue).format(valueFormat)
+              : dateUtil(defaultValue)
           } else {
-            const def: unknown[] = []
+            const def: any[] = []
             defaultValue.forEach((item) => {
-              def.push(dateUtil(item))
+              def.push(
+                valueFormat
+                  ? dateUtil(item).format(valueFormat)
+                  : dateUtil(item)
+              )
             })
             schema.defaultValue = def
           }

@@ -73,13 +73,13 @@ const schemas: FormSchema[] = [
   },
 
   {
-    field: 'range',
-    label: '时间',
+    field: 'startDate',
+    label: '日期范围',
     component: 'RangePicker',
+    defaultValue: ['1996/10-10', '2023-11-10'],
     componentProps: {
-      onChange: (e: any) => {
-        console.log('77777', e)
-      }
+      format: 'YYYY-MM-DD',
+      placeholder: ['开始日期', '结束日期']
     }
   }
 
@@ -274,8 +274,7 @@ onMounted(() => {
   setFieldsValue({
     field: 123,
     table: [{ a: 1, b: 2, c: 3 }],
-    c: '123',
-    range: [dayjs('2023-09-01'), dayjs('2023-09-02')]
+    c: '123'
   })
 })
 

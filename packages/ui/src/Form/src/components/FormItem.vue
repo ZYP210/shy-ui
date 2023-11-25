@@ -91,6 +91,13 @@ export default defineComponent({
         })
       }
       if (schema.component === 'Input') {
+        const maxlength =
+          componentProps?.maxlength === undefined
+            ? 100
+            : componentProps.maxlength
+        componentProps = Object.assign({}, componentProps, {
+          maxlength
+        })
         componentProps.onInputEvent = (e) => {
           flag.value += 1
 
@@ -289,7 +296,7 @@ export default defineComponent({
           const [e] = args
           const target = e ? e.target : null
           const value = target ? (isCheck ? target.checked : target.value) : e
-          if(props.formModel[field] === value) return;
+          if (props.formModel[field] === value) return
           props.setFormModel(field, value)
           //修改下拉选数据没有同步开始shy-edit
           if (propsData[eventKey] && args.length >= 1) {
@@ -337,7 +344,6 @@ export default defineComponent({
       const handleInput = (e) => {
         compAttr?.onInputEvent && compAttr.onInputEvent(e)
       }
-
 
       if (!renderComponentContent) {
         return <Comp {...compAttr} onInput={handleInput} />

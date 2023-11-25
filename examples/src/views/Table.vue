@@ -45,7 +45,7 @@ import { BasicTable, useTable, TableAction } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
 const { createMessage } = useMessage()
-
+import dayjs from 'dayjs'
 // const schemas = [
 //   { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
 //   { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
@@ -115,6 +115,17 @@ const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
     component: 'Input',
     colProps: { span: 6 }
   }
+})
+
+searchFormSchema.unshift({
+  label: '日期范围',
+  component: 'RangePicker',
+  field: '[startDate, endDate]',
+  defaultValue: [dayjs().add(-30, 'd'), dayjs()],
+  componentProps: {
+    style: { width: '100%' }
+  },
+  colProps: { span: 6 }
 })
 
 const [
