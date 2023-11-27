@@ -121,7 +121,7 @@ searchFormSchema.unshift({
   label: '日期范围',
   component: 'RangePicker',
   field: '[startDate, endDate]',
-  defaultValue: [dayjs().add(-30, 'd'), dayjs()],
+  defaultValue: [dayjs().add(-30, 'd').format('YYYY-MM-DD'), dayjs()],
   componentProps: {
     style: { width: '100%' }
   },
@@ -138,63 +138,18 @@ const [
   }
 ] = useTable({
   api: (params) => {
-    return new Promise((resolve) => {
-      resolve([
-        {
-          id: '1704062192584458242',
-          status: 0,
-          rangePlace: '',
-          place: '上海',
-          createTime: 1695115061000,
-          name: 'zzz',
-          address: '1111',
-          remark: '999'
-        },
-        {
-          id: '1703938810197053441',
-          status: 0,
-          rangePlace: '国产',
-          place: '衡水',
-          createTime: 1695085645000,
-          name: 'zzz',
-          phone: '1212121',
-          address: '1111',
-          remark: '999'
-        },
-        {
-          id: '1703680571205570561',
-          status: 0,
-          rangePlace: '国产',
-          place: '河北',
-          createTime: 1695024076000,
-          name: 'zzz',
-          phone: '1212121',
-          address: '1111',
-          remark: '999'
-        },
-        {
-          id: '1703680511969415170',
-          status: 0,
-          rangePlace: '国产',
-          place: '重庆',
-          createTime: 1695024062000,
-          name: 'zzz',
-          phone: '1212121',
-          address: '1111',
-          remark: '999'
-        },
-        {
-          id: '1703667719287689218',
-          status: 0,
-          rangePlace: '进口',
-          place: '新西兰',
-          createTime: 1695021012000,
-          name: 'zzz',
-          phone: '1212121',
-          address: '1111',
-          remark: '999'
-        }
-      ])
+    return Array.from({ length: 100 }, (_, i) => {
+      return {
+        id: i,
+        status: 0,
+        rangePlace: '国产',
+        place: '河北',
+        createTime: 1695024076000,
+        name: 'zzz',
+        phone: '1212121',
+        address: '1111',
+        remark: '999'
+      }
     })
   },
   rowKey: 'id',

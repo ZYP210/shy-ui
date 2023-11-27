@@ -1,8 +1,8 @@
 <template>
   <div class="p-4 w-600px">
     <Description title="基础示例" @register="register">
-      <template #usernameLabel>1</template>
-      <template #usernameValue>2</template>
+      <template #usernameLabel="{ model, field }">{{ field }}</template>
+      <template #usernameValue="res">{{ res }}</template>
     </Description>
   </div>
 </template>

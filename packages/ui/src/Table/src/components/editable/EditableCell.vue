@@ -127,7 +127,11 @@ export default defineComponent({
         // showCount: true,
         maxlength: 100,
         size: 'small',
-        getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
+        getPopupContainer: (e) => {
+          return !!index
+            ? e.parentNode
+            : unref(table?.wrapRef.value) ?? document.body
+        },
         placeholder: createPlaceholderMessage(unref(getComponent)),
         ...apiSelectProps,
         ...compProps,

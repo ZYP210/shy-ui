@@ -64,14 +64,20 @@ export default defineComponent({
                 class={`${prefixCls}-label`}
               >
                 {slots[`${item.field}Label`]
-                  ? slots[`${item.field}Label`]?.()
+                  ? slots[`${item.field}Label`]?.({
+                      model: getProps.value.data,
+                      field: item.label
+                    })
                   : item.label}
                 {getProps.value?.isShowColon ? ':' : ''}
               </span>
 
               <span class={`${prefixCls}-value`}>
                 {slots[`${item.field}Value`]
-                  ? slots[`${item.field}Value`]?.()
+                  ? slots[`${item.field}Value`]?.({
+                      model: getProps.value.data,
+                      field: getProps.value.data[`${item.field}`]
+                    })
                   : getProps.value.data[`${item.field}`]}
                 {item?.isCopy ? (
                   <span
