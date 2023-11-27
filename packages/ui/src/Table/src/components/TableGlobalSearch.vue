@@ -119,7 +119,7 @@ export default defineComponent({
 
     const globalSearchWrapperRef = ref()
     const clickOutside = (e) => {
-      if (document.querySelector('.table-settings').contains(e.target)) return
+      if (document.querySelector('.table-settings')?.contains(e.target)) return
       if (globalSearchWrapperRef.value.contains(e.target)) return
       table.closeGlobalSearch()
     }

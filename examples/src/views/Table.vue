@@ -154,6 +154,7 @@ const [
   },
   rowKey: 'id',
   columns,
+  showTableSetting: false,
   formConfig: {
     schemas: searchFormSchema as any
   },

@@ -66,7 +66,7 @@ export default defineComponent({
     const clickOutside = (e) => {
       if (tableAdvancedSearchWrapperRef.value.contains(e.target)) return
 
-      if (document.querySelector('.table-settings').contains(e.target)) return
+      if (document.querySelector('.table-settings')?.contains(e.target)) return
       if (e.target.classList.contains('shy-basic-minus-icon')) return
 
       const selectList = document.getElementsByClassName('ant-select-dropdown')
