@@ -23,6 +23,10 @@ export const basicProps = {
     type: String,
     default: () => 'right'
   },
+  labelWidth: {
+    type: Number as PropType<number | string>,
+    default: () => 80
+  },
   isShowColon: {
     type: Boolean,
     default: () => true

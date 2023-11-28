@@ -14,6 +14,7 @@ export interface DescItem {
 export interface DescriptionProps {
   schema: DescItem[]
   data: Recordable
+  labelWidth?: number
   isShowColon?: boolean
   labelAlign?: string
   labelStyle?: CSSProperties

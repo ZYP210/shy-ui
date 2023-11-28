@@ -60,6 +60,7 @@ export default defineComponent({
               {slots?.[`${item.field}Label`] || item.label ? (
                 <span
                   style={{
+                    width: `${getProps.value.labelWidth}px`,
                     textAlign: getProps.value.labelAlign,
                     ...(getProps.value?.labelStyle
                       ? getProps.value?.labelStyle
