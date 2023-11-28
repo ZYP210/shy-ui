@@ -1,4 +1,5 @@
 import { PropType } from 'vue'
+import type { CSSProperties } from 'vue'
 
 export interface Schema {
   label?: string
@@ -8,6 +9,8 @@ export interface Schema {
   }
   component?: 'Divider' | 'Group'
   isCopy?: boolean
+  labelStyle?: CSSProperties
+  contentStyle?: CSSProperties
 }
 export const basicColProps = 24
 
@@ -19,10 +22,6 @@ export const basicProps = {
   labelAlign: {
     type: String,
     default: () => 'right'
-  },
-  labelWidth: {
-    type: Number as PropType<number | string>,
-    default: () => 80
   },
   isShowColon: {
     type: Boolean,

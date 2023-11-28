@@ -69,6 +69,9 @@ export default defineComponent({
       if (document.querySelector('.table-settings')?.contains(e.target)) return
       if (e.target.classList.contains('shy-basic-minus-icon')) return
 
+      //fix: 修复点击长下拉框时，高级搜索框关闭的问题
+      if (e.target.nodeName === 'BODY') return
+
       const selectList = document.getElementsByClassName('ant-select-dropdown')
       const pickList = document.getElementsByClassName('ant-picker-dropdown')
 

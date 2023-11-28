@@ -34,7 +34,9 @@ export const CellComponent: FunctionalComponent = (
     {
       overlayClassName: 'edit-cell-rule-popover',
       visible: !!popoverVisible,
-      ...(getPopupContainer ? { getPopupContainer } : {})
+      getPopupContainer: (e) => {
+        return attrs.currIndex ? e.parentNode : document.body
+      }
     },
     {
       default: () => DefaultComp,

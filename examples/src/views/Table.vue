@@ -63,8 +63,8 @@ const columns: any[] = [
       options: [
         { label: 1, value: 2 },
         { label: 2, value: 3 }
-      ],
-      getPopupContainer: () => document.body
+      ]
+      // getPopupContainer: () => document.body
     }
   },
   {
@@ -94,6 +94,12 @@ const columns: any[] = [
   {
     title: '电话',
     dataIndex: 'phone',
+    component: 'Select',
+    componentProps: {
+      options: Array.from({ length: 100 }, (_, i) => {
+        return { label: i, value: i }
+      })
+    },
     editRow: true
   },
   {
@@ -154,10 +160,11 @@ const [
   },
   rowKey: 'id',
   columns,
-  showTableSetting: false,
   formConfig: {
     schemas: searchFormSchema as any
   },
+  showTableSetting: true,
+  useAdvancedSearch: true,
   rowSelection: { type: 'checkbox' },
   clickToRowSelect: false,
   useSearchForm: true,

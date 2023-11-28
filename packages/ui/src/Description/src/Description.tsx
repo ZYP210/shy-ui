@@ -3,6 +3,7 @@ import { basicProps, Schema, basicColProps } from './props'
 import { Divider } from 'ant-design-vue'
 import DescriptionGroup from './DescriptionGroup'
 import { CopyOutlined } from '@ant-design/icons-vue'
+import { useMessage } from '@shy-plugins/use'
 
 export default defineComponent({
   name: 'Description',
@@ -10,6 +11,8 @@ export default defineComponent({
   emits: ['register'],
   setup(props, { emit, slots }) {
     const prefixCls = 'shy-basic-description'
+
+    const { createMessage } = useMessage()
 
     const getProps = computed(() => {
       return {
@@ -23,17 +26,15 @@ export default defineComponent({
       innerProps.value = { ...innerProps.value, ...props }
     }
 
-    function copyToClipboard(text: string) {
-      const textarea = document.createElement('textarea')
-      textarea.value = text
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-    }
-
     const handleClick = (value: string) => {
-      copyToClipboard(value)
+      navigator.clipboard.writeText(value).then(
+        () => {
+          createMessage.success('复制成功')
+        },
+        () => {
+          createMessage.error('无法复制文本到剪贴板')
+        }
+      )
     }
 
     const rows = computed(() => {
@@ -56,23 +57,38 @@ export default defineComponent({
                 }%`
               }}
             >
-              <span
-                style={{
-                  width: `${getProps.value.labelWidth}px`,
-                  textAlign: getProps.value.labelAlign
-                }}
-                class={`${prefixCls}-label`}
-              >
-                {slots[`${item.field}Label`]
-                  ? slots[`${item.field}Label`]?.({
-                      model: getProps.value.data,
-                      field: item.label
-                    })
-                  : item.label}
-                {getProps.value?.isShowColon ? ':' : ''}
-              </span>
+              {slots?.[`${item.field}Label`] || item.label ? (
+                <span
+                  style={{
+                    textAlign: getProps.value.labelAlign,
+                    ...(getProps.value?.labelStyle
+                      ? getProps.value?.labelStyle
+                      : {}),
+                    ...(item?.labelStyle ? item?.labelStyle : {})
+                  }}
+                  class={`${prefixCls}-label`}
+                >
+                  {slots[`${item.field}Label`]
+                    ? slots[`${item.field}Label`]?.({
+                        model: getProps.value.data,
+                        field: item.label
+                      })
+                    : item.label}
+                  {getProps.value?.isShowColon ? ':' : ''}
+                </span>
+              ) : (
+                <> </>
+              )}
 
-              <span class={`${prefixCls}-value`}>
+              <span
+                class={`${prefixCls}-value`}
+                style={{
+                  ...(getProps.value?.contentStyle
+                    ? getProps.value?.contentStyle
+                    : {}),
+                  ...(item?.contentStyle ? item?.contentStyle : {})
+                }}
+              >
                 {slots[`${item.field}Value`]
                   ? slots[`${item.field}Value`]?.({
                       model: getProps.value.data,

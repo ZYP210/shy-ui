@@ -1,15 +1,23 @@
+import type { CSSProperties } from 'vue'
 export interface DescItem {
-  field: string
-  label: string
-  colProps?: { span?: number }
+  label?: string
+  field?: string
+  colProps?: {
+    span: number
+  }
+  component?: 'Divider' | 'Group'
+  isCopy?: boolean
+  labelStyle?: CSSProperties
+  contentStyle?: CSSProperties
 }
 
 export interface DescriptionProps {
   schema: DescItem[]
   data: Recordable
-  labelWidth?: number
   isShowColon?: boolean
   labelAlign?: string
+  labelStyle?: CSSProperties
+  contentStyle?: CSSProperties
 }
 
 export interface DescInstance {

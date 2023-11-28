@@ -124,14 +124,9 @@ export default defineComponent({
       }
       upEditDynamicDisabled(record, column, value)
       return {
-        // showCount: true,
         maxlength: 100,
         size: 'small',
-        getPopupContainer: (e) => {
-          return !!index
-            ? e.parentNode
-            : unref(table?.wrapRef.value) ?? document.body
-        },
+        getPopupContainer: () => unref(table?.wrapRef.value) ?? document.body,
         placeholder: createPlaceholderMessage(unref(getComponent)),
         ...apiSelectProps,
         ...compProps,
@@ -498,6 +493,7 @@ export default defineComponent({
                 onChange={this.handleChange}
                 onOptionsChange={this.handleOptionsChange}
                 onPressEnter={this.handleEnter}
+                currIndex={this.index}
               />
               {!this.getRowEditable && (
                 <div class={`${this.prefixCls}__action`}>

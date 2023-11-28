@@ -1,8 +1,9 @@
 <template>
-  <div class="p-4 w-600px">
+  <div class="p-4 w-1600px">
     <Description title="基础示例" @register="register">
-      <template #usernameLabel="{ model, field }">{{ field }}</template>
-      <template #usernameValue="res">{{ res }}</template>
+      <template #usernameValue="res">
+        <a-button :style="{ width: `200px` }" type="primary">查看证照</a-button>
+      </template>
     </Description>
   </div>
 </template>
@@ -27,9 +28,10 @@ const schema: DescItem[] = [
   },
   {
     field: 'username',
-    label: '用户名',
+    label: '',
     colProps: { span: 12 },
-    isCopy: true
+    isCopy: true,
+    contentStyle: { marginLeft: `200px` }
   },
   {
     field: 'nickName',
@@ -61,6 +63,8 @@ const schema: DescItem[] = [
 const [register] = useDescription({
   data: mockData,
   schema,
-  labelAlign: 'left'
+  labelAlign: 'left',
+  labelStyle: { width: `100px` },
+  contentStyle: {}
 })
 </script>
