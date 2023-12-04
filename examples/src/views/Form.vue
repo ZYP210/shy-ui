@@ -77,11 +77,12 @@ const schemas: FormSchema[] = [
     label: '日期范围',
     component: 'RangePicker',
     defaultValue: ['1996/10-10', '2023-11-10'],
+    colProps: { span: 24 },
     componentProps: {
       format: 'YYYY-MM-DD',
       placeholder: ['开始日期', '结束日期']
     }
-  }
+  },
 
   // {
   //   field: 'field',
@@ -216,35 +217,36 @@ const schemas: FormSchema[] = [
   //   }
   // },
   //
-  // {
-  //   field: 'table',
-  //   label: 'table',
-  //   component: 'Table',
-  //   componentProps: {
-  //     columns: [
-  //       {
-  //         title: 'a',
-  //         dataIndex: 'a'
-  //       },
-  //       {
-  //         title: 'b',
-  //         dataIndex: 'b'
-  //       },
-  //       {
-  //         title: 'c',
-  //         dataIndex: 'c'
-  //       },
-  //       {
-  //         title: 'd',
-  //         dataIndex: 'd'
-  //       },
-  //       {
-  //         title: 'e',
-  //         dataIndex: 'e'
-  //       }
-  //     ]
-  //   }
-  // }
+  {
+    field: 'table',
+    label: 'table',
+    component: 'Table',
+    cloProps: { span: 24 },
+    componentProps: {
+      columns: [
+        {
+          title: 'a',
+          dataIndex: 'a'
+        },
+        {
+          title: 'b',
+          dataIndex: 'b'
+        },
+        {
+          title: 'c',
+          dataIndex: 'c'
+        },
+        {
+          title: 'd',
+          dataIndex: 'd'
+        },
+        {
+          title: 'e',
+          dataIndex: 'e'
+        }
+      ]
+    }
+  }
   // {
   //   field: 'z',
   //   label: 'Divider',
@@ -273,7 +275,7 @@ const [
 onMounted(() => {
   setFieldsValue({
     field: 123,
-    table: [{ a: 1, b: 2, c: 3 }],
+    // table: [{ a: 1, b: 2, c: 3 }],
     c: '123'
   })
 })
@@ -327,7 +329,7 @@ const handleSubmit = (values: any) => {
 const handleGetForm = async () => {
   const values = await validate()
 
-  // console.log('values', values)
+  console.log('values', values)
 }
 
 const handleModalChange = (rows) => {

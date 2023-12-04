@@ -77,7 +77,7 @@ import {
 import { ref, unref, computed, watch } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 import { Icon } from '../../../Icon'
-const emit = defineEmits(['update:value'])
+const emit = defineEmits(['update:value', 'change'])
 
 const listFormRefs = ref<unknown[]>([])
 
@@ -102,14 +102,14 @@ const getColumns = computed(() => {
     customRender: ({ index }: { index: number }) => {
       return `${index + 1}`
     },
-    width: 50,
+    minWidth: 50,
     align: 'center'
   }
   return [indexColumn, ...props.columns] as unknown
 })
 
 const plusClickEvent = () => {
-  state.value.unshift({})
+  state.value = [{}, ...state.value]
 }
 
 const rowClickEvent = (index) => {
@@ -134,8 +134,11 @@ loadKv()
 watch(
   () => state.value,
   (v) => {
+    console.log(11, v)
+
     emit('update:value', v)
   }
+  // { immediate: true }
 )
 
 const validate = async () => {
