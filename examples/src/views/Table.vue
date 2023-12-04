@@ -68,20 +68,31 @@ const columns: any[] = [
     }
   },
   {
-    title: '产地',
-    editRow: true,
-    dataIndex: 'place',
-    editComponent: 'Input',
-    editRule: true,
-    customRender: ({ record }) => {
-      return record
-    }
+    title: '合格数',
+    dataIndex: 'qualifiedNum',
+    fixed: 'right',
+    width: 200,
+    editComponent: 'InputNumber',
+    editComponentProps({ record }) {
+      return {
+        max: 5,
+        precision: 0,
+        onChange: (val) => {
+          if (typeof val === 'number') {
+            // console.log('222')
+          }
+        }
+      }
+    },
+    editable: true,
+    edit: true,
+    editRule: true
   },
-
   {
     title: '创建/更新时间',
     dataIndex: 'createTime',
     editRow: true,
+    editRule: true,
     customRender: ({ text }) => {
       return text
     }
@@ -111,6 +122,17 @@ const columns: any[] = [
     title: '备注',
     editRow: true,
     dataIndex: 'remark'
+  },
+  {
+    title: '产地',
+    editRow: true,
+    dataIndex: 'place',
+    editComponent: 'InputNumber',
+    fixed: 'right',
+    editRule: true,
+    customRender: ({ record }) => {
+      return record
+    }
   }
 ]
 
@@ -144,7 +166,7 @@ const [
   }
 ] = useTable({
   api: (params) => {
-    return Array.from({ length: 100 }, (_, i) => {
+    return Array.from({ length: 300 }, (_, i) => {
       return {
         id: i,
         status: 0,

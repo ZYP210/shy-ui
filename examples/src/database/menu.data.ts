@@ -31,7 +31,7 @@ export const URLData: MenuList[] = [
   },
   {
     title: '常用组件',
-    urlAry: ['Description', 'Drawer', 'ModalView']
+    urlAry: ['Description', 'Drawer', 'ModalView', 'DescriptionForm']
   },
   {
     title: '基础组件',

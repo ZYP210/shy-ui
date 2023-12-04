@@ -13,6 +13,17 @@ export interface ComponentProps {
   getPopupContainer?: Fn
 }
 
+function findAncestorWithClassName(element, className) {
+  // 循环查找元素的父级节点
+  while (
+    (element = element.parentElement) &&
+    !element.classList.contains(className)
+  );
+
+  // 如果找到匹配的元素，则返回它；否则返回null
+  return element
+}
+
 export const CellComponent: FunctionalComponent = (
   {
     component = 'Input',
@@ -35,7 +46,9 @@ export const CellComponent: FunctionalComponent = (
       overlayClassName: 'edit-cell-rule-popover',
       visible: !!popoverVisible,
       getPopupContainer: (e) => {
-        return attrs.currIndex ? e.parentNode : document.body
+        return attrs.currIndex
+          ? findAncestorWithClassName(e, 'ant-table-cell') || e.parentNode
+          : document.body
       }
     },
     {
