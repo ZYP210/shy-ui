@@ -60,6 +60,10 @@ const columns: any[] = [
     editComponent: 'ApiCascader',
     editRule: true,
     editComponentProps: {
+      params: { type: 1 },
+      api: (params) => {
+        console.log(params)
+      },
       options: [
         { label: 1, value: 2, children: [{ label: 1, value: 2 }] },
         { label: 2, value: 3 }

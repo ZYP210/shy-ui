@@ -69,6 +69,9 @@ export default defineConfig({
       formats: ['es', 'cjs']
     }
   },
+  esbuild: {
+    pure: ['console.log', 'debugger']
+  },
   plugins: [
     vue(),
     vueJsx(),

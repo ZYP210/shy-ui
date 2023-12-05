@@ -65,6 +65,10 @@ export default defineComponent({
     },
     displayRenderArray: {
       type: Array
+    },
+    params: {
+      type: Object as PropType<Recordable>,
+      default: () => {}
     }
   },
   emits: ['change', 'defaultChange'],
@@ -138,6 +142,7 @@ export default defineComponent({
       if (!api || !isFunction(api)) return
       try {
         const res = await api({
+          ...props.params,
           [props.asyncFetchParamKey]: Reflect.get(targetOption, 'value')
         })
         if (Array.isArray(res)) {
