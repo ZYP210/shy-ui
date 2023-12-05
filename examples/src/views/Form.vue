@@ -275,7 +275,7 @@ const [
 onMounted(() => {
   setFieldsValue({
     field: 123,
-    // table: [{ a: 1, b: 2, c: 3 }],
+    table: [{ a: 1, b: 2, c: 3 }],
     c: '123'
   })
 })

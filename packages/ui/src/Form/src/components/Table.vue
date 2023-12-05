@@ -10,7 +10,10 @@
   >
     <template #headerCell="{ column }">
       <div v-if="column.dataIndex === 'index'">
-        <div class="table-plus" @click="plusClickEvent">+</div>
+        <div v-if="isShowAction" class="table-plus" @click="plusClickEvent">
+          +
+        </div>
+        <div v-else>序号</div>
       </div>
     </template>
 
@@ -58,17 +61,17 @@
       </template>
 
       <div v-else class="delete-wrapper">
-        <span class="delete-index">{{ index + 1 }}</span>
+        <span v-if="isShowAction" class="delete-index">{{ index + 1 }}</span>
 
         <div
-          v-if="props.isShowAction"
+          v-if="isShowAction"
           class="delete-item"
           @click="rowClickEvent(index)"
         >
           <Icon icon="ant-design:delete-filled" color="#fff" />
         </div>
 
-        <span v-else class="delete-index">{{ index + 1 }}</span>
+        <span v-else class="">{{ index + 1 }}</span>
       </div>
     </template>
   </Table>
@@ -179,6 +182,7 @@ defineExpose({ validate })
   box-sizing: border-box;
   line-height: 30px;
   cursor: pointer;
+  text-align: center;
 }
 
 .table-children::v-deep(.ant-form-item) {
