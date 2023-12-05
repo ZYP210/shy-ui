@@ -48,7 +48,11 @@
               :precision="column.precision ?? 2"
             />
 
-            <Input v-else v-model:value="record[column.dataIndex]" />
+            <Input
+              v-else
+              v-model:value="record[column.dataIndex]"
+              :disabled="!props.isShowAction"
+            />
           </FormItem>
         </Form>
       </template>
@@ -56,9 +60,15 @@
       <div v-else class="delete-wrapper">
         <span class="delete-index">{{ index + 1 }}</span>
 
-        <div class="delete-item" @click="rowClickEvent(index)">
+        <div
+          v-if="props.isShowAction"
+          class="delete-item"
+          @click="rowClickEvent(index)"
+        >
           <Icon icon="ant-design:delete-filled" color="#fff" />
         </div>
+
+        <span v-else class="delete-index">{{ index + 1 }}</span>
       </div>
     </template>
   </Table>
@@ -89,6 +99,10 @@ const props = defineProps({
   value: {
     type: Array,
     default: () => []
+  },
+  isShowAction: {
+    type: Boolean,
+    default: () => true
   }
 })
 
