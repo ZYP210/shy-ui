@@ -12,3 +12,4 @@ export type ComponentType =
   | 'RadioGroup'
   | 'RadioButtonGroup'
   | 'ApiRadioGroup'
+  | 'ApiCascader'

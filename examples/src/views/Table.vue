@@ -57,11 +57,11 @@ const columns: any[] = [
     title: '产地范围',
     dataIndex: 'rangePlace',
     editRow: true,
-    editComponent: 'Select',
+    editComponent: 'ApiCascader',
     editRule: true,
     editComponentProps: {
       options: [
-        { label: 1, value: 2 },
+        { label: 1, value: 2, children: [{ label: 1, value: 2 }] },
         { label: 2, value: 3 }
       ]
       // getPopupContainer: () => document.body
@@ -210,6 +210,7 @@ async function handleSave(record) {
   }
   try {
     const data = cloneDeep(record.editValueRefs)
+    console.log('data', data)
 
     if (record.id.toString().indexOf('noSave') !== -1) {
       // await saveApi([data])

@@ -15,7 +15,8 @@ import {
   ApiSelect,
   ApiTreeSelect,
   RadioButtonGroup,
-  ApiRadioGroup
+  ApiRadioGroup,
+  ApiCascader
 } from '../../Form'
 
 const componentMap = new Map<ComponentType, Component>()
@@ -33,6 +34,7 @@ componentMap.set('TimePicker', TimePicker)
 componentMap.set('RadioGroup', Radio.Group)
 componentMap.set('RadioButtonGroup', RadioButtonGroup)
 componentMap.set('ApiRadioGroup', ApiRadioGroup)
+componentMap.set('ApiCascader', ApiCascader)
 
 export function add(compName: ComponentType, component: Component) {
   componentMap.set(compName, component)
