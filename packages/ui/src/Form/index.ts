@@ -2,7 +2,7 @@ import BasicForm from './src/BasicForm.vue'
 import './src/style/index.less'
 export * from './src/types/form'
 export * from './src/types/formItem'
-
+import FormItem from './src/components/FormItem.vue'
 export { useComponentRegister } from './src/hooks/useComponentRegister'
 export { useForm } from './src/hooks/useForm'
 
@@ -16,4 +16,4 @@ export { default as ApiTransfer } from './src/components/ApiTransfer.vue'
 export { default as TableChildren } from './src/components/Table.vue'
 export { default as ApiModalSelect } from './src/components/ApiModalSelect/ApiModalSelect.vue'
 
-export { BasicForm }
+export { BasicForm, FormItem }
