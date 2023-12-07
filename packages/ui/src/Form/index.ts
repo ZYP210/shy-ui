@@ -2,10 +2,11 @@ import BasicForm from './src/BasicForm.vue'
 import './src/style/index.less'
 export * from './src/types/form'
 export * from './src/types/formItem'
-import FormItem from './src/components/FormItem.vue'
+export * from './src/types/index'
+export * from './src/componentMap'
 export { useComponentRegister } from './src/hooks/useComponentRegister'
 export { useForm } from './src/hooks/useForm'
-
+export { default as FormItem } from './src/components/FormItem.vue'
 export { default as ApiSelect } from './src/components/ApiSelect.vue'
 export { default as RadioButtonGroup } from './src/components/RadioButtonGroup.vue'
 export { default as ApiTreeSelect } from './src/components/ApiTreeSelect.vue'
@@ -16,4 +17,4 @@ export { default as ApiTransfer } from './src/components/ApiTransfer.vue'
 export { default as TableChildren } from './src/components/Table.vue'
 export { default as ApiModalSelect } from './src/components/ApiModalSelect/ApiModalSelect.vue'
 
-export { BasicForm, FormItem }
+export { BasicForm }
