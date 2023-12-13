@@ -188,6 +188,11 @@ export default defineComponent({
       return `edit-cell-align-${align}`
     })
 
+    const getErrorClass = computed(() => {
+      const isRule = unref(getRuleVisible)
+      return isRule ? `${prefixCls}__rule` : ''
+    })
+
     const getRowEditable = computed(() => {
       const { editable } = props.record || {}
       return !!editable
@@ -444,7 +449,8 @@ export default defineComponent({
       getValues,
       handleEnter,
       handleSubmitClick,
-      spinning
+      spinning,
+      getErrorClass
     }
   },
   render() {
@@ -488,7 +494,7 @@ export default defineComponent({
                 popoverVisible={this.getRuleVisible}
                 rule={this.getRule}
                 ruleMessage={this.ruleMessage}
-                class={this.getWrapperClass}
+                class={[this.getWrapperClass, this.getErrorClass]}
                 ref="elRef"
                 onChange={this.handleChange}
                 onOptionsChange={this.handleOptionsChange}
@@ -571,6 +577,15 @@ export default defineComponent({
       svg {
         color: @primary-color;
       }
+    }
+  }
+
+  &__rule {
+    border: 1px solid @error-color !important;
+
+    &::placeholder,
+    & ::placeholder {
+      color: @error-color !important;
     }
   }
 

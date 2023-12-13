@@ -2,14 +2,16 @@
   <div class="p-4 w-1600px">
     <Description title="基础示例" @register="register">
       <template #usernameValue="res">
-        <a-button :style="{ width: `200px` }" type="primary">查看证照</a-button>
+        <!-- {{ fun() }}  -->
+        <component :is="fun('red')" />
       </template>
     </Description>
   </div>
 </template>
 <script lang="ts" setup>
 import { Description, DescItem, useDescription } from '3h1-ui'
-
+import { h } from 'vue'
+import { Tag } from 'ant-design-vue'
 const mockData: any = {
   username: 'test',
   nickName: 'VB',
@@ -59,7 +61,9 @@ const schema: DescItem[] = [
     colProps: { span: 8 }
   }
 ]
-
+const fun = (color) => {
+  return h(Tag, { style: { color } }, 222)
+}
 const [register] = useDescription({
   data: mockData,
   schema,

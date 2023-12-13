@@ -151,8 +151,6 @@ loadKv()
 watch(
   () => state.value,
   (v) => {
-    console.log(11, v)
-
     emit('update:value', v)
   }
   // { immediate: true }

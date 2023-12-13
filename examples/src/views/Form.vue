@@ -34,6 +34,7 @@ import { ref } from 'vue'
 import dayjs from 'dayjs'
 
 const a = ref('')
+
 const timeRange = [dayjs(), dayjs()]
 
 const tree = {
@@ -43,21 +44,44 @@ const tree = {
     )
   }
 }
-
 const schemas: FormSchema[] = [
   {
     field: 'type',
     label: '类型',
-    component: 'RadioButtonGroup',
-    defaultValue: 1,
+    component: 'ApiCascader',
     componentProps: {
-      options: [
-        { label: '资源', value: 1 },
-        { label: '菜单', value: 2 }
-      ],
-      onChange: (e: any) => {
-        console.log('888888', e)
+      // initFetchParams: { zzz: 3 },
+      params: { zzz: 1 },
+      api: async (params) => {
+        console.log(params)
+        return [
+          {
+            label: 2,
+            value: 3,
+            children: [
+              { label: 'zzz', value: 5, isLeaf: true },
+              { label: 'zzz3333', value: 6, isLeaf: true }
+            ]
+          },
+          {
+            label: 4,
+            value: 4
+          }
+        ]
+      },
+      isLeaf: (record) => {
+        return record.isLeaf
+      },
+      onChange: (e, ...v) => {
+        console.log('ApiCascader====>:', e, v)
       }
+      // options: [
+      //   { label: 1, value: 1, children: [{ label: 2, value: 2 }] },
+      //   { label: 3, value: 3, isLeaf: false }
+      // ]
+      // onChange: (e: any) => {
+      //   console.log('888888', e)
+      // }
     }
   },
 
@@ -246,23 +270,23 @@ const schemas: FormSchema[] = [
         }
       ]
     }
-  }
+  },
   // {
   //   field: 'z',
   //   label: 'Divider',
   //   component: 'Divider',
   //   colProps: { span: 24 }
   // },
-  // {
-  //   field: 'c',
-  //   label: '选择弹框',
-  //   component: 'Input',
-  //   slot: 'ApiModalSelect',
-  //   componentProps: {
-  //     autoLink: false
-  //   },
-  //   required: true
-  // }
+  {
+    field: 'c',
+    label: '选择弹框',
+    component: 'Input',
+    slot: 'ApiModalSelect',
+    componentProps: {
+      autoLink: false
+    },
+    required: true
+  }
 ]
 const { createMessage } = useMessage()
 const [

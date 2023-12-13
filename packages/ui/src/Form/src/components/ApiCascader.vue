@@ -119,7 +119,7 @@ export default defineComponent({
       apiData.value = []
       loading.value = true
       try {
-        const res = await api(props.initFetchParams)
+        const res = await api({ ...props.initFetchParams, ...props.params })
         if (Array.isArray(res)) {
           apiData.value = res
           return
@@ -197,5 +197,5 @@ export default defineComponent({
       handleRenderDisplay
     }
   }
-})
+}) as any
 </script>

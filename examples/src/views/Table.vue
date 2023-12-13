@@ -57,19 +57,23 @@ const columns: any[] = [
     title: '产地范围',
     dataIndex: 'rangePlace',
     editRow: true,
-    editComponent: 'ApiCascader',
+    editComponent: 'Input',
     editRule: true,
-    editComponentProps: {
-      params: { type: 1 },
-      api: (params) => {
-        console.log(params)
-      },
-      options: [
-        { label: 1, value: 2, children: [{ label: 1, value: 2 }] },
-        { label: 2, value: 3 }
-      ]
+    editComponentProps: (params) => {
+      console.log('params', params)
+      return {
+        params: { type: 1 },
+        api: (params) => {
+          console.log(params)
+          return [
+            { label: 1, value: 2, children: [{ label: 1, value: 2 }] },
+            { label: 2, value: 3 }
+          ]
+        }
+      }
       // getPopupContainer: () => document.body
-    }
+    },
+    globalShow: false
   },
   {
     title: '合格数',
@@ -90,7 +94,8 @@ const columns: any[] = [
     },
     editable: true,
     edit: true,
-    editRule: true
+    editRule: true,
+    globalShow: false
   },
   {
     title: '创建/更新时间',
@@ -99,12 +104,14 @@ const columns: any[] = [
     editRule: true,
     customRender: ({ text }) => {
       return text
-    }
+    },
+    globalShow: false
   },
   {
     title: '厂家名称',
     dataIndex: 'name',
-    editRow: true
+    editRow: true,
+    globalShow: false
   },
   {
     title: '电话',
@@ -115,17 +122,20 @@ const columns: any[] = [
         return { label: i, value: i }
       })
     },
-    editRow: true
+    editRow: true,
+    globalShow: false
   },
   {
     title: '地址',
     dataIndex: 'address',
-    editRow: true
+    editRow: true,
+    globalShow: false
   },
   {
     title: '备注',
     editRow: true,
-    dataIndex: 'remark'
+    dataIndex: 'remark',
+    globalShow: false
   },
   {
     title: '产地',
@@ -136,7 +146,8 @@ const columns: any[] = [
     editRule: true,
     customRender: ({ record }) => {
       return record
-    }
+    },
+    globalShow: false
   }
 ]
 
