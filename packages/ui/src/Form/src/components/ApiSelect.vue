@@ -181,5 +181,5 @@ export default defineComponent({
       filterOption
     }
   }
-})
+}) as any
 </script>

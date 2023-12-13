@@ -134,8 +134,7 @@ const columns: any[] = [
   {
     title: '备注',
     editRow: true,
-    dataIndex: 'remark',
-    globalShow: false
+    dataIndex: 'remark'
   },
   {
     title: '产地',
@@ -146,8 +145,7 @@ const columns: any[] = [
     editRule: true,
     customRender: ({ record }) => {
       return record
-    },
-    globalShow: false
+    }
   }
 ]
 

@@ -1,6 +1,6 @@
 <template>
   <div class="table-settings">
-    <GlobalSearch v-if="getBindValues.useAdvancedSearch" />
+    <GlobalSearch v-if="ifShowGlobalSearch" />
 
     <AdvancedSearchSetting
       v-if="getBindValues.useAdvancedSearch"
@@ -87,7 +87,25 @@ export default defineComponent({
 
     const { getBindValues } = useTableContext()
 
-    return { getSetting, handleColumnChange, getTableContainer, getBindValues }
+    const ifShowGlobalSearch = computed(() => {
+      return (
+        getBindValues.value.useAdvancedSearch &&
+        getBindValues.value.columns.some((item) => {
+          return (
+            item.dataIndex !== 'action' &&
+            [true, undefined].includes(item.globalShow)
+          )
+        })
+      )
+    })
+
+    return {
+      getSetting,
+      handleColumnChange,
+      getTableContainer,
+      getBindValues,
+      ifShowGlobalSearch
+    }
   }
 })
 </script>

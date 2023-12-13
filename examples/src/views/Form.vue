@@ -30,8 +30,9 @@ import {
 import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
 import { onMounted } from 'vue'
-import { ref } from 'vue'
+import { ref, h } from 'vue'
 import dayjs from 'dayjs'
+import { Select } from 'ant-design-vue'
 const a = ref('')
 
 const timeRange = [dayjs(), dayjs()]
@@ -126,27 +127,44 @@ const schemas: FormSchema[] = [
   //     }
   //   }
   // },
-  // {
-  //   field: 'ApiSelect',
-  //   label: 'ApiSelect',
-  //   component: 'ApiSelect',
-  //   colProps: { span: 8 },
-  //   componentProps: {
-  //     api: () =>
-  //       new Promise((resolve) =>
-  //         resolve([
-  //           { label: 'a', value: '1' },
-  //           { label: 'b', value: '2' },
-  //           { label: 'c', value: '3' },
-  //           { label: 'd', value: '4' },
-  //           { label: 'e', value: '5' },
-  //           { label: '中文', value: '6' },
-  //           { label: '英文', value: '7' },
-  //           { label: '德文', value: '8' }
-  //         ])
-  //       )
-  //   }
-  // },
+  {
+    field: 'test',
+    label: 'test',
+    component: 'ApiSelect',
+    render: () => {
+      return h(Select, {
+        options: [{ label: 'a', value: '1' }],
+        onChange: (...args) => {
+          console.log(2222, args)
+        }
+      })
+    }
+  },
+  {
+    field: 'ApiSelect',
+    label: 'ApiSelect',
+    component: 'ApiSelect',
+    colProps: { span: 8 },
+    componentProps: {
+      api: () =>
+        new Promise((resolve) =>
+          resolve([
+            { label: 'a', value: '1' },
+            { label: 'b', value: '2' },
+            { label: 'c', value: '3' },
+            { label: 'd', value: '4' },
+            { label: 'e', value: '5' },
+            { label: '中文', value: '6' },
+            { label: '英文', value: '7' },
+            { label: '德文', value: '8' }
+          ])
+        ),
+      immediate: true,
+      onChange: (a, b) => {
+        console.log('111', a, b)
+      }
+    }
+  },
   // {
   //   field: 'ApiSelectFieldNames',
   //   label: 'ApiSelectFieldNames',

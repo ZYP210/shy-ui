@@ -294,18 +294,14 @@ export default defineComponent({
       const on = {
         [eventKey]: (...args: Nullable<Recordable>[]) => {
           const [e] = args
+
+          if (propsData[eventKey] && args.length >= 1) {
+            propsData[eventKey](...args)
+          }
+
           const target = e ? e.target : null
           const value = target ? (isCheck ? target.checked : target.value) : e
-          if (props.formModel[field] === value) return
           props.setFormModel(field, value)
-          //修改下拉选数据没有同步开始shy-edit
-          if (propsData[eventKey] && args.length >= 1) {
-            propsData[eventKey](value)
-          }
-          //修改下拉选数据没有同步结束
-          // if (propsData[eventKey]) {
-          //   propsData[eventKey](...args);
-          // }
         }
       }
       const Comp = componentMap.get(component) as ReturnType<
