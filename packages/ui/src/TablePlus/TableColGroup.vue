@@ -1,17 +1,12 @@
 <template>
-  <VxeColgroup :title="column.groupName">
+  <VxeColgroup :title="column.groupName" v-bind="column">
     <template v-for="c in column.children" :key="c.field">
       <TableColGroup
         v-if="c?.groupName"
         :column="c"
         @handleSortChange="handleSortChange"
       />
-      <vxe-column
-        v-else
-        title="a"
-        :field="c.field"
-        :edit-render="c?.editRender || undefined"
-      >
+      <vxe-column v-else v-bind="c" :edit-render="c?.editRender || undefined">
         <template #default="config">
           <slot :name="c.field" v-bind="config">
             <template v-if="config.row._isEdit && column?.isEdit">

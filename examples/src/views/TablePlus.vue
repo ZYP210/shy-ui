@@ -61,7 +61,8 @@ const columns = [
   },
   {
     title: 'b',
-    field: 'b'
+    field: 'b',
+    width: 100
   },
   // { title: 'c', field: 'c', width: 300 },
   // { title: 'd', field: 'd', width: 300 },
@@ -69,14 +70,14 @@ const columns = [
   // { title: 'f', field: 'f', width: 300 },
   // { title: 'g', field: 'g', width: 300 },
   {
-    groupName: 'aa',
+    groupName: 'bb',
     children: [
       { title: '测试a', field: 'a-a', width: 100, sortable: true },
       { title: '测试b', field: 'a-b', width: 100 },
-      { title: '测试c', field: 'a-c', width: 100 },
+      { title: '测试c', field: 'a-c', width: 200 },
       {
         groupName: 'cc',
-        children: [{ title: '测试a', field: 'a-a', width: 100, sortable: true }]
+        children: [{ title: '测试a', field: 'a-a', width: 200, sortable: true }]
       }
     ]
   }
