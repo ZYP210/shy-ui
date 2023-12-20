@@ -154,6 +154,13 @@ const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
     label: `demo${i}`,
     field: `demo${i}`,
     component: 'Input',
+    componentProps: ({ ...ages }) => {
+      return {
+        onModelChange: (e) => {
+          console.log(e, ages)
+        }
+      }
+    },
     colProps: { span: 6 }
   }
 })
@@ -163,8 +170,12 @@ searchFormSchema.unshift({
   component: 'RangePicker',
   field: '[startDate, endDate]',
   defaultValue: [dayjs().add(-30, 'd').format('YYYY-MM-DD'), dayjs()],
-  componentProps: {
-    style: { width: '100%' }
+  componentProps: ({ ...ages }) => {
+    return {
+      onModelChange: (e) => {
+        console.log(e, ages)
+      }
+    }
   },
   colProps: { span: 6 }
 })
@@ -175,7 +186,8 @@ const [
     reload,
     setProps,
     getDataSource,
-    setTableData /*getSelectRows, clearSelectedRowKeys*/
+    setTableData /*getSelectRows, clearSelectedRowKeys*/,
+    getForm
   }
 ] = useTable({
   api: (params) => {
@@ -257,6 +269,15 @@ const pushApi = async () => {
     })
   )
 }
+
+onMounted(() => {
+  const form = getForm()
+  setTimeout(() => {
+    form.setFieldsValue({
+      demo0: '123'
+    })
+  }, 1000)
+})
 </script>
 
 <style scoped>

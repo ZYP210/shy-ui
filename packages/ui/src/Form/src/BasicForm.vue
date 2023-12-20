@@ -78,7 +78,7 @@ import FormItem from './components/FormItem.vue'
 import FormAction from './components/FormAction.vue'
 
 import { dateItemType } from './helper'
-import { dateUtil, deepMerge } from '@shy-plugins/utils'
+import { dateUtil, deepMerge, isFunction } from '@shy-plugins/utils'
 
 // import { cloneDeep } from 'lodash-es';
 
@@ -296,9 +296,36 @@ export default defineComponent({
       }
     )
 
+    const tempFormModel = reactive<Recordable>({})
+
     watch(
       () => formModel,
-      useDebounceFn(() => {
+      useDebounceFn((val) => {
+        for (const key in val) {
+          if (val[key] !== tempFormModel[key]) {
+            unref(getProps).schemas?.forEach((item) => {
+              const isComponentProps = item.field === key && item.componentProps
+              if (
+                isComponentProps &&
+                !isFunction(item.componentProps) &&
+                item.componentProps?.onModelChange
+              ) {
+                item.componentProps.onModelChange(val[key])
+              } else if (isComponentProps && isFunction(item.componentProps)) {
+                const modelProps = item.componentProps({
+                  schema: item,
+                  formModel: formModel,
+                  formActionType: formActionType as FormActionType,
+                  tableAction: props.tableAction
+                })
+                if (modelProps.onModelChange) {
+                  modelProps.onModelChange(val[key])
+                }
+              }
+            })
+          }
+        }
+        Object.assign(tempFormModel, formModel)
         unref(getProps).submitOnChange && handleSubmit()
       }, 300),
       { deep: true }

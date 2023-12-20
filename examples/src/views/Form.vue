@@ -44,7 +44,7 @@ const tree = {
     )
   }
 }
-const schemas: FormSchema[] = [
+const schemas = ref<FormSchema[]>([
   {
     field: 'type',
     label: '类型',
@@ -88,7 +88,12 @@ const schemas: FormSchema[] = [
   {
     label: 'a',
     field: 'a',
-    component: 'Input'
+    component: 'Input',
+    componentProps: {
+      onModelChange: (e) => {
+        console.log('111', e)
+      }
+    }
   },
   {
     label: 'b',
@@ -160,8 +165,8 @@ const schemas: FormSchema[] = [
           ])
         ),
       immediate: true,
-      onChange: (a, b) => {
-        console.log('111', a, b)
+      onModelChange: (e) => {
+        console.log('111', e)
       }
     }
   },
@@ -263,29 +268,34 @@ const schemas: FormSchema[] = [
     label: 'table',
     component: 'Table',
     cloProps: { span: 24 },
-    componentProps: {
-      columns: [
-        {
-          title: 'a',
-          dataIndex: 'a'
+    componentProps: ({ ...ages }) => {
+      return {
+        onModelChange: (e) => {
+          console.log(e, ages)
         },
-        {
-          title: 'b',
-          dataIndex: 'b'
-        },
-        {
-          title: 'c',
-          dataIndex: 'c'
-        },
-        {
-          title: 'd',
-          dataIndex: 'd'
-        },
-        {
-          title: 'e',
-          dataIndex: 'e'
-        }
-      ]
+        columns: [
+          {
+            title: 'a',
+            dataIndex: 'a'
+          },
+          {
+            title: 'b',
+            dataIndex: 'b'
+          },
+          {
+            title: 'c',
+            dataIndex: 'c'
+          },
+          {
+            title: 'd',
+            dataIndex: 'd'
+          },
+          {
+            title: 'e',
+            dataIndex: 'e'
+          }
+        ]
+      }
     }
   },
   // {
@@ -304,7 +314,7 @@ const schemas: FormSchema[] = [
     },
     required: true
   }
-]
+])
 const { createMessage } = useMessage()
 const [
   registerForm,
@@ -315,10 +325,18 @@ const [
 
 onMounted(() => {
   setFieldsValue({
-    field: 123,
+    ApiSelect: 777,
     table: [{ a: 1, b: 2, c: 3 }],
     c: '123'
   })
+
+  setTimeout(() => {
+    setFieldsValue({
+      field: 123,
+      table: [{ a: 9, b: 10, c: 11 }],
+      ApiSelect: '123'
+    })
+  }, 5000)
 })
 
 const data = ref([])
