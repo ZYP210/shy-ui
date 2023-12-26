@@ -2,7 +2,8 @@ import type {
   BasicColumn,
   BasicTableProps,
   CellFormat,
-  GetColumnsParams
+  GetColumnsParams,
+  TableActionType
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 import type { ComputedRef } from 'vue'
@@ -130,7 +131,8 @@ function handleActionColumn(
 
 export function useColumns(
   propsRef: ComputedRef<BasicTableProps>,
-  getPaginationRef: ComputedRef<boolean | PaginationProps>
+  getPaginationRef: ComputedRef<boolean | PaginationProps>,
+  tableAction: ComputedRef<TableActionType>
 ) {
   const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<
     BasicColumn[]
@@ -204,7 +206,7 @@ export function useColumns(
 
         // edit table
         if ((edit || editRow) && !isDefaultAction) {
-          column.customRender = renderEditCell(column)
+          column.customRender = renderEditCell(column, tableAction.value)
         }
         if (propsRef.value.useAdvancedSearch) {
           if (column.flag === 'INDEX' || column.flag === 'ACTION') {

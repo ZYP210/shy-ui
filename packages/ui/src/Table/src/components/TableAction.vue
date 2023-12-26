@@ -116,7 +116,11 @@ const getActions = computed<Array<PopconfirmProps & ActionItem>>(() => {
   const cacheActions = []
   return (toRaw(props.actions) || [])
     .filter((action, _) => {
-      if (isIfShow(action) && cacheActions.length < props.showCount) {
+      if (
+        isIfShow(action) &&
+        cacheActions.length <
+          props.showCount - (props.actions.length !== props.showCount ? 1 : 0)
+      ) {
         cacheActions.push(action)
         return true
       } else return false
@@ -146,7 +150,11 @@ const getDropdownList = computed((): any[] => {
   const cacheActions = []
 
   const list = (toRaw(props.actions) || []).filter((action, index) => {
-    if (isIfShow(action) && cacheActions.length < props.showCount) {
+    if (
+      isIfShow(action) &&
+      cacheActions.length <
+        props.showCount - (props.actions.length !== props.showCount ? 1 : 0)
+    ) {
       cacheActions.push(action)
       return false
     } else if (isIfShow(action)) return true

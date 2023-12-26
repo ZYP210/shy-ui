@@ -1,4 +1,4 @@
-import type { BasicColumn } from '../../types/table'
+import type { BasicColumn, TableActionType } from '../../types/table'
 
 import { h, Ref, toRaw, ref } from 'vue'
 
@@ -17,7 +17,10 @@ export function isNeedRefresh() {
   uuId.value = buildUUID()
 }
 
-export function renderEditCell(column: BasicColumn) {
+export function renderEditCell(
+  column: BasicColumn,
+  tableAction: TableActionType
+) {
   return ({ text: value, record, index }: Params) => {
     toRaw(record).onValid = async () => {
       if (isArray(record?.validCbs)) {
@@ -55,6 +58,7 @@ export function renderEditCell(column: BasicColumn) {
       record,
       column,
       index,
+      tableAction,
       uuId: uuId.value
     })
   }

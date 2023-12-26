@@ -227,6 +227,8 @@ export default defineComponent({
       onChange && isFunction(onChange) && onChange.call(undefined, ...args)
     }
 
+    const tableActionRef = computed(() => tableAction)
+
     const {
       getViewColumns,
       getColumns,
@@ -234,7 +236,7 @@ export default defineComponent({
       setColumns,
       getColumnsRef,
       getCacheColumns
-    } = useColumns(getProps, getPaginationInfo)
+    } = useColumns(getProps, getPaginationInfo, tableActionRef)
 
     const { getScrollRef, redoHeight } = useTableScroll(
       getProps,

@@ -25,6 +25,10 @@
                   onClick: handleSave.bind(null, record)
                 },
                 {
+                  label: '测试',
+                  onClick: handleSave.bind(null, record)
+                },
+                {
                   label: '取消',
                   popConfirm: {
                     title: '是否取消编辑',
@@ -81,7 +85,7 @@ const columns: any[] = [
     fixed: 'right',
     width: 200,
     editComponent: 'InputNumber',
-    editComponentProps({ record }) {
+    editComponentProps({ record, tableAction }) {
       return {
         max: 5,
         precision: 0,
@@ -210,6 +214,7 @@ const [
   formConfig: {
     schemas: searchFormSchema as any
   },
+  showIndexColumn: true,
   showTableSetting: true,
   useAdvancedSearch: true,
   rowSelection: { type: 'checkbox' },

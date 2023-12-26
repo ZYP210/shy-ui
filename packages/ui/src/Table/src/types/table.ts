@@ -499,6 +499,7 @@ export type BasicColumn = {
         record: Recordable
         column: BasicColumn
         index: number
+        typeAction: TableActionType
       }) => Recordable)
     | Recordable
   editRule?: boolean | ((text: string, record: Recordable) => Promise<string>)

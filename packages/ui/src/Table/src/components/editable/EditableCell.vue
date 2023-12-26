@@ -9,7 +9,7 @@ import {
   unref,
   watchEffect
 } from 'vue'
-import type { BasicColumn } from '../../types/table'
+import type { BasicColumn, TableActionType } from '../../types/table'
 // import type { EditRecordRow } from './index'
 import {
   CheckOutlined,
@@ -66,7 +66,10 @@ export default defineComponent({
       type: String,
       default: ''
     },
-    index: propTypes.number
+    index: propTypes.number,
+    tableAction: {
+      type: Object as PropType<TableActionType>
+    }
   },
   setup(props) {
     const table = useTableContext()
@@ -107,10 +110,10 @@ export default defineComponent({
         : val
 
       let compProps = props.column?.editComponentProps ?? ({} as any)
-      const { record, column, index } = props
+      const { record, column, index, tableAction } = props
 
       if (isFunction(compProps)) {
-        compProps = compProps({ text: val, record, column, index }) ?? {}
+        compProps = compProps({ text: val, record, column, index, tableAction }) ?? {}
       }
 
       // 用临时变量存储 onChange方法 用于 handleChange方法 获取，并删除原始onChange, 防止存在两个 onChange
