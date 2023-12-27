@@ -23,7 +23,6 @@ import { useTableContext } from '../../hooks/useTableContext'
 import { clickOutside } from '../../../../directives'
 
 import {
-  propTypes,
   isArray,
   isBoolean,
   isFunction,
@@ -66,7 +65,10 @@ export default defineComponent({
       type: String,
       default: ''
     },
-    index: propTypes.number,
+    index: {
+      type: Number,
+      default: 0
+    },
     tableAction: {
       type: Object as PropType<TableActionType>
     }
@@ -113,7 +115,8 @@ export default defineComponent({
       const { record, column, index, tableAction } = props
 
       if (isFunction(compProps)) {
-        compProps = compProps({ text: val, record, column, index, tableAction }) ?? {}
+        compProps =
+          compProps({ text: val, record, column, index, tableAction }) ?? {}
       }
 
       // 用临时变量存储 onChange方法 用于 handleChange方法 获取，并删除原始onChange, 防止存在两个 onChange
@@ -522,7 +525,7 @@ export default defineComponent({
       </div>
     )
   }
-}) as any
+})
 </script>
 <style lang="less">
 @prefix-cls: ~'@{namespace}-editable-cell';

@@ -30,7 +30,7 @@ export interface ButtonProps extends AntdButtonProps {
 
 export interface FormActionType {
   submit: () => Promise<void>
-  setFieldsValue: <T>(values: T) => Promise<void>
+  setFieldsValue: (values: Recordable) => Promise<void>
   resetFields: () => Promise<void>
   getFieldsValue: () => Recordable
   clearValidate: (name?: string | string[]) => Promise<void>
@@ -160,11 +160,11 @@ export interface FormSchema {
   componentProps?:
     | ((opt: {
         schema: FormSchema
-        tableAction: TableActionType
+        tableAction: TableActionType | undefined
         formActionType: FormActionType
         formModel: Recordable
       }) => Recordable)
-    | object
+    | Recordable
   // Required
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean)
 

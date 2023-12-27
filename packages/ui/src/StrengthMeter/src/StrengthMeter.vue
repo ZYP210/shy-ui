@@ -25,15 +25,21 @@
 import { defineComponent, computed, ref, watch, unref, watchEffect } from 'vue'
 import { Input } from 'ant-design-vue'
 import { zxcvbn } from '@zxcvbn-ts/core'
-import { propTypes } from '@shy-plugins/utils'
 
 export default defineComponent({
   name: 'StrengthMeter',
   components: { InputPassword: Input.Password },
   props: {
-    value: propTypes.string,
-    showInput: propTypes.bool.def(true),
-    disabled: propTypes.bool
+    value: {
+      type: String
+    },
+    showInput: {
+      type: Boolean,
+      default: true
+    },
+    disabled: {
+      type: Boolean
+    }
   },
   emits: ['score-change', 'change'],
   setup(props, { emit }) {

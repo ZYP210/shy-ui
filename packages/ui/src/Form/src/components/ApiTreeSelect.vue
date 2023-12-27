@@ -17,7 +17,7 @@
 <script lang="ts">
 import { computed, defineComponent, watch, ref, onMounted, unref } from 'vue'
 import { TreeSelect } from 'ant-design-vue'
-import { isArray, isFunction, propTypes } from '@shy-plugins/utils'
+import { isArray, isFunction } from '@shy-plugins/utils'
 import { get } from 'lodash-es'
 import { LoadingOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
@@ -29,7 +29,10 @@ export default defineComponent({
     },
     params: { type: Object },
     immediate: { type: Boolean, default: true },
-    resultField: propTypes.string.def('')
+    resultField: {
+      type: String,
+      default: ''
+    }
   },
   emits: ['options-change', 'change'],
   setup(props, { attrs, emit }) {
@@ -40,7 +43,7 @@ export default defineComponent({
       return {
         ...(props.api ? { treeData: unref(treeData) } : {}),
         ...attrs
-      }
+      } as Recordable
     })
 
     function handleChange(...args) {

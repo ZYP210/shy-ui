@@ -33,7 +33,7 @@ import {
   watch
 } from 'vue'
 import { Radio } from 'ant-design-vue'
-import { isFunction, propTypes } from '@shy-plugins/utils'
+import { isFunction } from '@shy-plugins/utils'
 import { useRuleFormItem, useAttrs } from '@shy-plugins/use'
 import { get, omit } from 'lodash-es'
 type OptionsItem = {
@@ -67,11 +67,25 @@ export default defineComponent({
       type: [Boolean] as PropType<boolean>,
       default: false
     },
-    numberToString: propTypes.bool,
-    resultField: propTypes.string.def(''),
-    labelField: propTypes.string.def('label'),
-    valueField: propTypes.string.def('value'),
-    immediate: propTypes.bool.def(true)
+    numberToString: {
+      type: Boolean
+    },
+    resultField: {
+      type: String,
+      default: ''
+    },
+    labelField: {
+      type: String,
+      default: 'label'
+    },
+    valueField: {
+      type: String,
+      default: 'value'
+    },
+    immediate: {
+      type: Boolean,
+      default: true
+    }
   },
   emits: ['options-change', 'change'],
   setup(props, { emit }) {

@@ -16,7 +16,7 @@ import type { PropType } from 'vue'
 import { defineComponent, unref, computed, toRaw } from 'vue'
 import { Table } from 'ant-design-vue'
 import { cloneDeep } from 'lodash-es'
-import { isFunction, propTypes } from '@shy-plugins/utils'
+import { isFunction } from '@shy-plugins/utils'
 import type { BasicColumn } from '../types/table'
 import { INDEX_COLUMN_FLAG } from '../const'
 import { useTableContext } from '../hooks/useTableContext'
@@ -36,7 +36,10 @@ export default defineComponent({
     scroll: {
       type: Object as PropType<Recordable>
     },
-    rowKey: propTypes.string.def('key')
+    rowKey: {
+      type: String,
+      default: 'key'
+    }
   },
   setup(props) {
     const table = useTableContext()

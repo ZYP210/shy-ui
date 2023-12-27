@@ -126,7 +126,7 @@ export function useFormEvents({
         })
       }
     })
-    validateFields(validKeys).catch((_) => {})
+    validateFields(validKeys).catch(() => {})
   }
   /**
    * @description: Delete based on field name

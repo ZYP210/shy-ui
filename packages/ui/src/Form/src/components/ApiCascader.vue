@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref, unref, watch, watchEffect } from 'vue'
 import { Cascader } from 'ant-design-vue'
-import { propTypes, isFunction } from '@shy-plugins/utils'
+import { isFunction } from '@shy-plugins/utils'
 import { get, omit } from 'lodash-es'
 import { useRuleFormItem } from '@shy-plugins/use'
 import { LoadingOutlined } from '@ant-design/icons-vue'
@@ -32,6 +32,7 @@ interface Option {
   isLeaf?: boolean
   children?: Option[]
 }
+
 export default defineComponent({
   name: 'ApiCascader',
   components: {
@@ -46,13 +47,33 @@ export default defineComponent({
       type: Function as PropType<(arg?: Recordable) => Promise<Option[]>>,
       default: null
     },
-    numberToString: propTypes.bool,
-    resultField: propTypes.string.def(''),
-    labelField: propTypes.string.def('label'),
-    valueField: propTypes.string.def('value'),
-    childrenField: propTypes.string.def('children'),
-    asyncFetchParamKey: propTypes.string.def('parentCode'),
-    immediate: propTypes.bool.def(true),
+    numberToString: {
+      type: Boolean
+    },
+    resultField: {
+      type: String,
+      default: ''
+    },
+    labelField: {
+      type: String,
+      default: 'label'
+    },
+    valueField: {
+      type: String,
+      default: 'value'
+    },
+    childrenField: {
+      type: String,
+      default: 'children'
+    },
+    asyncFetchParamKey: {
+      type: String,
+      default: 'parentCode'
+    },
+    immediate: {
+      type: Boolean,
+      default: true
+    },
     // init fetch params
     initFetchParams: {
       type: Object as PropType<Recordable>,
@@ -197,5 +218,5 @@ export default defineComponent({
       handleRenderDisplay
     }
   }
-}) as any
+})
 </script>

@@ -96,7 +96,7 @@ const listFormRefs = ref<unknown[]>([])
 
 const props = defineProps({
   columns: {
-    type: Array,
+    type: Array as PropType<Array<any>>,
     default: () => []
   },
   value: {
@@ -122,7 +122,7 @@ const getColumns = computed(() => {
     minWidth: 50,
     align: 'center'
   }
-  return [indexColumn, ...props.columns] as unknown
+  return [indexColumn, ...props.columns]
 })
 
 const plusClickEvent = () => {

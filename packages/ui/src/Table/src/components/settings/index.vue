@@ -36,12 +36,10 @@ import type { TableSetting, ColumnChangeParam } from '../../types/table'
 import { defineComponent, computed, unref } from 'vue'
 import ColumnSetting from './ColumnSetting.vue'
 import SizeSetting from './SizeSetting.vue'
-import RedoSetting from './RedoSetting.vue'
 import FullScreenSetting from './FullScreenSetting.vue'
 import ShowSearchSetting from './ShowSearchSetting.vue'
 import AdvancedSearchSetting from './AdvancedSearchSetting.vue'
 
-// import { useI18n } from '/@/hooks/web/useI18n'
 import { useTableContext } from '../../hooks/useTableContext'
 import GlobalSearch from './GlobalSearch.vue'
 

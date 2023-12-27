@@ -58,13 +58,7 @@ import { PopConfirmButton } from '../../../Button'
 import { Dropdown } from '../../../Dropdown'
 import { useDesign } from '@shy-plugins/use'
 import { useTableContext } from '../hooks/useTableContext'
-import {
-  isBoolean,
-  isFunction,
-  isNumber,
-  isString,
-  propTypes
-} from '@shy-plugins/utils'
+import { isBoolean, isFunction, isNumber, isString } from '@shy-plugins/utils'
 import { ACTION_COLUMN_FLAG } from '../const'
 import { MoreOutlined } from '@ant-design/icons-vue'
 import type { PopconfirmProps } from 'ant-design-vue'
@@ -78,9 +72,17 @@ const props = defineProps({
     type: Array as PropType<ActionItem[]>,
     default: null
   },
-  divider: propTypes.bool.def(true),
-  outside: propTypes.bool,
-  stopButtonPropagation: propTypes.bool.def(false),
+  divider: {
+    type: Boolean,
+    default: true
+  },
+  outside: {
+    type: Boolean
+  },
+  stopButtonPropagation: {
+    type: Boolean,
+    default: false
+  },
   showCount: {
     type: Number,
     default: () => 3
@@ -113,7 +115,7 @@ function isIfShow(action: ActionItem): boolean {
 }
 
 const getActions = computed<Array<PopconfirmProps & ActionItem>>(() => {
-  const cacheActions = []
+  const cacheActions: any[] = []
   return (toRaw(props.actions) || [])
     .filter((action, _) => {
       if (
@@ -147,7 +149,7 @@ const getActions = computed<Array<PopconfirmProps & ActionItem>>(() => {
 })
 
 const getDropdownList = computed((): any[] => {
-  const cacheActions = []
+  const cacheActions: any[] = []
 
   const list = (toRaw(props.actions) || []).filter((action, index) => {
     if (

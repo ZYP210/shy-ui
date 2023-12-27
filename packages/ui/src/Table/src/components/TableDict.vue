@@ -11,14 +11,16 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { Tag } from 'ant-design-vue'
-import { propTypes } from '@shy-plugins/utils'
 import { Icon } from '../../../Icon'
 
 export default defineComponent({
   name: 'TableDict',
   components: { Tag, Icon },
   props: {
-    data: propTypes.object.def()
+    data: {
+      type: Object as PropType<Recordable>,
+      required: true
+    }
   },
   setup() {}
 })

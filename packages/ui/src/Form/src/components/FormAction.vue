@@ -51,9 +51,7 @@ import { Form, Col } from 'ant-design-vue'
 import { BasicButton, ButtonProps } from '../../../Button'
 // import { BasicArrow } from '/@/components/Basic';
 import { useFormContext } from '../hooks/useFormContext'
-import { propTypes } from '@shy-plugins/utils'
 import { watchEffect } from 'vue'
-import { SearchOutlined } from '@ant-design/icons-vue'
 import { Button } from 'ant-design-vue'
 type ButtonOptions = Partial<ButtonProps> & { text: string }
 
@@ -63,14 +61,25 @@ export default defineComponent({
     FormItem: Form.Item,
     BasicButton,
     [Col.name]: Col,
-    Button,
-    SearchOutlined
+    Button
   },
   props: {
-    showActionButtonGroup: propTypes.bool.def(true),
-    showResetButton: propTypes.bool.def(true),
-    showSubmitButton: propTypes.bool.def(true),
-    showAdvancedButton: propTypes.bool.def(true),
+    showActionButtonGroup: {
+      type: Boolean,
+      default: true
+    },
+    showResetButton: {
+      type: Boolean,
+      default: true
+    },
+    showSubmitButton: {
+      type: Boolean,
+      default: true
+    },
+    showAdvancedButton: {
+      type: Boolean,
+      default: true
+    },
     resetButtonOptions: {
       type: Object as PropType<ButtonOptions>,
       default: () => ({})
@@ -83,10 +92,17 @@ export default defineComponent({
       type: Object as PropType<Partial<ColEx>>,
       default: () => ({})
     },
-    actionSpan: propTypes.number.def(6),
-    isAdvanced: propTypes.bool,
-    hideAdvanceBtn: propTypes.bool
-  } as any,
+    actionSpan: {
+      type: Number,
+      default: 6
+    },
+    isAdvanced: {
+      type: Boolean
+    },
+    hideAdvanceBtn: {
+      type: Boolean
+    }
+  },
   // emits: ['toggle-advanced'],
   setup(props) {
     const actionColOpt = computed(() => {

@@ -24,7 +24,10 @@ export default defineComponent({
     },
     params: { type: Object },
     immediate: { type: Boolean, default: true },
-    resultField: propTypes.string.def(''),
+    resultField: {
+      type: String,
+      default: ''
+    },
     afterFetch: { type: Function as PropType<Fn> }
   },
   emits: ['options-change', 'change'],

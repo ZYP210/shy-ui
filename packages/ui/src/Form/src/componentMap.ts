@@ -34,7 +34,7 @@ import { IconPicker } from '../../Icon'
 import { CountdownInput } from '../../CountDown'
 
 import Table from './components/Table.vue'
-import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
+// import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
 
 const componentMap = new Map<ComponentType, Component>()
 

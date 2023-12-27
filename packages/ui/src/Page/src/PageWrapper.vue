@@ -43,7 +43,6 @@ import { CSSProperties, PropType, provide } from 'vue'
 import { defineComponent, computed, watch, ref, unref } from 'vue'
 import PageFooter from './PageFooter.vue'
 
-import { propTypes } from '@shy-plugins/utils'
 import { omit } from 'lodash-es'
 import { PageHeader } from 'ant-design-vue'
 import { useContentHeight } from '@shy-plugins/use'
@@ -54,20 +53,36 @@ export default defineComponent({
   components: { PageFooter, PageHeader },
   inheritAttrs: false,
   props: {
-    title: propTypes.string,
-    dense: propTypes.bool,
-    ghost: propTypes.bool,
-    content: propTypes.string,
+    title: {
+      type: String
+    },
+    dense: {
+      type: Boolean
+    },
+    ghost: {
+      type: Boolean
+    },
+    content: {
+      type: String
+    },
     contentStyle: {
       type: Object as PropType<CSSProperties>
     },
-    contentBackground: propTypes.bool,
-    contentFullHeight: propTypes.bool,
-    contentClass: propTypes.string,
-    fixedHeight: propTypes.bool,
-    upwardSpace: propTypes
-      .oneOfType([propTypes.number, propTypes.string])
-      .def(0)
+    contentBackground: {
+      type: Boolean
+    },
+    contentFullHeight: {
+      type: Boolean
+    },
+    contentClass: {
+      type: String
+    },
+    fixedHeight: {
+      type: Boolean
+    },
+    upwardSpace: {
+      type: Object as PropType<string | number>
+    }
   },
   setup(props, { slots, attrs }) {
     const wrapperRef = ref(null)
@@ -171,7 +186,7 @@ export default defineComponent({
       prefixCls,
       getShowHeader,
       getShowFooter,
-      omit,
+      omit: omit as any,
       getContentClass
     }
   }

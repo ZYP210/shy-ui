@@ -83,7 +83,7 @@ import { dateUtil, deepMerge, isFunction } from '@shy-plugins/utils'
 // import { cloneDeep } from 'lodash-es';
 
 import { useFormValues } from './hooks/useFormValues'
-import useAdvanced from './hooks/useAdvanced'
+import { useAdvanced } from './hooks/useAdvanced'
 import { useFormEvents } from './hooks/useFormEvents'
 import { createFormContext } from './hooks/useFormContext'
 import { useAutoFocus } from './hooks/useAutoFocus'
@@ -125,7 +125,10 @@ export default defineComponent({
 
     // Get the basic configuration of the form
     const getProps = computed((): FormProps => {
-      return { ...props, ...unref(propsRef) } as FormProps
+      return {
+        ...(props as any),
+        ...unref(propsRef)
+      } as FormProps
     })
 
     const getFormClass = computed(() => {
@@ -339,7 +342,7 @@ export default defineComponent({
       formModel[key] = value
       const { validateTrigger } = unref(getBindValue)
       if (!validateTrigger || validateTrigger === 'change') {
-        validateFields([key]).catch((_) => {})
+        validateFields([key]).catch(() => {})
       }
       emit('field-value-change', key, value)
     }
@@ -359,7 +362,7 @@ export default defineComponent({
       }
     }
 
-    const formActionType: Partial<FormActionType> = {
+    const formActionType: FormActionType = {
       getFieldsValue,
       setFieldsValue,
       resetFields,
@@ -396,7 +399,7 @@ export default defineComponent({
       getProps,
       formElRef,
       getSchema,
-      formActionType: formActionType as any,
+      formActionType,
       setFormModel,
       getFormClass,
       getToggleClass,
@@ -408,5 +411,5 @@ export default defineComponent({
       clearCurrValidate
     }
   }
-} as any)
+})
 </script>

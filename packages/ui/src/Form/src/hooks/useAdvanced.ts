@@ -18,14 +18,14 @@ interface UseAdvancedContext {
   defaultValueRef: Ref<Recordable>
 }
 
-export default function ({
+export const useAdvanced = ({
   advanceState,
   emit,
   getProps,
   getSchema,
   formModel,
   defaultValueRef
-}: UseAdvancedContext) {
+}: UseAdvancedContext) => {
   const vm = getCurrentInstance()
 
   const { realWidthRef, screenEnum, screenRef } = useBreakpoint()
@@ -121,7 +121,7 @@ export default function ({
     }
   }
 
-  const fieldsIsAdvancedMap = shallowReactive({})
+  const fieldsIsAdvancedMap = shallowReactive<Recordable>({})
 
   function updateAdvanced() {
     let itemColSum = 0

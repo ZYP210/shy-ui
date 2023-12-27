@@ -33,7 +33,7 @@ import {
   watch
 } from 'vue'
 import { Select } from 'ant-design-vue'
-import { isFunction, propTypes } from '@shy-plugins/utils'
+import { isFunction } from '@shy-plugins/utils'
 import { useRuleFormItem, useAttrs } from '@shy-plugins/use'
 import { get, omit } from 'lodash-es'
 import { LoadingOutlined } from '@ant-design/icons-vue'
@@ -49,8 +49,12 @@ export default defineComponent({
   inheritAttrs: false,
   props: {
     value: [Array, Object, String, Number],
-    numberToString: propTypes.bool,
-    stringToNumber: propTypes.bool,
+    numberToString: {
+      type: Boolean
+    },
+    stringToNumber: {
+      type: Boolean
+    },
     api: {
       type: Function as PropType<(arg?: Recordable) => Promise<OptionsItem[]>>,
       default: null
@@ -61,11 +65,26 @@ export default defineComponent({
       default: () => ({})
     },
     // support xxx.xxx.xx
-    resultField: propTypes.string.def(''),
-    labelField: propTypes.string.def('label'),
-    valueField: propTypes.string.def('value'),
-    immediate: propTypes.bool.def(true),
-    alwaysLoad: propTypes.bool.def(false)
+    resultField: {
+      type: String,
+      default: ''
+    },
+    labelField: {
+      type: String,
+      default: 'label'
+    },
+    valueField: {
+      type: String,
+      default: 'value'
+    },
+    immediate: {
+      type: Boolean,
+      default: true
+    },
+    alwaysLoad: {
+      type: Boolean,
+      default: false
+    }
   },
   emits: ['options-change', 'change', 'update:value'],
   setup(props, { emit }) {
@@ -181,5 +200,5 @@ export default defineComponent({
       filterOption
     }
   }
-}) as any
+})
 </script>

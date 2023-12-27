@@ -18,12 +18,16 @@ import {
   FETCH_SETTING,
   DEFAULT_SIZE
 } from './const'
-import { propTypes } from '@shy-plugins/utils'
 
 export const basicProps = reactive({
   clickToRowSelect: { type: Boolean, default: true },
   isTreeTable: Boolean,
-  tableSetting: propTypes.shape<TableSetting>({}),
+  tableSetting: {
+    type: Object as PropType<TableSetting>,
+    default: () => {
+      return {}
+    }
+  },
   inset: Boolean,
   sortFn: {
     type: Function as PropType<(sortInfo: SorterResult) => any>,
@@ -45,7 +49,10 @@ export const basicProps = reactive({
     type: Array as PropType<Recordable[]>,
     default: null
   },
-  indentSize: propTypes.number.def(24),
+  indentSize: {
+    type: Number,
+    default: 24
+  },
   canColDrag: { type: Boolean, default: true },
   api: {
     type: Function as PropType<(...arg: any[]) => Promise<any>>,
@@ -83,11 +90,19 @@ export const basicProps = reactive({
     default: null
   },
   // 使用搜索表单
-  useSearchForm: propTypes.bool,
+  useSearchForm: {
+    type: Boolean
+  },
   //使用高级搜索
-  useAdvancedSearch: propTypes.bool.def(false),
+  useAdvancedSearch: {
+    type: Boolean,
+    default: false
+  },
   // 使用表格内边距
-  useTableWrapper: propTypes.bool.def(true),
+  useTableWrapper: {
+    type: Boolean,
+    default: true
+  },
   // 表单配置
   formConfig: {
     type: Object as PropType<Partial<FormProps>>,
@@ -109,8 +124,13 @@ export const basicProps = reactive({
   ellipsis: { type: Boolean, default: true },
   isCanResizeParent: { type: Boolean, default: false },
   canResize: { type: Boolean, default: true },
-  clearSelectOnPageChange: propTypes.bool,
-  resizeHeightOffset: propTypes.number.def(0),
+  clearSelectOnPageChange: {
+    type: Boolean
+  },
+  resizeHeightOffset: {
+    type: Number,
+    default: 0
+  },
   rowSelection: {
     type: Object as PropType<TableRowSelection | null>,
     default: null
@@ -124,7 +144,9 @@ export const basicProps = reactive({
   titleHelpMessage: {
     type: [String, Array] as PropType<string | string[]>
   },
-  maxHeight: propTypes.number,
+  maxHeight: {
+    type: Number
+  },
   dataSource: {
     type: Array as PropType<Recordable[]>,
     default: null
@@ -135,12 +157,17 @@ export const basicProps = reactive({
     >,
     default: ''
   },
-  bordered: propTypes.bool.def(false),
+  bordered: {
+    type: Boolean,
+    default: false
+  },
   pagination: {
     type: [Object, Boolean] as PropType<PaginationProps | boolean>,
     default: true
   },
-  loading: propTypes.bool,
+  loading: {
+    type: Boolean
+  },
   rowClassName: {
     type: Function as PropType<
       (record: TableCustomRecord<any>, index: number) => string

@@ -14,7 +14,7 @@
 <script lang="ts">
 import { computed, defineComponent, watch, ref, unref, watchEffect } from 'vue'
 import { Transfer } from 'ant-design-vue'
-import { isFunction, propTypes } from '@shy-plugins/utils'
+import { isFunction } from '@shy-plugins/utils'
 import { get, omit } from 'lodash-es'
 import { TransferDirection, TransferItem } from 'ant-design-vue/lib/transfer'
 export default defineComponent({
@@ -28,12 +28,26 @@ export default defineComponent({
     },
     params: { type: Object },
     dataSource: { type: Array as PropType<Array<TransferItem>> },
-    immediate: propTypes.bool.def(true),
-    alwaysLoad: propTypes.bool.def(false),
+    immediate: {
+      type: Boolean,
+      default: true
+    },
+    alwaysLoad: {
+      type: Boolean
+    },
     afterFetch: { type: Function as PropType<Fn> },
-    resultField: propTypes.string.def(''),
-    labelField: propTypes.string.def('title'),
-    valueField: propTypes.string.def('key'),
+    resultField: {
+      type: String,
+      default: ''
+    },
+    labelField: {
+      type: String,
+      default: 'title'
+    },
+    valueField: {
+      type: String,
+      default: 'key'
+    },
     showSearch: { type: Boolean, default: false },
     disabled: { type: Boolean, default: false },
     filterOption: {

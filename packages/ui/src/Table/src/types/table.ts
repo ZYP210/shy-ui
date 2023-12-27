@@ -27,7 +27,7 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
    * Callback executed when selected rows change
    * @type Function
    */
-  onChange?: (selectedRowKeys: string[] | number[], selectedRows: T[]) => any
+  onChange?: (selectedRowKeys: Array<string | number>, selectedRows: T[]) => any
 
   /**
    * Callback executed when select/deselect one row
@@ -50,7 +50,7 @@ export interface TableRowSelection<T = any> extends ITableRowSelection {
    * Callback executed when row selection is inverted
    * @type Function
    */
-  onSelectInvert?: (selectedRows: string[] | number[]) => any
+  onSelectInvert?: (selectedRows: Array<string | number>) => any
 }
 
 export interface TableCustomRecord<T> {
@@ -479,6 +479,8 @@ export type BasicColumn = {
   customTitle?: VueNode
 
   slots?: Recordable
+
+  globalShow?: boolean
 
   // Whether to hide the column by default, it can be displayed in the column configuration
   defaultHidden?: boolean
