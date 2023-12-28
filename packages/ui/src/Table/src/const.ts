@@ -1,4 +1,4 @@
-import { SorterResult } from './types/table'
+import type { SorterResult, AlignType } from './types/table'
 
 const componentSetting = {
   // basic-table setting
@@ -82,7 +82,7 @@ export const DEFAULT_SORT_FN = defaultSortFn
 export const DEFAULT_FILTER_FN = defaultFilterFn
 
 //  Default layout of table cells
-export let DEFAULT_ALIGN = 'left'
+export let DEFAULT_ALIGN: AlignType = 'left'
 
 export const INDEX_COLUMN_FLAG = 'INDEX'
 

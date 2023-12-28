@@ -191,7 +191,7 @@ export function useColumns(
 
         if (!slots || !slots?.title) {
           // column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
-          column.customTitle = column.title
+          column.customTitle = column.title as any
           Reflect.deleteProperty(column, 'title')
         }
         const isDefaultAction = [
@@ -215,7 +215,7 @@ export function useColumns(
             column.sorter = column?.sorter === undefined ? true : column.sorter
           }
         }
-        return reactive(column)
+        return reactive<BasicColumn>(column)
       })
   })
 
@@ -313,7 +313,7 @@ export function useColumns(
     getCacheColumns,
     getColumns,
     setColumns,
-    getViewColumns,
+    getViewColumns: getViewColumns as ComputedRef<never[]>,
     setCacheColumnsByField
   }
 }

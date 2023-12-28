@@ -455,6 +455,7 @@ export interface BasicTableProps<T = any> {
 
   onColumnsChange?: (data: ColumnChangeParam[]) => void
 }
+export type AlignType = 'left' | 'center' | 'right'
 
 export type CellFormat =
   | string
