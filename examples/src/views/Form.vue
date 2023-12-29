@@ -1,6 +1,7 @@
 <template>
   <div class="m-4">
     <Button @click="handleGetForm">获取form</Button>
+    <Button @click="handleReset">reset</Button>
     <BasicForm
       :labelWidth="100"
       @register="registerForm"
@@ -44,6 +45,7 @@ const tree = {
     )
   }
 }
+
 const schemas = ref<FormSchema[]>([
   {
     field: 'type',
@@ -99,6 +101,26 @@ const schemas = ref<FormSchema[]>([
     label: 'b',
     field: 'b',
     component: 'Input'
+  },
+
+  {
+    label: 'c',
+    field: 'c',
+    component: 'ApiTransfer',
+    componentProps: {
+      api: () =>
+        new Promise((resolve) =>
+          resolve(
+            Array.from({ length: 20 }, (_, i) => {
+              return {
+                key: i.toString(),
+                title: `content${i + 1}`,
+                description: `description of content${i + 1}`
+              }
+            })
+          )
+        )
+    }
   },
 
   {
@@ -318,10 +340,14 @@ const schemas = ref<FormSchema[]>([
 const { createMessage } = useMessage()
 const [
   registerForm,
-  { setFieldsValue, getFieldsValue, validate, updateSchema }
+  { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useForm({
   schemas
 })
+
+const handleReset = () => {
+  resetFields()
+}
 
 onMounted(() => {
   setFieldsValue({

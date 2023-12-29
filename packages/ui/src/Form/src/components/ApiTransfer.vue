@@ -1,5 +1,6 @@
 <template>
   <Transfer
+    v-bind="getAttrs"
     :data-source="getdataSource"
     :filter-option="filterOption"
     :render="(item) => item.title"
@@ -59,7 +60,7 @@ export default defineComponent({
     showSelectAll: { type: Boolean, default: false },
     targetKeys: { type: Array as PropType<Array<string>> }
   },
-  emits: ['options-change', 'change'],
+  emits: ['options-change', 'change', 'update:value'],
   setup(props, { attrs, emit }) {
     const _dataSource = ref<TransferItem[]>([])
     const _targetKeys = ref<string[]>([])
@@ -73,7 +74,7 @@ export default defineComponent({
     const getdataSource = computed(() => {
       const { labelField, valueField } = props
 
-      return unref(_dataSource).reduce((prev, next: Recordable) => {
+      const data = unref(_dataSource).reduce((prev, next: Recordable) => {
         if (next) {
           prev.push({
             ...omit(next, [labelField, valueField]),
@@ -83,6 +84,8 @@ export default defineComponent({
         }
         return prev
       }, [] as TransferItem[])
+      console.log(data)
+      return data
     })
     const getTargetKeys = computed<string[]>(() => {
       if (unref(_targetKeys).length > 0) {
@@ -103,10 +106,12 @@ export default defineComponent({
       console.log(direction)
       console.log(moveKeys)
       emit('change', keys)
+      emit('update:value', keys)
     }
 
     watchEffect(() => {
       props.immediate && !props.alwaysLoad && fetch()
+      _targetKeys.value = props.value || []
     })
 
     watch(
