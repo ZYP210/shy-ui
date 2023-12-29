@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="37px" height="37px" viewBox="0 0 37 37" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>69</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-311.000000, -1370.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="69" transform="translate(310.000000, 1353.000000)">
+                    <rect id="矩形备份" fill="#333333" x="2" y="30" width="13" height="1"></rect>
+                    <rect id="矩形备份-2" fill="#333333" x="4" y="35" width="9" height="1"></rect>
+                    <rect id="矩形" fill="#333333" transform="translate(8.500000, 24.000000) rotate(-270.000000) translate(-8.500000, -24.000000) " x="1.5" y="23.5" width="14" height="1"></rect>
+                    <path d="M8.5,17 C13.1944204,17 17,13.1944204 17,8.5 C17,3.80557963 13.1944204,0 8.5,0 C3.80557963,0 0,3.80557963 0,8.5 C0,13.1944204 3.80557963,17 8.5,17 Z" id="椭圆形" stroke="#333333"></path>
+                    <path d="M8.5,12 C10.4329966,12 12,10.4329966 12,8.5 C12,6.56700338 10.4329966,5 8.5,5 C6.56700338,5 5,6.56700338 5,8.5 C5,10.4329966 6.56700338,12 8.5,12 Z" id="椭圆形" stroke="#333333"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

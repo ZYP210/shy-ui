@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>113</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-20.000000, -2456.000000)" fill="#333333">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="113" transform="translate(9.000000, 2447.000000)">
+                    <rect id="矩形备份" transform="translate(14.500000, 7.557269) rotate(-90.000000) translate(-14.500000, -7.557269) " x="8" y="7.05726887" width="13" height="1"></rect>
+                    <rect id="矩形" transform="translate(7.000000, 7.557269) rotate(-360.000000) translate(-7.000000, -7.557269) " x="0" y="7.05726887" width="14" height="1"></rect>
+                    <rect id="矩形备份-4" transform="translate(27.000000, 7.557269) rotate(-360.000000) translate(-27.000000, -7.557269) " x="20" y="7.05726887" width="14" height="1"></rect>
+                    <path d="M20.6528233,13.208 C21.1688233,12.428 21.5768233,11.6 21.8888233,10.736 C22.2368233,9.704 22.4168233,8.66 22.4168233,7.616 C22.4168233,6.548 22.2368233,5.504 21.8888233,4.472 C21.5768233,3.596 21.1688233,2.768 20.6528233,2 L19.8128233,2 C20.2928233,2.792 20.6648233,3.62 20.9528233,4.484 C21.3008233,5.54 21.4808233,6.572 21.4808233,7.604 C21.4808233,8.624 21.3008233,9.668 20.9528233,10.724 C20.6648233,11.576 20.2928233,12.404 19.8128233,13.208 L20.6528233,13.208 Z" id="）" fill-rule="nonzero" transform="translate(21.114823, 7.604000) rotate(-180.000000) translate(-21.114823, -7.604000) "></path>
+                    <polygon id="+" fill-rule="nonzero" points="9.96 4.952 9.96 3.304 11.6 3.304 11.6 2.552 9.96 2.552 9.96 0.912 9.208 0.912 9.208 2.552 7.56 2.552 7.56 3.304 9.208 3.304 9.208 4.952"></polygon>
+                    <polygon id="-" fill-rule="nonzero" points="28.6 3.304 28.6 2.552 24.56 2.552 24.56 3.304"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

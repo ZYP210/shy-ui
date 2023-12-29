@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>26</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="jiexiantu" transform="translate(-31.000000, -429.000000)" fill="#00FF00" fill-rule="nonzero">
+            <g id="编组" transform="translate(29.000000, 29.000000)">
+                <g id="25" transform="translate(7.000000, 400.000000)">
+                    <polygon id="路径" points="0 8 0.675871766 7.5 6 14 6 21 5 21 5 14"></polygon>
+                    <path d="M5.5,8 C4.67157288,8 4,8.67157288 4,9.5 C4,10.3284271 4.67157288,11 5.5,11 C6.32842712,11 7,10.3284271 7,9.5 C7,8.67157288 6.32842712,8 5.5,8 Z M5.5,8.75 C5.91421356,8.75 6.25,9.08578644 6.25,9.5 C6.25,9.91421356 5.91421356,10.25 5.5,10.25 C5.08578644,10.25 4.75,9.91421356 4.75,9.5 C4.75,9.08578644 5.08578644,8.75 5.5,8.75 Z" id="椭圆形"></path>
+                    <polygon id="路径" points="8 7 8 8 3 8 3 7"></polygon>
+                    <polygon id="路径" points="6 7.72715225e-14 6 7 5 7 5 7.72715225e-14"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>60</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-206.000000, -1137.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="60" transform="translate(195.000000, 1132.000000)">
+                    <polygon id="矩形备份-20" fill="#333333" points="33 5 45 5 45 6 33 6"></polygon>
+                    <circle id="椭圆形备份-8" stroke="#333333" fill="#B3B3B3" cx="32.5" cy="5.5" r="1.5"></circle>
+                    <polygon id="矩形备份-20" fill="#333333" points="33 15 45 15 45 16 33 16"></polygon>
+                    <circle id="椭圆形备份-8" stroke="#333333" fill="#B3B3B3" cx="32.5" cy="15.5" r="1.5"></circle>
+                    <polygon id="矩形备份-20" fill="#333333" points="3.52051721e-13 5 12 5 12 6 0 6"></polygon>
+                    <circle id="椭圆形备份-8" stroke="#333333" fill="#B3B3B3" cx="12.5" cy="5.5" r="1.5"></circle>
+                    <polygon id="矩形备份-20" fill="#333333" points="3.52051721e-13 15 12 15 12 16 0 16"></polygon>
+                    <circle id="椭圆形备份-8" stroke="#333333" fill="#B3B3B3" cx="12.5" cy="15.5" r="1.5"></circle>
+                    <circle id="椭圆形备份-8" stroke="#333333" fill="#B3B3B3" cx="21.5" cy="5.5" r="1.5"></circle>
+                    <circle id="椭圆形备份-8" stroke="#333333" fill="#B3B3B3" cx="21.5" cy="15.5" r="1.5"></circle>
+                    <rect id="矩形" fill="#333333" transform="translate(25.500000, 2.500000) rotate(-30.000000) translate(-25.500000, -2.500000) " x="22" y="2" width="7" height="1"></rect>
+                    <rect id="矩形备份-21" fill="#333333" transform="translate(25.500000, 12.500000) rotate(-30.000000) translate(-25.500000, -12.500000) " x="22" y="12" width="7" height="1"></rect>
+                    <rect id="矩形" fill="#333333" x="26" y="2" width="1" height="10"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

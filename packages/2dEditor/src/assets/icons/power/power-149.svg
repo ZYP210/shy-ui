@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="153px" height="153px" viewBox="0 0 153 153" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>28</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_2" transform="translate(-259.000000, -757.000000)">
+            <g id="编组-2" transform="translate(5.000000, 22.000000)">
+                <g id="28" transform="translate(255.000000, 752.000000)">
+                    <polygon id="矩形" stroke="#333333" transform="translate(26.549316, 26.997360) rotate(-315.000000) translate(-26.549316, -26.997360) " points="25.4409321 25.95872 23.3644469 13.1573212 37.4911846 16.7663318 40.3196118 40.8373997 16.2485439 38.0089725 12.7790209 23.7427471"></polygon>
+                    <path d="M5,9 L5,8 L48,8 L48,9 L45,9 L45,13 L44,13 L44,9 L40,9 L40,13 L39,13 L39,9 L35,9 L35,13 L34,13 L34,9 L30,9 L30,13 L29,13 L29,9 L25,9 L25,13 L24,13 L24,9 L20,9 L20,13 L19,13 L19,9 L15,9 L15,13 L14,13 L14,9 L10,9 L10,13 L9,13 L9,9 L5,9 Z M42,4 L42,5 L11,5 L11,4 L42,4 Z M39,0 L39,1 L14,1 L14,0 L39,0 Z" id="形状结合" fill="#333333"></path>
+                    <polygon id="矩形" stroke="#333333" points="6 14 47 14 34 49 19 49"></polygon>
+                    <path d="M35,47 L53,135 L48,135 L30.818,51 L22.182,51 L5,135 L0,135 L18,47 L35,47 Z" id="形状结合" stroke="#333333" fill="#B3B3B3"></path>
+                    <polyline id="路径-26" stroke="#333333" stroke-width="2" points="0.134728841 19.7261226 6 14 47 14 52.5981992 19.7261226"></polyline>
+                    <polygon id="矩形" stroke="#333333" transform="translate(26.500000, 55.500000) rotate(-90.000000) translate(-26.500000, -55.500000) " points="30.5 51.5 30.5 59.5 22.5 55.4986562"></polygon>
+                    <polygon id="矩形备份-12" stroke="#333333" transform="translate(26.500000, 67.000000) rotate(-90.000000) translate(-26.500000, -67.000000) " points="32.5 61 32.5 73 20.5 66.9979843"></polygon>
+                    <path d="M35,73.8088955 L18.618034,81.9971267 L35,90.1908615 L35,73.8088955 Z" id="矩形备份-13" stroke="#333333" transform="translate(26.500000, 82.000000) rotate(-90.000000) translate(-26.500000, -82.000000) "></path>
+                    <path d="M39,90.8088955 L14.618034,102.995783 L39,115.190861 L39,90.8088955 Z" id="矩形备份-14" stroke="#333333" transform="translate(26.500000, 103.000000) rotate(-90.000000) translate(-26.500000, -103.000000) "></path>
+                    <rect id="矩形" fill="#333333" x="9" y="115" width="35" height="1"></rect>
+                    <path d="M52.5,19.7261226 C67.4852539,43.5753742 100.111715,47.5 150.379384,31.5" id="路径-3" stroke="#333333"></path>
+                    <path d="M0,19.7261226 C58.5497983,39.9599174 109.123549,39.9599174 151.721252,19.7261226" id="路径-4" stroke="#333333"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

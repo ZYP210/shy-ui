@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="38px" viewBox="0 0 38 38" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>109</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-129.000000, -2362.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="109" transform="translate(137.000000, 2363.000000) rotate(-270.000000) translate(-137.000000, -2363.000000) translate(125.500000, 2343.500000)">
+                    <polygon id="三角形" stroke="#333333" fill="#B3B3B3" points="11.5 16 16 22.75 7 22.75"></polygon>
+                    <rect id="矩形" fill="#333333" transform="translate(11.500000, 30.500000) rotate(-270.000000) translate(-11.500000, -30.500000) " x="3.5" y="30" width="16" height="1"></rect>
+                    <rect id="矩形备份-23" fill="#333333" transform="translate(11.500000, 8.000000) rotate(-270.000000) translate(-11.500000, -8.000000) " x="4" y="7.5" width="15" height="1"></rect>
+                    <path d="M0.674,15 L22.7359009,15 L22.265,16 L0.0968225267,16 L0.674,15 Z M0.0968225267,6 L1.09682253,6 L1.09682253,16 L0.0968225267,16 L0.0968225267,6 Z M22,15 L23,15 L23,25 L22,25 L22,15 Z" id="路径-5" fill="#333333" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

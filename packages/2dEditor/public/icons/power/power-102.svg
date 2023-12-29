@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="58px" height="58px" viewBox="0 0 58 58" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>103</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-11.000000, -2246.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="103" transform="translate(0.000000, 2228.000000)">
+                    <rect id="矩形" stroke="#333333" transform="translate(29.000000, 29.000000) rotate(-315.000000) translate(-29.000000, -29.000000) " x="14" y="14" width="30" height="30"></rect>
+                    <g id="64" transform="translate(18.375000, 19.000000) rotate(-315.000000) translate(-18.375000, -19.000000) translate(15.000000, 16.000000)">
+                        <rect id="矩形备份" fill="#333333" x="0.375" y="0" width="6" height="1"></rect>
+                        <polygon id="三角形" stroke="#333333" fill="#B3B3B3" points="3.375 0.75 6.75 5.8125 0 5.8125"></polygon>
+                    </g>
+                    <g id="64" transform="translate(41.375000, 20.000000) rotate(-225.000000) translate(-41.375000, -20.000000) translate(38.000000, 17.000000)">
+                        <rect id="矩形备份" fill="#333333" x="0.375" y="0" width="6" height="1"></rect>
+                        <polygon id="三角形" stroke="#333333" fill="#B3B3B3" points="3.375 0.75 6.75 5.8125 0 5.8125"></polygon>
+                    </g>
+                    <g id="64" transform="translate(40.510585, 39.563472) rotate(-135.000000) translate(-40.510585, -39.563472) translate(37.135585, 36.563472)">
+                        <rect id="矩形备份" fill="#333333" x="0.375" y="0" width="6" height="1"></rect>
+                        <polygon id="三角形" stroke="#333333" fill="#B3B3B3" points="3.375 0.75 6.75 5.8125 0 5.8125"></polygon>
+                    </g>
+                    <g id="64" transform="translate(18.681280, 39.909161) rotate(-225.000000) translate(-18.681280, -39.909161) translate(15.306280, 36.909161)">
+                        <rect id="矩形备份" fill="#333333" x="0.375" y="0" width="6" height="1"></rect>
+                        <polygon id="三角形" stroke="#333333" fill="#B3B3B3" points="3.375 0.75 6.75 5.8125 0 5.8125"></polygon>
+                    </g>
+                    <rect id="矩形" fill="#333333" x="49" y="28.5" width="9" height="1"></rect>
+                    <rect id="矩形" fill="#333333" x="0" y="28.5" width="8" height="1"></rect>
+                    <rect id="矩形" fill="#333333" transform="translate(29.000000, 4.500000) rotate(-90.000000) translate(-29.000000, -4.500000) " x="25" y="4" width="8" height="1"></rect>
+                    <rect id="矩形" fill="#333333" transform="translate(29.000000, 53.500000) rotate(-90.000000) translate(-29.000000, -53.500000) " x="25" y="53" width="8" height="1"></rect>
+                    <rect id="矩形" fill="#333333" x="5" y="31" width="3" height="1"></rect>
+                    <polyline id="路径-21" stroke="#333333" points="52 31 52 34 49 34"></polyline>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

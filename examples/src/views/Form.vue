@@ -107,6 +107,7 @@ const schemas = ref<FormSchema[]>([
     label: 'c',
     field: 'c',
     component: 'ApiTransfer',
+    defaultValue: ['0', '1'],
     componentProps: {
       api: () =>
         new Promise((resolve) =>
@@ -352,13 +353,12 @@ const handleReset = () => {
 onMounted(() => {
   setFieldsValue({
     ApiSelect: 777,
-    table: [{ a: 1, b: 2, c: 3 }],
-    c: '123'
+    table: [{ a: 1, b: 2, c: 3 }]
+    // c: ['0', '1']
   })
 
   setTimeout(() => {
     setFieldsValue({
-      field: 123,
       table: [{ a: 9, b: 10, c: 11 }],
       ApiSelect: '123'
     })

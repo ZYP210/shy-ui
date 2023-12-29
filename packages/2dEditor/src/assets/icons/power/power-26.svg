@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="44px" height="44px" viewBox="0 0 44 44" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>27</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-175.000000, -437.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="27" transform="translate(183.000000, 419.000000)">
+                    <polygon id="路径" fill="#333333" fill-rule="nonzero" points="3.48431078 0.986327399 3.48431078 11.9863274 2.48431078 11.9863274 2.48431078 0.986327399"></polygon>
+                    <polygon id="路径备份" fill="#333333" fill-rule="nonzero" points="3.5 20 3.5 41 2.5 41 2.5 20"></polygon>
+                    <polyline id="路径-2" stroke="#333333" points="0 7.08319892 3.01666667 4.0532734 6.01588732 7.08319892"></polyline>
+                    <polyline id="路径-2备份" stroke="#333333" points="0 11.0299255 3.01666667 8 6.01588732 11.0299255"></polyline>
+                    <polyline id="路径-2" stroke="#333333" transform="translate(3.007944, 26.514963) rotate(-180.000000) translate(-3.007944, -26.514963) " points="0 28.0299255 3.01666667 25 6.01588732 28.0299255"></polyline>
+                    <polyline id="路径-2备份" stroke="#333333" transform="translate(3.007944, 22.568236) rotate(-180.000000) translate(-3.007944, -22.568236) " points="-3.63797881e-12 24.0831989 3.01666667 21.0532734 6.01588732 24.0831989"></polyline>
+                    <rect id="矩形" stroke="#333333" fill="#00F500" x="1.53333333" y="11.5" width="2.94" height="9"></rect>
+                    <polygon id="三角形" fill="#333333" transform="translate(3.000000, 36.500000) rotate(-180.000000) translate(-3.000000, -36.500000) " points="3 35 5 38 1 38"></polygon>
+                    <circle id="椭圆形" fill="#333333" cx="2.96210392" cy="41.9780044" r="2"></circle>
+                    <rect id="矩形" fill="#333333" x="3" y="29" width="10" height="1"></rect>
+                    <rect id="矩形" fill="#333333" x="12" y="29" width="1" height="7"></rect>
+                    <rect id="矩形" fill="#333333" x="9" y="35" width="7" height="1"></rect>
+                    <rect id="矩形备份-9" fill="#333333" x="10.5" y="37" width="4" height="1"></rect>
+                    <rect id="矩形备份-10" fill="#333333" x="11.5" y="39" width="2" height="1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

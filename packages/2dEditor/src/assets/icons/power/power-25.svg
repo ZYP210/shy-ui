@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="36px" viewBox="0 0 36 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>26</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-99.000000, -438.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="26" transform="translate(102.500000, 420.000000)">
+                    <rect id="矩形" fill="#333333" transform="translate(8.000000, 0.500000) rotate(-180.000000) translate(-8.000000, -0.500000) " x="3" y="-5.55111512e-16" width="10" height="1"></rect>
+                    <rect id="矩形备份-4" fill="#333333" transform="translate(3.500000, 9.500000) rotate(-90.000000) translate(-3.500000, -9.500000) " x="-6" y="9" width="19" height="1"></rect>
+                    <rect id="矩形" fill="#333333" x="2" y="14" width="1" height="4"></rect>
+                    <rect id="矩形备份-8" fill="#333333" transform="translate(3.500000, 26.500000) rotate(-90.000000) translate(-3.500000, -26.500000) " x="-1.5" y="26" width="10" height="1"></rect>
+                    <rect id="矩形" fill="#333333" x="0" y="31" width="7" height="1"></rect>
+                    <rect id="矩形备份-9" fill="#333333" x="1.5" y="33" width="4" height="1"></rect>
+                    <rect id="矩形备份-10" fill="#333333" x="2.5" y="35" width="2" height="1"></rect>
+                    <rect id="矩形" stroke="#333333" x="1" y="10" width="5" height="12"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

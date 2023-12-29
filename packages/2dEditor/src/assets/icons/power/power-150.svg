@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="175px" height="175px" viewBox="0 0 175 175" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>29</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M42.8973068,32.1673251 C36.6154227,15.1342323 37.3299925,27.2770788 17.9685691,20.3332211 C16.3684658,19.7593537 15.5645311,17.3171656 13.8646704,17.3058619 C11.7212262,17.2916083 10.1078049,21.1563049 8.15705424,20.2679763 C-1.6188893,15.8162285 -0.459906613,8.41730612 0.884867503,6.8836556 C2.24084019,5.33723364 4.83637994,5.55758489 6.89130489,5.47175787 C11.6060493,5.27483952 16.3362778,6.46227091 21.0363801,6.04199753 C34.0049191,4.88237773 21.2278984,-3.74259148 43.4871199,1.89503728 C46.2917095,2.60536019 45.8660838,7.7485939 48.4757382,8.99758751 C50.0181395,9.73578846 71.5724392,12.6058532 73.4136102,14.1649766 C73.9158852,14.5903085 70.317057,42.1338102 69.0258347,43 C62.1151924,37.1912875 68,17.3058619 58.300302,26.6241259 C56.1306534,31.5229779 58.5285448,46.9002142 50.7018912,26.6671875 C49.403222,25.6141846 47.158833,25.560553 45.6950043,26.3683662 C45.1643912,26.6611849 45.3164773,30.8743736 44.5,33 C44.3359726,33.4270309 43.8017415,33.1494726 42.8973068,32.1673251 Z" id="path-1"></path>
+        <filter x="-8.2%" y="-14.0%" width="116.2%" height="128.3%" filterUnits="objectBoundingBox" id="filter-2">
+            <feGaussianBlur stdDeviation="2.5" in="SourceAlpha" result="shadowBlurInner1"></feGaussianBlur>
+            <feOffset dx="6" dy="-5" in="shadowBlurInner1" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.2 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_2" transform="translate(-24.000000, -943.000000)">
+            <g id="编组-2" transform="translate(5.000000, 22.000000)">
+                <g id="29" transform="translate(20.000000, 961.000000)">
+                    <g>
+                        <polygon id="矩形" stroke="#333333" transform="translate(26.549316, 26.997360) rotate(-315.000000) translate(-26.549316, -26.997360) " points="25.4409321 25.95872 23.3644469 13.1573212 37.4911846 16.7663318 40.3196118 40.8373997 16.2485439 38.0089725 12.7790209 23.7427471"></polygon>
+                        <path d="M5,9 L5,8 L48,8 L48,9 L45,9 L45,13 L44,13 L44,9 L40,9 L40,13 L39,13 L39,9 L35,9 L35,13 L34,13 L34,9 L30,9 L30,13 L29,13 L29,9 L25,9 L25,13 L24,13 L24,9 L20,9 L20,13 L19,13 L19,9 L15,9 L15,13 L14,13 L14,9 L10,9 L10,13 L9,13 L9,9 L5,9 Z M42,4 L42,5 L11,5 L11,4 L42,4 Z M39,0 L39,1 L14,1 L14,0 L39,0 Z" id="形状结合" fill="#333333"></path>
+                        <polygon id="矩形" stroke="#333333" points="6 14 47 14 34 49 19 49"></polygon>
+                        <path d="M35,47 L53,135 L48,135 L30.818,51 L22.182,51 L5,135 L0,135 L18,47 L35,47 Z" id="形状结合" stroke="#333333" fill="#B3B3B3"></path>
+                        <polyline id="路径-26" stroke="#333333" stroke-width="2" points="0.134728841 19.7261226 6 14 47 14 52.5981992 19.7261226"></polyline>
+                        <polygon id="矩形" stroke="#333333" transform="translate(26.500000, 55.500000) rotate(-90.000000) translate(-26.500000, -55.500000) " points="30.5 51.5 30.5 59.5 22.5 55.4986562"></polygon>
+                        <polygon id="矩形备份-12" stroke="#333333" transform="translate(26.500000, 67.000000) rotate(-90.000000) translate(-26.500000, -67.000000) " points="32.5 61 32.5 73 20.5 66.9979843"></polygon>
+                        <path d="M35,73.8088955 L18.618034,81.9971267 L35,90.1908615 L35,73.8088955 Z" id="矩形备份-13" stroke="#333333" transform="translate(26.500000, 82.000000) rotate(-90.000000) translate(-26.500000, -82.000000) "></path>
+                        <path d="M39,90.8088955 L14.618034,102.995783 L39,115.190861 L39,90.8088955 Z" id="矩形备份-14" stroke="#333333" transform="translate(26.500000, 103.000000) rotate(-90.000000) translate(-26.500000, -103.000000) "></path>
+                        <rect id="矩形" fill="#333333" x="9" y="115" width="35" height="1"></rect>
+                        <path d="M52.5,19.7261226 C60.4051082,58.8748217 77.7931407,85.9954336 104.664098,101.087958" id="路径-3" stroke="#333333"></path>
+                        <path d="M0,19.7261226 C22.6666667,63.9087075 57.0833333,91.0293194 103.25,101.087958" id="路径-4" stroke="#333333"></path>
+                        <polygon id="路径-6" stroke="#333333" fill="#B3B3B3" points="101.239591 103.863544 109.072263 101.547097 108.170788 98.3123728 100.255932 100.584996"></polygon>
+                    </g>
+                    <g id="编组" transform="translate(80.000000, 37.000000)">
+                        <polygon id="路径-29" stroke="#333333" fill="#B3B3B3" points="1 82.3454149 38.3568612 97.5116269 94.0049607 76 48.2342059 65"></polygon>
+                        <polygon id="路径-27" stroke="#333333" fill="#B3B3B3" points="12 69.6314039 37 62 37 87 12 82.3542914"></polygon>
+                        <polygon id="路径-28" stroke="#333333" fill="#B3B3B3" points="37.5 62 71.5 63.6735378 71.5 75.6970143 37.5 87"></polygon>
+                        <g id="路径-30">
+                            <use fill="#E8E8E8" fill-rule="evenodd" xlink:href="#path-1"></use>
+                            <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                            <use stroke="#C4C4C4" stroke-width="1" xlink:href="#path-1"></use>
+                        </g>
+                        <path d="M49,33 L48,35 L47,35 L47,85 L42,87 L42,35 L41,35 L40,33 L49,33 Z M62,38 L61,40 L60,40 L60,80.40768 L55,82 L55,40 L54,40 L53,38 L62,38 Z M73,43 L72,45 L71,45 L71,76.8756789 L66,79 L66,45 L65,45 L64,43 L73,43 Z" id="形状结合" stroke="#333333" fill="#B3B3B3" stroke-linejoin="round"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>14</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_2" transform="translate(-131.000000, -338.000000)">
+            <g id="编组-2" transform="translate(5.000000, 22.000000)">
+                <g id="14" transform="translate(126.000000, 331.000000)">
+                    <path d="M10,0 L24,0 C27.3137085,-6.08718376e-16 30,2.6862915 30,6 C30,9.3137085 27.3137085,12 24,12 L10,12 L10,12 L10,0 Z" id="矩形" stroke="#333333"></path>
+                    <rect id="矩形" stroke="#333333" fill="#B3B3B3" x="30" y="5" width="3" height="2"></rect>
+                    <rect id="矩形" fill="#333333" x="33" y="5.5" width="9" height="1"></rect>
+                    <rect id="矩形" fill="#333333" x="0" y="3" width="10" height="1"></rect>
+                    <rect id="矩形备份-27" fill="#333333" x="0" y="8" width="10" height="1"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="39px" height="39px" viewBox="0 0 39 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>6</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_2" transform="translate(-139.000000, -125.000000)" fill="#333333">
+            <g id="编组-2" transform="translate(5.000000, 22.000000)">
+                <g id="6" transform="translate(134.000000, 103.000000)">
+                    <rect id="矩形备份" transform="translate(13.500000, 19.557269) rotate(-90.000000) translate(-13.500000, -19.557269) " x="7" y="19.0572689" width="13" height="1"></rect>
+                    <rect id="矩形" transform="translate(7.000000, 19.557269) rotate(-360.000000) translate(-7.000000, -19.557269) " x="0" y="19.0572689" width="14" height="1"></rect>
+                    <polygon id="路径-22" fill-rule="nonzero" points="21.6501022 0.67841753 21.6501022 13.2885487 13.8237494 19.9383021 13.1762506 19.1762356 20.65 12.826 20.6501022 0.67841753"></polygon>
+                    <polygon id="路径-22" fill-rule="nonzero" transform="translate(16.900034, 28.617945) scale(1, -1) translate(-16.900034, -28.617945) " points="21.1501022 19 21.1501022 30.5888659 13.3500333 38.2358901 12.6499667 37.5218126 20.15 30.168 20.1501022 19"></polygon>
+                    <path d="M18.5,10.5 C13.5294373,10.5 9.5,14.5294373 9.5,19.5 C9.5,24.4705627 13.5294373,28.5 18.5,28.5 C23.4705627,28.5 27.5,24.4705627 27.5,19.5 C27.5,14.5294373 23.4705627,10.5 18.5,10.5 Z M18.5,11.5 C22.918278,11.5 26.5,15.081722 26.5,19.5 C26.5,23.918278 22.918278,27.5 18.5,27.5 C14.081722,27.5 10.5,23.918278 10.5,19.5 C10.5,15.081722 14.081722,11.5 18.5,11.5 Z" id="椭圆形" fill-rule="nonzero"></path>
+                    <polygon id="路径-23" fill-rule="nonzero" points="18.3287251 21.9264299 19.3152689 21.7629325 19.9653027 25.6852393 16.0490841 25.6852393 16.0490841 24.6852393 18.786 24.685"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

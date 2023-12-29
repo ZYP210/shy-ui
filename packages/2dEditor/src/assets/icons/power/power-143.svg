@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>22</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_2" transform="translate(-249.000000, -549.000000)">
+            <g id="编组-2" transform="translate(5.000000, 22.000000)">
+                <g id="22" transform="translate(244.000000, 528.000000)">
+                    <circle id="椭圆形" stroke="#333333" cx="13" cy="13" r="3"></circle>
+                    <circle id="椭圆形备份-5" stroke="#333333" cx="29" cy="13" r="3"></circle>
+                    <rect id="矩形" fill="#333333" x="0" y="13" width="10" height="1"></rect>
+                    <rect id="矩形备份-18" fill="#333333" x="13" y="9.5" width="16" height="1"></rect>
+                    <rect id="矩形备份-19" fill="#333333" x="32" y="13" width="10" height="1"></rect>
+                    <circle id="椭圆形" stroke="#333333" cx="13" cy="30" r="3"></circle>
+                    <circle id="椭圆形备份-5" stroke="#333333" cx="29" cy="30" r="3"></circle>
+                    <rect id="矩形" fill="#333333" x="0" y="30" width="10" height="1"></rect>
+                    <rect id="矩形备份-18" fill="#333333" x="13" y="26.5" width="16" height="1"></rect>
+                    <rect id="矩形备份-19" fill="#333333" x="32" y="30" width="10" height="1"></rect>
+                    <polygon id="路径-12" fill="#333333" fill-rule="nonzero" points="26.5545103 0.608742736 26.992051 1.50794136 21.5 4.18 21.5 27 20.5 27 20.5 3.55480421"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>115</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-225.000000, -2455.000000)" fill="#333333">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="115" transform="translate(214.000000, 2446.000000)">
+                    <rect id="矩形备份" transform="translate(19.916823, 8.557269) rotate(-270.000000) translate(-19.916823, -8.557269) " x="13.4168233" y="8.05726887" width="13" height="1"></rect>
+                    <rect id="矩形" transform="translate(16.508330, 8.933013) rotate(-60.000000) translate(-16.508330, -8.933013) " x="16.0083302" y="-4.0669873" width="1" height="26"></rect>
+                    <polygon id="三角形" transform="translate(5.105508, 2.105508) scale(-1, 1) rotate(-308.000000) translate(-5.105508, -2.105508) " points="5.10550834 0.605508343 6.60550834 3.60550834 3.60550834 3.60550834"></polygon>
+                    <rect id="矩形" transform="translate(7.000000, 8.557269) rotate(-360.000000) translate(-7.000000, -8.557269) " x="0" y="8.05726887" width="14" height="1"></rect>
+                    <rect id="矩形备份-4" transform="translate(27.000000, 8.557269) rotate(-360.000000) translate(-27.000000, -8.557269) " x="20" y="8.05726887" width="14" height="1"></rect>
+                    <path d="M12.84,14.1145377 C13.356,13.3345377 13.764,12.5065377 14.076,11.6425377 C14.424,10.6105377 14.604,9.56653775 14.604,8.52253775 C14.604,7.45453775 14.424,6.41053775 14.076,5.37853775 C13.764,4.50253775 13.356,3.67453775 12.84,2.90653775 L12,2.90653775 C12.48,3.69853775 12.852,4.52653775 13.14,5.39053775 C13.488,6.44653775 13.668,7.47853775 13.668,8.51053775 C13.668,9.53053775 13.488,10.5745377 13.14,11.6305377 C12.852,12.4825377 12.48,13.3105377 12,14.1145377 L12.84,14.1145377 Z" id="）" fill-rule="nonzero" transform="translate(13.302000, 8.510538) rotate(-360.000000) translate(-13.302000, -8.510538) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

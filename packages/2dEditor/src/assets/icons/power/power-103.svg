@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="45px" height="45px" viewBox="0 0 45 45" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>104</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-127.000000, -2252.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="104" transform="translate(116.000000, 2247.000000)">
+                    <polygon id="矩形" fill="#333333" points="0 9 45 9 45 10 0 10"></polygon>
+                    <rect id="矩形" fill="#333333" transform="translate(6.000000, 2.500000) rotate(-345.000000) translate(-6.000000, -2.500000) " x="0" y="2" width="12" height="1"></rect>
+                    <rect id="矩形备份-36" fill="#333333" transform="translate(6.000000, 16.500000) scale(1, -1) rotate(-345.000000) translate(-6.000000, -16.500000) " x="0" y="16" width="12" height="1"></rect>
+                    <rect id="矩形" fill="#333333" transform="translate(39.000000, 2.500000) scale(-1, 1) rotate(-345.000000) translate(-39.000000, -2.500000) " x="33" y="2" width="12" height="1"></rect>
+                    <rect id="矩形备份-36" fill="#333333" transform="translate(39.000000, 16.500000) scale(-1, -1) rotate(-345.000000) translate(-39.000000, -16.500000) " x="33" y="16" width="12" height="1"></rect>
+                    <circle id="椭圆形" stroke="#333333" fill="#B3B3B3" cx="22.5" cy="9.5" r="7.5"></circle>
+                    <polygon id="M" fill="#333333" fill-rule="nonzero" points="19.9831933 12 19.9831933 7.86554622 20.0168067 7.86554622 21.7815126 12 22.6302521 12 24.394958 7.86554622 24.4285714 7.86554622 24.4285714 12 25.4117647 12 25.4117647 6 24.2605042 6 22.2268908 10.7058824 22.1932773 10.7058824 20.1512605 6 19 6 19 12"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

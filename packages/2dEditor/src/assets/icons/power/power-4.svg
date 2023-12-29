@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>5</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-336.000000, -21.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="5" transform="translate(332.000000, 4.000000)">
+                    <circle id="椭圆形" stroke="#F0F000" cx="8" cy="8" r="8"></circle>
+                    <circle id="椭圆形" stroke="#00FF00" cx="8" cy="20" r="8"></circle>
+                    <polygon id="三角形" stroke="#00FF00" points="8 19 11 24 5 24"></polygon>
+                    <path d="M8.68324297,-1.52766688e-12 L8.68324297,7.85 L15.5138524,11.1477089 L14.8803383,11.9214401 L8.08456044,8.525 L1.0810745,11.9214401 L0.447560436,11.1477089 L7.5,7.85 L7.5,-1.52766688e-12 L8.68324297,-1.52766688e-12 Z" id="形状结合" fill="#F0F000" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

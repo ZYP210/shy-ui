@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>26</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="0%" y1="100%" x2="100%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#F9F902" stop-opacity="0.2" offset="0%"></stop>
+            <stop stop-color="#E9FF00" offset="49.6436867%"></stop>
+            <stop stop-color="#F9F902" stop-opacity="0.2" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_2" transform="translate(-220.000000, -621.000000)">
+            <g id="编组-2" transform="translate(5.000000, 22.000000)">
+                <g id="26" transform="translate(215.000000, 610.000000)">
+                    <rect id="矩形" fill="#353535" x="0" y="9" width="100" height="60"></rect>
+                    <polygon id="矩形" fill="url(#linearGradient-1)" transform="translate(50.000000, 39.000000) rotate(-315.000000) translate(-50.000000, -39.000000) " points="30 19 77.0710678 11.9289322 70 59 22.9289322 66.0710678"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

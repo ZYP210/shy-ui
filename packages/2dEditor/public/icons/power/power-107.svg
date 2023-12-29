@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="48px" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>108</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-20.000000, -2356.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="108" transform="translate(9.000000, 2347.000000)">
+                    <circle id="椭圆形备份-7" stroke="#333333" cx="2.5" cy="2" r="2"></circle>
+                    <circle id="椭圆形备份-7" stroke="#333333" cx="2.5" cy="27" r="2"></circle>
+                    <circle id="椭圆形备份-7" stroke="#333333" cx="45.5" cy="14" r="2"></circle>
+                    <polygon id="路径" fill="#333333" fill-rule="nonzero" points="4.47763601 1.27185826 32.6866357 1.27185826 45.1414274 12.0751302 44.4861811 12.8305455 32.313 2.271 4.47763601 2.27185826"></polygon>
+                    <polygon id="路径" fill="#333333" fill-rule="nonzero" transform="translate(24.809532, 21.609889) scale(1, -1) translate(-24.809532, -21.609889) " points="4.47763601 15.8305455 32.6866357 15.8305455 45.1414274 26.6338175 44.4861811 27.3892328 32.313 16.8296873 4.47763601 16.8305455"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

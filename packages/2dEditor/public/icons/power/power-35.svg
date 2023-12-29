@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="54px" height="54px" viewBox="0 0 54 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>36</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-282.000000, -643.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="36" transform="translate(272.000000, 641.000000)">
+                    <circle id="椭圆形" stroke="#333333" cx="3" cy="19" r="3"></circle>
+                    <circle id="椭圆形" stroke="#333333" cx="3" cy="3" r="3"></circle>
+                    <circle id="椭圆形" stroke="#333333" cx="19" cy="19" r="3"></circle>
+                    <circle id="椭圆形" stroke="#333333" cx="19" cy="3" r="3"></circle>
+                    <circle id="椭圆形" stroke="#333333" cx="35" cy="19" r="3"></circle>
+                    <circle id="椭圆形" stroke="#333333" cx="35" cy="3" r="3"></circle>
+                    <polygon id="路径-10" fill="#333333" fill-rule="nonzero" points="51.7810546 6.10340489 52.3900285 6.89659511 45.7428299 12 7 12 7 11 45.402 11"></polygon>
+                    <polygon id="路径-11" fill="#333333" fill-rule="nonzero" points="9.33162617 2.86857401 10.2964623 3.13142599 6.48241808 17.131426 5.51758192 16.868574"></polygon>
+                    <polygon id="路径-11" fill="#333333" fill-rule="nonzero" points="25.3316262 2.86857401 26.2964623 3.13142599 22.4824181 17.131426 21.5175819 16.868574"></polygon>
+                    <polygon id="路径-11" fill="#333333" fill-rule="nonzero" points="41.3316262 2.86857401 42.2964623 3.13142599 38.4824181 17.131426 37.5175819 16.868574"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

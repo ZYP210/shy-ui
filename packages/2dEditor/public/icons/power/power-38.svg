@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="42px" height="42px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>39</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-113.000000, -746.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="39" transform="translate(102.000000, 731.000000)">
+                    <circle id="椭圆形" stroke="#333333" cx="13" cy="16" r="3"></circle>
+                    <circle id="椭圆形备份-5" stroke="#333333" cx="29" cy="16" r="3"></circle>
+                    <circle id="椭圆形备份-6" stroke="#333333" cx="21" cy="3" r="3"></circle>
+                    <rect id="矩形" fill="#333333" x="0" y="16" width="10" height="1"></rect>
+                    <rect id="矩形备份-18" fill="#333333" x="13" y="12.5" width="16" height="1"></rect>
+                    <rect id="矩形备份-19" fill="#333333" x="32" y="16" width="10" height="1"></rect>
+                    <circle id="椭圆形" stroke="#333333" cx="13" cy="33" r="3"></circle>
+                    <circle id="椭圆形备份-5" stroke="#333333" cx="29" cy="33" r="3"></circle>
+                    <rect id="矩形" fill="#333333" x="0" y="33" width="10" height="1"></rect>
+                    <rect id="矩形备份-18" fill="#333333" x="13" y="29.5" width="16" height="1"></rect>
+                    <rect id="矩形备份-19" fill="#333333" x="32" y="33" width="10" height="1"></rect>
+                    <polygon id="路径-12" fill="#333333" fill-rule="nonzero" points="26.5545103 3.60874274 26.992051 4.50794136 21.5 7.18 21.5 30 20.5 30 20.5 6.55480421"></polygon>
+                    <polygon id="H" fill="#333333" fill-rule="nonzero" points="11.604 12 11.604 10.002 14.082 10.002 14.082 12 14.574 12 14.574 7.716 14.082 7.716 14.082 9.576 11.604 9.576 11.604 7.716 11.112 7.716 11.112 12"></polygon>
+                    <path d="M27.586,12 L28.042,10.8 L30.01,10.8 L30.466,12 L31,12 L29.314,7.716 L28.744,7.716 L27.058,12 L27.586,12 Z M29.854,10.386 L28.198,10.386 L29.02,8.244 L29.044,8.244 L29.854,10.386 Z" id="A" fill="#333333" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="34px" viewBox="0 0 34 34" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>77</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-136.000000, -1589.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="77" transform="translate(126.000000, 1577.000000)">
+                    <path d="M15.8974311,14.1016952 C20.8679938,14.1016952 24.8974311,16.5641291 24.8974311,19.6016952 C24.8974311,19.7357906 24.8895783,19.8687651 24.8741386,20.0004564 L6.92072353,20.0004564 C6.90528378,19.8687651 6.89743105,19.7357906 6.89743105,19.6016952 C6.89743105,16.5641291 10.9268683,14.1016952 15.8974311,14.1016952 Z" id="形状结合" stroke="#333333" fill="#B3B3B3"></path>
+                    <rect id="矩形" fill="#333333" x="15.3974311" y="6.1016952" width="1" height="8"></rect>
+                    <rect id="矩形" fill="#333333" transform="translate(15.897431, 5.601695) rotate(7.000000) translate(-15.897431, -5.601695) " x="2.89743105" y="5.1016952" width="26" height="1"></rect>
+                    <circle id="椭圆形备份-6" stroke="#333333" cx="2" cy="2.08986488" r="2"></circle>
+                    <circle id="椭圆形备份-7" stroke="#333333" cx="29.9708484" cy="3" r="2"></circle>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

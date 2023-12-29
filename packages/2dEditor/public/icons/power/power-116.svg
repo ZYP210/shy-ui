@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="41px" height="41px" viewBox="0 0 41 41" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>117</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="电力_1" transform="translate(-401.000000, -2451.000000)">
+            <g id="编组" transform="translate(11.000000, 18.000000)">
+                <g id="117" transform="translate(410.500000, 2454.500000) rotate(-180.000000) translate(-410.500000, -2454.500000) translate(390.000000, 2453.000000)">
+                    <polygon id="矩形" fill="#333333" points="0.5 2 10.5 2 10.475719 3 0.5 3"></polygon>
+                    <path d="M15,2.5 C15,1.11928813 13.8807119,0 12.5,0 C11.1192881,0 10,1.11928813 10,2.5" id="路径" stroke="#333333"></path>
+                    <path d="M20,2.5 C20,1.11928813 18.8807119,0 17.5,0 C16.1192881,0 15,1.11928813 15,2.5" id="路径备份-2" stroke="#333333"></path>
+                    <path d="M25,2.5 C25,1.11928813 23.8807119,0 22.5,0 C21.1192881,0 20,1.11928813 20,2.5" id="路径备份-3" stroke="#333333"></path>
+                    <path d="M31,2.5 C31,1.11928813 29.6568542,0 28,0 C26.3431458,0 25,1.11928813 25,2.5" id="路径备份-3" stroke="#333333"></path>
+                    <polygon id="矩形备份-20" fill="#333333" points="30.5 2 40.5 2 40.5 3 30.5 3"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
