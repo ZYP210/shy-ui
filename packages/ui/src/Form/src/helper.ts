@@ -13,6 +13,7 @@ export function createPlaceholderMessage(component: ComponentType) {
     return '请选择'
   }
   if (
+    component.includes('Transfer') ||
     component.includes('Select') ||
     component.includes('Cascader') ||
     component.includes('Checkbox') ||

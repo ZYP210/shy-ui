@@ -106,6 +106,7 @@ const schemas = ref<FormSchema[]>([
   {
     label: 'c',
     field: 'c',
+    required: true,
     component: 'ApiTransfer',
     defaultValue: ['0', '1'],
     componentProps: {
