@@ -1,19 +1,27 @@
 <template>
-  <Upload
-    v-model:file-list="fileList"
-    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-  >
-    <a-button>
-      <upload-outlined></upload-outlined>
-      文件上传
-    </a-button>
-  </Upload>
+  <div>
+    <Upload v-model:file-list="state" @success="handleSuccess">
+      <a-button>
+        <upload-outlined></upload-outlined>
+        文件上传
+      </a-button>
+    </Upload>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { UploadOutlined } from '@ant-design/icons-vue'
-import type { UploadProps, Upload } from 'ant-design-vue'
+import { Upload } from 'ant-design-vue'
+import { useRuleFormItem } from '@shy-plugins/use'
 
-const fileList = ref<UploadProps['fileList']>([])
+const props = defineProps<{
+  value: any[]
+}>()
+
+const emitData = ref<any[]>([])
+const [state] = useRuleFormItem(props, 'value', 'change', emitData)
+const handleSuccess = (file, fileList) => {
+  emitData.value = fileList
+}
 </script>

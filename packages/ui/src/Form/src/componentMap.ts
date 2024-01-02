@@ -32,6 +32,7 @@ import Upload from './components/Upload.vue'
 import { StrengthMeter } from '../../StrengthMeter'
 import { IconPicker } from '../../Icon'
 import { CountdownInput } from '../../CountDown'
+import Tinymce from './components/Tinymce.vue'
 
 import Table from './components/Table.vue'
 // import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
@@ -74,6 +75,7 @@ componentMap.set('StrengthMeter', StrengthMeter)
 componentMap.set('IconPicker', IconPicker)
 componentMap.set('InputCountDown', CountdownInput)
 componentMap.set('Table', Table)
+componentMap.set('Tinymce', Tinymce)
 
 componentMap.set('Upload', Upload)
 componentMap.set('Divider', Divider)

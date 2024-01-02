@@ -1,14 +1,5 @@
 <template>
   <div :class="prefixCls" :style="{ width: containerWidth }">
-    <ImgUpload
-      :fullscreen="fullscreen"
-      @uploading="handleImageUploading"
-      @done="handleDone"
-      v-if="showImageUpload"
-      v-show="editorRef"
-      :disabled="disabled"
-      :uploadUrl="uploadUrl"
-    />
     <textarea
       :id="tinymceId"
       ref="elRef"

@@ -117,3 +117,4 @@ export type ComponentType =
   | 'ApiTransfer'
   | 'Table'
   | 'ApiModalSelect'
+  | 'Tinymce'

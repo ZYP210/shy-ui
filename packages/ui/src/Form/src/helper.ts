@@ -83,5 +83,6 @@ export const defaultValueComponents = [
   'Input',
   'InputPassword',
   'InputSearch',
-  'InputTextArea'
+  'InputTextArea',
+  'Tinymce'
 ]

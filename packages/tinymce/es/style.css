@@ -1,10 +1,10 @@
-.'shy-tinymce-img-upload'[data-v-ae7e1a6f] {
+.shy-tinymce-img-upload {
   position: absolute;
   top: 4px;
   right: 10px;
   z-index: 20;
 }
-.'shy-tinymce-img-upload'.fullscreen[data-v-ae7e1a6f] {
+.shy-tinymce-img-upload.fullscreen {
   position: fixed;
   z-index: 10000;
 }

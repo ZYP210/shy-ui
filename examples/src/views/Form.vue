@@ -16,8 +16,6 @@
         />
       </template>
     </BasicForm>
-
-    <a-range-picker :value="timeRange" />
   </div>
 </template>
 <script lang="ts" setup>
@@ -47,96 +45,90 @@ const tree = {
 }
 
 const schemas = ref<FormSchema[]>([
-  {
-    field: 'type',
-    label: '类型',
-    component: 'ApiCascader',
-    componentProps: {
-      // initFetchParams: { zzz: 3 },
-      params: { zzz: 1 },
-      api: async (params) => {
-        console.log(params)
-        return [
-          {
-            label: 2,
-            value: 3,
-            children: [
-              { label: 'zzz', value: 5, isLeaf: true },
-              { label: 'zzz3333', value: 6, isLeaf: true }
-            ]
-          },
-          {
-            label: 4,
-            value: 4
-          }
-        ]
-      },
-      isLeaf: (record) => {
-        return record.isLeaf
-      },
-      onChange: (e, ...v) => {
-        console.log('ApiCascader====>:', e, v)
-      }
-      // options: [
-      //   { label: 1, value: 1, children: [{ label: 2, value: 2 }] },
-      //   { label: 3, value: 3, isLeaf: false }
-      // ]
-      // onChange: (e: any) => {
-      //   console.log('888888', e)
-      // }
-    }
-  },
-
-  {
-    label: 'a',
-    field: 'a',
-    component: 'Input',
-    componentProps: {
-      onModelChange: (e) => {
-        console.log('111', e)
-      }
-    }
-  },
-  {
-    label: 'b',
-    field: 'b',
-    component: 'Input'
-  },
-
-  {
-    label: 'c',
-    field: 'c',
-    required: true,
-    component: 'ApiTransfer',
-    defaultValue: ['0', '1'],
-    componentProps: {
-      api: () =>
-        new Promise((resolve) =>
-          resolve(
-            Array.from({ length: 20 }, (_, i) => {
-              return {
-                key: i.toString(),
-                title: `content${i + 1}`,
-                description: `description of content${i + 1}`
-              }
-            })
-          )
-        )
-    }
-  },
-
+  // {
+  //   field: 'type',
+  //   label: '类型',
+  //   component: 'ApiCascader',
+  //   componentProps: {
+  //     // initFetchParams: { zzz: 3 },
+  //     params: { zzz: 1 },
+  //     api: async (params) => {
+  //       console.log(params)
+  //       return [
+  //         {
+  //           label: 2,
+  //           value: 3,
+  //           children: [
+  //             { label: 'zzz', value: 5, isLeaf: true },
+  //             { label: 'zzz3333', value: 6, isLeaf: true }
+  //           ]
+  //         },
+  //         {
+  //           label: 4,
+  //           value: 4
+  //         }
+  //       ]
+  //     },
+  //     isLeaf: (record) => {
+  //       return record.isLeaf
+  //     },
+  //     onChange: (e, ...v) => {
+  //       console.log('ApiCascader====>:', e, v)
+  //     }
+  //     // options: [
+  //     //   { label: 1, value: 1, children: [{ label: 2, value: 2 }] },
+  //     //   { label: 3, value: 3, isLeaf: false }
+  //     // ]
+  //     // onChange: (e: any) => {
+  //     //   console.log('888888', e)
+  //     // }
+  //   }
+  // },
+  // {
+  //   label: 'a',
+  //   field: 'a',
+  //   component: 'Input',
+  //   componentProps: {
+  //     onModelChange: (e) => {
+  //       console.log('111', e)
+  //     }
+  //   }
+  // },
+  // {
+  //   label: 'b',
+  //   field: 'b',
+  //   component: 'Input'
+  // },
+  // {
+  //   label: 'c',
+  //   field: 'c',
+  //   required: true,
+  //   component: 'ApiTransfer',
+  //   defaultValue: ['0', '1'],
+  //   componentProps: {
+  //     api: () =>
+  //       new Promise((resolve) =>
+  //         resolve(
+  //           Array.from({ length: 20 }, (_, i) => {
+  //             return {
+  //               key: i.toString(),
+  //               title: `content${i + 1}`,
+  //               description: `description of content${i + 1}`
+  //             }
+  //           })
+  //         )
+  //       )
+  //   }
+  // },
   {
     field: 'startDate',
     label: '日期范围',
     component: 'RangePicker',
-    defaultValue: ['1996/10-10', '2023-11-10'],
     colProps: { span: 24 },
     componentProps: {
-      format: 'YYYY-MM-DD',
-      placeholder: ['开始日期', '结束日期']
+      valueFormat: 'YYYY-MM-DD HH:mm:ss'
     }
-  },
-
+  }
   // {
   //   field: 'field',
   //   component: 'Input',
@@ -145,7 +137,6 @@ const schemas = ref<FormSchema[]>([
   //     span: 8
   //   },
   //   defaultValue: '1',
-
   //   componentProps: {
   //     placeholder: '自定义placeholder',
   //     onChange: (e) => {
@@ -156,44 +147,44 @@ const schemas = ref<FormSchema[]>([
   //     }
   //   }
   // },
-  {
-    field: 'test',
-    label: 'test',
-    component: 'ApiSelect',
-    render: () => {
-      return h(Select, {
-        options: [{ label: 'a', value: '1' }],
-        onChange: (...args) => {
-          console.log(2222, args)
-        }
-      })
-    }
-  },
-  {
-    field: 'ApiSelect',
-    label: 'ApiSelect',
-    component: 'ApiSelect',
-    colProps: { span: 8 },
-    componentProps: {
-      api: () =>
-        new Promise((resolve) =>
-          resolve([
-            { label: 'a', value: '1' },
-            { label: 'b', value: '2' },
-            { label: 'c', value: '3' },
-            { label: 'd', value: '4' },
-            { label: 'e', value: '5' },
-            { label: '中文', value: '6' },
-            { label: '英文', value: '7' },
-            { label: '德文', value: '8' }
-          ])
-        ),
-      immediate: true,
-      onModelChange: (e) => {
-        console.log('111', e)
-      }
-    }
-  },
+  // {
+  //   field: 'test',
+  //   label: 'test',
+  //   component: 'ApiSelect',
+  //   render: () => {
+  //     return h(Select, {
+  //       options: [{ label: 'a', value: '1' }],
+  //       onChange: (...args) => {
+  //         console.log(2222, args)
+  //       }
+  //     })
+  //   }
+  // },
+  // {
+  //   field: 'ApiSelect',
+  //   label: 'ApiSelect',
+  //   component: 'ApiSelect',
+  //   colProps: { span: 8 },
+  //   componentProps: {
+  //     api: () =>
+  //       new Promise((resolve) =>
+  //         resolve([
+  //           { label: 'a', value: '1' },
+  //           { label: 'b', value: '2' },
+  //           { label: 'c', value: '3' },
+  //           { label: 'd', value: '4' },
+  //           { label: 'e', value: '5' },
+  //           { label: '中文', value: '6' },
+  //           { label: '英文', value: '7' },
+  //           { label: '德文', value: '8' }
+  //         ])
+  //       ),
+  //     immediate: true,
+  //     onModelChange: (e) => {
+  //       console.log('111', e)
+  //     }
+  //   }
+  // },
   // {
   //   field: 'ApiSelectFieldNames',
   //   label: 'ApiSelectFieldNames',
@@ -287,57 +278,62 @@ const schemas = ref<FormSchema[]>([
   //   }
   // },
   //
-  {
-    field: 'table',
-    label: 'table',
-    component: 'Table',
-    cloProps: { span: 24 },
-    componentProps: ({ ...ages }) => {
-      return {
-        onModelChange: (e) => {
-          console.log(e, ages)
-        },
-        columns: [
-          {
-            title: 'a',
-            dataIndex: 'a'
-          },
-          {
-            title: 'b',
-            dataIndex: 'b'
-          },
-          {
-            title: 'c',
-            dataIndex: 'c'
-          },
-          {
-            title: 'd',
-            dataIndex: 'd'
-          },
-          {
-            title: 'e',
-            dataIndex: 'e'
-          }
-        ]
-      }
-    }
-  },
+  // {
+  //   field: 'table',
+  //   label: 'table',
+  //   component: 'Table',
+  //   cloProps: { span: 24 },
+  //   componentProps: ({ ...ages }) => {
+  //     return {
+  //       onModelChange: (e) => {
+  //         console.log(e, ages)
+  //       },
+  //       columns: [
+  //         {
+  //           title: 'a',
+  //           dataIndex: 'a'
+  //         },
+  //         {
+  //           title: 'b',
+  //           dataIndex: 'b'
+  //         },
+  //         {
+  //           title: 'c',
+  //           dataIndex: 'c'
+  //         },
+  //         {
+  //           title: 'd',
+  //           dataIndex: 'd'
+  //         },
+  //         {
+  //           title: 'e',
+  //           dataIndex: 'e'
+  //         }
+  //       ]
+  //     }
+  //   }
+  // },
   // {
   //   field: 'z',
   //   label: 'Divider',
   //   component: 'Divider',
   //   colProps: { span: 24 }
   // },
-  {
-    field: 'c',
-    label: '选择弹框',
-    component: 'Input',
-    slot: 'ApiModalSelect',
-    componentProps: {
-      autoLink: false
-    },
-    required: true
-  }
+  // {
+  //   field: 'c',
+  //   label: '选择弹框',
+  //   component: 'Input',
+  //   slot: 'ApiModalSelect',
+  //   componentProps: {
+  //     autoLink: false
+  //   },
+  //   required: true
+  // },
+  // {
+  //   label: 'Tinymce',
+  //   field: 'Tinymce',
+  //   component: 'Tinymce'
+  // }
 ])
 const { createMessage } = useMessage()
 const [
@@ -353,17 +349,15 @@ const handleReset = () => {
 
 onMounted(() => {
   setFieldsValue({
-    ApiSelect: 777,
-    table: [{ a: 1, b: 2, c: 3 }]
-    // c: ['0', '1']
+    Tinymce: '123',
+    startDate: ['1996-10-10 00:00:00', '2023-11-10 23:59:59']
   })
-
-  setTimeout(() => {
-    setFieldsValue({
-      table: [{ a: 9, b: 10, c: 11 }],
-      ApiSelect: '123'
-    })
-  }, 5000)
+  // setTimeout(() => {
+  //   setFieldsValue({
+  //     table: [{ a: 9, b: 10, c: 11 }],
+  //     ApiSelect: '123'
+  //   })
+  // }, 5000)
 })
 
 const data = ref([])
@@ -392,19 +386,19 @@ const columns = [
 
 const change = () => {
   updateSchema([
-    {
-      field: 'a',
-      defaultValue: '111',
-      component: 'Select',
-      componentProps: {
-        disabled: true
-      }
-    },
-    {
-      field: 'b',
-      defaultValue: '222',
-      component: 'Select'
-    }
+    // {
+    //   field: 'a',
+    //   defaultValue: '111',
+    //   component: 'Select',
+    //   componentProps: {
+    //     disabled: true
+    //   }
+    // },
+    // {
+    //   field: 'b',
+    //   defaultValue: '222',
+    //   component: 'Select'
+    // }
   ])
 }
 

@@ -52,8 +52,9 @@ export function useFormEvents({
       const isInput =
         schema?.component && defaultValueComponents.includes(schema.component)
       const defaultValue = cloneDeep(defaultValueRef.value[key])
-      formModel[key] = isInput ? defaultValue || '' : defaultValue
+      formModel[key] = isInput ? defaultValue || ' ' : defaultValue
     })
+
     nextTick(() => clearValidate())
 
     emit('reset', toRaw(formModel))

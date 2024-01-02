@@ -13,6 +13,7 @@ import { createPlaceholderMessage, setComponentRuleType } from '../helper'
 import { cloneDeep, upperFirst } from 'lodash-es'
 import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import Divider from './Divider'
+import dayjs from 'dayjs'
 
 export default defineComponent({
   name: 'BasicFormItem',
@@ -123,6 +124,25 @@ export default defineComponent({
             return option[label].toLowerCase().indexOf(input.toLowerCase()) >= 0
           }
         })
+      }
+
+      if (schema.component === 'RangePicker') {
+        componentProps = Object.assign(
+          {
+            format: 'YYYY-MM-DD',
+            valueFormat: 'YYYY-MM-DD HH:mm:ss',
+            placeholder: ['开始日期', '结束日期'],
+            showTime: {
+              defaultValue: [
+                dayjs('00:00:00', 'HH:mm:ss'),
+                dayjs('23:59:59', 'HH:mm:ss')
+              ]
+            }
+          },
+          componentProps
+        )
+
+        console.log(1, componentProps)
       }
 
       return componentProps as Recordable
@@ -301,6 +321,7 @@ export default defineComponent({
 
           const target = e ? e.target : null
           const value = target ? (isCheck ? target.checked : target.value) : e
+
           props.setFormModel(field, value)
         }
       }
