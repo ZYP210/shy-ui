@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useContext } from '/@/hooks/useContext'
+import { useContext } from '../../../hooks/useContext'
 import {
   Modal,
   Row,
@@ -63,6 +63,8 @@ import {
   Button as AButton,
   Checkbox as ACheckbox
 } from 'ant-design-vue'
+import { ref, reactive, watchEffect, watch, computed, toRefs } from 'vue'
+
 type Props = {
   open: boolean
 }
@@ -150,4 +152,3 @@ const checkedChange = (e, item) => {
 </script>
 
 <style scoped lang="less"></style>
-../../../hooks/useContext

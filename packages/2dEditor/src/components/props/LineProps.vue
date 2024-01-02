@@ -18,8 +18,10 @@
 </template>
 
 <script lang="ts" setup>
-import { useSelection } from '/@/hooks/useSelections'
-import { useLineAnimation } from '/@/hooks/useLineAnimation'
+import { useSelection } from '../../hooks/useSelections'
+import { useLineAnimation } from '../../hooks/useLineAnimation'
+import { ref, watch } from 'vue'
+
 import {
   Form as AForm,
   Input as AInput,
@@ -43,4 +45,3 @@ const handleChangeName = () => {
   console.log('meta', meta2d)
 }
 </script>
-../../hooks/useSelections../../hooks/useLineAnimation

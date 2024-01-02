@@ -38,6 +38,7 @@ export default defineComponent({
     }
 
     const rows = computed(() => {
+      let element = null
       return getProps.value.schema.map((item: Schema) => {
         if (item?.component === 'Divider') {
           return <Divider></Divider>
@@ -48,6 +49,18 @@ export default defineComponent({
             </div>
           )
         } else {
+          if (item?.customRender) {
+            element = item?.customRender
+              ? item.customRender(getProps.value.data)
+              : null
+          } else {
+            element = slots[`${item.field}Value`]
+              ? slots[`${item.field}Value`]?.({
+                  model: getProps.value.data,
+                  field: getProps.value.data[`${item.field}`]
+                })
+              : getProps.value.data[`${item.field}`]
+          }
           return (
             <div
               class={`${prefixCls}-row`}
@@ -90,12 +103,7 @@ export default defineComponent({
                   ...(item?.contentStyle ? item?.contentStyle : {})
                 }}
               >
-                {slots[`${item.field}Value`]
-                  ? slots[`${item.field}Value`]?.({
-                      model: getProps.value.data,
-                      field: getProps.value.data[`${item.field}`]
-                    })
-                  : getProps.value.data[`${item.field}`]}
+                {element}
                 {item?.isCopy ? (
                   <span
                     style="cursor:pointer;margin-left:5px"

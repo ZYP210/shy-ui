@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import Props from '../components/props/index.vue'
-import Graphics from './Graphics.vue'
+// import Props from '../components/props/index.vue'
+// import Graphics from './Graphics.vue'
 import Header from '../components/header/index.vue'
 </script>

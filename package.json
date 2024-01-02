@@ -16,6 +16,7 @@
     "@ant-design/icons-vue": "^6.1.0",
     "@pnpm/find-workspace-packages": "^6.0.9",
     "@pnpm/types": "^9.4.0",
+    "@shy-plugins/2d-edit": "workspace:^",
     "@types/lodash-es": "^4.17.6",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",

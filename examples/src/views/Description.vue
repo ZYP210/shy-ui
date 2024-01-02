@@ -1,11 +1,6 @@
 <template>
   <div class="p-4 w-1600px">
-    <Description title="基础示例" @register="register">
-      <template #usernameValue="res">
-        <!-- {{ fun() }}  -->
-        <component :is="fun('red')" />
-      </template>
-    </Description>
+    <Description title="基础示例" @register="register"> </Description>
   </div>
 </template>
 <script lang="ts" setup>
@@ -23,7 +18,7 @@ const mockData: any = {
   certy: '3504256199xxxxxxxxx',
   tag: 'orange'
 }
-const schema: DescItem[] = [
+const schema = [
   {
     label: '基本信息',
     component: 'Group'
@@ -39,7 +34,10 @@ const schema: DescItem[] = [
     field: 'nickName',
     label: '昵称',
     colProps: { span: 12 },
-    isCopy: true
+    isCopy: false,
+    customRender: (data) => {
+      return h(Tag, { color: 'success' }, data.phone)
+    }
   },
   {
     label: '用户信息',

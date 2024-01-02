@@ -38,7 +38,7 @@
 
 <script lang="ts" setup>
 import { Options } from '@meta2d/core'
-import Form from '/@/components/form/index.vue'
+import Form from '../form/index.vue'
 import {
   baseSchema,
   canvasSchema,
@@ -46,8 +46,8 @@ import {
   echartsSchema,
   setParams
 } from './props.data'
-import { useSelection } from '/@/hooks/useSelections'
-import { useContext } from '/@/hooks/useContext'
+import { useSelection } from '../../hooks/useSelections'
+import { useContext } from '../../hooks/useContext'
 import type { FormSchema } from '../../types/form'
 import {
   Tabs as ATabs,
@@ -55,8 +55,9 @@ import {
   CollapsePanel as ACollapsePanel,
   TabPane as ATabPane
 } from 'ant-design-vue'
-import { useEventBus } from '/@/hooks/useEventBus'
+import { useEventBus } from '../../hooks/useEventBus'
 import LineProps from './LineProps.vue'
+import { ref, reactive, unref, toRefs, watch, computed, onUnmounted } from 'vue'
 
 const { deviceDataSource, api } = useContext()
 

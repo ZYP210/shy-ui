@@ -8,27 +8,29 @@
 </template>
 
 <script lang="ts" setup>
-import DataSourceModal from './components/dataSourceModal.vue';
-const dataSourceModalOpen = ref(false);
+import DataSourceModal from './components/dataSourceModal.vue'
+import { ref } from 'vue'
+
+const dataSourceModalOpen = ref(false)
 const actionList = ref([
   {
     label: '数据源',
     event: () => {
-      dataSourceModalOpen.value = true;
-    },
+      dataSourceModalOpen.value = true
+    }
   },
   {
     label: '保存',
-    event: 'redo',
+    event: 'redo'
   },
   {
     label: '预览',
-    event: 'import',
+    event: 'import'
   },
   {
     label: '发布',
-    event: 'export',
-  },
-]);
+    event: 'export'
+  }
+])
 </script>
 <style scoped lang="less"></style>

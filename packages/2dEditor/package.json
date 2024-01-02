@@ -1,8 +1,7 @@
 {
   "name": "@shy-plugins/2d-edit",
   "version": "0.0.9",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
+  "main": "src/index.ts",
   "private": false,
   "scripts": {
     "dev": "vite",

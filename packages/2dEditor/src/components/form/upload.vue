@@ -15,7 +15,7 @@
 <script lang="ts" setup>
 // import { PlusOutlined, LoadingOutlined } from '@ant-design/icons-vue';
 import { message } from 'ant-design-vue'
-import { useContext } from '/@/hooks/useContext'
+import { useContext } from '../../hooks/useContext'
 import { Upload as AUpload } from 'ant-design-vue'
 import { ref, watch } from 'vue'
 

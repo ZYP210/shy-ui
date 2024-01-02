@@ -11,6 +11,7 @@ export interface Schema {
   isCopy?: boolean
   labelStyle?: CSSProperties
   contentStyle?: CSSProperties
+  customRender: any
 }
 export const basicColProps = 24
 
@@ -34,5 +35,9 @@ export const basicProps = {
   data: {
     type: Object,
     default: () => ({})
+  },
+  customRender: {
+    type: Object,
+    default: () => null
   }
 }

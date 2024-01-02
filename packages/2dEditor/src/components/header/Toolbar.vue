@@ -34,11 +34,11 @@
 </template>
 
 <script lang="ts" setup>
-import { toolbarData, toolbarFunction } from './Toolbar.data';
+import { toolbarData, toolbarFunction } from './Toolbar.data'
 import {
   Dropdown as ADropdown,
   Menu as AMenu,
-  MenuItem as AMenuItem,
-} from 'ant-design-vue';
+  MenuItem as AMenuItem
+} from 'ant-design-vue'
 </script>
 <style scoped lang="less"></style>
