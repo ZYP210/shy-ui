@@ -16,5 +16,16 @@ export { default as ApiCascader } from './src/components/ApiCascader.vue'
 export { default as ApiTransfer } from './src/components/ApiTransfer.vue'
 export { default as TableChildren } from './src/components/Table.vue'
 export { default as ApiModalSelect } from './src/components/ApiModalSelect/ApiModalSelect.vue'
+// import { App } from 'vue'
+
+// const withInstall = <T>(component: T) => {
+//   const comp = component as any
+
+//   comp.install = (app: App) => {
+//     app.component('BasicForm', component)
+//   }
+//   return component as T & Plugin
+// }
+// withInstall(BasicForm)
 
 export { BasicForm }

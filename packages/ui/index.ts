@@ -29,3 +29,7 @@ export * from './src/AdvancedSearch'
 export * from './src/Label'
 export * from './src/BasicContainer'
 export * from './src/DescriptionsForm'
+
+import { registerGlobalConfig } from './config/index'
+
+export { registerGlobalConfig }

@@ -92,6 +92,7 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { basicProps } from './props'
 import { cloneDeep } from 'lodash-es'
+import { useGlobalConfig } from '../../../config/index'
 
 export default defineComponent({
   name: 'BasicForm',
@@ -124,9 +125,12 @@ export default defineComponent({
     const prefixCls = 'shy-basic-form'
 
     // Get the basic configuration of the form
+    const { config } = useGlobalConfig('form')
+
     const getProps = computed((): FormProps => {
       return {
         ...(props as any),
+        ...config, // 全局注入属性
         ...unref(propsRef)
       } as FormProps
     })

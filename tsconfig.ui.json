@@ -11,6 +11,7 @@
   },
   "include": [
     "packages/ui/types",
+    "packages/ui/config",
     "packages/ui/src",
     "packages/ui/src/**/*.vue"
   ]

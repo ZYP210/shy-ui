@@ -199,7 +199,7 @@ const [
   rowKey: 'id',
   columns,
   formConfig: {
-    rangePickerField: [['createTime']],
+    // rangePickerField: [['createTime']],
     schemas: [
       {
         label: '日期范围',
