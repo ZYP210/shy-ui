@@ -126,25 +126,6 @@ export default defineComponent({
         })
       }
 
-      if (schema.component === 'RangePicker') {
-        componentProps = Object.assign(
-          {
-            format: 'YYYY-MM-DD',
-            valueFormat: 'YYYY-MM-DD HH:mm:ss',
-            placeholder: ['开始日期', '结束日期'],
-            showTime: {
-              defaultValue: [
-                dayjs('00:00:00', 'HH:mm:ss'),
-                dayjs('23:59:59', 'HH:mm:ss')
-              ]
-            }
-          },
-          componentProps
-        )
-
-        console.log(1, componentProps)
-      }
-
       return componentProps as Recordable
     })
 

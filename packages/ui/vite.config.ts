@@ -31,6 +31,7 @@ export default defineConfig({
         '@logicflow/extension',
         '@shy-plugins/use',
         '@shy-plugins/utils',
+        '@shy-plugins/tinymce',
         '@zxcvbn-ts/core',
         'sortablejs',
         'virtual:svg-icons-names',
@@ -40,7 +41,8 @@ export default defineConfig({
         'codemirror',
         'vite-plugin-purge-icons',
         'ant-design-vue/es/locale/zh_CN',
-        'qrcode'
+        'qrcode',
+        'dayjs'
       ],
       output: [
         {

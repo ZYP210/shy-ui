@@ -128,7 +128,7 @@ const schemas = ref<FormSchema[]>([
     componentProps: {
       valueFormat: 'YYYY-MM-DD HH:mm:ss'
     }
-  }
+  },
   // {
   //   field: 'field',
   //   component: 'Input',
@@ -329,11 +329,11 @@ const schemas = ref<FormSchema[]>([
   //   },
   //   required: true
   // },
-  // {
-  //   label: 'Tinymce',
-  //   field: 'Tinymce',
-  //   component: 'Tinymce'
-  // }
+  {
+    label: 'Tinymce',
+    field: 'Tinymce',
+    component: 'Tinymce'
+  }
 ])
 const { createMessage } = useMessage()
 const [

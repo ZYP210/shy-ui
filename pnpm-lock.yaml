@@ -370,6 +370,9 @@ importers:
       '@purge-icons/generated':
         specifier: ^0.9.0
         version: 0.9.0
+      '@shy-plugins/tinymce':
+        specifier: workspace:^
+        version: link:../tinymce
       '@shy-plugins/use':
         specifier: workspace:*
         version: link:../use
@@ -16670,7 +16673,7 @@ packages:
       '@vue/composition-api':
         optional: true
     dependencies:
-      vue: 3.3.13(typescript@5.0.4)
+      vue: 3.3.13(typescript@4.9.4)
 
   /vue-demi@0.14.5(vue@3.3.4):
     resolution: {integrity: sha512-o9NUVpl/YlsGJ7t+xuqJKx8EBGf1quRhCiT6D/J0pfwmk9zUwYkC7yrF4SZCe6fETvSM3UNL2edcbYrSyc4QHA==}

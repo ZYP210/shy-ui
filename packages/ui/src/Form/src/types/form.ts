@@ -131,6 +131,7 @@ export interface FormProps {
   submitFunc?: () => Promise<void>
   transformDateFunc?: (date: any) => string
   colon?: boolean
+  rangePickerField: any[]
 }
 export interface FormSchema {
   // Field name

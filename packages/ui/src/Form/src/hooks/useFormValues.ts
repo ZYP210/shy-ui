@@ -10,6 +10,7 @@ import { unref } from 'vue'
 import type { Ref, ComputedRef } from 'vue'
 import type { FormProps, FormSchema } from '../types/form'
 import { cloneDeep, set } from 'lodash-es'
+import dayjs from 'dayjs'
 
 interface UseFormValuesContext {
   defaultValueRef: Ref<any>
@@ -129,6 +130,25 @@ export function useFormValues({
       values[endTimeKey] = dateUtil(endTime).format(endTimeFormat)
       Reflect.deleteProperty(values, field)
     }
+
+    const rangePickerField = unref(getProps)?.rangePickerField || []
+
+    rangePickerField.forEach((fieldConfig: any) => {
+      if (values[fieldConfig[0]] && Array.isArray(values[fieldConfig[0]])) {
+        const startTimeKey = fieldConfig[1] || '00:00:00'
+        const endTimeKey = fieldConfig[2] || '23:59:59'
+
+        values[fieldConfig[0]][0] =
+          dayjs(values[fieldConfig[0]][0]).format('YYYY-MM-DD') +
+          ' ' +
+          startTimeKey
+
+        values[fieldConfig[0]][1] =
+          dayjs(values[fieldConfig[0]][1]).format('YYYY-MM-DD') +
+          ' ' +
+          endTimeKey
+      }
+    })
 
     return values
   }

@@ -2,6 +2,7 @@
 <script lang="ts" setup>
 import { Tinymce } from '@shy-plugins/tinymce'
 import { useRuleFormItem } from '@shy-plugins/use'
+import '@shy-plugins/tinymce/es/style.css'
 // import { watchEffect } from 'vue'
 
 const props = defineProps<{

@@ -188,5 +188,9 @@ export const basicProps = {
 
   rowProps: {
     type: Object as PropType<RowProps>
+  },
+  rangePickerField: {
+    type: Array,
+    default: () => []
   }
 }

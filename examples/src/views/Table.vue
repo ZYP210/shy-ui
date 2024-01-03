@@ -169,21 +169,6 @@ const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
   }
 })
 
-searchFormSchema.unshift({
-  label: '日期范围',
-  component: 'RangePicker',
-  field: '[startDate, endDate]',
-  defaultValue: [dayjs().add(-30, 'd').format('YYYY-MM-DD'), dayjs()],
-  componentProps: ({ ...ages }) => {
-    return {
-      onModelChange: (e) => {
-        console.log(e, ages)
-      }
-    }
-  },
-  colProps: { span: 6 }
-})
-
 const [
   register,
   {
@@ -195,6 +180,8 @@ const [
   }
 ] = useTable({
   api: (params) => {
+    console.log('params', params)
+
     return Array.from({ length: 300 }, (_, i) => {
       return {
         id: i,
@@ -212,7 +199,17 @@ const [
   rowKey: 'id',
   columns,
   formConfig: {
-    schemas: searchFormSchema as any
+    rangePickerField: [['createTime']],
+    schemas: [
+      {
+        label: '日期范围',
+        component: 'RangePicker',
+        field: 'createTime',
+        componentProps: ({ ...ages }) => {
+          return {}
+        }
+      }
+    ]
   },
   showIndexColumn: true,
   showTableSetting: true,
