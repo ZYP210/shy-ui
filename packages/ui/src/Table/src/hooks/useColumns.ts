@@ -200,8 +200,16 @@ export function useColumns(
         ].includes(flag!)
         if (!customRender && format && !edit && !isDefaultAction) {
           column.customRender = ({ text, record, index }) => {
-            return formatCell(text, format, record, index)
+            return formatCell(text, format, record, index, tableAction.value)
           }
+        }
+
+        if (customRender) {
+          column.customRender = ({ ...ages }) =>
+            customRender({
+              ...ages,
+              ...{ tableAction: tableAction.value }
+            })
         }
 
         // edit table
@@ -343,7 +351,8 @@ export function formatCell(
   text: string,
   format: CellFormat,
   record: Recordable,
-  index: number
+  index: number,
+  tableAction: TableActionType
 ) {
   if (!format) {
     return text
@@ -351,7 +360,7 @@ export function formatCell(
 
   // custom function
   if (isFunction(format)) {
-    return format(text, record, index)
+    return format(text, record, index, tableAction)
   }
 
   try {
