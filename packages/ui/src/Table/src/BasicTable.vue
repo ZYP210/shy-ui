@@ -114,7 +114,7 @@ import { warn, isFunction } from '@shy-plugins/utils'
 import type {} from 'csstype'
 import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
 import TableGlobalSearch from './components/TableGlobalSearch.vue'
-// import { onMounted } from 'vue'
+import { useGlobalConfig } from '../../../config/index'
 
 export default defineComponent({
   components: {
@@ -156,9 +156,9 @@ export default defineComponent({
     const prefixCls = 'shy-basic-table'
 
     const [registerForm, formActions] = useForm()
-
+    const { config } = useGlobalConfig('table')
     const getProps = computed(() => {
-      return { ...props, ...unref(innerPropsRef) } as BasicTableProps
+      return { ...props, ...config, ...unref(innerPropsRef) } as BasicTableProps
     })
 
     const isFixedHeightPage = inject(PageWrapperFixedHeightKey, false)

@@ -1,5 +1,6 @@
 const globalConfig = {
-  form: {}
+  form: {},
+  table: {}
 }
 
 export const registerGlobalConfig = (config: any) => {
