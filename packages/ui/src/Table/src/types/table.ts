@@ -459,7 +459,12 @@ export type AlignType = 'left' | 'center' | 'right'
 
 export type CellFormat =
   | string
-  | ((text: string, record: Recordable, index: number) => string | number)
+  | ((
+      text: string,
+      record: Recordable,
+      index: number,
+      tableAction: TableActionType
+    ) => string | number)
   | Map<string | number, any>
 
 // @ts-ignore

@@ -142,12 +142,13 @@ const columns: any[] = [
   },
   {
     title: '产地',
-    editRow: true,
+    // editRow: true,
     dataIndex: 'place',
-    editComponent: 'InputNumber',
+    // editComponent: 'InputNumber',
     fixed: 'right',
-    editRule: true,
-    customRender: ({ record }) => {
+    // editRule: true,
+    customRender: ({ record, ...ages }) => {
+      console.log('ages', ages)
       return record
     }
   }
