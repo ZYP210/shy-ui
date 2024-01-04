@@ -7,6 +7,7 @@
     :canFullscreen="false"
     @ok="handleOk"
     okText="确认并上传"
+    destroy-on-close
   >
     <div :class="prefixCls">
       <div :class="`${prefixCls}-left`">
@@ -28,7 +29,7 @@
             :beforeUpload="handleBeforeUpload"
           >
             <Tooltip title="选择图片" placement="bottom">
-              <a-button
+              <BasicButton
                 size="small"
                 preIcon="ant-design:upload-outlined"
                 type="primary"
@@ -37,7 +38,7 @@
           </Upload>
           <Space>
             <Tooltip title="重置" placement="bottom">
-              <a-button
+              <BasicButton
                 type="primary"
                 preIcon="ant-design:reload-outlined"
                 size="small"
@@ -46,7 +47,7 @@
               />
             </Tooltip>
             <Tooltip title="逆时针旋转" placement="bottom">
-              <a-button
+              <BasicButton
                 type="primary"
                 preIcon="ant-design:rotate-left-outlined"
                 size="small"
@@ -55,7 +56,7 @@
               />
             </Tooltip>
             <Tooltip title="顺时针旋转" placement="bottom">
-              <a-button
+              <BasicButton
                 type="primary"
                 preIcon="ant-design:rotate-right-outlined"
                 size="small"
@@ -64,7 +65,7 @@
               />
             </Tooltip>
             <Tooltip title="水平翻转" placement="bottom">
-              <a-button
+              <BasicButton
                 type="primary"
                 preIcon="vaadin:arrows-long-h"
                 size="small"
@@ -73,7 +74,7 @@
               />
             </Tooltip>
             <Tooltip title="垂直翻转" placement="bottom">
-              <a-button
+              <BasicButton
                 type="primary"
                 preIcon="vaadin:arrows-long-v"
                 size="small"
@@ -82,7 +83,7 @@
               />
             </Tooltip>
             <Tooltip title="放大" placement="bottom">
-              <a-button
+              <BasicButton
                 type="primary"
                 preIcon="ant-design:zoom-in-outlined"
                 size="small"
@@ -91,7 +92,7 @@
               />
             </Tooltip>
             <Tooltip title="缩小" placement="bottom">
-              <a-button
+              <BasicButton
                 type="primary"
                 preIcon="ant-design:zoom-out-outlined"
                 size="small"
@@ -125,6 +126,7 @@ import { defineComponent, ref } from 'vue'
 import CropperImage from './Cropper.vue'
 import { Space, Upload, Avatar, Tooltip } from 'ant-design-vue'
 import { BasicModal, useModalInner } from '../../Modal'
+import { BasicButton } from '../../Button'
 import { dataURLtoBlob } from '@shy-plugins/utils'
 import { isFunction } from '@shy-plugins/utils'
 
@@ -139,9 +141,17 @@ const props = {
 
 export default defineComponent({
   name: 'CropperModal',
-  components: { BasicModal, Space, CropperImage, Upload, Avatar, Tooltip },
+  components: {
+    BasicModal,
+    Space,
+    CropperImage,
+    Upload,
+    Avatar,
+    Tooltip,
+    BasicButton
+  },
   props,
-  emits: ['uploadSuccess', 'register'],
+  emits: ['uploadSuccess', 'register', 'beforeUpload'],
   setup(props, { emit }) {
     let filename = ''
     const src = ref('')
@@ -152,7 +162,11 @@ export default defineComponent({
 
     const prefixCls = 'shy-cropper-am'
 
-    const [register, { closeModal, setModalProps }] = useModalInner()
+    const [register, { closeModal, setModalProps }] = useModalInner(() => {
+      src.value = ''
+      previewSource.value = ''
+      filename = ''
+    })
 
     // Block upload
     function handleBeforeUpload(file: File) {
@@ -200,6 +214,12 @@ export default defineComponent({
         } finally {
           setModalProps({ confirmLoading: false })
         }
+      } else {
+        emit('beforeUpload', {
+          file: dataURLtoBlob(previewSource.value),
+          filename,
+          closeModal
+        })
       }
     }
 

@@ -3,7 +3,7 @@
     <div
       :class="`${prefixCls}-image-wrapper`"
       :style="getImageWrapperStyle"
-      @click="openModal"
+      @click="openModal(true, {})"
     >
       <div :class="`${prefixCls}-image-mask`" :style="getImageWrapperStyle">
         <Icon
@@ -17,7 +17,7 @@
     </div>
     <a-button
       :class="`${prefixCls}-upload-btn`"
-      @click="openModal"
+      @click="openModal(true, {})"
       v-if="showBtn"
       v-bind="btnProps"
     >
@@ -27,6 +27,7 @@
     <CopperModal
       @register="register"
       @upload-success="handleUploadSuccess"
+      @before-upload="handleBeforeUpload"
       :uploadApi="uploadApi"
       :src="sourceValue"
     />
@@ -56,7 +57,9 @@ const props = {
   btnProps: { type: Object as PropType<ButtonProps> },
   btnText: { type: String, default: '' },
   uploadApi: {
-    type: Function as PropType<({ file: Blob, name: string }) => Promise<void>>
+    type: Function as PropType<
+      ({ file, name }: { file: Blob; name: string }) => Promise<void>
+    >
   }
 }
 
@@ -64,7 +67,7 @@ export default defineComponent({
   name: 'CropperAvatar',
   components: { CopperModal, Icon },
   props,
-  emits: ['update:value', 'change'],
+  emits: ['update:value', 'change', 'beforeUpload'],
   setup(props, { emit, expose }) {
     const sourceValue = ref(props.value || '')
 
@@ -104,6 +107,10 @@ export default defineComponent({
       createMessage.success('上传成功')
     }
 
+    function handleBeforeUpload({ file, closeModal, filename }) {
+      emit('beforeUpload', { file, closeModal, filename })
+    }
+
     expose({ openModal: openModal.bind(null, true), closeModal })
 
     return {
@@ -115,7 +122,8 @@ export default defineComponent({
       getClass,
       getImageWrapperStyle,
       getStyle,
-      handleUploadSuccess
+      handleUploadSuccess,
+      handleBeforeUpload
     }
   }
 })

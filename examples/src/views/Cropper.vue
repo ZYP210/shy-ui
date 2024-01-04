@@ -5,15 +5,17 @@
     @cropend="handleCropend"
     style="width: 40vw"
   />
+  <AvatarCropper @before-upload="handleBeforeUpload" />
 </template>
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { CropperImage } from '3h1-ui'
+import { CropperImage, AvatarCropper } from '3h1-ui'
 import img from '../assets/imgs/1.jpg'
 
 export default defineComponent({
   components: {
-    CropperImage
+    CropperImage,
+    AvatarCropper
   },
   setup() {
     const info = ref('')
@@ -24,11 +26,17 @@ export default defineComponent({
       cropperImg.value = imgBase64
     }
 
+    const handleBeforeUpload = ({ file, closeModal, filename }) => {
+      console.log(file, filename)
+      closeModal()
+    }
+
     return {
       img,
       info,
       cropperImg,
-      handleCropend
+      handleCropend,
+      handleBeforeUpload
     }
   }
 })
