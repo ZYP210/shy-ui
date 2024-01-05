@@ -55,6 +55,11 @@ const { createMessage } = useMessage()
 //   { label: 'a', field: 'c', component: 'Input', colProps: { span: 8 } },
 //   { label: 'a', field: 'd', component: 'Input', colProps: { span: 8 } }
 // ]
+
+// const zzz = useRender()
+
+// console.log(zzz)
+
 const columns: any[] = [
   {
     title: '产地范围',
