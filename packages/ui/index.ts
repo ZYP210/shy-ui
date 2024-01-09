@@ -30,6 +30,7 @@ export * from './src/AdvancedSearch'
 export * from './src/Label'
 export * from './src/BasicContainer'
 export * from './src/DescriptionsForm'
+export * from './src/BasicResizeWrapper'
 
 import { registerGlobalConfig } from './config/index'
 

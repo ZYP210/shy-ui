@@ -229,7 +229,10 @@ export function useTableScroll(
 
     const table = unref(tableElRef)
     const tableWidth = table?.$el?.offsetWidth ?? 0
-    const tableData = unref(getDataSourceRef)
+
+
+    console.log(tableWidth, table?.$el?.offsetWidth, width)
+
     return tableWidth > width ? '100%' : width
   })
 

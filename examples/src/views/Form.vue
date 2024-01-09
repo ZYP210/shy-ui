@@ -129,6 +129,24 @@ const schemas = ref<FormSchema[]>([
       valueFormat: 'YYYY-MM-DD HH:mm:ss'
     }
   },
+  {
+    field: '1111',
+    label: '上传',
+    component: 'Upload',
+    colProps: { span: 24 },
+    componentProps: {
+      maxNumber: 2,
+      api: async (params) => {
+        console.log(params)
+        return {
+          status: 'success',
+          data: {
+            url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
+          }
+        }
+      }
+    }
+  },
   // {
   //   field: 'field',
   //   component: 'Input',

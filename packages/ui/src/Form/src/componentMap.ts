@@ -28,13 +28,16 @@ import ApiTree from './components/ApiTree.vue'
 import ApiTreeSelect from './components/ApiTreeSelect.vue'
 import ApiCascader from './components/ApiCascader.vue'
 import ApiTransfer from './components/ApiTransfer.vue'
-import Upload from './components/Upload.vue'
+// import Upload from './components/Upload.vue'
 import { StrengthMeter } from '../../StrengthMeter'
 import { IconPicker } from '../../Icon'
 import { CountdownInput } from '../../CountDown'
 import Tinymce from './components/Tinymce.vue'
 
 import Table from './components/Table.vue'
+
+import { BasicUpload } from '../../Upload'
+
 // import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
 
 const componentMap = new Map<ComponentType, Component>()
@@ -63,6 +66,7 @@ componentMap.set('Cascader', Cascader)
 componentMap.set('Slider', Slider)
 componentMap.set('Rate', Rate)
 componentMap.set('ApiTransfer', ApiTransfer)
+componentMap.set('Upload', BasicUpload)
 
 // componentMap.set('ApiModalSelect', ApiModalSelect)
 
@@ -77,7 +81,7 @@ componentMap.set('InputCountDown', CountdownInput)
 componentMap.set('Table', Table)
 componentMap.set('Tinymce', Tinymce)
 
-componentMap.set('Upload', Upload)
+// componentMap.set('Upload', Upload)
 componentMap.set('Divider', Divider)
 
 export function add(compName: ComponentType, component: Component) {

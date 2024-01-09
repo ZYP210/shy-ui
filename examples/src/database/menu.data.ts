@@ -52,7 +52,8 @@ export const URLData: MenuList[] = [
       'ClickOutSide',
       'CollapseContainer',
       'LazyContainer',
-      'ScrollContainer'
+      'ScrollContainer',
+      'BasicResizeWrapper'
     ]
   },
   {
