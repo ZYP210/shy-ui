@@ -24,10 +24,18 @@ export default defineComponent({
       default: () => false
     }
   },
-  emits: ['click-return'],
+  emits: ['click-return', 'confirm', 'cancel'],
   setup(props, { slots, emit }) {
     const handleClick = () => {
       emit('click-return')
+    }
+
+    const handleCancel = () => {
+      emit('cancel')
+    }
+
+    const handleConfirm = () => {
+      emit('confirm')
     }
 
     return () => (
@@ -52,13 +60,13 @@ export default defineComponent({
               {slots.beforeCancelButton?.()}
 
               {props.isShowCancelButton ? (
-                <BasicButton size="small">取消</BasicButton>
+                <BasicButton onClick={handleCancel}>取消</BasicButton>
               ) : null}
 
               {slots.afterCancelButton?.()}
 
               {props.isShowConfirmButton ? (
-                <BasicButton type="primary" size="small">
+                <BasicButton onClick={handleConfirm} type="primary">
                   确定
                 </BasicButton>
               ) : null}
