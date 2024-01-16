@@ -22,6 +22,14 @@ export default defineComponent({
     isShowFooter: {
       type: Boolean,
       default: () => false
+    },
+    confirmButtonText: {
+      type: String,
+      default: () => '确定'
+    },
+    cancelButtonText: {
+      type: String,
+      default: () => '取消'
     }
   },
   emits: ['click-return', 'confirm', 'cancel'],
@@ -57,21 +65,23 @@ export default defineComponent({
         {props.isShowFooter ? (
           <div class={`${prefixCls}-footer`}>
             <Space>
-              {slots.beforeCancelButton?.()}
-
-              {props.isShowCancelButton ? (
-                <BasicButton onClick={handleCancel}>取消</BasicButton>
-              ) : null}
-
-              {slots.afterCancelButton?.()}
+              {slots.beforeConfirmButton?.()}
 
               {props.isShowConfirmButton ? (
                 <BasicButton onClick={handleConfirm} type="primary">
-                  确定
+                  {props.confirmButtonText}
                 </BasicButton>
               ) : null}
 
-              {slots.beforeConfirmButton?.()}
+              {slots.beforeCancelButton?.()}
+
+              {props.isShowCancelButton ? (
+                <BasicButton onClick={handleCancel}>
+                  {props.cancelButtonText}
+                </BasicButton>
+              ) : null}
+
+              {slots.afterCancelButton?.()}
             </Space>
           </div>
         ) : null}
