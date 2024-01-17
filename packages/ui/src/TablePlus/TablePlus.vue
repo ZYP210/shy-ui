@@ -286,9 +286,6 @@ const props = withDefaults(defineProps<Props>(), {
     return (form) => {
       return form
     }
-  },
-  transDataAfterReload: () => {
-    return (res) => res.records
   }
 })
 const innerProps = ref({})

@@ -24,7 +24,7 @@ import dayjs from 'dayjs'
 import { Button } from 'ant-design-vue'
 
 const getActions = (row) => {
-  // console.log('column', column)
+  const data = getTableData()
 
   return [
     {
@@ -41,12 +41,14 @@ const getActions = (row) => {
     //   label: '测试'
     // },
     {
-      auth: 'alarm_delete',
       label: '删除',
 
       popConfirm: {
         title: '是否确认删除',
-        confirm: () => {}
+        confirm: () => {
+          --pageNumber.value
+          reload()
+        }
       }
     }
   ]
@@ -83,15 +85,17 @@ const columns = [
   }
 ]
 
-const getList = (params = {}) => {
+const pageNumber = ref(41)
+
+const getList = (params) => {
   const list = []
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < pageNumber.value; i++) {
     list.push({
       id: i,
-      a: 1,
-      b: 2,
-      c: 3,
-      d: 4,
+      a: i + 1,
+      b: i + 2,
+      c: i + 3,
+      d: i + 4,
       children: [
         {
           id: i + 'c',
@@ -110,10 +114,22 @@ const getList = (params = {}) => {
       ]
     })
   }
+  console.log('params', params)
+  if (params.current === 2) {
+    return new Promise((resolve) => {
+      return resolve({
+        total: 10,
+        records: []
+      })
+    })
+  }
   return new Promise((resolve) => {
     return resolve({
-      records: list,
-      total: list.length
+      total: list.length,
+      records: list.slice(
+        params.size * (params.current - 1),
+        params.size * params.current
+      )
     })
   })
 }
@@ -138,6 +154,8 @@ const [
   register,
   {
     getRowSelection,
+    getTableData,
+    setTableData,
     setProps,
     reload,
     setEditByRow,
