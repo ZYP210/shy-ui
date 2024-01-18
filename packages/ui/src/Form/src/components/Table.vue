@@ -44,8 +44,7 @@
             <DatePicker
               v-else-if="column.type === 'datePicker'"
               v-model:value="record[column.dataIndex]"
-              valueFormat="YYYY-MM-DD HH:mm:ss"
-              :showTime="true"
+              v-bind="column"
             />
             <InputNumber
               v-else-if="column.type === 'number'"
