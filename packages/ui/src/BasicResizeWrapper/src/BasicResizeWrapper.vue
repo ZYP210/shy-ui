@@ -17,7 +17,6 @@ export default defineComponent({
     const { prefixCls } = useDesign('basic-resize-wrapper')
 
     function setScale() {
-      console.log('setScale', screenRef.value, currentScreenRef.value)
       screenRef.value.style.transform = `scale(${
         currentScreenRef.value.offsetWidth / props.designWidth
       },${currentScreenRef.value.offsetHeight / props.designHeight})`

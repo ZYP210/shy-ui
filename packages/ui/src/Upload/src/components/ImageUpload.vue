@@ -180,7 +180,6 @@ async function customRequest(info: UploadRequestOption<any>) {
     isInnerOperate.value = true
     emit('change', value)
   } catch (e: any) {
-    console.log(e)
     info.onError!(e)
   }
 }

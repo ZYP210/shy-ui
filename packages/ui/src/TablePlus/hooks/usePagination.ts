@@ -9,9 +9,12 @@ export const usePagination = () => {
   })
 
   const setPage = (pageInfo) => {
-    nextTick(() => {
-      Object.keys(pageInfo).forEach((key) => {
-        page[key] = pageInfo[key]
+    return new Promise((resolve) => {
+      nextTick(() => {
+        Object.keys(pageInfo).forEach((key) => {
+          page[key] = pageInfo[key]
+        })
+        resolve({ ...page })
       })
     })
   }
