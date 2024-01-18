@@ -180,7 +180,6 @@ defineExpose({ validate })
   height: 30px;
   font-size: 30px;
   color: #fff;
-  background-color: @primary-color;
   border-radius: 50%;
   box-sizing: border-box;
   line-height: 30px;
