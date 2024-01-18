@@ -21,7 +21,8 @@ const columns = [
   },
   {
     title: 'c',
-    dataIndex: 'c'
+    dataIndex: 'c',
+    type: 'datePicker'
   },
   {
     title: 'd',
@@ -34,9 +35,9 @@ const columns = [
 ]
 const data = [
   { b: 2, c: 3 },
-  { a: 1, b: 2, c: 3 },
-  { a: 1, b: 2, c: 3 },
-  { a: 1, b: 2, c: 3 }
+  { a: 1, b: 2 },
+  { a: 1, b: 2 },
+  { a: 1, b: 2 }
 ]
 const tableRef = ref()
 const handleValidate = async () => {

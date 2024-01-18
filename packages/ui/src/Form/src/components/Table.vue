@@ -44,7 +44,7 @@
             <DatePicker
               v-else-if="column.type === 'datePicker'"
               v-model:value="record[column.dataIndex]"
-              v-bind="column"
+              valueFormat="'YYYY-MM-DD HH:mm:ss'"
             />
             <InputNumber
               v-else-if="column.type === 'number'"
@@ -92,7 +92,7 @@ import {
 } from 'ant-design-vue'
 import { ref, unref, computed, watch } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
-import { Icon } from '../../../Icon'
+
 const emit = defineEmits(['update:value', 'change'])
 import { DeleteFilled, PlusCircleFilled } from '@ant-design/icons-vue'
 
