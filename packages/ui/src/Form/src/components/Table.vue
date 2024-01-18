@@ -10,8 +10,12 @@
   >
     <template #headerCell="{ column }">
       <div v-if="column.dataIndex === 'index'">
-        <div v-if="isShowAction" class="table-plus" @click="plusClickEvent">
-          +
+        <div
+          v-if="isShowAction"
+          class="shy-table-edit-icon-plus"
+          @click="plusClickEvent"
+        >
+          <plus-circle-filled :style="{ color: '#006eff' }" />
         </div>
         <div v-else>序号</div>
       </div>
@@ -68,7 +72,7 @@
           class="delete-item"
           @click="rowClickEvent(index)"
         >
-          <Icon icon="ant-design:delete-filled" color="#fff" />
+          <delete-filled :style="{ color: '#fff' }" />
         </div>
 
         <span v-else class="">{{ index + 1 }}</span>
@@ -91,6 +95,7 @@ import { ref, unref, computed, watch } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 import { Icon } from '../../../Icon'
 const emit = defineEmits(['update:value', 'change'])
+import { DeleteFilled, PlusCircleFilled } from '@ant-design/icons-vue'
 
 const listFormRefs = ref<unknown[]>([])
 
@@ -170,10 +175,10 @@ defineExpose({ validate })
 </script>
 
 <style scoped lang="less">
-.table-plus {
+.shy-table-edit-icon-plus {
   width: 30px;
   height: 30px;
-  font-size: 24px;
+  font-size: 30px;
   color: #fff;
   background-color: @primary-color;
   border-radius: 50%;
