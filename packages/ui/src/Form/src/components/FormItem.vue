@@ -14,7 +14,7 @@ import { cloneDeep, upperFirst } from 'lodash-es'
 import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import Divider from './Divider'
 import dayjs from 'dayjs'
-import { useGlobalConfig } from '../../../config/index'
+import { useGlobalConfig } from '../../../../config/index'
 
 export default defineComponent({
   name: 'BasicFormItem',
