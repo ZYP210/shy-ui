@@ -45,6 +45,7 @@ const tree = {
 }
 
 const schemas = ref<FormSchema[]>([
+  { field: 'aa', label: '数字框', component: 'InputNumber' },
   // {
   //   field: 'type',
   //   label: '类型',

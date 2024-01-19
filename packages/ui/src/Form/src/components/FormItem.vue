@@ -14,6 +14,7 @@ import { cloneDeep, upperFirst } from 'lodash-es'
 import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import Divider from './Divider'
 import dayjs from 'dayjs'
+import { useGlobalConfig } from '../../../config/index'
 
 export default defineComponent({
   name: 'BasicFormItem',
@@ -51,6 +52,8 @@ export default defineComponent({
   },
   emits: ['clearCurrValidate'],
   setup(props, { slots, emit }) {
+    const { config } = useGlobalConfig('form')
+
     const { schema, formProps } = toRefs(props) as {
       schema: Ref<FormSchema>
       formProps: Ref<FormProps>
@@ -126,7 +129,10 @@ export default defineComponent({
         })
       }
 
-      return componentProps as Recordable
+      return {
+        ...(config[schema?.component] || {}),
+        ...componentProps
+      } as Recordable
     })
 
     const getDisable = computed(() => {
