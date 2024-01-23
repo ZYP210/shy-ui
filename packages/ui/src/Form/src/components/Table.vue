@@ -123,7 +123,7 @@ const getColumns = computed(() => {
     customRender: ({ index }: { index: number }) => {
       return `${index + 1}`
     },
-    minWidth: 50,
+    width: 50,
     align: 'center'
   }
   return [indexColumn, ...props.columns]
@@ -178,12 +178,7 @@ defineExpose({ validate })
   width: 30px;
   height: 30px;
   font-size: 30px;
-  color: #fff;
-  border-radius: 50%;
-  box-sizing: border-box;
-  line-height: 30px;
   cursor: pointer;
-  text-align: center;
 }
 
 .table-children::v-deep(.ant-form-item) {

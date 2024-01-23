@@ -184,23 +184,36 @@ const [
     getForm
   }
 ] = useTable({
-  // api: (params) => {
-  //   console.log('params', params)
+  isTreeTable: true,
+  api: (params) => {
+    console.log('params', params)
 
-  //   return Array.from({ length: 300 }, (_, i) => {
-  //     return {
-  //       id: i,
-  //       status: 0,
-  //       rangePlace: '国产',
-  //       place: '河北',
-  //       createTime: 1695024076000,
-  //       name: 'zzz',
-  //       phone: '1212121',
-  //       address: '1111',
-  //       remark: '999'
-  //     }
-  //   })
-  // },
+    return Array.from({ length: 300 }, (_, i) => {
+      return {
+        id: i,
+        status: 0,
+        rangePlace: '国产',
+        place: '河北',
+        createTime: 1695024076000,
+        name: 'zzz',
+        phone: '1212121',
+        address: '1111',
+        remark: '999',
+        children: [
+          {
+            status: 0,
+            rangePlace: '国产',
+            place: '河北',
+            createTime: 1695024076000,
+            name: 'zzz',
+            phone: '1212121',
+            address: '1111',
+            remark: '999'
+          }
+        ]
+      }
+    })
+  },
   rowKey: 'id',
   columns,
   formConfig: {
