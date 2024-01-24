@@ -181,6 +181,7 @@ defineExpose({ validate })
   height: 30px;
   font-size: 30px;
   cursor: pointer;
+  display: flex;
 }
 
 .table-children::v-deep(.ant-form-item) {
