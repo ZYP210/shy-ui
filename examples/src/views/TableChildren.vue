@@ -1,6 +1,12 @@
 <template>
   <div class="">
-    <TableChildren ref="tableRef" :columns="columns" v-model:value="data" />
+    <TableChildren
+      ref="tableRef"
+      :columns="columns"
+      v-model:value="data"
+      @add="handleAdd"
+      @remove="handleRemove"
+    />
 
     <a-button @click="handleValidate">校验</a-button>
   </div>
@@ -46,6 +52,13 @@ const handleValidate = async () => {
   } catch {
     console.log('error')
   }
+}
+
+const handleAdd = () => {
+  console.log('add')
+}
+const handleRemove = () => {
+  console.log('remove')
 }
 </script>
 <style lang="less" scoped></style>

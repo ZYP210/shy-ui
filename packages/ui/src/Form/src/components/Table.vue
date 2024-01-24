@@ -93,7 +93,7 @@ import {
 import { ref, unref, computed, watch } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 
-const emit = defineEmits(['update:value', 'change'])
+const emit = defineEmits(['update:value', 'change', 'add', 'remove'])
 import { DeleteFilled, PlusCircleFilled } from '@ant-design/icons-vue'
 
 const listFormRefs = ref<unknown[]>([])
@@ -131,12 +131,14 @@ const getColumns = computed(() => {
 
 const plusClickEvent = () => {
   state.value = [{}, ...state.value]
+  emit('add', state.value)
 }
 
 const rowClickEvent = (index) => {
   state.value = unref(state).filter((item, i) => {
     return index !== i
   })
+  emit('remove', state.value, index)
 }
 
 const loadKv = () => {
