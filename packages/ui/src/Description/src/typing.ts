@@ -9,6 +9,7 @@ export interface DescItem {
   isCopy?: boolean
   labelStyle?: CSSProperties
   contentStyle?: CSSProperties
+  helpMessage: String
 }
 
 export interface DescriptionProps {

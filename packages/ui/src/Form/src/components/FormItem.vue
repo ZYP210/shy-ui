@@ -125,7 +125,8 @@ export default defineComponent({
           showSearch: true,
           filterOption: (input: string, option: any) => {
             return option[label].toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
+          },
+          getPopupContainer: () => document.body
         })
       }
 

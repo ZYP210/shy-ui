@@ -4,6 +4,7 @@ import { Divider } from 'ant-design-vue'
 import DescriptionGroup from './DescriptionGroup'
 import { CopyOutlined } from '@ant-design/icons-vue'
 import { useMessage } from '@shy-plugins/use'
+import { BasicHelp } from '../../Basic/index'
 
 export default defineComponent({
   name: 'Description',
@@ -88,6 +89,17 @@ export default defineComponent({
                         field: item.label
                       })
                     : item.label}
+
+                  {item?.helpMessage ? (
+                    <BasicHelp
+                      style={{ paddingTop: '5px' }}
+                      placement="top"
+                      class="mx-1"
+                      text={item?.helpMessage}
+                    />
+                  ) : (
+                    ''
+                  )}
                   {getProps.value?.isShowColon ? ':' : ''}
                 </span>
               ) : (

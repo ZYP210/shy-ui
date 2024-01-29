@@ -46,7 +46,8 @@ const schema = [
   {
     field: 'phone',
     label: '联系电话',
-    colProps: { span: 8 }
+    colProps: { span: 8 },
+    helpMessage: '这是一个'
   },
   {
     field: 'email',

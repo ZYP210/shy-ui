@@ -12,6 +12,7 @@ export interface Schema {
   labelStyle?: CSSProperties
   contentStyle?: CSSProperties
   customRender: any
+  helpMessage: string
 }
 export const basicColProps = 24
 
