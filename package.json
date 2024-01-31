@@ -7,7 +7,8 @@
     "dev:example": "node ./release.js&&pnpm -C examples dev",
     "publish:ui": "cd ./scripts && bash publish.sh",
     "update:version": "tsx scripts/update-version.ts",
-    "build:utils": "pnpm -C packages/utils build"
+    "build:utils": "pnpm -C packages/utils build",
+    "create:plugins": "node ./create"
   },
   "keywords": [],
   "author": "",
@@ -17,11 +18,13 @@
     "@pnpm/find-workspace-packages": "^6.0.9",
     "@pnpm/types": "^9.4.0",
     "@shy-plugins/2d-edit": "workspace:^",
+    "@shy-plugins/text": "workspace:^",
     "@types/lodash-es": "^4.17.6",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
     "@typescript-eslint/parser": "^5.44.0",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vitejs/plugin-vue-jsx": "^3.0.0",
+    "a": "^3.0.1",
     "cli-progress": "^3.12.0",
     "cpy": "^9.0.1",
     "eslint": "^8.28.0",
@@ -52,7 +55,8 @@
     "vite": "^4.4.9",
     "vite-plugin-dts": "^1.7.1",
     "vue": "^3.2.40",
-    "vue-types": "^5.0.2"
+    "vue-types": "^5.0.2",
+    "yamljs": "^0.3.0"
   },
   "dependencies": {
     "3h1-ui": "workspace:*",
