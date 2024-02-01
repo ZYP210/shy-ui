@@ -17,12 +17,13 @@ import 'virtual:svg-icons-register'
 
 import { BasicTable, registerGlobalConfig } from '3h1-ui'
 import { Plugin } from 'vue'
-
+import ShyFlowDingDing from '@shy-plugins/workflow-dingding';
 const app = createApp(App)
 
 registerGlobalConfig({ form: { rangePickerField: [['createTime']] } })
 
 app
+  .use(ShyFlowDingDing)
   .use(router)
   .use(BasicTable as unknown as Plugin, {})
   .mount('#app')

@@ -28,7 +28,7 @@ module.exports = {
       'error',
       {
         endOfLine: 'auto',
-        semi: false
+        semi: ["error", "always"],
       }
     ],
     'vue/no-setup-props-destructure': 0,

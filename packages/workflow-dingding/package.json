@@ -1,0 +1,23 @@
+{
+  "name": "@shy-plugins/workflow-dingding",
+  "version": "0.0.15",
+  "description": "仿钉钉工作流",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
+    "patch": "npm version patch",
+    "deploy": "vite build && npm publish"
+  },
+  "files": [
+    "lib",
+    "es"
+  ],
+  "author": "shy",
+  "license": "ISC",
+  "dependencies": {
+    "ant-design-vue": "^3.2.15",
+    "vuex": "4.0.0"
+  }
+}

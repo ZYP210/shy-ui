@@ -68,7 +68,8 @@ export const URLData: MenuList[] = [
       'Qrcode',
       'ScrollBar',
       'Transition',
-      'Tree'
+      'Tree',
+      'workflow-dingding'
     ]
   }
 ]
