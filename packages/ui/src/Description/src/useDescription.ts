@@ -3,33 +3,41 @@ import type {
   DescInstance,
   UseDescReturnType
 } from './typing'
-import { ref, getCurrentInstance, unref, onUnmounted, watch } from 'vue'
+import { error, getDynamicProps } from '@shy-plugins/utils'
+import { ref, unref, onUnmounted, watch, nextTick } from 'vue'
 
 export function useDescription(
   props?: Partial<DescriptionProps>
 ): UseDescReturnType {
-  if (!getCurrentInstance()) {
-    throw new Error(
-      'useDescription() can only be used inside setup() or functional components!'
-    )
-  }
-  const desc = ref<Nullable<DescInstance>>(null)
+  
+  const descRef = ref<Nullable<DescInstance>>(null)
   const loaded = ref(false)
+
+  async function getDescription() {
+    const desc = unref(descRef)
+    if (!desc) {
+      error(
+        'useDescription() can only be used inside setup() or functional components!'
+      )
+    }
+    await nextTick()
+    return desc as DescInstance
+  }
 
   function register(instance: DescInstance) {
     onUnmounted(() => {
-      desc.value = null
+      descRef.value = null
       loaded.value = false
     })
-    if (unref(loaded) && instance === unref(desc)) return
+    if (unref(loaded) && instance === unref(descRef)) return
 
-    desc.value = instance
+    descRef.value = instance
     loaded.value = true
 
     watch(
       () => props,
       () => {
-        props && instance.setDescProps(props)
+        props && instance.setDescProps(getDynamicProps(props))
       },
       {
         immediate: true,
@@ -39,8 +47,9 @@ export function useDescription(
   }
 
   const methods: DescInstance = {
-    setDescProps: (descProps: Partial<DescriptionProps>): void => {
-      unref(desc)?.setDescProps(descProps)
+    setDescProps: async (descProps: Partial<DescriptionProps>) => {
+      const desc = await getDescription();
+      desc?.setDescProps(descProps)
     }
   }
 
