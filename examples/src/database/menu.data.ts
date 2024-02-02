@@ -69,7 +69,8 @@ export const URLData: MenuList[] = [
       'ScrollBar',
       'Transition',
       'Tree',
-      'workflow-dingding'
+      'workflow-dingding',
+      'workflow-bpmn'
     ]
   }
 ]

@@ -1,0 +1,24 @@
+{
+  "name": "@shy-plugins/workflow-bpmn",
+  "version": "0.0.2",
+  "description": "bpmn工作流",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "vite build",
+    "patch": "npm version patch",
+    "deploy": "vite build && npm publish"
+  },
+  "files": [
+    "lib",
+    "es"
+  ],
+  "author": "shy",
+  "license": "ISC",
+  "dependencies": {
+    "bpmn-js": "8.9.0",
+    "bpmn-js-properties-panel": "0.46.0",
+    "bpmn-js-token-simulation": "0.10.0",
+    "steady-xml": "0.1.0"
+  }
+}
