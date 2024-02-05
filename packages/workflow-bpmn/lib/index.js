@@ -81205,8 +81205,8 @@ const _sfc_main$7 = /* @__PURE__ */ vue.defineComponent({
             vue.createVNode(vue.unref(FormItem), { label: "回路特性" }, {
               default: vue.withCtx(() => [
                 vue.createVNode(vue.unref(Select$1), {
-                  modelValue: vue.unref(loopCharacteristics),
-                  "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => vue.isRef(loopCharacteristics) ? loopCharacteristics.value = $event : null),
+                  value: vue.unref(loopCharacteristics),
+                  "onUpdate:value": _cache[0] || (_cache[0] = ($event) => vue.isRef(loopCharacteristics) ? loopCharacteristics.value = $event : null),
                   onChange: changeLoopCharacteristicsType
                 }, {
                   default: vue.withCtx(() => [
@@ -81236,7 +81236,7 @@ const _sfc_main$7 = /* @__PURE__ */ vue.defineComponent({
                     })
                   ]),
                   _: 1
-                }, 8, ["modelValue"])
+                }, 8, ["value"])
               ]),
               _: 1
             }),

@@ -71,7 +71,6 @@ const tinymceProps = {
   value: {
     type: String
   },
-
   toolbar: {
     type: Array as PropType<string[]>,
     default: toolbar

@@ -81203,8 +81203,8 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
             createVNode(unref(FormItem), { label: "回路特性" }, {
               default: withCtx(() => [
                 createVNode(unref(Select$1), {
-                  modelValue: unref(loopCharacteristics),
-                  "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => isRef(loopCharacteristics) ? loopCharacteristics.value = $event : null),
+                  value: unref(loopCharacteristics),
+                  "onUpdate:value": _cache[0] || (_cache[0] = ($event) => isRef(loopCharacteristics) ? loopCharacteristics.value = $event : null),
                   onChange: changeLoopCharacteristicsType
                 }, {
                   default: withCtx(() => [
@@ -81234,7 +81234,7 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
                     })
                   ]),
                   _: 1
-                }, 8, ["modelValue"])
+                }, 8, ["value"])
               ]),
               _: 1
             }),
