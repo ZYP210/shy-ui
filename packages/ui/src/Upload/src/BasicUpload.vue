@@ -53,7 +53,7 @@ import { isArray } from '@shy-plugins/utils'
 import UploadModal from './components/UploadModal.vue'
 import UploadPreviewModal from './components/UploadPreviewModal.vue'
 
-defineOptions({ name: 'BasicUpload' })
+// defineOptions({ name: 'BasicUpload' })
 
 const props = defineProps(uploadContainerProps)
 

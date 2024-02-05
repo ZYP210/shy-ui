@@ -193,7 +193,7 @@
   //   name: ''
   // })
 
-  defineOptions({ name: 'MyProcessDesigner' });
+  // defineOptions({ name: 'MyProcessDesigner' });
   const { createConfirm, createMessage } = useMessage();
   const bpmnCanvas = ref();
   const refFile = ref();

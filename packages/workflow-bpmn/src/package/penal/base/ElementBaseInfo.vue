@@ -39,8 +39,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { Form, FormItem, Input, Button } from 'ant-design-vue';
-  defineOptions({ name: 'ElementBaseInfo' });
+import { Form, FormItem, Input, Button } from 'ant-design-vue';
+import { ref,reactive,toRaw,watch,onMounted,onBeforeUnmount} from 'vue'
+  // defineOptions({ name: 'ElementBaseInfo' });
   const labelCol = {
     style: { width: '90px' },
   };

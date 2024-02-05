@@ -75,8 +75,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { Checkbox, Form, FormItem, Input, Select, SelectOption } from 'ant-design-vue';
-  defineOptions({ name: 'ElementMultiInstance' });
+import { Checkbox, Form, FormItem, Input, Select, SelectOption } from 'ant-design-vue';
+import { ref,inject,toRaw,onBeforeUnmount,watch} from 'vue'
+  // defineOptions({ name: 'ElementMultiInstance' });
 
   const props = defineProps({
     businessObject: Object,

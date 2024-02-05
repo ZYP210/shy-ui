@@ -51,7 +51,6 @@
       destroy-on-close
     >
       <Form
-        v-model:value="modelObjectForm"
         :model="modelObjectForm"
         :label-col="{ style: { width: '90px' } }"
         ref="formRef"
@@ -75,8 +74,8 @@
   import type { FormInstance } from 'ant-design-vue';
   import { BasicModal, Icon, TableAction } from '3h1-ui';
   import { useMessage } from '@shy-plugins/use';
-  import { reactive } from 'vue';
-  defineOptions({ name: 'SignalAndMassage' });
+  import { reactive,onMounted,computed ,ref} from 'vue';
+  // defineOptions({ name: 'SignalAndMassage' });
   const messageColumns = [
     {
       title: '消息ID',

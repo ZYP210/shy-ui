@@ -46,8 +46,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { FormItem, Input } from 'ant-design-vue';
-  defineOptions({ name: 'UserTask' });
+import { FormItem, Input } from 'ant-design-vue';
+import { ref,onBeforeUnmount,watch,nextTick,toRaw} from 'vue'
+  // defineOptions({ name: 'UserTask' });
   const props = defineProps({
     id: String,
     type: String,

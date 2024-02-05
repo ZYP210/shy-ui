@@ -70,8 +70,9 @@
   // import ElementForm from './form/ElementForm.vue'
   import UserTaskListeners from './listeners/UserTaskListeners.vue';
   import { Icon } from '3h1-ui';
-  import { Collapse, CollapsePanel } from 'ant-design-vue';
-  defineOptions({ name: 'MyPropertiesPanel' });
+import { Collapse, CollapsePanel } from 'ant-design-vue';
+import { ref ,provide,watch,onBeforeUnmount} from 'vue';
+  // defineOptions({ name: 'MyPropertiesPanel' });
 
   const props = defineProps({
     bpmnModeler: {

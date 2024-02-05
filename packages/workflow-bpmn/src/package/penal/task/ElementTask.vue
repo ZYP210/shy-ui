@@ -20,8 +20,9 @@
   import UserTask from './task-components/UserTask.vue';
   import ScriptTask from './task-components/ScriptTask.vue';
   import ReceiveTask from './task-components/ReceiveTask.vue';
-  import { Form, FormItem, Checkbox } from 'ant-design-vue';
-  defineOptions({ name: 'ElementTaskConfig' });
+import { Form, FormItem, Checkbox } from 'ant-design-vue';
+import { ref,watch} from 'vue'
+  // defineOptions({ name: 'ElementTaskConfig' });
 
   const props = defineProps({
     id: String,

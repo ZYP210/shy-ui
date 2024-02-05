@@ -8,7 +8,7 @@
 <script lang="ts" setup>
   import { assign } from 'min-dash';
 
-  defineOptions({ name: 'MyProcessPalette' });
+  // defineOptions({ name: 'MyProcessPalette' });
 
   const bpmnInstances = () => (window as any).bpmnInstances;
   const addTask = (event, options: any = {}) => {

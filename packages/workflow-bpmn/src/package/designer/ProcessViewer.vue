@@ -11,7 +11,7 @@
   import DefaultEmptyXML from './plugins/defaultEmpty';
   import { formatToDateTime,isEmpty } from '@shy-plugins/utils';
 
-  defineOptions({ name: 'MyProcessViewer' });
+  // defineOptions({ name: 'MyProcessViewer' });
 
   const props = defineProps({
     value: {
@@ -327,26 +327,26 @@
         html = `<p>审批人：${task.assigneeUser.nickname}</p>
                   <p>部门：${task.assigneeUser.deptName}</p>
                   <p>结果：${dataResult}</p>
-                  <p>创建时间：${formatDate(task.createTime)}</p>`;
+                  <p>创建时间：${formatToDateTime(task.createTime)}</p>`;
         // html = `<p>审批人：${task.assigneeUser.nickname}</p>
         //             <p>部门：${task.assigneeUser.deptName}</p>
         //             <p>结果：${getIntDictOptions(
         //               DICT_TYPE.BPM_PROCESS_INSTANCE_RESULT,
         //               task.result
         //             )}</p>
-        //             <p>创建时间：${formatDate(task.createTime)}</p>`
+        //             <p>创建时间：${formatToDateTime(task.createTime)}</p>`
         if (task.endTime) {
-          html += `<p>结束时间：${formatDate(task.endTime)}</p>`;
+          html += `<p>结束时间：${formatToDateTime(task.endTime)}</p>`;
         }
         if (task.reason) {
           html += `<p>审批建议：${task.reason}</p>`;
         }
       } else if (element.value.type === 'bpmn:ServiceTask' && processInstance.value) {
         if (activity.startTime > 0) {
-          html = `<p>创建时间：${formatDate(activity.startTime)}</p>`;
+          html = `<p>创建时间：${formatToDateTime(activity.startTime)}</p>`;
         }
         if (activity.endTime > 0) {
-          html += `<p>结束时间：${formatDate(activity.endTime)}</p>`;
+          html += `<p>结束时间：${formatToDateTime(activity.endTime)}</p>`;
         }
       } else if (element.value.type === 'bpmn:EndEvent' && processInstance.value) {
         let optionData =props.bpmProcessInstanceResult || [];
@@ -362,7 +362,7 @@
         //   processInstance.value.result
         // )}</p>`
         if (processInstance.value.endTime) {
-          html += `<p>结束时间：${formatDate(processInstance.value.endTime)}</p>`;
+          html += `<p>结束时间：${formatToDateTime(processInstance.value.endTime)}</p>`;
         }
       }
       elementOverlayIds.value[element.value.id] = toRaw(overlays.value)?.add(element.value, {

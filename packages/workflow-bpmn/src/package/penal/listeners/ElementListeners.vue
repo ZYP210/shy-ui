@@ -236,9 +236,10 @@
   import { createListenerObject, updateElementExtensions } from '../../utils';
   import { initListenerType, initListenerForm, listenerType, fieldType } from './utilSelf';
   import { Icon } from '3h1-ui';
-  import { useMessage } from '@shy-plugins/use';
+import { useMessage } from '@shy-plugins/use';
+import { ref,inject,nextTick,watch} from 'vue'
   const { createConfirm } = useMessage();
-  defineOptions({ name: 'ElementListeners' });
+  // defineOptions({ name: 'ElementListeners' });
 
   const props = defineProps({
     id: String,

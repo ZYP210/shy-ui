@@ -268,8 +268,9 @@
     listenerType,
     fieldType,
   } from './utilSelf';
-  import { useMessage } from '@shy-plugins/use';
-  defineOptions({ name: 'UserTaskListeners' });
+import { useMessage } from '@shy-plugins/use';
+import { ref,inject,nextTick,watch} from 'vue'
+  // defineOptions({ name: 'UserTaskListeners' });
   const { createConfirm } = useMessage();
   const props = defineProps({
     id: String,

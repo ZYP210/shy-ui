@@ -1,7 +1,7 @@
 <script setup lang="ts">
-defineOptions({
-  name: 'IndexPage',
-})
+// defineOptions({
+//   name: 'IndexPage',
+// })
 const user = useUserStore()
 const name = ref(user.savedName)
 

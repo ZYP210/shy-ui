@@ -57,8 +57,9 @@
 <script lang="ts" setup>
   import { Button, Form, FormItem, Input, Table } from 'ant-design-vue';
   import { BasicModal, TableAction } from '3h1-ui';
-  import { useMessage } from '@shy-plugins/use';
-  defineOptions({ name: 'ElementProperties' });
+import { useMessage } from '@shy-plugins/use';
+import { inject,ref,nextTick,toRaw,watch} from 'vue'
+  // defineOptions({ name: 'ElementProperties' });
   const { createConfirm } = useMessage();
   const props = defineProps({
     id: String,
