@@ -18,7 +18,7 @@ const mockData: any = {
   certy: '3504256199xxxxxxxxx',
   tag: 'orange'
 }
-const schema = [
+const schema: any[] = [
   {
     label: '基本信息',
     component: 'Group'
@@ -63,11 +63,15 @@ const schema = [
 const fun = (color) => {
   return h(Tag, { style: { color } }, 222)
 }
-const [register] = useDescription({
+const [register, { setDescProps }] = useDescription({
   data: mockData,
   schema,
   labelAlign: 'left',
   labelStyle: { width: `100px` },
   contentStyle: {}
+})
+
+onMounted(() => { 
+  setDescProps({ data: { phone:1111 } })
 })
 </script>
