@@ -162,7 +162,6 @@
         </template>
       </Form>
 
-      <!-- <el-divider /> -->
       <p class="listener-filed__title">
         <span><Icon icon="ep:menu" />注入字段：</span>
         <Button type="primary" @click="openListenerFieldForm(null)">添加字段</Button>

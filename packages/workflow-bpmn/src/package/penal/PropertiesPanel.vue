@@ -22,19 +22,18 @@
         <template #header><Icon icon="ep:promotion" />流转条件</template>
         <flow-condition :business-object="elementBusinessObject" :type="elementType" />
       </CollapsePanel>
-      <CollapsePanel key="condition" v-if="formVisible">
+      <!-- <CollapsePanel key="condition" v-if="formVisible">
         <template #header><Icon icon="ep:list" />表单</template>
-        <!-- <element-form :id="elementId" :type="elementType" /> -->
         友情提示：使用
         <router-link :to="{ path: '/bpm/manager/form' }"
           ><el-link type="danger">流程表单</el-link>
         </router-link>
         替代，提供更好的表单设计功能
-      </CollapsePanel>
-      <CollapsePanel key="task" v-if="elementType.indexOf('Task') !== -1">
+      </CollapsePanel> -->
+      <!-- <CollapsePanel key="task" v-if="elementType.indexOf('Task') !== -1">
         <template #header><Icon icon="ep:checked" />任务</template>
         <element-task :id="elementId" :type="elementType" />
-      </CollapsePanel>
+      </CollapsePanel> -->
       <CollapsePanel v-if="elementType.indexOf('Task') !== -1" key="multiInstance">
         <template #header><Icon icon="ep:help-filled" />多实例</template>
         <element-multi-instance :business-object="elementBusinessObject" :type="elementType" />
@@ -184,7 +183,8 @@ import { ref ,provide,watch,onBeforeUnmount} from 'vue';
       activatedElement.source &&
       activatedElement.source.type.indexOf('StartEvent') === -1
     );
-    formVisible.value = elementType.value === 'UserTask' || elementType.value === 'StartEvent';
+    //隐藏表单
+    // formVisible.value = elementType.value === 'UserTask' || elementType.value === 'StartEvent';
   };
 
   onBeforeUnmount(() => {

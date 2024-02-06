@@ -134,7 +134,6 @@
           </FormItem>
         </template>
       </Form>
-      <el-divider />
       <p class="listener-filed__title">
         <span class="flex"><Icon icon="ep:menu" />注入字段：</span>
         <Button type="primary" @click="openListenerFieldForm(null)" style="width: 80px"

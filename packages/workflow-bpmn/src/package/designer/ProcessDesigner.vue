@@ -141,7 +141,7 @@
       wrap-class-name="full-modal"
     >
       <!-- append-to-body -->
-      <div v-highlight>
+      <div>
         <code class="hljs">
           <!-- 高亮代码块 -->
           {{ previewResult }}

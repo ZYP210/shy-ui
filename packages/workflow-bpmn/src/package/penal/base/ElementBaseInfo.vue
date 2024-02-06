@@ -127,8 +127,8 @@ import { ref,reactive,toRaw,watch,onMounted,onBeforeUnmount} from 'vue'
   onMounted(() => {
     // 针对上传的 bpmn 流程图时，需要延迟 1 秒的时间，保证 key 和 name 的更新
     setTimeout(() => {
-      handleKeyUpdate(props.model.key);
-      handleNameUpdate(props.model.name);
+      handleKeyUpdate(props.model?.key);
+      handleNameUpdate(props.model?.name);
     }, 1000);
   });
 
