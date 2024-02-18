@@ -236,7 +236,9 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
 
 <script lang="ts" setup>
   import { MyProcessDesigner, MyProcessPenal, CustomContentPadProvider,
-    CustomPaletteProvider } from '@shy-plugins/workflow-bpmn';
+  CustomPaletteProvider
+} from '@shy-plugins/workflow-bpmn';
+    
   // 自定义元素选中时的弹出菜单（修改 默认任务 为 用户任务）
   // 自定义左侧菜单（修改 默认任务 为 用户任务）
   import { CollapseContainer } from '3h1-ui';

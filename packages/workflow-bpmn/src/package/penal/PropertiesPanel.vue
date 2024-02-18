@@ -71,8 +71,6 @@
   import { Icon } from '3h1-ui';
 import { Collapse, CollapsePanel } from 'ant-design-vue';
 import { ref ,provide,watch,onBeforeUnmount} from 'vue';
-  // defineOptions({ name: 'MyPropertiesPanel' });
-
   const props = defineProps({
     bpmnModeler: {
       type: Object,
@@ -111,11 +109,8 @@ import { ref ,provide,watch,onBeforeUnmount} from 'vue';
     () => {
       // 避免加载时 流程图 并未加载完成
       if (!props.bpmnModeler) {
-        console.log('缺少props.bpmnModeler');
         return;
       }
-
-      console.log('props.bpmnModeler 有值了！！！');
       const w = window as any;
       w.bpmnInstances = {
         modeler: props.bpmnModeler,
@@ -129,7 +124,6 @@ import { ref ,provide,watch,onBeforeUnmount} from 'vue';
         selection: props.bpmnModeler.get('selection'),
       };
 
-      console.log(bpmnInstances(), 'window.bpmnInstances');
       getActiveElement();
       unwatchBpmn();
     },
@@ -142,7 +136,6 @@ import { ref ,provide,watch,onBeforeUnmount} from 'vue';
     // 初始第一个选中元素 bpmn:Process
     initFormOnChanged(null);
     props.bpmnModeler.on('import.done', (e) => {
-      console.log(e, 'eeeee');
       initFormOnChanged(null);
     });
     // 监听选择事件，修改当前激活的元素以及表单
@@ -165,14 +158,6 @@ import { ref ,provide,watch,onBeforeUnmount} from 'vue';
         bpmnInstances().elementRegistry.find((el) => el.type === 'bpmn:Collaboration');
     }
     if (!activatedElement) return;
-    console.log(`
-              ----------
-      select element changed:
-                id:  ${activatedElement.id}
-              type:  ${activatedElement.businessObject.$type}
-              ----------
-              `);
-    console.log('businessObject: ', activatedElement.businessObject);
     bpmnInstances().bpmnElement = activatedElement;
     bpmnElement.value = activatedElement;
     elementId.value = activatedElement.id;
@@ -190,8 +175,6 @@ import { ref ,provide,watch,onBeforeUnmount} from 'vue';
   onBeforeUnmount(() => {
     const w = window as any;
     w.bpmnInstances = null;
-    console.log(props, 'props1');
-    console.log(props.bpmnModeler, 'props.bpmnModeler1');
   });
 
   watch(

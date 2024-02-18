@@ -45277,8 +45277,8 @@ function parseAttributes(content, type, props) {
   }
   return attributes;
 }
-const _hoisted_1$d = { class: "my-process-designer" };
-const _hoisted_2$8 = {
+const _hoisted_1$9 = { class: "my-process-designer" };
+const _hoisted_2$7 = {
   class: "my-process-designer__header",
   style: { "z-index": "999", "display": "table-row-group" }
 };
@@ -45288,7 +45288,7 @@ const _hoisted_5$1 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1
 const _hoisted_6 = /* @__PURE__ */ vue.createElementVNode("br", null, null, -1);
 const _hoisted_7 = { class: "my-process-designer__container" };
 const _hoisted_8 = { class: "hljs" };
-const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
+const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
   __name: "ProcessDesigner",
   props: {
     value: String,
@@ -45363,20 +45363,25 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
   setup(__props, { emit }) {
     const props = __props;
     const ButtonGroup = antDesignVue.Button.Group;
+    console.log("BpmnModeler******", Modeler);
+    console.log(444444444444);
     const { createConfirm, createMessage } = use.useMessage();
-    const bpmnCanvas = ref();
-    const refFile = ref();
-    provide("configGlobal", props);
+    console.log(55555555555);
+    const bpmnCanvas = vue.ref();
+    const refFile = vue.ref();
+    console.log(66666666);
+    console.log(7777777);
+    console.log("props*****", props);
+    vue.provide("configGlobal", props);
     let bpmnModeler = null;
-    const defaultZoom = ref(1);
-    const previewModelVisible = ref(false);
-    const simulationStatus = ref(false);
-    const previewResult = ref("");
-    const previewType = ref("xml");
-    const recoverable = ref(false);
-    const revocable = ref(false);
-    const additionalModules = computed(() => {
-      console.log(props.additionalModel, "additionalModel");
+    const defaultZoom = vue.ref(1);
+    const previewModelVisible = vue.ref(false);
+    const simulationStatus = vue.ref(false);
+    const previewResult = vue.ref("");
+    const previewType = vue.ref("xml");
+    const recoverable = vue.ref(false);
+    const revocable = vue.ref(false);
+    const additionalModules = vue.computed(() => {
       const Modules = [];
       if (props.onlyCustomizeAddi) {
         if (Object.prototype.toString.call(props.additionalModel) == "[object Array]") {
@@ -45396,7 +45401,6 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
       if (props.simulation) {
         Modules.push(tokenSimulation);
       }
-      console.log(props.prefix, "props.prefix ");
       if (props.prefix === "camunda") {
         Modules.push(camundaModdleExtension);
       }
@@ -45408,10 +45412,7 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
       }
       return Modules;
     });
-    const moddleExtensions = computed(() => {
-      console.log(props.onlyCustomizeModdle, "props.onlyCustomizeModdle");
-      console.log(props.moddleExtension, "props.moddleExtension");
-      console.log(props.prefix, "props.prefix");
+    const moddleExtensions = vue.computed(() => {
       const Extensions = {};
       if (props.onlyCustomizeModdle) {
         return props.moddleExtension || null;
@@ -45432,21 +45433,13 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
       }
       return Extensions;
     });
-    console.log(additionalModules, "additionalModules()");
-    console.log(moddleExtensions, "moddleExtensions()");
     const initBpmnModeler = () => {
+      console.log("initmodeler111111", bpmnModeler);
       if (bpmnModeler)
         return;
       let data = document.getElementById("bpmnCanvas");
-      console.log(data, "data");
-      console.log(props.keyboard, "props.keyboard");
-      console.log(additionalModules, "additionalModules()");
-      console.log(moddleExtensions, "moddleExtensions()");
+      console.log("initmodeler22222", data);
       bpmnModeler = new Modeler({
-        // container: this.$refs['bpmn-canvas'],
-        // container: getCurrentInstance(),
-        // container: needClass,
-        // container: bpmnCanvas.value,
         container: data,
         // width: '100%',
         // 添加控制板
@@ -45465,19 +45458,16 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
         // ],
         // moddleExtensions: { camunda: moddleExtensions.value }
       });
-      console.log(bpmnModeler, "bpmnModeler111111");
+      console.log("initmodeler333333", bpmnModeler);
       emit("init-finished", bpmnModeler);
       initModelListeners();
     };
     const initModelListeners = () => {
       const EventBus2 = bpmnModeler.get("eventBus");
-      console.log(EventBus2, "EventBus");
       props.events.forEach((event2) => {
         EventBus2.on(event2, function(eventObj) {
-          let eventName = event2.replace(/\./g, "-");
+          event2.replace(/\./g, "-");
           let element = eventObj ? eventObj.element : null;
-          console.log(eventName, "eventName");
-          console.log(element, "element");
           emit("element-click", element, eventObj);
         });
       });
@@ -45500,13 +45490,11 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
       });
     };
     const createNewDiagram = async (xml2) => {
-      console.log(xml2, "xml");
       let newId = props.processId || `Process_${(/* @__PURE__ */ new Date()).getTime()}`;
       let newName = props.processName || `业务流程_${(/* @__PURE__ */ new Date()).getTime()}`;
       let xmlString = xml2 || DefaultEmptyXML(newId, newName, props.prefix);
       try {
         let { warnings } = await bpmnModeler.importXML(xmlString);
-        console.log(warnings, "warnings");
         if (warnings && warnings.length) {
           warnings.forEach((warn) => console.warn(warn));
         }
@@ -45573,7 +45561,6 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
     };
     const processSimulation = () => {
       simulationStatus.value = !simulationStatus.value;
-      console.log(bpmnModeler.get("toggleMode", "strict"), "bpmnModeler.get('toggleMode')");
       props.simulation && bpmnModeler.get("toggleMode", "strict").toggleMode();
     };
     const processRedo = () => {
@@ -45625,7 +45612,6 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
       });
     };
     const previewProcessXML = () => {
-      console.log(bpmnModeler.saveXML, "bpmnModeler");
       bpmnModeler.saveXML({ format: true }).then(({ xml: xml2 }) => {
         previewResult.value = xml2;
         previewType.value = "xml";
@@ -45642,39 +45628,36 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
       });
     };
     const processSave = async () => {
-      console.log(bpmnModeler, "bpmnModelerbpmnModelerbpmnModelerbpmnModeler");
       const { err, xml: xml2 } = await bpmnModeler.saveXML();
-      console.log(err, "errerrerrerrerr");
-      console.log(xml2, "xmlxmlxmlxmlxml");
       if (err) {
         alert("保存模型失败，请重试！");
         return;
       }
       emit("save", xml2);
     };
-    onBeforeMount(() => {
+    vue.onBeforeMount(() => {
       console.log(props, "propspropspropsprops");
     });
-    onMounted(() => {
+    vue.onMounted(() => {
+      console.log("onmonnted****");
       initBpmnModeler();
       createNewDiagram(props.value);
     });
-    onBeforeUnmount(() => {
+    vue.onBeforeUnmount(() => {
       if (bpmnModeler)
         bpmnModeler.destroy();
       emit("destroy", bpmnModeler);
       bpmnModeler = null;
     });
     return (_ctx, _cache) => {
-      const _directive_highlight = vue.resolveDirective("highlight");
-      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$d, [
-        vue.createElementVNode("div", _hoisted_2$8, [
+      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$9, [
+        vue.createElementVNode("div", _hoisted_2$7, [
           vue.renderSlot(_ctx.$slots, "control-header"),
           !_ctx.$slots["control-header"] ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
             vue.createVNode(vue.unref(ButtonGroup), { key: "file-control" }, {
               default: vue.withCtx(() => [
                 vue.createVNode(vue.unref(antDesignVue.Button), {
-                  onClick: _cache[0] || (_cache[0] = ($event) => vue.unref(refFile).click())
+                  onClick: _cache[0] || (_cache[0] = ($event) => refFile.value.click())
                 }, {
                   default: vue.withCtx(() => [
                     vue.createVNode(vue.unref(_3h1Ui.Icon), {
@@ -45777,7 +45760,7 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
                 }),
                 props.simulation ? (vue.openBlock(), vue.createBlock(vue.unref(antDesignVue.Tooltip), {
                   key: 0,
-                  title: vue.unref(simulationStatus) ? "退出模拟" : "开启模拟"
+                  title: simulationStatus.value ? "退出模拟" : "开启模拟"
                 }, {
                   default: vue.withCtx(() => [
                     vue.createVNode(vue.unref(antDesignVue.Button), { onClick: processSimulation }, {
@@ -45908,7 +45891,7 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
                 vue.createVNode(vue.unref(antDesignVue.Tooltip), { title: "缩小视图" }, {
                   default: vue.withCtx(() => [
                     vue.createVNode(vue.unref(antDesignVue.Button), {
-                      disabled: vue.unref(defaultZoom) < 0.2,
+                      disabled: defaultZoom.value < 0.2,
                       onClick: _cache[10] || (_cache[10] = ($event) => processZoomOut())
                     }, {
                       default: vue.withCtx(() => [
@@ -45924,14 +45907,14 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
                 }),
                 vue.createVNode(vue.unref(antDesignVue.Button), null, {
                   default: vue.withCtx(() => [
-                    vue.createTextVNode(vue.toDisplayString(Math.floor(vue.unref(defaultZoom) * 10 * 10) + "%"), 1)
+                    vue.createTextVNode(vue.toDisplayString(Math.floor(defaultZoom.value * 10 * 10) + "%"), 1)
                   ]),
                   _: 1
                 }),
                 vue.createVNode(vue.unref(antDesignVue.Tooltip), { title: "放大视图" }, {
                   default: vue.withCtx(() => [
                     vue.createVNode(vue.unref(antDesignVue.Button), {
-                      disabled: vue.unref(defaultZoom) > 4,
+                      disabled: defaultZoom.value > 4,
                       onClick: _cache[11] || (_cache[11] = ($event) => processZoomIn())
                     }, {
                       default: vue.withCtx(() => [
@@ -45969,7 +45952,7 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
                 vue.createVNode(vue.unref(antDesignVue.Tooltip), { title: "撤销" }, {
                   default: vue.withCtx(() => [
                     vue.createVNode(vue.unref(antDesignVue.Button), {
-                      disabled: !vue.unref(revocable),
+                      disabled: !revocable.value,
                       onClick: _cache[13] || (_cache[13] = ($event) => processUndo())
                     }, {
                       default: vue.withCtx(() => [
@@ -45986,7 +45969,7 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
                 vue.createVNode(vue.unref(antDesignVue.Tooltip), { title: "恢复" }, {
                   default: vue.withCtx(() => [
                     vue.createVNode(vue.unref(antDesignVue.Button), {
-                      disabled: !vue.unref(recoverable),
+                      disabled: !recoverable.value,
                       onClick: _cache[14] || (_cache[14] = ($event) => processRedo())
                     }, {
                       default: vue.withCtx(() => [
@@ -46020,7 +46003,7 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
             vue.createVNode(vue.unref(antDesignVue.Button), {
               onClick: processSave,
               type: "primary",
-              disabled: vue.unref(simulationStatus)
+              disabled: simulationStatus.value
             }, {
               default: vue.withCtx(() => [
                 vue.createVNode(vue.unref(_3h1Ui.Icon), {
@@ -46053,17 +46036,15 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
         ]),
         vue.createVNode(vue.unref(antDesignVue.Modal), {
           title: "预览",
-          visible: vue.unref(previewModelVisible),
-          "onUpdate:visible": _cache[15] || (_cache[15] = ($event) => vue.isRef(previewModelVisible) ? previewModelVisible.value = $event : null),
+          visible: previewModelVisible.value,
+          "onUpdate:visible": _cache[15] || (_cache[15] = ($event) => previewModelVisible.value = $event),
           width: "80%",
           footer: null,
           "wrap-class-name": "full-modal"
         }, {
           default: vue.withCtx(() => [
-            vue.withDirectives((vue.openBlock(), vue.createElementBlock("div", null, [
-              vue.createElementVNode("code", _hoisted_8, vue.toDisplayString(vue.unref(previewResult)), 1)
-            ])), [
-              [_directive_highlight]
+            vue.createElementVNode("div", null, [
+              vue.createElementVNode("code", _hoisted_8, vue.toDisplayString(previewResult.value), 1)
             ])
           ]),
           _: 1
@@ -46073,13 +46054,13 @@ const _sfc_main$e = /* @__PURE__ */ vue.defineComponent({
   }
 });
 const ProcessDesigner_vue_vue_type_style_index_0_lang = "";
-_sfc_main$e.install = function(Vue) {
-  Vue.component(_sfc_main$e.name, _sfc_main$e);
+_sfc_main$a.install = function(Vue) {
+  Vue.component("MyProcessDesigner", _sfc_main$a);
 };
-const _hoisted_1$c = { class: "panel-tab__content" };
-const _hoisted_2$7 = { key: 0 };
+const _hoisted_1$8 = { class: "panel-tab__content" };
+const _hoisted_2$6 = { key: 0 };
 const _hoisted_3$4 = { key: 1 };
-const _sfc_main$d = /* @__PURE__ */ vue.defineComponent({
+const _sfc_main$9 = /* @__PURE__ */ vue.defineComponent({
   __name: "ElementBaseInfo",
   props: {
     businessObject: {
@@ -46148,8 +46129,9 @@ const _sfc_main$d = /* @__PURE__ */ vue.defineComponent({
     };
     vue.onMounted(() => {
       setTimeout(() => {
-        handleKeyUpdate(props.model.key);
-        handleNameUpdate(props.model.name);
+        var _a, _b;
+        handleKeyUpdate((_a = props.model) == null ? void 0 : _a.key);
+        handleNameUpdate((_b = props.model) == null ? void 0 : _b.name);
       }, 1e3);
     });
     vue.watch(
@@ -46164,7 +46146,7 @@ const _sfc_main$d = /* @__PURE__ */ vue.defineComponent({
       bpmnElement.value = null;
     });
     return (_ctx, _cache) => {
-      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$c, [
+      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$8, [
         vue.createVNode(vue.unref(antDesignVue.Form), {
           "label-col": labelCol,
           labelAlign: "right",
@@ -46172,7 +46154,7 @@ const _sfc_main$d = /* @__PURE__ */ vue.defineComponent({
           rules
         }, {
           default: vue.withCtx(() => [
-            needProps.value.type == "bpmn:Process" ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$7, [
+            needProps.value.type == "bpmn:Process" ? (vue.openBlock(), vue.createElementBlock("div", _hoisted_2$6, [
               vue.createVNode(vue.unref(antDesignVue.Button), {
                 href: "https://doc.iocoder.cn/bpm/#_3-%E6%B5%81%E7%A8%8B%E5%9B%BE%E7%A4%BA%E4%BE%8B",
                 type: "link",
@@ -46252,11 +46234,11 @@ const _sfc_main$d = /* @__PURE__ */ vue.defineComponent({
     };
   }
 });
-const _hoisted_1$b = { class: "panel-tab__content" };
-const _hoisted_2$6 = { class: "element-property input-property" };
+const _hoisted_1$7 = { class: "panel-tab__content" };
+const _hoisted_2$5 = { class: "element-property input-property" };
 const _hoisted_3$3 = /* @__PURE__ */ vue.createElementVNode("div", { class: "element-property__label" }, "元素文档：", -1);
 const _hoisted_4$2 = { class: "element-property__value" };
-const _sfc_main$c = /* @__PURE__ */ vue.defineComponent({
+const _sfc_main$8 = /* @__PURE__ */ vue.defineComponent({
   __name: "ElementOtherConfig",
   props: {
     id: String
@@ -46294,8 +46276,8 @@ const _sfc_main$c = /* @__PURE__ */ vue.defineComponent({
       { immediate: true }
     );
     return (_ctx, _cache) => {
-      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$b, [
-        vue.createElementVNode("div", _hoisted_2$6, [
+      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$7, [
+        vue.createElementVNode("div", _hoisted_2$5, [
           _hoisted_3$3,
           vue.createElementVNode("div", _hoisted_4$2, [
             vue.createVNode(vue.unref(antDesignVue.Textarea), {
@@ -46309,535 +46291,6 @@ const _sfc_main$c = /* @__PURE__ */ vue.defineComponent({
             }, null, 8, ["value"])
           ])
         ])
-      ]);
-    };
-  }
-});
-const _hoisted_1$a = { style: { "margin-top": "16px" } };
-const _sfc_main$b = /* @__PURE__ */ vue.defineComponent({
-  __name: "UserTask",
-  props: {
-    id: String,
-    type: String
-  },
-  setup(__props) {
-    const props = __props;
-    const defaultTaskForm = vue.ref({
-      assignee: "",
-      candidateUsers: [],
-      candidateGroups: [],
-      dueDate: "",
-      followUpDate: "",
-      priority: ""
-    });
-    const userTaskForm = vue.ref({});
-    const bpmnElement = vue.ref();
-    const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
-    const resetTaskForm = () => {
-      var _a, _b;
-      for (let key in defaultTaskForm.value) {
-        let value;
-        if (key === "candidateUsers" || key === "candidateGroups") {
-          value = ((_a = bpmnElement.value) == null ? void 0 : _a.businessObject[key]) ? bpmnElement.value.businessObject[key].split(",") : [];
-        } else {
-          value = ((_b = bpmnElement.value) == null ? void 0 : _b.businessObject[key]) || defaultTaskForm.value[key];
-        }
-        userTaskForm.value[key] = value;
-      }
-    };
-    const updateElementTask = (key) => {
-      const taskAttr = /* @__PURE__ */ Object.create(null);
-      if (key === "candidateUsers" || key === "candidateGroups") {
-        taskAttr[key] = userTaskForm.value[key] && userTaskForm.value[key].length ? userTaskForm.value[key].join() : null;
-      } else {
-        taskAttr[key] = userTaskForm.value[key] || null;
-      }
-      bpmnInstances2().modeling.updateProperties(vue.toRaw(bpmnElement.value), taskAttr);
-    };
-    vue.watch(
-      () => props.id,
-      () => {
-        bpmnElement.value = bpmnInstances2().bpmnElement;
-        vue.nextTick(() => {
-          resetTaskForm();
-        });
-      },
-      { immediate: true }
-    );
-    vue.onBeforeUnmount(() => {
-      bpmnElement.value = null;
-    });
-    return (_ctx, _cache) => {
-      const _component_el_link = vue.resolveComponent("el-link");
-      const _component_router_link = vue.resolveComponent("router-link");
-      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$a, [
-        vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "到期时间" }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Input), {
-              value: userTaskForm.value.dueDate,
-              "onUpdate:value": _cache[0] || (_cache[0] = ($event) => userTaskForm.value.dueDate = $event),
-              clearable: "",
-              onChange: _cache[1] || (_cache[1] = ($event) => updateElementTask("dueDate"))
-            }, null, 8, ["value"])
-          ]),
-          _: 1
-        }),
-        vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "跟踪时间" }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Input), {
-              value: userTaskForm.value.followUpDate,
-              "onUpdate:value": _cache[2] || (_cache[2] = ($event) => userTaskForm.value.followUpDate = $event),
-              clearable: "",
-              onChange: _cache[3] || (_cache[3] = ($event) => updateElementTask("followUpDate"))
-            }, null, 8, ["value"])
-          ]),
-          _: 1
-        }),
-        vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "优先级" }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Input), {
-              value: userTaskForm.value.priority,
-              "onUpdate:value": _cache[4] || (_cache[4] = ($event) => userTaskForm.value.priority = $event),
-              clearable: "",
-              onChange: _cache[5] || (_cache[5] = ($event) => updateElementTask("priority"))
-            }, null, 8, ["value"])
-          ]),
-          _: 1
-        }),
-        vue.createTextVNode(" 友情提示：任务的分配规则，使用 "),
-        vue.createVNode(_component_router_link, {
-          target: "_blank",
-          to: { path: "/bpm/manager/model" }
-        }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(_component_el_link, { type: "danger" }, {
-              default: vue.withCtx(() => [
-                vue.createTextVNode("流程模型")
-              ]),
-              _: 1
-            })
-          ]),
-          _: 1
-        }),
-        vue.createTextVNode(" 下的【分配规则】替代，提供指定角色、部门负责人、部门成员、岗位、工作组、自定义脚本等 7 种维护的任务分配维度，更加灵活！ ")
-      ]);
-    };
-  }
-});
-const _hoisted_1$9 = { style: { "margin-top": "16px" } };
-const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
-  __name: "ScriptTask",
-  props: {
-    id: String,
-    type: String
-  },
-  setup(__props) {
-    const props = __props;
-    const defaultTaskForm = vue.ref({
-      scriptFormat: "",
-      script: "",
-      resource: "",
-      resultVariable: ""
-    });
-    const scriptTaskForm = vue.ref({});
-    const bpmnElement = vue.ref();
-    const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
-    const resetTaskForm = () => {
-      var _a;
-      for (let key in defaultTaskForm.value) {
-        let value = ((_a = bpmnElement.value) == null ? void 0 : _a.businessObject[key]) || defaultTaskForm.value[key];
-        scriptTaskForm.value[key] = value;
-      }
-      scriptTaskForm.value.scriptType = scriptTaskForm.value.script ? "inline" : "external";
-    };
-    const updateElementTask = () => {
-      let taskAttr = /* @__PURE__ */ Object.create(null);
-      taskAttr.scriptFormat = scriptTaskForm.value.scriptFormat || null;
-      taskAttr.resultVariable = scriptTaskForm.value.resultVariable || null;
-      if (scriptTaskForm.value.scriptType === "inline") {
-        taskAttr.script = scriptTaskForm.value.script || null;
-        taskAttr.resource = null;
-      } else {
-        taskAttr.resource = scriptTaskForm.value.resource || null;
-        taskAttr.script = null;
-      }
-      bpmnInstances2().modeling.updateProperties(vue.toRaw(bpmnElement.value), taskAttr);
-    };
-    vue.onBeforeUnmount(() => {
-      bpmnElement.value = null;
-    });
-    vue.watch(
-      () => props.id,
-      () => {
-        bpmnElement.value = bpmnInstances2().bpmnElement;
-        vue.nextTick(() => {
-          resetTaskForm();
-        });
-      },
-      { immediate: true }
-    );
-    return (_ctx, _cache) => {
-      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$9, [
-        vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "脚本格式" }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Input), {
-              value: scriptTaskForm.value.scriptFormat,
-              "onUpdate:value": _cache[0] || (_cache[0] = ($event) => scriptTaskForm.value.scriptFormat = $event),
-              clearable: "",
-              onInput: _cache[1] || (_cache[1] = ($event) => updateElementTask()),
-              onChange: _cache[2] || (_cache[2] = ($event) => updateElementTask())
-            }, null, 8, ["value"])
-          ]),
-          _: 1
-        }),
-        vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "脚本类型" }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Select), {
-              value: scriptTaskForm.value.scriptType,
-              "onUpdate:value": _cache[3] || (_cache[3] = ($event) => scriptTaskForm.value.scriptType = $event)
-            }, {
-              default: vue.withCtx(() => [
-                vue.createVNode(vue.unref(antDesignVue.SelectOption), { value: "inline" }, {
-                  default: vue.withCtx(() => [
-                    vue.createTextVNode("内联脚本")
-                  ]),
-                  _: 1
-                }),
-                vue.createVNode(vue.unref(antDesignVue.SelectOption), { value: "external" }, {
-                  default: vue.withCtx(() => [
-                    vue.createTextVNode("外部资源")
-                  ]),
-                  _: 1
-                })
-              ]),
-              _: 1
-            }, 8, ["value"])
-          ]),
-          _: 1
-        }),
-        vue.withDirectives(vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "脚本" }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Input), {
-              value: scriptTaskForm.value.script,
-              "onUpdate:value": _cache[4] || (_cache[4] = ($event) => scriptTaskForm.value.script = $event),
-              type: "textarea",
-              resize: "vertical",
-              autosize: { minRows: 2, maxRows: 4 },
-              clearable: "",
-              onInput: _cache[5] || (_cache[5] = ($event) => updateElementTask()),
-              onChange: _cache[6] || (_cache[6] = ($event) => updateElementTask())
-            }, null, 8, ["value"])
-          ]),
-          _: 1
-        }, 512), [
-          [vue.vShow, scriptTaskForm.value.scriptType === "inline"]
-        ]),
-        vue.withDirectives(vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "资源地址" }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Input), {
-              value: scriptTaskForm.value.resource,
-              "onUpdate:value": _cache[7] || (_cache[7] = ($event) => scriptTaskForm.value.resource = $event),
-              clearable: "",
-              onInput: _cache[8] || (_cache[8] = ($event) => updateElementTask()),
-              onChange: _cache[9] || (_cache[9] = ($event) => updateElementTask())
-            }, null, 8, ["value"])
-          ]),
-          _: 1
-        }, 512), [
-          [vue.vShow, scriptTaskForm.value.scriptType === "external"]
-        ]),
-        vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "结果变量" }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Input), {
-              value: scriptTaskForm.value.resultVariable,
-              "onUpdate:value": _cache[10] || (_cache[10] = ($event) => scriptTaskForm.value.resultVariable = $event),
-              clearable: "",
-              onInput: _cache[11] || (_cache[11] = ($event) => updateElementTask()),
-              onChange: _cache[12] || (_cache[12] = ($event) => updateElementTask())
-            }, null, 8, ["value"])
-          ]),
-          _: 1
-        })
-      ]);
-    };
-  }
-});
-const _hoisted_1$8 = { style: { "margin-top": "16px" } };
-const _hoisted_2$5 = { style: { "display": "flex", "align-items": "center", "justify-content": "space-between", "flex-wrap": "nowrap" } };
-const _sfc_main$9 = /* @__PURE__ */ vue.defineComponent({
-  __name: "ReceiveTask",
-  props: {
-    id: String,
-    type: String
-  },
-  setup(__props) {
-    const props = __props;
-    const message = use.useMessage();
-    const bindMessageId = vue.ref("");
-    const newMessageForm = vue.ref({});
-    const messageMap = vue.ref({});
-    const messageModelVisible = vue.ref(false);
-    const bpmnElement = vue.ref();
-    const bpmnMessageRefsMap = vue.ref();
-    const bpmnRootElements = vue.ref();
-    const bpmnInstances2 = () => window.bpmnInstances;
-    const getBindMessage = () => {
-      var _a, _b;
-      bpmnElement.value = bpmnInstances2().bpmnElement;
-      bindMessageId.value = ((_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.messageRef) == null ? void 0 : _b.id) || "-1";
-    };
-    const openMessageModel = () => {
-      messageModelVisible.value = true;
-      newMessageForm.value = {};
-    };
-    const createNewMessage = () => {
-      if (messageMap.value[newMessageForm.value.id]) {
-        message.error("该消息已存在，请修改id后重新保存");
-        return;
-      }
-      const newMessage = bpmnInstances2().moddle.create("bpmn:Message", newMessageForm.value);
-      bpmnRootElements.value.push(newMessage);
-      messageMap.value[newMessageForm.value.id] = newMessageForm.value.name;
-      bpmnMessageRefsMap.value[newMessageForm.value.id] = newMessage;
-      messageModelVisible.value = false;
-    };
-    const updateTaskMessage = (messageId) => {
-      if (messageId === "-1") {
-        bpmnInstances2().modeling.updateProperties(vue.toRaw(bpmnElement.value), {
-          messageRef: null
-        });
-      } else {
-        bpmnInstances2().modeling.updateProperties(vue.toRaw(bpmnElement.value), {
-          messageRef: bpmnMessageRefsMap.value[messageId]
-        });
-      }
-    };
-    vue.onMounted(() => {
-      bpmnMessageRefsMap.value = /* @__PURE__ */ Object.create(null);
-      bpmnRootElements.value = bpmnInstances2().modeler.getDefinitions().rootElements;
-      bpmnRootElements.value.filter((el) => el.$type === "bpmn:Message").forEach((m2) => {
-        bpmnMessageRefsMap.value[m2.id] = m2;
-        messageMap.value[m2.id] = m2.name;
-      });
-      messageMap.value["-1"] = "无";
-    });
-    vue.onBeforeUnmount(() => {
-      bpmnElement.value = null;
-    });
-    vue.watch(
-      () => props.id,
-      () => {
-        vue.nextTick(() => {
-          getBindMessage();
-        });
-      },
-      { immediate: true }
-    );
-    return (_ctx, _cache) => {
-      const _component_Icon = vue.resolveComponent("Icon");
-      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$8, [
-        vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "消息实例" }, {
-          default: vue.withCtx(() => [
-            vue.createElementVNode("div", _hoisted_2$5, [
-              vue.createVNode(vue.unref(antDesignVue.Select), {
-                value: bindMessageId.value,
-                "onUpdate:value": _cache[0] || (_cache[0] = ($event) => bindMessageId.value = $event),
-                onChange: updateTaskMessage
-              }, {
-                default: vue.withCtx(() => [
-                  (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(Object.keys(messageMap.value), (key) => {
-                    return vue.openBlock(), vue.createBlock(vue.unref(antDesignVue.SelectOption), {
-                      value: key,
-                      key
-                    }, {
-                      default: vue.withCtx(() => [
-                        vue.createTextVNode(vue.toDisplayString(messageMap.value[key]), 1)
-                      ]),
-                      _: 2
-                    }, 1032, ["value"]);
-                  }), 128))
-                ]),
-                _: 1
-              }, 8, ["value"]),
-              vue.createVNode(vue.unref(antDesignVue.Button), {
-                type: "primary",
-                style: { "margin-left": "8px" },
-                onClick: openMessageModel
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(_component_Icon, { icon: "ep:plus" })
-                ]),
-                _: 1
-              })
-            ])
-          ]),
-          _: 1
-        }),
-        vue.createVNode(vue.unref(_3h1Ui.BasicModal), {
-          visible: messageModelVisible.value,
-          "onUpdate:visible": _cache[3] || (_cache[3] = ($event) => messageModelVisible.value = $event),
-          "close-on-click-modal": false,
-          title: "创建新消息",
-          width: "400px",
-          "append-to-body": "",
-          "destroy-on-close": ""
-        }, {
-          footer: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Button), {
-              type: "primary",
-              onClick: createNewMessage
-            }, {
-              default: vue.withCtx(() => [
-                vue.createTextVNode("确 认")
-              ]),
-              _: 1
-            })
-          ]),
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.Form), {
-              model: newMessageForm.value,
-              "label-col": { style: { width: "90px" } }
-            }, {
-              default: vue.withCtx(() => [
-                vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "消息ID" }, {
-                  default: vue.withCtx(() => [
-                    vue.createVNode(vue.unref(antDesignVue.Input), {
-                      value: newMessageForm.value.id,
-                      "onUpdate:value": _cache[1] || (_cache[1] = ($event) => newMessageForm.value.id = $event),
-                      clearable: ""
-                    }, null, 8, ["value"])
-                  ]),
-                  _: 1
-                }),
-                vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "消息名称" }, {
-                  default: vue.withCtx(() => [
-                    vue.createVNode(vue.unref(antDesignVue.Input), {
-                      value: newMessageForm.value.name,
-                      "onUpdate:value": _cache[2] || (_cache[2] = ($event) => newMessageForm.value.name = $event),
-                      clearable: ""
-                    }, null, 8, ["value"])
-                  ]),
-                  _: 1
-                })
-              ]),
-              _: 1
-            }, 8, ["model"])
-          ]),
-          _: 1
-        }, 8, ["visible"])
-      ]);
-    };
-  }
-});
-const _hoisted_1$7 = { class: "panel-tab__content" };
-const _sfc_main$8 = /* @__PURE__ */ vue.defineComponent({
-  __name: "ElementTask",
-  props: {
-    id: String,
-    type: String
-  },
-  setup(__props) {
-    const props = __props;
-    const taskConfigForm = vue.ref({
-      asyncAfter: false,
-      asyncBefore: false,
-      exclusive: false
-    });
-    const witchTaskComponent = vue.ref();
-    const installedComponent = vue.ref({
-      // 手工任务与普通任务一致，不需要其他配置
-      // 接收消息任务，需要在全局下插入新的消息实例，并在该节点下的 messageRef 属性绑定该实例
-      // 发送任务、服务任务、业务规则任务共用一个相同配置
-      UserTask: "UserTask",
-      // 用户任务配置
-      ScriptTask: "ScriptTask",
-      // 脚本任务配置
-      ReceiveTask: "ReceiveTask"
-      // 消息接收任务
-    });
-    const bpmnElement = vue.ref();
-    const bpmnInstances2 = () => window.bpmnInstances;
-    const changeTaskAsync = () => {
-      if (!taskConfigForm.value.asyncBefore && !taskConfigForm.value.asyncAfter) {
-        taskConfigForm.value.exclusive = false;
-      }
-      bpmnInstances2().modeling.updateProperties(bpmnInstances2().bpmnElement, {
-        ...taskConfigForm.value
-      });
-    };
-    vue.watch(
-      () => props.id,
-      () => {
-        var _a, _b, _c, _d, _e, _f;
-        bpmnElement.value = bpmnInstances2().bpmnElement;
-        taskConfigForm.value.asyncBefore = (_b = (_a = bpmnElement.value) == null ? void 0 : _a.businessObject) == null ? void 0 : _b.asyncBefore;
-        taskConfigForm.value.asyncAfter = (_d = (_c = bpmnElement.value) == null ? void 0 : _c.businessObject) == null ? void 0 : _d.asyncAfter;
-        taskConfigForm.value.exclusive = (_f = (_e = bpmnElement.value) == null ? void 0 : _e.businessObject) == null ? void 0 : _f.exclusive;
-      },
-      { immediate: true }
-    );
-    vue.watch(
-      () => props.type,
-      () => {
-        if (props.type == installedComponent.value.UserTask) {
-          witchTaskComponent.value = _sfc_main$b;
-        }
-        if (props.type == installedComponent.value.ScriptTask) {
-          witchTaskComponent.value = _sfc_main$a;
-        }
-        if (props.type == installedComponent.value.ReceiveTask) {
-          witchTaskComponent.value = _sfc_main$9;
-        }
-      },
-      { immediate: true }
-    );
-    return (_ctx, _cache) => {
-      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$7, [
-        vue.createVNode(vue.unref(antDesignVue.Form), {
-          size: "small",
-          "label-col": { style: { width: "90px" } }
-        }, {
-          default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "异步延续" }, {
-              default: vue.withCtx(() => [
-                vue.createVNode(vue.unref(antDesignVue.Checkbox), {
-                  modelValue: taskConfigForm.value.asyncBefore,
-                  "onUpdate:modelValue": _cache[0] || (_cache[0] = ($event) => taskConfigForm.value.asyncBefore = $event),
-                  onChange: changeTaskAsync
-                }, {
-                  default: vue.withCtx(() => [
-                    vue.createTextVNode("异步前")
-                  ]),
-                  _: 1
-                }, 8, ["modelValue"]),
-                vue.createVNode(vue.unref(antDesignVue.Checkbox), {
-                  modelValue: taskConfigForm.value.asyncAfter,
-                  "onUpdate:modelValue": _cache[1] || (_cache[1] = ($event) => taskConfigForm.value.asyncAfter = $event),
-                  onChange: changeTaskAsync
-                }, {
-                  default: vue.withCtx(() => [
-                    vue.createTextVNode("异步后")
-                  ]),
-                  _: 1
-                }, 8, ["modelValue"]),
-                taskConfigForm.value.asyncAfter || taskConfigForm.value.asyncBefore ? (vue.openBlock(), vue.createBlock(vue.unref(antDesignVue.Checkbox), {
-                  key: 0,
-                  modelValue: taskConfigForm.value.exclusive,
-                  "onUpdate:modelValue": _cache[2] || (_cache[2] = ($event) => taskConfigForm.value.exclusive = $event),
-                  onChange: changeTaskAsync
-                }, {
-                  default: vue.withCtx(() => [
-                    vue.createTextVNode("排除")
-                  ]),
-                  _: 1
-                }, 8, ["modelValue"])) : vue.createCommentVNode("", true)
-              ]),
-              _: 1
-            }),
-            (vue.openBlock(), vue.createBlock(vue.resolveDynamicComponent(witchTaskComponent.value), vue.normalizeProps(vue.guardReactiveProps(_ctx.$props)), null, 16))
-          ]),
-          _: 1
-        })
       ]);
     };
   }
@@ -47976,7 +47429,6 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
       { immediate: true }
     );
     return (_ctx, _cache) => {
-      const _component_el_divider = vue.resolveComponent("el-divider");
       return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$3, [
         vue.createVNode(vue.unref(antDesignVue.Table), {
           dataSource: elementListenersList.value,
@@ -48211,7 +47663,6 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
               ]),
               _: 1
             }, 8, ["model"]),
-            vue.createVNode(_component_el_divider),
             vue.createElementVNode("p", _hoisted_3$1, [
               vue.createElementVNode("span", _hoisted_4$1, [
                 vue.createVNode(vue.unref(_3h1Ui.Icon), { icon: "ep:menu" }),
@@ -49346,7 +48797,7 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
     const elementType = vue.ref("");
     const elementBusinessObject = vue.ref({});
     const conditionFormVisible = vue.ref(false);
-    const formVisible = vue.ref(false);
+    vue.ref(false);
     const bpmnElement = vue.ref();
     vue.provide("prefix", props.prefix);
     vue.provide("width", props.width);
@@ -49415,7 +48866,6 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
       elementType.value = activatedElement.type.split(":")[1] || "";
       elementBusinessObject.value = JSON.parse(JSON.stringify(activatedElement.businessObject));
       conditionFormVisible.value = !!(elementType.value === "SequenceFlow" && activatedElement.source && activatedElement.source.type.indexOf("StartEvent") === -1);
-      formVisible.value = elementType.value === "UserTask" || elementType.value === "StartEvent";
     };
     vue.onBeforeUnmount(() => {
       const w2 = window;
@@ -49430,8 +48880,6 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
       }
     );
     return (_ctx, _cache) => {
-      const _component_el_link = vue.resolveComponent("el-link");
-      const _component_router_link = vue.resolveComponent("router-link");
       return vue.openBlock(), vue.createElementBlock("div", {
         class: "process-panel__container",
         style: vue.normalizeStyle({ width: `${__props.width}px` })
@@ -49448,7 +48896,7 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
                 vue.createTextVNode(" 常规")
               ]),
               default: vue.withCtx(() => [
-                vue.createVNode(_sfc_main$d, {
+                vue.createVNode(_sfc_main$9, {
                   "id-edit-disabled": __props.idEditDisabled,
                   "business-object": elementBusinessObject.value,
                   type: elementType.value,
@@ -49477,41 +48925,6 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
                   "business-object": elementBusinessObject.value,
                   type: elementType.value
                 }, null, 8, ["business-object", "type"])
-              ]),
-              _: 1
-            })) : vue.createCommentVNode("", true),
-            formVisible.value ? (vue.openBlock(), vue.createBlock(vue.unref(antDesignVue.CollapsePanel), { key: "condition" }, {
-              header: vue.withCtx(() => [
-                vue.createVNode(vue.unref(_3h1Ui.Icon), { icon: "ep:list" }),
-                vue.createTextVNode("表单")
-              ]),
-              default: vue.withCtx(() => [
-                vue.createTextVNode(" 友情提示：使用 "),
-                vue.createVNode(_component_router_link, { to: { path: "/bpm/manager/form" } }, {
-                  default: vue.withCtx(() => [
-                    vue.createVNode(_component_el_link, { type: "danger" }, {
-                      default: vue.withCtx(() => [
-                        vue.createTextVNode("流程表单")
-                      ]),
-                      _: 1
-                    })
-                  ]),
-                  _: 1
-                }),
-                vue.createTextVNode(" 替代，提供更好的表单设计功能 ")
-              ]),
-              _: 1
-            })) : vue.createCommentVNode("", true),
-            elementType.value.indexOf("Task") !== -1 ? (vue.openBlock(), vue.createBlock(vue.unref(antDesignVue.CollapsePanel), { key: "task" }, {
-              header: vue.withCtx(() => [
-                vue.createVNode(vue.unref(_3h1Ui.Icon), { icon: "ep:checked" }),
-                vue.createTextVNode("任务")
-              ]),
-              default: vue.withCtx(() => [
-                vue.createVNode(_sfc_main$8, {
-                  id: elementId.value,
-                  type: elementType.value
-                }, null, 8, ["id", "type"])
               ]),
               _: 1
             })) : vue.createCommentVNode("", true),
@@ -49573,7 +48986,7 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
                 vue.createTextVNode("其他")
               ]),
               default: vue.withCtx(() => [
-                vue.createVNode(_sfc_main$c, { id: elementId.value }, null, 8, ["id"])
+                vue.createVNode(_sfc_main$8, { id: elementId.value }, null, 8, ["id"])
               ]),
               _: 1
             })
@@ -49585,7 +48998,7 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
   }
 });
 _sfc_main$1.install = function(Vue) {
-  Vue.component(_sfc_main$1.name, _sfc_main$1);
+  Vue.component("MyPropertiesPanel", _sfc_main$1);
 };
 var MapShim = function() {
   if (typeof Map !== "undefined") {
@@ -57239,6 +56652,6 @@ const bpmnCodes = "";
 const bpmnEmbedded = "";
 exports.CustomContentPadProvider = index$2;
 exports.CustomPaletteProvider = index$1;
-exports.MyProcessDesigner = _sfc_main$e;
+exports.MyProcessDesigner = _sfc_main$a;
 exports.MyProcessPenal = _sfc_main$1;
 exports.MyProcessViewer = _sfc_main;
