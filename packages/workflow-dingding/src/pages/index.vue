@@ -1,9 +1,9 @@
 <template>
   <div class="dingflow-design-body">
     <div class="fd-nav-content">
-      <a-button type="primary" style="z-index: 999" class="ant-btn button-publish" @click="saveSet">
+      <Button type="primary" style="z-index: 999" class="ant-btn button-publish" @click="saveSet">
         <span v-if="!option.isLook">发 布</span>
-      </a-button>
+      </Button>
       <section class="dingflow-design">
         <div class="zoom" v-if="!option.isLook">
           <div class="zoom-out" :class="nowVal == 50 && 'disabled'" @click="zoomSize(1)"></div>
@@ -63,6 +63,7 @@ import branchDrawer from "../components/drawer/branchDrawer.vue";
 import $func from "../config/preload";
 import { ref } from "vue";
 import { mapMutations } from "../config/lib.js";
+import { Button} from 'ant-design-vue'
 let { setTableId, setNodeTypeList, setUserList, setRoleList, setDeptList, setIsLook, setAuthorityTableList ,setPostList,setUserGroupList,setScriptList,setTypeList} =
   mapMutations();
 

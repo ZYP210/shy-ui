@@ -110,7 +110,7 @@
 <script setup>
 import $func from "../config/preload";
 import { RightOutlined, ClockCircleOutlined, FileOutlined, NodeIndexOutlined } from "@ant-design/icons-vue";
-import { onMounted, computed } from "vue";
+import { onMounted, computed , defineProps, defineEmits } from "vue";
 let bgColors = ["#464747", "#2991FF", "#21A64B"];
 let placeholderList = [,"发起人", "审核人", "触发器","条件" ,"条件分支" ];
 let props = defineProps({

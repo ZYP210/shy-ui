@@ -15,7 +15,7 @@
             <!-- <send-outlined v-else-if="nodeConfig.type == 2" /> -->
             <control-outlined v-else-if="nodeConfig.type == 3" />
           </span>
-          <a-input
+          <Input
             v-if="isInput"
             style="width: 120px"
             class="ant-input editable-title-input"
@@ -53,7 +53,7 @@
               <div class="auto-judge" :class="isTried && item.error ? 'error active' : ''">
                 <div class="sort-left" v-if="index != 0" @click="arrTransfer(index, -1)">&lt;</div>
                 <div class="title-wrapper">
-                  <a-input
+                  <Input
                     style="width: 120px"
                     v-if="isInputList[index]"
                     class="ant-input editable-title-input"
@@ -114,7 +114,8 @@ import {
   InfoCircleOutlined,
 } from "@ant-design/icons-vue";
 import { mapState, mapMutations } from "../config/lib.js";
-import { onMounted, ref, watch, getCurrentInstance, computed } from "vue";
+import { onMounted, ref, watch, getCurrentInstance, computed , toRaw } from "vue";
+import { Input, Select } from "ant-design-vue";
 import { cloneDeep } from "lodash";
 let _uid = getCurrentInstance().uid;
 let bgColors = ["87, 106, 149", "255, 148, 62", "50, 150, 250", , , "71, 188, 130"];

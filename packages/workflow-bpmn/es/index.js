@@ -45361,15 +45361,9 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
   setup(__props, { emit }) {
     const props = __props;
     const ButtonGroup = Button.Group;
-    console.log("BpmnModeler******", Modeler);
-    console.log(444444444444);
     const { createConfirm, createMessage } = useMessage();
-    console.log(55555555555);
     const bpmnCanvas = ref$1();
     const refFile = ref$1();
-    console.log(66666666);
-    console.log(7777777);
-    console.log("props*****", props);
     provide$1("configGlobal", props);
     let bpmnModeler = null;
     const defaultZoom = ref$1(1);
@@ -45432,31 +45426,15 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
       return Extensions;
     });
     const initBpmnModeler = () => {
-      console.log("initmodeler111111", bpmnModeler);
       if (bpmnModeler)
         return;
       let data = document.getElementById("bpmnCanvas");
-      console.log("initmodeler22222", data);
       bpmnModeler = new Modeler({
         container: data,
-        // width: '100%',
-        // 添加控制板
-        // propertiesPanel: {
-        // parent: '#js-properties-panel'
-        // },
         keyboard: props.keyboard ? { bindTo: document } : null,
-        // additionalModules: additionalModules.value,
         additionalModules: additionalModules.value,
         moddleExtensions: moddleExtensions.value
-        // additionalModules: [
-        // additionalModules.value
-        // propertiesPanelModule,
-        // propertiesProviderModule
-        // propertiesProviderModule
-        // ],
-        // moddleExtensions: { camunda: moddleExtensions.value }
       });
-      console.log("initmodeler333333", bpmnModeler);
       emit("init-finished", bpmnModeler);
       initModelListeners();
     };
@@ -45634,10 +45612,8 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
       emit("save", xml2);
     };
     onBeforeMount(() => {
-      console.log(props, "propspropspropsprops");
     });
     onMounted$1(() => {
-      console.log("onmonnted****");
       initBpmnModeler();
       createNewDiagram(props.value);
     });
@@ -48804,10 +48780,8 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       () => props.bpmnModeler,
       () => {
         if (!props.bpmnModeler) {
-          console.log("缺少props.bpmnModeler");
           return;
         }
-        console.log("props.bpmnModeler 有值了！！！");
         const w2 = window;
         w2.bpmnInstances = {
           modeler: props.bpmnModeler,
@@ -48820,7 +48794,6 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
           replace: props.bpmnModeler.get("replace"),
           selection: props.bpmnModeler.get("selection")
         };
-        console.log(bpmnInstances2(), "window.bpmnInstances");
         getActiveElement();
         unwatchBpmn();
       },
@@ -48831,7 +48804,6 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     const getActiveElement = () => {
       initFormOnChanged(null);
       props.bpmnModeler.on("import.done", (e) => {
-        console.log(e, "eeeee");
         initFormOnChanged(null);
       });
       props.bpmnModeler.on("selection.changed", ({ newSelection }) => {
@@ -48850,14 +48822,6 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       }
       if (!activatedElement)
         return;
-      console.log(`
-              ----------
-      select element changed:
-                id:  ${activatedElement.id}
-              type:  ${activatedElement.businessObject.$type}
-              ----------
-              `);
-      console.log("businessObject: ", activatedElement.businessObject);
       bpmnInstances2().bpmnElement = activatedElement;
       bpmnElement.value = activatedElement;
       elementId.value = activatedElement.id;
@@ -48868,8 +48832,6 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     onBeforeUnmount$1(() => {
       const w2 = window;
       w2.bpmnInstances = null;
-      console.log(props, "props1");
-      console.log(props.bpmnModeler, "props.bpmnModeler1");
     });
     watch$1(
       () => elementId.value,

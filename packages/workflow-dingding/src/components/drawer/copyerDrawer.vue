@@ -1,5 +1,5 @@
 <template>
-  <a-drawer
+  <Drawer
     v-model:visible="visible"
     class="set_copyer"
     :width="550"
@@ -8,45 +8,45 @@
     @close="saveCopyer"
     :footer-style="{ textAlign: 'right' }"
   >
-    <a-form ref="formRef">
-      <a-space v-for="(item, index) in conditionList" style="display: flex; margin-bottom: 8px" align="baseline">
-        <a-form-item label="类型">
-          <a-select
+    <Form ref="formRef">
+      <Space v-for="(item, index) in conditionList" style="display: flex; margin-bottom: 8px" align="baseline">
+        <FormItem label="类型">
+          <Select
             v-model:value="item.type"
             :options="typeList"
             style="width: 130px"
             placeholder="请选择类型"
-          ></a-select>
-        </a-form-item>
+          ></Select>
+        </FormItem>
 
-        <a-form-item label="值">
-          <a-input v-model:value="item.value" placeholder="请输入值" />
-        </a-form-item>
+        <FormItem label="值">
+          <Input v-model:value="item.value" placeholder="请输入值" />
+        </FormItem>
         <MinusCircleOutlined @click="removeSight(item)" class="icon" />
-      </a-space>
+      </Space>
 
-      <a-form-item>
-        <a-button type="dashed" block @click="addSight">
+      <FormItem>
+        <Button type="dashed" block @click="addSight">
           <PlusOutlined />
           添加
-        </a-button>
-      </a-form-item>
-    </a-form>
+        </Button>
+      </FormItem>
+    </Form>
 
     <template #footer>
-      <a-space>
-        <a-button type="primary" @click="saveCopyer">确 定</a-button>
-        <a-button @click="closeDrawer">取 消</a-button>
-      </a-space>
+      <Space>
+        <Button type="primary" @click="saveCopyer">确 定</Button>
+        <Button @click="closeDrawer">取 消</Button>
+      </Space>
     </template>
-  </a-drawer>
+  </Drawer>
 </template>
 <script setup>
 import $func from "../../config/preload";
 import { mapState, mapMutations } from "../../config/lib.js";
 import { ref, watch, computed } from "vue";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
-
+import {Drawer, Form, FormItem, Input, Select, Button, Space, Checkbox } from 'ant-design-vue'
 let copyerConfig = ref({});
 let conditionList = ref([]);
 let { copyerDrawer, copyerConfig1 } = mapState();

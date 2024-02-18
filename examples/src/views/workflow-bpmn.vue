@@ -258,9 +258,7 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
 
   /** 初始化 modeler */
   const initModeler = (item) => {
-    setTimeout(() => {
-      modeler.value = item;
-    }, 10);
+    modeler.value = item;
   };
 
   /** 添加/修改模型 */

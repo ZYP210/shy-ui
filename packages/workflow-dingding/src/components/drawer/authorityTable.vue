@@ -1,20 +1,20 @@
 <template>
-  <a-table :columns="columns" :data-source="dataSource" :pagination="false">
+  <Table :columns="columns" :data-source="dataSource" :pagination="false">
     <template #bodyCell="{ text, record, index, column }">
       <template v-if="['label'].includes(column.dataIndex)">
         <span>{{ text }}</span>
       </template>
       <template v-else>
-        <a-radio-group v-model:value="checkList[index]">
-          <a-radio :value="record[column.dataIndex]" />
-        </a-radio-group>
+        <RadioGroup v-model:value="checkList[index]">
+          <Radio :value="record[column.dataIndex]" />
+        </RadioGroup>
       </template>
     </template>
-  </a-table>
+  </Table>
 </template>
 <script lang="ts" setup>
-import { ref, watch } from "vue";
-
+import { ref, watch, defineProps, defineEmits } from "vue";
+import { RadioGroup,Table,Radio } from "ant-design-vue";
 const props = defineProps({
   fieldPermissions: {
     type: Array,

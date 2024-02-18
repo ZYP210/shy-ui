@@ -1,6 +1,6 @@
 {
   "name": "@shy-plugins/workflow-dingding",
-  "version": "0.0.15",
+  "version": "0.0.30",
   "description": "仿钉钉工作流",
   "main": "lib/index.js",
   "module": "es/index.js",

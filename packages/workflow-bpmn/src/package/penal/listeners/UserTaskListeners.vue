@@ -7,6 +7,7 @@
       :showTableSetting="false"
       :pagination="false"
       :canResize="false"
+      :customRow="customRow"
     >
       <template #bodyCell="{ column, record, index }">
         <template v-if="column.dataIndex === 'action'">
@@ -269,7 +270,61 @@
   } from './utilSelf';
 import { useMessage } from '@shy-plugins/use';
 import { ref,inject,nextTick,watch} from 'vue'
-  // defineOptions({ name: 'UserTaskListeners' });
+const sourceObj = ref({})
+    const targetObj = ref({})
+    let sourceIndex
+    let targetIndex
+    const customRow = (record, index) => {
+      return {
+        style: {
+          cursor: 'pointer'
+        },
+        // 鼠标移入
+        onMouseenter: event => {
+          // 兼容IE
+          const ev = event || window.event
+          ev.target.draggable = true
+        },
+        // 开始拖拽
+        onDragstart: event => {
+          // 兼容IE
+          const ev = event || window.event
+          ev.stopPropagation()
+          // 得到源目标数据
+          sourceObj.value = record
+          sourceIndex = index
+        },
+        // 拖动元素经过的元素
+        onDragover: event => {
+          // 兼容 IE
+          const ev = event || window.event
+          // 阻止默认行为
+          ev.preventDefault()
+          ev.dataTransfer.dropEffect = 'move'   // 可以去掉拖动时那个＋号
+          targetIndex = index
+        },
+        // 鼠标松开
+        onDrop: event => {
+          // 兼容IE
+          const ev = event || window.event
+          // 阻止冒泡
+          ev.stopPropagation()
+          // 得到目标数据
+          targetObj.value = record
+         // 将源数据插入目标数据前面
+          targetIndex = index
+          if (targetIndex === sourceIndex) return
+          elementListenersList.value.splice(sourceIndex, 1)
+          elementListenersList.value.splice(targetIndex, 0, sourceObj.value)
+          bpmnElementListeners.value.splice(sourceIndex, 1)
+          bpmnElementListeners.value.splice(targetIndex, 0, sourceObj.value)
+          updateElementExtensions(
+            bpmnElement.value,
+            otherExtensionList.value.concat(bpmnElementListeners.value),
+        );
+        }
+      }
+    }
   const { createConfirm } = useMessage();
   const props = defineProps({
     id: String,
