@@ -1,9 +1,9 @@
 <template>
-  <BasicContainer title="详情">
+  <BasicContainer title="详情" footer-align="center" cancel-align="right">
     <template #extra> Extra </template>
-    <template #buttons>
-      <Button type="primary">保存</Button>
-    </template>
+    <div class="min-h-7777px">sdsadsad</div>
+
+    <template #footer> 7777 </template>
   </BasicContainer>
 </template>
 
