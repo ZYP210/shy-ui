@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
+import { ref } from 'vue';
   const bpmProcessInstanceResult=[
     {
         "value": 1,
@@ -210,7 +211,6 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
 
 <template>
   <CollapseContainer style="position: relative">
-    <!-- 流程设计器，负责绘制流程等 -->
     <MyProcessDesigner
       key="designer"
       v-if="xmlString !== undefined"
@@ -223,7 +223,6 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
       :additionalModel="controlForm.additionalModel"
       @save="save"
     />
-    <!-- 流程属性器，负责编辑每个流程节点的属性 -->
     <MyProcessPenal
       key="penal"
       :bpmnModeler="modeler as any"
@@ -238,14 +237,10 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
   import { MyProcessDesigner, MyProcessPenal, CustomContentPadProvider,
   CustomPaletteProvider
 } from '@shy-plugins/workflow-bpmn';
-    
-  // 自定义元素选中时的弹出菜单（修改 默认任务 为 用户任务）
-  // 自定义左侧菜单（修改 默认任务 为 用户任务）
+  import { ref, onMounted } from 'vue';
   import { CollapseContainer } from '3h1-ui';
-  // defineOptions({ name: 'BpmModelEditor' });
-
-  const xmlString = ref(undefined); // BPMN XML
-  const modeler = ref(null); // BPMN Modeler
+  const xmlString = ref(undefined); 
+  const modeler = ref(null); 
   const controlForm = ref({
     simulation: true,
     labelEditing: false,
@@ -254,21 +249,18 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
     headerButtonSize: 'mini',
     additionalModel: [CustomContentPadProvider, CustomPaletteProvider],
   });
-  const model = ref(); // 流程模型的信息
+  const model = ref(); 
 
-  /** 初始化 modeler */
   const initModeler = (item) => {
     modeler.value = item;
   };
 
-  /** 添加/修改模型 */
   const save = async (bpmnXml) => {
    console.log('bpmnXml',bpmnXml);
    
   };
 
 
-  /** 初始化 */
 onMounted(async () => {
   setTimeout(() => {
     xmlString.value=`<?xml version="1.0" encoding="UTF-8"?>

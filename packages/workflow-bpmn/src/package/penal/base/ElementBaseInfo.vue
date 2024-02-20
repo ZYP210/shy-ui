@@ -40,7 +40,8 @@
 </template>
 <script lang="ts" setup>
 import { Form, FormItem, Input, Button } from 'ant-design-vue';
-import { ref,reactive,toRaw,watch,onMounted,onBeforeUnmount} from 'vue'
+import { ref, reactive, toRaw, watch, onMounted, onBeforeUnmount } from 'vue'
+import { updateElementProperties} from '../../utils'
   // defineOptions({ name: 'ElementBaseInfo' });
   const labelCol = {
     style: { width: '90px' },
@@ -86,7 +87,6 @@ import { ref,reactive,toRaw,watch,onMounted,onBeforeUnmount} from 'vue'
 
     // 在 BPMN 的 XML 中，流程标识 key，其实对应的是 id 节点
     elementBaseInfo.value['id'] = value;
-
     setTimeout(() => {
       updateBaseInfo('id');
     }, 100);
@@ -124,42 +124,30 @@ import { ref,reactive,toRaw,watch,onMounted,onBeforeUnmount} from 'vue'
       bpmnInstances().modeling.updateProperties(toRaw(bpmnElement.value), attrObj);
     }
   };
-  onMounted(() => {
+onMounted(() => {    
     // 针对上传的 bpmn 流程图时，需要延迟 1 秒的时间，保证 key 和 name 的更新
     setTimeout(() => {
       handleKeyUpdate(props.model?.key);
       handleNameUpdate(props.model?.name);
     }, 1000);
-  });
-
+});
+  //userTask添加flowable:skipExpression属性
+watch(() => props.businessObject.id, (id) => { 
+  if (props.businessObject.$type=== 'bpmn:UserTask') { 
+    //在xml中追加属性
+    updateElementProperties(toRaw(bpmnElement.value),id)
+  }
+})
   watch(
     () => props.businessObject,
     (val) => {
       if (val) {
-        // nextTick(() => {
         resetBaseInfo();
-        // })
       }
     },
+
   );
-  // watch(
-  //   () => ({ ...props }),
-  //   (oldVal, newVal) => {
-  //     if (newVal) {
-  //       needProps.value = newVal
-  //     }
-  //   },
-  //   {
-  //     immediate: true
-  //   }
-  // )
-  // 'model.key': {
-  //   immediate: false,
-  //   handler: function (val) {
-  //     this.handleKeyUpdate(val)
-  //   }
-  // }
-  onBeforeUnmount(() => {
+    onBeforeUnmount(() => {
     bpmnElement.value = null;
   });
 </script>

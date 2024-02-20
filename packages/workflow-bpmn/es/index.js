@@ -1,6 +1,6 @@
-import { defineComponent, ref as ref$1, provide as provide$1, computed, onBeforeMount, onMounted as onMounted$1, onBeforeUnmount as onBeforeUnmount$1, openBlock, createElementBlock, createElementVNode, renderSlot, Fragment, createVNode, unref, withCtx, createTextVNode, createBlock, createCommentVNode, toDisplayString, reactive, watch as watch$1, toRaw as toRaw$1, nextTick, inject, withDirectives, vShow, renderList, resolveComponent, normalizeStyle } from "vue";
+import { defineComponent, ref, provide, computed, onBeforeMount, onMounted, onBeforeUnmount, openBlock, createElementBlock, createElementVNode, renderSlot, Fragment, createVNode, unref, withCtx, createTextVNode, createBlock, createCommentVNode, toDisplayString, toRaw, reactive, watch, nextTick, inject, withDirectives, vShow, renderList, resolveComponent, normalizeStyle } from "vue";
 import { Icon, BasicModal, TableAction, BasicDrawer } from "3h1-ui";
-import { Button, Tooltip, Modal, Form, FormItem, Input, Textarea, Select, SelectOption, Checkbox, Table, Collapse, CollapsePanel } from "ant-design-vue";
+import { ButtonGroup, Button, Tooltip, Modal, Form, FormItem, Input, Textarea, Select, SelectOption, Checkbox, Table, Collapse, CollapsePanel } from "ant-design-vue";
 import { useMessage } from "@shy-plugins/use";
 var commonjsGlobal$1 = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 function getDefaultExportFromCjs$1(x2) {
@@ -45360,19 +45360,18 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
   ],
   setup(__props, { emit }) {
     const props = __props;
-    const ButtonGroup = Button.Group;
     const { createConfirm, createMessage } = useMessage();
-    const bpmnCanvas = ref$1();
-    const refFile = ref$1();
-    provide$1("configGlobal", props);
+    const bpmnCanvas = ref();
+    const refFile = ref();
+    provide("configGlobal", props);
     let bpmnModeler = null;
-    const defaultZoom = ref$1(1);
-    const previewModelVisible = ref$1(false);
-    const simulationStatus = ref$1(false);
-    const previewResult = ref$1("");
-    const previewType = ref$1("xml");
-    const recoverable = ref$1(false);
-    const revocable = ref$1(false);
+    const defaultZoom = ref(1);
+    const previewModelVisible = ref(false);
+    const simulationStatus = ref(false);
+    const previewResult = ref("");
+    const previewType = ref("xml");
+    const recoverable = ref(false);
+    const revocable = ref(false);
     const additionalModules = computed(() => {
       const Modules = [];
       if (props.onlyCustomizeAddi) {
@@ -45613,11 +45612,11 @@ const _sfc_main$a = /* @__PURE__ */ defineComponent({
     };
     onBeforeMount(() => {
     });
-    onMounted$1(() => {
+    onMounted(() => {
       initBpmnModeler();
       createNewDiagram(props.value);
     });
-    onBeforeUnmount$1(() => {
+    onBeforeUnmount(() => {
       if (bpmnModeler)
         bpmnModeler.destroy();
       emit("destroy", bpmnModeler);
@@ -46031,6 +46030,75 @@ const ProcessDesigner_vue_vue_type_style_index_0_lang = "";
 _sfc_main$a.install = function(Vue) {
   Vue.component("MyProcessDesigner", _sfc_main$a);
 };
+const bpmnInstances = () => window == null ? void 0 : window.bpmnInstances;
+function createListenerObject(options, isTask, prefix2) {
+  const listenerObj = /* @__PURE__ */ Object.create(null);
+  listenerObj.event = options.event;
+  isTask && (listenerObj.id = options.id);
+  switch (options.listenerType) {
+    case "scriptListener":
+      listenerObj.script = createScriptObject(options, prefix2);
+      break;
+    case "expressionListener":
+      listenerObj.expression = options.expression;
+      break;
+    case "delegateExpressionListener":
+      listenerObj.delegateExpression = options.delegateExpression;
+      break;
+    default:
+      listenerObj.class = options.class;
+  }
+  if (options.fields) {
+    listenerObj.fields = options.fields.map((field) => {
+      return createFieldObject(field, prefix2);
+    });
+  }
+  if (isTask && options.event === "timeout" && !!options.eventDefinitionType) {
+    const timeDefinition = bpmnInstances().moddle.create("bpmn:FormalExpression", {
+      body: options.eventTimeDefinitions
+    });
+    const TimerEventDefinition = bpmnInstances().moddle.create("bpmn:TimerEventDefinition", {
+      id: `TimerEventDefinition_${uuid(8)}`,
+      [`time${options.eventDefinitionType.replace(/^\S/, (s2) => s2.toUpperCase())}`]: timeDefinition
+    });
+    listenerObj.eventDefinitions = [TimerEventDefinition];
+  }
+  return bpmnInstances().moddle.create(
+    `${prefix2}:${isTask ? "TaskListener" : "ExecutionListener"}`,
+    listenerObj
+  );
+}
+function createFieldObject(option, prefix2) {
+  const { name: name2, fieldType: fieldType2, string, expression } = option;
+  const fieldConfig = fieldType2 === "string" ? { name: name2, string } : { name: name2, expression };
+  return bpmnInstances().moddle.create(`${prefix2}:Field`, fieldConfig);
+}
+function createScriptObject(options, prefix2) {
+  const { scriptType, scriptFormat, value, resource } = options;
+  const scriptConfig = scriptType === "inlineScript" ? { scriptFormat, value } : { scriptFormat, resource };
+  return bpmnInstances().moddle.create(`${prefix2}:Script`, scriptConfig);
+}
+function updateElementExtensions(element, extensionList) {
+  const extensions = bpmnInstances().moddle.create("bpmn:ExtensionElements", {
+    values: extensionList
+  });
+  bpmnInstances().modeling.updateProperties(toRaw(element), {
+    extensionElements: extensions
+  });
+}
+function uuid(length2 = 8, chars) {
+  let result = "";
+  const charsString = chars || "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for (let i2 = length2; i2 > 0; --i2) {
+    result += charsString[Math.floor(Math.random() * charsString.length)];
+  }
+  return result;
+}
+function updateElementProperties(element, id) {
+  bpmnInstances().modeling.updateProperties(element, {
+    ["flowable:skipExpression"]: `\${true == ${id}_skip}`
+  });
+}
 const _hoisted_1$8 = { class: "panel-tab__content" };
 const _hoisted_2$6 = { key: 0 };
 const _hoisted_3$4 = { key: 1 };
@@ -46053,9 +46121,9 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
     const labelCol = {
       style: { width: "90px" }
     };
-    const needProps = ref$1({});
-    const bpmnElement = ref$1();
-    const elementBaseInfo = ref$1({});
+    const needProps = ref({});
+    const bpmnElement = ref();
+    const elementBaseInfo = ref({});
     const rules = reactive({
       id: [{ required: true, message: "流程标识不能为空", trigger: "blur" }],
       name: [{ required: true, message: "流程名称不能为空", trigger: "blur" }]
@@ -46093,22 +46161,27 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
       attrObj[key] = elementBaseInfo.value[key];
       needProps.value = { ...elementBaseInfo.value, ...needProps.value };
       if (key === "id") {
-        bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
+        bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
           id: elementBaseInfo.value[key],
           di: { id: `${elementBaseInfo.value[key]}_di` }
         });
       } else {
-        bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), attrObj);
+        bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), attrObj);
       }
     };
-    onMounted$1(() => {
+    onMounted(() => {
       setTimeout(() => {
         var _a, _b;
         handleKeyUpdate((_a = props.model) == null ? void 0 : _a.key);
         handleNameUpdate((_b = props.model) == null ? void 0 : _b.name);
       }, 1e3);
     });
-    watch$1(
+    watch(() => props.businessObject.id, (id) => {
+      if (props.businessObject.$type === "bpmn:UserTask") {
+        updateElementProperties(toRaw(bpmnElement.value), id);
+      }
+    });
+    watch(
       () => props.businessObject,
       (val) => {
         if (val) {
@@ -46116,7 +46189,7 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
         }
       }
     );
-    onBeforeUnmount$1(() => {
+    onBeforeUnmount(() => {
       bpmnElement.value = null;
     });
     return (_ctx, _cache) => {
@@ -46219,22 +46292,22 @@ const _sfc_main$8 = /* @__PURE__ */ defineComponent({
   },
   setup(__props) {
     const props = __props;
-    const documentation = ref$1("");
-    const bpmnElement = ref$1();
+    const documentation = ref("");
+    const bpmnElement = ref();
     const bpmnInstances2 = () => window.bpmnInstances;
     const updateDocumentation = () => {
       bpmnElement.value && bpmnElement.value.id === props.id || (bpmnElement.value = bpmnInstances2().elementRegistry.get(props.id));
       const documentations = bpmnInstances2().bpmnFactory.create("bpmn:Documentation", {
         text: documentation.value
       });
-      bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
+      bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
         documentation: [documentations]
       });
     };
-    onBeforeUnmount$1(() => {
+    onBeforeUnmount(() => {
       bpmnElement.value = null;
     });
-    watch$1(
+    watch(
       () => props.id,
       (id) => {
         if (id && id.length) {
@@ -46279,8 +46352,8 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
   setup(__props) {
     const props = __props;
     const prefix2 = inject("prefix");
-    const loopCharacteristics = ref$1("");
-    const defaultLoopInstanceForm = ref$1({
+    const loopCharacteristics = ref("");
+    const defaultLoopInstanceForm = ref({
       completionCondition: "",
       loopCardinality: "",
       extensionElements: [],
@@ -46288,9 +46361,9 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
       asyncBefore: false,
       exclusive: false
     });
-    const loopInstanceForm = ref$1({});
-    const bpmnElement = ref$1(null);
-    const multiLoopInstance = ref$1(null);
+    const loopInstanceForm = ref({});
+    const bpmnElement = ref(null);
+    const multiLoopInstance = ref(null);
     const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
     const getElementLoop = (businessObject) => {
       var _a, _b, _c, _d;
@@ -46322,7 +46395,7 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
     };
     const changeLoopCharacteristicsType = (type) => {
       if (type === "Null") {
-        bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
+        bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
           loopCharacteristics: null
         });
         return;
@@ -46331,7 +46404,7 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
         const loopCharacteristicsObject = bpmnInstances2().moddle.create(
           "bpmn:StandardLoopCharacteristics"
         );
-        bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
+        bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
           loopCharacteristics: loopCharacteristicsObject
         });
         multiLoopInstance.value = null;
@@ -46348,8 +46421,8 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
           { collection: "${coll_userList}" }
         );
       }
-      bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
-        loopCharacteristics: toRaw$1(multiLoopInstance.value)
+      bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
+        loopCharacteristics: toRaw(multiLoopInstance.value)
       });
     };
     const updateLoopCardinality = (e) => {
@@ -46361,7 +46434,7 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
         });
       }
       bpmnInstances2().modeling.updateModdleProperties(
-        toRaw$1(bpmnElement.value),
+        toRaw(bpmnElement.value),
         multiLoopInstance.value,
         {
           loopCardinality
@@ -46377,7 +46450,7 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
         });
       }
       bpmnInstances2().modeling.updateModdleProperties(
-        toRaw$1(bpmnElement.value),
+        toRaw(bpmnElement.value),
         multiLoopInstance.value,
         {
           completionCondition
@@ -46394,7 +46467,7 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
         ]
       });
       bpmnInstances2().modeling.updateModdleProperties(
-        toRaw$1(bpmnElement.value),
+        toRaw(bpmnElement.value),
         multiLoopInstance.value,
         {
           extensionElements
@@ -46403,7 +46476,7 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
     };
     const updateLoopBase = () => {
       bpmnInstances2().modeling.updateModdleProperties(
-        toRaw$1(bpmnElement.value),
+        toRaw(bpmnElement.value),
         multiLoopInstance.value,
         {
           collection: loopInstanceForm.value.collection || null,
@@ -46426,16 +46499,16 @@ const _sfc_main$7 = /* @__PURE__ */ defineComponent({
         asyncAttr[key] = loopInstanceForm.value[key];
       }
       bpmnInstances2().modeling.updateModdleProperties(
-        toRaw$1(bpmnElement.value),
+        toRaw(bpmnElement.value),
         multiLoopInstance.value,
         asyncAttr
       );
     };
-    onBeforeUnmount$1(() => {
+    onBeforeUnmount(() => {
       multiLoopInstance.value = null;
       bpmnElement.value = null;
     });
-    watch$1(
+    watch(
       () => props.businessObject,
       (val) => {
         bpmnElement.value = bpmnInstances2().bpmnElement;
@@ -46615,11 +46688,11 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
   },
   setup(__props) {
     const props = __props;
-    const flowConditionForm = ref$1({});
-    const bpmnElement = ref$1();
-    const bpmnElementSource = ref$1();
-    const bpmnElementSourceRef = ref$1();
-    const flowConditionRef = ref$1();
+    const flowConditionForm = ref({});
+    const bpmnElement = ref();
+    const bpmnElementSource = ref();
+    const bpmnElementSourceRef = ref();
+    const flowConditionRef = ref();
     const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
     const resetFlowCondition = () => {
       bpmnElement.value = bpmnInstances2().bpmnElement;
@@ -46648,26 +46721,26 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
     const updateFlowType = (flowType) => {
       if (flowType === "condition") {
         flowConditionRef.value = bpmnInstances2().moddle.create("bpmn:FormalExpression");
-        bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
+        bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
           conditionExpression: flowConditionRef.value
         });
         return;
       }
       if (flowType === "default") {
-        bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
+        bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
           conditionExpression: null
         });
-        bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElementSource.value), {
+        bpmnInstances2().modeling.updateProperties(toRaw(bpmnElementSource.value), {
           default: bpmnElement.value
         });
         return;
       }
       if (bpmnElementSourceRef.value.default && bpmnElementSourceRef.value.default.id === bpmnElement.value.id) {
-        bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElementSource.value), {
+        bpmnInstances2().modeling.updateProperties(toRaw(bpmnElementSource.value), {
           default: null
         });
       }
-      bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
+      bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
         conditionExpression: null
       });
     };
@@ -46688,16 +46761,16 @@ const _sfc_main$6 = /* @__PURE__ */ defineComponent({
           });
         }
       }
-      bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
+      bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
         conditionExpression: condition
       });
     };
-    onBeforeUnmount$1(() => {
+    onBeforeUnmount(() => {
       bpmnElement.value = null;
       bpmnElementSource.value = null;
       bpmnElementSourceRef.value = null;
     });
-    watch$1(
+    watch(
       () => props.businessObject,
       (val) => {
         console.log(val, "val");
@@ -46906,15 +46979,15 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
       }
     ];
     const { createMessage } = useMessage();
-    const signalList = ref$1([]);
-    const messageList = ref$1([]);
-    const dialogVisible = ref$1(false);
-    const modelType = ref$1("");
+    const signalList = ref([]);
+    const messageList = ref([]);
+    const dialogVisible = ref(false);
+    const modelType = ref("");
     const modelObjectForm = reactive({ id: "", name: "" });
-    const rootElements = ref$1();
-    const messageIdMap = ref$1();
-    const signalIdMap = ref$1();
-    const formRef = ref$1();
+    const rootElements = ref();
+    const messageIdMap = ref();
+    const signalIdMap = ref();
+    const formRef = ref();
     const modelConfig = computed(() => {
       if (modelType.value === "message") {
         return { title: "创建消息", idLabel: "消息ID", nameLabel: "消息名称" };
@@ -46963,7 +47036,7 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
       dialogVisible.value = false;
       initDataList();
     };
-    onMounted$1(() => {
+    onMounted(() => {
       initDataList();
     });
     return (_ctx, _cache) => {
@@ -47093,70 +47166,6 @@ const _sfc_main$5 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const bpmnInstances = () => window == null ? void 0 : window.bpmnInstances;
-function createListenerObject(options, isTask, prefix2) {
-  const listenerObj = /* @__PURE__ */ Object.create(null);
-  listenerObj.event = options.event;
-  isTask && (listenerObj.id = options.id);
-  switch (options.listenerType) {
-    case "scriptListener":
-      listenerObj.script = createScriptObject(options, prefix2);
-      break;
-    case "expressionListener":
-      listenerObj.expression = options.expression;
-      break;
-    case "delegateExpressionListener":
-      listenerObj.delegateExpression = options.delegateExpression;
-      break;
-    default:
-      listenerObj.class = options.class;
-  }
-  if (options.fields) {
-    listenerObj.fields = options.fields.map((field) => {
-      return createFieldObject(field, prefix2);
-    });
-  }
-  if (isTask && options.event === "timeout" && !!options.eventDefinitionType) {
-    const timeDefinition = bpmnInstances().moddle.create("bpmn:FormalExpression", {
-      body: options.eventTimeDefinitions
-    });
-    const TimerEventDefinition = bpmnInstances().moddle.create("bpmn:TimerEventDefinition", {
-      id: `TimerEventDefinition_${uuid(8)}`,
-      [`time${options.eventDefinitionType.replace(/^\S/, (s2) => s2.toUpperCase())}`]: timeDefinition
-    });
-    listenerObj.eventDefinitions = [TimerEventDefinition];
-  }
-  return bpmnInstances().moddle.create(
-    `${prefix2}:${isTask ? "TaskListener" : "ExecutionListener"}`,
-    listenerObj
-  );
-}
-function createFieldObject(option, prefix2) {
-  const { name: name2, fieldType: fieldType2, string, expression } = option;
-  const fieldConfig = fieldType2 === "string" ? { name: name2, string } : { name: name2, expression };
-  return bpmnInstances().moddle.create(`${prefix2}:Field`, fieldConfig);
-}
-function createScriptObject(options, prefix2) {
-  const { scriptType, scriptFormat, value, resource } = options;
-  const scriptConfig = scriptType === "inlineScript" ? { scriptFormat, value } : { scriptFormat, resource };
-  return bpmnInstances().moddle.create(`${prefix2}:Script`, scriptConfig);
-}
-function updateElementExtensions(element, extensionList) {
-  const extensions = bpmnInstances().moddle.create("bpmn:ExtensionElements", {
-    values: extensionList
-  });
-  bpmnInstances().modeling.updateProperties(toRaw$1(element), {
-    extensionElements: extensions
-  });
-}
-function uuid(length2 = 8, chars) {
-  let result = "";
-  const charsString = chars || "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  for (let i2 = length2; i2 > 0; --i2) {
-    result += charsString[Math.floor(Math.random() * charsString.length)];
-  }
-  return result;
-}
 function initListenerForm(listener) {
   let self2 = {
     ...listener
@@ -47172,19 +47181,18 @@ function initListenerForm(listener) {
     if (listener.eventDefinitions.length) {
       let k2 = "";
       for (const key in listener.eventDefinitions[0]) {
-        console.log(listener.eventDefinitions, key);
         if (key.indexOf("time") !== -1) {
           k2 = key;
           self2.eventDefinitionType = key.replace("time", "").toLowerCase();
         }
       }
-      console.log(k2);
       self2.eventTimeDefinitions = listener.eventDefinitions[0][k2].body;
     }
   }
   return self2;
 }
 function initListenerType(listener) {
+  var _a;
   let listenerType2;
   if (listener.class)
     listenerType2 = "classListener";
@@ -47197,7 +47205,8 @@ function initListenerType(listener) {
   return {
     ...JSON.parse(JSON.stringify(listener)),
     ...listener.script ?? {},
-    listenerType: listenerType2
+    listenerType: listenerType2,
+    id: (_a = listener.$attrs) == null ? void 0 : _a.id
   };
 }
 const listenerType = {
@@ -47232,23 +47241,72 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent({
   setup(__props) {
     const props = __props;
     const { createConfirm } = useMessage();
+    const sourceObj = ref({});
+    const listenerObject = ref({});
+    const targetObj = ref({});
+    let sourceIndex;
+    let targetIndex;
+    const customRow = (record, index2) => {
+      return {
+        style: {
+          cursor: "pointer"
+        },
+        // 鼠标移入
+        onMouseenter: (event2) => {
+          const ev = event2 || window.event;
+          ev.target.draggable = true;
+        },
+        // 开始拖拽
+        onDragstart: (event2) => {
+          const ev = event2 || window.event;
+          ev.stopPropagation();
+          listenerObject.value = createListenerObject(record, false, prefix2);
+          sourceObj.value = record;
+          sourceIndex = index2;
+        },
+        // 拖动元素经过的元素
+        onDragover: (event2) => {
+          const ev = event2 || window.event;
+          ev.preventDefault();
+          ev.dataTransfer.dropEffect = "move";
+          targetIndex = index2;
+        },
+        // 鼠标松开
+        onDrop: (event2) => {
+          const ev = event2 || window.event;
+          ev.stopPropagation();
+          targetObj.value = record;
+          targetIndex = index2;
+          if (targetIndex === sourceIndex)
+            return;
+          elementListenersList.value.splice(sourceIndex, 1);
+          elementListenersList.value.splice(targetIndex, 0, sourceObj.value);
+          bpmnElementListeners.value.splice(sourceIndex, 1);
+          bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value);
+          updateElementExtensions(
+            bpmnElement.value,
+            otherExtensionList.value.concat(bpmnElementListeners.value)
+          );
+        }
+      };
+    };
     const prefix2 = inject("prefix");
     const width = inject("width");
-    const elementListenersList = ref$1([]);
-    const listenerForm = ref$1({});
-    const listenerFormModelVisible = ref$1(false);
-    const fieldsListOfListener = ref$1([]);
-    const listenerFieldForm = ref$1({});
-    const listenerFieldFormModelVisible = ref$1(false);
-    const editingListenerIndex = ref$1(-1);
-    const editingListenerFieldIndex = ref$1(-1);
-    const listenerTypeObject = ref$1(listenerType);
-    const fieldTypeObject = ref$1(fieldType);
-    const bpmnElement = ref$1();
-    const otherExtensionList = ref$1();
-    const bpmnElementListeners = ref$1();
-    const listenerFormRef = ref$1();
-    const listenerFieldFormRef = ref$1();
+    const elementListenersList = ref([]);
+    const listenerForm = ref({});
+    const listenerFormModelVisible = ref(false);
+    const fieldsListOfListener = ref([]);
+    const listenerFieldForm = ref({});
+    const listenerFieldFormModelVisible = ref(false);
+    const editingListenerIndex = ref(-1);
+    const editingListenerFieldIndex = ref(-1);
+    const listenerTypeObject = ref(listenerType);
+    const fieldTypeObject = ref(fieldType);
+    const bpmnElement = ref();
+    const otherExtensionList = ref();
+    const bpmnElementListeners = ref();
+    const listenerFormRef = ref();
+    const listenerFieldFormRef = ref();
     const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
     const listenerColumns = [
       {
@@ -47375,12 +47433,12 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent({
       let validateStatus = await listenerFormRef.value.validate();
       if (!validateStatus)
         return;
-      const listenerObject = createListenerObject(listenerForm.value, false, prefix2);
+      const listenerObject2 = createListenerObject(listenerForm.value, false, prefix2);
       if (editingListenerIndex.value === -1) {
-        bpmnElementListeners.value.push(listenerObject);
+        bpmnElementListeners.value.push(listenerObject2);
         elementListenersList.value.push(listenerForm.value);
       } else {
-        bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject);
+        bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject2);
         elementListenersList.value.splice(editingListenerIndex.value, 1, listenerForm.value);
       }
       otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
@@ -47393,7 +47451,7 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent({
       listenerFormModelVisible.value = false;
       listenerForm.value = {};
     };
-    watch$1(
+    watch(
       () => props.id,
       (val) => {
         val && val.length && nextTick(() => {
@@ -47410,7 +47468,8 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent({
           showIndexColumn: "",
           showTableSetting: false,
           pagination: false,
-          canResize: false
+          canResize: false,
+          customRow
         }, {
           bodyCell: withCtx(({ column, record, index: index2 }) => [
             column.dataIndex === "action" ? (openBlock(), createBlock(unref(TableAction), {
@@ -47843,15 +47902,15 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
       },
       { width: 80, title: "操作", dataIndex: "action" }
     ];
-    const elementPropertyList = ref$1([]);
-    const propertyForm = ref$1({});
-    const editingPropertyIndex = ref$1(-1);
-    const propertyFormModelVisible = ref$1(false);
-    const bpmnElement = ref$1();
-    const otherExtensionList = ref$1();
-    const bpmnElementProperties = ref$1();
-    const bpmnElementPropertyList = ref$1();
-    const attributeFormRef = ref$1();
+    const elementPropertyList = ref([]);
+    const propertyForm = ref({});
+    const editingPropertyIndex = ref(-1);
+    const propertyFormModelVisible = ref(false);
+    const bpmnElement = ref();
+    const otherExtensionList = ref();
+    const bpmnElementProperties = ref();
+    const bpmnElementPropertyList = ref();
+    const attributeFormRef = ref();
     const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
     const resetAttributesList = () => {
       var _a, _b;
@@ -47899,8 +47958,8 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
       const { name: name2, value } = propertyForm.value;
       if (editingPropertyIndex.value !== -1) {
         bpmnInstances2().modeling.updateModdleProperties(
-          toRaw$1(bpmnElement.value),
-          toRaw$1(bpmnElementPropertyList.value)[toRaw$1(editingPropertyIndex.value)],
+          toRaw(bpmnElement.value),
+          toRaw(bpmnElementPropertyList.value)[toRaw(editingPropertyIndex.value)],
           {
             name: name2,
             value
@@ -47923,11 +47982,11 @@ const _sfc_main$3 = /* @__PURE__ */ defineComponent({
       const extensions = bpmnInstances2().moddle.create("bpmn:ExtensionElements", {
         values: otherExtensionList.value.concat([properties])
       });
-      bpmnInstances2().modeling.updateProperties(toRaw$1(bpmnElement.value), {
+      bpmnInstances2().modeling.updateProperties(toRaw(bpmnElement.value), {
         extensionElements: extensions
       });
     };
-    watch$1(
+    watch(
       () => props.id,
       (val) => {
         if (val) {
@@ -48059,25 +48118,74 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
   },
   setup(__props) {
     const props = __props;
+    const sourceObj = ref({});
+    const targetObj = ref({});
+    const listenerObject = ref({});
+    let sourceIndex;
+    let targetIndex;
+    const customRow = (record, index2) => {
+      return {
+        style: {
+          cursor: "pointer"
+        },
+        // 鼠标移入
+        onMouseenter: (event2) => {
+          const ev = event2 || window.event;
+          ev.target.draggable = true;
+        },
+        // 开始拖拽
+        onDragstart: (event2) => {
+          const ev = event2 || window.event;
+          ev.stopPropagation();
+          listenerObject.value = createListenerObject(record, true, prefix2);
+          sourceObj.value = record;
+          sourceIndex = index2;
+        },
+        // 拖动元素经过的元素
+        onDragover: (event2) => {
+          const ev = event2 || window.event;
+          ev.preventDefault();
+          ev.dataTransfer.dropEffect = "move";
+          targetIndex = index2;
+        },
+        // 鼠标松开
+        onDrop: (event2) => {
+          const ev = event2 || window.event;
+          ev.stopPropagation();
+          targetObj.value = record;
+          targetIndex = index2;
+          if (targetIndex === sourceIndex)
+            return;
+          elementListenersList.value.splice(sourceIndex, 1);
+          elementListenersList.value.splice(targetIndex, 0, sourceObj.value);
+          bpmnElementListeners.value.splice(sourceIndex, 1);
+          bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value);
+          updateElementExtensions(
+            bpmnElement.value,
+            otherExtensionList.value.concat(bpmnElementListeners.value)
+          );
+        }
+      };
+    };
     const { createConfirm } = useMessage();
     const prefix2 = inject("prefix");
     const width = inject("width");
-    const elementListenersList = ref$1([]);
-    const listenerEventTypeObject = ref$1(eventType);
-    const listenerTypeObject = ref$1(listenerType);
-    const listenerFormModelVisible = ref$1(false);
-    const listenerForm = ref$1({});
-    const fieldTypeObject = ref$1(fieldType);
-    const fieldsListOfListener = ref$1([]);
-    const listenerFieldFormModelVisible = ref$1(false);
-    const editingListenerIndex = ref$1(-1);
-    const editingListenerFieldIndex = ref$1(-1);
-    const listenerFieldForm = ref$1({});
-    const bpmnElement = ref$1();
-    const bpmnElementListeners = ref$1();
-    const otherExtensionList = ref$1();
-    const listenerFormRef = ref$1();
-    const listenerFieldFormRef = ref$1();
+    const elementListenersList = ref([]);
+    const listenerEventTypeObject = ref(eventType);
+    const listenerTypeObject = ref(listenerType);
+    const listenerFormModelVisible = ref(false);
+    const listenerForm = ref({});
+    const fieldTypeObject = ref(fieldType);
+    const fieldsListOfListener = ref([]);
+    const listenerFieldFormModelVisible = ref(false);
+    const editingListenerIndex = ref(-1);
+    const editingListenerFieldIndex = ref(-1);
+    const listenerFieldForm = ref({});
+    const bpmnElement = ref();
+    const bpmnElementListeners = ref();
+    const otherExtensionList = ref();
+    const listenerFormRef = ref();
+    const listenerFieldFormRef = ref();
     const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
     const elementListenersColumns = [
       {
@@ -48124,10 +48232,6 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
     ];
     const resetListenersList = () => {
       var _a, _b;
-      console.log(
-        bpmnInstances2().bpmnElement,
-        "window.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElement"
-      );
       bpmnElement.value = bpmnInstances2().bpmnElement;
       otherExtensionList.value = [];
       bpmnElementListeners.value = ((_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values.filter(
@@ -48161,7 +48265,6 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
       });
     };
     const removeListener = (listener, index2) => {
-      console.log(listener, "listener");
       createConfirm({
         iconType: "warning",
         title: "提示",
@@ -48181,12 +48284,12 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
       let validateStatus = await listenerFormRef.value.validate();
       if (!validateStatus)
         return;
-      const listenerObject = createListenerObject(listenerForm.value, true, prefix2);
+      const listenerObject2 = createListenerObject(listenerForm.value, true, prefix2);
       if (editingListenerIndex.value === -1) {
-        bpmnElementListeners.value.push(listenerObject);
+        bpmnElementListeners.value.push(listenerObject2);
         elementListenersList.value.push(listenerForm.value);
       } else {
-        bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject);
+        bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject2);
         elementListenersList.value.splice(editingListenerIndex.value, 1, listenerForm.value);
       }
       otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
@@ -48229,7 +48332,6 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
       });
     };
     const removeListenerField = (field, index2) => {
-      console.log(field, "field");
       createConfirm({
         iconType: "warning",
         title: "提示",
@@ -48240,7 +48342,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
         }
       });
     };
-    watch$1(
+    watch(
       () => props.id,
       (val) => {
         val && val.length && nextTick(() => {
@@ -48257,7 +48359,8 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
           showIndexColumn: "",
           showTableSetting: false,
           pagination: false,
-          canResize: false
+          canResize: false,
+          customRow
         }, {
           bodyCell: withCtx(({ column, record, index: index2 }) => [
             column.dataIndex === "action" ? (openBlock(), createBlock(unref(TableAction), {
@@ -48766,17 +48869,17 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
   },
   setup(__props) {
     const props = __props;
-    const activeTab = ref$1("base");
-    const elementId = ref$1("");
-    const elementType = ref$1("");
-    const elementBusinessObject = ref$1({});
-    const conditionFormVisible = ref$1(false);
-    ref$1(false);
-    const bpmnElement = ref$1();
-    provide$1("prefix", props.prefix);
-    provide$1("width", props.width);
+    const activeTab = ref("base");
+    const elementId = ref("");
+    const elementType = ref("");
+    const elementBusinessObject = ref({});
+    const conditionFormVisible = ref(false);
+    ref(false);
+    const bpmnElement = ref();
+    provide("prefix", props.prefix);
+    provide("width", props.width);
     const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
-    const unwatchBpmn = watch$1(
+    const unwatchBpmn = watch(
       () => props.bpmnModeler,
       () => {
         if (!props.bpmnModeler) {
@@ -48807,15 +48910,18 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
         initFormOnChanged(null);
       });
       props.bpmnModeler.on("selection.changed", ({ newSelection }) => {
+        console.log("selection.changed", newSelection);
         initFormOnChanged(newSelection[0] || null);
       });
       props.bpmnModeler.on("element.changed", ({ element }) => {
+        console.log("element.changed", element);
         if (element && element.id === elementId.value) {
           initFormOnChanged(element);
         }
       });
     };
     const initFormOnChanged = (element) => {
+      console.log("initFormOnChanged", element);
       let activatedElement = element;
       if (!activatedElement) {
         activatedElement = bpmnInstances2().elementRegistry.find((el) => el.type === "bpmn:Process") ?? bpmnInstances2().elementRegistry.find((el) => el.type === "bpmn:Collaboration");
@@ -48829,11 +48935,11 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       elementBusinessObject.value = JSON.parse(JSON.stringify(activatedElement.businessObject));
       conditionFormVisible.value = !!(elementType.value === "SequenceFlow" && activatedElement.source && activatedElement.source.type.indexOf("StartEvent") === -1);
     };
-    onBeforeUnmount$1(() => {
+    onBeforeUnmount(() => {
       const w2 = window;
       w2.bpmnInstances = null;
     });
-    watch$1(
+    watch(
       () => elementId.value,
       () => {
         activeTab.value = "base";
@@ -56104,7 +56210,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
 });
 const ProcessViewer_vue_vue_type_style_index_0_lang = "";
 _sfc_main.install = function(Vue) {
-  Vue.component(_sfc_main.name, _sfc_main);
+  Vue.component("MyProcessViewer", _sfc_main);
 };
 function ContextPadProvider(config, injector, eventBus, contextPad, modeling, elementFactory, connect, create2, popupMenu, canvas, rules, translate2) {
   config = config || {};

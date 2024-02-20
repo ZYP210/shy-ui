@@ -240,11 +240,13 @@ import { useMessage } from '@shy-plugins/use';
 import { ref,inject,nextTick,watch} from 'vue'
   const { createConfirm } = useMessage();
   // defineOptions({ name: 'ElementListeners' });
-  const sourceObj = ref({})
+const sourceObj = ref({})
+  const listenerObject=ref({})
     const targetObj = ref({})
     let sourceIndex
     let targetIndex
-    const customRow = (record, index) => {
+const customRow = (record, index) => {
+      
       return {
         style: {
           cursor: 'pointer'
@@ -261,6 +263,7 @@ import { ref,inject,nextTick,watch} from 'vue'
           const ev = event || window.event
           ev.stopPropagation()
           // 得到源目标数据
+           listenerObject.value= createListenerObject(record, false, prefix);
           sourceObj.value = record
           sourceIndex = index
         },
@@ -287,7 +290,7 @@ import { ref,inject,nextTick,watch} from 'vue'
           elementListenersList.value.splice(sourceIndex, 1)
           elementListenersList.value.splice(targetIndex, 0, sourceObj.value)
           bpmnElementListeners.value.splice(sourceIndex, 1)
-          bpmnElementListeners.value.splice(targetIndex, 0, sourceObj.value)
+          bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value)
           updateElementExtensions(
             bpmnElement.value,
             otherExtensionList.value.concat(bpmnElementListeners.value),

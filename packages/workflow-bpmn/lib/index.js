@@ -3283,19 +3283,19 @@ var Collection = collection;
 function hasOwnProperty$1(e, property) {
   return Object.prototype.hasOwnProperty.call(e, property.name || property);
 }
-function defineCollectionProperty(ref2, property, target) {
-  var collection2 = Collection.extend(target[property.name] || [], ref2, property, target);
+function defineCollectionProperty(ref, property, target) {
+  var collection2 = Collection.extend(target[property.name] || [], ref, property, target);
   Object.defineProperty(target, property.name, {
     enumerable: property.enumerable,
     value: collection2
   });
   if (collection2.length) {
     collection2.forEach(function(o2) {
-      ref2.set(o2, property.inverse, target);
+      ref.set(o2, property.inverse, target);
     });
   }
 }
-function defineProperty$1(ref2, property, target) {
+function defineProperty$1(ref, property, target) {
   var inverseProperty = property.inverse;
   var _value = target[property.name];
   Object.defineProperty(target, property.name, {
@@ -3311,10 +3311,10 @@ function defineProperty$1(ref2, property, target) {
       var old = _value;
       _value = null;
       if (old) {
-        ref2.unset(old, inverseProperty, target);
+        ref.unset(old, inverseProperty, target);
       }
       _value = value;
-      ref2.set(_value, inverseProperty, target);
+      ref.set(_value, inverseProperty, target);
     }
   });
 }
@@ -10561,7 +10561,7 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
       strokeLinecap: "round",
       strokeDasharray: "none"
     }, options.attrs);
-    var ref2 = options.ref || { x: 0, y: 0 };
+    var ref = options.ref || { x: 0, y: 0 };
     var scale = options.scale || 1;
     if (attrs.strokeDasharray === "none") {
       attrs.strokeDasharray = [1e4, 1];
@@ -10572,8 +10572,8 @@ function BpmnRenderer(config, eventBus, styles, pathMap, canvas, textRenderer, p
     attr(marker2, {
       id,
       viewBox: "0 0 20 20",
-      refX: ref2.x,
-      refY: ref2.y,
+      refX: ref.x,
+      refY: ref.y,
       markerWidth: 20 * scale,
       markerHeight: 20 * scale,
       orient: "auto"
@@ -45362,7 +45362,6 @@ const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
   ],
   setup(__props, { emit }) {
     const props = __props;
-    const ButtonGroup = antDesignVue.Button.Group;
     const { createConfirm, createMessage } = use.useMessage();
     const bpmnCanvas = vue.ref();
     const refFile = vue.ref();
@@ -45630,7 +45629,7 @@ const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
         vue.createElementVNode("div", _hoisted_2$7, [
           vue.renderSlot(_ctx.$slots, "control-header"),
           !_ctx.$slots["control-header"] ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
-            vue.createVNode(vue.unref(ButtonGroup), { key: "file-control" }, {
+            vue.createVNode(vue.unref(antDesignVue.ButtonGroup), { key: "file-control" }, {
               default: vue.withCtx(() => [
                 vue.createVNode(vue.unref(antDesignVue.Button), {
                   onClick: _cache[0] || (_cache[0] = ($event) => refFile.value.click())
@@ -45755,7 +45754,7 @@ const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
               ]),
               _: 1
             }),
-            vue.createVNode(vue.unref(ButtonGroup), { key: "align-control" }, {
+            vue.createVNode(vue.unref(antDesignVue.ButtonGroup), { key: "align-control" }, {
               default: vue.withCtx(() => [
                 vue.createVNode(vue.unref(antDesignVue.Tooltip), { title: "向左对齐" }, {
                   default: vue.withCtx(() => [
@@ -45862,7 +45861,7 @@ const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
               ]),
               _: 1
             }),
-            vue.createVNode(vue.unref(ButtonGroup), { key: "scale-control" }, {
+            vue.createVNode(vue.unref(antDesignVue.ButtonGroup), { key: "scale-control" }, {
               default: vue.withCtx(() => [
                 vue.createVNode(vue.unref(antDesignVue.Tooltip), { title: "缩小视图" }, {
                   default: vue.withCtx(() => [
@@ -45923,7 +45922,7 @@ const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
               ]),
               _: 1
             }),
-            vue.createVNode(vue.unref(ButtonGroup), { key: "stack-control" }, {
+            vue.createVNode(vue.unref(antDesignVue.ButtonGroup), { key: "stack-control" }, {
               default: vue.withCtx(() => [
                 vue.createVNode(vue.unref(antDesignVue.Tooltip), { title: "撤销" }, {
                   default: vue.withCtx(() => [
@@ -46033,6 +46032,75 @@ const ProcessDesigner_vue_vue_type_style_index_0_lang = "";
 _sfc_main$a.install = function(Vue) {
   Vue.component("MyProcessDesigner", _sfc_main$a);
 };
+const bpmnInstances = () => window == null ? void 0 : window.bpmnInstances;
+function createListenerObject(options, isTask, prefix2) {
+  const listenerObj = /* @__PURE__ */ Object.create(null);
+  listenerObj.event = options.event;
+  isTask && (listenerObj.id = options.id);
+  switch (options.listenerType) {
+    case "scriptListener":
+      listenerObj.script = createScriptObject(options, prefix2);
+      break;
+    case "expressionListener":
+      listenerObj.expression = options.expression;
+      break;
+    case "delegateExpressionListener":
+      listenerObj.delegateExpression = options.delegateExpression;
+      break;
+    default:
+      listenerObj.class = options.class;
+  }
+  if (options.fields) {
+    listenerObj.fields = options.fields.map((field) => {
+      return createFieldObject(field, prefix2);
+    });
+  }
+  if (isTask && options.event === "timeout" && !!options.eventDefinitionType) {
+    const timeDefinition = bpmnInstances().moddle.create("bpmn:FormalExpression", {
+      body: options.eventTimeDefinitions
+    });
+    const TimerEventDefinition = bpmnInstances().moddle.create("bpmn:TimerEventDefinition", {
+      id: `TimerEventDefinition_${uuid(8)}`,
+      [`time${options.eventDefinitionType.replace(/^\S/, (s2) => s2.toUpperCase())}`]: timeDefinition
+    });
+    listenerObj.eventDefinitions = [TimerEventDefinition];
+  }
+  return bpmnInstances().moddle.create(
+    `${prefix2}:${isTask ? "TaskListener" : "ExecutionListener"}`,
+    listenerObj
+  );
+}
+function createFieldObject(option, prefix2) {
+  const { name: name2, fieldType: fieldType2, string, expression } = option;
+  const fieldConfig = fieldType2 === "string" ? { name: name2, string } : { name: name2, expression };
+  return bpmnInstances().moddle.create(`${prefix2}:Field`, fieldConfig);
+}
+function createScriptObject(options, prefix2) {
+  const { scriptType, scriptFormat, value, resource } = options;
+  const scriptConfig = scriptType === "inlineScript" ? { scriptFormat, value } : { scriptFormat, resource };
+  return bpmnInstances().moddle.create(`${prefix2}:Script`, scriptConfig);
+}
+function updateElementExtensions(element, extensionList) {
+  const extensions = bpmnInstances().moddle.create("bpmn:ExtensionElements", {
+    values: extensionList
+  });
+  bpmnInstances().modeling.updateProperties(vue.toRaw(element), {
+    extensionElements: extensions
+  });
+}
+function uuid(length2 = 8, chars) {
+  let result = "";
+  const charsString = chars || "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  for (let i2 = length2; i2 > 0; --i2) {
+    result += charsString[Math.floor(Math.random() * charsString.length)];
+  }
+  return result;
+}
+function updateElementProperties(element, id) {
+  bpmnInstances().modeling.updateProperties(element, {
+    ["flowable:skipExpression"]: `\${true == ${id}_skip}`
+  });
+}
 const _hoisted_1$8 = { class: "panel-tab__content" };
 const _hoisted_2$6 = { key: 0 };
 const _hoisted_3$4 = { key: 1 };
@@ -46109,6 +46177,11 @@ const _sfc_main$9 = /* @__PURE__ */ vue.defineComponent({
         handleKeyUpdate((_a = props.model) == null ? void 0 : _a.key);
         handleNameUpdate((_b = props.model) == null ? void 0 : _b.name);
       }, 1e3);
+    });
+    vue.watch(() => props.businessObject.id, (id) => {
+      if (props.businessObject.$type === "bpmn:UserTask") {
+        updateElementProperties(vue.toRaw(bpmnElement.value), id);
+      }
     });
     vue.watch(
       () => props.businessObject,
@@ -47095,70 +47168,6 @@ const _sfc_main$5 = /* @__PURE__ */ vue.defineComponent({
     };
   }
 });
-const bpmnInstances = () => window == null ? void 0 : window.bpmnInstances;
-function createListenerObject(options, isTask, prefix2) {
-  const listenerObj = /* @__PURE__ */ Object.create(null);
-  listenerObj.event = options.event;
-  isTask && (listenerObj.id = options.id);
-  switch (options.listenerType) {
-    case "scriptListener":
-      listenerObj.script = createScriptObject(options, prefix2);
-      break;
-    case "expressionListener":
-      listenerObj.expression = options.expression;
-      break;
-    case "delegateExpressionListener":
-      listenerObj.delegateExpression = options.delegateExpression;
-      break;
-    default:
-      listenerObj.class = options.class;
-  }
-  if (options.fields) {
-    listenerObj.fields = options.fields.map((field) => {
-      return createFieldObject(field, prefix2);
-    });
-  }
-  if (isTask && options.event === "timeout" && !!options.eventDefinitionType) {
-    const timeDefinition = bpmnInstances().moddle.create("bpmn:FormalExpression", {
-      body: options.eventTimeDefinitions
-    });
-    const TimerEventDefinition = bpmnInstances().moddle.create("bpmn:TimerEventDefinition", {
-      id: `TimerEventDefinition_${uuid(8)}`,
-      [`time${options.eventDefinitionType.replace(/^\S/, (s2) => s2.toUpperCase())}`]: timeDefinition
-    });
-    listenerObj.eventDefinitions = [TimerEventDefinition];
-  }
-  return bpmnInstances().moddle.create(
-    `${prefix2}:${isTask ? "TaskListener" : "ExecutionListener"}`,
-    listenerObj
-  );
-}
-function createFieldObject(option, prefix2) {
-  const { name: name2, fieldType: fieldType2, string, expression } = option;
-  const fieldConfig = fieldType2 === "string" ? { name: name2, string } : { name: name2, expression };
-  return bpmnInstances().moddle.create(`${prefix2}:Field`, fieldConfig);
-}
-function createScriptObject(options, prefix2) {
-  const { scriptType, scriptFormat, value, resource } = options;
-  const scriptConfig = scriptType === "inlineScript" ? { scriptFormat, value } : { scriptFormat, resource };
-  return bpmnInstances().moddle.create(`${prefix2}:Script`, scriptConfig);
-}
-function updateElementExtensions(element, extensionList) {
-  const extensions = bpmnInstances().moddle.create("bpmn:ExtensionElements", {
-    values: extensionList
-  });
-  bpmnInstances().modeling.updateProperties(vue.toRaw(element), {
-    extensionElements: extensions
-  });
-}
-function uuid(length2 = 8, chars) {
-  let result = "";
-  const charsString = chars || "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  for (let i2 = length2; i2 > 0; --i2) {
-    result += charsString[Math.floor(Math.random() * charsString.length)];
-  }
-  return result;
-}
 function initListenerForm(listener) {
   let self2 = {
     ...listener
@@ -47174,19 +47183,18 @@ function initListenerForm(listener) {
     if (listener.eventDefinitions.length) {
       let k2 = "";
       for (const key in listener.eventDefinitions[0]) {
-        console.log(listener.eventDefinitions, key);
         if (key.indexOf("time") !== -1) {
           k2 = key;
           self2.eventDefinitionType = key.replace("time", "").toLowerCase();
         }
       }
-      console.log(k2);
       self2.eventTimeDefinitions = listener.eventDefinitions[0][k2].body;
     }
   }
   return self2;
 }
 function initListenerType(listener) {
+  var _a;
   let listenerType2;
   if (listener.class)
     listenerType2 = "classListener";
@@ -47199,7 +47207,8 @@ function initListenerType(listener) {
   return {
     ...JSON.parse(JSON.stringify(listener)),
     ...listener.script ?? {},
-    listenerType: listenerType2
+    listenerType: listenerType2,
+    id: (_a = listener.$attrs) == null ? void 0 : _a.id
   };
 }
 const listenerType = {
@@ -47234,6 +47243,55 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
   setup(__props) {
     const props = __props;
     const { createConfirm } = use.useMessage();
+    const sourceObj = vue.ref({});
+    const listenerObject = vue.ref({});
+    const targetObj = vue.ref({});
+    let sourceIndex;
+    let targetIndex;
+    const customRow = (record, index2) => {
+      return {
+        style: {
+          cursor: "pointer"
+        },
+        // 鼠标移入
+        onMouseenter: (event2) => {
+          const ev = event2 || window.event;
+          ev.target.draggable = true;
+        },
+        // 开始拖拽
+        onDragstart: (event2) => {
+          const ev = event2 || window.event;
+          ev.stopPropagation();
+          listenerObject.value = createListenerObject(record, false, prefix2);
+          sourceObj.value = record;
+          sourceIndex = index2;
+        },
+        // 拖动元素经过的元素
+        onDragover: (event2) => {
+          const ev = event2 || window.event;
+          ev.preventDefault();
+          ev.dataTransfer.dropEffect = "move";
+          targetIndex = index2;
+        },
+        // 鼠标松开
+        onDrop: (event2) => {
+          const ev = event2 || window.event;
+          ev.stopPropagation();
+          targetObj.value = record;
+          targetIndex = index2;
+          if (targetIndex === sourceIndex)
+            return;
+          elementListenersList.value.splice(sourceIndex, 1);
+          elementListenersList.value.splice(targetIndex, 0, sourceObj.value);
+          bpmnElementListeners.value.splice(sourceIndex, 1);
+          bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value);
+          updateElementExtensions(
+            bpmnElement.value,
+            otherExtensionList.value.concat(bpmnElementListeners.value)
+          );
+        }
+      };
+    };
     const prefix2 = vue.inject("prefix");
     const width = vue.inject("width");
     const elementListenersList = vue.ref([]);
@@ -47377,12 +47435,12 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
       let validateStatus = await listenerFormRef.value.validate();
       if (!validateStatus)
         return;
-      const listenerObject = createListenerObject(listenerForm.value, false, prefix2);
+      const listenerObject2 = createListenerObject(listenerForm.value, false, prefix2);
       if (editingListenerIndex.value === -1) {
-        bpmnElementListeners.value.push(listenerObject);
+        bpmnElementListeners.value.push(listenerObject2);
         elementListenersList.value.push(listenerForm.value);
       } else {
-        bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject);
+        bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject2);
         elementListenersList.value.splice(editingListenerIndex.value, 1, listenerForm.value);
       }
       otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
@@ -47412,7 +47470,8 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
           showIndexColumn: "",
           showTableSetting: false,
           pagination: false,
-          canResize: false
+          canResize: false,
+          customRow
         }, {
           bodyCell: vue.withCtx(({ column, record, index: index2 }) => [
             column.dataIndex === "action" ? (vue.openBlock(), vue.createBlock(vue.unref(_3h1Ui.TableAction), {
@@ -48061,6 +48120,55 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
   },
   setup(__props) {
     const props = __props;
+    const sourceObj = vue.ref({});
+    const targetObj = vue.ref({});
+    const listenerObject = vue.ref({});
+    let sourceIndex;
+    let targetIndex;
+    const customRow = (record, index2) => {
+      return {
+        style: {
+          cursor: "pointer"
+        },
+        // 鼠标移入
+        onMouseenter: (event2) => {
+          const ev = event2 || window.event;
+          ev.target.draggable = true;
+        },
+        // 开始拖拽
+        onDragstart: (event2) => {
+          const ev = event2 || window.event;
+          ev.stopPropagation();
+          listenerObject.value = createListenerObject(record, true, prefix2);
+          sourceObj.value = record;
+          sourceIndex = index2;
+        },
+        // 拖动元素经过的元素
+        onDragover: (event2) => {
+          const ev = event2 || window.event;
+          ev.preventDefault();
+          ev.dataTransfer.dropEffect = "move";
+          targetIndex = index2;
+        },
+        // 鼠标松开
+        onDrop: (event2) => {
+          const ev = event2 || window.event;
+          ev.stopPropagation();
+          targetObj.value = record;
+          targetIndex = index2;
+          if (targetIndex === sourceIndex)
+            return;
+          elementListenersList.value.splice(sourceIndex, 1);
+          elementListenersList.value.splice(targetIndex, 0, sourceObj.value);
+          bpmnElementListeners.value.splice(sourceIndex, 1);
+          bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value);
+          updateElementExtensions(
+            bpmnElement.value,
+            otherExtensionList.value.concat(bpmnElementListeners.value)
+          );
+        }
+      };
+    };
     const { createConfirm } = use.useMessage();
     const prefix2 = vue.inject("prefix");
     const width = vue.inject("width");
@@ -48126,10 +48234,6 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
     ];
     const resetListenersList = () => {
       var _a, _b;
-      console.log(
-        bpmnInstances2().bpmnElement,
-        "window.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElementwindow.bpmnInstances.bpmnElement"
-      );
       bpmnElement.value = bpmnInstances2().bpmnElement;
       otherExtensionList.value = [];
       bpmnElementListeners.value = ((_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values.filter(
@@ -48163,7 +48267,6 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
       });
     };
     const removeListener = (listener, index2) => {
-      console.log(listener, "listener");
       createConfirm({
         iconType: "warning",
         title: "提示",
@@ -48183,12 +48286,12 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
       let validateStatus = await listenerFormRef.value.validate();
       if (!validateStatus)
         return;
-      const listenerObject = createListenerObject(listenerForm.value, true, prefix2);
+      const listenerObject2 = createListenerObject(listenerForm.value, true, prefix2);
       if (editingListenerIndex.value === -1) {
-        bpmnElementListeners.value.push(listenerObject);
+        bpmnElementListeners.value.push(listenerObject2);
         elementListenersList.value.push(listenerForm.value);
       } else {
-        bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject);
+        bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject2);
         elementListenersList.value.splice(editingListenerIndex.value, 1, listenerForm.value);
       }
       otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
@@ -48231,7 +48334,6 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
       });
     };
     const removeListenerField = (field, index2) => {
-      console.log(field, "field");
       createConfirm({
         iconType: "warning",
         title: "提示",
@@ -48259,7 +48361,8 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
           showIndexColumn: "",
           showTableSetting: false,
           pagination: false,
-          canResize: false
+          canResize: false,
+          customRow
         }, {
           bodyCell: vue.withCtx(({ column, record, index: index2 }) => [
             column.dataIndex === "action" ? (vue.openBlock(), vue.createBlock(vue.unref(_3h1Ui.TableAction), {
@@ -48809,15 +48912,18 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
         initFormOnChanged(null);
       });
       props.bpmnModeler.on("selection.changed", ({ newSelection }) => {
+        console.log("selection.changed", newSelection);
         initFormOnChanged(newSelection[0] || null);
       });
       props.bpmnModeler.on("element.changed", ({ element }) => {
+        console.log("element.changed", element);
         if (element && element.id === elementId.value) {
           initFormOnChanged(element);
         }
       });
     };
     const initFormOnChanged = (element) => {
+      console.log("initFormOnChanged", element);
       let activatedElement = element;
       if (!activatedElement) {
         activatedElement = bpmnInstances2().elementRegistry.find((el) => el.type === "bpmn:Process") ?? bpmnInstances2().elementRegistry.find((el) => el.type === "bpmn:Collaboration");
@@ -55788,15 +55894,15 @@ const _sfc_main = /* @__PURE__ */ vue.defineComponent({
   emits: ["destroy"],
   setup(__props, { emit }) {
     const props = __props;
-    provide("configGlobal", props);
+    vue.provide("configGlobal", props);
     let bpmnModeler;
-    const xml2 = ref("");
-    const activityLists = ref([]);
-    const processInstance = ref(void 0);
-    const taskList = ref([]);
-    const bpmnCanvas = ref();
-    const elementOverlayIds = ref(null);
-    const overlays = ref(null);
+    const xml2 = vue.ref("");
+    const activityLists = vue.ref([]);
+    const processInstance = vue.ref(void 0);
+    const taskList = vue.ref([]);
+    const bpmnCanvas = vue.ref();
+    const elementOverlayIds = vue.ref(null);
+    const overlays = vue.ref(null);
     const initBpmnModeler = () => {
       if (bpmnModeler)
         return;
@@ -56039,51 +56145,51 @@ const _sfc_main = /* @__PURE__ */ vue.defineComponent({
             html += `<p>结束时间：${formatToDateTime(processInstance.value.endTime)}</p>`;
           }
         }
-        elementOverlayIds.value[element.value.id] = (_a = toRaw(overlays.value)) == null ? void 0 : _a.add(element.value, {
+        elementOverlayIds.value[element.value.id] = (_a = vue.toRaw(overlays.value)) == null ? void 0 : _a.add(element.value, {
           position: { left: 0, bottom: 0 },
           html: `<div class="element-overlays">${html}</div>`
         });
       }
     };
     const elementOut = (element) => {
-      toRaw(overlays.value).remove({ element });
+      vue.toRaw(overlays.value).remove({ element });
       elementOverlayIds.value[element.id] = null;
     };
-    onMounted(() => {
+    vue.onMounted(() => {
       xml2.value = props.value;
       activityLists.value = props.activityData;
       initBpmnModeler();
       createNewDiagram(xml2.value);
       initModelListeners();
     });
-    onBeforeUnmount(() => {
+    vue.onBeforeUnmount(() => {
       if (bpmnModeler)
         bpmnModeler.destroy();
       emit("destroy", bpmnModeler);
       bpmnModeler = null;
     });
-    watch(
+    vue.watch(
       () => props.value,
       (newValue) => {
         xml2.value = newValue;
         createNewDiagram(xml2.value);
       }
     );
-    watch(
+    vue.watch(
       () => props.activityData,
       (newActivityData) => {
         activityLists.value = newActivityData;
         createNewDiagram(xml2.value);
       }
     );
-    watch(
+    vue.watch(
       () => props.processInstanceData,
       (newProcessInstanceData) => {
         processInstance.value = newProcessInstanceData;
         createNewDiagram(xml2.value);
       }
     );
-    watch(
+    vue.watch(
       () => props.taskData,
       (newTaskListData) => {
         taskList.value = newTaskListData;
@@ -56106,7 +56212,7 @@ const _sfc_main = /* @__PURE__ */ vue.defineComponent({
 });
 const ProcessViewer_vue_vue_type_style_index_0_lang = "";
 _sfc_main.install = function(Vue) {
-  Vue.component(_sfc_main.name, _sfc_main);
+  Vue.component("MyProcessViewer", _sfc_main);
 };
 function ContextPadProvider(config, injector, eventBus, contextPad, modeling, elementFactory, connect, create2, popupMenu, canvas, rules, translate2) {
   config = config || {};

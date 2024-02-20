@@ -14,13 +14,11 @@ export function initListenerForm(listener) {
     if (listener.eventDefinitions.length) {
       let k = '';
       for (const key in listener.eventDefinitions[0]) {
-        console.log(listener.eventDefinitions, key);
         if (key.indexOf('time') !== -1) {
           k = key;
           self.eventDefinitionType = key.replace('time', '').toLowerCase();
         }
       }
-      console.log(k);
       self.eventTimeDefinitions = listener.eventDefinitions[0][k].body;
     }
   }
@@ -37,6 +35,7 @@ export function initListenerType(listener) {
     ...JSON.parse(JSON.stringify(listener)),
     ...(listener.script ?? {}),
     listenerType: listenerType,
+    id:listener.$attrs?.id
   };
 }
 

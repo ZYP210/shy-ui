@@ -70,7 +70,8 @@
   import UserTaskListeners from './listeners/UserTaskListeners.vue';
   import { Icon } from '3h1-ui';
 import { Collapse, CollapsePanel } from 'ant-design-vue';
-import { ref ,provide,watch,onBeforeUnmount} from 'vue';
+import { ref, provide, watch, onBeforeUnmount } from 'vue';
+import { updateElementProperties} from '../utils';
   const props = defineProps({
     bpmnModeler: {
       type: Object,
@@ -140,9 +141,11 @@ import { ref ,provide,watch,onBeforeUnmount} from 'vue';
     });
     // 监听选择事件，修改当前激活的元素以及表单
     props.bpmnModeler.on('selection.changed', ({ newSelection }) => {
+      console.log('selection.changed', newSelection);
       initFormOnChanged(newSelection[0] || null);
     });
     props.bpmnModeler.on('element.changed', ({ element }) => {
+      console.log('element.changed', element);
       // 保证 修改 "默认流转路径" 类似需要修改多个元素的事件发生的时候，更新表单的元素与原选中元素不一致。
       if (element && element.id === elementId.value) {
         initFormOnChanged(element);
@@ -150,14 +153,16 @@ import { ref ,provide,watch,onBeforeUnmount} from 'vue';
     });
   };
   // 初始化数据
-  const initFormOnChanged = (element) => {
+const initFormOnChanged = (element) => {
+    console.log('initFormOnChanged', element);
+    
     let activatedElement = element;
     if (!activatedElement) {
       activatedElement =
         bpmnInstances().elementRegistry.find((el) => el.type === 'bpmn:Process') ??
         bpmnInstances().elementRegistry.find((el) => el.type === 'bpmn:Collaboration');
     }
-    if (!activatedElement) return;
+  if (!activatedElement) return;
     bpmnInstances().bpmnElement = activatedElement;
     bpmnElement.value = activatedElement;
     elementId.value = activatedElement.id;
@@ -167,7 +172,8 @@ import { ref ,provide,watch,onBeforeUnmount} from 'vue';
       elementType.value === 'SequenceFlow' &&
       activatedElement.source &&
       activatedElement.source.type.indexOf('StartEvent') === -1
-    );
+  );
+ 
     //隐藏表单
     // formVisible.value = elementType.value === 'UserTask' || elementType.value === 'StartEvent';
   };

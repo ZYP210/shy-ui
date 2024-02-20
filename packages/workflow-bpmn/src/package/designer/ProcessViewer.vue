@@ -10,9 +10,7 @@
   import BpmnViewer from 'bpmn-js/lib/Viewer';
   import DefaultEmptyXML from './plugins/defaultEmpty';
   import { formatToDateTime,isEmpty } from '@shy-plugins/utils';
-
-  // defineOptions({ name: 'MyProcessViewer' });
-
+import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch, onMounted, onBeforeUnmount } from 'vue'
   const props = defineProps({
     value: {
       // BPMN XML 字符串

@@ -153,8 +153,7 @@
 
 <script lang="ts" setup>
   import { Icon } from '3h1-ui';
-  import { Button, Tooltip, Modal } from 'ant-design-vue';
-  const ButtonGroup = Button.Group;
+  import { Button, Tooltip, Modal, ButtonGroup } from 'ant-design-vue';
   import { useMessage } from '@shy-plugins/use';
   import BpmnModeler from 'bpmn-js/lib/Modeler';
   import DefaultEmptyXML from './plugins/defaultEmpty';
@@ -172,7 +171,7 @@
   import activitiModdleExtension from './plugins/extension-moddle/activiti';
   import flowableModdleExtension from './plugins/extension-moddle/flowable';
 import { XmlNode, XmlNodeType, parseXmlString } from 'steady-xml';
-import { ref,onMounted,onBeforeMount,onBeforeUnmount,provide ,computed} from 'vue';
+import { ref,onMounted,onBeforeMount,onBeforeUnmount,provide ,computed,defineProps,defineEmits } from 'vue';
 const { createConfirm, createMessage } = useMessage();  
   const bpmnCanvas = ref();
 const refFile = ref();
@@ -520,8 +519,10 @@ const initBpmnModeler = () => {
       previewModelVisible.value = true;
     });
   };
-  const processSave = async () => {
-    const { err, xml } = await bpmnModeler.saveXML();
+const processSave = async () => {
+    
+    
+  const { err, xml } = await bpmnModeler.saveXML();
     // 读取异常时抛出异常
     if (err) {
       // this.$modal.msgError('保存模型失败，请重试！')

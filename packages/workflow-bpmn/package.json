@@ -1,8 +1,9 @@
 {
   "name": "@shy-plugins/workflow-bpmn",
-  "version": "0.0.14",
+  "version": "0.0.16",
   "description": "bpmn工作流",
-  "main": "index.ts",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build",
