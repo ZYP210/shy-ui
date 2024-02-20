@@ -49,6 +49,12 @@ export const basicProps = reactive({
     type: Array as PropType<Recordable[]>,
     default: null
   },
+  summaryTotalFields: {
+    type: Array as PropType<string[]>,
+    default: null
+  },
+  showSummaryTotal: Boolean,
+
   indentSize: {
     type: Number,
     default: 24

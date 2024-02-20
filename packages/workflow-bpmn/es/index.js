@@ -47273,6 +47273,7 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent({
         },
         // 鼠标松开
         onDrop: (event2) => {
+          var _a, _b, _c;
           const ev = event2 || window.event;
           ev.stopPropagation();
           targetObj.value = record;
@@ -47283,6 +47284,9 @@ const _sfc_main$4 = /* @__PURE__ */ defineComponent({
           elementListenersList.value.splice(targetIndex, 0, sourceObj.value);
           bpmnElementListeners.value.splice(sourceIndex, 1);
           bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value);
+          otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
+            (ex) => ex.$type !== `${prefix2}:ExecutionListener`
+          )) ?? [];
           updateElementExtensions(
             bpmnElement.value,
             otherExtensionList.value.concat(bpmnElementListeners.value)
@@ -48150,6 +48154,7 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
         },
         // 鼠标松开
         onDrop: (event2) => {
+          var _a, _b, _c;
           const ev = event2 || window.event;
           ev.stopPropagation();
           targetObj.value = record;
@@ -48160,6 +48165,9 @@ const _sfc_main$2 = /* @__PURE__ */ defineComponent({
           elementListenersList.value.splice(targetIndex, 0, sourceObj.value);
           bpmnElementListeners.value.splice(sourceIndex, 1);
           bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value);
+          otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
+            (ex) => ex.$type !== `${prefix2}:TaskListener`
+          )) ?? [];
           updateElementExtensions(
             bpmnElement.value,
             otherExtensionList.value.concat(bpmnElementListeners.value)

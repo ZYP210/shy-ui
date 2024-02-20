@@ -32,7 +32,9 @@ export function useRowSelection(
       onChange: (selectedRowKeys: string[]) => {
         setSelectedRowKeys(selectedRowKeys)
       },
-      ...omit(rowSelection, ['onChange'])
+      ...omit(rowSelection, ['onChange']),
+      fixed: rowSelection.fixed ?? 'left',
+      columnWidth: rowSelection.columnWidth ?? 60
     }
   })
 

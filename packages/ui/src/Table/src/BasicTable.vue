@@ -61,6 +61,26 @@
           <template #bodyCell="data">
             <slot name="bodyCell" v-bind="data || {}"></slot>
           </template>
+
+          <template #summary v-if="getProps.showSummaryTotal">
+            <TableSummary>
+              <TableSummaryRow>
+                <TableSummaryCell align="center" :index="0">
+                  总计
+                </TableSummaryCell>
+
+                <template
+                  v-for="(item, index) in (getColumnsRef as any)"
+                  :key="index"
+                >
+                  <TableSummaryCell :index="index + 1">
+                    {{ summaryTotalData[item.dataIndex] || '' }}
+                  </TableSummaryCell>
+                </template>
+              </TableSummaryRow>
+            </TableSummary>
+          </template>
+
           <!--      <template #[`header-${column.dataIndex}`] v-for="(column, index) in columns" :key="index">-->
           <!--        <HeaderCell :column="column" />-->
           <!--      </template>-->
@@ -86,7 +106,13 @@ import {
   inject,
   watchEffect
 } from 'vue'
-import { Empty, Table } from 'ant-design-vue'
+import {
+  Empty,
+  Table,
+  TableSummaryRow,
+  TableSummaryCell,
+  TableSummary
+} from 'ant-design-vue'
 import { BasicForm, useForm } from '../../Form'
 import { PageWrapperFixedHeightKey } from '../../Page'
 import HeaderCell from './components/HeaderCell.vue'
@@ -123,7 +149,10 @@ export default defineComponent({
     BasicForm,
     HeaderCell,
     Empty,
-    TableGlobalSearch
+    TableGlobalSearch,
+    TableSummaryRow,
+    TableSummaryCell,
+    TableSummary
   },
   props: basicProps,
   emits: [
@@ -204,7 +233,8 @@ export default defineComponent({
       getRowKey,
       reload,
       getAutoCreateKey,
-      updateTableData
+      updateTableData,
+      summaryTotalData
     } = useDataSource(
       getProps,
       {
@@ -463,7 +493,11 @@ export default defineComponent({
       handleAdvancedEnsure,
       isVisibleGlobalSearch,
       schemasAdvancedSearchString,
-      schemasAdvancedSearchGlobal
+      schemasAdvancedSearchGlobal,
+      getColumns,
+      getColumnsRef,
+      summaryTotalData,
+      getProps
     }
   }
 })
