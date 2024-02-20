@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build",
     "patch": "npm version patch",
-    "deploy": "vite build && npm publish"
+    "deploy": "vite build && pnpm publish"
   },
   "files": [
     "lib",
