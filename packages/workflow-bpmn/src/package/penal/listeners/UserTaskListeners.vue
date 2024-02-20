@@ -320,6 +320,10 @@ const listenerObject=ref({})
           elementListenersList.value.splice(targetIndex, 0, sourceObj.value)
           bpmnElementListeners.value.splice(sourceIndex, 1)
           bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value)
+          otherExtensionList.value =
+          bpmnElement.value.businessObject?.extensionElements?.values?.filter(
+            (ex) => ex.$type !== `${prefix}:TaskListener`,
+          ) ?? [];
           updateElementExtensions(
             bpmnElement.value,
             otherExtensionList.value.concat(bpmnElementListeners.value),
