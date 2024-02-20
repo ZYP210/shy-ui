@@ -70,7 +70,7 @@
                 </TableSummaryCell>
 
                 <template
-                  v-for="(item, index) in (getColumnsRef as any)"
+                  v-for="(item, index) in (getColumnsRef as any).filter(item =>  item.flag !== 'INDEX')"
                   :key="index"
                 >
                   <TableSummaryCell :index="index + 1">
@@ -85,6 +85,8 @@
           <!--        <HeaderCell :column="column" />-->
           <!--      </template>-->
         </Table>
+
+        {{ getColumnsRef }}
       </div>
     </div>
   </div>

@@ -179,7 +179,6 @@ const [
     getForm
   }
 ] = useTable({
-  isTreeTable: true,
   api: (params) => {
     console.log('params', params)
 
@@ -215,17 +214,18 @@ const [
   },
   showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
-  showIndexColumn: true,
   showTableSetting: true,
   useAdvancedSearch: true,
-  rowSelection: { type: 'checkbox' },
+  rowSelection: false,
   clickToRowSelect: false,
   useSearchForm: true,
   actionColumn: {
     width: 250,
     dataIndex: 'action',
     fixed: 'right'
-  }
+  },
+  showIndexColumn: true,
+  indexColumn: {}
 })
 
 function handleSelectChange({ rows }) {}
