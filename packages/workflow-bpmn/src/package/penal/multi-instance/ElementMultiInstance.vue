@@ -1,13 +1,20 @@
 <template>
   <div class="panel-tab__content">
     <Form :label-col="{ style: { width: '90px' } }">
-      <FormItem label="回路特性">
+      <!-- <FormItem label="回路特性">
         <Select v-model:value="loopCharacteristics" @change="changeLoopCharacteristicsType">
           <SelectOption value="ParallelMultiInstance">并行多重事件</SelectOption>
           <SelectOption value="SequentialMultiInstance">时序多重事件</SelectOption>
           <SelectOption value="StandardLoop">循环事件</SelectOption>
           <SelectOption value="Null">无</SelectOption>
         </Select>
+      </FormItem> -->
+      <FormItem label="多实例">
+        <RadioGroup v-model:value="loopInstanceForm.completionCondition" @change="updateLoopCondition">
+          <Radio value="${nrOfCompletedInstances== nrOfInstances}">会签</Radio>
+          <Radio value="${nrOfCompletedInstances==1}">或签</Radio>
+          <Radio value="Null">无</Radio>
+        </RadioGroup>
       </FormItem>
       <template
         v-if="
@@ -15,14 +22,14 @@
           loopCharacteristics === 'SequentialMultiInstance'
         "
       >
-        <FormItem label="循环基数" name="loopCardinality">
+        <!-- <FormItem label="循环基数" name="loopCardinality">
           <Input
             v-model:value="loopInstanceForm.loopCardinality"
             clearable
             @change="updateLoopCardinality"
           />
-        </FormItem>
-        <FormItem label="集合" name="collection" v-show="false">
+        </FormItem> -->
+        <!-- <FormItem label="集合" name="collection" v-show="false">
           <Input v-model:value="loopInstanceForm.collection" clearable @change="updateLoopBase" />
         </FormItem>
         <FormItem label="元素变量" name="elementVariable">
@@ -31,15 +38,15 @@
             clearable
             @change="updateLoopBase"
           />
-        </FormItem>
-        <FormItem label="完成条件" name="completionCondition">
+        </FormItem> -->
+        <!-- <FormItem label="完成条件" name="completionCondition">
           <Input
             v-model:value="loopInstanceForm.completionCondition"
             clearable
             @change="updateLoopCondition"
           />
-        </FormItem>
-        <FormItem label="异步状态" name="async">
+        </FormItem> -->
+        <!-- <FormItem label="异步状态" name="async">
           <Checkbox
             v-model:checked="loopInstanceForm.asyncBefore"
             @change="updateLoopAsync('asyncBefore')"
@@ -56,8 +63,8 @@
             @change="updateLoopAsync('exclusive')"
             >排除</Checkbox
           >
-        </FormItem>
-        <FormItem
+        </FormItem> -->
+        <!-- <FormItem
           label="重试周期"
           name="timeCycle"
           v-if="loopInstanceForm.asyncAfter || loopInstanceForm.asyncBefore"
@@ -68,15 +75,15 @@
             clearable
             @change="updateLoopTimeCycle"
           />
-        </FormItem>
+        </FormItem> -->
       </template>
     </Form>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { Checkbox, Form, FormItem, Input, Select, SelectOption } from 'ant-design-vue';
-import { ref,inject,toRaw,onBeforeUnmount,watch} from 'vue'
+import { Checkbox, Form, FormItem, Input, Select, SelectOption, RadioGroup,Radio } from 'ant-design-vue';
+import { ref,inject,toRaw,onBeforeUnmount,watch, onMounted} from 'vue'
   // defineOptions({ name: 'ElementMultiInstance' });
 
   const props = defineProps({
@@ -87,7 +94,7 @@ import { ref,inject,toRaw,onBeforeUnmount,watch} from 'vue'
   const loopCharacteristics = ref('');
   //默认配置，用来覆盖原始不存在的选项，避免报错
   const defaultLoopInstanceForm = ref({
-    completionCondition: '',
+    completionCondition: 'Null',
     loopCardinality: '',
     extensionElements: [],
     asyncAfter: false,
@@ -99,10 +106,10 @@ import { ref,inject,toRaw,onBeforeUnmount,watch} from 'vue'
   const multiLoopInstance = ref(null);
   const bpmnInstances = () => (window as any)?.bpmnInstances;
 
-  const getElementLoop = (businessObject) => {
+const getElementLoop = (businessObject) => {    
     if (!businessObject.loopCharacteristics) {
       loopCharacteristics.value = 'Null';
-      loopInstanceForm.value = {};
+      loopInstanceForm.value = {completionCondition:'Null'};
       return;
     }
     if (businessObject.loopCharacteristics.$type === 'bpmn:StandardLoopCharacteristics') {
@@ -188,8 +195,13 @@ import { ref,inject,toRaw,onBeforeUnmount,watch} from 'vue'
     );
   };
   // 完成条件
-  const updateLoopCondition = (e) => {
-    const condition = e.target.value;
+const updateLoopCondition = (e) => {  
+  const condition = e.target.value;    
+    if (condition === 'Null') {
+      changeLoopCharacteristicsType('Null');
+    } else { 
+      changeLoopCharacteristicsType('ParallelMultiInstance');
+    }
     let completionCondition = null;
     if (condition && condition.length) {
       completionCondition = bpmnInstances().moddle.create('bpmn:FormalExpression', {
@@ -260,7 +272,6 @@ import { ref,inject,toRaw,onBeforeUnmount,watch} from 'vue'
     multiLoopInstance.value = null;
     bpmnElement.value = null;
   });
-
   watch(
     () => props.businessObject,
     (val) => {
