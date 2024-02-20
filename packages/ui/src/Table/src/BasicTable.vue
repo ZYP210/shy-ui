@@ -85,8 +85,6 @@
           <!--        <HeaderCell :column="column" />-->
           <!--      </template>-->
         </Table>
-
-        {{ getColumnsRef }}
       </div>
     </div>
   </div>
