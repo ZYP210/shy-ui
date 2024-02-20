@@ -18,8 +18,8 @@ export default defineConfig({
     //css分离
     //cssCodeSplit: true,
     rollupOptions: {
-      //忽略打包vue文件
-      external: ['vue'],
+      //忽略打包vue文件Å
+      external: ['vue', '3h1-ui'],
       input: ['./index.ts'],
       output: [
         {
