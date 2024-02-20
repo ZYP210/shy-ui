@@ -46348,10 +46348,10 @@ const _sfc_main$7 = /* @__PURE__ */ vue.defineComponent({
   },
   setup(__props) {
     const props = __props;
-    const prefix2 = vue.inject("prefix");
+    vue.inject("prefix");
     const loopCharacteristics = vue.ref("");
     const defaultLoopInstanceForm = vue.ref({
-      completionCondition: "",
+      completionCondition: "Null",
       loopCardinality: "",
       extensionElements: [],
       asyncAfter: false,
@@ -46366,7 +46366,7 @@ const _sfc_main$7 = /* @__PURE__ */ vue.defineComponent({
       var _a, _b, _c, _d;
       if (!businessObject.loopCharacteristics) {
         loopCharacteristics.value = "Null";
-        loopInstanceForm.value = {};
+        loopInstanceForm.value = { completionCondition: "Null" };
         return;
       }
       if (businessObject.loopCharacteristics.$type === "bpmn:StandardLoopCharacteristics") {
@@ -46422,24 +46422,13 @@ const _sfc_main$7 = /* @__PURE__ */ vue.defineComponent({
         loopCharacteristics: vue.toRaw(multiLoopInstance.value)
       });
     };
-    const updateLoopCardinality = (e) => {
-      const cardinality = e.target.value;
-      let loopCardinality = null;
-      if (cardinality && cardinality.length) {
-        loopCardinality = bpmnInstances2().moddle.create("bpmn:FormalExpression", {
-          body: cardinality
-        });
-      }
-      bpmnInstances2().modeling.updateModdleProperties(
-        vue.toRaw(bpmnElement.value),
-        multiLoopInstance.value,
-        {
-          loopCardinality
-        }
-      );
-    };
     const updateLoopCondition = (e) => {
       const condition = e.target.value;
+      if (condition === "Null") {
+        changeLoopCharacteristicsType("Null");
+      } else {
+        changeLoopCharacteristicsType("ParallelMultiInstance");
+      }
       let completionCondition = null;
       if (condition && condition.length) {
         completionCondition = bpmnInstances2().moddle.create("bpmn:FormalExpression", {
@@ -46452,53 +46441,6 @@ const _sfc_main$7 = /* @__PURE__ */ vue.defineComponent({
         {
           completionCondition
         }
-      );
-    };
-    const updateLoopTimeCycle = (e) => {
-      const value = e.target.value;
-      const extensionElements = bpmnInstances2().moddle.create("bpmn:ExtensionElements", {
-        values: [
-          bpmnInstances2().moddle.create(`${prefix2}:FailedJobRetryTimeCycle`, {
-            body: value
-          })
-        ]
-      });
-      bpmnInstances2().modeling.updateModdleProperties(
-        vue.toRaw(bpmnElement.value),
-        multiLoopInstance.value,
-        {
-          extensionElements
-        }
-      );
-    };
-    const updateLoopBase = () => {
-      bpmnInstances2().modeling.updateModdleProperties(
-        vue.toRaw(bpmnElement.value),
-        multiLoopInstance.value,
-        {
-          collection: loopInstanceForm.value.collection || null,
-          elementVariable: loopInstanceForm.value.elementVariable || null
-        }
-      );
-    };
-    const updateLoopAsync = (key) => {
-      const { asyncBefore, asyncAfter } = loopInstanceForm.value;
-      let asyncAttr = /* @__PURE__ */ Object.create(null);
-      if (!asyncBefore && !asyncAfter) {
-        loopInstanceForm.value["exclusive"] = false;
-        asyncAttr = {
-          asyncBefore: false,
-          asyncAfter: false,
-          exclusive: false,
-          extensionElements: null
-        };
-      } else {
-        asyncAttr[key] = loopInstanceForm.value[key];
-      }
-      bpmnInstances2().modeling.updateModdleProperties(
-        vue.toRaw(bpmnElement.value),
-        multiLoopInstance.value,
-        asyncAttr
       );
     };
     vue.onBeforeUnmount(() => {
@@ -46517,33 +46459,27 @@ const _sfc_main$7 = /* @__PURE__ */ vue.defineComponent({
       return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$6, [
         vue.createVNode(vue.unref(antDesignVue.Form), { "label-col": { style: { width: "90px" } } }, {
           default: vue.withCtx(() => [
-            vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "回路特性" }, {
+            vue.createVNode(vue.unref(antDesignVue.FormItem), { label: "多实例" }, {
               default: vue.withCtx(() => [
-                vue.createVNode(vue.unref(antDesignVue.Select), {
-                  value: loopCharacteristics.value,
-                  "onUpdate:value": _cache[0] || (_cache[0] = ($event) => loopCharacteristics.value = $event),
-                  onChange: changeLoopCharacteristicsType
+                vue.createVNode(vue.unref(antDesignVue.RadioGroup), {
+                  value: loopInstanceForm.value.completionCondition,
+                  "onUpdate:value": _cache[0] || (_cache[0] = ($event) => loopInstanceForm.value.completionCondition = $event),
+                  onChange: updateLoopCondition
                 }, {
                   default: vue.withCtx(() => [
-                    vue.createVNode(vue.unref(antDesignVue.SelectOption), { value: "ParallelMultiInstance" }, {
+                    vue.createVNode(vue.unref(antDesignVue.Radio), { value: "${nrOfCompletedInstances== nrOfInstances}" }, {
                       default: vue.withCtx(() => [
-                        vue.createTextVNode("并行多重事件")
+                        vue.createTextVNode("会签")
                       ]),
                       _: 1
                     }),
-                    vue.createVNode(vue.unref(antDesignVue.SelectOption), { value: "SequentialMultiInstance" }, {
+                    vue.createVNode(vue.unref(antDesignVue.Radio), { value: "${nrOfCompletedInstances==1}" }, {
                       default: vue.withCtx(() => [
-                        vue.createTextVNode("时序多重事件")
+                        vue.createTextVNode("或签")
                       ]),
                       _: 1
                     }),
-                    vue.createVNode(vue.unref(antDesignVue.SelectOption), { value: "StandardLoop" }, {
-                      default: vue.withCtx(() => [
-                        vue.createTextVNode("循环事件")
-                      ]),
-                      _: 1
-                    }),
-                    vue.createVNode(vue.unref(antDesignVue.SelectOption), { value: "Null" }, {
+                    vue.createVNode(vue.unref(antDesignVue.Radio), { value: "Null" }, {
                       default: vue.withCtx(() => [
                         vue.createTextVNode("无")
                       ]),
@@ -46555,120 +46491,7 @@ const _sfc_main$7 = /* @__PURE__ */ vue.defineComponent({
               ]),
               _: 1
             }),
-            loopCharacteristics.value === "ParallelMultiInstance" || loopCharacteristics.value === "SequentialMultiInstance" ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [
-              vue.createVNode(vue.unref(antDesignVue.FormItem), {
-                label: "循环基数",
-                name: "loopCardinality"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(vue.unref(antDesignVue.Input), {
-                    value: loopInstanceForm.value.loopCardinality,
-                    "onUpdate:value": _cache[1] || (_cache[1] = ($event) => loopInstanceForm.value.loopCardinality = $event),
-                    clearable: "",
-                    onChange: updateLoopCardinality
-                  }, null, 8, ["value"])
-                ]),
-                _: 1
-              }),
-              vue.withDirectives(vue.createVNode(vue.unref(antDesignVue.FormItem), {
-                label: "集合",
-                name: "collection"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(vue.unref(antDesignVue.Input), {
-                    value: loopInstanceForm.value.collection,
-                    "onUpdate:value": _cache[2] || (_cache[2] = ($event) => loopInstanceForm.value.collection = $event),
-                    clearable: "",
-                    onChange: updateLoopBase
-                  }, null, 8, ["value"])
-                ]),
-                _: 1
-              }, 512), [
-                [vue.vShow, false]
-              ]),
-              vue.createVNode(vue.unref(antDesignVue.FormItem), {
-                label: "元素变量",
-                name: "elementVariable"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(vue.unref(antDesignVue.Input), {
-                    value: loopInstanceForm.value.elementVariable,
-                    "onUpdate:value": _cache[3] || (_cache[3] = ($event) => loopInstanceForm.value.elementVariable = $event),
-                    clearable: "",
-                    onChange: updateLoopBase
-                  }, null, 8, ["value"])
-                ]),
-                _: 1
-              }),
-              vue.createVNode(vue.unref(antDesignVue.FormItem), {
-                label: "完成条件",
-                name: "completionCondition"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(vue.unref(antDesignVue.Input), {
-                    value: loopInstanceForm.value.completionCondition,
-                    "onUpdate:value": _cache[4] || (_cache[4] = ($event) => loopInstanceForm.value.completionCondition = $event),
-                    clearable: "",
-                    onChange: updateLoopCondition
-                  }, null, 8, ["value"])
-                ]),
-                _: 1
-              }),
-              vue.createVNode(vue.unref(antDesignVue.FormItem), {
-                label: "异步状态",
-                name: "async"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(vue.unref(antDesignVue.Checkbox), {
-                    checked: loopInstanceForm.value.asyncBefore,
-                    "onUpdate:checked": _cache[5] || (_cache[5] = ($event) => loopInstanceForm.value.asyncBefore = $event),
-                    onChange: _cache[6] || (_cache[6] = ($event) => updateLoopAsync("asyncBefore"))
-                  }, {
-                    default: vue.withCtx(() => [
-                      vue.createTextVNode("异步前")
-                    ]),
-                    _: 1
-                  }, 8, ["checked"]),
-                  vue.createVNode(vue.unref(antDesignVue.Checkbox), {
-                    checked: loopInstanceForm.value.asyncAfter,
-                    "onUpdate:checked": _cache[7] || (_cache[7] = ($event) => loopInstanceForm.value.asyncAfter = $event),
-                    onChange: _cache[8] || (_cache[8] = ($event) => updateLoopAsync("asyncAfter"))
-                  }, {
-                    default: vue.withCtx(() => [
-                      vue.createTextVNode("异步后")
-                    ]),
-                    _: 1
-                  }, 8, ["checked"]),
-                  loopInstanceForm.value.asyncAfter || loopInstanceForm.value.asyncBefore ? (vue.openBlock(), vue.createBlock(vue.unref(antDesignVue.Checkbox), {
-                    key: 0,
-                    checked: loopInstanceForm.value.exclusive,
-                    "onUpdate:checked": _cache[9] || (_cache[9] = ($event) => loopInstanceForm.value.exclusive = $event),
-                    onChange: _cache[10] || (_cache[10] = ($event) => updateLoopAsync("exclusive"))
-                  }, {
-                    default: vue.withCtx(() => [
-                      vue.createTextVNode("排除")
-                    ]),
-                    _: 1
-                  }, 8, ["checked"])) : vue.createCommentVNode("", true)
-                ]),
-                _: 1
-              }),
-              loopInstanceForm.value.asyncAfter || loopInstanceForm.value.asyncBefore ? (vue.openBlock(), vue.createBlock(vue.unref(antDesignVue.FormItem), {
-                label: "重试周期",
-                name: "timeCycle",
-                key: "timeCycle"
-              }, {
-                default: vue.withCtx(() => [
-                  vue.createVNode(vue.unref(antDesignVue.Input), {
-                    value: loopInstanceForm.value.timeCycle,
-                    "onUpdate:value": _cache[11] || (_cache[11] = ($event) => loopInstanceForm.value.timeCycle = $event),
-                    clearable: "",
-                    onChange: updateLoopTimeCycle
-                  }, null, 8, ["value"])
-                ]),
-                _: 1
-              })) : vue.createCommentVNode("", true)
-            ], 64)) : vue.createCommentVNode("", true)
+            loopCharacteristics.value === "ParallelMultiInstance" || loopCharacteristics.value === "SequentialMultiInstance" ? (vue.openBlock(), vue.createElementBlock(vue.Fragment, { key: 0 }, [], 64)) : vue.createCommentVNode("", true)
           ]),
           _: 1
         })
