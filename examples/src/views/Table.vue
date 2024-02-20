@@ -216,7 +216,7 @@ const [
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
   useAdvancedSearch: true,
-  rowSelection: false,
+  rowSelection: {},
   clickToRowSelect: false,
   useSearchForm: true,
   actionColumn: {
@@ -224,7 +224,7 @@ const [
     dataIndex: 'action',
     fixed: 'right'
   },
-  showIndexColumn: true,
+  showIndexColumn: false,
   indexColumn: {}
 })
 

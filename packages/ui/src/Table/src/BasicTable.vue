@@ -65,15 +65,19 @@
           <template #summary v-if="getProps.showSummaryTotal">
             <TableSummary>
               <TableSummaryRow>
-                <TableSummaryCell align="center" :index="0">
-                  总计
-                </TableSummaryCell>
-
                 <template
-                  v-for="(item, index) in (getColumnsRef as any).filter(item =>  item.flag !== 'INDEX')"
+                  v-for="(item, index) in (getColumnsSummary as any)"
                   :key="index"
                 >
-                  <TableSummaryCell :index="index + 1">
+                  <TableSummaryCell
+                    v-if="index === 0"
+                    align="center"
+                    :index="0"
+                  >
+                    总计
+                  </TableSummaryCell>
+
+                  <TableSummaryCell v-else :index="index">
                     {{ summaryTotalData[item.dataIndex] || '' }}
                   </TableSummaryCell>
                 </template>
@@ -265,7 +269,8 @@ export default defineComponent({
       setCacheColumnsByField,
       setColumns,
       getColumnsRef,
-      getCacheColumns
+      getCacheColumns,
+      getColumnsSummary
     } = useColumns(getProps, getPaginationInfo, tableActionRef)
 
     const { getScrollRef, redoHeight } = useTableScroll(
@@ -497,7 +502,8 @@ export default defineComponent({
       getColumns,
       getColumnsRef,
       summaryTotalData,
-      getProps
+      getProps,
+      getColumnsSummary
     }
   }
 })

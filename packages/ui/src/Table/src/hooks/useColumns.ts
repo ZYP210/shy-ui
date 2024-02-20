@@ -227,6 +227,14 @@ export function useColumns(
       })
   })
 
+  const getColumnsSummary = computed(() => {
+    if (propsRef.value.rowSelection) {
+      //@ts-ignore
+      return [{ flag: 'ROW_SELECTION' }, ...getViewColumns.value]
+    }
+    return getViewColumns.value
+  })
+
   watch(
     () => unref(propsRef).columns,
     (columns) => {
@@ -322,7 +330,8 @@ export function useColumns(
     getColumns,
     setColumns,
     getViewColumns: getViewColumns as ComputedRef<never[]>,
-    setCacheColumnsByField
+    setCacheColumnsByField,
+    getColumnsSummary: getColumnsSummary as ComputedRef<never[]>
   }
 }
 
