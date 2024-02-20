@@ -46179,18 +46179,13 @@ const _sfc_main$9 = /* @__PURE__ */ vue.defineComponent({
       }, 1e3);
     });
     vue.watch(() => props.businessObject.id, (id) => {
+      if (id)
+        resetBaseInfo();
       if (props.businessObject.$type === "bpmn:UserTask") {
+        console.log("userTask add skipExpression", vue.toRaw(bpmnElement.value), props.businessObject.id);
         updateElementProperties(vue.toRaw(bpmnElement.value), id);
       }
     });
-    vue.watch(
-      () => props.businessObject,
-      (val) => {
-        if (val) {
-          resetBaseInfo();
-        }
-      }
-    );
     vue.onBeforeUnmount(() => {
       bpmnElement.value = null;
     });

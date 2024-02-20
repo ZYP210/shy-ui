@@ -46177,18 +46177,13 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
       }, 1e3);
     });
     watch(() => props.businessObject.id, (id) => {
+      if (id)
+        resetBaseInfo();
       if (props.businessObject.$type === "bpmn:UserTask") {
+        console.log("userTask add skipExpression", toRaw(bpmnElement.value), props.businessObject.id);
         updateElementProperties(toRaw(bpmnElement.value), id);
       }
     });
-    watch(
-      () => props.businessObject,
-      (val) => {
-        if (val) {
-          resetBaseInfo();
-        }
-      }
-    );
     onBeforeUnmount(() => {
       bpmnElement.value = null;
     });
