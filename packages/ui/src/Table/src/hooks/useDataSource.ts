@@ -55,6 +55,19 @@ export function useDataSource(
     tableData.value = unref(dataSourceRef)
   })
 
+  const summaryTotalData = computed(() => {
+    const { summaryTotalFields } = unref(propsRef)
+    if (!summaryTotalFields) return {}
+    const obj = {}
+    summaryTotalFields.forEach((field) => {
+      const total = dataSourceRef.value.reduce((acc, cur) => {
+        return acc + (cur[field] || 0)
+      }, 0)
+      obj[field] = total
+    })
+    return obj
+  })
+
   watch(
     () => unref(propsRef).dataSource,
     () => {
@@ -395,6 +408,7 @@ export function useDataSource(
     deleteTableDataRecord,
     insertTableDataRecord,
     findTableDataRecord,
-    handleTableChange
+    handleTableChange,
+    summaryTotalData
   }
 }

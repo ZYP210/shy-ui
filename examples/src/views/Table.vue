@@ -49,6 +49,7 @@ import { BasicTable, useTable, TableAction } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
 const { createMessage } = useMessage()
+import { ref, onMounted } from 'vue'
 // const schemas = [
 //   { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
 //   { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
@@ -86,7 +87,6 @@ const columns: any[] = [
   {
     title: '合格数',
     dataIndex: 'qualifiedNum',
-    fixed: 'right',
     width: 200,
     editComponent: 'InputNumber',
     editComponentProps({ record, tableAction }) {
@@ -100,8 +100,8 @@ const columns: any[] = [
         }
       }
     },
-    editable: true,
-    edit: true,
+    editable: false,
+    edit: false,
     editRule: true,
     globalShow: false
   },
@@ -147,14 +147,9 @@ const columns: any[] = [
   {
     title: '产地',
     // editRow: true,
-    dataIndex: 'place',
+    dataIndex: 'place'
     // editComponent: 'InputNumber',
-    fixed: 'right',
     // editRule: true,
-    customRender: ({ record, ...ages }) => {
-      console.log('ages', ages)
-      return record
-    }
   }
 ]
 
@@ -198,19 +193,8 @@ const [
         name: 'zzz',
         phone: '1212121',
         address: '1111',
-        remark: '999',
-        children: [
-          {
-            status: 0,
-            rangePlace: '国产',
-            place: '河北',
-            createTime: 1695024076000,
-            name: 'zzz',
-            phone: '1212121',
-            address: '1111',
-            remark: '999'
-          }
-        ]
+        remark: 999,
+        qualifiedNum: 100
       }
     })
   },
@@ -229,6 +213,8 @@ const [
       }
     ]
   },
+  showSummaryTotal: true,
+  summaryTotalFields: ['qualifiedNum'],
   showIndexColumn: true,
   showTableSetting: true,
   useAdvancedSearch: true,
