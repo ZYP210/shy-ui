@@ -133,20 +133,22 @@ onMounted(() => {
 });
   //userTask添加flowable:skipExpression属性
 watch(() => props.businessObject.id, (id) => { 
-  if (props.businessObject.$type=== 'bpmn:UserTask') { 
+  if(id) resetBaseInfo();
+  if (props.businessObject.$type === 'bpmn:UserTask') { 
+    console.log('userTask add skipExpression',toRaw(bpmnElement.value),props.businessObject.id)
     //在xml中追加属性
     updateElementProperties(toRaw(bpmnElement.value),id)
   }
 })
-  watch(
-    () => props.businessObject,
-    (val) => {
-      if (val) {
-        resetBaseInfo();
-      }
-    },
+  // watch(
+  //   () => props.businessObject,
+  //   (val) => {
+  //     if (val) {
+  //       resetBaseInfo();
+  //     }
+  //   },
 
-  );
+  // );
     onBeforeUnmount(() => {
     bpmnElement.value = null;
   });

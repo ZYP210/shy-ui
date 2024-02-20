@@ -71,7 +71,6 @@
   import { Icon } from '3h1-ui';
 import { Collapse, CollapsePanel } from 'ant-design-vue';
 import { ref, provide, watch, onBeforeUnmount } from 'vue';
-import { updateElementProperties} from '../utils';
   const props = defineProps({
     bpmnModeler: {
       type: Object,
