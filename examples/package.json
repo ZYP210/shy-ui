@@ -24,11 +24,11 @@
     "@iconify/json": "^2.2.2",
     "@purge-icons/generated": "^0.9.0",
     "@shy-plugins/2d-edit": "workspace:^",
+    "@shy-plugins/workflow-bpmn": "workspace:^",
     "@shy-plugins/workflow-dingding": "workspace:^",
     "less": "^4.1.3",
     "vite-plugin-pages": "^0.30.1",
     "vite-plugin-windicss": "^1.8.10",
-    "windicss": "^3.5.6",
-    "@shy-plugins/workflow-bpmn": "workspace:^"
+    "windicss": "^3.5.6"
   }
 }

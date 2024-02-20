@@ -1,5 +1,5 @@
 <template>
-  <a-drawer
+  <Drawer
     v-model:visible="visible"
     class="set_promoter"
     :width="550"
@@ -10,18 +10,18 @@
     :footer-style="{ textAlign: 'right' }"
   >
     <template #footer>
-      <a-space>
-        <a-button type="primary" @click="saveCondition">确 定</a-button>
-        <a-button @click="closeDrawer">取 消</a-button>
-      </a-space>
+      <Space>
+        <Button type="primary" @click="saveCondition">确 定</Button>
+        <Button @click="closeDrawer">取 消</Button>
+      </Space>
     </template>
-  </a-drawer>
+  </Drawer>
 </template>
 <script setup>
 import { mapState, mapMutations } from "../../config/lib.js";
 
-import { Form } from "ant-design-vue";
-import { reactive } from "vue";
+import { Form ,Drawer, Input, Button, Space } from "ant-design-vue";
+import { reactive, ref, computed, watch } from "vue";
 const useForm = Form.useForm;
 
 const modelRef = reactive({ expression: "" });

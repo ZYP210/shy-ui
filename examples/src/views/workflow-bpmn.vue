@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
+import { ref } from 'vue';
   const bpmProcessInstanceResult=[
     {
         "value": 1,
@@ -210,7 +211,6 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
 
 <template>
   <CollapseContainer style="position: relative">
-    <!-- 流程设计器，负责绘制流程等 -->
     <MyProcessDesigner
       key="designer"
       v-if="xmlString !== undefined"
@@ -223,7 +223,6 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
       :additionalModel="controlForm.additionalModel"
       @save="save"
     />
-    <!-- 流程属性器，负责编辑每个流程节点的属性 -->
     <MyProcessPenal
       key="penal"
       :bpmnModeler="modeler as any"
@@ -236,14 +235,12 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
 
 <script lang="ts" setup>
   import { MyProcessDesigner, MyProcessPenal, CustomContentPadProvider,
-    CustomPaletteProvider } from '@shy-plugins/workflow-bpmn';
-  // 自定义元素选中时的弹出菜单（修改 默认任务 为 用户任务）
-  // 自定义左侧菜单（修改 默认任务 为 用户任务）
+  CustomPaletteProvider
+} from '@shy-plugins/workflow-bpmn';
+  import { ref, onMounted } from 'vue';
   import { CollapseContainer } from '3h1-ui';
-  defineOptions({ name: 'BpmModelEditor' });
-
-  const xmlString = ref(undefined); // BPMN XML
-  const modeler = ref(null); // BPMN Modeler
+  const xmlString = ref(undefined); 
+  const modeler = ref(null); 
   const controlForm = ref({
     simulation: true,
     labelEditing: false,
@@ -252,26 +249,25 @@ import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
     headerButtonSize: 'mini',
     additionalModel: [CustomContentPadProvider, CustomPaletteProvider],
   });
-  const model = ref(); // 流程模型的信息
+  const model = ref(); 
 
-  /** 初始化 modeler */
   const initModeler = (item) => {
-    setTimeout(() => {
-      modeler.value = item;
-    }, 10);
+    modeler.value = item;
   };
 
-  /** 添加/修改模型 */
   const save = async (bpmnXml) => {
    console.log('bpmnXml',bpmnXml);
    
   };
 
 
-  /** 初始化 */
 onMounted(async () => {
+  setTimeout(() => {
     xmlString.value=`<?xml version="1.0" encoding="UTF-8"?>
 <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="diagram_Process_1706597140854" targetNamespace="http://flowable.org/bpmn"><bpmn2:process id="yanshi123" name="演示流程2" isExecutable="true"><bpmn2:startEvent id="Event_0lihbt4"><bpmn2:outgoing>Flow_1kk0kmd</bpmn2:outgoing></bpmn2:startEvent><bpmn2:userTask id="Activity_14r2usp" name="提交"><bpmn2:incoming>Flow_1kk0kmd</bpmn2:incoming><bpmn2:outgoing>Flow_1xe01bc</bpmn2:outgoing></bpmn2:userTask><bpmn2:sequenceFlow id="Flow_1kk0kmd" sourceRef="Event_0lihbt4" targetRef="Activity_14r2usp" /><bpmn2:userTask id="Activity_09569ee" name="领导审批"><bpmn2:incoming>Flow_1xe01bc</bpmn2:incoming><bpmn2:outgoing>Flow_1kyc2ps</bpmn2:outgoing></bpmn2:userTask><bpmn2:sequenceFlow id="Flow_1xe01bc" sourceRef="Activity_14r2usp" targetRef="Activity_09569ee" /><bpmn2:userTask id="Activity_1fjzogd" name="老板审批"><bpmn2:incoming>Flow_1kyc2ps</bpmn2:incoming><bpmn2:outgoing>Flow_17dws2h</bpmn2:outgoing></bpmn2:userTask><bpmn2:sequenceFlow id="Flow_1kyc2ps" sourceRef="Activity_09569ee" targetRef="Activity_1fjzogd" /><bpmn2:endEvent id="Event_051gsrk"><bpmn2:incoming>Flow_17dws2h</bpmn2:incoming></bpmn2:endEvent><bpmn2:sequenceFlow id="Flow_17dws2h" sourceRef="Activity_1fjzogd" targetRef="Event_051gsrk" /></bpmn2:process><bpmndi:BPMNDiagram id="BPMNDiagram_1"><bpmndi:BPMNPlane id="yanshi123_di" bpmnElement="yanshi123"><bpmndi:BPMNEdge id="Flow_17dws2h_di" bpmnElement="Flow_17dws2h"><di:waypoint x="720" y="260" /><di:waypoint x="782" y="260" /></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="Flow_1kyc2ps_di" bpmnElement="Flow_1kyc2ps"><di:waypoint x="560" y="260" /><di:waypoint x="620" y="260" /></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="Flow_1xe01bc_di" bpmnElement="Flow_1xe01bc"><di:waypoint x="400" y="260" /><di:waypoint x="460" y="260" /></bpmndi:BPMNEdge><bpmndi:BPMNEdge id="Flow_1kk0kmd_di" bpmnElement="Flow_1kk0kmd"><di:waypoint x="248" y="260" /><di:waypoint x="300" y="260" /></bpmndi:BPMNEdge><bpmndi:BPMNShape id="Event_0lihbt4_di" bpmnElement="Event_0lihbt4"><dc:Bounds x="212" y="242" width="36" height="36" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="Activity_14r2usp_di" bpmnElement="Activity_14r2usp"><dc:Bounds x="300" y="220" width="100" height="80" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="Activity_09569ee_di" bpmnElement="Activity_09569ee"><dc:Bounds x="460" y="220" width="100" height="80" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="Activity_1fjzogd_di" bpmnElement="Activity_1fjzogd"><dc:Bounds x="620" y="220" width="100" height="80" /></bpmndi:BPMNShape><bpmndi:BPMNShape id="Event_051gsrk_di" bpmnElement="Event_051gsrk"><dc:Bounds x="782" y="242" width="36" height="36" /></bpmndi:BPMNShape></bpmndi:BPMNPlane></bpmndi:BPMNDiagram></bpmn2:definitions>`
+
+  },1000)
+    
    
   });
 </script>

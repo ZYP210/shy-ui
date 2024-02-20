@@ -47,7 +47,7 @@ import { uploadContainerProps } from '../props'
 import { isImgTypeByName } from '../helper'
 import { UploadResultStatus } from '../types/typing'
 
-defineOptions({ name: 'ImageUpload' })
+// defineOptions({ name: 'ImageUpload' })
 
 const emit = defineEmits(['change', 'update:value', 'delete'])
 const props = defineProps({

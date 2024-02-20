@@ -32,16 +32,16 @@ export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    AutoImport({
-      include: [
-        /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-        /\.vue$/,
-        /\.vue\?vue/ // .vue
-      ],
-      ignore: ['h'],
-      dts: './types/auto-imports.d.ts',
-      imports: ['vue', 'vue-router']
-    }),
+    // AutoImport({
+    //   include: [
+    //     /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
+    //     /\.vue$/,
+    //     /\.vue\?vue/ // .vue
+    //   ],
+    //   ignore: ['h'],
+    //   dts: './types/auto-imports.d.ts',
+    //   imports: ['vue', 'vue-router']
+    // }),
     ComponentImport({
       dts: './types/components.d.ts',
       resolvers: [AntDesignVueResolver({ importStyle: 'less' })]

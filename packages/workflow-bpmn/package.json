@@ -1,6 +1,6 @@
 {
   "name": "@shy-plugins/workflow-bpmn",
-  "version": "0.0.2",
+  "version": "0.0.16",
   "description": "bpmn工作流",
   "main": "index.ts",
   "scripts": {

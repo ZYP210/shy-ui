@@ -75,3 +75,9 @@ export function uuid(length = 8, chars?) {
   }
   return result;
 }
+//更新userTask属性，固定加入flowable:skipExpression
+export function updateElementProperties(element, id) { 
+  bpmnInstances().modeling.updateProperties(element, {
+    ['flowable:skipExpression']: `\${true == ${id}_skip}`,
+  });
+}

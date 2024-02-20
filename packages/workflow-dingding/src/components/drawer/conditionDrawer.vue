@@ -1,5 +1,5 @@
 <template>
-  <a-drawer
+  <Drawer
     v-model:visible="visible"
     class="set_promoter"
     :width="550"
@@ -9,15 +9,15 @@
     destroyOnClose
     :footer-style="{ textAlign: 'right' }"
   >
-    <a-form>
-      <a-form-item
+    <Form>
+      <FormItem
         label="条件组表达式"
         v-bind="validateInfos.expression"
         extra="使用表达式构建复杂逻辑，例如：（A & B) | C"
       >
-        <a-input v-model:value="modelRef.expression" />
-      </a-form-item>
-    </a-form>
+        <Input v-model:value="modelRef.expression" />
+      </FormItem>
+    </Form>
 
     <!-- <template #footer>
       <a-space>
@@ -25,13 +25,13 @@
         <a-button @click="closeDrawer">取 消</a-button>
       </a-space>
     </template> -->
-  </a-drawer>
+  </Drawer>
 </template>
 <script setup>
 import { mapState, mapMutations } from "../../config/lib.js";
 
-import { Form } from "ant-design-vue";
-import { reactive } from "vue";
+import { Form, FormItem, Drawer,Input, Space, Button } from "ant-design-vue";
+import { reactive , ref, computed, watch } from "vue";
 const useForm = Form.useForm;
 
 const modelRef = reactive({ expression: "" });

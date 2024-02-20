@@ -228,8 +228,9 @@
     SelectOption,
     Divider,
   } from 'ant-design-vue';
-  import { BasicModal, Icon, TableAction, BasicDrawer } from '3h1-ui';
-  defineOptions({ name: 'ElementForm' });
+import { BasicModal, Icon, TableAction, BasicDrawer } from '3h1-ui';
+  import {ref,inject,toRaw,watch,nextTick} from 'vue'
+  // defineOptions({ name: 'ElementForm' });
   const fieldPropertiesColumns = [
     {
       title: '属性编号',

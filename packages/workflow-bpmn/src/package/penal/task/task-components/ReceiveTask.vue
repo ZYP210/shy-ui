@@ -44,14 +44,15 @@
 <script lang="ts" setup>
   import { FormItem, Form, Input, Select, SelectOption, Button } from 'ant-design-vue';
   import { BasicModal } from '3h1-ui';
-  import { useMessage } from '@shy-plugins/use';
-  defineOptions({ name: 'ReceiveTask' });
+import { useMessage } from '@shy-plugins/use';
+import {ref ,toRaw,onBeforeUnmount,watch,nextTick,onMounted} from 'vue'
+  // defineOptions({ name: 'ReceiveTask' });
   const props = defineProps({
     id: String,
     type: String,
   });
 
-  const message = useMessage();
+  const message = useMessage() as any;
 
   const bindMessageId = ref('');
   const newMessageForm = ref<any>({});

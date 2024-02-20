@@ -1,7 +1,7 @@
 <template>
   <div class="add-node-btn-box">
     <div class="add-node-btn">
-      <a-popover v-model="visible" placement="right" v-if="!isLook">
+      <Popover v-model="visible" placement="right" v-if="!isLook">
         <template #content>
           <ul class="node-select">
             <li @click="addType(2)" v-if="hasNode(2)">
@@ -17,7 +17,7 @@
         <button class="btn" type="button">
           <plus-outlined class="iconfont" />
         </button>
-      </a-popover>
+      </Popover>
     </div>
   </div>
 </template>
@@ -34,7 +34,8 @@ import {
 } from "@ant-design/icons-vue";
 import { mapState } from "../config/lib.js";
 import $func from "../config/preload";
-import { ref } from "vue";
+import { ref ,defineProps, defineEmits} from "vue";
+import { Popover} from "ant-design-vue";
 let props = defineProps({
   childNodeP: {
     type: Object,

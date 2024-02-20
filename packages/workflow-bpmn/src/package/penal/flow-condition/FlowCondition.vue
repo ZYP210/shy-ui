@@ -62,8 +62,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { Form, FormItem, Input, Select, SelectOption } from 'ant-design-vue';
-  defineOptions({ name: 'FlowCondition' });
+import { Form, FormItem, Input, Select, SelectOption } from 'ant-design-vue';
+import { ref,toRaw,onBeforeUnmount,watch,nextTick} from 'vue'
+  // defineOptions({ name: 'FlowCondition' });
 
   const props = defineProps({
     businessObject: Object,

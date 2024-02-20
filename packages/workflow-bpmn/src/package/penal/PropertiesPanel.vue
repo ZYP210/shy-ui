@@ -22,19 +22,18 @@
         <template #header><Icon icon="ep:promotion" />流转条件</template>
         <flow-condition :business-object="elementBusinessObject" :type="elementType" />
       </CollapsePanel>
-      <CollapsePanel key="condition" v-if="formVisible">
+      <!-- <CollapsePanel key="condition" v-if="formVisible">
         <template #header><Icon icon="ep:list" />表单</template>
-        <!-- <element-form :id="elementId" :type="elementType" /> -->
         友情提示：使用
         <router-link :to="{ path: '/bpm/manager/form' }"
           ><el-link type="danger">流程表单</el-link>
         </router-link>
         替代，提供更好的表单设计功能
-      </CollapsePanel>
-      <CollapsePanel key="task" v-if="elementType.indexOf('Task') !== -1">
+      </CollapsePanel> -->
+      <!-- <CollapsePanel key="task" v-if="elementType.indexOf('Task') !== -1">
         <template #header><Icon icon="ep:checked" />任务</template>
         <element-task :id="elementId" :type="elementType" />
-      </CollapsePanel>
+      </CollapsePanel> -->
       <CollapsePanel v-if="elementType.indexOf('Task') !== -1" key="multiInstance">
         <template #header><Icon icon="ep:help-filled" />多实例</template>
         <element-multi-instance :business-object="elementBusinessObject" :type="elementType" />
@@ -70,9 +69,9 @@
   // import ElementForm from './form/ElementForm.vue'
   import UserTaskListeners from './listeners/UserTaskListeners.vue';
   import { Icon } from '3h1-ui';
-  import { Collapse, CollapsePanel } from 'ant-design-vue';
-  defineOptions({ name: 'MyPropertiesPanel' });
-
+import { Collapse, CollapsePanel } from 'ant-design-vue';
+import { ref, provide, watch, onBeforeUnmount } from 'vue';
+import { updateElementProperties} from '../utils';
   const props = defineProps({
     bpmnModeler: {
       type: Object,
@@ -111,11 +110,8 @@
     () => {
       // 避免加载时 流程图 并未加载完成
       if (!props.bpmnModeler) {
-        console.log('缺少props.bpmnModeler');
         return;
       }
-
-      console.log('props.bpmnModeler 有值了！！！');
       const w = window as any;
       w.bpmnInstances = {
         modeler: props.bpmnModeler,
@@ -129,7 +125,6 @@
         selection: props.bpmnModeler.get('selection'),
       };
 
-      console.log(bpmnInstances(), 'window.bpmnInstances');
       getActiveElement();
       unwatchBpmn();
     },
@@ -142,14 +137,15 @@
     // 初始第一个选中元素 bpmn:Process
     initFormOnChanged(null);
     props.bpmnModeler.on('import.done', (e) => {
-      console.log(e, 'eeeee');
       initFormOnChanged(null);
     });
     // 监听选择事件，修改当前激活的元素以及表单
     props.bpmnModeler.on('selection.changed', ({ newSelection }) => {
+      console.log('selection.changed', newSelection);
       initFormOnChanged(newSelection[0] || null);
     });
     props.bpmnModeler.on('element.changed', ({ element }) => {
+      console.log('element.changed', element);
       // 保证 修改 "默认流转路径" 类似需要修改多个元素的事件发生的时候，更新表单的元素与原选中元素不一致。
       if (element && element.id === elementId.value) {
         initFormOnChanged(element);
@@ -157,22 +153,16 @@
     });
   };
   // 初始化数据
-  const initFormOnChanged = (element) => {
+const initFormOnChanged = (element) => {
+    console.log('initFormOnChanged', element);
+    
     let activatedElement = element;
     if (!activatedElement) {
       activatedElement =
         bpmnInstances().elementRegistry.find((el) => el.type === 'bpmn:Process') ??
         bpmnInstances().elementRegistry.find((el) => el.type === 'bpmn:Collaboration');
     }
-    if (!activatedElement) return;
-    console.log(`
-              ----------
-      select element changed:
-                id:  ${activatedElement.id}
-              type:  ${activatedElement.businessObject.$type}
-              ----------
-              `);
-    console.log('businessObject: ', activatedElement.businessObject);
+  if (!activatedElement) return;
     bpmnInstances().bpmnElement = activatedElement;
     bpmnElement.value = activatedElement;
     elementId.value = activatedElement.id;
@@ -182,15 +172,15 @@
       elementType.value === 'SequenceFlow' &&
       activatedElement.source &&
       activatedElement.source.type.indexOf('StartEvent') === -1
-    );
-    formVisible.value = elementType.value === 'UserTask' || elementType.value === 'StartEvent';
+  );
+ 
+    //隐藏表单
+    // formVisible.value = elementType.value === 'UserTask' || elementType.value === 'StartEvent';
   };
 
   onBeforeUnmount(() => {
     const w = window as any;
     w.bpmnInstances = null;
-    console.log(props, 'props1');
-    console.log(props.bpmnModeler, 'props.bpmnModeler1');
   });
 
   watch(

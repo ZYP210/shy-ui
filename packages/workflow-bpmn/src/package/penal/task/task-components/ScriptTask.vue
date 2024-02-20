@@ -45,8 +45,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { FormItem, Input, Select, SelectOption } from 'ant-design-vue';
-  defineOptions({ name: 'ScriptTask' });
+import { FormItem, Input, Select, SelectOption } from 'ant-design-vue';
+import { ref,onBeforeUnmount,toRaw,watch,nextTick} from 'vue'
+  // defineOptions({ name: 'ScriptTask' });
   const props = defineProps({
     id: String,
     type: String,

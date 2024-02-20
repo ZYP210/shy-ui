@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:visible="visibleDialog" title="提示" :width="650">
+  <Modal v-model:visible="visibleDialog" title="提示" :width="650">
     <div class="ant-confirm-body">
       <!-- <i class="anticon anticon-close-circle" style="color: #f00"></i> -->
       <span class="ant-confirm-title">当前无法发布</span>
@@ -16,14 +16,15 @@
       </div>
     </div>
     <template #footer>
-      <a-button @click="visibleDialog = false">我知道了</a-button>
-      <a-button type="primary" @click="visibleDialog = false">前往修改</a-button>
+      <Button @click="visibleDialog = false">我知道了</Button>
+      <Button type="primary" @click="visibleDialog = false">前往修改</Button>
     </template>
-  </a-modal>
+  </Modal>
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, defineProps, defineEmits } from "vue";
+import { Modal, Button } from "ant-design-vue";
 let props = defineProps({
   list: {
     type: Array,

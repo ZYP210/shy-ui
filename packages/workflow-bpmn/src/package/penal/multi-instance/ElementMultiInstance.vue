@@ -2,7 +2,7 @@
   <div class="panel-tab__content">
     <Form :label-col="{ style: { width: '90px' } }">
       <FormItem label="回路特性">
-        <Select v-model="loopCharacteristics" @change="changeLoopCharacteristicsType">
+        <Select v-model:value="loopCharacteristics" @change="changeLoopCharacteristicsType">
           <SelectOption value="ParallelMultiInstance">并行多重事件</SelectOption>
           <SelectOption value="SequentialMultiInstance">时序多重事件</SelectOption>
           <SelectOption value="StandardLoop">循环事件</SelectOption>
@@ -75,8 +75,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { Checkbox, Form, FormItem, Input, Select, SelectOption } from 'ant-design-vue';
-  defineOptions({ name: 'ElementMultiInstance' });
+import { Checkbox, Form, FormItem, Input, Select, SelectOption } from 'ant-design-vue';
+import { ref,inject,toRaw,onBeforeUnmount,watch} from 'vue'
+  // defineOptions({ name: 'ElementMultiInstance' });
 
   const props = defineProps({
     businessObject: Object,

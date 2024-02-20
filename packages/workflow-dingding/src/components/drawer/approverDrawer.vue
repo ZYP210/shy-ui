@@ -1,5 +1,5 @@
 <template>
-  <a-drawer
+  <Drawer
     v-model:visible="visible"
     class="set_promoter"
     :width="550"
@@ -10,30 +10,30 @@
     :footer-style="{ textAlign: 'right' }"
   >
     <div class="btn-group">
-      <a-radio-group v-model:value="type">
-        <a-radio-button class="btn" value="1">审核人</a-radio-button>
-        <a-radio-button class="btn" value="2">设置字段权限</a-radio-button>
-      </a-radio-group>
+      <RadioGroup v-model:value="type">
+        <RadioButton class="btn" value="1">审核人</RadioButton>
+        <RadioButton class="btn" value="2">设置字段权限</RadioButton>
+      </RadioGroup>
     </div>
 
     <template v-if="type === '1'">
-      <a-form class="form" ref="formRef" name="dynamic_form_nest_item">
-        <a-form-item>
+      <Form class="form" ref="formRef" name="dynamic_form_nest_item">
+        <FormItem>
           <span class="tips">选择能发起该审批的人员/部门，不选则默认开放给所有人</span>
-        </a-form-item>
-        <a-space v-for="(item, index) in approvalList" style="display: flex; margin-bottom: 8px" align="baseline">
-          <a-form-item label="类型">
-            <a-select
+        </FormItem>
+        <Space v-for="(item, index) in approvalList" style="display: flex; margin-bottom: 8px" align="baseline">
+          <FormItem label="类型">
+            <Select
               v-model:value="item.type"
               :options="approveTypes"
               style="width: 130px"
               placeholder="请选择类型"
               @change="selectChange($event,item)"
-            ></a-select>
-          </a-form-item>
+            ></Select>
+          </FormItem>
 
-          <a-form-item label="值">
-            <a-select
+          <FormItem label="值">
+            <Select
               v-if="!ruleTypeDic[item.type]?.component"
               v-model:value="item.options"
               mode="multiple"
@@ -46,8 +46,8 @@
               :show-checked-strategy="TreeSelect.SHOW_ALL"
               :filter-option="filterOption"
               @change="valueChange($event,item)"
-            ></a-select>
-            <a-tree-select
+            ></Select>
+            <TreeSelect
               v-if="ruleTypeDic[item.type]?.component"
               v-model:value="item.options"
               style="width: 200px"
@@ -62,9 +62,9 @@
               tree-node-filter-prop="deptName"
               @change="valueChange($event,item)"
             />
-          </a-form-item>
+          </FormItem>
           <!-- <MinusCircleOutlined @click="removeSight(item)" class="icon" /> -->
-        </a-space>
+        </Space>
 
         <!-- <a-form-item v-if="approvalList.length < 3">
           <a-button type="dashed" block @click="addSight">
@@ -72,9 +72,9 @@
             添加
           </a-button>
         </a-form-item> -->
-      </a-form>
+      </Form>
 
-      <div class="list" v-if="approvalList[0].type">
+      <div class="list" v-if="approvalList[0] && approvalList[0].type">
         <div class="list-col" v-for="node in approvalList">
           {{ approveTypes.find((type) => node.type == type.value)?.label }}：
           <span class="list-row" v-for="value in node.options"> {{ getOptionsLabel(node.type,value) }}</span>
@@ -92,14 +92,14 @@
         <a-button @click="closeDrawer">取 消</a-button>
       </a-space>
     </template> -->
-  </a-drawer>
+  </Drawer>
 </template>
 
 <script setup>
 import { mapState, mapMutations } from "../../config/lib";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
-import { computed } from "vue";
-import { TreeSelect } from "ant-design-vue";
+import { computed, ref, watch } from "vue";
+import { TreeSelect,Drawer,RadioButton,RadioGroup,Form,FormItem,Input,Select,Button,Space } from "ant-design-vue";
 import AuthorityTable from "./authorityTable.vue";
 import $func from "../../config/preload";
 let emits = defineEmits(["update:nodeConfig"]);

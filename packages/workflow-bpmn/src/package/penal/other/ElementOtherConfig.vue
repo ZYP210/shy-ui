@@ -17,8 +17,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { Textarea } from 'ant-design-vue';
-  defineOptions({ name: 'ElementOtherConfig' });
+import { Textarea } from 'ant-design-vue';
+import { ref,toRaw,onBeforeUnmount,watch,nextTick} from 'vue'
+  // defineOptions({ name: 'ElementOtherConfig' });
   const props = defineProps({
     id: String,
   });

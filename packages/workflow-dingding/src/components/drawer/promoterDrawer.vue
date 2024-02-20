@@ -1,5 +1,5 @@
 <template>
-  <a-drawer
+  <Drawer
     v-model:visible="visible"
     class="set_promoter"
     :width="550"
@@ -10,9 +10,9 @@
     :destroyOnClose="true"
   >
     <div class="btn-group">
-      <a-radio-group v-model:value="type">
-        <a-radio-button class="btn" value="2">设置字段权限</a-radio-button>
-      </a-radio-group>
+      <RadioGroup v-model:value="type">
+        <RadioButton class="btn" value="2">设置字段权限</RadioButton>
+      </RadioGroup>
     </div>
     <template v-if="type==2"> <AuthorityTable v-model:fieldPermissions="fieldPermissions" /> </template>
     <!-- <template #footer>
@@ -21,12 +21,13 @@
         <a-button @click="closeDrawer">取 消</a-button>
       </a-space>
     </template> -->
-  </a-drawer>
+  </Drawer>
 </template>
 <script setup>
 import { mapState, mapMutations } from "../../config/lib";
-import { computed } from "vue";
+import { computed,watch, ref , reactive } from "vue";
 import AuthorityTable from "./authorityTable.vue";
+import { Drawer, RadioGroup, RadioButton } from 'ant-design-vue'
 const { types } = mapState();
 const filterOption = (inputValue, option) => {
   return option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
