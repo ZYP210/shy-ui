@@ -7,7 +7,16 @@ import type {
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 import type { ComputedRef } from 'vue'
-import { computed, Ref, ref, reactive, toRaw, unref, watch } from 'vue'
+import {
+  computed,
+  Ref,
+  ref,
+  reactive,
+  toRaw,
+  unref,
+  watch,
+  onMounted
+} from 'vue'
 import { renderEditCell } from '../components/editable'
 // import { usePermission } from '@shy-plugins/use'
 // import { useI18n } from '/@/hooks/web/useI18n'
@@ -44,6 +53,23 @@ function handleItem(item: BasicColumn, ellipsis: boolean) {
   if (children && children.length) {
     handleChildren(children, !!ellipsis)
   }
+}
+
+function handleColumnResize(
+  propsRef: ComputedRef<BasicTableProps>,
+  columns: BasicColumn[]
+) {
+  columns.forEach((item) => {
+    if (item.flag === 'ACTION') return
+    if (propsRef.value.resizable) {
+      item.width = item.width || 100
+      item.resizable = item.resizable === undefined ? true : item.resizable
+    } else {
+      if (item.resizable) {
+        item.width = item.width || 100
+      }
+    }
+  })
 }
 
 function handleChildren(
@@ -132,7 +158,8 @@ function handleActionColumn(
 export function useColumns(
   propsRef: ComputedRef<BasicTableProps>,
   getPaginationRef: ComputedRef<boolean | PaginationProps>,
-  tableAction: ComputedRef<TableActionType>
+  tableAction: ComputedRef<TableActionType>,
+  tableElRef: Ref<ComponentRef>
 ) {
   const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<
     BasicColumn[]
@@ -144,6 +171,8 @@ export function useColumns(
 
     handleIndexColumn(propsRef, getPaginationRef, columns)
     handleActionColumn(propsRef, columns)
+    handleColumnResize(propsRef, columns)
+
     if (!columns) {
       return []
     }
@@ -225,6 +254,14 @@ export function useColumns(
         }
         return reactive<BasicColumn>(column)
       })
+  })
+
+  const getColumnsSummary = computed(() => {
+    if (propsRef.value.rowSelection) {
+      //@ts-ignore
+      return [{ flag: 'ROW_SELECTION' }, ...getViewColumns.value]
+    }
+    return getViewColumns.value
   })
 
   watch(
@@ -322,7 +359,8 @@ export function useColumns(
     getColumns,
     setColumns,
     getViewColumns: getViewColumns as ComputedRef<never[]>,
-    setCacheColumnsByField
+    setCacheColumnsByField,
+    getColumnsSummary: getColumnsSummary as ComputedRef<never[]>
   }
 }
 

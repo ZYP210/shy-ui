@@ -66,6 +66,7 @@ const columns: any[] = [
     title: '产地范围',
     dataIndex: 'rangePlace',
     editRow: true,
+
     editComponent: 'Input',
     editRule: true,
     editComponentProps: (params) => {
@@ -88,6 +89,7 @@ const columns: any[] = [
     title: '合格数',
     dataIndex: 'qualifiedNum',
     width: 200,
+
     editComponent: 'InputNumber',
     editComponentProps({ record, tableAction }) {
       return {
@@ -119,7 +121,8 @@ const columns: any[] = [
     title: '厂家名称',
     dataIndex: 'name',
     editRow: true,
-    globalShow: false
+    globalShow: false,
+    resizable: true
   },
   {
     title: '电话',
@@ -148,6 +151,7 @@ const columns: any[] = [
     title: '产地',
     // editRow: true,
     dataIndex: 'place'
+
     // editComponent: 'InputNumber',
     // editRule: true,
   }
@@ -179,7 +183,6 @@ const [
     getForm
   }
 ] = useTable({
-  isTreeTable: true,
   api: (params) => {
     console.log('params', params)
 
@@ -213,19 +216,22 @@ const [
       }
     ]
   },
+  resizable: true,
   showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
-  showIndexColumn: true,
   showTableSetting: true,
   useAdvancedSearch: true,
-  rowSelection: { type: 'checkbox' },
+  rowSelection: {},
   clickToRowSelect: false,
   useSearchForm: true,
   actionColumn: {
     width: 250,
     dataIndex: 'action',
+    title: '操作',
     fixed: 'right'
-  }
+  },
+  showIndexColumn: true,
+  indexColumn: {}
 })
 
 function handleSelectChange({ rows }) {}

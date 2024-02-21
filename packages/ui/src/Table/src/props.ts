@@ -128,6 +128,7 @@ export const basicProps = reactive({
     default: null
   },
   ellipsis: { type: Boolean, default: true },
+  resizable: { type: Boolean, default: false },
   isCanResizeParent: { type: Boolean, default: false },
   canResize: { type: Boolean, default: true },
   clearSelectOnPageChange: {
