@@ -66,6 +66,7 @@ const columns: any[] = [
     title: '产地范围',
     dataIndex: 'rangePlace',
     editRow: true,
+
     editComponent: 'Input',
     editRule: true,
     editComponentProps: (params) => {
@@ -88,6 +89,7 @@ const columns: any[] = [
     title: '合格数',
     dataIndex: 'qualifiedNum',
     width: 200,
+
     editComponent: 'InputNumber',
     editComponentProps({ record, tableAction }) {
       return {
@@ -148,6 +150,7 @@ const columns: any[] = [
     title: '产地',
     // editRow: true,
     dataIndex: 'place'
+
     // editComponent: 'InputNumber',
     // editRule: true,
   }
@@ -212,6 +215,7 @@ const [
       }
     ]
   },
+  resizable: true,
   showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
@@ -222,9 +226,10 @@ const [
   actionColumn: {
     width: 250,
     dataIndex: 'action',
+    title: '操作',
     fixed: 'right'
   },
-  showIndexColumn: false,
+  showIndexColumn: true,
   indexColumn: {}
 })
 

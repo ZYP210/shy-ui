@@ -271,7 +271,7 @@ export default defineComponent({
       getColumnsRef,
       getCacheColumns,
       getColumnsSummary
-    } = useColumns(getProps, getPaginationInfo, tableActionRef)
+    } = useColumns(getProps, getPaginationInfo, tableActionRef, tableElRef)
 
     const { getScrollRef, redoHeight } = useTableScroll(
       getProps,
