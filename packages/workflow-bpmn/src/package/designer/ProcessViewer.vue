@@ -11,6 +11,7 @@
   import DefaultEmptyXML from './plugins/defaultEmpty';
   import { formatToDateTime,isEmpty } from '@shy-plugins/utils';
 import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch, onMounted, onBeforeUnmount } from 'vue'
+import { values } from 'lodash-es';
   const props = defineProps({
     value: {
       // BPMN XML 字符串
@@ -99,15 +100,18 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
     let canvas = bpmnModeler.get('canvas');
     let todoActivity: any = activityList.find((m: any) => !m.endTime); // 找到待办的任务
     let endActivity: any = activityList[activityList.length - 1]; // 获得最后一个任务
+    // 先清除之前的高亮
     let findProcessTask = false; //是否已经高亮了进行中的任务
     //进行中高亮之后的任务 key 集合，用于过滤掉 taskList 进行中后面的任务，避免进行中后面的数据 Hover 还有数据
     let removeTaskDefinitionKeyList = [];
     // debugger
     bpmnModeler.getDefinitions().rootElements[0].flowElements?.forEach((n: any) => {
-      let activity: any = activityList.find((m: any) => m.key === n.id); // 找到对应的活动
-      if (!activity) {
+      let activity: any = null;
+      let activityMap = activityList.filter((m: any) => m.key === n.id); // 找到对应的活动
+      if (!activityMap.length) {
         return;
       }
+      activity = activityMap[activityMap.length - 1];
       if (n.$type === 'bpmn:UserTask') {
         // 用户任务
         // 处理用户任务的高亮
@@ -116,11 +120,12 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
           return;
         }
         //进行中的任务已经高亮过了，则不高亮后面的任务了
+        
         if (findProcessTask) {
           removeTaskDefinitionKeyList.push(n.id);
           return;
         }
-        // 高亮任务
+         // 高亮任务
         canvas.addMarker(n.id, getResultCss(task.result));
         //标记是否高亮了进行中任务
         if (task.result === 1) {
@@ -134,7 +139,9 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
         const outgoing = getActivityOutgoing(activity);
         outgoing?.forEach((nn: any) => {
           // debugger
-          let targetActivity: any = activityList.find((m: any) => m.key === nn.targetRef.id);
+          let targetActivity: any = null;
+          let targetActivityMap: any = activityList.filter((m: any) => m.key === nn.targetRef.id);
+          targetActivity= targetActivityMap[targetActivityMap.length - 1];
           // 如果目标活动存在，则根据该活动是否结束，进行【bpmn:SequenceFlow】连线的高亮设置
           if (targetActivity) {
             canvas.addMarker(nn.id, targetActivity.endTime ? 'highlight' : 'highlight-todo');
@@ -162,10 +169,12 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
         let matchNN: any = undefined;
         let matchActivity: any = undefined;
         n.outgoing?.forEach((nn: any) => {
-          let targetActivity = activityList.find((m: any) => m.key === nn.targetRef.id);
-          if (!targetActivity) {
+          let targetActivity = null;
+          let targetActivityMap = activityList.filter((m: any) => m.key === nn.targetRef.id);
+          if (!targetActivityMap.length) {
             return;
           }
+          targetActivity = targetActivityMap[targetActivityMap.length - 1];
           // 特殊判断 endEvent 类型的原因，ExclusiveGateway 可能后续连有 2 个路径：
           //  1. 一个是 UserTask => EndEvent
           //  2. 一个是 EndEvent
@@ -185,7 +194,9 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
         canvas.addMarker(n.id, getActivityHighlightCss(activity));
         n.outgoing?.forEach((nn: any) => {
           // 获得连线是否有指向目标。如果有，则进行高亮
-          const targetActivity = activityList.find((m: any) => m.key === nn.targetRef.id);
+          let targetActivity = null;
+          const targetActivityMap = activityList.filter((m: any) => m.key === nn.targetRef.id);
+          targetActivity = targetActivityMap[targetActivityMap.length - 1];
           if (targetActivity) {
             canvas.addMarker(nn.id, getActivityHighlightCss(targetActivity)); // 高亮【bpmn:SequenceFlow】连线
             // 高亮【...】目标。其中 ... 可以是 bpm:UserTask、也可以是其它的。当然，如果是 bpm:UserTask 的话，其实不做高亮也没问题，因为上面有逻辑做了这块。
@@ -197,7 +208,9 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
         n.outgoing?.forEach((nn) => {
           // outgoing 例如说【bpmn:SequenceFlow】连线
           // 获得连线是否有指向目标。如果有，则进行高亮
-          let targetActivity = activityList.find((m: any) => m.key === nn.targetRef.id);
+          let targetActivity = null;
+          let targetActivityMap = activityList.filter((m: any) => m.key === nn.targetRef.id);
+          targetActivity = targetActivityMap[targetActivityMap.length - 1];
           if (targetActivity) {
             canvas.addMarker(nn.id, 'highlight'); // 高亮【bpmn:SequenceFlow】连线
             canvas.addMarker(n.id, 'highlight'); // 高亮【bpmn:StartEvent】开始节点（自己）
@@ -238,7 +251,7 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
     if (result === 1) {
       // 审批中
       return 'highlight-todo';
-    } else if (result === 2) {
+    } else if (result === 2 || !result) {
       // 已通过
       return 'highlight';
     } else if (result === 3) {
@@ -291,15 +304,18 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
     });
   };
   // 流程图的元素被 hover
-  const elementHover = (element) => {
+const elementHover = (element) => {
+    
     element.value = element;
     !elementOverlayIds.value && (elementOverlayIds.value = {});
     !overlays.value && (overlays.value = bpmnModeler.get('overlays'));
-    // 展示信息
-    const activity = activityLists.value.find((m) => m.key === element.value.id);
-    if (!activity) {
+  // 展示信息
+    let activity = null;
+    const activityMap = activityLists.value.filter((m) => m.key === element.value.id);
+    if (!activityMap.length) {
       return;
-    }
+  }
+  activity = activityMap[activityMap.length - 1];    
     if (!elementOverlayIds.value[element.value.id] && element.value.type !== 'bpmn:Process') {
       let html = `<div class="element-overlays">
             <p>Elemet id: ${element.value.id}</p>
@@ -322,8 +338,8 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
             dataResult = element.label;
           }
         });
-        html = `<p>审批人：${task.assigneeUser.nickname}</p>
-                  <p>部门：${task.assigneeUser.deptName}</p>
+        html = `<p>审批人：${task?.assigneeUser?.nickname || '--'}</p>
+                  <p>部门：${task?.assigneeUser?.deptName || '--'}</p>
                   <p>结果：${dataResult}</p>
                   <p>创建时间：${formatToDateTime(task.createTime)}</p>`;
         // html = `<p>审批人：${task.assigneeUser.nickname}</p>
@@ -378,6 +394,7 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
   onMounted(() => {
     xml.value = props.value;
     activityLists.value = props.activityData;
+    taskList.value = props.taskData;
     // 初始化
     initBpmnModeler();
     createNewDiagram(xml.value);
@@ -415,10 +432,11 @@ import {  defineProps, defineEmits, provide, ref, toRefs, toRaw, computed, watch
   );
   watch(
     () => props.taskData,
-    (newTaskListData) => {
+    (newTaskListData) => {      
       taskList.value = newTaskListData;
-      createNewDiagram(xml.value);
-    },
+      if(taskList.value.length > 0)
+        createNewDiagram(xml.value);
+    }
   );
 </script>
 

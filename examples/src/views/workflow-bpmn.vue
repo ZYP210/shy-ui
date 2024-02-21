@@ -1,4 +1,4 @@
-<!-- <template>
+<template>
   <div class="box-card">
     <MyProcessViewer
       key="designer"
@@ -16,7 +16,13 @@
 <script setup lang="ts">
 import { MyProcessViewer } from '@shy-plugins/workflow-bpmn';
 import { ref } from 'vue';
-  const bpmProcessInstanceResult=[
+const bpmProcessInstanceResult = [
+    {
+      value: null,
+      label: '通过',
+      colorType: 'success',
+      cssClass: '',
+    },
     {
         "value": 1,
         "label": "处理中",
@@ -72,26 +78,74 @@ import { ref } from 'vue';
         "cssClass": ""
     }
   ]
-  const bpmnXml=`<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:flowable=\"http://flowable.org/bpmn\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:omgdi=\"http://www.omg.org/spec/DD/20100524/DI\" typeLanguage=\"http://www.w3.org/2001/XMLSchema\" expressionLanguage=\"http://www.w3.org/1999/XPath\" targetNamespace=\"http://www.flowable.org/test\">\n  <process id=\"zh_ceshi1\" name=\"啊啊啊啊啊1\" isExecutable=\"true\">\n    <startEvent id=\"dingStartEvent\" name=\"流程启动\"></startEvent>\n    <userTask id=\"userTask_11a431201e7b4d4c8371e6ed2e3c454e\" name=\"发起人\" flowable:skipExpression=\"${true}\"></userTask>\n    <sequenceFlow id=\"sequenceFlow_1d9b3b95f9994d09b468635521aef481\" sourceRef=\"dingStartEvent\" targetRef=\"userTask_11a431201e7b4d4c8371e6ed2e3c454e\"></sequenceFlow>\n    <userTask id=\"userTask_eb36bea1dd3a49caaf7cdfec93968297\" name=\"审核人\"></userTask>\n    <sequenceFlow id=\"sequenceFlow_3fa62fa43d3248dfa968b23c9e434cd0\" sourceRef=\"userTask_11a431201e7b4d4c8371e6ed2e3c454e\" targetRef=\"userTask_eb36bea1dd3a49caaf7cdfec93968297\"></sequenceFlow>\n    <endEvent id=\"dingEndEvent\" name=\"流程结束\"></endEvent>\n    <sequenceFlow id=\"sequenceFlow_3e99a9c6faa84706858322e68641f4f2\" sourceRef=\"userTask_eb36bea1dd3a49caaf7cdfec93968297\" targetRef=\"dingEndEvent\"></sequenceFlow>\n  </process>\n  <bpmndi:BPMNDiagram id=\"BPMNDiagram_zh_ceshi1\">\n    <bpmndi:BPMNPlane bpmnElement=\"zh_ceshi1\" id=\"BPMNPlane_zh_ceshi1\">\n      <bpmndi:BPMNShape bpmnElement=\"dingEndEvent\" id=\"BPMNShape_dingEndEvent\">\n        <omgdc:Bounds height=\"30.0\" width=\"30.0\" x=\"380.0\" y=\"15.0\"></omgdc:Bounds>\n      </bpmndi:BPMNShape>\n      <bpmndi:BPMNShape bpmnElement=\"userTask_11a431201e7b4d4c8371e6ed2e3c454e\" id=\"BPMNShape_userTask_11a431201e7b4d4c8371e6ed2e3c454e\">\n        <omgdc:Bounds height=\"60.0\" width=\"100.0\" x=\"80.0\" y=\"0.0\"></omgdc:Bounds>\n      </bpmndi:BPMNShape>\n      <bpmndi:BPMNShape bpmnElement=\"userTask_eb36bea1dd3a49caaf7cdfec93968297\" id=\"BPMNShape_userTask_eb36bea1dd3a49caaf7cdfec93968297\">\n        <omgdc:Bounds height=\"60.0\" width=\"100.0\" x=\"230.0\" y=\"0.0\"></omgdc:Bounds>\n      </bpmndi:BPMNShape>\n      <bpmndi:BPMNShape bpmnElement=\"dingStartEvent\" id=\"BPMNShape_dingStartEvent\">\n        <omgdc:Bounds height=\"30.0\" width=\"30.0\" x=\"0.0\" y=\"15.0\"></omgdc:Bounds>\n      </bpmndi:BPMNShape>\n      <bpmndi:BPMNEdge bpmnElement=\"sequenceFlow_3fa62fa43d3248dfa968b23c9e434cd0\" id=\"BPMNEdge_sequenceFlow_3fa62fa43d3248dfa968b23c9e434cd0\">\n        <omgdi:waypoint x=\"180.0\" y=\"30.0\"></omgdi:waypoint>\n        <omgdi:waypoint x=\"192.0\" y=\"30.0\"></omgdi:waypoint>\n        <omgdi:waypoint x=\"192.0\" y=\"30.0\"></omgdi:waypoint>\n        <omgdi:waypoint x=\"230.0\" y=\"30.0\"></omgdi:waypoint>\n      </bpmndi:BPMNEdge>\n      <bpmndi:BPMNEdge bpmnElement=\"sequenceFlow_3e99a9c6faa84706858322e68641f4f2\" id=\"BPMNEdge_sequenceFlow_3e99a9c6faa84706858322e68641f4f2\">\n        <omgdi:waypoint x=\"330.0\" y=\"30.0\"></omgdi:waypoint>\n        <omgdi:waypoint x=\"342.0\" y=\"30.0\"></omgdi:waypoint>\n        <omgdi:waypoint x=\"342.0\" y=\"30.0\"></omgdi:waypoint>\n        <omgdi:waypoint x=\"380.0\" y=\"30.0\"></omgdi:waypoint>\n      </bpmndi:BPMNEdge>\n      <bpmndi:BPMNEdge bpmnElement=\"sequenceFlow_1d9b3b95f9994d09b468635521aef481\" id=\"BPMNEdge_sequenceFlow_1d9b3b95f9994d09b468635521aef481\">\n        <omgdi:waypoint x=\"30.0\" y=\"30.0\"></omgdi:waypoint>\n        <omgdi:waypoint x=\"42.0\" y=\"30.0\"></omgdi:waypoint>\n        <omgdi:waypoint x=\"42.0\" y=\"30.0\"></omgdi:waypoint>\n        <omgdi:waypoint x=\"80.0\" y=\"30.0\"></omgdi:waypoint>\n      </bpmndi:BPMNEdge>\n    </bpmndi:BPMNPlane>\n  </bpmndi:BPMNDiagram>\n</definitions>`
+  const bpmnXml=`<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://flowable.org/bpmn" id="diagram_Process_1708236724801">
+  <process id="skip_test123" name="免审流程123" isExecutable="true">
+    <startEvent id="Event_14016ux"></startEvent>
+    <userTask id="Activity_1nkv739" name="abc" flowable:skipExpression="\${true == Activity_1nkv739_skip}"></userTask>
+    <sequenceFlow id="Flow_0fyrtrd" sourceRef="Event_14016ux" targetRef="Activity_1nkv739"></sequenceFlow>
+    <userTask id="Activity_0m8x9be" name="123" flowable:skipExpression="\${true == Activity_0m8x9be_skip}"></userTask>
+    <sequenceFlow id="Flow_140531a" sourceRef="Activity_1nkv739" targetRef="Activity_0m8x9be"></sequenceFlow>
+    <userTask id="Activity_0hynar5" name="hah" flowable:skipExpression="\${true == Activity_0hynar5_skip}"></userTask>
+    <sequenceFlow id="Flow_003dmj6" sourceRef="Activity_0m8x9be" targetRef="Activity_0hynar5"></sequenceFlow>
+    <endEvent id="Event_0pbmk5n"></endEvent>
+    <sequenceFlow id="Flow_0u18zdq" sourceRef="Activity_0hynar5" targetRef="Event_0pbmk5n"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_skip_test123">
+    <bpmndi:BPMNPlane bpmnElement="skip_test123" id="BPMNPlane_skip_test123">
+      <bpmndi:BPMNShape bpmnElement="Event_14016ux" id="BPMNShape_Event_14016ux">
+        <omgdc:Bounds height="36.0" width="36.0" x="202.0" y="262.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Activity_1nkv739" id="BPMNShape_Activity_1nkv739">
+        <omgdc:Bounds height="80.0" width="100.0" x="290.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Activity_0m8x9be" id="BPMNShape_Activity_0m8x9be">
+        <omgdc:Bounds height="80.0" width="100.0" x="450.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Activity_0hynar5" id="BPMNShape_Activity_0hynar5">
+        <omgdc:Bounds height="80.0" width="100.0" x="610.0" y="240.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="Event_0pbmk5n" id="BPMNShape_Event_0pbmk5n">
+        <omgdc:Bounds height="36.0" width="36.0" x="772.0" y="262.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="Flow_0u18zdq" id="BPMNEdge_Flow_0u18zdq">
+        <omgdi:waypoint x="710.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="772.0" y="280.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_003dmj6" id="BPMNEdge_Flow_003dmj6">
+        <omgdi:waypoint x="550.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="610.0" y="280.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_140531a" id="BPMNEdge_Flow_140531a">
+        <omgdi:waypoint x="390.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="450.0" y="280.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="Flow_0fyrtrd" id="BPMNEdge_Flow_0fyrtrd">
+        <omgdi:waypoint x="238.0" y="280.0"></omgdi:waypoint>
+        <omgdi:waypoint x="290.0" y="280.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>`
   const tasks=[
     {
-        "id": "2b802db2-bf55-11ee-a1f3-b0dcef2e0f58",
-        "name": "审核人",
+        "id": "e4fac6ea-cefa-11ee-96f6-aa643deda0c3",
+        "name": "hah",
         "claimTime": null,
-        "createTime": 1706608302000,
+        "createTime": 1708328747000,
         "suspensionState": null,
         "processInstance": {
-            "id": "2b781757-bf55-11ee-a1f3-b0dcef2e0f58",
-            "name": "啊啊啊啊啊1",
+            "id": "95ffed3f-cef9-11ee-8387-b0dcef2e0f58",
+            "name": "免审流程123",
             "startUserId": 1,
             "startUserNickname": "admin",
-            "processDefinitionId": "zh_ceshi1:1:680dd77d-bf3a-11ee-b543-b0dcef2e0f58"
+            "processDefinitionId": "skip_test123:8:c7292376-cef7-11ee-96f6-aa643deda0c3"
         },
-        "endTime": null,
-        "durationInMillis": null,
-        "result": 1,
-        "reason": null,
-        "definitionKey": "userTask_eb36bea1dd3a49caaf7cdfec93968297",
+        "endTime": 1708478146000,
+        "durationInMillis": 149398683,
+        "result": 2,
+        "reason": "wqw",
+        "definitionKey": "Activity_0hynar5",
         "assigneeUser": {
             "id": 1,
             "nickname": "admin",
@@ -102,23 +156,131 @@ import { ref } from 'vue';
         "children": null
     },
     {
-        "id": "2b80069f-bf55-11ee-a1f3-b0dcef2e0f58",
-        "name": "发起人",
+        "id": "a4882b85-cef9-11ee-96f6-aa643deda0c3",
+        "name": "123",
         "claimTime": null,
-        "createTime": 1706608301779,
+        "createTime": 1708328210000,
         "suspensionState": null,
         "processInstance": {
-            "id": "2b781757-bf55-11ee-a1f3-b0dcef2e0f58",
-            "name": "啊啊啊啊啊1",
+            "id": "95ffed3f-cef9-11ee-8387-b0dcef2e0f58",
+            "name": "免审流程123",
             "startUserId": 1,
             "startUserNickname": "admin",
-            "processDefinitionId": "zh_ceshi1:1:680dd77d-bf3a-11ee-b543-b0dcef2e0f58"
+            "processDefinitionId": "skip_test123:8:c7292376-cef7-11ee-96f6-aa643deda0c3"
         },
-        "endTime": 1706608301801,
-        "durationInMillis": 22,
+        "endTime": 1708328747000,
+        "durationInMillis": 537617,
+        "result": 2,
+        "reason": "1",
+        "definitionKey": "Activity_0m8x9be",
+        "assigneeUser": {
+            "id": 1,
+            "nickname": "admin",
+            "deptId": null,
+            "deptName": "研发部"
+        },
+        "parentTaskId": null,
+        "children": null
+    },
+    {
+        "id": "a1dc4560-cef9-11ee-96f6-aa643deda0c3",
+        "name": "abc",
+        "claimTime": null,
+        "createTime": 1708328205000,
+        "suspensionState": null,
+        "processInstance": {
+            "id": "95ffed3f-cef9-11ee-8387-b0dcef2e0f58",
+            "name": "免审流程123",
+            "startUserId": 1,
+            "startUserNickname": "admin",
+            "processDefinitionId": "skip_test123:8:c7292376-cef7-11ee-96f6-aa643deda0c3"
+        },
+        "endTime": 1708328210000,
+        "durationInMillis": 4478,
+        "result": 2,
+        "reason": "1",
+        "definitionKey": "Activity_1nkv739",
+        "assigneeUser": {
+            "id": 1,
+            "nickname": "admin",
+            "deptId": null,
+            "deptName": "研发部"
+        },
+        "parentTaskId": null,
+        "children": null
+    },
+    {
+        "id": "9c4fd48a-cef9-11ee-96f6-aa643deda0c3",
+        "name": "hah",
+        "claimTime": null,
+        "createTime": 1708328196000,
+        "suspensionState": null,
+        "processInstance": {
+            "id": "95ffed3f-cef9-11ee-8387-b0dcef2e0f58",
+            "name": "免审流程123",
+            "startUserId": 1,
+            "startUserNickname": "admin",
+            "processDefinitionId": "skip_test123:8:c7292376-cef7-11ee-96f6-aa643deda0c3"
+        },
+        "endTime": 1708328205000,
+        "durationInMillis": 9341,
+        "result": 5,
+        "reason": "1",
+        "definitionKey": "Activity_0hynar5",
+        "assigneeUser": {
+            "id": 1,
+            "nickname": "admin",
+            "deptId": null,
+            "deptName": "研发部"
+        },
+        "parentTaskId": null,
+        "children": null
+    },
+    {
+        "id": "9601c20c-cef9-11ee-8387-b0dcef2e0f58",
+        "name": "123",
+        "claimTime": null,
+        "createTime": 1708328185000,
+        "suspensionState": null,
+        "processInstance": {
+            "id": "95ffed3f-cef9-11ee-8387-b0dcef2e0f58",
+            "name": "免审流程123",
+            "startUserId": 1,
+            "startUserNickname": "admin",
+            "processDefinitionId": "skip_test123:8:c7292376-cef7-11ee-96f6-aa643deda0c3"
+        },
+        "endTime": 1708328196000,
+        "durationInMillis": 10513,
+        "result": 2,
+        "reason": "1",
+        "definitionKey": "Activity_0m8x9be",
+        "assigneeUser": {
+            "id": 1,
+            "nickname": "admin",
+            "deptId": null,
+            "deptName": "研发部"
+        },
+        "parentTaskId": null,
+        "children": null
+    },
+    {
+        "id": "9601c209-cef9-11ee-8387-b0dcef2e0f58",
+        "name": "abc",
+        "claimTime": null,
+        "createTime": 1708328185393,
+        "suspensionState": null,
+        "processInstance": {
+            "id": "95ffed3f-cef9-11ee-8387-b0dcef2e0f58",
+            "name": "免审流程123",
+            "startUserId": 1,
+            "startUserNickname": "admin",
+            "processDefinitionId": "skip_test123:8:c7292376-cef7-11ee-96f6-aa643deda0c3"
+        },
+        "endTime": 1708328185394,
+        "durationInMillis": 1,
         "result": null,
         "reason": null,
-        "definitionKey": "userTask_11a431201e7b4d4c8371e6ed2e3c454e",
+        "definitionKey": "Activity_1nkv739",
         "assigneeUser": null,
         "parentTaskId": null,
         "children": null
@@ -160,43 +322,106 @@ import { ref } from 'vue';
   const bpmnControlForm = ref({
     prefix: 'flowable',
   });
-  const activityList = ref([
+  const activityList = [
     {
-        "key": "dingStartEvent",
+        "key": "Event_14016ux",
         "type": "startEvent",
-        "startTime": 1706608301775,
-        "endTime": 1706608301778,
+        "startTime": 1708328185393,
+        "endTime": 1708328185393,
         "taskId": null
     },
     {
-        "key": "sequenceFlow_1d9b3b95f9994d09b468635521aef481",
+        "key": "Flow_0fyrtrd",
         "type": "sequenceFlow",
-        "startTime": 1706608301779,
-        "endTime": 1706608301779,
+        "startTime": 1708328185393,
+        "endTime": 1708328185393,
         "taskId": null
     },
     {
-        "key": "userTask_11a431201e7b4d4c8371e6ed2e3c454e",
+        "key": "Activity_1nkv739",
         "type": "userTask",
-        "startTime": 1706608301779,
-        "endTime": 1706608301801,
-        "taskId": "2b80069f-bf55-11ee-a1f3-b0dcef2e0f58"
+        "startTime": 1708328185393,
+        "endTime": 1708328185394,
+        "taskId": "9601c209-cef9-11ee-8387-b0dcef2e0f58"
     },
     {
-        "key": "sequenceFlow_3fa62fa43d3248dfa968b23c9e434cd0",
+        "key": "Flow_140531a",
         "type": "sequenceFlow",
-        "startTime": 1706608301801,
-        "endTime": 1706608301801,
+        "startTime": 1708328185394,
+        "endTime": 1708328185394,
         "taskId": null
     },
     {
-        "key": "userTask_eb36bea1dd3a49caaf7cdfec93968297",
+        "key": "Activity_0m8x9be",
         "type": "userTask",
-        "startTime": 1706608301801,
-        "endTime": null,
-        "taskId": "2b802db2-bf55-11ee-a1f3-b0dcef2e0f58"
+        "startTime": 1708328185394,
+        "endTime": 1708328195921,
+        "taskId": "9601c20c-cef9-11ee-8387-b0dcef2e0f58"
+    },
+    {
+        "key": "Flow_003dmj6",
+        "type": "sequenceFlow",
+        "startTime": 1708328195928,
+        "endTime": 1708328195928,
+        "taskId": null
+    },
+    {
+        "key": "Activity_0hynar5",
+        "type": "userTask",
+        "startTime": 1708328195929,
+        "endTime": 1708328205268,
+        "taskId": "9c4fd48a-cef9-11ee-96f6-aa643deda0c3"
+    },
+    {
+        "key": "Activity_1nkv739",
+        "type": "userTask",
+        "startTime": 1708328205278,
+        "endTime": 1708328209759,
+        "taskId": "a1dc4560-cef9-11ee-96f6-aa643deda0c3"
+    },
+    {
+        "key": "Flow_140531a",
+        "type": "sequenceFlow",
+        "startTime": 1708328209760,
+        "endTime": 1708328209760,
+        "taskId": null
+    },
+    {
+        "key": "Activity_0m8x9be",
+        "type": "userTask",
+        "startTime": 1708328209761,
+        "endTime": 1708328747381,
+        "taskId": "a4882b85-cef9-11ee-96f6-aa643deda0c3"
+    },
+    {
+        "key": "Flow_0u18zdq",
+        "type": "sequenceFlow",
+        "startTime": 1708478146069,
+        "endTime": 1708478146069,
+        "taskId": null
+    },
+    {
+        "key": "Event_0pbmk5n",
+        "type": "endEvent",
+        "startTime": 1708478146071,
+        "endTime": 1708478146071,
+        "taskId": null
+    },
+    {
+        "key": "Flow_003dmj6",
+        "type": "sequenceFlow",
+        "startTime": 1708328747382,
+        "endTime": 1708328747382,
+        "taskId": null
+    },
+    {
+        "key": "Activity_0hynar5",
+        "type": "userTask",
+        "startTime": 1708328747383,
+        "endTime": 1708478146069,
+        "taskId": "e4fac6ea-cefa-11ee-96f6-aa643deda0c3"
     }
-]); 
+]
  
 </script>
 
@@ -207,9 +432,9 @@ import { ref } from 'vue';
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
     border-radius: 6px;
   }
-</style> -->
+</style>
 
-<template>
+<!-- <template>
   <CollapseContainer style="position: relative">
     <MyProcessDesigner
       key="designer"
@@ -277,4 +502,4 @@ onMounted(async () => {
     top: 90px;
     right: 60px;
   }
-</style>
+</style> -->

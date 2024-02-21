@@ -1,6 +1,6 @@
 {
   "name": "@shy-plugins/workflow-bpmn",
-  "version": "0.0.23",
+  "version": "0.0.26",
   "description": "bpmn工作流",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build",
     "patch": "npm version patch",
-    "deploy": "vite build && pnpm publish"
+    "deploy": "vite build && pnpm publish --no-git-checks"
   },
   "files": [
     "lib",

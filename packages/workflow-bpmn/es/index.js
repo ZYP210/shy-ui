@@ -46177,13 +46177,23 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
       }, 1e3);
     });
     watch(() => props.businessObject.id, (id) => {
-      if (id)
-        resetBaseInfo();
+      var _a;
       if (props.businessObject.$type === "bpmn:UserTask") {
-        console.log("userTask add skipExpression", toRaw(bpmnElement.value), props.businessObject.id);
-        updateElementProperties(toRaw(bpmnElement.value), id);
+        const bpmnElement2 = (_a = bpmnInstances2()) == null ? void 0 : _a.bpmnElement;
+        console.log("userTask add skipExpression", toRaw(bpmnElement2), props.businessObject.id);
+        nextTick(() => {
+          updateElementProperties(toRaw(bpmnElement2), id);
+        });
       }
     });
+    watch(
+      () => props.businessObject,
+      (val) => {
+        if (val) {
+          resetBaseInfo();
+        }
+      }
+    );
     onBeforeUnmount(() => {
       bpmnElement.value = null;
     });
@@ -55764,10 +55774,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       let removeTaskDefinitionKeyList = [];
       (_a = bpmnModeler.getDefinitions().rootElements[0].flowElements) == null ? void 0 : _a.forEach((n2) => {
         var _a2, _b, _c;
-        let activity = activityList.find((m2) => m2.key === n2.id);
-        if (!activity) {
+        let activity = null;
+        let activityMap = activityList.filter((m2) => m2.key === n2.id);
+        if (!activityMap.length) {
           return;
         }
+        activity = activityMap[activityMap.length - 1];
         if (n2.$type === "bpmn:UserTask") {
           const task = taskList.value.find((m2) => m2.id === activity.taskId);
           if (!task) {
@@ -55786,7 +55798,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           }
           const outgoing = getActivityOutgoing(activity);
           outgoing == null ? void 0 : outgoing.forEach((nn) => {
-            let targetActivity = activityList.find((m2) => m2.key === nn.targetRef.id);
+            let targetActivity = null;
+            let targetActivityMap = activityList.filter((m2) => m2.key === nn.targetRef.id);
+            targetActivity = targetActivityMap[targetActivityMap.length - 1];
             if (targetActivity) {
               canvas.addMarker(nn.id, targetActivity.endTime ? "highlight" : "highlight-todo");
             } else if (nn.targetRef.$type === "bpmn:ExclusiveGateway") {
@@ -55808,10 +55822,12 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           let matchNN = void 0;
           let matchActivity = void 0;
           (_a2 = n2.outgoing) == null ? void 0 : _a2.forEach((nn) => {
-            let targetActivity = activityList.find((m2) => m2.key === nn.targetRef.id);
-            if (!targetActivity) {
+            let targetActivity = null;
+            let targetActivityMap = activityList.filter((m2) => m2.key === nn.targetRef.id);
+            if (!targetActivityMap.length) {
               return;
             }
+            targetActivity = targetActivityMap[targetActivityMap.length - 1];
             if (!matchActivity || matchActivity.type === "endEvent") {
               matchNN = nn;
               matchActivity = targetActivity;
@@ -55823,7 +55839,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
         } else if (n2.$type === "bpmn:ParallelGateway") {
           canvas.addMarker(n2.id, getActivityHighlightCss(activity));
           (_b = n2.outgoing) == null ? void 0 : _b.forEach((nn) => {
-            const targetActivity = activityList.find((m2) => m2.key === nn.targetRef.id);
+            let targetActivity = null;
+            const targetActivityMap = activityList.filter((m2) => m2.key === nn.targetRef.id);
+            targetActivity = targetActivityMap[targetActivityMap.length - 1];
             if (targetActivity) {
               canvas.addMarker(nn.id, getActivityHighlightCss(targetActivity));
               canvas.addMarker(nn.targetRef.id, getActivityHighlightCss(targetActivity));
@@ -55831,7 +55849,9 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
           });
         } else if (n2.$type === "bpmn:StartEvent") {
           (_c = n2.outgoing) == null ? void 0 : _c.forEach((nn) => {
-            let targetActivity = activityList.find((m2) => m2.key === nn.targetRef.id);
+            let targetActivity = null;
+            let targetActivityMap = activityList.filter((m2) => m2.key === nn.targetRef.id);
+            targetActivity = targetActivityMap[targetActivityMap.length - 1];
             if (targetActivity) {
               canvas.addMarker(nn.id, "highlight");
               canvas.addMarker(n2.id, "highlight");
@@ -55867,7 +55887,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     const getResultCss = (result) => {
       if (result === 1) {
         return "highlight-todo";
-      } else if (result === 2) {
+      } else if (result === 2 || !result) {
         return "highlight";
       } else if (result === 3) {
         return "highlight-reject";
@@ -55910,14 +55930,16 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       });
     };
     const elementHover = (element) => {
-      var _a;
+      var _a, _b, _c;
       element.value = element;
       !elementOverlayIds.value && (elementOverlayIds.value = {});
       !overlays.value && (overlays.value = bpmnModeler.get("overlays"));
-      const activity = activityLists.value.find((m2) => m2.key === element.value.id);
-      if (!activity) {
+      let activity = null;
+      const activityMap = activityLists.value.filter((m2) => m2.key === element.value.id);
+      if (!activityMap.length) {
         return;
       }
+      activity = activityMap[activityMap.length - 1];
       if (!elementOverlayIds.value[element.value.id] && element.value.type !== "bpmn:Process") {
         let html = `<div class="element-overlays">
             <p>Elemet id: ${element.value.id}</p>
@@ -55939,8 +55961,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
               dataResult = element2.label;
             }
           });
-          html = `<p>审批人：${task.assigneeUser.nickname}</p>
-                  <p>部门：${task.assigneeUser.deptName}</p>
+          html = `<p>审批人：${((_a = task == null ? void 0 : task.assigneeUser) == null ? void 0 : _a.nickname) || "--"}</p>
+                  <p>部门：${((_b = task == null ? void 0 : task.assigneeUser) == null ? void 0 : _b.deptName) || "--"}</p>
                   <p>结果：${dataResult}</p>
                   <p>创建时间：${formatToDateTime(task.createTime)}</p>`;
           if (task.endTime) {
@@ -55969,7 +55991,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
             html += `<p>结束时间：${formatToDateTime(processInstance.value.endTime)}</p>`;
           }
         }
-        elementOverlayIds.value[element.value.id] = (_a = toRaw(overlays.value)) == null ? void 0 : _a.add(element.value, {
+        elementOverlayIds.value[element.value.id] = (_c = toRaw(overlays.value)) == null ? void 0 : _c.add(element.value, {
           position: { left: 0, bottom: 0 },
           html: `<div class="element-overlays">${html}</div>`
         });
@@ -55982,6 +56004,7 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
     onMounted(() => {
       xml2.value = props.value;
       activityLists.value = props.activityData;
+      taskList.value = props.taskData;
       initBpmnModeler();
       createNewDiagram(xml2.value);
       initModelListeners();
@@ -56017,7 +56040,8 @@ const _sfc_main = /* @__PURE__ */ defineComponent({
       () => props.taskData,
       (newTaskListData) => {
         taskList.value = newTaskListData;
-        createNewDiagram(xml2.value);
+        if (taskList.value.length > 0)
+          createNewDiagram(xml2.value);
       }
     );
     return (_ctx, _cache) => {

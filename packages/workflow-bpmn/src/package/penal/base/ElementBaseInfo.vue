@@ -40,7 +40,7 @@
 </template>
 <script lang="ts" setup>
 import { Form, FormItem, Input, Button } from 'ant-design-vue';
-import { ref, reactive, toRaw, watch, onMounted, onBeforeUnmount } from 'vue'
+import { ref, reactive, toRaw, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { updateElementProperties} from '../../utils'
   // defineOptions({ name: 'ElementBaseInfo' });
   const labelCol = {
@@ -133,22 +133,24 @@ onMounted(() => {
 });
   //userTask添加flowable:skipExpression属性
 watch(() => props.businessObject.id, (id) => { 
-  if(id) resetBaseInfo();
   if (props.businessObject.$type === 'bpmn:UserTask') { 
-    console.log('userTask add skipExpression',toRaw(bpmnElement.value),props.businessObject.id)
+    const bpmnElement = bpmnInstances()?.bpmnElement;
+    console.log('userTask add skipExpression',toRaw(bpmnElement),props.businessObject.id)
     //在xml中追加属性
-    updateElementProperties(toRaw(bpmnElement.value),id)
+    nextTick(() => { 
+      updateElementProperties(toRaw(bpmnElement),id)
+    })
   }
 })
-  // watch(
-  //   () => props.businessObject,
-  //   (val) => {
-  //     if (val) {
-  //       resetBaseInfo();
-  //     }
-  //   },
+  watch(
+    () => props.businessObject,
+    (val) => {
+      if (val) {
+        resetBaseInfo();
+      }
+    },
 
-  // );
+  );
     onBeforeUnmount(() => {
     bpmnElement.value = null;
   });
