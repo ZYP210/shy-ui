@@ -121,7 +121,8 @@ const columns: any[] = [
     title: '厂家名称',
     dataIndex: 'name',
     editRow: true,
-    globalShow: false
+    globalShow: false,
+    resizable: true
   },
   {
     title: '电话',
