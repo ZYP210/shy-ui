@@ -9,7 +9,7 @@ export interface DescItem {
   isCopy?: boolean
   labelStyle?: CSSProperties
   contentStyle?: CSSProperties
-  helpMessage: String
+  helpMessage: string
 }
 
 export interface DescriptionProps {
@@ -17,9 +17,10 @@ export interface DescriptionProps {
   data: Recordable
   labelWidth?: number
   isShowColon?: boolean
-  labelAlign?: string
+  labelAlign?: 'left' | 'center' | 'right'
   labelStyle?: CSSProperties
-  contentStyle?: CSSProperties
+  contentStyle?: CSSProperties,
+  bordered?: boolean
 }
 
 export interface DescInstance {

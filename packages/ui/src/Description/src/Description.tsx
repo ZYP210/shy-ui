@@ -1,10 +1,11 @@
-import { computed, defineComponent, ref } from 'vue'
+import { CSSProperties, computed, defineComponent, ref } from 'vue'
 import { basicProps, Schema, basicColProps } from './props'
 import { Divider } from 'ant-design-vue'
 import DescriptionGroup from './DescriptionGroup'
 import { CopyOutlined } from '@ant-design/icons-vue'
 import { useMessage } from '@shy-plugins/use'
 import { BasicHelp } from '../../Basic/index'
+import { DescriptionProps } from './typing'
 
 export default defineComponent({
   name: 'Description',
@@ -15,7 +16,7 @@ export default defineComponent({
 
     const { createMessage } = useMessage()
 
-    const getProps = computed(() => {
+    const getProps = computed<DescriptionProps>(() => {
       return {
         ...props,
         ...innerProps.value
@@ -37,6 +38,25 @@ export default defineComponent({
         }
       )
     }
+
+    const isBordered = computed(() => getProps.value.bordered)
+
+    const labelAlignCss = computed<CSSProperties>(() => {
+      switch (getProps.value.labelAlign) {
+        case 'left':
+          return { justifyContent: 'flex-start' }
+        case 'center':
+          return { justifyContent: 'center' }
+        case 'right':
+          return { justifyContent: 'flex-end' }
+        default:
+          if(getProps.value.bordered){
+            return { justifyContent: 'center' }
+          } else {
+            return { justifyContent: 'flex-end' }
+          }
+      }
+    })
 
     const rows = computed(() => {
       let element = null
@@ -75,7 +95,7 @@ export default defineComponent({
                 <span
                   style={{
                     width: `${getProps.value.labelWidth}px`,
-                    textAlign: getProps.value.labelAlign,
+                    ...labelAlignCss.value,
                     ...(getProps.value?.labelStyle
                       ? getProps.value?.labelStyle
                       : {}),
@@ -100,7 +120,7 @@ export default defineComponent({
                   ) : (
                     ''
                   )}
-                  {getProps.value?.isShowColon ? ':' : ''}
+                  {getProps.value?.isShowColon ? '：' : ''}
                 </span>
               ) : (
                 <> </>
@@ -136,6 +156,16 @@ export default defineComponent({
     })
 
     emit('register', { setDescProps })
-    return () => <div class={`${prefixCls}-wrapper`}>{rows.value}</div>
+    return () => (
+      <div
+        class={
+          isBordered.value
+            ? `${prefixCls}-wrapper ${prefixCls}-wrapper-bordered`
+            : `${prefixCls}-wrapper`
+        }
+      >
+        {rows.value}
+      </div>
+    )
   }
 })
