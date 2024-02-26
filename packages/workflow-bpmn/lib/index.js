@@ -47114,9 +47114,10 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
           elementListenersList.value.splice(targetIndex, 0, sourceObj.value);
           bpmnElementListeners.value.splice(sourceIndex, 1);
           bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value);
-          otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
-            (ex) => ex.$type !== `${prefix2}:ExecutionListener`
-          )) ?? [];
+          if (bpmnElement.value.businessObject.extensionElements)
+            otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
+              (ex) => ex.$type !== `${prefix2}:ExecutionListener`
+            )) ?? [];
           updateElementExtensions(
             bpmnElement.value,
             otherExtensionList.value.concat(bpmnElementListeners.value)
@@ -47137,8 +47138,8 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
     const listenerTypeObject = vue.ref(listenerType);
     const fieldTypeObject = vue.ref(fieldType);
     const bpmnElement = vue.ref();
-    const otherExtensionList = vue.ref();
-    const bpmnElementListeners = vue.ref();
+    const otherExtensionList = vue.ref([]);
+    const bpmnElementListeners = vue.ref([]);
     const listenerFormRef = vue.ref();
     const listenerFieldFormRef = vue.ref();
     const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
@@ -47181,9 +47182,10 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
       var _a, _b, _c;
       bpmnElement.value = bpmnInstances2().bpmnElement;
       otherExtensionList.value = [];
-      bpmnElementListeners.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
-        (ex) => ex.$type === `${prefix2}:ExecutionListener`
-      )) ?? [];
+      if (bpmnElement.value.businessObject.extensionElements)
+        bpmnElementListeners.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
+          (ex) => ex.$type === `${prefix2}:ExecutionListener`
+        )) ?? [];
       elementListenersList.value = bpmnElementListeners.value.map(
         (listener) => initListenerType(listener)
       );
@@ -47275,9 +47277,10 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
         bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject2);
         elementListenersList.value.splice(editingListenerIndex.value, 1, listenerForm.value);
       }
-      otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
-        (ex) => ex.$type !== `${prefix2}:ExecutionListener`
-      )) ?? [];
+      if (bpmnElement.value.businessObject.extensionElements)
+        otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
+          (ex) => ex.$type !== `${prefix2}:ExecutionListener`
+        )) ?? [];
       updateElementExtensions(
         bpmnElement.value,
         otherExtensionList.value.concat(bpmnElementListeners.value)
@@ -47995,9 +47998,10 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
           elementListenersList.value.splice(targetIndex, 0, sourceObj.value);
           bpmnElementListeners.value.splice(sourceIndex, 1);
           bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value);
-          otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
-            (ex) => ex.$type !== `${prefix2}:TaskListener`
-          )) ?? [];
+          if (bpmnElement.value.businessObject.extensionElements)
+            otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
+              (ex) => ex.$type !== `${prefix2}:TaskListener`
+            )) ?? [];
           updateElementExtensions(
             bpmnElement.value,
             otherExtensionList.value.concat(bpmnElementListeners.value)
@@ -48020,8 +48024,8 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
     const editingListenerFieldIndex = vue.ref(-1);
     const listenerFieldForm = vue.ref({});
     const bpmnElement = vue.ref();
-    const bpmnElementListeners = vue.ref();
-    const otherExtensionList = vue.ref();
+    const bpmnElementListeners = vue.ref([]);
+    const otherExtensionList = vue.ref([]);
     const listenerFormRef = vue.ref();
     const listenerFieldFormRef = vue.ref();
     const bpmnInstances2 = () => window == null ? void 0 : window.bpmnInstances;
@@ -48072,9 +48076,10 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
       var _a, _b;
       bpmnElement.value = bpmnInstances2().bpmnElement;
       otherExtensionList.value = [];
-      bpmnElementListeners.value = ((_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values.filter(
-        (ex) => ex.$type === `${prefix2}:TaskListener`
-      )) ?? [];
+      if (bpmnElement.value.businessObject.extensionElements)
+        bpmnElementListeners.value = ((_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values.filter(
+          (ex) => ex.$type === `${prefix2}:TaskListener`
+        )) ?? [];
       elementListenersList.value = bpmnElementListeners.value.map(
         (listener) => initListenerType(listener)
       );
@@ -48130,9 +48135,10 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
         bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject2);
         elementListenersList.value.splice(editingListenerIndex.value, 1, listenerForm.value);
       }
-      otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
-        (ex) => ex.$type !== `${prefix2}:TaskListener`
-      )) ?? [];
+      if (bpmnElement.value.businessObject.extensionElements)
+        otherExtensionList.value = ((_c = (_b = (_a = bpmnElement.value.businessObject) == null ? void 0 : _a.extensionElements) == null ? void 0 : _b.values) == null ? void 0 : _c.filter(
+          (ex) => ex.$type !== `${prefix2}:TaskListener`
+        )) ?? [];
       updateElementExtensions(
         bpmnElement.value,
         otherExtensionList.value.concat(bpmnElementListeners.value)

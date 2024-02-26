@@ -320,6 +320,7 @@ const listenerObject=ref({})
           elementListenersList.value.splice(targetIndex, 0, sourceObj.value)
           bpmnElementListeners.value.splice(sourceIndex, 1)
           bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value)
+          if(bpmnElement.value.businessObject.extensionElements)
           otherExtensionList.value =
           bpmnElement.value.businessObject?.extensionElements?.values?.filter(
             (ex) => ex.$type !== `${prefix}:TaskListener`,
@@ -350,8 +351,8 @@ const listenerObject=ref({})
   const editingListenerFieldIndex = ref(-1); // 字段所在下标，-1 为新增
   const listenerFieldForm = ref<any>({}); // 监听器 注入字段 详情表单
   const bpmnElement = ref();
-  const bpmnElementListeners = ref();
-  const otherExtensionList = ref();
+  const bpmnElementListeners = ref([]);
+  const otherExtensionList = ref([]);
   const listenerFormRef = ref();
   const listenerFieldFormRef = ref();
   const bpmnInstances = () => (window as any)?.bpmnInstances;
@@ -398,9 +399,11 @@ const listenerObject=ref({})
     },
     { width: 90, title: '操作', dataIndex: 'action' },
   ];
-  const resetListenersList = () => {
+const resetListenersList = () => {
+    
     bpmnElement.value = bpmnInstances().bpmnElement;
-    otherExtensionList.value = [];
+  otherExtensionList.value = [];
+    if(bpmnElement.value.businessObject.extensionElements)
     bpmnElementListeners.value =
       bpmnElement.value.businessObject?.extensionElements?.values.filter(
         (ex) => ex.$type === `${prefix}:TaskListener`,
@@ -459,8 +462,9 @@ const openListenerForm = (listener, index?) => {
     } else {
       bpmnElementListeners.value.splice(editingListenerIndex.value, 1, listenerObject);
       elementListenersList.value.splice(editingListenerIndex.value, 1, listenerForm.value);
-    }
+    }    
     // 保存其他配置
+    if(bpmnElement.value.businessObject.extensionElements)
     otherExtensionList.value =
       bpmnElement.value.businessObject?.extensionElements?.values?.filter(
         (ex) => ex.$type !== `${prefix}:TaskListener`,

@@ -291,6 +291,7 @@ const customRow = (record, index) => {
           elementListenersList.value.splice(targetIndex, 0, sourceObj.value)
           bpmnElementListeners.value.splice(sourceIndex, 1)
           bpmnElementListeners.value.splice(targetIndex, 0, listenerObject.value)
+          if( bpmnElement.value.businessObject.extensionElements)
           otherExtensionList.value =
           bpmnElement.value.businessObject?.extensionElements?.values?.filter(
             (ex) => ex.$type !== `${prefix}:ExecutionListener`,
@@ -319,8 +320,8 @@ const customRow = (record, index) => {
   const listenerTypeObject = ref(listenerType);
   const fieldTypeObject = ref(fieldType);
   const bpmnElement = ref();
-  const otherExtensionList = ref();
-  const bpmnElementListeners = ref();
+  const otherExtensionList = ref([]);
+  const bpmnElementListeners = ref([]);
   const listenerFormRef = ref();
   const listenerFieldFormRef = ref();
   const bpmnInstances = () => (window as any)?.bpmnInstances;
@@ -362,6 +363,7 @@ const customRow = (record, index) => {
   const resetListenersList = () => {
     bpmnElement.value = bpmnInstances().bpmnElement;
     otherExtensionList.value = [];
+    if(bpmnElement.value.businessObject.extensionElements)
     bpmnElementListeners.value =
       bpmnElement.value.businessObject?.extensionElements?.values?.filter(
         (ex) => ex.$type === `${prefix}:ExecutionListener`,
@@ -463,6 +465,7 @@ const customRow = (record, index) => {
       elementListenersList.value.splice(editingListenerIndex.value, 1, listenerForm.value);
     }
     // 保存其他配置
+    if(bpmnElement.value.businessObject.extensionElements)
     otherExtensionList.value =
       bpmnElement.value.businessObject?.extensionElements?.values?.filter(
         (ex) => ex.$type !== `${prefix}:ExecutionListener`,

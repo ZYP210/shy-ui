@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div class="box-card">
     <MyProcessViewer
       key="designer"
@@ -432,9 +432,9 @@ const bpmProcessInstanceResult = [
     box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.12);
     border-radius: 6px;
   }
-</style>
+</style> -->
 
-<!-- <template>
+<template>
   <CollapseContainer style="position: relative">
     <MyProcessDesigner
       key="designer"
@@ -502,4 +502,4 @@ onMounted(async () => {
     top: 90px;
     right: 60px;
   }
-</style> -->
+</style>
