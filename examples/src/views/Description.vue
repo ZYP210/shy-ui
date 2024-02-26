@@ -4,7 +4,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { Description, DescItem, useDescription } from '3h1-ui'
+import { Description, useDescription } from '3h1-ui'
 import { h } from 'vue'
 import { Tag } from 'ant-design-vue'
 const mockData: any = {
@@ -25,15 +25,14 @@ const schema: any[] = [
   },
   {
     field: 'username',
-    label: '',
-    colProps: { span: 12 },
+    label: '测试',
+    colProps: { span: 8 },
     isCopy: true,
-    contentStyle: { marginLeft: `200px` }
   },
   {
     field: 'nickName',
     label: '昵称',
-    colProps: { span: 12 },
+    colProps: { span: 16 },
     isCopy: false,
     customRender: (data) => {
       return h(Tag, { color: 'success' }, data.phone)
@@ -66,12 +65,9 @@ const fun = (color) => {
 const [register, { setDescProps }] = useDescription({
   data: mockData,
   schema,
-  labelAlign: 'left',
-  labelStyle: { width: `100px` },
-  contentStyle: {}
 })
 
 onMounted(() => { 
-  setDescProps({ data: { phone:1111 } })
+  setDescProps({ data: mockData, labelWidth: 110, bordered: false })
 })
 </script>

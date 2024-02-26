@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+import { PropType, reactive } from 'vue'
 import type { CSSProperties } from 'vue'
 
 export interface Schema {
@@ -11,19 +11,18 @@ export interface Schema {
   isCopy?: boolean
   labelStyle?: CSSProperties
   contentStyle?: CSSProperties
-  customRender: any
+  customRender?: any
   helpMessage: string
 }
 export const basicColProps = 24
 
-export const basicProps = {
+export const basicProps = reactive({
   schema: {
     type: Array as PropType<Schema[]>,
     default: () => []
   },
   labelAlign: {
-    type: String,
-    default: () => 'right'
+    type: String as PropType<'left' | 'center' | 'right'>,
   },
   labelWidth: {
     type: Number as PropType<number | string>,
@@ -37,8 +36,12 @@ export const basicProps = {
     type: Object,
     default: () => ({})
   },
+  bordered: {
+    type: Boolean,
+    default: () => false
+  },
   customRender: {
     type: Object,
     default: () => null
   }
-}
+})
