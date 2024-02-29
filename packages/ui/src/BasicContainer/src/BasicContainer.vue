@@ -2,8 +2,15 @@
   <div :class="prefixCls">
     <div v-if="isShowHeader" :class="`${prefixCls}-header`">
       <div :class="`${prefixCls}-header-title`">
-        <div :class="`${prefixCls}-header-title-icon`" @click="emit('cancel')">
+        <div
+          v-if="!loading"
+          :class="`${prefixCls}-header-title-icon`"
+          @click="emit('cancel')"
+        >
           <ArrowLeftOutlined :style="{ fontSize: `16px` }" />
+        </div>
+        <div v-if="loading" :class="`${prefixCls}-header-title-loading-icon`">
+          <LoadingOutlined :style="{ fontSize: `16px` }" />
         </div>
         <div :class="`${prefixCls}-header-title-text`">{{ title }}</div>
       </div>
@@ -15,19 +22,33 @@
       <slot></slot>
     </div>
     <div v-if="isShowFooter" :class="`${prefixCls}-footer ${footerAlignRef}`">
-      <div :class="`${prefixCls}-footer-buttons ${cancelAlignRef}`" v-if="isShowBtn">
+      <div
+        :class="`${prefixCls}-footer-buttons ${cancelAlignRef}`"
+        v-if="isShowBtn"
+      >
         <Button
-          :class="`${prefixCls}-footer-cancel-button`"
           v-if="isShowCancelBtn"
+          :class="`${prefixCls}-footer-cancel-button`"
+          :loading="loading"
           @click="emit('cancel')"
         >
           {{ cancelBtnText }}
         </Button>
         <div :class="`${prefixCls}-footer-fn-buttons`">
-          <Button v-if="isShowSaveBtn" type="primary" @click="emit('save')">
+          <Button
+            v-if="isShowSaveBtn"
+            type="primary"
+            :loading="loading"
+            @click="emit('save')"
+          >
             {{ saveBtnText }}
           </Button>
-          <Button v-if="isShowSubmitBtn" type="primary" @click="emit('submit')">
+          <Button
+            v-if="isShowSubmitBtn"
+            type="primary"
+            :loading="loading"
+            @click="emit('submit')"
+          >
             {{ submitBtnText }}
           </Button>
           <slot name="buttons"></slot>
@@ -40,7 +61,7 @@
 
 <script lang="ts">
 import { Button } from 'ant-design-vue'
-import { ArrowLeftOutlined } from '@ant-design/icons-vue'
+import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons-vue'
 import { defineComponent, computed } from 'vue'
 import { basicContainerProps } from './props'
 import { useDesign } from '@shy-plugins/use'
@@ -48,7 +69,8 @@ import { useDesign } from '@shy-plugins/use'
 export default defineComponent({
   components: {
     Button,
-    ArrowLeftOutlined
+    ArrowLeftOutlined,
+    LoadingOutlined
   },
   props: basicContainerProps,
   emits: ['submit', 'cancel', 'save'],
@@ -151,7 +173,6 @@ export default defineComponent({
 
   &-footer-cancel-left {
     flex-direction: row;
-    
   }
 
   &-footer-cancel-right {
