@@ -4,6 +4,10 @@ export const basicContainerProps = reactive({
   title: {
     type: String
   },
+  loading: {
+    type: Boolean,
+    default: false
+  },
   isShowHeader: {
     type: Boolean,
     default: true

@@ -1,5 +1,5 @@
 <template>
-  <BasicContainer title="详情" footer-align="center" cancel-align="right">
+  <BasicContainer title="详情" footer-align="center" cancel-align="right" :loading="loading">
     <template #extra> Extra </template>
     <div class="min-h-7777px">sdsadsad</div>
 
@@ -10,4 +10,6 @@
 <script lang="ts" setup>
 import { Button } from 'ant-design-vue'
 import { BasicContainer } from '3h1-ui'
+
+const loading = ref(true);
 </script>
