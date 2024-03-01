@@ -107,7 +107,7 @@ export const getVersion = async (jsonData: any) => {
 
   const res = await prompts(question)
 
-  const filePath = './scripts/tag.txt'
+  const filePath = '../../scripts/tag.txt'
   fs.writeFile(filePath, res.tag, (err: string) => {
     console.log(err)
   })
