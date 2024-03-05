@@ -57,16 +57,31 @@ function handleItem(item: BasicColumn, ellipsis: boolean) {
 
 function handleColumnResize(
   propsRef: ComputedRef<BasicTableProps>,
-  columns: BasicColumn[]
+  columns: BasicColumn[],
+  wrapRef: Ref
 ) {
+  const tableWidth =
+    wrapRef.value?.querySelector?.('.ant-table-body')?.clientWidth
+  const selectWidth = 60;
+  const [sumWidth, sumLength] = columns.reduce(
+    ([sumWidth, length], cur) => {
+      if (typeof cur.width === 'number') {
+        return [sumWidth + cur.width, ++length]
+      }
+      return [sumWidth, length]
+    },
+    [0, 0]
+  )
+  const length = columns.length
+  const colWidth = tableWidth ? (tableWidth - sumWidth - selectWidth) / (length - sumLength) : 100
   columns.forEach((item) => {
-    if (item.flag === 'ACTION') return
+    if (item.flag) return
     if (propsRef.value.resizable) {
-      item.width = item.width || 100
+      item.width = item.width || colWidth
       item.resizable = item.resizable === undefined ? true : item.resizable
     } else {
       if (item.resizable) {
-        item.width = item.width || 100
+        item.width = item.width || colWidth
       }
     }
   })
@@ -159,7 +174,7 @@ export function useColumns(
   propsRef: ComputedRef<BasicTableProps>,
   getPaginationRef: ComputedRef<boolean | PaginationProps>,
   tableAction: ComputedRef<TableActionType>,
-  tableElRef: Ref<ComponentRef>
+  wrapRef: Ref<ComponentRef>
 ) {
   const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<
     BasicColumn[]
@@ -171,7 +186,7 @@ export function useColumns(
 
     handleIndexColumn(propsRef, getPaginationRef, columns)
     handleActionColumn(propsRef, columns)
-    handleColumnResize(propsRef, columns)
+    handleColumnResize(propsRef, columns, wrapRef)
 
     if (!columns) {
       return []

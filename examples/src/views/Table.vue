@@ -88,7 +88,7 @@ const columns: any[] = [
   {
     title: '合格数',
     dataIndex: 'qualifiedNum',
-    width: 200,
+    // width: 200,
 
     editComponent: 'InputNumber',
     editComponentProps({ record, tableAction }) {
@@ -122,7 +122,8 @@ const columns: any[] = [
     dataIndex: 'name',
     editRow: true,
     globalShow: false,
-    resizable: true
+    resizable: true,
+    width: 300,
   },
   {
     title: '电话',
@@ -184,7 +185,6 @@ const [
   }
 ] = useTable({
   api: (params) => {
-    console.log('params', params)
 
     return Array.from({ length: 300 }, (_, i) => {
       return {
