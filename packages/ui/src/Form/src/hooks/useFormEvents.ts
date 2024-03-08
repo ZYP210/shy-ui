@@ -19,6 +19,7 @@ import {
   defaultValueComponents
 } from '../helper'
 import { cloneDeep, uniqBy } from 'lodash-es'
+import dayjs from 'dayjs'
 
 interface UseFormActionContext {
   emit: EmitType
@@ -89,6 +90,7 @@ export function useFormEvents({
       if (hasKey && fields.includes(key)) {
         // time type
         if (itemIsDateType(key)) {
+          console.log(key, value)
           if (Array.isArray(value)) {
             const arr: any[] = []
             for (const ele of value) {
@@ -102,9 +104,10 @@ export function useFormEvents({
             if (typeof componentProps === 'function') {
               _props = _props({ formModel })
             }
+            if(typeof value !== 'string') value = dayjs(value)
             formModel[key] = value
               ? _props?.valueFormat
-                ? value
+                ? dayjs(value).format(_props?.valueFormat)
                 : dateUtil(value)
               : null
           }

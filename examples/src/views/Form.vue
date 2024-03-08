@@ -124,10 +124,11 @@ const schemas = ref<FormSchema[]>([
   {
     field: 'startDate',
     label: '日期范围',
-    component: 'RangePicker',
+    component: 'DatePicker',
     colProps: { span: 24 },
     componentProps: {
-      valueFormat: 'YYYY-MM-DD HH:mm:ss'
+      valueFormat: 'YYYY-MM-DD HH:mm:ss',
+      showTime: true
     }
   },
   {
@@ -369,7 +370,7 @@ const handleReset = () => {
 onMounted(() => {
   setFieldsValue({
     Tinymce: '123',
-    startDate: ['1996-10-10 00:00:00', '2023-11-10 23:59:59']
+    startDate: new Date().getTime()
   })
   // setTimeout(() => {
   //   setFieldsValue({
