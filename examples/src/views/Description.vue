@@ -9,7 +9,7 @@ import { h } from 'vue'
 import { Tag } from 'ant-design-vue'
 const mockData: any = {
   username: 'test',
-  nickName: 'VB',
+  // nickName: 'VB',
   age: 123,
   phone: '15695909xxx',
   email: '190848757@qq.com',
@@ -19,10 +19,10 @@ const mockData: any = {
   tag: 'orange'
 }
 const schema: any[] = [
-  {
-    label: '基本信息',
-    component: 'Group'
-  },
+  // {
+  //   label: '基本信息',
+  //   component: 'Group'
+  // },
   {
     field: 'username',
     label: '测试',
@@ -36,12 +36,16 @@ const schema: any[] = [
     isCopy: false,
     customRender: (data) => {
       return h(Tag, { color: 'success' }, data.phone)
+    },
+    ifShow: (data) => {
+      console.log(data)
+      return !!data.nickName
     }
   },
-  {
-    label: '用户信息',
-    component: 'Divider'
-  },
+  // {
+  //   label: '用户信息',
+  //   component: 'Divider'
+  // },
   {
     field: 'phone',
     label: '联系电话',
@@ -63,11 +67,12 @@ const fun = (color) => {
   return h(Tag, { style: { color } }, 222)
 }
 const [register, { setDescProps }] = useDescription({
-  data: mockData,
+  // data: mockData,
+  bordered: true,
   schema,
 })
 
 onMounted(() => { 
-  setDescProps({ data: mockData, labelWidth: 110, bordered: false })
+  setDescProps({ data: mockData, labelWidth: 110 })
 })
 </script>

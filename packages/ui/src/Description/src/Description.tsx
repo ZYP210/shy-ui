@@ -6,6 +6,7 @@ import { CopyOutlined } from '@ant-design/icons-vue'
 import { useMessage } from '@shy-plugins/use'
 import { BasicHelp } from '../../Basic/index'
 import { DescriptionProps } from './typing'
+import { isBoolean, isFunction } from '@shy-plugins/utils'
 
 export default defineComponent({
   name: 'Description',
@@ -50,7 +51,7 @@ export default defineComponent({
         case 'right':
           return { justifyContent: 'flex-end' }
         default:
-          if(getProps.value.bordered){
+          if (getProps.value.bordered) {
             return { justifyContent: 'center' }
           } else {
             return { justifyContent: 'flex-end' }
@@ -82,7 +83,14 @@ export default defineComponent({
                 })
               : getProps.value.data[`${item.field}`]
           }
-          return (
+
+          const ifShow = isBoolean(item?.ifShow) || isFunction(item?.ifShow)
+            ? isFunction(item.ifShow)
+              ? item.ifShow(getProps.value.data)
+              : item.ifShow
+            : true
+
+          return ifShow ? (
             <div
               class={`${prefixCls}-row`}
               style={{
@@ -150,7 +158,7 @@ export default defineComponent({
                 ) : null}
               </span>
             </div>
-          )
+          ) : null
         }
       })
     })

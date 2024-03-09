@@ -13,6 +13,7 @@ export interface Schema {
   contentStyle?: CSSProperties
   customRender?: any
   helpMessage: string
+  ifShow?: (data) => boolean | boolean
 }
 export const basicColProps = 24
 
@@ -22,7 +23,7 @@ export const basicProps = reactive({
     default: () => []
   },
   labelAlign: {
-    type: String as PropType<'left' | 'center' | 'right'>,
+    type: String as PropType<'left' | 'center' | 'right'>
   },
   labelWidth: {
     type: Number as PropType<number | string>,
