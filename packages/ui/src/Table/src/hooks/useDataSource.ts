@@ -63,7 +63,7 @@ export function useDataSource(
       const total = dataSourceRef.value.reduce((acc, cur) => {
         return acc + (cur[field] || 0)
       }, 0)
-      obj[field] = total
+      obj[field] = Number.parseFloat(total.toFixed(2)).toLocaleString('en-US')
     })
     return obj
   })

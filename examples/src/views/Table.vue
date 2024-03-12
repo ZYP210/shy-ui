@@ -1,45 +1,52 @@
 <template>
-  <div class="flex flex-col">
-    <div class="flex-auto p-10px">
+  <div class=" w-full h-full flex flex-col">
+    <div class="flex-1 p-10px">
       <a-button @click="pushApi">点我</a-button>
-      <BasicTable
-        title="基础示例"
-        titleHelpMessage="温馨提醒"
-        @register="register"
-        @selection-change="handleSelectChange"
-      >
-        <template #toolbar>
-          <a-button type="primary"> 操作按钮 </a-button>
-        </template>
-
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex === 'action'">
-            <TableAction
-              :actions="[
-                {
-                  label: '编辑',
-                  onClick: handleEdit.bind(null, record)
-                },
-                {
-                  label: '保存',
-                  onClick: handleSave.bind(null, record)
-                },
-                {
-                  label: '测试',
-                  onClick: handleSave.bind(null, record)
-                },
-                {
-                  label: '取消',
-                  popConfirm: {
-                    title: '是否取消编辑',
-                    confirm: handleCancel.bind(null, record)
-                  }
-                }
-              ]"
-            />
+      <div class="flex-1">
+        <BasicTable
+          title="基础示例"
+          titleHelpMessage="温馨提醒"
+          @register="register"
+          @selection-change="handleSelectChange"
+        >
+          <template #toolbar>
+            <a-button type="primary"> 操作按钮 </a-button>
           </template>
-        </template>
-      </BasicTable>
+
+          <template #headerCell="{ column }">
+            <div v-if="column.flag === 'INDEX'">111</div>
+            <div v-else>{{ column.customTitle }}</div>
+          </template>
+
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.dataIndex === 'action'">
+              <TableAction
+                :actions="[
+                  {
+                    label: '编辑',
+                    onClick: handleEdit.bind(null, record)
+                  },
+                  {
+                    label: '保存',
+                    onClick: handleSave.bind(null, record)
+                  },
+                  {
+                    label: '测试',
+                    onClick: handleSave.bind(null, record)
+                  },
+                  {
+                    label: '取消',
+                    popConfirm: {
+                      title: '是否取消编辑',
+                      confirm: handleCancel.bind(null, record)
+                    }
+                  }
+                ]"
+              />
+            </template>
+          </template>
+        </BasicTable>
+      </div>
     </div>
   </div>
 </template>
@@ -66,7 +73,7 @@ const columns: any[] = [
     title: '产地范围',
     dataIndex: 'rangePlace',
     editRow: true,
-
+    editable: true,
     editComponent: 'Input',
     editRule: true,
     editComponentProps: (params) => {
@@ -74,7 +81,7 @@ const columns: any[] = [
       return {
         params: { type: 1 },
         api: (params) => {
-          console.log(params)
+          // console.log(params)
           return [
             { label: 1, value: 2, children: [{ label: 1, value: 2 }] },
             { label: 2, value: 3 }
@@ -123,7 +130,7 @@ const columns: any[] = [
     editRow: true,
     globalShow: false,
     resizable: true,
-    width: 300,
+    width: 300
   },
   {
     title: '电话',
@@ -185,7 +192,6 @@ const [
   }
 ] = useTable({
   api: (params) => {
-
     return Array.from({ length: 300 }, (_, i) => {
       return {
         id: i,
@@ -197,7 +203,7 @@ const [
         phone: '1212121',
         address: '1111',
         remark: 999,
-        qualifiedNum: 100
+        qualifiedNum: 100.011111111
       }
     })
   },
@@ -221,15 +227,16 @@ const [
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
   useAdvancedSearch: true,
-  rowSelection: {},
+  // rowSelection: {},
   clickToRowSelect: false,
   useSearchForm: true,
-  actionColumn: {
-    width: 250,
-    dataIndex: 'action',
-    title: '操作',
-    fixed: 'right'
-  },
+  canResize: false,
+  // actionColumn: {
+  //   width: 250,
+  //   dataIndex: 'action',
+  //   title: '操作',
+  //   fixed: 'right'
+  // },
   showIndexColumn: true,
   indexColumn: {}
 })
