@@ -70,7 +70,8 @@ export const URLData: MenuList[] = [
       'Transition',
       'Tree',
       'workflow-dingding',
-      'workflow-bpmn'
+      'workflow-bpmn',
+      'ColorPickerPopover'
     ]
   }
 ]

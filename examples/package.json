@@ -13,7 +13,7 @@
     "@ant-design/icons-vue": "^6.1.0",
     "@iconify/iconify": "^3.0.1",
     "@shy-plugins/ai-map": "workspace:^",
-    "ant-design-vue": "^3.2.20",
+    "ant-design-vue": "^4.1.2",
     "axios": "^1.2.1",
     "vite-plugin-purge-icons": "^0.9.2",
     "vite-plugin-svg-icons": "^2.0.1",

@@ -184,8 +184,8 @@ importers:
         specifier: workspace:^
         version: link:../packages/aiMap
       ant-design-vue:
-        specifier: ^3.2.20
-        version: 3.2.20(vue@3.3.4)
+        specifier: ^4.1.2
+        version: 4.1.2(vue@3.3.4)
       axios:
         specifier: ^1.2.1
         version: 1.2.6
@@ -457,8 +457,8 @@ importers:
         specifier: workspace:*
         version: link:../utils
       ant-design-vue:
-        specifier: ^3.2.15
-        version: 3.2.15(vue@3.4.21)
+        specifier: ^4.1.2
+        version: 4.1.2(vue@3.4.21)
 
   packages/utils:
     dependencies:
@@ -469,8 +469,8 @@ importers:
         specifier: ^9.6.0
         version: 9.12.0(vue@3.4.21)
       ant-design-vue:
-        specifier: ^3.2.15
-        version: 3.2.15(vue@3.4.21)
+        specifier: ^4.1.2
+        version: 4.1.2(vue@3.4.21)
       crypto-js:
         specifier: ^4.1.1
         version: 4.1.1
@@ -508,8 +508,8 @@ importers:
   packages/workflow-dingding:
     dependencies:
       ant-design-vue:
-        specifier: ^3.2.15
-        version: 3.2.20(vue@3.4.21)
+        specifier: ^4.1.2
+        version: 4.1.2(vue@3.4.21)
       vuex:
         specifier: 4.0.0
         version: 4.0.0(vue@3.4.21)
@@ -784,6 +784,26 @@ packages:
       '@ant-design/colors': 6.0.0
       '@ant-design/icons-svg': 4.2.1
       vue: 3.3.13(typescript@5.0.4)
+    dev: false
+
+  /@ant-design/icons-vue@7.0.1(vue@3.3.4):
+    resolution: {integrity: sha512-eCqY2unfZK6Fe02AwFlDHLfoyEFreP6rBwAZMIJ1LugmfMiVgwWDYlp1YsRugaPtICYOabV1iWxXdP12u9U43Q==}
+    peerDependencies:
+      vue: '>=3.0.3'
+    dependencies:
+      '@ant-design/colors': 6.0.0
+      '@ant-design/icons-svg': 4.2.1
+      vue: 3.3.4
+    dev: false
+
+  /@ant-design/icons-vue@7.0.1(vue@3.4.21):
+    resolution: {integrity: sha512-eCqY2unfZK6Fe02AwFlDHLfoyEFreP6rBwAZMIJ1LugmfMiVgwWDYlp1YsRugaPtICYOabV1iWxXdP12u9U43Q==}
+    peerDependencies:
+      vue: '>=3.0.3'
+    dependencies:
+      '@ant-design/colors': 6.0.0
+      '@ant-design/icons-svg': 4.2.1
+      vue: 3.4.21(typescript@4.9.4)
     dev: false
 
   /@antfu/eslint-config-basic@0.39.3(@typescript-eslint/eslint-plugin@5.59.11)(@typescript-eslint/parser@5.59.11)(eslint@8.41.0)(typescript@5.0.4):
@@ -2385,13 +2405,6 @@ packages:
   /@babel/regjsgen@0.8.0:
     resolution: {integrity: sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==}
     dev: true
-
-  /@babel/runtime@7.21.5:
-    resolution: {integrity: sha512-8jI69toZqqcsnqGGqwGS4Qb1VwLOEp4hz+CXPywcvjs60u3B4Pom/U/7rm4W8tMOYEB+E9wgD0mW1l3r8qlI9Q==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      regenerator-runtime: 0.13.11
-    dev: false
 
   /@babel/runtime@7.22.11:
     resolution: {integrity: sha512-ee7jVNlWN09+KftVOu9n7S8gQzD/Z6hN/I8VBRXW4P1+Xe7kJGXMwu8vds4aGIMHZnNbdpSWCfZZtinytpcAvA==}
@@ -6653,32 +6666,6 @@ packages:
     engines: {node: '>=12'}
     dev: true
 
-  /ant-design-vue@3.2.15(vue@3.4.21):
-    resolution: {integrity: sha512-sJfE7LWimSdAPe4dzNyQBrmVMnOTNQTkG9oOyr+7W8qIYrX8sYWyC68Nn1uum4KBJUSZUa/BU6dohvTG0urBhA==}
-    engines: {node: '>=12.22.0'}
-    peerDependencies:
-      vue: '>=3.2.0'
-    dependencies:
-      '@ant-design/colors': 6.0.0
-      '@ant-design/icons-vue': 6.1.0(vue@3.4.21)
-      '@babel/runtime': 7.21.5
-      '@ctrl/tinycolor': 3.6.0
-      '@simonwep/pickr': 1.8.2
-      array-tree-filter: 2.1.0
-      async-validator: 4.2.5
-      dayjs: 1.11.10
-      dom-align: 1.12.4
-      dom-scroll-into-view: 2.0.1
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      resize-observer-polyfill: 1.5.1
-      scroll-into-view-if-needed: 2.2.31
-      shallow-equal: 1.2.1
-      vue: 3.4.21(typescript@4.9.4)
-      vue-types: 3.0.2(vue@3.4.21)
-      warning: 4.0.3
-    dev: false
-
   /ant-design-vue@3.2.20(vue@3.3.13):
     resolution: {integrity: sha512-YWpMfGaGoRastIXEYfCoJiaRiDHk4chqtYhlKQM5GqPt6NfvrM1Vg2e60yHtjxlZjed91wCMm0rAmyUr7Hwzdg==}
     engines: {node: '>=12.22.0'}
@@ -6702,58 +6689,6 @@ packages:
       shallow-equal: 1.2.1
       vue: 3.3.13(typescript@5.0.4)
       vue-types: 3.0.2(vue@3.3.13)
-      warning: 4.0.3
-    dev: false
-
-  /ant-design-vue@3.2.20(vue@3.3.4):
-    resolution: {integrity: sha512-YWpMfGaGoRastIXEYfCoJiaRiDHk4chqtYhlKQM5GqPt6NfvrM1Vg2e60yHtjxlZjed91wCMm0rAmyUr7Hwzdg==}
-    engines: {node: '>=12.22.0'}
-    peerDependencies:
-      vue: '>=3.2.0'
-    dependencies:
-      '@ant-design/colors': 6.0.0
-      '@ant-design/icons-vue': 6.1.0(vue@3.3.4)
-      '@babel/runtime': 7.22.11
-      '@ctrl/tinycolor': 3.6.0
-      '@simonwep/pickr': 1.8.2
-      array-tree-filter: 2.1.0
-      async-validator: 4.2.5
-      dayjs: 1.11.10
-      dom-align: 1.12.4
-      dom-scroll-into-view: 2.0.1
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      resize-observer-polyfill: 1.5.1
-      scroll-into-view-if-needed: 2.2.31
-      shallow-equal: 1.2.1
-      vue: 3.3.4
-      vue-types: 3.0.2(vue@3.3.4)
-      warning: 4.0.3
-    dev: false
-
-  /ant-design-vue@3.2.20(vue@3.4.21):
-    resolution: {integrity: sha512-YWpMfGaGoRastIXEYfCoJiaRiDHk4chqtYhlKQM5GqPt6NfvrM1Vg2e60yHtjxlZjed91wCMm0rAmyUr7Hwzdg==}
-    engines: {node: '>=12.22.0'}
-    peerDependencies:
-      vue: '>=3.2.0'
-    dependencies:
-      '@ant-design/colors': 6.0.0
-      '@ant-design/icons-vue': 6.1.0(vue@3.4.21)
-      '@babel/runtime': 7.22.11
-      '@ctrl/tinycolor': 3.6.0
-      '@simonwep/pickr': 1.8.2
-      array-tree-filter: 2.1.0
-      async-validator: 4.2.5
-      dayjs: 1.11.10
-      dom-align: 1.12.4
-      dom-scroll-into-view: 2.0.1
-      lodash: 4.17.21
-      lodash-es: 4.17.21
-      resize-observer-polyfill: 1.5.1
-      scroll-into-view-if-needed: 2.2.31
-      shallow-equal: 1.2.1
-      vue: 3.4.21(typescript@4.9.4)
-      vue-types: 3.0.2(vue@3.4.21)
       warning: 4.0.3
     dev: false
 
@@ -6785,6 +6720,68 @@ packages:
       throttle-debounce: 5.0.0
       vue: 3.2.45
       vue-types: 3.0.2(vue@3.2.45)
+      warning: 4.0.3
+    dev: false
+
+  /ant-design-vue@4.1.2(vue@3.3.4):
+    resolution: {integrity: sha512-ynFkDJLlHgumeK6Hr1UZ7PvQNZ1uBcri/pmejBdS3kRqHeA5VRsxneYDwa8YxA+uYB5YfT2jpYsSHsiMiCjRGg==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      vue: '>=3.2.0'
+    dependencies:
+      '@ant-design/colors': 6.0.0
+      '@ant-design/icons-vue': 7.0.1(vue@3.3.4)
+      '@babel/runtime': 7.24.0
+      '@ctrl/tinycolor': 3.6.1
+      '@emotion/hash': 0.9.1
+      '@emotion/unitless': 0.8.1
+      '@simonwep/pickr': 1.8.2
+      array-tree-filter: 2.1.0
+      async-validator: 4.2.5
+      csstype: 3.1.3
+      dayjs: 1.11.10
+      dom-align: 1.12.4
+      dom-scroll-into-view: 2.0.1
+      lodash: 4.17.21
+      lodash-es: 4.17.21
+      resize-observer-polyfill: 1.5.1
+      scroll-into-view-if-needed: 2.2.31
+      shallow-equal: 1.2.1
+      stylis: 4.3.1
+      throttle-debounce: 5.0.0
+      vue: 3.3.4
+      vue-types: 3.0.2(vue@3.3.4)
+      warning: 4.0.3
+    dev: false
+
+  /ant-design-vue@4.1.2(vue@3.4.21):
+    resolution: {integrity: sha512-ynFkDJLlHgumeK6Hr1UZ7PvQNZ1uBcri/pmejBdS3kRqHeA5VRsxneYDwa8YxA+uYB5YfT2jpYsSHsiMiCjRGg==}
+    engines: {node: '>=12.22.0'}
+    peerDependencies:
+      vue: '>=3.2.0'
+    dependencies:
+      '@ant-design/colors': 6.0.0
+      '@ant-design/icons-vue': 7.0.1(vue@3.4.21)
+      '@babel/runtime': 7.24.0
+      '@ctrl/tinycolor': 3.6.1
+      '@emotion/hash': 0.9.1
+      '@emotion/unitless': 0.8.1
+      '@simonwep/pickr': 1.8.2
+      array-tree-filter: 2.1.0
+      async-validator: 4.2.5
+      csstype: 3.1.3
+      dayjs: 1.11.10
+      dom-align: 1.12.4
+      dom-scroll-into-view: 2.0.1
+      lodash: 4.17.21
+      lodash-es: 4.17.21
+      resize-observer-polyfill: 1.5.1
+      scroll-into-view-if-needed: 2.2.31
+      shallow-equal: 1.2.1
+      stylis: 4.3.1
+      throttle-debounce: 5.0.0
+      vue: 3.4.21(typescript@4.9.4)
+      vue-types: 3.0.2(vue@3.4.21)
       warning: 4.0.3
     dev: false
 
@@ -14488,6 +14485,7 @@ packages:
 
   /regenerator-runtime@0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
+    dev: true
 
   /regenerator-runtime@0.14.0:
     resolution: {integrity: sha512-srw17NI0TUWHuGa5CFGGmhfNIeja30WMBfbslPNhf6JrqQlLN5gcrvig1oqPxiVaXb0oW0XRKtH6Nngs5lKCIA==}

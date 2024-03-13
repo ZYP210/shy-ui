@@ -31,6 +31,7 @@ export * from './src/Label'
 export * from './src/BasicContainer'
 export * from './src/DescriptionsForm'
 export * from './src/BasicResizeWrapper'
+export * from './src/ColorPickerPanel'
 
 import { registerGlobalConfig } from './config/index'
 
