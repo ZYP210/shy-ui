@@ -73,7 +73,7 @@ const columns: any[] = [
     title: '产地范围',
     dataIndex: 'rangePlace',
     editRow: true,
-    editable: true,
+    // editable: true,
     editComponent: 'Input',
     editRule: true,
     editComponentProps: (params) => {
@@ -230,13 +230,13 @@ const [
   // rowSelection: {},
   clickToRowSelect: false,
   useSearchForm: true,
-  canResize: false,
-  // actionColumn: {
-  //   width: 250,
-  //   dataIndex: 'action',
-  //   title: '操作',
-  //   fixed: 'right'
-  // },
+  // canResize: false,
+  actionColumn: {
+    width: 250,
+    dataIndex: 'action',
+    title: '操作',
+    fixed: 'right'
+  },
   showIndexColumn: true,
   indexColumn: {}
 })

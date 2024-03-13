@@ -18,6 +18,7 @@
     "@pnpm/find-workspace-packages": "^6.0.9",
     "@pnpm/types": "^9.4.0",
     "@shy-plugins/2d-edit": "workspace:^",
+    "@shy-plugins/workflow-bpmn": "workspace:^",
     "@shy-plugins/workflow-dingding": "workspace:^",
     "@types/lodash-es": "^4.17.6",
     "@typescript-eslint/eslint-plugin": "^5.44.0",
@@ -56,7 +57,6 @@
     "vite-plugin-dts": "^1.7.1",
     "vue": "^3.2.40",
     "vue-types": "^5.0.2",
-    "@shy-plugins/workflow-bpmn": "workspace:^",
     "yamljs": "^0.3.0"
   },
   "dependencies": {
@@ -66,6 +66,6 @@
     "@shy-plugins/tinymce": "workspace:*",
     "@shy-plugins/use": "workspace:*",
     "@shy-plugins/utils": "workspace:*",
-    "ant-design-vue": "3"
+    "ant-design-vue": "^4.1.2"
   }
 }

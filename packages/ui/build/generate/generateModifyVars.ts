@@ -1,6 +1,12 @@
 import { generateAntColors, primaryColor } from './themeConfig'
-import { getThemeVariables } from 'ant-design-vue/dist/theme'
+import { theme  } from 'ant-design-vue'
+import convertLegacyToken from 'ant-design-vue/lib/theme/convertLegacyToken'
 import { resolve } from 'path'
+
+const { defaultAlgorithm, defaultSeed } = theme;
+
+const mapToken = defaultAlgorithm(defaultSeed);
+const v3Token = convertLegacyToken(mapToken);
 
 /**
  * less global variable
@@ -15,13 +21,13 @@ export function generateModifyVars(dark = false) {
     primaryColorObj[`primary-${index + 1}`] = palettes[index]
   }
 
-  const modifyVars = getThemeVariables({ dark })
+  const modifyVars = v3Token
 
   return {
     ...modifyVars,
     // Used for global import to avoid the need to import each style file separately
     // reference:  Avoid repeated references
-    hack: `${modifyVars.hack} @import (reference) "${resolve(
+    hack: `true; @import (reference) "${resolve(
       'design/config.less'
     )}";`,
     'primary-color': primary,

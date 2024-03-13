@@ -1,7 +1,7 @@
 import 'virtual:windi-base.css'
 import 'virtual:windi-components.css'
 import 'virtual:windi-utilities.css'
-import 'ant-design-vue/dist/antd.min.css'
+import 'ant-design-vue/dist/reset.css';
 
 export * from './src/Form'
 export * from './src/Container'
