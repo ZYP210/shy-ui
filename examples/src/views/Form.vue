@@ -298,41 +298,43 @@ const schemas = ref<FormSchema[]>([
   //   }
   // },
   //
-  // {
-  //   field: 'table',
-  //   label: 'table',
-  //   component: 'Table',
-  //   cloProps: { span: 24 },
-  //   componentProps: ({ ...ages }) => {
-  //     return {
-  //       onModelChange: (e) => {
-  //         console.log(e, ages)
-  //       },
-  //       columns: [
-  //         {
-  //           title: 'a',
-  //           dataIndex: 'a'
-  //         },
-  //         {
-  //           title: 'b',
-  //           dataIndex: 'b'
-  //         },
-  //         {
-  //           title: 'c',
-  //           dataIndex: 'c'
-  //         },
-  //         {
-  //           title: 'd',
-  //           dataIndex: 'd'
-  //         },
-  //         {
-  //           title: 'e',
-  //           dataIndex: 'e'
-  //         }
-  //       ]
-  //     }
-  //   }
-  // },
+  {
+    field: 'table',
+    label: 'table',
+    component: 'Table',
+    required: true,
+    colProps: { span: 24 },
+    componentProps: ({ ...ages }) => {
+      return {
+        onModelChange: (e) => {
+          // console.log(e, ages)
+        },
+        columns: [
+          {
+            title: 'a',
+            dataIndex: 'a',
+            required: true
+          },
+          {
+            title: 'b',
+            dataIndex: 'b'
+          },
+          {
+            title: 'c',
+            dataIndex: 'c'
+          },
+          {
+            title: 'd',
+            dataIndex: 'd'
+          },
+          {
+            title: 'e',
+            dataIndex: 'e'
+          }
+        ]
+      }
+    }
+  },
   // {
   //   field: 'z',
   //   label: 'Divider',
@@ -427,9 +429,13 @@ const handleSubmit = (values: any) => {
 }
 
 const handleGetForm = async () => {
-  const values = await validate()
+  try {
+    const values = await validate()
 
-  console.log('values', values)
+    console.log('values', values)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 const handleModalChange = (rows) => {

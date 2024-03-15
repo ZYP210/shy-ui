@@ -9,7 +9,7 @@
     align="center"
   >
     <template #headerCell="{ column }">
-      <div v-if="column.dataIndex === 'index'">
+      <template v-if="column.dataIndex === 'index'">
         <div
           v-if="isShowAction"
           class="shy-table-edit-icon-plus"
@@ -18,64 +18,69 @@
           <plus-circle-filled :style="{ color: '#006eff' }" />
         </div>
         <div v-else>序号</div>
-      </div>
+      </template>
+
+      <template v-else>
+        <span v-if="column.required" class="table-children-required">*</span>
+        <span>{{ column.title }}</span>
+      </template>
     </template>
 
     <template #bodyCell="{ column, record, index }">
       <template v-if="column.dataIndex !== 'index'">
-        <Form
-          :model="record"
-          :ref="
-            (el) => {
-              if (el) listFormRefs.push(el)
-            }
-          "
+        <FormItem
+          :required="column.required"
+          :rules="column?.rules || []"
+          :name="[$attrs.codeField, index, column.dataIndex]"
+          :key="record['uuid']"
         >
-          <FormItem :rules="column?.rules || []" :name="column.dataIndex">
-            <Select
-              v-if="column.type === 'select'"
-              v-model:value="record[column.dataIndex]"
-              :options="column.dicData"
-              :mode="column.mode"
-              :max-tag-count="column.maxTagCount"
-              :max-tag-text-length="column.maxTagTextLength"
-            />
-
-            <DatePicker
-              v-else-if="column.type === 'datePicker'"
-              v-model:value="record[column.dataIndex]"
-              valueFormat="YYYY-MM-DD HH:mm:ss"
-            />
-            <InputNumber
-              v-else-if="column.type === 'number'"
-              v-model:value="record[column.dataIndex]"
-              :min="column.min"
-              :max="column.max"
-              :precision="column.precision ?? 2"
-            />
-
-            <Input
-              v-else
-              v-model:value="record[column.dataIndex]"
-              :disabled="!props.isShowAction"
-            />
-          </FormItem>
-        </Form>
+          <Select
+            v-if="column.type === 'select'"
+            v-model:value="record[column.dataIndex]"
+            :options="column.dicData"
+            :mode="column.mode"
+            :max-tag-count="column.maxTagCount"
+            :max-tag-text-length="column.maxTagTextLength"
+          />
+          <DatePicker
+            v-else-if="column.type === 'datePicker'"
+            v-model:value="record[column.dataIndex]"
+            valueFormat="YYYY-MM-DD HH:mm:ss"
+          />
+          <InputNumber
+            v-else-if="column.type === 'number'"
+            v-model:value="record[column.dataIndex]"
+            :min="column.min"
+            :max="column.max"
+            :precision="column.precision ?? 2"
+          />
+          <Input
+            v-else
+            v-model:value="record[column.dataIndex]"
+            :disabled="!props.isShowAction"
+          />
+        </FormItem>
       </template>
 
-      <div v-else class="delete-wrapper">
-        <span v-if="isShowAction" class="delete-index">{{ index + 1 }}</span>
+      <template v-else>
+        <div class="table-children-delete-wrapper" :key="record['uuid']">
+          <span v-if="isShowAction" class="table-children-delete-index">
+            {{ index + 1 }}
+          </span>
 
-        <div
-          v-if="isShowAction"
-          class="delete-item"
-          @click="rowClickEvent(index)"
-        >
-          <delete-filled :style="{ color: '#fff' }" />
+          <div
+            v-if="isShowAction"
+            class="table-children-delete-item"
+            @click="rowClickEvent(record['uuid'])"
+          >
+            <delete-filled :style="{ color: '#fff' }" />
+          </div>
+
+          <span v-else class="table-children-delete-index">
+            {{ index + 1 }}
+          </span>
         </div>
-
-        <span v-else class="">{{ index + 1 }}</span>
-      </div>
+      </template>
     </template>
   </Table>
 </template>
@@ -84,17 +89,18 @@
 import {
   Table,
   Input,
-  Form,
+  // Form,
   FormItem,
   Select,
   DatePicker,
   InputNumber
 } from 'ant-design-vue'
-import { ref, unref, computed, watch } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 
 const emit = defineEmits(['update:value', 'change', 'add', 'remove'])
 import { DeleteFilled, PlusCircleFilled } from '@ant-design/icons-vue'
+import { buildUUID } from '@shy-plugins/utils'
 
 const listFormRefs = ref<unknown[]>([])
 
@@ -130,14 +136,16 @@ const getColumns = computed(() => {
 })
 
 const plusClickEvent = () => {
-  state.value = [{}, ...state.value]
+  state.value = [{ uuid: buildUUID() }, ...state.value]
   emit('add', state.value)
 }
 
 const rowClickEvent = (index) => {
-  state.value = unref(state).filter((item, i) => {
-    return index !== i
+  const tempState = state.value.filter((item: any) => {
+    return item['uuid'] !== index
   })
+  tempState.forEach((item: any) => (item['uuid'] = buildUUID()))
+  state.value = [...tempState]
   emit('remove', state.value, index)
 }
 
@@ -158,6 +166,9 @@ watch(
   () => state.value,
   (v) => {
     emit('update:value', v)
+  },
+  {
+    deep: true
   }
   // { immediate: true }
 )
@@ -188,22 +199,43 @@ defineExpose({ validate })
   margin-bottom: 0 !important;
 }
 
-.delete-wrapper {
-  height: 100%;
+.table-children {
+  &-required {
+    color: #ff4d4f;
+    margin-right: 4px;
+  }
 
-  &:hover {
-    .delete-item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  :deep(.ant-table-cell) {
+    padding: 8px !important;
 
-    .delete-index {
+    // .ant-form * {
+    //   border: none !important;
+    // }
+
+    .ant-form-item-explain {
       display: none;
     }
   }
 
-  .delete-item {
+  &-delete-wrapper {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+
+    &:hover {
+      .table-children-delete-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .table-children-delete-index {
+        display: none;
+      }
+    }
+  }
+
+  &-delete-item {
     background-color: red;
     border-radius: 50%;
     width: 30px;
@@ -213,7 +245,8 @@ defineExpose({ validate })
     cursor: pointer;
   }
 
-  .delete-index {
+  &-delete-index {
+    user-select: none;
     display: inline-block;
   }
 }
