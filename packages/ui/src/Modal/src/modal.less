@@ -41,6 +41,30 @@
     padding: 14px;
   }
 
+  &-content {
+    padding: 0 !important;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  }
+
+  &-close {
+    // position: unset !important;
+    top: unset !important;
+    width: unset !important;
+    height: unset !important;
+    font-weight: normal;
+    outline: none;
+
+    &:hover,&:active{
+      background: unset !important;
+    }
+
+    &-x .@{namespace}-basic-modal-close {
+      justify-content: flex-end;
+      height: 56px;
+      line-height: 56px;
+    }
+  }
+
   &-title {
     font-size: 16px;
     font-weight: bold;
@@ -70,28 +94,18 @@
     padding: 16px;
   }
 
-  &-content {
-    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
-  }
-
   &-footer {
+    border-radius: unset !important;
+
     button + button {
       margin-left: 10px;
     }
 
-    background: #fff !important;
-  }
-
-  &-close {
-    font-weight: normal;
-    outline: none;
   }
 
   &-close-x {
     display: inline-block;
     width: 96px !important;
-    height: 56px;
-    line-height: 56px;
   }
 
   &-confirm-body {
