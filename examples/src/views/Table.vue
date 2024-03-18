@@ -130,7 +130,7 @@ const columns: any[] = [
     editRow: true,
     globalShow: false,
     resizable: true,
-    width: 300
+
   },
   {
     title: '电话',
@@ -155,6 +155,133 @@ const columns: any[] = [
     editRow: true,
     dataIndex: 'remark'
   },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+  {
+    title: '备注',
+    editRow: true,
+    dataIndex: 'remark'
+  },
+
   {
     title: '产地',
     // editRow: true,

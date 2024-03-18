@@ -54,7 +54,6 @@ export default defineComponent({
         return []
       }
       let dataSource = toRaw(unref(table.getDataSource()))
-      console.log(12, dataSource)
 
       dataSource = summaryFunc(dataSource)
       dataSource.forEach((item, i) => {

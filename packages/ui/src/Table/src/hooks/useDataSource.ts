@@ -15,7 +15,6 @@ import { useTimeoutFn } from '@shy-plugins/use'
 import { buildUUID, isFunction, isBoolean } from '@shy-plugins/utils'
 import { get, cloneDeep, merge } from 'lodash-es'
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const'
-import { useTableContext } from './useTableContext'
 
 interface ActionType {
   getPaginationInfo: ComputedRef<boolean | PaginationProps>
@@ -103,6 +102,7 @@ export function useDataSource(
       searchState.filterInfo = filterInfo
       params.filterInfo = filterInfo
     }
+
     fetch(params)
   }
 
