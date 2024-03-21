@@ -29,6 +29,7 @@ export const basicProps = reactive({
     }
   },
   inset: Boolean,
+  isSortFetch: { type: Boolean, default: true },
   sortFn: {
     type: Function as PropType<(sortInfo: SorterResult) => any>,
     default: DEFAULT_SORT_FN

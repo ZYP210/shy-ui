@@ -69,29 +69,34 @@ import { ref, onMounted } from 'vue'
 // console.log(zzz)
 
 const columns: any[] = [
-  {
-    title: '产地范围',
-    dataIndex: 'rangePlace',
-    editRow: true,
-    editable: true,
-    editComponent: 'Input',
-    editRule: true,
-    editComponentProps: (params) => {
-      console.log('params', params)
-      return {
-        params: { type: 1 },
-        api: (params) => {
-          // console.log(params)
-          return [
-            { label: 1, value: 2, children: [{ label: 1, value: 2 }] },
-            { label: 2, value: 3 }
-          ]
-        }
-      }
-      // getPopupContainer: () => document.body
-    },
-    globalShow: false
-  },
+  // {
+  //   title: '产地范围',
+  //   dataIndex: 'rangePlace',
+  //   editRow: true,
+  //   editable: true,
+  //   editComponent: 'ApiSelect',
+  //   editRule: true,
+  //   editComponentProps: (params) => {
+  //     // console.log('params', params)
+  //     return {
+  //       params: { type: 1 },
+  //       api: (params) => {
+  //         // console.log(params)
+  //         return new Promise((resolve) => {
+  //           setTimeout(() => {
+  //             resolve([
+  //               { label: 'a', value: 'a' },
+  //               { label: 'b', value: 'b' }
+  //             ])
+  //           }, 3000)
+  //         })
+  //       }
+  //     }
+  //     // getPopupContainer: () => document.body
+  //   },
+  //   sorter: () => {},
+  //   globalShow: false
+  // },
   {
     title: '合格数',
     dataIndex: 'qualifiedNum',
@@ -319,23 +324,24 @@ const [
   }
 ] = useTable({
   api: (params) => {
-    return Array.from({ length: 300 }, (_, i) => {
+    return Array.from({ length: 100 }, (_, i) => {
       return {
         id: i,
-        status: 0,
-        rangePlace: '国产',
+        status: i,
+        rangePlace: i,
         place: '河北',
         createTime: 1695024076000,
         name: 'zzz',
         phone: '1212121',
         address: '1111',
         remark: 999,
-        qualifiedNum: 100.011111111
+        qualifiedNum: 100000.11111111
       }
     })
   },
   rowKey: 'id',
   columns,
+  isSortFetch: false,
   formConfig: {
     // rangePickerField: [['createTime']],
     schemas: [

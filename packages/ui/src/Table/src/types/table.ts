@@ -190,6 +190,8 @@ export interface BasicTableProps<T = any> {
   isTreeTable?: boolean
   // 自定义排序方法
   sortFn?: (sortInfo: SorterResult) => any
+  // 是否使用服务端排序
+  isSortFetch?: boolean
   // 排序方法
   filterFn?: (data: Partial<Recordable<string[]>>) => any
   // 取消表格的默认padding

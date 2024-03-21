@@ -21,18 +21,22 @@
       </template>
 
       <template v-else>
-        <span v-if="column.required" class="table-children-required">*</span>
+        <span
+          v-if="column.required || column?.rules?.length"
+          class="table-children-required"
+          >*</span
+        >
         <span>{{ column.title }}</span>
       </template>
     </template>
 
-    <template #bodyCell="{ column, record, index }">
-      <template v-if="column.dataIndex !== 'index'">
+    <template #bodyCell="{ column, record, index, ...args }">
+      <template v-if="column.dataIndex !== 'index' && column.type !== 'text'">
         <FormItem
           :required="column.required"
           :rules="column?.rules || []"
           :name="[$attrs.codeField, index, column.dataIndex]"
-          :key="record['uuid']"
+          :key="record[rowKey]"
         >
           <Select
             v-if="column.type === 'select'"
@@ -55,15 +59,28 @@
             :precision="column.precision ?? 2"
           />
           <Input
-            v-else
+            v-else-if="column.type === 'input'"
             v-model:value="record[column.dataIndex]"
             :disabled="!props.isShowAction"
+          />
+          <component
+            v-else
+            allowClear
+            :getPopupContainer="getPopupContainer"
+            :style="{ width: '100%' }"
+            v-bind="
+              isFunction(column.componentProps)
+                ? column.componentProps({ record, column, index, ...args })
+                : column.componentProps
+            "
+            v-model:value="record[column.dataIndex]"
+            :is="componentMap.get(column.type)"
           />
         </FormItem>
       </template>
 
-      <template v-else>
-        <div class="table-children-delete-wrapper" :key="record['uuid']">
+      <template v-else-if="column.dataIndex === 'index'">
+        <div class="table-children-delete-wrapper" :key="record[rowKey]">
           <span v-if="isShowAction" class="table-children-delete-index">
             {{ index + 1 }}
           </span>
@@ -71,7 +88,7 @@
           <div
             v-if="isShowAction"
             class="table-children-delete-item"
-            @click="rowClickEvent(record['uuid'])"
+            @click="rowClickEvent(record[rowKey])"
           >
             <delete-filled :style="{ color: '#fff' }" />
           </div>
@@ -89,7 +106,6 @@
 import {
   Table,
   Input,
-  // Form,
   FormItem,
   Select,
   DatePicker,
@@ -100,11 +116,16 @@ import { useRuleFormItem } from '@shy-plugins/use'
 
 const emit = defineEmits(['update:value', 'change', 'add', 'remove'])
 import { DeleteFilled, PlusCircleFilled } from '@ant-design/icons-vue'
-import { buildUUID } from '@shy-plugins/utils'
+import { buildUUID, isFunction } from '@shy-plugins/utils'
+import { componentMap } from '../componentMap'
 
 const listFormRefs = ref<unknown[]>([])
 
 const props = defineProps({
+  rowKey: {
+    type: String,
+    default: () => 'uuid'
+  },
   columns: {
     type: Array as PropType<Array<any>>,
     default: () => []
@@ -132,22 +153,30 @@ const getColumns = computed(() => {
     width: 50,
     align: 'center'
   }
-  return [indexColumn, ...props.columns]
+  return [
+    indexColumn,
+    ...props.columns.map((item: any) => ({
+      ...item,
+      type: item.type ? item.type : 'input'
+    }))
+  ]
 })
 
 const plusClickEvent = () => {
-  state.value = [{ uuid: buildUUID() }, ...state.value]
+  state.value = [{ [props.rowKey]: buildUUID() }, ...state.value]
   emit('add', state.value)
 }
 
 const rowClickEvent = (index) => {
   const tempState = state.value.filter((item: any) => {
-    return item['uuid'] !== index
+    return item[props.rowKey] !== index
   })
-  tempState.forEach((item: any) => (item['uuid'] = buildUUID()))
+  tempState.forEach((item: any) => (item[props.rowKey] = buildUUID()))
   state.value = [...tempState]
   emit('remove', state.value, index)
 }
+
+const getPopupContainer = () => document.body
 
 const loadKv = () => {
   const columns: any = props.columns
@@ -171,6 +200,21 @@ watch(
     deep: true
   }
   // { immediate: true }
+)
+
+watch(
+  () => props.value,
+  (v) => {
+    if (v.length) {
+      state.value = v.map((ele: any) => ({
+        ...ele,
+        [props.rowKey]: buildUUID()
+      }))
+    }
+  },
+  {
+    immediate: true
+  }
 )
 
 const validate = async () => {
@@ -207,10 +251,6 @@ defineExpose({ validate })
 
   :deep(.ant-table-cell) {
     padding: 8px !important;
-
-    // .ant-form * {
-    //   border: none !important;
-    // }
 
     .ant-form-item-explain {
       display: none;

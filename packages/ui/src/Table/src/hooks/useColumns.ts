@@ -7,16 +7,7 @@ import type {
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 import type { ComputedRef } from 'vue'
-import {
-  computed,
-  Ref,
-  ref,
-  reactive,
-  toRaw,
-  unref,
-  watch,
-  onMounted
-} from 'vue'
+import { computed, Ref, ref, reactive, toRaw, unref, watch } from 'vue'
 import { renderEditCell } from '../components/editable'
 // import { usePermission } from '@shy-plugins/use'
 // import { useI18n } from '/@/hooks/web/useI18n'
@@ -27,6 +18,7 @@ import {
   isBoolean,
   isFunction,
   isMap,
+  isNumber,
   isString
 } from '@shy-plugins/utils'
 import {
@@ -235,7 +227,27 @@ export function useColumns(
         return hasPermission(column.auth) && isIfShow(column)
       })
       .map((column) => {
-        const { slots, customRender, format, edit, editRow, flag } = column
+        const isSummaryCol =
+          unref(propsRef).showSummaryTotal &&
+          unref(propsRef).summaryTotalFields?.includes?.(
+            column.dataIndex! as string
+          )
+        const summaryFormat = (text) => {
+          return text
+            ? isNumber(+text) && !isNaN(+text)
+              ? Number.parseFloat((+text).toFixed(2)).toLocaleString('en-US')
+              : text
+            : ''
+        }
+
+        const {
+          slots,
+          customRender,
+          format = isSummaryCol ? summaryFormat : undefined,
+          edit,
+          editRow,
+          flag
+        } = column
 
         if (!slots || !slots?.title) {
           // column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };

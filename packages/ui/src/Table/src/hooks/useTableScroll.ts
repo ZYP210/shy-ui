@@ -10,6 +10,7 @@ import { useWindowSizeFn } from '@shy-plugins/use'
 import { useModalContext } from '../../../Modal'
 import { onMountedOrActivated } from '@shy-plugins/use'
 import { useDebounceFn } from '@vueuse/core'
+import Sortable from 'sortablejs'
 
 export function useTableScroll(
   propsRef: ComputedRef<BasicTableProps>,
@@ -202,6 +203,17 @@ export function useTableScroll(
     calcTableHeight()
     nextTick(() => {
       debounceRedoHeight()
+    })
+
+    const table = unref(tableElRef)
+    if (!table) return
+    const tableEl: Element = table.$el
+    if (!tableEl) return
+    const bodyEl = tableEl.querySelector('.ant-table-tbody') as HTMLElement
+    if (!bodyEl) return
+    new Sortable(bodyEl, {
+      ghostClass: 'bg-gray-100',
+      draggable: '.ant-table-row'
     })
   })
 
