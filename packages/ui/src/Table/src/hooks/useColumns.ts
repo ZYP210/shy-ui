@@ -7,7 +7,7 @@ import type {
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 import type { ComputedRef } from 'vue'
-import { computed, Ref, ref, reactive, toRaw, unref, watch } from 'vue'
+import { computed, Ref, ref, reactive, toRaw, unref, watch, h } from 'vue'
 import { renderEditCell } from '../components/editable'
 // import { usePermission } from '@shy-plugins/use'
 // import { useI18n } from '/@/hooks/web/useI18n'
@@ -134,7 +134,7 @@ function handleIndexColumn(
         return `${index + 1}`
       }
       const { current = 1, pageSize = PAGE_SIZE } = getPagination
-      return ((current < 1 ? 1 : current) - 1) * pageSize + index + 1
+      return h('div', { class: 'ant-table-cell-index full cursor-pointer' }, ((current < 1 ? 1 : current) - 1) * pageSize + index + 1)
     },
     ...(isFixedLeft
       ? {

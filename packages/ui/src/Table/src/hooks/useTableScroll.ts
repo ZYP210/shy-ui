@@ -213,6 +213,7 @@ export function useTableScroll(
     if (!bodyEl) return
     new Sortable(bodyEl, {
       ghostClass: 'bg-gray-100',
+      handle: '.ant-table-cell .ant-table-cell-index',
       draggable: '.ant-table-row'
     })
   })

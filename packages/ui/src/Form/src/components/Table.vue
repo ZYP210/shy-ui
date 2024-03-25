@@ -111,13 +111,14 @@ import {
   DatePicker,
   InputNumber
 } from 'ant-design-vue'
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, toRaw } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
-
-const emit = defineEmits(['update:value', 'change', 'add', 'remove'])
 import { DeleteFilled, PlusCircleFilled } from '@ant-design/icons-vue'
 import { buildUUID, isFunction } from '@shy-plugins/utils'
 import { componentMap } from '../componentMap'
+import { isEqual } from 'lodash-es'
+
+const emit = defineEmits(['update:value', 'change', 'add', 'remove'])
 
 const listFormRefs = ref<unknown[]>([])
 
@@ -163,7 +164,7 @@ const getColumns = computed(() => {
 })
 
 const plusClickEvent = () => {
-  state.value = [{ [props.rowKey]: buildUUID() }, ...state.value]
+  state.value = [{ [props.rowKey]: buildUUID() }, ...toRaw(state.value)]
   emit('add', state.value)
 }
 
@@ -193,27 +194,21 @@ loadKv()
 
 watch(
   () => state.value,
-  (v) => {
-    emit('update:value', v)
-  },
-  {
-    deep: true
-  }
-  // { immediate: true }
-)
-
-watch(
-  () => props.value,
-  (v) => {
-    if (v.length) {
-      state.value = v.map((ele: any) => ({
-        ...ele,
-        [props.rowKey]: buildUUID()
-      }))
+  (v, old) => {
+    if (!isEqual(toRaw(v), toRaw(old))) {
+      emit(
+        'update:value',
+        toRaw(v).map((ele: any) => {
+          return {
+            ...ele,
+            [props.rowKey]: ele[props.rowKey] || buildUUID()
+          }
+        })
+      )
     }
   },
   {
-    immediate: true
+    deep: true,
   }
 )
 

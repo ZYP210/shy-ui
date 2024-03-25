@@ -363,7 +363,7 @@ const [
   // rowSelection: {},
   clickToRowSelect: false,
   useSearchForm: true,
-  canResize: false,
+  // canResize: false,
   // actionColumn: {
   //   width: 250,
   //   dataIndex: 'action',
