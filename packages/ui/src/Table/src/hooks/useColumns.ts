@@ -7,16 +7,7 @@ import type {
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 import type { ComputedRef } from 'vue'
-import {
-  computed,
-  Ref,
-  ref,
-  reactive,
-  toRaw,
-  unref,
-  watch,
-  onMounted
-} from 'vue'
+import { computed, Ref, ref, reactive, toRaw, unref, watch, h } from 'vue'
 import { renderEditCell } from '../components/editable'
 // import { usePermission } from '@shy-plugins/use'
 // import { useI18n } from '/@/hooks/web/useI18n'
@@ -27,6 +18,7 @@ import {
   isBoolean,
   isFunction,
   isMap,
+  isNumber,
   isString
 } from '@shy-plugins/utils'
 import {
@@ -61,8 +53,9 @@ function handleColumnResize(
   wrapRef: Ref
 ) {
   const tableWidth =
-    wrapRef.value?.querySelector?.('.ant-table-body')?.clientWidth - 7 || wrapRef.value?.querySelector?.('.ant-table-content')?.clientWidth
-  const selectWidth = propsRef.value.rowSelection ? 60 : 0;
+    wrapRef.value?.querySelector?.('.ant-table-body')?.clientWidth - 7 ||
+    wrapRef.value?.querySelector?.('.ant-table-content')?.clientWidth
+  const selectWidth = propsRef.value.rowSelection ? 60 : 0
   const [sumWidth, sumLength] = columns.reduce(
     ([sumWidth, length], cur) => {
       if (typeof cur.width === 'number') {
@@ -73,7 +66,10 @@ function handleColumnResize(
     [0, 0]
   )
   const length = columns.length
-  const colWidth = tableWidth ? (tableWidth - sumWidth - selectWidth) / (length - sumLength) : 100
+  const countWidth = tableWidth
+    ? (tableWidth - sumWidth - selectWidth) / (length - sumLength)
+    : 150
+  const colWidth = countWidth < 150 ? 150 : countWidth
   columns.forEach((item) => {
     if (item.flag) return
     if (propsRef.value.resizable) {
@@ -138,7 +134,7 @@ function handleIndexColumn(
         return `${index + 1}`
       }
       const { current = 1, pageSize = PAGE_SIZE } = getPagination
-      return ((current < 1 ? 1 : current) - 1) * pageSize + index + 1
+      return h('div', { class: 'ant-table-cell-index full cursor-pointer' }, ((current < 1 ? 1 : current) - 1) * pageSize + index + 1)
     },
     ...(isFixedLeft
       ? {
@@ -231,7 +227,27 @@ export function useColumns(
         return hasPermission(column.auth) && isIfShow(column)
       })
       .map((column) => {
-        const { slots, customRender, format, edit, editRow, flag } = column
+        const isSummaryCol =
+          unref(propsRef).showSummaryTotal &&
+          unref(propsRef).summaryTotalFields?.includes?.(
+            column.dataIndex! as string
+          )
+        const summaryFormat = (text) => {
+          return text
+            ? isNumber(+text) && !isNaN(+text)
+              ? Number.parseFloat((+text).toFixed(2)).toLocaleString('en-US')
+              : text
+            : ''
+        }
+
+        const {
+          slots,
+          customRender,
+          format = isSummaryCol ? summaryFormat : undefined,
+          edit,
+          editRow,
+          flag
+        } = column
 
         if (!slots || !slots?.title) {
           // column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };

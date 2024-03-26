@@ -13,7 +13,7 @@ import { createPlaceholderMessage, setComponentRuleType } from '../helper'
 import { cloneDeep, upperFirst } from 'lodash-es'
 import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import Divider from './Divider'
-import dayjs from 'dayjs'
+// import dayjs from 'dayjs'
 import { useGlobalConfig } from '../../../../config/index'
 
 export default defineComponent({
@@ -417,6 +417,15 @@ export default defineComponent({
 
         const showSuffix = !!suffix
         const getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix
+
+        // if (component === 'Table') {
+        //   return (
+        //     <div style="display:flex">
+        //       <div style="flex:1;">{getContent()}</div>
+        //       {showSuffix && <span class="suffix">{getSuffix}</span>}
+        //     </div>
+        //   )
+        // }
 
         return (
           <Form.Item

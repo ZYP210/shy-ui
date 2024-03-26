@@ -49,7 +49,12 @@ export default defineConfig({
     Pages({
       dirs: ['./src/views']
     }),
-    WindiCSS(),
+    WindiCSS({
+      scan: {
+        dirs: ['../packages/ui/src', '.'],
+        fileExtensions: ['vue', 'js', 'ts']
+      }
+    }),
     PurgeIcons(),
     configSvgIconsPlugin()
   ],

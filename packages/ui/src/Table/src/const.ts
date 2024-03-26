@@ -23,6 +23,7 @@ const componentSetting = {
     defaultSize: 'middle',
     // Custom general sort function
     defaultSortFn: (sortInfo: SorterResult) => {
+
       const { field, order } = sortInfo
       if (field && order) {
         return {

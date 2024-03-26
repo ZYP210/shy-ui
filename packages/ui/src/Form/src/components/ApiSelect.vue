@@ -27,7 +27,6 @@ import {
   defineComponent,
   PropType,
   ref,
-  watchEffect,
   computed,
   unref,
   watch
@@ -113,9 +112,20 @@ export default defineComponent({
       }, [] as OptionsItem[])
     })
 
-    watchEffect(() => {
-      props.immediate && !props.alwaysLoad && fetch()
-    })
+    // watchEffect(() => {
+    //   // console.log(new Date().getTime())
+    //   // props.immediate && !props.alwaysLoad && fetch()
+    // })
+
+    watch(
+      () => props.immediate && !props.alwaysLoad,
+      (val) => {
+        if (val) fetch()
+      },
+      {
+        immediate: true
+      }
+    )
 
     watch(
       () => state.value,
@@ -180,8 +190,9 @@ export default defineComponent({
       emit('options-change', unref(getOptions))
     }
 
-    function handleChange(_, ...args) {
+    function handleChange(val, ...args) {
       emitData.value = args
+      emit('update:value', val)
     }
 
     const filterOption = (input: string, option: any) => {

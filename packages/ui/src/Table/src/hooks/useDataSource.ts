@@ -13,9 +13,8 @@ import {
 } from 'vue'
 import { useTimeoutFn } from '@shy-plugins/use'
 import { buildUUID, isFunction, isBoolean } from '@shy-plugins/utils'
-import { get, cloneDeep, merge } from 'lodash-es'
+import { get, cloneDeep, merge, eq } from 'lodash-es'
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const'
-import { useTableContext } from './useTableContext'
 
 interface ActionType {
   getPaginationInfo: ComputedRef<boolean | PaginationProps>
@@ -61,7 +60,7 @@ export function useDataSource(
     const obj = {}
     summaryTotalFields.forEach((field) => {
       const total = dataSourceRef.value.reduce((acc, cur) => {
-        return acc + (cur[field] || 0)
+        return +acc + (+cur[field] || 0)
       }, 0)
       obj[field] = Number.parseFloat(total.toFixed(2)).toLocaleString('en-US')
     })
@@ -79,11 +78,19 @@ export function useDataSource(
     }
   )
 
+  // const oldPaginationRef = ref<PaginationProps>({})
+  // const oldFilterInfoRef = ref<Partial<Recordable<string[]>>>({})
+  let oldSortInfoRef;
+
   function handleTableChange(
     pagination: PaginationProps,
     filters: Partial<Recordable<string[]>>,
     sorter: SorterResult
   ) {
+    // const isChangePagination = !eq(oldPaginationRef.value, pagination)
+    // const isChangeFilter = !eq(oldFilterInfoRef.value, filters)
+    const isChangeSorter = !eq(oldSortInfoRef, sorter.order)
+
     const { clearSelectOnPageChange, sortFn, filterFn } = unref(propsRef)
     if (clearSelectOnPageChange) {
       clearSelectedRowKeys()
@@ -103,6 +110,13 @@ export function useDataSource(
       searchState.filterInfo = filterInfo
       params.filterInfo = filterInfo
     }
+
+    console.log(isChangeSorter)
+    if (isChangeSorter && !unref(propsRef).isSortFetch) {
+      oldSortInfoRef = sorter.order
+      return
+    }
+
     fetch(params)
   }
 
