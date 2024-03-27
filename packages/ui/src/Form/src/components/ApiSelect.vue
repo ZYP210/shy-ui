@@ -172,6 +172,7 @@ export default defineComponent({
         console.warn(error)
       } finally {
         loading.value = false
+        isFirstLoad.value = false
       }
     }
 

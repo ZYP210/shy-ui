@@ -45,7 +45,49 @@ const tree = {
 }
 
 const schemas = ref<FormSchema[]>([
-  { field: 'aa', label: '数字框', component: 'InputNumber' },
+  {
+    label: 'a',
+    field: 'a',
+    component: 'ApiSelect',
+    componentProps: ({ formModel }) => {
+      return {
+        api: async (ppp) => {
+          console.log(ppp, 111)
+          return [
+            {
+              label: 'a',
+              value: 'a'
+            },
+            {
+              label: 'b',
+              value: 'b'
+            }
+          ]
+        },
+        onChange: (val) => {
+          formModel.b = undefined
+          formModel.aaa = val
+        }
+      }
+    }
+  },
+  {
+    label: 'b',
+    field: 'b',
+    component: 'ApiSelect',
+    componentProps: ({ formModel }) => {
+      console.log(formModel, 999)
+      return {
+        api: async (ppp) => {
+          console.log(ppp, 222)
+          if (ppp?.aaa) return [{ label: '777', value: '777' }]
+          return []
+        },
+        params: { aaa: formModel.aaa }
+      }
+    }
+  }
+  // { field: 'aa', label: '数字框', component: 'InputNumber' },
   // {
   //   field: 'type',
   //   label: '类型',
@@ -121,34 +163,34 @@ const schemas = ref<FormSchema[]>([
   //       )
   //   }
   // },
-  {
-    field: 'startDate',
-    label: '日期范围',
-    component: 'DatePicker',
-    colProps: { span: 24 },
-    componentProps: {
-      valueFormat: 'YYYY-MM-DD HH:mm:ss',
-      showTime: true
-    }
-  },
-  {
-    field: '1111',
-    label: '上传',
-    component: 'Upload',
-    colProps: { span: 24 },
-    componentProps: {
-      maxNumber: 2,
-      api: async (params) => {
-        console.log(params)
-        return {
-          status: 'success',
-          data: {
-            url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
-          }
-        }
-      }
-    }
-  },
+  // {
+  //   field: 'startDate',
+  //   label: '日期范围',
+  //   component: 'DatePicker',
+  //   colProps: { span: 24 },
+  //   componentProps: {
+  //     valueFormat: 'YYYY-MM-DD HH:mm:ss',
+  //     showTime: true
+  //   }
+  // },
+  // {
+  //   field: '1111',
+  //   label: '上传',
+  //   component: 'Upload',
+  //   colProps: { span: 24 },
+  //   componentProps: {
+  //     maxNumber: 2,
+  //     api: async (params) => {
+  //       console.log(params)
+  //       return {
+  //         status: 'success',
+  //         data: {
+  //           url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
+  //         }
+  //       }
+  //     }
+  //   }
+  // },
   // {
   //   field: 'field',
   //   component: 'Input',
@@ -298,43 +340,43 @@ const schemas = ref<FormSchema[]>([
   //   }
   // },
   //
-  {
-    field: 'table',
-    label: 'table',
-    component: 'Table',
-    required: true,
-    colProps: { span: 24 },
-    componentProps: ({ ...ages }) => {
-      return {
-        onModelChange: (e) => {
-          // console.log(e, ages)
-        },
-        columns: [
-          {
-            title: 'a',
-            dataIndex: 'a',
-            required: true
-          },
-          {
-            title: 'b',
-            dataIndex: 'b'
-          },
-          {
-            title: 'c',
-            dataIndex: 'c'
-          },
-          {
-            title: 'd',
-            dataIndex: 'd'
-          },
-          {
-            title: 'e',
-            dataIndex: 'e'
-          }
-        ]
-      }
-    }
-  },
+  // {
+  //   field: 'table',
+  //   label: 'table',
+  //   component: 'Table',
+  //   required: true,
+  //   colProps: { span: 24 },
+  //   componentProps: ({ ...ages }) => {
+  //     return {
+  //       onModelChange: (e) => {
+  //         // console.log(e, ages)
+  //       },
+  //       columns: [
+  //         {
+  //           title: 'a',
+  //           dataIndex: 'a',
+  //           required: true
+  //         },
+  //         {
+  //           title: 'b',
+  //           dataIndex: 'b'
+  //         },
+  //         {
+  //           title: 'c',
+  //           dataIndex: 'c'
+  //         },
+  //         {
+  //           title: 'd',
+  //           dataIndex: 'd'
+  //         },
+  //         {
+  //           title: 'e',
+  //           dataIndex: 'e'
+  //         }
+  //       ]
+  //     }
+  //   }
+  // },
   // {
   //   field: 'z',
   //   label: 'Divider',
@@ -351,11 +393,11 @@ const schemas = ref<FormSchema[]>([
   //   },
   //   required: true
   // },
-  {
-    label: 'Tinymce',
-    field: 'Tinymce',
-    component: 'Tinymce'
-  }
+  // {
+  //   label: 'Tinymce',
+  //   field: 'Tinymce',
+  //   component: 'Tinymce'
+  // }
 ])
 const { createMessage } = useMessage()
 const [
