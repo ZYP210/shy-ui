@@ -83,7 +83,6 @@ export default defineComponent({
 
   .scrollbar__wrap {
     overflow-x: hidden;
-    margin-bottom: 18px !important;
   }
 
   .scrollbar__view {
