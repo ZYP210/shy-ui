@@ -23,6 +23,9 @@ export function createPlaceholderMessage(component: ComponentType) {
     // return `请选择${label}`;
     return '请选择'
   }
+  if(component.includes('Table')) {
+    return '请至少添加一条'
+  }
   return ''
 }
 

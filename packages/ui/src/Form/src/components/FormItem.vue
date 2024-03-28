@@ -200,7 +200,7 @@ export default defineComponent({
         ? rulesMessageJoinLabel
         : globalRulesMessageJoinLabel
       const defaultMsg =
-        createPlaceholderMessage(component) + `${joinLabel ? label : ''}`
+        createPlaceholderMessage(component) + `${joinLabel ? label ? label : '' : ''}`
 
       function validator(rule: any, value: any) {
         const msg = rule.message || defaultMsg
