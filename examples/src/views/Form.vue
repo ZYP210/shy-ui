@@ -45,32 +45,32 @@ const tree = {
 }
 
 const schemas = ref<FormSchema[]>([
-  // {
-  //   label: 'a',
-  //   field: 'a',
-  //   component: 'ApiSelect',
-  //   componentProps: ({ formModel }) => {
-  //     return {
-  //       api: async (ppp) => {
-  //         console.log(ppp, 111)
-  //         return [
-  //           {
-  //             label: 'a',
-  //             value: 'a'
-  //           },
-  //           {
-  //             label: 'b',
-  //             value: 'b'
-  //           }
-  //         ]
-  //       },
-  //       onChange: (val) => {
-  //         formModel.b = undefined
-  //         formModel.aaa = val
-  //       }
-  //     }
-  //   }
-  // },
+  {
+    label: 'a',
+    field: 'a',
+    component: 'ApiSelect',
+    componentProps: ({ formModel }) => {
+      return {
+        api: async (ppp) => {
+          console.log(ppp, 111)
+          return [
+            {
+              label: 'a',
+              value: 'a'
+            },
+            {
+              label: 'b',
+              value: 'b'
+            }
+          ]
+        },
+        onChange: (val) => {
+          formModel.b = undefined
+          formModel.aaa = val
+        }
+      }
+    }
+  },
   // {
   //   label: 'b',
   //   field: 'b',
@@ -375,7 +375,7 @@ const schemas = ref<FormSchema[]>([
         ]
       }
     }
-  },
+  }
   // {
   //   field: 'z',
   //   label: 'Divider',
