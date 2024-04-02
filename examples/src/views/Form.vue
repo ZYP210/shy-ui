@@ -52,7 +52,6 @@ const schemas = ref<FormSchema[]>([
     componentProps: ({ formModel }) => {
       return {
         api: async (ppp) => {
-          console.log(ppp, 111)
           return [
             {
               label: 'a',
@@ -348,7 +347,7 @@ const schemas = ref<FormSchema[]>([
     componentProps: ({ ...ages }) => {
       return {
         onModelChange: (e) => {
-          // console.log(e, ages)
+          console.log(e)
         },
         columns: [
           {
