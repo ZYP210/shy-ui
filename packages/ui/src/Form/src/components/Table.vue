@@ -41,7 +41,8 @@
           <Popover
             overlayClassName="table-children-err-popover"
             :visible="
-              !!rulesRef?.[`${column.dataIndex}-${record.uuid}Info`]?.show
+              !!rulesRef?.[`${column.dataIndex}-${record.uuid}Info`]?.show &&
+              !isScroll
             "
           >
             <template #content>
@@ -132,6 +133,8 @@ import { cloneDeep, isArray, isEqual } from 'lodash-es'
 import { FormActionType } from '../types/form'
 import { Popover } from 'ant-design-vue'
 import { reactive } from 'vue'
+import { onMounted } from 'vue'
+import { onUnmounted } from 'vue'
 
 const formActionType: FormActionType = inject('formActionType')!
 const emit = defineEmits(['update:value', 'change', 'add', 'remove'])
@@ -267,6 +270,29 @@ watch(
     deep: true
   }
 )
+
+const isScroll = ref(false)
+onMounted(() => {
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (isScroll.value) return
+      isScroll.value = true
+    },
+    true
+  )
+  window.addEventListener(
+    'scrollend',
+    () => {
+      isScroll.value = false
+    },
+    true
+  )
+})
+onUnmounted(() => {
+  window.removeEventListener('scroll', () => {})
+  window.removeEventListener('scrollend', () => {})
+})
 
 // 冗余代码
 const loadKv = () => {
