@@ -72,7 +72,8 @@ import {
   unref,
   onMounted,
   watch,
-  nextTick
+  nextTick,
+  provide,
 } from 'vue'
 import { Form, Row } from 'ant-design-vue'
 import FormItem from './components/FormItem.vue'
@@ -383,6 +384,7 @@ export default defineComponent({
       submit: handleSubmit,
       scrollToField: scrollToField
     }
+    provide('formActionType', formActionType)
 
     const clearCurrValidate = (field: string) => {
       clearValidate([field])

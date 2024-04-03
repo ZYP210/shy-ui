@@ -340,28 +340,86 @@ const schemas = ref<FormSchema[]>([
   // },
   //
   {
+    label: '',
     field: 'table',
     component: 'Table',
     required: true,
     colProps: { span: 24 },
-    componentProps: ({ ...ages }) => {
+    componentProps: ({ formModel }) => {
       return {
-        onModelChange: (e) => {
-          console.log(e)
-        },
         columns: [
           {
-            title: 'a',
-            dataIndex: 'a',
-            required: true
+            title: '预计付款时间',
+            dataIndex: 'expectPayTime',
+            type: 'DatePicker',
+            required: true,
+            rules: [
+              {
+                required: true,
+                validator: async (rule, value, { record }, formActionType) => {
+                  if (!value) return Promise.reject('请选择预计付款时间')
+                  if (value && !record.expectReturnTime) {
+                    try {
+                      const errIndex = formModel.table.findIndex(
+                        (ele) => ele.uuid === record.uuid
+                      )
+                      console.log(errIndex, 'ppp', record.uuid)
+                      await formActionType.validate([
+                        ['table', errIndex, 'expectReturnTime']
+                      ])
+                    } catch (error) {}
+                    return Promise.resolve()
+                  }
+                  if (dayjs(value).isBefore(record.expectReturnTime)) {
+                    return Promise.resolve()
+                  } else {
+                    return Promise.reject('付款时间不能大于回款时间')
+                  }
+                }
+              }
+            ],
+            componentProps: {
+              valueFormat: 'YYYY-MM-DD HH:mm:ss'
+            }
           },
           {
-            title: 'b',
-            dataIndex: 'b'
+            title: '预计回款时间',
+            dataIndex: 'expectReturnTime',
+            type: 'DatePicker',
+            required: true,
+            rules: [
+              {
+                required: true,
+                validator: async (rule, value, { record }, formActionType) => {
+                  console.log('zzz', record.uuid)
+                  if (!value) return Promise.reject('请选择预计回款时间')
+                  if (value && !record.expectPayTime) {
+                    try {
+                      const errIndex = formModel.table.findIndex(
+                        (ele) => ele.uuid === record.uuid
+                      )
+                      console.log(errIndex, 'zzz', record.uuid)
+                      await formActionType.validate([
+                        ['table', errIndex, 'expectPayTime']
+                      ])
+                    } catch (error) {}
+                    return Promise.resolve()
+                  }
+                  if (dayjs(value).isAfter(record.expectPayTime)) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject('回款时间不能小于付款时间')
+                }
+              }
+            ],
+            componentProps: {
+              valueFormat: 'YYYY-MM-DD HH:mm:ss'
+            }
           },
           {
             title: 'c',
-            dataIndex: 'c'
+            dataIndex: 'c',
+            required: true
           },
           {
             title: 'd',
@@ -402,7 +460,7 @@ const [
   registerForm,
   { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useForm({
-  schemas
+  schemas: schemas as any
 })
 
 const handleReset = () => {
