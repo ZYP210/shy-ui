@@ -2,7 +2,7 @@
   <div class="m-4">
     <Button @click="handleGetForm">获取form</Button>
     <Button @click="handleReset">reset</Button>
-    <div class="h-1000px"></div>
+    <div class="h-500px"></div>
     <BasicForm
       :labelWidth="100"
       @register="registerForm"
@@ -17,7 +17,7 @@
         />
       </template>
     </BasicForm>
-    <div class="h-2000px"></div>
+    <div class="h-1000px"></div>
   </div>
 </template>
 <script lang="ts" setup>

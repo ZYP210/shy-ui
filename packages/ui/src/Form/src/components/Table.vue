@@ -272,26 +272,23 @@ watch(
 )
 
 const isScroll = ref(false)
+const timer = ref<NodeJS.Timeout>()
 onMounted(() => {
   window.addEventListener(
     'scroll',
-    () => {
+    (e) => {
+      clearTimeout(timer.value)
+      timer.value = setTimeout(() => {
+        isScroll.value = false
+      }, 500)
       if (isScroll.value) return
       isScroll.value = true
-    },
-    true
-  )
-  window.addEventListener(
-    'scrollend',
-    () => {
-      isScroll.value = false
     },
     true
   )
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', () => {})
-  window.removeEventListener('scrollend', () => {})
 })
 
 // 冗余代码
