@@ -54,9 +54,10 @@ const schemas = ref<FormSchema[]>([
     componentProps: ({ formModel }) => {
       return {
         api: async (ppp) => {
+          console.log(ppp)
           return [
             {
-              label: 'a',
+              label: 'a11111111111111asKLHDSAKJDHSAJKDHSADJKHSADKJSAHDASJDHSADKJASHDKJASHDKJSAHDASKJHD',
               value: 'a'
             },
             {
@@ -65,29 +66,27 @@ const schemas = ref<FormSchema[]>([
             }
           ]
         },
-        onChange: (val) => {
-          formModel.b = undefined
-          formModel.aaa = val
-        }
+        params: { c: formModel.bb }
+      }
+    },
+    colProps: { span: 8 }
+  },
+  {
+    label: 'b',
+    field: 'b',
+    component: 'ApiSelect',
+    componentProps: ({ formModel }) => {
+      console.log(formModel, 999)
+      return {
+        api: async (ppp) => {
+          console.log(ppp, 222)
+          if (ppp?.aaa) return [{ label: '777', value: '777' }]
+          return []
+        },
+        params: { aaa: formModel.aaa }
       }
     }
-  },
-  // {
-  //   label: 'b',
-  //   field: 'b',
-  //   component: 'ApiSelect',
-  //   componentProps: ({ formModel }) => {
-  //     console.log(formModel, 999)
-  //     return {
-  //       api: async (ppp) => {
-  //         console.log(ppp, 222)
-  //         if (ppp?.aaa) return [{ label: '777', value: '777' }]
-  //         return []
-  //       },
-  //       params: { aaa: formModel.aaa }
-  //     }
-  //   }
-  // }
+  }
   // { field: 'aa', label: '数字框', component: 'InputNumber' },
   // {
   //   field: 'type',
@@ -341,7 +340,7 @@ const schemas = ref<FormSchema[]>([
   //   }
   // },
   //
-  {
+  ,{
     label: '',
     field: 'table',
     component: 'Table',
@@ -471,8 +470,7 @@ const handleReset = () => {
 
 onMounted(() => {
   setFieldsValue({
-    Tinymce: '123',
-    startDate: new Date().getTime()
+    b: 123
   })
   // setTimeout(() => {
   //   setFieldsValue({
