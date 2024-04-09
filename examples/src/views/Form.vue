@@ -74,18 +74,18 @@ const schemas = ref<FormSchema[]>([
   {
     label: 'b',
     field: 'b',
-    component: 'ApiSelect',
-    componentProps: ({ formModel }) => {
-      console.log(formModel, 999)
-      return {
-        api: async (ppp) => {
-          console.log(ppp, 222)
-          if (ppp?.aaa) return [{ label: '777', value: '777' }]
-          return []
-        },
-        params: { aaa: formModel.aaa }
-      }
-    }
+    component: 'InputNumber',
+    // componentProps: ({ formModel }) => {
+    //   console.log(formModel, 999)
+    //   return {
+    //     api: async (ppp) => {
+    //       console.log(ppp, 222)
+    //       if (ppp?.aaa) return [{ label: '777', value: '777' }]
+    //       return []
+    //     },
+    //     params: { aaa: formModel.aaa }
+    //   }
+    // }
   }
   // { field: 'aa', label: '数字框', component: 'InputNumber' },
   // {
@@ -420,6 +420,7 @@ const schemas = ref<FormSchema[]>([
           {
             title: 'c',
             dataIndex: 'c',
+            type: 'InputNumber',
             required: true
           },
           {
