@@ -9,6 +9,7 @@
   }
 
   &-input {
+    width: 100%;
     flex: 1;
   }
 
@@ -69,6 +70,10 @@
 
     &:not(.ant-form-item-with-help) {
       margin-bottom: 20px;
+    }
+
+    &-control-input-content > div > div:not(.ant-input-number-handler-wrap) {
+      width: 100%;
     }
 
     &.suffix-item {
@@ -132,4 +137,8 @@
     content: '';
     background: #2991ff;
   }
+}
+
+.table-children-err-popover .ant-popover-inner-content{
+  padding: 6px 16px;
 }

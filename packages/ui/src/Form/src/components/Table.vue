@@ -34,48 +34,61 @@
       <template v-if="column.dataIndex !== 'index' && column.type !== 'text'">
         <FormItem
           :required="column.required"
-          :rules="column?.rules || []"
+          :rules="getRules({ column, record, index, ...args })"
           :name="[$attrs.codeField, index, column.dataIndex]"
           :key="record[rowKey]"
         >
-          <Select
-            v-if="column.type === 'select'"
-            v-model:value="record[column.dataIndex]"
-            :options="column.dicData"
-            :mode="column.mode"
-            :max-tag-count="column.maxTagCount"
-            :max-tag-text-length="column.maxTagTextLength"
-          />
-          <DatePicker
-            v-else-if="column.type === 'datePicker'"
-            v-model:value="record[column.dataIndex]"
-            valueFormat="YYYY-MM-DD HH:mm:ss"
-          />
-          <InputNumber
-            v-else-if="column.type === 'number'"
-            v-model:value="record[column.dataIndex]"
-            :min="column.min"
-            :max="column.max"
-            :precision="column.precision ?? 2"
-          />
-          <Input
-            v-else-if="column.type === 'input'"
-            v-model:value="record[column.dataIndex]"
-            :disabled="!props.isShowAction"
-          />
-          <component
-            v-else
-            allowClear
-            :getPopupContainer="getPopupContainer"
-            :style="{ width: '100%' }"
-            v-bind="
-              isFunction(column.componentProps)
-                ? column.componentProps({ record, column, index, ...args })
-                : column.componentProps
+          <Popover
+            overlayClassName="table-children-err-popover"
+            :visible="
+              !!rulesRef?.[`${column.dataIndex}-${record.uuid}Info`]?.show &&
+              !isScroll
             "
-            v-model:value="record[column.dataIndex]"
-            :is="componentMap.get(column.type)"
-          />
+          >
+            <template #content>
+              <span class="text-red-500">
+                {{ rulesRef[`${column.dataIndex}-${record.uuid}Info`]?.msg }}
+              </span>
+            </template>
+            <Select
+              v-if="column.type === 'select'"
+              v-model:value="record[column.dataIndex]"
+              :options="column.dicData"
+              :mode="column.mode"
+              :max-tag-count="column.maxTagCount"
+              :max-tag-text-length="column.maxTagTextLength"
+            />
+            <DatePicker
+              v-else-if="column.type === 'datePicker'"
+              v-model:value="record[column.dataIndex]"
+              valueFormat="YYYY-MM-DD HH:mm:ss"
+            />
+            <InputNumber
+              v-else-if="column.type === 'number'"
+              v-model:value="record[column.dataIndex]"
+              :min="column.min"
+              :max="column.max"
+              :precision="column.precision ?? 2"
+            />
+            <Input
+              v-else-if="column.type === 'input'"
+              v-model:value="record[column.dataIndex]"
+              :disabled="!props.isShowAction"
+            />
+            <component
+              v-else
+              allowClear
+              :getPopupContainer="getPopupContainer"
+              :style="{ width: '100%' }"
+              v-bind="
+                isFunction(column.componentProps)
+                  ? column.componentProps({ record, column, index, ...args })
+                  : column.componentProps
+              "
+              v-model:value="record[column.dataIndex]"
+              :is="componentMap.get(column.type)"
+            />
+          </Popover>
         </FormItem>
       </template>
 
@@ -111,16 +124,20 @@ import {
   DatePicker,
   InputNumber
 } from 'ant-design-vue'
-import { ref, computed, watch, toRaw } from 'vue'
+import { ref, computed, watch, toRaw, inject } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 import { DeleteFilled, PlusCircleFilled } from '@ant-design/icons-vue'
 import { buildUUID, isFunction } from '@shy-plugins/utils'
 import { componentMap } from '../componentMap'
-import { isEqual } from 'lodash-es'
+import { cloneDeep, isArray, isEqual } from 'lodash-es'
+import { FormActionType } from '../types/form'
+import { Popover } from 'ant-design-vue'
+import { reactive } from 'vue'
+import { onMounted } from 'vue'
+import { onUnmounted } from 'vue'
 
+const formActionType: FormActionType = inject('formActionType')!
 const emit = defineEmits(['update:value', 'change', 'add', 'remove'])
-
-const listFormRefs = ref<unknown[]>([])
 
 const props = defineProps({
   rowKey: {
@@ -179,18 +196,60 @@ const rowClickEvent = (index) => {
 
 const getPopupContainer = () => document.body
 
-const loadKv = () => {
-  const columns: any = props.columns
-  let dicData = []
-  columns.forEach(async (column) => {
-    if (column?.api) {
-      dicData = await column.api()
-      column.dicData = dicData
+const rulesRef = reactive({})
+const getRules = ({ column, record, index, ...args }) => {
+  const errKey = `${column.dataIndex}-${record.uuid}Info`
+  if (!column.required) return []
+  if (rulesRef[errKey]?.rules) return rulesRef[errKey]?.rules
+  rulesRef[errKey] = {
+    rules: [],
+    show: false,
+    msg: ''
+  }
+  if (!column.rules && column.required) {
+    rulesRef[errKey].rules = [
+      {
+        required: true,
+        validator: (rule, value) => {
+          const prefix = column.type.toLocaleLowerCase().includes('input')
+            ? '请输入'
+            : '请选择'
+          const errMsg = `${prefix}${column.title}`
+          if (value) {
+            rulesRef[errKey].show = false
+            return Promise.resolve()
+          }
+          rulesRef[errKey].show = true
+          rulesRef[errKey].msg = errMsg
+          return Promise.reject(errMsg)
+        }
+      }
+    ]
+    return rulesRef[errKey].rules
+  }
+  if (!isArray(column.rules)) return column.rules
+  rulesRef[errKey].rules = cloneDeep(column.rules)
+  rulesRef[errKey].rules.forEach((item) => {
+    if (!item.validator || !isFunction(item.validator)) return
+    const validator = item.validator
+    item.validator = async (rule, value) => {
+      try {
+        rulesRef[errKey].show = false
+        return await validator(
+          rule,
+          value,
+          { column, record, ...args },
+          formActionType
+        )
+      } catch (error) {
+        rulesRef[errKey].show = true
+        rulesRef[errKey].msg = error
+        return Promise.reject(error)
+      }
     }
   })
+  return rulesRef[errKey].rules
 }
-
-loadKv()
 
 watch(
   () => state.value,
@@ -208,10 +267,42 @@ watch(
     }
   },
   {
-    deep: true,
+    deep: true
   }
 )
 
+const isScroll = ref(false)
+const timer = ref<NodeJS.Timeout>()
+onMounted(() => {
+  window.addEventListener(
+    'scroll',
+    (e) => {
+      clearTimeout(timer.value)
+      timer.value = setTimeout(() => {
+        isScroll.value = false
+      }, 500)
+      if (isScroll.value) return
+      isScroll.value = true
+    },
+    true
+  )
+})
+onUnmounted(() => {
+  window.removeEventListener('scroll', () => {})
+})
+
+// 冗余代码
+const loadKv = () => {
+  const columns: any = props.columns
+  let dicData = []
+  columns.forEach(async (column) => {
+    if (column?.api) {
+      dicData = await column.api()
+      column.dicData = dicData
+    }
+  })
+}
+const listFormRefs = ref<unknown[]>([])
 const validate = async () => {
   try {
     for (let formRef of listFormRefs.value as { validate: () => {} }[]) {
@@ -221,7 +312,7 @@ const validate = async () => {
     throw new Error('校验失败')
   }
 }
-
+loadKv()
 defineExpose({ validate })
 </script>
 

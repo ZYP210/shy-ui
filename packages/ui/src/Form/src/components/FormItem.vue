@@ -187,7 +187,9 @@ export default defineComponent({
         dynamicRules,
         required
       } = props.schema
-      emit('clearCurrValidate', unref(getValues).field)
+      if (props.schema.component !== 'Table') {
+        emit('clearCurrValidate', unref(getValues).field)
+      }
       if (isFunction(dynamicRules)) {
         return dynamicRules(unref(getValues)) as ValidationRule[]
       }
@@ -200,7 +202,8 @@ export default defineComponent({
         ? rulesMessageJoinLabel
         : globalRulesMessageJoinLabel
       const defaultMsg =
-        createPlaceholderMessage(component) + `${joinLabel ? label : ''}`
+        createPlaceholderMessage(component) +
+        `${joinLabel ? (label ? label : '') : ''}`
 
       function validator(rule: any, value: any) {
         const msg = rule.message || defaultMsg

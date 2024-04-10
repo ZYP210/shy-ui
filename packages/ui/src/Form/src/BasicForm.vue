@@ -64,6 +64,7 @@ import type { Ref } from 'vue'
 import { DownOutlined } from '@ant-design/icons-vue'
 
 import {
+  toRaw,
   defineComponent,
   reactive,
   ref,
@@ -71,7 +72,8 @@ import {
   unref,
   onMounted,
   watch,
-  nextTick
+  nextTick,
+  provide,
 } from 'vue'
 import { Form, Row } from 'ant-design-vue'
 import FormItem from './components/FormItem.vue'
@@ -93,6 +95,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { basicProps } from './props'
 import { cloneDeep } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
+import { isEqual } from 'lodash-es'
 
 export default defineComponent({
   name: 'BasicForm',
@@ -308,31 +311,31 @@ export default defineComponent({
     watch(
       () => formModel,
       useDebounceFn((val) => {
+        if (isEqual(toRaw(val), toRaw(tempFormModel))) return
         for (const key in val) {
-          if (val[key] !== tempFormModel[key]) {
-            unref(getProps).schemas?.forEach((item) => {
-              const isComponentProps = item.field === key && item.componentProps
-              if (
-                isComponentProps &&
-                !isFunction(item.componentProps) &&
-                item.componentProps?.onModelChange
-              ) {
-                item.componentProps.onModelChange(val[key])
-              } else if (isComponentProps && isFunction(item.componentProps)) {
-                const modelProps = item.componentProps({
-                  schema: item,
-                  formModel: formModel,
-                  formActionType: formActionType as FormActionType,
-                  tableAction: props.tableAction
-                })
-                if (modelProps.onModelChange) {
-                  modelProps.onModelChange(val[key])
-                }
+          if (isEqual(toRaw(val[key]), toRaw(tempFormModel[key]))) continue
+          unref(getProps).schemas?.forEach((item) => {
+            const isComponentProps = item.field === key && item.componentProps
+            if (
+              isComponentProps &&
+              !isFunction(item.componentProps) &&
+              item.componentProps?.onModelChange
+            ) {
+              item.componentProps.onModelChange(val[key])
+            } else if (isComponentProps && isFunction(item.componentProps)) {
+              const modelProps = item.componentProps({
+                schema: item,
+                formModel: formModel,
+                formActionType: formActionType as FormActionType,
+                tableAction: props.tableAction
+              })
+              if (modelProps.onModelChange) {
+                modelProps.onModelChange(val[key])
               }
-            })
-          }
+            }
+          })
         }
-        Object.assign(tempFormModel, formModel)
+        Object.assign(tempFormModel, cloneDeep(formModel))
         unref(getProps).submitOnChange && handleSubmit()
       }, 300),
       { deep: true }
@@ -381,6 +384,7 @@ export default defineComponent({
       submit: handleSubmit,
       scrollToField: scrollToField
     }
+    provide('formActionType', formActionType)
 
     const clearCurrValidate = (field: string) => {
       clearValidate([field])

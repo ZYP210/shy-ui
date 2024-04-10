@@ -2,6 +2,7 @@
   <div class="m-4">
     <Button @click="handleGetForm">获取form</Button>
     <Button @click="handleReset">reset</Button>
+    <div class="h-500px"></div>
     <BasicForm
       :labelWidth="100"
       @register="registerForm"
@@ -16,6 +17,7 @@
         />
       </template>
     </BasicForm>
+    <div class="h-1000px"></div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -45,7 +47,47 @@ const tree = {
 }
 
 const schemas = ref<FormSchema[]>([
-  { field: 'aa', label: '数字框', component: 'InputNumber' },
+  {
+    label: 'a',
+    field: 'a',
+    component: 'ApiSelect',
+    componentProps: ({ formModel }) => {
+      return {
+        api: async (ppp) => {
+          console.log(ppp)
+          return [
+            {
+              label: 'a11111111111111asKLHDSAKJDHSAJKDHSADJKHSADKJSAHDASJDHSADKJASHDKJASHDKJSAHDASKJHD',
+              value: 'a'
+            },
+            {
+              label: 'b',
+              value: 'b'
+            }
+          ]
+        },
+        params: { c: formModel.bb }
+      }
+    },
+    colProps: { span: 8 }
+  },
+  {
+    label: 'b',
+    field: 'b',
+    component: 'InputNumber',
+    // componentProps: ({ formModel }) => {
+    //   console.log(formModel, 999)
+    //   return {
+    //     api: async (ppp) => {
+    //       console.log(ppp, 222)
+    //       if (ppp?.aaa) return [{ label: '777', value: '777' }]
+    //       return []
+    //     },
+    //     params: { aaa: formModel.aaa }
+    //   }
+    // }
+  }
+  // { field: 'aa', label: '数字框', component: 'InputNumber' },
   // {
   //   field: 'type',
   //   label: '类型',
@@ -121,34 +163,34 @@ const schemas = ref<FormSchema[]>([
   //       )
   //   }
   // },
-  {
-    field: 'startDate',
-    label: '日期范围',
-    component: 'DatePicker',
-    colProps: { span: 24 },
-    componentProps: {
-      valueFormat: 'YYYY-MM-DD HH:mm:ss',
-      showTime: true
-    }
-  },
-  {
-    field: '1111',
-    label: '上传',
-    component: 'Upload',
-    colProps: { span: 24 },
-    componentProps: {
-      maxNumber: 2,
-      api: async (params) => {
-        console.log(params)
-        return {
-          status: 'success',
-          data: {
-            url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
-          }
-        }
-      }
-    }
-  },
+  // {
+  //   field: 'startDate',
+  //   label: '日期范围',
+  //   component: 'DatePicker',
+  //   colProps: { span: 24 },
+  //   componentProps: {
+  //     valueFormat: 'YYYY-MM-DD HH:mm:ss',
+  //     showTime: true
+  //   }
+  // },
+  // {
+  //   field: '1111',
+  //   label: '上传',
+  //   component: 'Upload',
+  //   colProps: { span: 24 },
+  //   componentProps: {
+  //     maxNumber: 2,
+  //     api: async (params) => {
+  //       console.log(params)
+  //       return {
+  //         status: 'success',
+  //         data: {
+  //           url: 'https://www.mocky.io/v2/5cc8019d300000980a055e76'
+  //         }
+  //       }
+  //     }
+  //   }
+  // },
   // {
   //   field: 'field',
   //   component: 'Input',
@@ -298,30 +340,88 @@ const schemas = ref<FormSchema[]>([
   //   }
   // },
   //
-  {
+  ,{
+    label: '',
     field: 'table',
-    label: 'table',
     component: 'Table',
     required: true,
     colProps: { span: 24 },
-    componentProps: ({ ...ages }) => {
+    componentProps: ({ formModel }) => {
       return {
-        onModelChange: (e) => {
-          // console.log(e, ages)
-        },
         columns: [
           {
-            title: 'a',
-            dataIndex: 'a',
-            required: true
+            title: '预计付款时间',
+            dataIndex: 'expectPayTime',
+            type: 'DatePicker',
+            required: true,
+            rules: [
+              {
+                required: true,
+                validator: async (rule, value, { record }, formActionType) => {
+                  if (!value) return Promise.reject('请选择预计付款时间')
+                  if (value && !record.expectReturnTime) {
+                    try {
+                      const errIndex = formModel.table.findIndex(
+                        (ele) => ele.uuid === record.uuid
+                      )
+                      console.log(errIndex, 'ppp', record.uuid)
+                      await formActionType.validate([
+                        ['table', errIndex, 'expectReturnTime']
+                      ])
+                    } catch (error) {}
+                    return Promise.resolve()
+                  }
+                  if (dayjs(value).isBefore(record.expectReturnTime)) {
+                    return Promise.resolve()
+                  } else {
+                    return Promise.reject('付款时间不能大于回款时间')
+                  }
+                }
+              }
+            ],
+            componentProps: {
+              valueFormat: 'YYYY-MM-DD HH:mm:ss'
+            }
           },
           {
-            title: 'b',
-            dataIndex: 'b'
+            title: '预计回款时间',
+            dataIndex: 'expectReturnTime',
+            type: 'DatePicker',
+            required: true,
+            rules: [
+              {
+                required: true,
+                validator: async (rule, value, { record }, formActionType) => {
+                  console.log('zzz', record.uuid)
+                  if (!value) return Promise.reject('请选择预计回款时间')
+                  if (value && !record.expectPayTime) {
+                    try {
+                      const errIndex = formModel.table.findIndex(
+                        (ele) => ele.uuid === record.uuid
+                      )
+                      console.log(errIndex, 'zzz', record.uuid)
+                      await formActionType.validate([
+                        ['table', errIndex, 'expectPayTime']
+                      ])
+                    } catch (error) {}
+                    return Promise.resolve()
+                  }
+                  if (dayjs(value).isAfter(record.expectPayTime)) {
+                    return Promise.resolve()
+                  }
+                  return Promise.reject('回款时间不能小于付款时间')
+                }
+              }
+            ],
+            componentProps: {
+              valueFormat: 'YYYY-MM-DD HH:mm:ss'
+            }
           },
           {
             title: 'c',
-            dataIndex: 'c'
+            dataIndex: 'c',
+            type: 'InputNumber',
+            required: true
           },
           {
             title: 'd',
@@ -334,7 +434,7 @@ const schemas = ref<FormSchema[]>([
         ]
       }
     }
-  },
+  }
   // {
   //   field: 'z',
   //   label: 'Divider',
@@ -351,18 +451,18 @@ const schemas = ref<FormSchema[]>([
   //   },
   //   required: true
   // },
-  {
-    label: 'Tinymce',
-    field: 'Tinymce',
-    component: 'Tinymce'
-  }
+  // {
+  //   label: 'Tinymce',
+  //   field: 'Tinymce',
+  //   component: 'Tinymce'
+  // }
 ])
 const { createMessage } = useMessage()
 const [
   registerForm,
   { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useForm({
-  schemas
+  schemas: schemas as any
 })
 
 const handleReset = () => {
@@ -371,8 +471,7 @@ const handleReset = () => {
 
 onMounted(() => {
   setFieldsValue({
-    Tinymce: '123',
-    startDate: new Date().getTime()
+    b: 123
   })
   // setTimeout(() => {
   //   setFieldsValue({
