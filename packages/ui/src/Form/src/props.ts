@@ -2,6 +2,7 @@ import type { FieldMapToTime, FormSchema } from './types/form'
 import type { CSSProperties, PropType } from 'vue'
 import type { ColEx } from './types'
 import type { TableActionType } from '../../Table'
+import type { TableActionType as ShyTableActionType } from '../../ShyTable'
 import type { RowProps } from 'ant-design-vue/lib/grid/Row'
 
 type SizeType = 'small' | 'middle' | 'large' | undefined
@@ -171,7 +172,7 @@ export const basicProps = {
     default: 'horizontal'
   },
   tableAction: {
-    type: Object as PropType<TableActionType>
+    type: Object as PropType<TableActionType | ShyTableActionType>
   },
 
   wrapperCol: {

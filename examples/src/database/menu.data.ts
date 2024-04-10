@@ -7,6 +7,7 @@ export const URLData: MenuList[] = [
   {
     title: '表格',
     urlAry: [
+      'ShyTable',
       'Table',
       'TableAction',
       'TableAnt',

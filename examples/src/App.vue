@@ -1,38 +1,49 @@
 <template>
-  <div class="controlBox" :style="controlBoxStyle">
-    <div class="controlBox-btn" @click="handleSwitch">
-      {{ !flag ? 'MENU' : '⨉' }}
-    </div>
-    <div class="controlBox-title" :style="{ opacity: flag ? 1 : 0 }">
-      菜单导航
-    </div>
-    <div class="controlBox-inner" :style="{ opacity: flag ? 1 : 0 }">
-      <div
-        class="controlBox-inner-item"
-        v-for="(item, index) in URLData"
-        :key="index"
-      >
-        <div class="controlBox-inner-item-title">{{ item.title }}</div>
-        <div class="controlBox-inner-item-link">
-          <router-link
-            @click="handleSwitch"
-            :to="`/${e}`"
-            v-for="(e, i) in item.urlAry"
-            :key="i"
-          >
-            {{ e }}
-          </router-link>
+  <ConfigProvider
+    :theme="{
+      token: {
+        borderRadius: 4,
+        colorPrimary: '#2da44e',
+        wireframe: true
+      }
+    }"
+  >
+    <div class="controlBox" :style="controlBoxStyle">
+      <div class="controlBox-btn" @click="handleSwitch">
+        {{ !flag ? 'MENU' : '⨉' }}
+      </div>
+      <div class="controlBox-title" :style="{ opacity: flag ? 1 : 0 }">
+        菜单导航
+      </div>
+      <div class="controlBox-inner" :style="{ opacity: flag ? 1 : 0 }">
+        <div
+          class="controlBox-inner-item"
+          v-for="(item, index) in URLData"
+          :key="index"
+        >
+          <div class="controlBox-inner-item-title">{{ item.title }}</div>
+          <div class="controlBox-inner-item-link">
+            <router-link
+              @click="handleSwitch"
+              :to="`/${e}`"
+              v-for="(e, i) in item.urlAry"
+              :key="i"
+            >
+              {{ e }}
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <router-view></router-view>
+    <router-view></router-view>
+  </ConfigProvider>
 </template>
 
 <script lang="ts" setup>
+import { ConfigProvider } from 'ant-design-vue'
 import { URLData } from '/@/database/menu.data'
-import {  ref, reactive } from 'vue'
+import { ref, reactive } from 'vue'
 const controlBoxStyle = reactive({
   top: '30px',
   width: '58px',

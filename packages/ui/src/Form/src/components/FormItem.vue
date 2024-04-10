@@ -4,6 +4,7 @@ import { computed, defineComponent, toRefs, unref, ref } from 'vue'
 import type { FormActionType, FormProps, FormSchema } from '../types/form'
 import type { Rule as ValidationRule } from 'ant-design-vue/lib/form/interface'
 import type { TableActionType } from '../../../Table'
+import type { TableActionType as ShyTableActionType } from '../../../ShyTable'
 import { Col, Form } from 'ant-design-vue'
 import { componentMap } from '../componentMap'
 import { BasicHelp } from '../../..//Basic'
@@ -41,7 +42,7 @@ export default defineComponent({
       default: null
     },
     tableAction: {
-      type: Object as PropType<TableActionType>
+      type: Object as PropType<TableActionType | ShyTableActionType>
     },
     formActionType: {
       type: Object as PropType<FormActionType>

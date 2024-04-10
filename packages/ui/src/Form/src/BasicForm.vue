@@ -73,7 +73,7 @@ import {
   onMounted,
   watch,
   nextTick,
-  provide,
+  provide
 } from 'vue'
 import { Form, Row } from 'ant-design-vue'
 import FormItem from './components/FormItem.vue'
@@ -96,6 +96,7 @@ import { basicProps } from './props'
 import { cloneDeep } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
 import { isEqual } from 'lodash-es'
+import { NamePath } from 'ant-design-vue/es/form/interface'
 
 export default defineComponent({
   name: 'BasicForm',
@@ -159,6 +160,7 @@ export default defineComponent({
     // Get uniform row style and Row configuration for the entire form
     const getRow = computed((): Recordable => {
       const { baseRowStyle = {}, rowProps } = unref(getProps)
+      console.log(rowProps)
       return {
         style: baseRowStyle,
         ...rowProps
@@ -379,10 +381,10 @@ export default defineComponent({
       removeSchemaByField,
       appendSchemaByField,
       clearValidate,
+      submit: handleSubmit,
       validateFields,
       validate,
-      submit: handleSubmit,
-      scrollToField: scrollToField
+      scrollToField
     }
     provide('formActionType', formActionType)
 
@@ -405,7 +407,7 @@ export default defineComponent({
       advanceState,
       getRow,
       getProps,
-      formElRef,
+      // formElRef,
       getSchema,
       formActionType,
       setFormModel,
@@ -415,7 +417,25 @@ export default defineComponent({
         (): Recordable => ({ ...getProps.value, ...advanceState })
       ),
       fieldsIsAdvancedMap,
-      ...formActionType,
+      getFieldsValue,
+      setFieldsValue,
+      resetFields,
+      updateSchema,
+      resetSchema,
+      setProps,
+      removeSchemaByField,
+      appendSchemaByField,
+      clearValidate,
+      submit: handleSubmit,
+      validateFields: validateFields as (
+        nameList?: NamePath[] | undefined
+      ) => Promise<any>,
+      validate: validate as (nameList?: NamePath[] | undefined) => Promise<any>,
+      scrollToField: scrollToField as (
+        name: NamePath,
+        options?: ScrollOptions | undefined
+      ) => Promise<void>,
+      // ...formActionType,
       clearCurrValidate
     }
   }
