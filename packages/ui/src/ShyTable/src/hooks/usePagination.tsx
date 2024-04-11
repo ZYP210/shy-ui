@@ -11,14 +11,14 @@ interface ItemRender {
   originalElement: any
 }
 
-function itemRender({ page, type, originalElement }: ItemRender) {
-  if (type === 'prev') {
-    return page === 0 ? null : <LeftOutlined />
-  } else if (type === 'next') {
-    return page === 1 ? null : <RightOutlined />
-  }
-  return originalElement
-}
+// function itemRender({ page, type, originalElement }: ItemRender) {
+//   if (type === 'prev') {
+//     return page === 0 ? null : <LeftOutlined />
+//   } else if (type === 'next') {
+//     return page === 1 ? null : <RightOutlined />
+//   }
+//   return originalElement
+// }
 
 export function usePagination(refProps: ComputedRef<ShyTableProps>) {
   const configRef = ref<PaginationProps>({})
@@ -36,12 +36,12 @@ export function usePagination(refProps: ComputedRef<ShyTableProps>) {
     }
   )
 
-  const getPaginationInfo = computed((): PaginationProps | boolean => {
+  const getPaginationInfo = computed((): PaginationProps => {
     const { pagination } = unref(refProps)
 
-    if (!unref(show) || (isBoolean(pagination) && !pagination)) {
-      return false
-    }
+    // if (!unref(show) || (isBoolean(pagination) && !pagination)) {
+    //   return false
+    // }
 
     return {
       current: 1,
@@ -51,7 +51,7 @@ export function usePagination(refProps: ComputedRef<ShyTableProps>) {
       showTotal: (total) => `共 ${total} 条数据`,
       showSizeChanger: true,
       pageSizeOptions: PAGE_SIZE_OPTIONS,
-      itemRender: itemRender,
+      // itemRender: itemRender,
       showQuickJumper: true,
       ...(isBoolean(pagination) ? {} : pagination),
       ...unref(configRef)

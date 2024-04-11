@@ -1,5 +1,7 @@
 <template>
   <div class=" w-full h-full flex flex-col">
+    <Button type="primary"> 操作按钮 </Button>
+
     <div class="flex-1 p-10px">
       <a-button @click="pushApi">点我</a-button>
       <div class="flex-1">
@@ -10,7 +12,6 @@
           @selection-change="handleSelectChange"
         >
           <template #toolbar>
-            <a-button type="primary"> 操作按钮 </a-button>
           </template>
 
           <template #headerCell="{ column }">
@@ -52,6 +53,7 @@
 </template>
 
 <script lang="ts" setup>
+import { Button } from 'ant-design-vue';
 import { BasicTable, useTable, TableAction } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
@@ -324,20 +326,21 @@ const [
   }
 ] = useTable({
   api: (params) => {
-    return Array.from({ length: 100 }, (_, i) => {
-      return {
-        id: i,
-        status: i,
-        rangePlace: i,
-        place: '河北',
-        createTime: 1695024076000,
-        name: 'zzz',
-        phone: '1212121',
-        address: '1111',
-        remark: 999,
-        qualifiedNum: 100000.11111111
-      }
-    })
+    // return Array.from({ length: 100 }, (_, i) => {
+    //   return {
+    //     id: i,
+    //     status: i,
+    //     rangePlace: i,
+    //     place: '河北',
+    //     createTime: 1695024076000,
+    //     name: 'zzz',
+    //     phone: '1212121',
+    //     address: '1111',
+    //     remark: 999,
+    //     qualifiedNum: 100000.11111111
+    //   }
+    // })
+    return []
   },
   rowKey: 'id',
   columns,
@@ -355,8 +358,8 @@ const [
       }
     ]
   },
-  resizable: true,
-  showSummaryTotal: true,
+  resizable: false,
+  // showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
   useAdvancedSearch: true,

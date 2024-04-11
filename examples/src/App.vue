@@ -4,7 +4,6 @@
       token: {
         borderRadius: 4,
         colorPrimary: '#2da44e',
-        wireframe: true
       }
     }"
   >

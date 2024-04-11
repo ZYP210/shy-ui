@@ -1,5 +1,5 @@
 <template>
-  <Modal class="modal-wrapper" v-bind="getBindValue" @cancel="handleCancel">
+  <Modal v-bind="getBindValue" @cancel="handleCancel">
     <template #closeIcon v-if="!$slots.closeIcon">
       <ModalClose
         :canFullscreen="getProps.canFullscreen"
@@ -36,19 +36,14 @@
       :height="getWrapperHeight"
       :visible="visibleRef"
       :modalFooterHeight="footer !== undefined && !footer ? 0 : undefined"
-      v-bind="
-        omit(getProps.wrapperProps, 'visible', 'height', 'modalFooterHeight')
-      "
+      v-bind="omitBindValue"
       @ext-height="handleExtHeight"
       @height-change="handleHeightChange"
     >
       <slot></slot>
     </ModalWrapper>
 
-    <template
-      #[item]="data"
-      v-for="item in Object.keys(omit($slots, 'default'))"
-    >
+    <template #[item]="data" v-for="item in omitSlotKeys">
       <slot :name="item" v-bind="data || {}"></slot>
     </template>
   </Modal>
@@ -92,7 +87,7 @@ export default defineComponent({
     'register',
     'update:visible'
   ],
-  setup(props, { emit, attrs }) {
+  setup(props, { emit, attrs, slots }) {
     const visibleRef = ref(false)
     const propsRef = ref<Partial<ModalProps> | null>(null)
     const modalWrapperRef = ref<any>(null)
@@ -122,7 +117,8 @@ export default defineComponent({
     const getMergeProps = computed((): Recordable => {
       return {
         ...props,
-        ...(unref(propsRef) as any)
+        ...(unref(propsRef) as any),
+        wrapClassName: `${props.wrapClassName || ''} ${prefixCls}`
       }
     })
 
@@ -161,6 +157,19 @@ export default defineComponent({
         return omit(attr, ['height', 'title'])
       }
       return omit(attr, 'title')
+    })
+
+    const omitBindValue = computed(() => {
+      return omit(
+        getProps.value.wrapperProps,
+        'visible',
+        'height',
+        'modalFooterHeight'
+      )
+    })
+
+    const omitSlotKeys = computed(() => {
+      return Object.keys(omit(slots, ['default']))
     })
 
     const getWrapperHeight = computed(() => {
@@ -236,13 +245,14 @@ export default defineComponent({
       extHeightRef.value = height
     }
 
-    function handleTitleDbClick(e) {
+    function handleTitleDbClick(e: Event) {
       if (!props.canFullscreen) return
       e.stopPropagation()
       handleFullScreen(e)
     }
 
     return {
+      prefixCls,
       handleCancel,
       getBindValue,
       getProps,
@@ -251,7 +261,9 @@ export default defineComponent({
       getMergeProps,
       handleOk,
       visibleRef,
-      omit,
+      omitBindValue: omitBindValue as Object,
+      omitSlotKeys,
+      // omit,
       modalWrapperRef,
       handleExtHeight,
       handleHeightChange,
@@ -261,3 +273,7 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="less">
+@import './modal.less';
+</style>

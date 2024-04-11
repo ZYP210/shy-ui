@@ -21,6 +21,13 @@ import {
 } from './const'
 
 export const basicProps = reactive({
+  isShowPagination: {
+    type: Boolean
+  },
+  isShowFooter: {
+    type: Boolean,
+    default: true
+  },
   clickToRowSelect: { type: Boolean, default: true },
   isTreeTable: Boolean,
   tableSetting: {
@@ -213,7 +220,7 @@ export const paginationProps = reactive({
       showTotal: (total) => `共 ${total} 条数据`,
       showSizeChanger: true,
       pageSizeOptions: PAGE_SIZE_OPTIONS,
-      showQuickJumper: true,
+      showQuickJumper: true
     }
   }
 })

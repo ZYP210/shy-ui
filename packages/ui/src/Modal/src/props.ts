@@ -1,6 +1,6 @@
 import type { PropType, CSSProperties } from 'vue'
 import type { ModalWrapperProps } from './typing'
-import { ButtonProps } from 'ant-design-vue'
+// import type { ButtonProps } from 'ant-design-vue'
 
 
 export const modalProps = {
@@ -65,9 +65,13 @@ export const basicProps = Object.assign({}, modalProps, {
 
   okType: { type: String, default: 'primary' },
 
-  okButtonProps: Object as PropType<ButtonProps>,
+  okButtonProps: {
+    type: Object as PropType<Recordable>
+  },
 
-  cancelButtonProps: Object as PropType<ButtonProps>,
+  cancelButtonProps: {
+    type: Object as PropType<Recordable>
+  },
 
   title: { type: String },
 

@@ -85,7 +85,8 @@ export function useDataSource(
   function handleTableChange(
     pagination: PaginationProps,
     filters: Partial<Recordable<string[]>>,
-    sorter: SorterResult
+    sorter: SorterResult,
+    extra: any
   ) {
     // const isChangePagination = !eq(oldPaginationRef.value, pagination)
     // const isChangeFilter = !eq(oldFilterInfoRef.value, filters)

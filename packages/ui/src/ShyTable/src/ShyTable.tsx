@@ -3,7 +3,8 @@ import type {
   TableActionType,
   SizeType,
   ColumnChangeParam,
-  InnerHandlers
+  InnerHandlers,
+  SorterResult
 } from './types/table'
 import {
   Empty,
@@ -37,6 +38,8 @@ import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
 import TableGlobalSearch from './components/TableGlobalSearch.vue'
 import HeaderCell from './components/HeaderCell.vue'
 import { isFunction } from '@vueuse/core'
+import TableFooter from './components/TableFooter'
+import { PaginationProps } from './types/pagination'
 
 const ShyTable = defineComponent({
   name: 'ShyTable',
@@ -60,7 +63,7 @@ const ShyTable = defineComponent({
   ],
   props: basicProps,
   setup(props, { attrs, slots, emit, expose }) {
-    const { prefixCls } = useDesign('basic-table')
+    const { prefixCls } = useDesign('table')
     const getWrapperClass = computed(() => {
       return [
         prefixCls,
@@ -97,14 +100,14 @@ const ShyTable = defineComponent({
         tableLayout: 'fixed',
         rowSelection: unref(getRowSelectionRef),
         rowKey: unref(getRowKey),
-        // // @ts-ignore
         columns: toRaw(unref(getViewColumns)),
-        pagination: toRaw(unref(getPaginationInfo)),
+        // pagination: toRaw(unref(getPaginationInfo)),
         dataSource,
         // footer: unref(getFooterProps),
         ...unref(getExpandOption),
         // 默认项
-        showSorterTooltip: false
+        showSorterTooltip: false,
+        pagination: false
       }
 
       propsData = omit(propsData, ['class', 'onChange'])
@@ -269,13 +272,6 @@ const ShyTable = defineComponent({
       setCurSearchParams,
       getCurSearchParams
     })
-    function handleTableChange(...args: any[]) {
-      onTableChange.call(undefined, ...args)
-      emit('change', ...args)
-      // 解决通过useTable注册onChange时不起作用的问题
-      const { onChange } = unref(getProps)
-      onChange && isFunction(onChange) && onChange.call(undefined, ...args)
-    }
 
     const {
       getFormProps,
@@ -306,6 +302,21 @@ const ShyTable = defineComponent({
 
     function getCurSearchParams() {
       return getCurSearchParamsHooks()
+    }
+
+    function handleTableChange(
+      ...args: [
+        PaginationProps,
+        Partial<Recordable<string[]>>,
+        SorterResult,
+        any
+      ]
+    ) {
+      onTableChange.call(undefined, ...args)
+      emit('change', ...args)
+      // 解决通过useTable注册onChange时不起作用的问题
+      const { onChange } = unref(getProps)
+      onChange && isFunction(onChange) && onChange.call(undefined, ...args)
     }
 
     expose(tableAction)
@@ -372,6 +383,12 @@ const ShyTable = defineComponent({
         ) : null
       }
 
+      const isShowFooter = () => {
+        return getBindValues.value.isShowFooter ? (
+          <TableFooter isShowPagination={getBindValues.value.isShowPagination} pagination={getPaginationInfo.value} onPageChange={setPagination} />
+        ) : null
+      }
+
       const handleResizeColumn = (w: unknown, col: { width: unknown }) => {
         col.width = w
       }
@@ -394,7 +411,11 @@ const ShyTable = defineComponent({
                 <div
                   class="flex justify-center items-center"
                   style={{
-                    height: `${(getScrollRef.value.y as number) - 41}px`
+                    height: `${
+                      (getScrollRef.value.y as number) -
+                      41 -
+                      (getProps.value.showSummaryTotal ? 47 : 0)
+                    }px`
                   }}
                 >
                   <Empty />
@@ -404,9 +425,10 @@ const ShyTable = defineComponent({
               summary: isShowSummary,
               ...Object.keys(slots).reduce((pre, cur) => {
                 return { ...pre, [cur]: (data) => slots?.[cur]?.(data || {}) }
-              },{})
+              }, {})
             }}
           </Table>
+          {isShowFooter()}
         </div>
       )
     }

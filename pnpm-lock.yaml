@@ -214,9 +214,6 @@ importers:
       '@shy-plugins/workflow-bpmn':
         specifier: workspace:^
         version: link:../packages/workflow-bpmn
-      '@shy-plugins/workflow-dingding':
-        specifier: workspace:^
-        version: link:../packages/workflow-dingding
       less:
         specifier: ^4.1.3
         version: 4.1.3

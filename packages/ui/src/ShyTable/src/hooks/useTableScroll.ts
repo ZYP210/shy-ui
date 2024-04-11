@@ -55,11 +55,12 @@ export function useTableScroll(
   }
 
   // No need to repeat queries
-  let paginationEl: HTMLElement | null
-  let footerEl: HTMLElement | null
+  // let paginationEl: HTMLElement | null
+  // let footerEl: HTMLElement | null
   let bodyEl: HTMLElement | null
   async function calcTableHeight() {
     const {
+      isShowFooter,
       resizeHeightOffset,
       pagination,
       maxHeight,
@@ -112,30 +113,8 @@ export function useTableScroll(
     // Table height from bottom height-custom offset
 
     let paddingHeight = propsRef.value.useTableWrapper ? 20 : 10
-    // Pager height
-    let paginationHeight = 10
-    if (!!isBoolean(pagination) && tableData.length !== 0) {
-      paginationEl = tableEl.querySelector('.ant-pagination') as HTMLElement
-      if (paginationEl) {
-        const offsetHeight = paginationEl.offsetHeight
-        paginationHeight += offsetHeight || 0
-      } else {
-        // TODO First fix 24
-        paginationHeight += 24
-      }
-    } else {
-      paginationHeight = 0
-    }
 
-    let footerHeight = 0
-    if (!isBoolean(pagination)) {
-      if (!footerEl) {
-        footerEl = tableEl.querySelector('.ant-table-footer') as HTMLElement
-      } else {
-        const offsetHeight = footerEl.offsetHeight
-        footerHeight += offsetHeight || 0
-      }
-    }
+    let footerHeight = isShowFooter ? 24 : 0
 
     let headerHeight = 0
     if (headEl) {
@@ -179,7 +158,7 @@ export function useTableScroll(
       bottomIncludeBody -
       (resizeHeightOffset || 0) -
       paddingHeight -
-      paginationHeight -
+      // paginationHeight -
       footerHeight -
       headerHeight
     height = height > maxHeight ? (maxHeight as number) : height

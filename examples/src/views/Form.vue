@@ -74,7 +74,7 @@ const schemas = ref<FormSchema[]>([
   {
     label: 'b',
     field: 'b',
-    component: 'InputNumber',
+    component: 'Input',
     // componentProps: ({ formModel }) => {
     //   console.log(formModel, 999)
     //   return {

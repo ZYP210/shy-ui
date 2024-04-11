@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full flex flex-col">
     <div>
-          <a-button @click="pushApi">点我</a-button>
+      <a-button @click="pushApi">点我</a-button>
     </div>
     <div class="flex-1">
       <ShyTable
@@ -11,7 +11,7 @@
         @selection-change="handleSelectChange"
       >
         <template #toolbar>
-          <a-button type="primary"> 操作按钮 </a-button>
+          <Button type="primary"> 操作按钮 </Button>
         </template>
 
         <template #headerCell="{ column }">
@@ -52,6 +52,7 @@
 </template>
 
 <script lang="ts" setup>
+import { Button } from 'ant-design-vue'
 import { ShyTable, useShyTable, ShyTableAction } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
@@ -322,22 +323,28 @@ const [
     getForm
   }
 ] = useShyTable({
-  api: (params) => {
-    return Array.from({ length: 100 }, (_, i) => {
-      return {
-        id: i,
-        status: i,
-        rangePlace: i,
-        place: '河北',
-        createTime: 1695024076000,
-        name: 'zzz',
-        phone: '1212121',
-        address: '1111',
-        remark: 999,
-        qualifiedNum: 100000.11111111
-      }
-    })
+  api: ({ current, size }) => {
+    // console.log(params)
+    return {
+      records: Array.from({ length: 100 }, (_, i) => {
+        return {
+          id: i,
+          status: i,
+          rangePlace: i,
+          place: '河北',
+          createTime: 1695024076000,
+          name: 'zzz',
+          phone: '1212121',
+          address: '1111',
+          remark: 999,
+          qualifiedNum: 100000.11111111
+        }
+      }).splice(current * size, size),
+      total: 100
+    }
+    return []
   },
+  // isShowFooter: false,
   rowKey: 'id',
   columns,
   isSortFetch: false,
@@ -363,7 +370,7 @@ const [
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
   useAdvancedSearch: true,
-  // rowSelection: {},
+  rowSelection: {},
   clickToRowSelect: false,
   useSearchForm: true,
   // canResize: false,

@@ -1,15 +1,15 @@
 <template>
   <div>
     <slot name="insertFooter"></slot>
-    <a-button
+    <Button
       v-bind="cancelButtonProps"
       @click="handleCancel"
       v-if="showCancelBtn"
     >
       {{ cancelText }}
-    </a-button>
+    </Button>
     <slot name="centerFooter"></slot>
-    <a-button
+    <Button
       :type="okType"
       @click="handleOk"
       :loading="confirmLoading"
@@ -17,11 +17,12 @@
       v-if="showOkBtn"
     >
       {{ okText }}
-    </a-button>
+    </Button>
     <slot name="appendFooter"></slot>
   </div>
 </template>
 <script lang="ts">
+import { Button } from 'ant-design-vue'
 import { defineComponent } from 'vue'
 
 import { basicProps } from '../props'
@@ -30,7 +31,9 @@ export default defineComponent({
   name: 'BasicModalFooter',
   props: basicProps,
   emits: ['ok', 'cancel'],
-
+  components: {
+    Button
+  },
   setup(_, { emit }) {
     function handleOk(e: Event) {
       emit('ok', e)

@@ -126,7 +126,11 @@ export interface TableActionType {
   getRowSelection: () => TableRowSelection<Recordable> | undefined
   getCacheColumns: () => BasicColumn[] | undefined
   emit?: EmitType
-  updateTableData: (index: number, key: string, value: any) => Recordable | undefined
+  updateTableData: (
+    index: number,
+    key: string,
+    value: any
+  ) => Recordable | undefined
   setShowPagination: (show: boolean) => Promise<void>
   getShowPagination: () => boolean | undefined
   setCacheColumnsByField?: (
@@ -183,6 +187,7 @@ export interface TableSetting {
 }
 
 export interface ShyTableProps<T = any> {
+  isShowFooter: boolean
   // 表格列允许拖拽
   resizable: boolean
   // 点击行选中

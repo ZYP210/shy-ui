@@ -160,7 +160,6 @@ export default defineComponent({
     // Get uniform row style and Row configuration for the entire form
     const getRow = computed((): Recordable => {
       const { baseRowStyle = {}, rowProps } = unref(getProps)
-      console.log(rowProps)
       return {
         style: baseRowStyle,
         ...rowProps

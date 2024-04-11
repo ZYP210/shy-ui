@@ -1,5 +1,5 @@
 <template>
-  <ConfigProvider :locale="zhCN">
+  <!-- <ConfigProvider :locale="zhCN"> -->
     <a-pagination
       class="shy-page"
       v-model:current="current"
@@ -10,7 +10,7 @@
       hideOnSinglePage
       @change="changeEvent"
     ></a-pagination>
-  </ConfigProvider>
+  <!-- </ConfigProvider> -->
 </template>
 <script lang="ts" setup>
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
