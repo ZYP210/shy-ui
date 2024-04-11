@@ -1,8 +1,5 @@
 <template>
   <div class="w-full h-full flex flex-col">
-    <div>
-      <a-button @click="pushApi">点我</a-button>
-    </div>
     <div class="flex-1">
       <ShyTable
         title="基础示例"
@@ -12,6 +9,10 @@
       >
         <template #toolbar>
           <Button type="primary"> 操作按钮 </Button>
+          <BasicButton type="danger" @click="pushApi">点我</BasicButton>
+          <BasicButton type="success" @click="pushApi">点我</BasicButton>
+          <BasicButton type="waring" @click="pushApi">点我</BasicButton>
+          <BasicButton type="message" @click="pushApi">点我</BasicButton>
         </template>
 
         <template #headerCell="{ column }">
@@ -25,6 +26,7 @@
               :actions="[
                 {
                   label: '编辑',
+                  // disabled: true,
                   onClick: handleEdit.bind(null, record)
                 },
                 {
@@ -53,10 +55,10 @@
 
 <script lang="ts" setup>
 import { Button } from 'ant-design-vue'
-import { ShyTable, useShyTable, ShyTableAction } from '3h1-ui'
+import { ShyTable, useShyTable, ShyTableAction, BasicButton } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
-const { createMessage } = useMessage()
+const { createMessage, createConfirm } = useMessage()
 import { ref, onMounted } from 'vue'
 // const schemas = [
 //   { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
@@ -425,11 +427,16 @@ function handleCancel(record) {
   getDataSource().shift()
 }
 const pushApi = async () => {
-  const pass = await Promise.all(
-    getDataSource().map(async (item) => {
-      return await item.onValid()
-    })
-  )
+  createMessage.warn('数据已保存')
+  createConfirm({
+    title: 111,
+    iconType: 'error'
+  })
+  // const pass = await Promise.all(
+  //   getDataSource().map(async (item) => {
+  //     return await item.onValid()
+  //   })
+  // )
 }
 
 onMounted(() => {

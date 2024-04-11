@@ -11,6 +11,7 @@ import { isBoolean, isFunction, isNumber, isString } from '@shy-plugins/utils'
 import { ACTION_COLUMN_FLAG } from '../const'
 import { MoreOutlined } from '@ant-design/icons-vue'
 import '../style/tableAction.less'
+import { BasicButton } from '../../../Button'
 
 const ShyTableAction = defineComponent({
   props: {
@@ -35,10 +36,10 @@ const ShyTableAction = defineComponent({
     },
     showCount: {
       type: Number,
-      default: () => 3
+      default: () => 2
     }
   },
-  setup(props) {
+  setup(props, { slots }) {
     const { prefixCls } = useDesign('basic-table-action')
     let table: Partial<TableActionType> = {}
     if (!props.outside) {
@@ -206,9 +207,11 @@ const ShyTableAction = defineComponent({
             v-if="getDropdownList.length > 0"
           >
             <slot name="more"></slot>
-            <a-button type="link" size="small" v-if="!$slots.more">
-              <MoreOutlined class="icon-more" />
-            </a-button>
+            {slots?.more?.() || (
+              <BasicButton type="link" size="small">
+                <MoreOutlined />
+              </BasicButton>
+            )}
           </Dropdown>
         ) : null
       }

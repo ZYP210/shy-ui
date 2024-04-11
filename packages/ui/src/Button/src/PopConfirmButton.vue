@@ -1,6 +1,6 @@
 <script lang="ts">
 import { computed, defineComponent, h, unref } from 'vue'
-import BasicButton from './BasicButton.vue'
+import BasicButton from './BasicButton'
 import { Popconfirm } from 'ant-design-vue'
 import { extendSlots } from '@shy-plugins/utils'
 import { omit } from 'lodash-es'

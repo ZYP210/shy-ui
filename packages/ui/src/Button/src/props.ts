@@ -2,6 +2,21 @@ const validColors = ['error', 'warning', 'success', ''] as const
 type ButtonColorType = (typeof validColors)[number]
 
 export const buttonProps = {
+  type: {
+    type: String as PropType<
+      | 'primary'
+      | 'ghost'
+      | 'dashed'
+      | 'link'
+      | 'text'
+      | 'default'
+      | 'danger'
+      | 'waring'
+      | 'success'
+      | 'message'
+    >,
+    default: 'default'
+  },
   color: {
     type: String as PropType<ButtonColorType>,
     validator: (v) => validColors.includes(v),
