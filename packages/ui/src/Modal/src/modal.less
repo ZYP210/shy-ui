@@ -19,7 +19,28 @@
     }
   }
 
+  :is(.ant-modal-content) {
+    padding: 0;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+  }
+
+  :is(.ant-modal-close) {
+    top: unset;
+    width: unset;
+    height: unset;
+    font-weight: normal;
+    outline: none;
+    height: 54px;
+    line-height: 54px;
+
+    &:hover,
+    &:active {
+      background: unset;
+    }
+  }
+
   :is(.ant-modal-header) {
+    padding: 14px;
     margin: 0;
     border-bottom: 1px solid @border-color-base;
   }

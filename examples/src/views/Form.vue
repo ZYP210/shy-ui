@@ -50,6 +50,7 @@ const schemas = ref<FormSchema[]>([
   {
     label: 'a',
     field: 'a',
+    required: true,
     component: 'ApiSelect',
     componentProps: ({ formModel }) => {
       return {
@@ -66,7 +67,7 @@ const schemas = ref<FormSchema[]>([
             }
           ]
         },
-        params: { c: formModel.bb }
+        params: { c: formModel.b }
       }
     },
     colProps: { span: 8 }

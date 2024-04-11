@@ -124,7 +124,7 @@ export default defineComponent({
     const isInitedDefaultRef = ref(false)
     const propsRef = ref<Partial<FormProps>>({})
     const schemaRef = ref<Nullable<FormSchema[]>>(null)
-    const formElRef = ref<Nullable<FormActionType>>(null)
+    const formElRef = ref<Nullable<FormActionType>>()
 
     const prefixCls = 'shy-basic-form'
 
@@ -397,6 +397,7 @@ export default defineComponent({
     })
 
     return {
+      formElRef,
       prefixCls,
       getBindValue,
       handleToggleAdvanced,

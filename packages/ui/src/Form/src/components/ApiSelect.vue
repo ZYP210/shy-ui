@@ -23,14 +23,7 @@
   </Select>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  PropType,
-  ref,
-  computed,
-  unref,
-  watch
-} from 'vue'
+import { defineComponent, PropType, ref, computed, unref, watch } from 'vue'
 import { Select } from 'ant-design-vue'
 import { isFunction } from '@shy-plugins/utils'
 import { useRuleFormItem, useAttrs } from '@shy-plugins/use'
@@ -137,7 +130,7 @@ export default defineComponent({
     watch(
       () => props.params,
       () => {
-        !unref(isFirstLoad) && fetch()
+        fetch()
       },
       { deep: true }
     )
