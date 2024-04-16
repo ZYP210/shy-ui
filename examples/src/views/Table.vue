@@ -1,5 +1,5 @@
 <template>
-  <div class=" w-full h-full flex flex-col">
+  <div class="w-full h-full flex flex-col">
     <Button type="primary"> 操作按钮 </Button>
 
     <div class="flex-1 p-10px">
@@ -11,8 +11,7 @@
           @register="register"
           @selection-change="handleSelectChange"
         >
-          <template #toolbar>
-          </template>
+          <template #toolbar> </template>
 
           <template #headerCell="{ column }">
             <div v-if="column.flag === 'INDEX'">111</div>
@@ -53,7 +52,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Button } from 'ant-design-vue';
+import { Button } from 'ant-design-vue'
 import { BasicTable, useTable, TableAction } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
@@ -136,8 +135,7 @@ const columns: any[] = [
     dataIndex: 'name',
     editRow: true,
     globalShow: false,
-    resizable: true,
-
+    resizable: true
   },
   {
     title: '电话',
@@ -354,8 +352,45 @@ const [
         field: 'createTime',
         componentProps: ({ ...ages }) => {
           return {}
-        }
-      }
+        },
+        colProps: { span: 6 }
+      },
+      {
+        label: '日期范围',
+        component: 'RangePicker',
+        field: 'createTime',
+        componentProps: ({ ...ages }) => {
+          return {}
+        },
+        colProps: { span: 6 }
+      },
+      {
+        label: '日期范围',
+        component: 'RangePicker',
+        field: 'createTime',
+        componentProps: ({ ...ages }) => {
+          return {}
+        },
+        colProps: { span: 6 }
+      },
+      {
+        label: '日期范围',
+        component: 'RangePicker',
+        field: 'createTime',
+        componentProps: ({ ...ages }) => {
+          return {}
+        },
+        colProps: { span: 6 }
+      },
+      {
+        label: '日期范围',
+        component: 'RangePicker',
+        field: 'createTime',
+        componentProps: ({ ...ages }) => {
+          return {}
+        },
+        colProps: { span: 6 }
+      },
     ]
   },
   resizable: false,
@@ -367,12 +402,11 @@ const [
   clickToRowSelect: false,
   useSearchForm: true,
   // canResize: false,
-  // actionColumn: {
-  //   width: 250,
-  //   dataIndex: 'action',
-  //   title: '操作',
-  //   fixed: 'right'
-  // },
+  actionColumn: {
+    dataIndex: 'action',
+    title: '操作',
+    fixed: 'right'
+  },
   showIndexColumn: true,
   indexColumn: {}
 })

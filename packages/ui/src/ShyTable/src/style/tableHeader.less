@@ -1,0 +1,34 @@
+@prefix-cls: ~'@{namespace}-table-header';
+
+.@{prefix-cls} {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &-button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  &-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-settings {
+    display: flex;
+    gap: 16px;
+  }
+
+  &-title {
+    display: flex;
+    gap: 10px;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+}

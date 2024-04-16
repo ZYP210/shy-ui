@@ -2,6 +2,7 @@ import 'virtual:windi-base.css'
 import 'virtual:windi-components.css'
 import 'virtual:windi-utilities.css'
 import 'ant-design-vue/dist/reset.css'
+import './src/style/index.less'
 
 export * from './src/Form'
 export * from './src/Container'
@@ -33,6 +34,8 @@ export * from './src/DescriptionsForm'
 export * from './src/BasicResizeWrapper'
 export * from './src/ColorPickerPopover'
 export * from './src/ShyTable'
+export * from './src/ShyForm'
+
 
 import { registerGlobalConfig } from './config/index'
 

@@ -104,39 +104,42 @@ export function useTableScroll(
     if (!unref(getCanResize) || !unref(tableData)) return
 
     await nextTick()
-    // Add a delay to get the correct bottomIncludeBody paginationHeight footerHeight headerHeight
 
-    const headEl = tableEl.querySelector('.ant-table-thead ')
+    const tableHeadEl = tableEl.querySelector('.ant-table-thead ')
 
-    if (!headEl) return
+    if (!tableHeadEl) return
 
-    // Table height from bottom height-custom offset
+    let paddingHeight = 0
 
-    let paddingHeight = propsRef.value.useTableWrapper ? 20 : 10
+    const headerHeight = 32
+    let footerHeight =
+      (wrapRef.value?.querySelector('.shy-ant-table-footer') as HTMLElement)
+        ?.offsetHeight ?? 0
 
-    let footerHeight = isShowFooter ? 24 : 0
-
-    let headerHeight = 0
-    if (headEl) {
-      headerHeight = (headEl as HTMLElement).offsetHeight + 1
+    let tableHeaderHeight = 0
+    if (tableHeadEl) {
+      tableHeaderHeight = (tableHeadEl as HTMLElement).offsetHeight + 1
     }
 
     let bottomIncludeBody = 0
     if (unref(wrapRef) && isCanResizeParent) {
-      const tablePadding = 12
-      const formMargin = 16
-      let paginationMargin = 10
+      let paginationMargin = 6
       const wrapHeight = unref(wrapRef)?.offsetHeight ?? 0
 
-      let formHeight = unref(formRef)?.$el.offsetHeight ?? 0
-      if (formHeight) {
-        formHeight += formMargin
-      }
-      if (isBoolean(pagination) && !pagination) {
+      let formHeight = isShowFooter
+        ? (wrapRef.value?.querySelector('.ant-form') as HTMLElement)
+            ?.offsetHeight ?? 0
+        : 0
+
+      if (
+        (isBoolean(pagination) && !pagination) ||
+        (isBoolean(isShowFooter) && !isShowFooter)
+      ) {
         paginationMargin = 0
       }
+
       if (isBoolean(useSearchForm) && !useSearchForm) {
-        paddingHeight = 0
+        paddingHeight = -24
       }
 
       const headerCellHeight =
@@ -144,34 +147,21 @@ export function useTableScroll(
           ?.offsetHeight ?? 0
 
       bottomIncludeBody =
-        wrapHeight -
-        formHeight -
-        headerCellHeight -
-        tablePadding -
-        paginationMargin
+        wrapHeight - formHeight - headerCellHeight - paginationMargin
     } else {
       // Table height from bottom
-      bottomIncludeBody = getViewportOffset(headEl).bottomIncludeBody
+      bottomIncludeBody = getViewportOffset(tableHeadEl).bottomIncludeBody
     }
 
     let height =
       bottomIncludeBody -
       (resizeHeightOffset || 0) -
       paddingHeight -
-      // paginationHeight -
       footerHeight -
+      tableHeaderHeight -
       headerHeight
     height = height > maxHeight ? (maxHeight as number) : height
     height = Math.floor(height)
-
-    // console.log('bottomIncludeBody', bottomIncludeBody)
-    // console.log('resizeHeightOffset', resizeHeightOffset)
-    // console.log('paddingHeight', paddingHeight)
-    // console.log('paginationHeight', paginationHeight)
-    // console.log('footerHeight', footerHeight)
-    // console.log('headerHeight', headerHeight)
-
-    // console.log('height', height)
 
     setHeight(height)
 

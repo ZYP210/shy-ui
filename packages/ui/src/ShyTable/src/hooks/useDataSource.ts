@@ -96,7 +96,7 @@ export function useDataSource(
     if (clearSelectOnPageChange) {
       clearSelectedRowKeys()
     }
-    setPagination(pagination)
+    // setPagination(pagination)
 
     const params: Recordable = {}
     if (sorter && isFunction(sortFn)) {
@@ -298,6 +298,7 @@ export function useDataSource(
       const { current = 1, pageSize = PAGE_SIZE } = unref(
         getPaginationInfo
       ) as PaginationProps
+
 
       if (
         (isBoolean(pagination) && !pagination) ||

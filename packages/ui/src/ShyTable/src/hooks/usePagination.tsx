@@ -1,24 +1,10 @@
 import type { PaginationProps } from '../types/pagination'
 import type { ShyTableProps } from '../types/table'
 import { computed, unref, ref, ComputedRef, watch } from 'vue'
-import { LeftOutlined, RightOutlined } from '@ant-design/icons-vue'
 import { isBoolean } from '@shy-plugins/utils'
 import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '../const'
 
-interface ItemRender {
-  page: number
-  type: 'page' | 'prev' | 'next'
-  originalElement: any
-}
 
-// function itemRender({ page, type, originalElement }: ItemRender) {
-//   if (type === 'prev') {
-//     return page === 0 ? null : <LeftOutlined />
-//   } else if (type === 'next') {
-//     return page === 1 ? null : <RightOutlined />
-//   }
-//   return originalElement
-// }
 
 export function usePagination(refProps: ComputedRef<ShyTableProps>) {
   const configRef = ref<PaginationProps>({})
@@ -39,19 +25,15 @@ export function usePagination(refProps: ComputedRef<ShyTableProps>) {
   const getPaginationInfo = computed((): PaginationProps => {
     const { pagination } = unref(refProps)
 
-    // if (!unref(show) || (isBoolean(pagination) && !pagination)) {
-    //   return false
-    // }
 
     return {
       current: 1,
       pageSize: PAGE_SIZE,
-      size: 'small',
+      size: '',
       defaultPageSize: PAGE_SIZE,
-      showTotal: (total) => `共 ${total} 条数据`,
+      showTotal: (total) => <span>共 <span>{total}</span> 条</span>,
       showSizeChanger: true,
       pageSizeOptions: PAGE_SIZE_OPTIONS,
-      // itemRender: itemRender,
       showQuickJumper: true,
       ...(isBoolean(pagination) ? {} : pagination),
       ...unref(configRef)

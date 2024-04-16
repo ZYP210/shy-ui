@@ -13,12 +13,11 @@ import {
   TableSummaryCell,
   TableSummaryRow
 } from 'ant-design-vue'
-import { computed, defineComponent, ref, toRaw, unref } from 'vue'
+import { computed, defineComponent, nextTick, ref, toRaw, unref } from 'vue'
 import { useDesign } from '@shy-plugins/use'
 import { basicProps } from './props'
-import './style/table.less'
 import { omit } from 'lodash-es'
-import { BasicForm, useForm } from '../../Form'
+import { ShyForm, useShyForm } from '../../ShyForm'
 import { useGlobalConfig } from '../../../config/index'
 import { useTableForm } from './hooks/useShyTableForm'
 import { useLoading } from './hooks/useLoading'
@@ -38,8 +37,9 @@ import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
 import TableGlobalSearch from './components/TableGlobalSearch.vue'
 import HeaderCell from './components/HeaderCell.vue'
 import { isFunction } from '@vueuse/core'
-import TableFooter from './components/TableFooter'
+import ShyTableFooter from './components/ShyTableFooter'
 import { PaginationProps } from './types/pagination'
+import './style/table.less'
 
 const ShyTable = defineComponent({
   name: 'ShyTable',
@@ -63,7 +63,7 @@ const ShyTable = defineComponent({
   ],
   props: basicProps,
   setup(props, { attrs, slots, emit, expose }) {
-    const { prefixCls } = useDesign('table')
+    const { prefixCls } = useDesign('ant-table')
     const getWrapperClass = computed(() => {
       return [
         prefixCls,
@@ -79,8 +79,8 @@ const ShyTable = defineComponent({
     const tableElRef = ref(null)
     const tableData = ref<Recordable[]>([])
 
-    const wrapRef = ref(null)
-    const formRef = ref(null)
+    const wrapRef = ref()
+    const formRef = ref()
     const innerPropsRef = ref<Partial<ShyTableProps>>()
 
     const { config } = useGlobalConfig('table')
@@ -91,32 +91,28 @@ const ShyTable = defineComponent({
       const dataSource = unref(getDataSourceRef)
       let propsData: Recordable = {
         ...attrs,
-
         customRow,
         ...unref(getProps),
-        ...unref(getHeaderProps),
         scroll: unref(getScrollRef),
         loading: unref(getLoading),
         tableLayout: 'fixed',
         rowSelection: unref(getRowSelectionRef),
         rowKey: unref(getRowKey),
         columns: toRaw(unref(getViewColumns)),
-        // pagination: toRaw(unref(getPaginationInfo)),
         dataSource,
-        // footer: unref(getFooterProps),
         ...unref(getExpandOption),
         // 默认项
         showSorterTooltip: false,
         pagination: false
       }
 
-      propsData = omit(propsData, ['class', 'onChange'])
+      propsData = omit(propsData, ['class', 'onChange', 'title'])
       return propsData
     })
 
     const { getLoading, setLoading } = useLoading(getProps)
 
-    const [registerForm, formActions] = useForm()
+    const [registerForm, formActions] = useShyForm()
 
     const setProps = (props: Partial<ShyTableProps>) => {
       innerPropsRef.value = { ...unref(innerPropsRef), ...props }
@@ -319,6 +315,13 @@ const ShyTable = defineComponent({
       onChange && isFunction(onChange) && onChange.call(undefined, ...args)
     }
 
+    function handlePageChange(pagination) {
+      setPagination(pagination)
+      nextTick(() => {
+        reload()
+      })
+    }
+
     expose(tableAction)
 
     emit('register', tableAction, formActions)
@@ -326,21 +329,22 @@ const ShyTable = defineComponent({
     return () => {
       const isShowForm = () => {
         return getBindValues.value.useSearchForm ? (
-          <BasicForm
+          <ShyForm
             ref={formRef}
-            submitOnReset
             {...getFormProps.value}
             tableAction={tableAction}
             onRegister={registerForm}
             onSubmit={handleSearchInfoChange}
             onAdvancedChange={redoHeight}
+            submitOnReset
+            showActionButtonGroup
           >
             {getFormSlotKeys.value.map((item) => {
               return {
                 [replaceFormSlotKey(item)]: (data) => slots?.item?.(data || {})
               }
             })}
-          </BasicForm>
+          </ShyForm>
         ) : null
       }
 
@@ -366,7 +370,7 @@ const ShyTable = defineComponent({
           <TableSummary>
             <TableSummaryRow>
               {getColumnsSummary.value.map((item: Recordable, index) => {
-                if (index === 0)
+                if (index === 1)
                   return (
                     <TableSummaryCell align="center" index={0}>
                       总计
@@ -383,9 +387,23 @@ const ShyTable = defineComponent({
         ) : null
       }
 
+      const isShowHeader = () => {
+        return getBindValues.value.isShowHeader ? getHeaderProps.value : {}
+      }
+
       const isShowFooter = () => {
         return getBindValues.value.isShowFooter ? (
-          <TableFooter isShowPagination={getBindValues.value.isShowPagination} pagination={getPaginationInfo.value} onPageChange={setPagination} />
+          <ShyTableFooter
+            isShowPagination={getBindValues.value.isShowPagination}
+            pagination={getPaginationInfo.value}
+            onPageChange={handlePageChange}
+          >
+            {{
+              default: (data) => {
+                return slots?.footer?.(data) || null
+              }
+            }}
+          </ShyTableFooter>
         ) : null
       }
 
@@ -393,39 +411,52 @@ const ShyTable = defineComponent({
         col.width = w
       }
 
+      const getAfterIgnoreSlots = (slots: Recordable) => {
+        const ignoreKeys = ['footer']
+
+        return Object.keys(slots)
+          .filter((key) => !ignoreKeys.includes(key))
+          .reduce((pre, cur) => {
+            return { ...pre, [cur]: (data) => slots?.[cur]?.(data || {}) }
+          }, {})
+      }
+
+      const emptyText = () => {
+        return (
+          <div
+            class="flex justify-center items-center"
+            style={{
+              height: `${
+                (getScrollRef.value.y as number) -
+                41 -
+                (getProps.value.showSummaryTotal ? 47 : 0)
+              }px`
+            }}
+          >
+            <Empty />
+          </div>
+        )
+      }
+
       return (
-        <div class={getWrapperClass.value}>
+        <div ref={wrapRef} class={getWrapperClass.value}>
           {isShowForm()}
           {isShowAdvancedSearch()}
           {isShowGlobalSearch()}
           <Table
             ref={tableElRef}
             {...getBindValues.value}
+            {...isShowHeader()}
             rowClassName={getRowClassName}
             onChange={handleTableChange}
             onResizeColumn={handleResizeColumn}
           >
             {{
               headerCell: (data) => <HeaderCell column={data.column} />,
-              emptyText: () => (
-                <div
-                  class="flex justify-center items-center"
-                  style={{
-                    height: `${
-                      (getScrollRef.value.y as number) -
-                      41 -
-                      (getProps.value.showSummaryTotal ? 47 : 0)
-                    }px`
-                  }}
-                >
-                  <Empty />
-                </div>
-              ),
+              emptyText,
               bodyCell: (data) => slots?.bodyCell?.(data || {}),
               summary: isShowSummary,
-              ...Object.keys(slots).reduce((pre, cur) => {
-                return { ...pre, [cur]: (data) => slots?.[cur]?.(data || {}) }
-              }, {})
+              ...getAfterIgnoreSlots(slots)
             }}
           </Table>
           {isShowFooter()}

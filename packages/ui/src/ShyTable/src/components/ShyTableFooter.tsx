@@ -1,22 +1,11 @@
-import { Pagination, Button } from 'ant-design-vue'
-import { computed, defineComponent } from 'vue'
+import { Pagination } from 'ant-design-vue'
+import { computed, defineComponent, unref } from 'vue'
 import { paginationProps } from '../props'
 import { useDesign } from '@shy-plugins/use'
 import { useTableContext } from '../hooks/useShyTableContext'
 import '../style/tableFooter.less'
 
-export const TableSettingBar = defineComponent({
-  props: {
-
-  },
-  setup(props) {
-    return () => {
-      return (<div></div>)
-    }
-  },
-});
-
-const TableFooter = defineComponent({
+const ShyTableFooter = defineComponent({
   emits: ['pageChange'],
   props: {
     isShowSettings: {
@@ -28,13 +17,27 @@ const TableFooter = defineComponent({
     },
     pagination: paginationProps
   },
-  setup(props, { emit }) {
-    const { prefixCls } = useDesign('table-footer')
+  setup(props, { emit, slots }) {
+    const { prefixCls } = useDesign('ant-table-footer')
 
-    const { getSelectRowKeys } = useTableContext()
+    const { getSelectRowKeys, getSelectRows } = useTableContext()
 
     const getSelectTotal = computed(() => {
-      return `已选择${getSelectRowKeys()?.length}条`
+      return (
+        <>
+          已选择
+          <span class={`${prefixCls}-count`}>{getSelectRowKeys()?.length}</span>
+          条
+        </>
+      )
+    })
+
+    const getSelections = computed(() => {
+      return {
+        rowKeys: getSelectRowKeys(),
+        rows: getSelectRows(),
+        disabled: !getSelectRowKeys()?.length
+      }
     })
 
     const handlePageChange = (current, pageSize) => {
@@ -46,7 +49,9 @@ const TableFooter = defineComponent({
         return props.isShowSettings ? (
           <div class={`${prefixCls}-settings`}>
             <div class={`${prefixCls}-count-box`}>{getSelectTotal.value}</div>
-            <div class={`${prefixCls}-setting-box`}></div>
+            <div class={`${prefixCls}-settings-box`}>
+              {slots.default?.(unref(getSelections))}
+            </div>
           </div>
         ) : null
       }
@@ -61,4 +66,4 @@ const TableFooter = defineComponent({
   }
 })
 
-export default TableFooter
+export default ShyTableFooter

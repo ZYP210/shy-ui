@@ -24,7 +24,7 @@
     <div></div>
     <div class="shy-basic-table-global-search-checkbox-wrapper">
       <CheckboxGroup v-model:value="fieldList" @change="handleCheckboxChange">
-        <template v-for="(item, index) in schemasAdvancedSearch" :key="index">
+        <template v-for="(item, _index) in schemasAdvancedSearch" :key="_index">
           <div style="height: 22px">
             <Checkbox :value="item.field">
               <span style="color: #131415; font-size: 12px">
@@ -149,7 +149,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .shy-basic-table-global-search {
   position: absolute;
-  top: 40px;
+  top: 80px;
   right: 131px;
   width: 200px;
   max-height: 800px;

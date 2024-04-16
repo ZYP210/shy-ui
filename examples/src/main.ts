@@ -10,7 +10,7 @@ import router from './router/index'
 // 注册windicss
 import 'virtual:windi-base.css'
 import 'virtual:windi-components.css'
-// import '/@/design/index.less'
+import '/@/design/index.less'
 import 'virtual:windi-utilities.css'
 
 // 注册本地svg

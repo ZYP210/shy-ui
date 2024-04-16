@@ -34,7 +34,7 @@ export function useRowSelection(
       },
       ...omit(rowSelection, ['onChange']),
       fixed: rowSelection.fixed ?? 'left',
-      columnWidth: rowSelection.columnWidth ?? 60
+      columnWidth: rowSelection.columnWidth ?? 36
     }
   })
 

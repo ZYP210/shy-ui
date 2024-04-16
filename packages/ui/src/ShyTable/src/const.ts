@@ -16,11 +16,11 @@ const componentSetting = {
       totalField: 'total'
     },
     // Number of pages that can be selected
-    pageSizeOptions: ['10', '50', '80', '100'],
+    pageSizeOptions: ['10', '20', '50', '100'],
     // Default display quantity on one page
     defaultPageSize: 10,
     // Default Size
-    defaultSize: 'middle',
+    defaultSize: 'small',
     // Custom general sort function
     defaultSortFn: (sortInfo: SorterResult) => {
 
@@ -89,7 +89,7 @@ export const INDEX_COLUMN_FLAG = 'INDEX'
 
 export const ACTION_COLUMN_FLAG = 'ACTION'
 
-export const ACTION_COLUMN_WIDTH = 160
+export const ACTION_COLUMN_WIDTH = 90
 
 export const setConstConfig = (config) => {
   DEFAULT_ALIGN = config.align

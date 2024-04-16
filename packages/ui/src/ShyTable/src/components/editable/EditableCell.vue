@@ -35,6 +35,8 @@ import { pick, set } from 'lodash-es'
 import { Spin } from 'ant-design-vue'
 import { watch } from 'vue'
 
+import { useDesign } from '@shy-plugins/use'
+
 export default defineComponent({
   name: 'EditableCell',
   components: {
@@ -84,8 +86,8 @@ export default defineComponent({
     const defaultValueRef = ref<any>(props.value)
     const spinning = ref<boolean>(false)
 
-    // const { prefixCls } = useDesign('editable-cell')
-    const prefixCls = 'shy-editable-cell'
+    const { prefixCls } = useDesign('ant-editable-cell')
+    // const prefixCls = 'shy-editable-cell'
 
     const getComponent = computed(() => props.column?.editComponent || 'Input')
     const getRule = computed(() => props.column?.editRule)
@@ -528,7 +530,7 @@ export default defineComponent({
 })
 </script>
 <style lang="less">
-@prefix-cls: ~'@{namespace}-editable-cell';
+@prefix-cls: ~'@{namespace}-ant-editable-cell';
 
 .edit-cell-align-left {
   text-align: left;
@@ -564,7 +566,7 @@ export default defineComponent({
 }
 .@{prefix-cls} {
   position: relative;
-  min-height: 24px; //设置高度让其始终可被hover
+  min-height: 20px; //设置高度让其始终可被hover
 
   &__wrapper {
     display: flex;

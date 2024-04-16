@@ -1,4 +1,4 @@
-import type { PropType } from 'vue'
+import type { PropType, RendererElement, RendererNode, VNode } from 'vue'
 import { reactive } from 'vue'
 import type { PaginationProps } from './types/pagination'
 import type {
@@ -21,6 +21,10 @@ import {
 } from './const'
 
 export const basicProps = reactive({
+  isShowHeader: {
+    type: Boolean,
+    default: true
+  },
   isShowPagination: {
     type: Boolean
   },
@@ -138,7 +142,7 @@ export const basicProps = reactive({
   },
   ellipsis: { type: Boolean, default: true },
   resizable: { type: Boolean, default: false },
-  isCanResizeParent: { type: Boolean, default: false },
+  isCanResizeParent: { type: Boolean, default: true },
   canResize: { type: Boolean, default: true },
   clearSelectOnPageChange: {
     type: Boolean
@@ -152,10 +156,11 @@ export const basicProps = reactive({
     default: null
   },
   title: {
-    type: [String, Function] as PropType<
-      string | ((data: Recordable) => string)
-    >,
-    default: null
+    type: [Function, Object, String] as PropType<
+      | VNode<RendererNode, RendererElement, { [key: string]: any }>
+      | Element
+      | ((data: Recordable) => string | undefined)
+    >
   },
   titleHelpMessage: {
     type: [String, Array] as PropType<string | string[]>

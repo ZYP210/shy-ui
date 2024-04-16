@@ -1,55 +1,57 @@
 <template>
-  <div class="w-full h-full flex flex-col">
-    <div class="flex-1">
-      <ShyTable
-        title="基础示例"
-        titleHelpMessage="温馨提醒"
-        @register="register"
-        @selection-change="handleSelectChange"
-      >
-        <template #toolbar>
-          <Button type="primary"> 操作按钮 </Button>
-          <BasicButton type="danger" @click="pushApi">点我</BasicButton>
-          <BasicButton type="success" @click="pushApi">点我</BasicButton>
-          <BasicButton type="waring" @click="pushApi">点我</BasicButton>
-          <BasicButton type="message" @click="pushApi">点我</BasicButton>
-        </template>
+  <div class="w-full h-full flex flex-col p-10px">
+    <ShyTable
+      titleHelpMessage="温馨提醒"
+      @register="register"
+      @selection-change="handleSelectChange"
+    >
+      <template #toolbar>
+        <Button type="primary"> 主要 </Button>
+        <BasicButton type="danger" @click="pushApi">危险</BasicButton>
+        <BasicButton type="success" @click="pushApi">完成</BasicButton>
+        <BasicButton type="waring" @click="pushApi">警告</BasicButton>
+        <BasicButton type="message" @click="pushApi">信息</BasicButton>
+        <Button> 默认 </Button>
+      </template>
 
-        <template #headerCell="{ column }">
-          <div v-if="column.flag === 'INDEX'">111</div>
-          <div v-else>{{ column.customTitle }}</div>
-        </template>
+      <template #headerCell="{ column }">
+        <div v-if="column.flag === 'INDEX'">111</div>
+        <div v-else>{{ column.customTitle }}</div>
+      </template>
 
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex === 'action'">
-            <ShyTableAction
-              :actions="[
-                {
-                  label: '编辑',
-                  // disabled: true,
-                  onClick: handleEdit.bind(null, record)
-                },
-                {
-                  label: '保存',
-                  onClick: handleSave.bind(null, record)
-                },
-                {
-                  label: '测试',
-                  onClick: handleSave.bind(null, record)
-                },
-                {
-                  label: '取消',
-                  popConfirm: {
-                    title: '是否取消编辑',
-                    confirm: handleCancel.bind(null, record)
-                  }
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'action'">
+          <ShyTableAction
+            :actions="[
+              {
+                label: '编辑',
+                // disabled: true,
+                onClick: handleEdit.bind(null, record)
+              },
+              {
+                label: '保存',
+                onClick: handleSave.bind(null, record)
+              },
+              {
+                label: '测试',
+                onClick: handleSave.bind(null, record)
+              },
+              {
+                label: '取消',
+                popConfirm: {
+                  title: '是否取消编辑',
+                  confirm: handleCancel.bind(null, record)
                 }
-              ]"
-            />
-          </template>
+              }
+            ]"
+          />
         </template>
-      </ShyTable>
-    </div>
+      </template>
+
+      <template #footer="data">
+        <ShyTableAction type="footer" :actions="getFooterActions(data)" />
+      </template>
+    </ShyTable>
   </div>
 </template>
 
@@ -315,6 +317,30 @@ const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
   }
 })
 
+const getFooterActions = ({ rows, rowKeys, disabled }) => {
+  return [
+    {
+      tooltip: '777',
+      label: '删除',
+      type: 'danger',
+      disabled
+    },
+    {
+      label: '导出',
+      type: 'default',
+      disabled
+    },
+    {
+      label: '测试',
+      disabled
+    },
+    {
+      label: '取消',
+      disabled
+    }
+  ]
+}
+
 const [
   register,
   {
@@ -325,7 +351,8 @@ const [
     getForm
   }
 ] = useShyTable({
-  api: ({ current, size }) => {
+  title: '表格标题',
+  api: ({ current, size }): any => {
     // console.log(params)
     return {
       records: Array.from({ length: 100 }, (_, i) => {
@@ -344,14 +371,14 @@ const [
       }).splice(current * size, size),
       total: 100
     }
-    return []
   },
+  // isShowHeader: false,
   // isShowFooter: false,
   rowKey: 'id',
   columns,
   isSortFetch: false,
+  useSearchForm: true,
   formConfig: {
-    // rangePickerField: [['createTime']],
     schemas: [
       {
         label: '日期范围',
@@ -364,26 +391,79 @@ const [
         component: 'RangePicker',
         field: 'createTime',
         colProps: { span: 6 }
-      }
+      },
+      {
+        label: '日期范围',
+        component: 'RangePicker',
+        field: 'createTime',
+        colProps: { span: 6 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime',
+        colProps: { span: 4 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime',
+        colProps: { span: 4 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime',
+        colProps: { span: 4 }
+      },
+      {
+        label: '日期范围',
+        component: 'RangePicker',
+        field: 'createTime',
+        colProps: { span: 6 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime',
+        colProps: { span: 4 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime',
+        colProps: { span: 4 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime',
+        colProps: { span: 4 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime',
+        colProps: { span: 4 }
+      },
     ]
   },
   resizable: true,
   showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
-  useAdvancedSearch: true,
+  // useAdvancedSearch: true,
   rowSelection: {},
   clickToRowSelect: false,
-  useSearchForm: true,
+  // useSearchForm: true,
   // canResize: false,
   actionColumn: {
-    width: 250,
     dataIndex: 'action',
     title: '操作',
     fixed: 'right'
   },
-  showIndexColumn: true,
-  indexColumn: {}
+  showIndexColumn: true
+  // indexColumn: {}
 })
 
 function handleSelectChange({ rows }) {}

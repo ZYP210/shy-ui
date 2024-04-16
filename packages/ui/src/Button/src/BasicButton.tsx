@@ -17,6 +17,10 @@ const BasicButton = defineComponent({
     })
 
     const renderButton = () => {
+      const isDanger = () => {
+        return props.type === 'danger' ? { type: undefined, danger: true } : {}
+      }
+
       const getColor = () => {
         let colorPrimary: string
         switch (props.type || props.color) {
@@ -60,6 +64,7 @@ const BasicButton = defineComponent({
         <ConfigProvider theme={getTypeToken()}>
           <Button
             {...getBindValue.value}
+            {...isDanger()}
             onClick={props.onClick}
             style={isLinkColorStyle()}
           >

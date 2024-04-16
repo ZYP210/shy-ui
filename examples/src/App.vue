@@ -1,9 +1,28 @@
 <template>
   <ConfigProvider
+    :locale="zhCN"
     :theme="{
       token: {
         borderRadius: 4,
-        colorPrimary: '#2da44e',
+        colorPrimary: '#2da44e'
+      },
+      components: {
+        Input: {
+          colorBgContainer: '#eaeef2',
+          lineWidth: 0,
+        },
+        DatePicker: {
+          colorBgContainer: '#eaeef2',
+          lineWidth: 0,
+        },
+        InputNumber: {
+          colorBgContainer: '#eaeef2',
+          lineWidth: 0,
+        },
+        Select: {
+          colorBgContainer: '#eaeef2',
+          lineWidth: 0,
+        }
       }
     }"
   >
@@ -40,6 +59,7 @@
 </template>
 
 <script lang="ts" setup>
+import zhCN from 'ant-design-vue/es/locale/zh_CN'
 import { ConfigProvider } from 'ant-design-vue'
 import { URLData } from '/@/database/menu.data'
 import { ref, reactive } from 'vue'

@@ -55,7 +55,7 @@ function handleColumnResize(
   const tableWidth =
     wrapRef.value?.querySelector?.('.ant-table-body')?.clientWidth - 7 ||
     wrapRef.value?.querySelector?.('.ant-table-content')?.clientWidth
-  const selectWidth = propsRef.value.rowSelection ? 60 : 0
+  const selectWidth = propsRef.value.rowSelection ? 36 : 0
   const [sumWidth, sumLength] = columns.reduce(
     ([sumWidth, length], cur) => {
       if (typeof cur.width === 'number') {

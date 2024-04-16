@@ -187,6 +187,7 @@ export interface TableSetting {
 }
 
 export interface ShyTableProps<T = any> {
+  isShowHeader: boolean
   isShowFooter: boolean
   // 表格列允许拖拽
   resizable: boolean

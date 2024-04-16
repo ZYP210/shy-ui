@@ -1,4 +1,4 @@
-@prefix-cls: ~'@{namespace}-basic-table-action';
+@prefix-cls: ~'@{namespace}-ant-table-action';
 
 .@{prefix-cls} {
   display: flex;
@@ -46,6 +46,43 @@
     svg {
       font-size: 1.1em;
       font-weight: 700;
+    }
+  }
+
+  &-footer-more-btn {
+    display: flex;
+    gap: 16px;
+
+    &-text {
+      position: relative;
+      display: flex;
+      height: 100%;
+    }
+
+    &-text::before {
+      content: '';
+      position: absolute;
+      right: -8px;
+      display: block;
+      height: 100%;
+      width: 0.5px;
+      background-color: var(--gray-3);
+    }
+  }
+
+  &-footer-more-text {
+    position: relative;
+    display: flex;
+    height: 100%;
+
+    &::before {
+      content: '';
+      position: absolute;
+      right: -8px;
+      display: block;
+      height: 100%;
+      width: 0.5px;
+      background-color: var(--gray-3);
     }
   }
 }

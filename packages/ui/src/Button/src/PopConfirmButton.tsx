@@ -1,5 +1,4 @@
-<script lang="ts">
-import { computed, defineComponent, h, unref } from 'vue'
+import { computed, defineComponent, unref } from 'vue'
 import BasicButton from './BasicButton'
 import { Popconfirm } from 'ant-design-vue'
 import { extendSlots } from '@shy-plugins/utils'
@@ -7,24 +6,18 @@ import { omit } from 'lodash-es'
 import { useAttrs } from '@shy-plugins/use'
 
 const props = {
-  /**
-   * Whether to enable the drop-down menu
-   * @default: true
-   */
   enable: {
     type: Boolean,
     default: true
   }
 }
 
-export default defineComponent({
-  name: 'PopButton',
+const PopConfirmButton = defineComponent({
   inheritAttrs: false,
   props,
   setup(props, { slots }) {
     const attrs = useAttrs()
 
-    // get inherit binding value
     const getBindValues = computed(() => {
       return Object.assign(
         {
@@ -39,14 +32,18 @@ export default defineComponent({
       const bindValues = omit(unref(getBindValues), 'icon')
       const btnBind = omit(bindValues, 'title') as Recordable
       if (btnBind.disabled) btnBind.color = ''
-      const Button = h(BasicButton, btnBind, extendSlots(slots))
 
-      // If it is not enabled, it is a normal button
-      if (!props.enable) {
-        return Button
+      const Button = () => {
+        return <BasicButton {...btnBind}>{extendSlots(slots)}</BasicButton>
       }
-      return h(Popconfirm, bindValues, { default: () => Button })
+
+      if (!props.enable) {
+        return Button()
+      }
+
+      return <Popconfirm {...bindValues}>{{ default: Button }}</Popconfirm>
     }
   }
 })
-</script>
+
+export default PopConfirmButton
