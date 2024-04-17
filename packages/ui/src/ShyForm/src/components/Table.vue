@@ -86,7 +86,7 @@
                   : column.componentProps
               "
               v-model:value="record[column.dataIndex]"
-              :is="componentMap.get(column.type)"
+              :is="ShyComponentMap.get(column.type)"
             />
           </Popover>
         </FormItem>
@@ -128,7 +128,7 @@ import { ref, computed, watch, toRaw, inject } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 import { DeleteFilled, PlusCircleFilled } from '@ant-design/icons-vue'
 import { buildUUID, isFunction } from '@shy-plugins/utils'
-import { componentMap } from '../componentMap'
+import { ShyComponentMap } from '../ShyComponentMap'
 import { cloneDeep, isArray, isEqual } from 'lodash-es'
 import { FormActionType } from '../types/form'
 import { Popover } from 'ant-design-vue'

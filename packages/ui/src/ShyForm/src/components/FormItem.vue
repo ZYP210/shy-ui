@@ -6,7 +6,7 @@ import type { Rule as ValidationRule } from 'ant-design-vue/lib/form/interface'
 import type { TableActionType } from '../../../Table'
 import type { TableActionType as ShyTableActionType } from '../../../ShyTable'
 import { Col, Form } from 'ant-design-vue'
-import { componentMap } from '../componentMap'
+import { ShyComponentMap } from '../ShyComponentMap'
 import { BasicHelp } from '../../..//Basic'
 import { isBoolean, isFunction, isNull, getSlot } from '@shy-plugins/utils'
 
@@ -313,7 +313,7 @@ export default defineComponent({
           props.setFormModel(field, value)
         }
       }
-      const Comp = componentMap.get(component) as ReturnType<
+      const Comp = ShyComponentMap.get(component) as ReturnType<
         typeof defineComponent
       >
 
@@ -453,7 +453,7 @@ export default defineComponent({
         renderColContent,
         component
       } = props.schema
-      if (!componentMap.has(component)) {
+      if (!ShyComponentMap.has(component)) {
         return null
       }
 

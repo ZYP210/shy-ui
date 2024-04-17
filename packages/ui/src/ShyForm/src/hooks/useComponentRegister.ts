@@ -1,6 +1,6 @@
 import type { ComponentType } from '../types'
 import { tryOnUnmounted } from '@vueuse/core'
-import { add, del } from '../componentMap'
+import { add, del } from '../ShyComponentMap'
 import type { Component } from 'vue'
 
 export function useComponentRegister(compName: ComponentType, comp: Component) {
