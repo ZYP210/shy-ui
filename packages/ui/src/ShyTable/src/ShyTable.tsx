@@ -168,7 +168,6 @@ const ShyTable = defineComponent({
 
     const {
       schemasAdvancedSearch,
-      // schemasAdvancedSearchString,
       schemasAdvancedSearchGlobal,
       isVisibleAdvancedSearch,
       openAdvancedSearch,
@@ -365,7 +364,7 @@ const ShyTable = defineComponent({
       }
 
       const isShowSummary = () => {
-        return getProps.value.showSummaryTotal ? (
+        return getDataSourceRef.value.length && getProps.value.showSummaryTotal ? (
           <TableSummary>
             <TableSummaryRow>
               {getColumnsSummary.value.map((item: Recordable, index) => {
@@ -397,6 +396,7 @@ const ShyTable = defineComponent({
       const isShowFooter = () => {
         return getBindValues.value.isShowFooter ? (
           <ShyTableFooter
+            isShowFooterSettings={getBindValues.value.isShowFooterSettings}
             isShowPagination={getBindValues.value.isShowPagination}
             pagination={getPaginationInfo.value}
             onPageChange={handlePageChange}
@@ -426,16 +426,7 @@ const ShyTable = defineComponent({
 
       const emptyText = () => {
         return (
-          <div
-            class="flex justify-center items-center"
-            style={{
-              height: `${
-                (getScrollRef.value.y as number) -
-                41 -
-                (getProps.value.showSummaryTotal ? 47 : 0)
-              }px`
-            }}
-          >
+          <div class="flex justify-center items-center">
             <Empty />
           </div>
         )

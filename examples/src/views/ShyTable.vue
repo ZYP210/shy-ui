@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full flex flex-col p-10px">
+  <div class="w-full h-full flex flex-col p-16px">
     <ShyTable
       titleHelpMessage="温馨提醒"
       @register="register"
@@ -371,6 +371,7 @@ const [
       total: 100
     }
   },
+  // isShowFooterSettings: false,
   // isShowHeader: false,
   // isShowFooter: false,
   headerAlign: 'left',

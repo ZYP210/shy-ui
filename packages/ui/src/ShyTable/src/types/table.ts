@@ -190,6 +190,7 @@ export interface ShyTableProps<T = any> {
   headerAlign: 'left' | 'right'
   isShowHeader: boolean
   isShowFooter: boolean
+  isShowFooterSettings: boolean
   isShowPagination: boolean
   // 表格列允许拖拽
   resizable: boolean

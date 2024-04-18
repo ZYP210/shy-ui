@@ -50,19 +50,14 @@ export function useTableScroll(
 
   function setHeight(height: number) {
     tableHeightRef.value = height
-    //  Solve the problem of modal adaptive height calculation when the form is placed in the modal
     modalFn?.redoModalHeight?.()
   }
 
-  // No need to repeat queries
-  // let paginationEl: HTMLElement | null
-  // let footerEl: HTMLElement | null
   let bodyEl: HTMLElement | null
   async function calcTableHeight() {
     const {
       isShowFooter,
       resizeHeightOffset,
-      pagination,
       maxHeight,
       isCanResizeParent,
       useSearchForm
@@ -158,7 +153,7 @@ export function useTableScroll(
       tableHeaderHeight -
       headerHeight
     height = height > maxHeight ? (maxHeight as number) : height
-    height = Math.floor(height)
+    height = Math.floor(height + 2)
 
     setHeight(height)
 

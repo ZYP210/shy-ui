@@ -33,6 +33,10 @@ export const shyTableBasicProps = reactive({
     type: Boolean,
     default: true
   },
+  isShowFooterSettings: {
+    type: Boolean,
+    default: true
+  },
   isShowFooter: {
     type: Boolean,
     default: true

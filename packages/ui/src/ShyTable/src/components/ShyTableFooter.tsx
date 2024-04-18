@@ -8,9 +8,8 @@ import '../style/tableFooter.less'
 const ShyTableFooter = defineComponent({
   emits: ['pageChange'],
   props: {
-    isShowSettings: {
-      type: Boolean,
-      default: true
+    isShowFooterSettings: {
+      type: Boolean
     },
     isShowPagination: {
       type: Boolean
@@ -48,13 +47,13 @@ const ShyTableFooter = defineComponent({
 
     return () => {
       const isShowSettings = () => {
-        return props.isShowSettings ? (
-          <div class={`${prefixCls}-settings`}>
+        return props.isShowFooterSettings ? (
+          <>
             <div class={`${prefixCls}-count-box`}>{getSelectTotal.value}</div>
             <div class={`${prefixCls}-settings-box`}>
               {slots.default?.(unref(getSelections))}
             </div>
-          </div>
+          </>
         ) : null
       }
 
@@ -66,7 +65,7 @@ const ShyTableFooter = defineComponent({
 
       return (
         <div class={prefixCls}>
-          {isShowSettings()}
+          <div class={`${prefixCls}-settings`}>{isShowSettings()}</div>
           {isShowPagination()}
         </div>
       )

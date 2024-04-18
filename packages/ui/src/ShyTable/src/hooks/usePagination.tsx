@@ -4,8 +4,6 @@ import { computed, unref, ref, ComputedRef, watch } from 'vue'
 import { isBoolean } from '@shy-plugins/utils'
 import { PAGE_SIZE, PAGE_SIZE_OPTIONS } from '../const'
 
-
-
 export function usePagination(refProps: ComputedRef<ShyTableProps>) {
   const configRef = ref<PaginationProps>({})
   const show = ref(true)
@@ -23,16 +21,21 @@ export function usePagination(refProps: ComputedRef<ShyTableProps>) {
   )
 
   const getPaginationInfo = computed((): PaginationProps => {
-    const { pagination, isShowPagination } = unref(refProps)
-
+    const { pagination, isShowPagination, isShowFooterSettings } =
+      unref(refProps)
 
     return {
+      isShowFooterSettings,
       isShowPagination,
       current: 1,
       pageSize: PAGE_SIZE,
       size: '',
       defaultPageSize: PAGE_SIZE,
-      showTotal: (total) => <span>共 <span>{total}</span> 条</span>,
+      showTotal: (total) => (
+        <span>
+          共 <span>{total}</span> 条
+        </span>
+      ),
       showSizeChanger: true,
       pageSizeOptions: PAGE_SIZE_OPTIONS,
       showQuickJumper: true,
