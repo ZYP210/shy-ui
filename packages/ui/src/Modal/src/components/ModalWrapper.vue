@@ -84,7 +84,7 @@ export default defineComponent({
           realHeightRef
         )}px`,
         overflow: 'auto',
-        padding: '16px'
+        margin: '16px'
       }
     })
 
@@ -122,7 +122,8 @@ export default defineComponent({
         let maxHeight =
           maxHeightEnum[props.size] -
           props.modalFooterHeight -
-          props.modalHeaderHeight
+          props.modalHeaderHeight -
+          32
 
         await nextTick()
         const spinEl = unref(spinRef)

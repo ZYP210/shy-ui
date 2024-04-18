@@ -19,11 +19,11 @@ echo $CONTENT
 
 cd ../packages/ui
 pnpm i --frozen-lockfile
-pnpm update:version
+# pnpm update:version
 
 pnpm build
 
-pnpm publish --no-git-checks --tag $CONTENT
+pnpm publish --no-git-checks --tag next
 
 cd -
 
