@@ -22,7 +22,7 @@ import { Plugin } from 'vue'
 // import '@shy-plugins/workflow-bpmn/es/style.css'
 // import '@shy-plugins/workflow-dingding/es/style.css'
 import 'ant-design-vue/dist/reset.css';
-import '3h1-ui/es/style.css'
+// import '3h1-ui/es/style.css'
 const app = createApp(App)
 
 registerGlobalConfig({ form: { rangePickerField: [['createTime']] } })

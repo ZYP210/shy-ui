@@ -2,7 +2,6 @@ import type { PropType, CSSProperties } from 'vue'
 import type { ModalWrapperProps } from './typing'
 // import type { ButtonProps } from 'ant-design-vue'
 
-
 export const modalProps = {
   visible: { type: Boolean },
   scrollTop: { type: Boolean, default: true },
@@ -81,5 +80,10 @@ export const basicProps = Object.assign({}, modalProps, {
 
   wrapClassName: { type: String },
 
-  zIndex: { type: Number }
+  zIndex: { type: Number },
+
+  size: {
+    type: String as PropType<'small' | 'default' | 'large'>,
+    default: 'default'
+  }
 })

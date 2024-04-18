@@ -1,28 +1,29 @@
 <template>
   <div>
     <slot name="insertFooter"></slot>
-    <Button
+    <BasicButton
+      type="danger"
       v-bind="cancelButtonProps"
       @click="handleCancel"
       v-if="showCancelBtn"
     >
       {{ cancelText }}
-    </Button>
+    </BasicButton>
     <slot name="centerFooter"></slot>
-    <Button
-      :type="okType"
+    <BasicButton
+      type="success"
       @click="handleOk"
       :loading="confirmLoading"
       v-bind="okButtonProps"
       v-if="showOkBtn"
     >
       {{ okText }}
-    </Button>
+    </BasicButton>
     <slot name="appendFooter"></slot>
   </div>
 </template>
 <script lang="ts">
-import { Button } from 'ant-design-vue'
+import { BasicButton } from '../../../Button/index'
 import { defineComponent } from 'vue'
 
 import { basicProps } from '../props'
@@ -32,7 +33,7 @@ export default defineComponent({
   props: basicProps,
   emits: ['ok', 'cancel'],
   components: {
-    Button
+    BasicButton
   },
   setup(_, { emit }) {
     function handleOk(e: Event) {

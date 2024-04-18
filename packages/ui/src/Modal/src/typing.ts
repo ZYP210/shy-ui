@@ -194,6 +194,8 @@ export interface ModalProps {
    * @type number
    */
   zIndex?: number
+
+  size: 'small' | 'default' | 'large'
 }
 
 export interface ModalWrapperProps {

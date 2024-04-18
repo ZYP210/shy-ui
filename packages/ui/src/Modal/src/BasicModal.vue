@@ -149,7 +149,7 @@ export default defineComponent({
       const attr = {
         ...attrs,
         ...unref(getMergeProps),
-        visible: unref(visibleRef),
+        open: unref(visibleRef),
         wrapClassName: unref(getWrapClassName)
       }
 
@@ -160,12 +160,15 @@ export default defineComponent({
     })
 
     const omitBindValue = computed(() => {
-      return omit(
-        getProps.value.wrapperProps,
-        'visible',
-        'height',
-        'modalFooterHeight'
-      )
+      return {
+        size: unref(getProps).size,
+        ...omit(
+          getProps.value.wrapperProps,
+          'visible',
+          'height',
+          'modalFooterHeight'
+        )
+      }
     })
 
     const omitSlotKeys = computed(() => {

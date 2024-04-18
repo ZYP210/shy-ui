@@ -74,7 +74,7 @@ export default defineComponent({
       getScrollWrap
     }
   }
-})
+}) as any
 </script>
 <style lang="less">
 .scroll-container {

@@ -7,8 +7,9 @@
       :visible="true"
       title="人物选择器"
       :maskClosable="false"
-      :width="600"
+      :width="800"
     >
+      <div class="h-1000px bg-pink-100"></div>
     </BasicModal>
   </div>
 </template>

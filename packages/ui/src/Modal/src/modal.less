@@ -1,27 +1,28 @@
 @prefix-cls: ~'@{namespace}-basic-modal';
 
 .@{prefix-cls} {
-  @media screen and (max-height: 600px) {
-    .ant-modal {
-      top: 60px;
-    }
-  }
+  // @media screen and (max-height: 600px) {
+  //   .ant-modal {
+  //     top: 60px;
+  //   }
+  // }
 
-  @media screen and (max-height: 540px) {
-    .ant-modal {
-      top: 30px;
-    }
-  }
+  // @media screen and (max-height: 540px) {
+  //   .ant-modal {
+  //     top: 30px;
+  //   }
+  // }
 
-  @media screen and (max-height: 480px) {
-    .ant-modal {
-      top: 10px;
-    }
-  }
+  // @media screen and (max-height: 480px) {
+  //   .ant-modal {
+  //     top: 10px;
+  //   }
+  // }
+
 
   :is(.ant-modal-content) {
     padding: 0;
-    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    // box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
   }
 
   :is(.ant-modal-close) {
@@ -40,15 +41,24 @@
   }
 
   :is(.ant-modal-header) {
-    padding: 14px;
+    height: 56px;
+    padding: 18px 16px;
     margin: 0;
-    border-bottom: 1px solid @border-color-base;
+    box-shadow: inset 0px -1px 0px 0px var(--gray-3);
+    border-bottom: unset;
+  }
+
+  :is(.ant-modal-body){
+    padding: unset !important;
   }
 
   :is(.ant-modal-footer) {
-    padding: 10px;
+    height: 56px;
+    padding: 12px 16px;
     margin: 0;
-    border-top: 1px solid @border-color-base;
+    border-top: unset;
+    box-shadow: inset 0px 1px 0px 0px var(--gray-3);
+    background: var(--gray-1);
   }
 }
 
