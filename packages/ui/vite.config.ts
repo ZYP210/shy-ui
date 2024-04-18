@@ -24,6 +24,7 @@ export default defineConfig({
       //忽略打包vue文件
       external: [
         'vue',
+        'vue-router',
         'vxe-table',
         'xe-utils',
         'ant-design-vue',

@@ -20,13 +20,18 @@ import {
   PAGE_SIZE_OPTIONS
 } from './const'
 
-export const basicProps = reactive({
+export const shyTableBasicProps = reactive({
+  headerAlign: {
+    type: String as PropType<'left' | 'right'>,
+    default: 'left'
+  },
   isShowHeader: {
     type: Boolean,
     default: true
   },
   isShowPagination: {
-    type: Boolean
+    type: Boolean,
+    default: true
   },
   isShowFooter: {
     type: Boolean,
@@ -232,6 +237,6 @@ export const paginationProps = reactive({
 
 export const basicPropChange = (options) => {
   Object.keys(options).forEach((name) => {
-    basicProps[name] = options[name]
+    shyTableBasicProps[name] = options[name]
   })
 }

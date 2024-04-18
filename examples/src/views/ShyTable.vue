@@ -351,7 +351,6 @@ const [
     getForm
   }
 ] = useShyTable({
-  title: '表格标题',
   api: ({ current, size }): any => {
     // console.log(params)
     return {
@@ -374,8 +373,10 @@ const [
   },
   // isShowHeader: false,
   // isShowFooter: false,
+  headerAlign: 'left',
   rowKey: 'id',
   columns,
+  // isShowPagination: false,
   isSortFetch: false,
   useSearchForm: true,
   formConfig: {

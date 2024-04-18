@@ -131,10 +131,7 @@ export function useTableScroll(
             ?.offsetHeight ?? 0
         : 0
 
-      if (
-        (isBoolean(pagination) && !pagination) ||
-        (isBoolean(isShowFooter) && !isShowFooter)
-      ) {
+      if (isBoolean(isShowFooter) && !isShowFooter) {
         paginationMargin = 0
       }
 

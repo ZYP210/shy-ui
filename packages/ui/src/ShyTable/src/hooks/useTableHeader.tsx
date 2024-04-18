@@ -14,7 +14,8 @@ export const useTableHeader = (
       title = null,
       showTableSetting,
       titleHelpMessage,
-      tableSetting
+      tableSetting,
+      headerAlign
     } = unref(propsRef)
     const hideTitle =
       !slots?.title && !title && !slots?.toolbar && !showTableSetting
@@ -23,12 +24,14 @@ export const useTableHeader = (
     }
 
     const headerProps = {
+      headerAlign,
       title: title as any,
       titleHelpMessage,
       showTableSetting,
       tableSetting,
       onColumnsChange: handlers.onColumnsChange
     }
+
 
     return {
       title: hideTitle
@@ -37,7 +40,7 @@ export const useTableHeader = (
             <ShyTableHeader {...headerProps}>
               {{
                 toolbar: () => getSlot(slots, 'toolbar'),
-                title: () => getSlot(slots, 'title'),
+                title: slots?.title ? () => slots?.title?.() : null
               }}
             </ShyTableHeader>
           )

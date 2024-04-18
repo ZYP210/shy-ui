@@ -23,10 +23,11 @@ export function usePagination(refProps: ComputedRef<ShyTableProps>) {
   )
 
   const getPaginationInfo = computed((): PaginationProps => {
-    const { pagination } = unref(refProps)
+    const { pagination, isShowPagination } = unref(refProps)
 
 
     return {
+      isShowPagination,
       current: 1,
       pageSize: PAGE_SIZE,
       size: '',

@@ -23,12 +23,14 @@ const ShyTableFooter = defineComponent({
     const { getSelectRowKeys, getSelectRows } = useTableContext()
 
     const getSelectTotal = computed(() => {
-      return (
+      return getSelectRowKeys()?.length ? (
         <>
-          已选择
+          已选中
           <span class={`${prefixCls}-count`}>{getSelectRowKeys()?.length}</span>
           条
         </>
+      ) : (
+        <>选中激活</>
       )
     })
 
@@ -56,10 +58,16 @@ const ShyTableFooter = defineComponent({
         ) : null
       }
 
+      const isShowPagination = () => {
+        return props.isShowPagination ? (
+          <Pagination {...props.pagination} onChange={handlePageChange} />
+        ) : null
+      }
+
       return (
         <div class={prefixCls}>
           {isShowSettings()}
-          <Pagination {...props.pagination} onChange={handlePageChange} />
+          {isShowPagination()}
         </div>
       )
     }

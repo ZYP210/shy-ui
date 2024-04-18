@@ -15,7 +15,7 @@ import {
 } from 'ant-design-vue'
 import { computed, defineComponent, nextTick, ref, toRaw, unref } from 'vue'
 import { useDesign } from '@shy-plugins/use'
-import { basicProps } from './props'
+import { shyTableBasicProps } from './props'
 import { omit } from 'lodash-es'
 import { ShyForm, useShyForm } from '../../ShyForm'
 import { useGlobalConfig } from '../../../config/index'
@@ -61,7 +61,7 @@ const ShyTable = defineComponent({
     'change',
     'columns-change'
   ],
-  props: basicProps,
+  props: shyTableBasicProps,
   setup(props, { attrs, slots, emit, expose }) {
     const { prefixCls } = useDesign('ant-table')
     const getWrapperClass = computed(() => {
@@ -102,8 +102,7 @@ const ShyTable = defineComponent({
         dataSource,
         ...unref(getExpandOption),
         // 默认项
-        showSorterTooltip: false,
-        pagination: false
+        showSorterTooltip: false
       }
 
       propsData = omit(propsData, ['class', 'onChange', 'title'])
@@ -370,9 +369,13 @@ const ShyTable = defineComponent({
           <TableSummary>
             <TableSummaryRow>
               {getColumnsSummary.value.map((item: Recordable, index) => {
-                if (index === 1)
+                if (index === 0)
                   return (
-                    <TableSummaryCell align="center" index={0}>
+                    <TableSummaryCell
+                      class={`${prefixCls}-summary-cell-first`}
+                      align="center"
+                      index={0}
+                    >
                       总计
                     </TableSummaryCell>
                   )
@@ -450,6 +453,7 @@ const ShyTable = defineComponent({
             rowClassName={getRowClassName}
             onChange={handleTableChange}
             onResizeColumn={handleResizeColumn}
+            pagination={false}
           >
             {{
               headerCell: (data) => <HeaderCell column={data.column} />,

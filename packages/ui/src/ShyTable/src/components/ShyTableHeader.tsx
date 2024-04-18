@@ -14,6 +14,7 @@ import '../style/tableHeader.less'
 import { Divider } from 'ant-design-vue'
 import { BarChartOutlined } from '@ant-design/icons-vue'
 import { theme } from 'ant-design-vue'
+import { useRoute } from 'vue-router'
 
 const ShyTableSetting = defineComponent({
   props: {
@@ -109,16 +110,19 @@ const ShyTableSetting = defineComponent({
 
 const ShyTableTitle = defineComponent({
   setup(props, { slots }) {
+    const route = useRoute()
+
     const { useToken } = theme
     const { token } = useToken()
-
     const { prefixCls } = useDesign('table-header-title')
 
     return () => {
       return (
         <div class={prefixCls}>
           <BarChartOutlined style={{ color: token?.value?.colorPrimary }} />
-          {slots?.title?.()}
+          {slots?.title
+            ? slots?.title?.()
+            : route?.meta?.title || route?.name || ''}
         </div>
       )
     }
@@ -142,6 +146,10 @@ const ShyTableHeader = defineComponent({
     titleHelpMessage: {
       type: [String, Array] as PropType<string | string[]>,
       default: ''
+    },
+    headerAlign: {
+      type: String as PropType<'left' | 'right'>,
+      default: 'left'
     }
   },
   setup(props, { emit, slots }) {
@@ -160,16 +168,26 @@ const ShyTableHeader = defineComponent({
       emit('columns-change', data)
     }
 
+    const getAlignClass = computed(() => [
+      `${prefixCls}-align`,
+      `${prefixCls}-align-${props.headerAlign}`
+    ])
+
     return () => {
       return (
         <div class={prefixCls}>
-          <ShyTableTitle>
-            {{
-              title: () => props.title || slots?.title?.()
-            }}
-          </ShyTableTitle>
-          <div class={`${prefixCls}-toolbar`}>
+          <div class={getAlignClass.value}>
+            <ShyTableTitle>
+              {{
+                title:
+                  props.title || slots?.title
+                    ? () => props.title || slots?.title?.()
+                    : null
+              }}
+            </ShyTableTitle>
             <div class={`${prefixCls}-button`}>{slots?.toolbar?.()}</div>
+          </div>
+          <div class={`${prefixCls}-toolbar`}>
             <Divider type="vertical" class="action-divider" />
             {isShowSetting()}
           </div>

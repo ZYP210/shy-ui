@@ -6,17 +6,26 @@
   justify-content: space-between;
   align-items: center;
 
+  &-align {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &-align-left {
+    flex-direction: row;
+  }
+
+  &-align-right {
+    flex-direction: row-reverse;
+  }
+
   &-button {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     gap: 0.5rem;
-  }
-
-  &-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
   }
 
   &-settings {

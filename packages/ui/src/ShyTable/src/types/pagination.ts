@@ -20,6 +20,7 @@ export declare class PaginationConfig extends Pagination {
 }
 
 export interface PaginationProps {
+  isShowPagination?: boolean
   /**
    * total number of data items
    * @default 0

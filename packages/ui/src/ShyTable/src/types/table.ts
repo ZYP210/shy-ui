@@ -187,8 +187,10 @@ export interface TableSetting {
 }
 
 export interface ShyTableProps<T = any> {
+  headerAlign: 'left' | 'right'
   isShowHeader: boolean
   isShowFooter: boolean
+  isShowPagination: boolean
   // 表格列允许拖拽
   resizable: boolean
   // 点击行选中
