@@ -12,6 +12,7 @@ export const useTableHeader = (
   const getHeaderProps = computed((): Recordable => {
     const {
       title = null,
+      isShowTitle,
       showTableSetting,
       titleHelpMessage,
       tableSetting,
@@ -24,6 +25,7 @@ export const useTableHeader = (
     }
 
     const headerProps = {
+      isShowTitle,
       headerAlign,
       title: title as any,
       titleHelpMessage,
@@ -31,7 +33,6 @@ export const useTableHeader = (
       tableSetting,
       onColumnsChange: handlers.onColumnsChange
     }
-
 
     return {
       title: hideTitle
