@@ -187,6 +187,7 @@ export interface TableSetting {
 }
 
 export interface ShyTableProps<T = any> {
+  isShowTitle: boolean
   headerAlign: 'left' | 'right'
   isShowHeader: boolean
   isShowFooter: boolean

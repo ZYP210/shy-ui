@@ -28,6 +28,8 @@ const app = createApp(App)
 registerGlobalConfig({ form: { rangePickerField: [['createTime']] } })
 
 shyTableBasicProps.headerAlign.default = 'right'
+shyTableBasicProps.isShowTitle.default = false
+
 basicContainerProps.isShowBack.default = false
 
 app

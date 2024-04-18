@@ -351,10 +351,11 @@ const [
     getForm
   }
 ] = useShyTable({
+  // isShowTitle: false,
   api: ({ current, size }): any => {
     // console.log(params)
     return {
-      records: Array.from({ length: 100 }, (_, i) => {
+      records: Array.from({ length: 1 }, (_, i) => {
         return {
           id: i,
           status: i,
@@ -367,14 +368,14 @@ const [
           remark: 999,
           qualifiedNum: 100000.11111111
         }
-      }).splice(current * size, size),
+      }),
       total: 100
     }
   },
   // isShowFooterSettings: false,
   // isShowHeader: false,
   // isShowFooter: false,
-  headerAlign: 'left',
+  // headerAlign: 'left',
   rowKey: 'id',
   columns,
   // isShowPagination: false,
@@ -464,7 +465,8 @@ const [
     title: '操作',
     fixed: 'right'
   },
-  showIndexColumn: true
+  showIndexColumn: true,
+  canResize: false,
   // indexColumn: {}
 })
 

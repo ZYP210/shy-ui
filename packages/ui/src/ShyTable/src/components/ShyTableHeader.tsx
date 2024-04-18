@@ -150,6 +150,9 @@ const ShyTableHeader = defineComponent({
     headerAlign: {
       type: String as PropType<'left' | 'right'>,
       default: 'left'
+    },
+    isShowTitle: {
+      type: Boolean
     }
   },
   setup(props, { emit, slots }) {
@@ -162,6 +165,19 @@ const ShyTableHeader = defineComponent({
           onColumnsChange={handleColumnChange}
         />
       ) : null
+    }
+
+    const isShowTitle = () => {
+      return props.isShowTitle ? (
+        <ShyTableTitle>
+          {{
+            title:
+              props.title || slots?.title
+                ? () => props.title || slots?.title?.()
+                : null
+          }}
+        </ShyTableTitle>
+      ) : <div class={`${prefixCls}-placeholder`}></div>
     }
 
     const handleColumnChange = (data: ColumnChangeParam[]) => {
@@ -177,14 +193,7 @@ const ShyTableHeader = defineComponent({
       return (
         <div class={prefixCls}>
           <div class={getAlignClass.value}>
-            <ShyTableTitle>
-              {{
-                title:
-                  props.title || slots?.title
-                    ? () => props.title || slots?.title?.()
-                    : null
-              }}
-            </ShyTableTitle>
+            {isShowTitle()}
             <div class={`${prefixCls}-button`}>{slots?.toolbar?.()}</div>
           </div>
           <div class={`${prefixCls}-toolbar`}>

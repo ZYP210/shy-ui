@@ -21,6 +21,10 @@ import {
 } from './const'
 
 export const shyTableBasicProps = reactive({
+  isShowTitle: {
+    type: Boolean,
+    default: true
+  },
   headerAlign: {
     type: String as PropType<'left' | 'right'>,
     default: 'left'
