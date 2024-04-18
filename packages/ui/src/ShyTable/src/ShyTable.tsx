@@ -364,7 +364,7 @@ const ShyTable = defineComponent({
       }
 
       const isShowSummary = () => {
-        return getDataSourceRef.value.length && getProps.value.showSummaryTotal ? (
+        return getDataSourceRef.value?.length && getProps.value?.showSummaryTotal ? (
           <TableSummary>
             <TableSummaryRow>
               {getColumnsSummary.value.map((item: Recordable, index) => {

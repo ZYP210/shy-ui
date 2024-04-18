@@ -3,13 +3,13 @@
     <div v-if="isShowHeader" :class="`${prefixCls}-header`">
       <div :class="`${prefixCls}-header-title`">
         <div
-          v-if="!loading"
+          v-if="!loading && isShowBack"
           :class="`${prefixCls}-header-title-icon`"
           @click="emit('cancel')"
         >
           <ArrowLeftOutlined :style="{ fontSize: `16px` }" />
         </div>
-        <div v-if="loading" :class="`${prefixCls}-header-title-loading-icon`">
+        <div v-if="loading && isShowBack" :class="`${prefixCls}-header-title-loading-icon`">
           <LoadingOutlined :style="{ fontSize: `16px` }" />
         </div>
         <div :class="`${prefixCls}-header-title-text`">{{ title }}</div>
@@ -111,8 +111,8 @@ export default defineComponent({
     width: 100%;
     height: fit-content;
     align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #eaeaea;
+    padding-block: 10px;
+    border-bottom: 1px solid var(--gray-3);
     gap: 8px;
 
     &-title {
@@ -144,7 +144,8 @@ export default defineComponent({
     justify-content: flex-end;
     align-items: center;
     gap: 8px;
-    border-top: 1px solid #eaeaea;
+    border-top: 1px solid var(--gray-3);
+    background-color: var(--gray-2);
 
     &-buttons {
       display: flex;

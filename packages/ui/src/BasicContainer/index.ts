@@ -1,4 +1,5 @@
 import BasicContainer from './src/BasicContainer.vue'
+export { basicContainerProps } from './src/props'
 import type { App, Plugin, Component } from 'vue'
 import { setDefaultConfig } from './src/props'
 

@@ -16,7 +16,7 @@ import 'virtual:windi-utilities.css'
 // 注册本地svg
 import 'virtual:svg-icons-register'
 
-import { BasicTable, registerGlobalConfig, shyTableBasicProps } from '3h1-ui'
+import { BasicTable, registerGlobalConfig, shyTableBasicProps, basicContainerProps } from '3h1-ui'
 import { Plugin } from 'vue'
 // import ShyFlowDingDing from '@shy-plugins/workflow-dingding';
 // import '@shy-plugins/workflow-bpmn/es/style.css'
@@ -28,6 +28,7 @@ const app = createApp(App)
 registerGlobalConfig({ form: { rangePickerField: [['createTime']] } })
 
 shyTableBasicProps.headerAlign.default = 'right'
+basicContainerProps.isShowBack.default = false
 
 app
   // .use(ShyFlowDingDing)

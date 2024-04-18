@@ -12,6 +12,10 @@ export const basicContainerProps = reactive({
     type: Boolean,
     default: true
   },
+  isShowBack: {
+    type: Boolean,
+    default: false
+  },
   isShowFooter: {
     type: Boolean,
     default: true
