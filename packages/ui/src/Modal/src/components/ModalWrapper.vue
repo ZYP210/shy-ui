@@ -26,7 +26,7 @@ const props = {
   useWrapper: { type: Boolean, default: true },
   modalHeaderHeight: { type: Number, default: 56 },
   modalFooterHeight: { type: Number, default: 56 },
-  minHeight: { type: Number, default: 500 - 158 },
+  minHeight: { type: Number, default: 500 - 150 },
   height: { type: Number },
   footerOffset: { type: Number, default: 0 },
   visible: { type: Boolean },

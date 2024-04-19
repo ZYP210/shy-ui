@@ -94,6 +94,12 @@ export default defineComponent({
     // const { prefixCls } = useDesign('basic-modal')
     const prefixCls = 'shy-basic-modal'
 
+    enum widthEnum {
+      small = '23%',
+      default = '47%',
+      large = '63%'
+    }
+
     // modal   Bottom and top height
     const extHeightRef = ref(0)
     const modalMethods: ModalMethods = {
@@ -145,12 +151,17 @@ export default defineComponent({
       }
     })
 
+    const getWrapperWidth = computed(() => {
+      return unref(getProps).width || widthEnum[props.size]
+    })
+
     const getBindValue = computed((): Recordable => {
       const attr = {
         ...attrs,
         ...unref(getMergeProps),
         open: unref(visibleRef),
-        wrapClassName: unref(getWrapClassName)
+        wrapClassName: unref(getWrapClassName),
+        width: unref(getWrapperWidth)
       }
 
       if (unref(fullScreenRef)) {
