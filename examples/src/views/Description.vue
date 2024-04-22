@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 w-1600px">
+  <div class="p-4 w-1600px mt-200px">
     <Description title="基础示例" @register="register"> </Description>
   </div>
 </template>
@@ -27,7 +27,7 @@ const schema: any[] = [
     field: 'username',
     label: '测试',
     colProps: { span: 8 },
-    isCopy: true,
+    isCopy: true
   },
   {
     field: 'nickName',
@@ -60,7 +60,7 @@ const schema: any[] = [
   {
     field: 'addr',
     label: '地址',
-    colProps: { span: 8 }
+    colProps: { span: 24 }
   }
 ]
 const fun = (color) => {
@@ -68,11 +68,12 @@ const fun = (color) => {
 }
 const [register, { setDescProps }] = useDescription({
   // data: mockData,
-  bordered: true,
+  bordered: false,
   schema,
+  mode: 'vertical'
 })
 
-onMounted(() => { 
+onMounted(() => {
   setDescProps({ data: mockData, labelWidth: 110 })
 })
 </script>

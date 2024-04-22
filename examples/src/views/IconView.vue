@@ -7,7 +7,7 @@
   </div>
 
   <div class="w-300px">
-    <IconPicker mode="svg" :pageSize="30" :copy="true" />
+    <IconPicker :pageSize="30" :copy="true" />
   </div>
 </template>
 

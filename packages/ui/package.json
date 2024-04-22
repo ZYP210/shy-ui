@@ -45,7 +45,9 @@
   },
   "types": "es/ui/index.d.ts",
   "devDependencies": {
+    "@iconify/json": "^2.2.2",
     "@types/sortablejs": "^1.15.1",
+    "inquirer": "^9.2.19",
     "vite-plugin-windicss": "^1.8.10",
     "windicss": "^3.5.6"
   }

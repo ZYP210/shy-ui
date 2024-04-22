@@ -43,6 +43,10 @@ export default defineComponent({
     const isBordered = computed(() => getProps.value.bordered)
 
     const labelAlignCss = computed<CSSProperties>(() => {
+      if (getProps.value.mode === 'vertical') {
+        return { justifyContent: 'flex-start' }
+      }
+
       switch (getProps.value.labelAlign) {
         case 'left':
           return { justifyContent: 'flex-start' }
@@ -84,11 +88,12 @@ export default defineComponent({
               : getProps.value.data[`${item.field}`]
           }
 
-          const ifShow = isBoolean(item?.ifShow) || isFunction(item?.ifShow)
-            ? isFunction(item.ifShow)
-              ? item.ifShow(getProps.value.data)
-              : item.ifShow
-            : true
+          const ifShow =
+            isBoolean(item?.ifShow) || isFunction(item?.ifShow)
+              ? isFunction(item.ifShow)
+                ? item.ifShow(getProps.value.data)
+                : item.ifShow
+              : true
 
           return ifShow ? (
             <div
@@ -96,13 +101,18 @@ export default defineComponent({
               style={{
                 flex: `0 0 ${
                   ((item?.colProps?.span || basicColProps) / 24) * 100
-                }%`
+                }%`,
+                flexDirection:
+                  getProps.value.mode === 'horizontal' ? 'row' : 'column'
               }}
             >
               {slots?.[`${item.field}Label`] || item.label ? (
                 <span
                   style={{
-                    width: `${getProps.value.labelWidth}px`,
+                    width:
+                      getProps.value.mode === 'horizontal'
+                        ? `${getProps.value.labelWidth}px`
+                        : 'auto',
                     ...labelAlignCss.value,
                     ...(getProps.value?.labelStyle
                       ? getProps.value?.labelStyle
@@ -124,11 +134,12 @@ export default defineComponent({
                       placement="top"
                       class="mx-1"
                       text={item?.helpMessage}
+                      iconSize="9px"
                     />
                   ) : (
                     ''
                   )}
-                  {getProps.value?.isShowColon ? '：' : ''}
+                  {getProps.value?.isShowColon ? '：' : <span></span>}
                 </span>
               ) : (
                 <> </>

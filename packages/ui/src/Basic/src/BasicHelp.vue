@@ -2,7 +2,7 @@
 import type { CSSProperties, PropType } from 'vue'
 import { defineComponent, computed, unref } from 'vue'
 import { Tooltip } from 'ant-design-vue'
-import { InfoCircleOutlined } from '@ant-design/icons-vue'
+import { QuestionCircleOutlined } from '@ant-design/icons-vue'
 import { getPopupContainer } from '@shy-plugins/utils'
 import { isString, isArray } from '@shy-plugins/utils'
 import { getSlot } from '@shy-plugins/utils'
@@ -35,7 +35,12 @@ const props = {
   /**
    * Help text list
    */
-  text: { type: [Array, String] as PropType<string[] | string> }
+  text: { type: [Array, String] as PropType<string[] | string> },
+  /**
+   * Help text font size
+   * @default: 14px
+   */
+  iconSize: { type: String, default: '14px' }
 }
 
 export default defineComponent({
@@ -87,7 +92,9 @@ export default defineComponent({
           getPopupContainer={() => getPopupContainer()}
         >
           <span class={prefixCls}>
-            {getSlot(slots) || <InfoCircleOutlined />}
+            {getSlot(slots) || (
+              <QuestionCircleOutlined style={{ fontSize: props.iconSize }} />
+            )}
           </span>
         </Tooltip>
       )

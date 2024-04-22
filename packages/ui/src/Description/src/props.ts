@@ -23,7 +23,8 @@ export const basicProps = reactive({
     default: () => []
   },
   labelAlign: {
-    type: String as PropType<'left' | 'center' | 'right'>
+    type: String as PropType<'left' | 'center' | 'right'>,
+    default: () => 'right'
   },
   labelWidth: {
     type: Number as PropType<number | string>,
@@ -31,7 +32,7 @@ export const basicProps = reactive({
   },
   isShowColon: {
     type: Boolean,
-    default: () => true
+    default: () => false
   },
   data: {
     type: Object,
@@ -44,5 +45,9 @@ export const basicProps = reactive({
   customRender: {
     type: Object,
     default: () => null
+  },
+  mode: {
+    type: String as PropType<'vertical| horizontal'>,
+    default: () => 'horizontal'
   }
 })
