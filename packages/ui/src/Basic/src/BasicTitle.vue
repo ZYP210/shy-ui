@@ -1,18 +1,25 @@
 <template>
   <span :class="getClass">
-    <slot></slot>
-    <BasicHelp
-      :class="`${prefixCls}-help`"
-      v-if="helpMessage"
-      :text="helpMessage"
-    />
+    <div>
+      <slot></slot>
+      <BasicHelp
+        :class="`${prefixCls}-help`"
+        v-if="helpMessage"
+        :text="helpMessage"
+      />
+    </div>
+    <div :class="`${prefixCls}-expand`" v-if="expand" @click="handleExpand">
+      <DownOutlined v-if="isExpand" :class="`${prefixCls}-expand-icon`" />
+      <UpOutlined v-else :class="`${prefixCls}-expand-icon`" />
+      <span>{{ isExpand ? '收起' : '展开' }}</span>
+    </div>
   </span>
 </template>
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-import { useSlots, computed } from 'vue'
+import { useSlots, computed, ref } from 'vue'
 import BasicHelp from './BasicHelp.vue'
-
+import { DownOutlined, UpOutlined } from '@ant-design/icons-vue'
 const props = defineProps({
   /**
    * Help text list or string
@@ -26,13 +33,20 @@ const props = defineProps({
    * Whether the color block on the left side of the title
    * @default: false
    */
-  span: { type: Boolean },
-  /**
-   * Whether to default the text, that is, not bold
-   * @default: false
-   */
-  normal: { type: Boolean }
+  span: { type: Boolean, default: true },
+
+  expand: {
+    type: Boolean,
+    default: false
+  }
 })
+
+const emit = defineEmits(['handleExpand'])
+
+const handleExpand = () => {
+  isExpand.value = !isExpand.value
+  emit('handleExpand')
+}
 
 // const { prefixCls } = useDesign('basic-title')
 
@@ -41,9 +55,10 @@ const prefixCls = 'shy-basic-title'
 const slots = useSlots()
 const getClass = computed(() => [
   prefixCls,
-  { [`${prefixCls}-show-span`]: props.span && slots.default },
-  { [`${prefixCls}-normal`]: props.normal }
+  { [`${prefixCls}-show-span`]: props.span && slots.default }
 ])
+
+const isExpand = ref(false)
 </script>
 <style lang="less" scoped>
 @prefix-cls: ~'@{namespace}-basic-title';
@@ -51,32 +66,42 @@ const getClass = computed(() => [
 .@{prefix-cls} {
   position: relative;
   display: flex;
-  padding-left: 7px;
-  font-size: 16px;
+  font-family: PingFangSC, PingFang SC;
   font-weight: 500;
-  line-height: 24px;
-  color: @text-color-base;
-  cursor: pointer;
-  user-select: none;
-
-  &-normal {
-    font-size: 14px;
-    font-weight: 500;
-  }
+  font-size: 14px;
+  color: var(--black-10);
+  line-height: 20px;
+  padding: 6px 10px;
+  justify-content: space-between;
+  align-items: center;
 
   &-show-span::before {
-    position: absolute;
-    top: 4px;
-    left: 0;
-    margin-right: 4px;
-    width: 3px;
-    height: 16px;
-    background-color: @primary-color;
     content: '';
+    position: absolute;
+    width: 2px;
+    height: 12px;
+    background: var(--green-5);
+    border-radius: 1px;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 
   &-help {
     margin-left: 10px;
+  }
+
+  &-expand {
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    color: var(--green-5);
+
+    &-icon {
+      font-size: 8px;
+      margin-right: 5px;
+    }
   }
 }
 </style>

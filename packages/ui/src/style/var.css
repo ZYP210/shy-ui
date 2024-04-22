@@ -1,5 +1,4 @@
 :root {
-  //中性色
   --gray-1: #f6f8fa;
   --gray-2: #eaeef2;
   --gray-3: #d0d7de;
@@ -10,7 +9,6 @@
   --gray-8: #424a53;
   --gray-9: #32383f;
   --gray-10: #24292f;
-  //绿色
   --green-1: #dafbe1;
   --green-2: #aceebb;
   --green-3: #6fdd8b;
@@ -21,7 +19,6 @@
   --green-8: #044f1e;
   --green-9: #003d16;
   --green-10: #002d11;
-  //橘色
   --orange-1: #fff1e5;
   --orange-2: #ffd8b5;
   --orange-3: #ffb77c;
@@ -32,7 +29,6 @@
   --orange-8: #762c00;
   --orange-9: #5c2200;
   --orange-10: #471700;
-  //粉红色
   --pink-1: #ffeff7;
   --pink-2: #ffd3eb;
   --pink-3: #ffadda;
@@ -43,7 +39,6 @@
   --pink-8: #772057;
   --pink-9: #611347;
   --pink-10: #4d0336;
-  //紫色
   --purple-1: #fbefff;
   --purple-2: #ecd8ff;
   --purple-3: #d8b9ff;
@@ -54,7 +49,6 @@
   --purple-8: #512a97;
   --purple-9: #3e1f79;
   --purple-10: #2e1461;
-  //红色
   --red-1: #ffebe9;
   --red-2: #ffcecb;
   --red-3: #ffaba8;
@@ -65,7 +59,6 @@
   --red-8: #82071e;
   --red-9: #660018;
   --red-10: #4c0014;
-  //黄色
   --yellow-1: #fff8c5;
   --yellow-2: #fae17d;
   --yellow-3: #eac54f;
@@ -76,7 +69,6 @@
   --yellow-8: #633c01;
   --yellow-9: #4d2d00;
   --yellow-10: #3b2300;
-  //蓝色
   --blue-1: #ddf4ff;
   --blue-2: #b6e3ff;
   --blue-3: #80ccff;
@@ -87,8 +79,6 @@
   --blue-8: #033d8b;
   --blue-9: #0a3069;
   --blue-10: #002155;
-  
-  //黑色
   --black-1: #F6F8FA;
   --black-2: #EAEEF2;
   --black-3: #D0D7DE;
@@ -99,18 +89,12 @@
   --black-8: #424A53;
   --black-9: #32383F;
   --black-10: #24292F;
-
-
-
   --shadow-2: 0px 2px 4px 0px rgba(0, 0, 0, 0.04),
     0px 1px 1px 0px rgba(0, 0, 0, 0.02);
-
   --shadow-3: 0px 4px 10px 0px rgba(0, 0, 0, 0.08),
     0px 1px px 0px rgba(0, 0, 0, 0.04);
-
   --shadow-4: 0px 8px 32px 0px rgba(0, 0, 0, 0.08),
     0px 2px 20px 0px rgba(0, 0, 0, 0.04);
-
   --shadow-5: 0px 24px 60px 0px rgba(0, 0, 0, 0.12),
     0px 8px 20px 0px rgba(0, 0, 0, 0.06);
 }
