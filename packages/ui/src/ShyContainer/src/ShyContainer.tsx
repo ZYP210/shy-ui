@@ -49,7 +49,7 @@ export default defineComponent({
 
     const optionBtnKeys = ['cancel', 'save', 'submit'] as const
 
-    enum BtnEnum {
+    enum BtnTypeEnum {
       cancel = 'danger',
       save = 'primary',
       submit = 'primary'
@@ -59,7 +59,7 @@ export default defineComponent({
       if (typeof key !== 'string') return
       return props[`isShow${toUpper(key)}Btn`] ? (
         <BasicButton
-          type={BtnEnum[key]}
+          type={BtnTypeEnum[key]}
           loading={props.loading}
           onClick={() => emit(key)}
         >
