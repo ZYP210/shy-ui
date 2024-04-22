@@ -35,7 +35,7 @@ export * from './src/BasicResizeWrapper'
 export * from './src/ColorPickerPopover'
 export * from './src/ShyTable'
 export * from './src/ShyForm'
-
+export * from './src/ShyContainer'
 
 import { registerGlobalConfig } from './config/index'
 
