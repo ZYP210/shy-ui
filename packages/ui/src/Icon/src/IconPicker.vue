@@ -83,13 +83,13 @@ import { Input, Popover, Pagination, Empty } from 'ant-design-vue'
 import Icon from './Icon.vue'
 import SvgIcon from './SvgIcon.vue'
 
-import iconsData from '../data/icons.data'
+import iconsData from '../data/icons.data.tabler'
+
 import { usePagination } from '@shy-plugins/use'
 import { useDebounceFn } from '@vueuse/core'
 
 import { useCopyToClipboard } from '@shy-plugins/use'
 import { useMessage } from '@shy-plugins/use'
-
 // import svgIcons from 'virtual:svg-icons-names'
 
 // 没有使用别名引入，是因为WebStorm当前版本还不能正确识别，会报unused警告
@@ -111,8 +111,8 @@ function getIcons() {
 }
 
 function getSvgIcons() {
-  // return svgIcons.map((icon) => icon.replace('icon-', ''))
   return []
+  // return svgIcons.map((icon) => icon.replace('icon-', ''))
 }
 
 interface Props {
