@@ -19,8 +19,9 @@ export interface DescriptionProps {
   isShowColon?: boolean
   labelAlign?: 'left' | 'center' | 'right'
   labelStyle?: CSSProperties
-  contentStyle?: CSSProperties,
+  contentStyle?: CSSProperties
   bordered?: boolean
+  mode?: 'horizontal' | 'vertical'
 }
 
 export interface DescInstance {
