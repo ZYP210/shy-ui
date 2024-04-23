@@ -19,6 +19,8 @@ import type { PropType } from 'vue'
 import { useSlots, computed, ref } from 'vue'
 import BasicHelp from './BasicHelp.vue'
 import BasicArrow from './BasicArrow.vue'
+import { useDesign } from '@shy-plugins/use'
+
 const props = defineProps({
   /**
    * Help text list or string
@@ -51,7 +53,7 @@ const handleExpand = () => {
   emit('handleExpand')
 }
 
-const prefixCls = 'shy-basic-title'
+const { prefixCls } = useDesign('basic-title')
 
 const slots = useSlots()
 
@@ -71,7 +73,7 @@ const isExpand = ref(false)
   font-family: PingFangSC, PingFang SC;
   font-weight: 500;
   font-size: 14px;
-  color: var(--black-10);
+  color: var(--gray-10);
   line-height: 20px;
   padding: 6px 10px;
   justify-content: space-between;
@@ -82,7 +84,7 @@ const isExpand = ref(false)
     position: absolute;
     width: 2px;
     height: 12px;
-    background: var(--green-5);
+    background: var(--primary-5);
     border-radius: 1px;
     left: 2px;
     top: 50%;
@@ -98,7 +100,7 @@ const isExpand = ref(false)
     font-size: 14px;
     display: flex;
     align-items: center;
-    color: var(--green-5);
+    color: var(--primary-5);
 
     &-icon {
       margin-right: 3px;
