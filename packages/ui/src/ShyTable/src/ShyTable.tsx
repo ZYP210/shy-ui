@@ -70,7 +70,7 @@ const ShyTable = defineComponent({
         attrs.class,
         {
           [`${prefixCls}-form-container`]: props.useSearchForm,
-          [`${prefixCls}-table-wrapper`]: props.useTableWrapper,
+          [`${prefixCls}-wrapper`]: props.useTableWrapper,
           [`${prefixCls}--inset`]: props.inset
         }
       ]

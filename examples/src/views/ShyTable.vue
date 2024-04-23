@@ -392,6 +392,7 @@ const [
       {
         label: '日期范围',
         component: 'RangePicker',
+
         field: 'createTime',
         colProps: { span: 6 }
       },
@@ -404,6 +405,9 @@ const [
       {
         label: '输入框',
         component: 'Input',
+        componentProps: {
+          placeholder: ''
+        },
         field: 'createTime',
         colProps: { span: 4 }
       },
@@ -466,7 +470,7 @@ const [
     fixed: 'right'
   },
   showIndexColumn: true,
-  canResize: false,
+  // canResize: false,
   // indexColumn: {}
 })
 

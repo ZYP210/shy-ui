@@ -2,15 +2,47 @@
 
 @namespace: shy;
 
-:is(.ant-input-affix-wrapper-focused, .ant-picker-focused) {
+input:focus.ant-input {
+  background-color: #fff;
   box-shadow: none;
-  background-color: var(--gray-0);
-  outline: 1px solid var(--green-5);
+  outline: 1px solid var(--primary-5);
+}
+
+:is(.ant-btn > span) {
+  display: inline-flex;
+}
+
+:is(
+    .ant-input-affix-wrapper-focused,
+    .ant-picker-focused,
+    .ant-input-number-focused
+  ) {
+  box-shadow: none;
+  background-color: #fff;
+  outline: 1px solid var(--primary-5);
   transition: background-color outline-width ease-in-out 0.3s;
 
-  input {
-    background-color: var(--gray-0);
+  & input.ant-input {
+    background-color: #fff;
+    outline: none;
   }
+
+  textarea {
+    background-color: #fff;
+  }
+}
+
+.ant-input-affix-wrapper:has(textarea) {
+  .ant-input:focus,
+  :is(.ant-input-focused) {
+    background-color: #fff;
+    box-shadow: none;
+    outline: 1px solid var(--primary-5);
+  }
+}
+
+:is(.ant-input-number .ant-input-number-handler-wrap) {
+  background-color: #fff;
 }
 
 :is(.ant-select-focused).ant-select:not(.ant-select-disabled):not(
@@ -18,8 +50,8 @@
   ):not(.ant-pagination-size-changer) {
   :is(.ant-select-selector) {
     box-shadow: none;
-    outline: 1px solid var(--green-5);
-    background-color: var(--gray-0);
+    outline: 1px solid var(--primary-5);
+    background-color: #fff;
     transition: background-color outline-width ease-in-out 0.3s;
   }
 }

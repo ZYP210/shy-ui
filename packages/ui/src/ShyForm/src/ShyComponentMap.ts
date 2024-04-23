@@ -33,10 +33,9 @@ import { StrengthMeter } from '../../StrengthMeter'
 import { IconPicker } from '../../Icon'
 import { CountdownInput } from '../../CountDown'
 import Tinymce from './components/Tinymce.vue'
-
 import Table from './components/Table.vue'
-
 import { BasicUpload } from '../../Upload'
+import { ColorPickerPopover } from '../../ColorPickerPopover'
 
 // import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
 
@@ -83,6 +82,7 @@ ShyComponentMap.set('Tinymce', Tinymce)
 
 // ShyComponentMap.set('Upload', Upload)
 ShyComponentMap.set('Divider', Divider)
+ShyComponentMap.set('ColorPicker', ColorPickerPopover);
 
 export function add(compName: ComponentType, component: Component) {
   ShyComponentMap.set(compName, component)

@@ -4,24 +4,26 @@
     :theme="{
       token: {
         borderRadius: 4,
-        colorPrimary: '#2da44e'
+        colorPrimary: '#2da44e',
+        blue: '#0969DA',
+        green: '#2DA44E'
       },
       components: {
         Input: {
           colorBgContainer: '#eaeef2',
-          lineWidth: 0,
+          lineWidth: 0
         },
         DatePicker: {
           colorBgContainer: '#eaeef2',
-          lineWidth: 0,
+          lineWidth: 0
         },
         InputNumber: {
           colorBgContainer: '#eaeef2',
-          lineWidth: 0,
+          lineWidth: 0
         },
         Select: {
           colorBgContainer: '#eaeef2',
-          lineWidth: 0,
+          lineWidth: 0
         }
       }
     }"
@@ -60,9 +62,26 @@
 
 <script lang="ts" setup>
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
-import { ConfigProvider } from 'ant-design-vue'
+import { ConfigProvider, theme } from 'ant-design-vue'
 import { URLData } from '/@/database/menu.data'
 import { ref, reactive } from 'vue'
+
+const handleToken = () => {
+  const { useToken } = theme
+
+  const { token } = useToken()
+  console.log(token)
+
+  for (let i = 1; i < 11; i++) {
+    console.log()
+    console.log(
+      `%c${token.value[`blue-${i}`]} %c${token.value[`green-${i}`]}`,
+      `background:${token.value[`blue-${i}`]}`,
+      `background:${token.value[`green-${i}`]}`
+    )
+  }
+}
+
 const controlBoxStyle = reactive({
   top: '30px',
   width: '58px',
@@ -79,6 +98,10 @@ const handleSwitch = () => {
   controlBoxStyle.padding = flag.value ? '0' : '15px'
   flag.value = !flag.value
 }
+
+onMounted(() => {
+  // handleToken()
+})
 </script>
 
 <style lang="less">

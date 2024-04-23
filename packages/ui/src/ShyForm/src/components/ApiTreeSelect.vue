@@ -1,5 +1,5 @@
 <template>
-  <a-tree-select
+  <TreeSelect
     v-bind="getAttrs"
     @change="handleChange"
     show-search
@@ -11,7 +11,7 @@
     <template #suffixIcon v-if="loading">
       <LoadingOutlined spin />
     </template>
-  </a-tree-select>
+  </TreeSelect>
 </template>
 
 <script lang="ts">
@@ -22,7 +22,7 @@ import { get } from 'lodash-es'
 import { LoadingOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
   name: 'ApiTreeSelect',
-  components: { ATreeSelect: TreeSelect, LoadingOutlined },
+  components: { TreeSelect, LoadingOutlined },
   props: {
     api: {
       type: Function as PropType<(arg?: Recordable) => Promise<Recordable>>

@@ -1,13 +1,13 @@
 <template>
   <div>
     <Space>
-      <a-button
+      <Button
         type="primary"
         @click="openUploadModal"
         preIcon="carbon:cloud-upload"
       >
         {{ t('component.upload.upload') }}
-      </a-button>
+      </Button>
       <Tooltip placement="bottom" v-if="showPreview">
         <template #title>
           {{ t('component.upload.uploaded') }}
@@ -15,12 +15,12 @@
             {{ fileList.length }}
           </template>
         </template>
-        <a-button @click="openPreviewModal">
+        <Button @click="openPreviewModal">
           <Icon icon="bi:eye" />
           <template v-if="fileList.length && showPreviewNumber">
             {{ fileList.length }}
           </template>
-        </a-button>
+        </Button>
       </Tooltip>
     </Space>
     <UploadModal
@@ -44,7 +44,7 @@
 <script lang="ts" setup>
 import { ref, watch, unref, computed, useAttrs } from 'vue'
 import Icon from '../../Icon/src/Icon.vue'
-import { Tooltip, Space } from 'ant-design-vue'
+import { Tooltip, Space, Button } from 'ant-design-vue'
 import { useModal } from '../../Modal'
 import { uploadContainerProps } from './props'
 import { omit } from 'lodash-es'
