@@ -9,8 +9,7 @@
       />
     </div>
     <div :class="`${prefixCls}-expand`" v-if="expand" @click="handleExpand">
-      <DownOutlined v-if="isExpand" :class="`${prefixCls}-expand-icon`" />
-      <UpOutlined v-else :class="`${prefixCls}-expand-icon`" />
+      <BasicArrow down :expand="isExpand" :class="`${prefixCls}-expand-icon`" />
       <span>{{ isExpand ? '收起' : '展开' }}</span>
     </div>
   </span>
@@ -19,7 +18,7 @@
 import type { PropType } from 'vue'
 import { useSlots, computed, ref } from 'vue'
 import BasicHelp from './BasicHelp.vue'
-import { DownOutlined, UpOutlined } from '@ant-design/icons-vue'
+import BasicArrow from './BasicArrow.vue'
 const props = defineProps({
   /**
    * Help text list or string
@@ -35,6 +34,10 @@ const props = defineProps({
    */
   span: { type: Boolean, default: true },
 
+  /**
+   * Whether show to expand
+   * @default: false
+   */
   expand: {
     type: Boolean,
     default: false
@@ -48,11 +51,10 @@ const handleExpand = () => {
   emit('handleExpand')
 }
 
-// const { prefixCls } = useDesign('basic-title')
-
 const prefixCls = 'shy-basic-title'
 
 const slots = useSlots()
+
 const getClass = computed(() => [
   prefixCls,
   { [`${prefixCls}-show-span`]: props.span && slots.default }
@@ -99,8 +101,7 @@ const isExpand = ref(false)
     color: var(--green-5);
 
     &-icon {
-      font-size: 8px;
-      margin-right: 5px;
+      margin-right: 3px;
     }
   }
 }
