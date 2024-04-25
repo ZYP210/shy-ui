@@ -34,8 +34,9 @@ import { cloneDeep } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
 import { isEqual, omit, pick } from 'lodash-es'
 import { useDesign } from '@shy-plugins/use'
-import './style/index.less'
 import { LeftOutlined } from '@ant-design/icons-vue'
+import './style/index.less'
+
 
 const ShyForm = defineComponent({
   props: basicProps,
@@ -278,10 +279,10 @@ const ShyForm = defineComponent({
       emit('field-value-change', key, value)
     }
 
-    function handleEnterPress(e: KeyboardEvent) {
+    function handleEnterPress(e: Event) {
       const { autoSubmitOnEnter } = unref(getProps)
       if (!autoSubmitOnEnter) return
-      if (e.key === 'Enter' && e.target && e.target instanceof HTMLElement) {
+      if ((e as KeyboardEvent).key === 'Enter' && e.target && e.target instanceof HTMLElement) {
         const target: HTMLElement = e.target as HTMLElement
         if (
           target &&
@@ -408,6 +409,7 @@ const ShyForm = defineComponent({
             formModel={formModel}
             setFormModel={setFormModel}
             onClearCurrValidate={clearCurrValidate}
+            class={{ [`${prefixCls}-table-form-item`]: isTableForm.value }}
             style={{
               [`--col-span`]: `${
                 (schema.colProps?.span / (ROW_SLICE + ACTION_COL)) * 100

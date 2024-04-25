@@ -1,9 +1,9 @@
 <template>
-  <div class="m-4 flex flex-col gap-16px">
-    <div class="flex gap-8px">
+  <div class="m-4 flex flex-col gap-16px overflow-auto">
+    <!-- <div class="flex gap-8px">
       <Button type="primary" @click="handleGetForm">获取form</Button>
       <Button @click="handleReset">reset</Button>
-    </div>
+    </div> -->
     <ShyForm
       :labelWidth="100"
       @register="registerForm"
@@ -39,7 +39,7 @@ const schemas = ref<FormSchema[]>([
     defaultValue: '111',
     component: 'Input',
     componentProps: {
-      disabled: true
+      // disabled: true
     },
     colProps: { span: 8 }
   },
@@ -49,7 +49,7 @@ const schemas = ref<FormSchema[]>([
     defaultValue: '111',
     component: 'InputTextArea',
     componentProps: {
-      disabled: true
+      // disabled: true
     },
     colProps: { span: 8 }
   },
