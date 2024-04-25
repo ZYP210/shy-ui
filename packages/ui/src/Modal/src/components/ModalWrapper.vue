@@ -17,7 +17,6 @@ import {
   onUnmounted
 } from 'vue'
 import { useWindowSizeFn } from '../hooks/useWindowSizeFn'
-import ScrollContainer from './ScrollContainer.vue'
 import { createModalContext } from '../hooks/useModalContext'
 import { useMutationObserver } from '@vueuse/core'
 
@@ -40,7 +39,6 @@ const props = {
 
 export default defineComponent({
   name: 'ModalWrapper',
-  components: { ScrollContainer },
   inheritAttrs: false,
   props,
   emits: ['height-change', 'ext-height'],
@@ -83,8 +81,6 @@ export default defineComponent({
         [props.fullScreen ? 'height' : 'maxHeight']: `${unref(
           realHeightRef
         )}px`,
-        overflow: 'auto',
-        margin: '16px'
       }
     })
 
@@ -153,7 +149,7 @@ export default defineComponent({
       }
     }
 
-    return { wrapperRef, spinRef, spinStyle, setModalHeight }
+    return { wrapperRef, spinRef, spinStyle, setModalHeight } as any
   }
-}) as any
+})
 </script>

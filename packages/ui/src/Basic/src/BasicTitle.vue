@@ -75,7 +75,7 @@ const isExpand = ref(false)
   font-size: 14px;
   color: var(--gray-10);
   line-height: 20px;
-  padding: 6px 10px;
+  padding: 0 0 0 10px;
   justify-content: space-between;
   align-items: center;
 

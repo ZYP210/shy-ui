@@ -1,7 +1,7 @@
 import type { ComputedRef, Slots } from 'vue'
 import type { ShyTableProps, FetchParams } from '../types/table'
 import { unref, computed } from 'vue'
-import type { FormProps } from '../../../Form'
+import type { FormProps } from '../../../ShyForm'
 import { isFunction } from '@shy-plugins/utils'
 import { cloneDeep } from 'lodash-es'
 

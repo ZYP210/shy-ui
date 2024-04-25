@@ -4,7 +4,6 @@ import type {
   SizeType,
   ColumnChangeParam,
   InnerHandlers,
-  SorterResult
 } from './types/table'
 import {
   Empty,
@@ -38,7 +37,6 @@ import TableGlobalSearch from './components/TableGlobalSearch.vue'
 import HeaderCell from './components/HeaderCell.vue'
 import { isFunction } from '@vueuse/core'
 import ShyTableFooter from './components/ShyTableFooter'
-import { PaginationProps } from './types/pagination'
 import './style/table.less'
 
 const ShyTable = defineComponent({
@@ -300,9 +298,9 @@ const ShyTable = defineComponent({
 
     function handleTableChange(
       ...args: [
-        PaginationProps,
-        Partial<Recordable<string[]>>,
-        SorterResult,
+        any,
+        any,
+        any,
         any
       ]
     ) {
@@ -410,7 +408,7 @@ const ShyTable = defineComponent({
         ) : null
       }
 
-      const handleResizeColumn = (w: unknown, col: { width: unknown }) => {
+      const handleResizeColumn = (w: number, col) => {
         col.width = w
       }
 

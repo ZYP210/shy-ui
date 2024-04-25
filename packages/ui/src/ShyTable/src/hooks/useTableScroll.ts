@@ -56,6 +56,7 @@ export function useTableScroll(
   let bodyEl: HTMLElement | null
   async function calcTableHeight() {
     const {
+      canResize,
       isShowFooter,
       resizeHeightOffset,
       maxHeight,
@@ -152,8 +153,8 @@ export function useTableScroll(
       footerHeight -
       tableHeaderHeight -
       headerHeight
-    height = height > maxHeight ? (maxHeight as number) : height
-    height = Math.floor(height + 2)
+    height = height > maxHeight! ? (maxHeight as number) : height
+    height = canResize ? Math.floor(height) : Math.floor(height + 2)
 
     setHeight(height)
 
