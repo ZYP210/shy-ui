@@ -3,7 +3,7 @@ import type {
   TableActionType,
   SizeType,
   ColumnChangeParam,
-  InnerHandlers,
+  InnerHandlers
 } from './types/table'
 import {
   Empty,
@@ -15,7 +15,7 @@ import {
 import { computed, defineComponent, nextTick, ref, toRaw, unref } from 'vue'
 import { useDesign } from '@shy-plugins/use'
 import { shyTableBasicProps } from './props'
-import { omit } from 'lodash-es'
+import { cloneDeep, omit } from 'lodash-es'
 import { ShyForm, useShyForm } from '../../ShyForm'
 import { useGlobalConfig } from '../../../config/index'
 import { useTableForm } from './hooks/useShyTableForm'
@@ -35,7 +35,7 @@ import { useTableScrollTo } from './hooks/useScrollTo'
 import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
 import TableGlobalSearch from './components/TableGlobalSearch.vue'
 import HeaderCell from './components/HeaderCell.vue'
-import { isFunction } from '@vueuse/core'
+import { isFunction, useDebounceFn } from '@vueuse/core'
 import ShyTableFooter from './components/ShyTableFooter'
 import './style/table.less'
 
@@ -296,14 +296,7 @@ const ShyTable = defineComponent({
       return getCurSearchParamsHooks()
     }
 
-    function handleTableChange(
-      ...args: [
-        any,
-        any,
-        any,
-        any
-      ]
-    ) {
+    function handleTableChange(...args: [any, any, any, any]) {
       onTableChange.call(undefined, ...args)
       emit('change', ...args)
       // 解决通过useTable注册onChange时不起作用的问题
@@ -362,7 +355,8 @@ const ShyTable = defineComponent({
       }
 
       const isShowSummary = () => {
-        return getDataSourceRef.value?.length && getProps.value?.showSummaryTotal ? (
+        return getDataSourceRef.value?.length &&
+          getProps.value?.showSummaryTotal ? (
           <TableSummary>
             <TableSummaryRow>
               {getColumnsSummary.value.map((item: Recordable, index) => {
@@ -408,8 +402,21 @@ const ShyTable = defineComponent({
         ) : null
       }
 
-      const handleResizeColumn = (w: number, col) => {
-        col.width = w
+      const setColDebounceFn = useDebounceFn((width, col) => {
+        const columns = cloneDeep(getColumns())
+        const tempColumns = columns.map((ele) => {
+          if (ele.dataIndex !== col.dataIndex) return ele
+          return {
+            ...ele,
+            width
+          }
+        })
+        setColumns(tempColumns)
+      }, 500)
+
+      const handleResizeColumn = (width: number, col) => {
+        col.width = width
+        setColDebounceFn(width, col)
       }
 
       const getAfterIgnoreSlots = (slots: Recordable) => {

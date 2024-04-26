@@ -49,35 +49,18 @@ function handleItem(item: BasicColumn, ellipsis: boolean) {
 
 function handleColumnResize(
   propsRef: ComputedRef<ShyTableProps>,
-  columns: BasicColumn[],
-  wrapRef: Ref
+  columns: BasicColumn[]
 ) {
-  const tableWidth =
-    wrapRef.value?.querySelector?.('.ant-table-body')?.clientWidth - 7 ||
-    wrapRef.value?.querySelector?.('.ant-table-content')?.clientWidth
-  const selectWidth = propsRef.value.rowSelection ? 36 : 0
-  const [sumWidth, sumLength] = columns.reduce(
-    ([sumWidth, length], cur) => {
-      if (typeof cur.width === 'number') {
-        return [sumWidth + cur.width, ++length]
-      }
-      return [sumWidth, length]
-    },
-    [0, 0]
-  )
-  const length = columns.length
-  const countWidth = tableWidth
-    ? (tableWidth - sumWidth - selectWidth) / (length - sumLength)
-    : 150
-  const colWidth = countWidth < 150 ? 150 : countWidth
   columns.forEach((item) => {
     if (item.flag) return
     if (propsRef.value.resizable) {
-      item.width = item.width || colWidth
+      item.width = item.width || (item?.title + '').length * 12 + 16
+      item.minWidth = (item?.title + '').length * 12 + 16
       item.resizable = item.resizable === undefined ? true : item.resizable
     } else {
       if (item.resizable) {
-        item.width = item.width || colWidth
+        item.width = item.width || (item?.title + '')?.length * 12 + 16
+        item.minWidth = (item?.title + '').length * 12 + 16
       }
     }
   })
@@ -134,7 +117,11 @@ function handleIndexColumn(
         return `${index + 1}`
       }
       const { current = 1, pageSize = PAGE_SIZE } = getPagination
-      return h('div', { class: 'ant-table-cell-index full cursor-pointer' }, ((current < 1 ? 1 : current) - 1) * pageSize + index + 1)
+      return h(
+        'div',
+        { class: 'ant-table-cell-index full cursor-pointer' },
+        ((current < 1 ? 1 : current) - 1) * pageSize + index + 1
+      )
     },
     ...(isFixedLeft
       ? {
@@ -182,7 +169,7 @@ export function useColumns(
 
     handleIndexColumn(propsRef, getPaginationRef, columns)
     handleActionColumn(propsRef, columns)
-    handleColumnResize(propsRef, columns, wrapRef)
+    handleColumnResize(propsRef, columns)
 
     if (!columns) {
       return []
@@ -338,6 +325,7 @@ export function useColumns(
 
     if (!isString(firstColumn) && !isArray(firstColumn)) {
       columnsRef.value = columns as BasicColumn[]
+      cacheColumns = columns as BasicColumn[]
     } else {
       const columnKeys = (columns as (string | string[])[]).map((m) =>
         m.toString()

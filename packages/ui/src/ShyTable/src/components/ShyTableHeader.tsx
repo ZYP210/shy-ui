@@ -155,6 +155,7 @@ const ShyTableHeader = defineComponent({
       type: Boolean
     }
   },
+  emits: ['columns-change'],
   setup(props, { emit, slots }) {
     const { prefixCls } = useDesign('table-header')
 
