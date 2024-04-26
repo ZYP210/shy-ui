@@ -15,7 +15,7 @@ export { default as ShyApiCascader } from './src/components/ApiCascader.vue'
 export { default as ShyApiTransfer } from './src/components/ApiTransfer.vue'
 export { default as ShyTableChildren } from './src/components/Table.vue'
 export { default as ShyApiModalSelect } from './src/components/ApiModalSelect/ApiModalSelect.vue'
-export { default as FromWrapper } from './src/components/FormWrapper.vue'
+export { default as ShyFormWrapper } from './src/components/FormWrapper.vue'
 // import { App } from 'vue'
 
 // const withInstall = <T>(component: T) => {

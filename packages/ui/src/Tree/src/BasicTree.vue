@@ -432,7 +432,7 @@ export default defineComponent({
               <>
                 {icon && <TreeIcon icon={icon} />}
                 {titleDom}
-                <span class={bem('actions')}>{renderAction(item)}</span>
+                <span class={bem('actions')}>{renderAction(item)}123</span>
               </>
             )}
           </span>
@@ -449,7 +449,7 @@ export default defineComponent({
       const showTitle = title || toolbar || search || slots.headerTitle
       const scrollStyle: CSSProperties = { height: 'calc(100% - 38px)' }
       return (
-        <div class={['h-full border-1px rounded-4px p-8px', attrs.class]}>
+        <div class={['h-full border-1px rounded-4px p-8px pt-0', attrs.class]}>
           {showTitle && (
             <TreeHeader
               checkable={checkable}
