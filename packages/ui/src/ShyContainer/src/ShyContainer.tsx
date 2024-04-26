@@ -91,7 +91,11 @@ export default defineComponent({
           {props.navBars.map((item: any) => {
             return (
               <BreadcrumbItem>
-                <a href={item.href}>{item.name}</a>
+              {item.path ? 
+               <router-link to={item.path}>{item.name}</router-link> 
+                : 
+               <span>{item.name}</span>
+              }
               </BreadcrumbItem>
             )
           })}
@@ -103,7 +107,7 @@ export default defineComponent({
       return (
         <div class={prefixCls}>
           {getNavBar()}
-          {props.isShowHeader ? getHeader() : null}
+          {props.isShowHeader && props.title ? getHeader() : null}
           {getContent()}
           {props.isShowFooter ? getFooter() : null}
         </div>

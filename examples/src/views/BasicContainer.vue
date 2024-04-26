@@ -1,12 +1,17 @@
 <template>
   <ShyContainer
-    title="查看提前开工"
     footer-align="center"
     cancel-align="right"
     :loading="loading"
     :nav-bars="[
-      { name: '首页', href: '/zzz' },
-      { name: '首页1', href: '/zzz' }
+    {
+      name: '客户管理',
+      path: '/opportunityManagement/customerManagement',
+    },
+    {
+      name: 'zzz',
+      path: '',
+    },
     ]"
   >
     <template #extra> 11111 </template>
