@@ -296,13 +296,13 @@ const getColorStr = (color: any, mode: ColorMode) => {
   }
 }
 const ColorPickerPanel = defineComponent({
-  name: 'ColorPanel',
+  name: 'ColorPickerPanel',
   inheritAttrs: false,
   props: {
-    color: { type: String, default: '#000' },
+    value: { type: String, default: '#000' },
     alpha: { type: Boolean }
   },
-  emits: ['change', 'update:color'],
+  emits: ['change', 'update:value'],
   setup(props, { attrs, emit }) {
     // const { color, alpha } = toRefs(props)
 
@@ -329,14 +329,14 @@ const ColorPickerPanel = defineComponent({
       ]
     })
 
-    const handleChange = (value) => {
-      emit('update:color', value)
+    const handleChange = useDebounceFn((value) => {
+      emit('update:value', value)
       emit('change', value)
-    }
+    })
 
     const handleColorModeChange = (value) => {
       colorMode.value = value as ColorMode
-      handleChange(getColorStr(props.color, value))
+      handleChange(getColorStr(props.value, value))
     }
 
     return () => {
@@ -351,7 +351,7 @@ const ColorPickerPanel = defineComponent({
                 {(colorMode.value === 'HEX' || colorMode.value === 'RGB') && (
                   <HexColorPicker
                     style={{ height: '160px' }}
-                    color={tinycolor(props.color).toHex()}
+                    color={tinycolor(props.value).toHex()}
                     onChange={useDebounceFn((value) => {
                       handleChange(getColorStr(value, colorMode.value))
                     }, 1)}
@@ -360,7 +360,7 @@ const ColorPickerPanel = defineComponent({
                 {(colorMode.value === 'RGBA' || colorMode.value === 'HEX8') && (
                   <RgbaColorPicker
                     style={{ height: '160px' }}
-                    color={tinycolor(props.color).toRgb()}
+                    color={tinycolor(props.value).toRgb()}
                     onChange={useDebounceFn((value) => {
                       handleChange(getColorStr(value, colorMode.value))
                     }, 1)}
@@ -371,7 +371,7 @@ const ColorPickerPanel = defineComponent({
                     <div class="color-panel-preview">
                       <div
                         style={{
-                          backgroundColor: props.color,
+                          backgroundColor: props.value,
                           width: '100%',
                           height: '100%'
                         }}
@@ -391,14 +391,14 @@ const ColorPickerPanel = defineComponent({
                   </div>
                   {colorMode.value === 'HEX' && (
                     <HexColorInput
-                      value={tinycolor(props.color).toHex()}
+                      value={tinycolor(props.value).toHex()}
                       onChange={(v) => handleChange(tinycolor(v).toHexString())}
                     />
                   )}
                   {colorMode.value === 'HEX8' && (
                     <HexColorInput
                       alpha
-                      value={tinycolor(props.color).toHex8()}
+                      value={tinycolor(props.value).toHex8()}
                       onChange={(v) =>
                         handleChange(tinycolor(v).toHex8String())
                       }
@@ -408,7 +408,7 @@ const ColorPickerPanel = defineComponent({
                     colorMode.value === 'RGB') && (
                     <RgbColorInput
                       alpha={colorMode.value === 'RGBA'}
-                      value={tinycolor(props.color).toRgb()}
+                      value={tinycolor(props.value).toRgb()}
                       onChange={(v) => handleChange(tinycolor(v).toRgbString())}
                     />
                   )}
@@ -429,7 +429,7 @@ const ColorPickerPanel = defineComponent({
         >
           <div
             style={{
-              backgroundColor: props.color,
+              backgroundColor: props.value,
               width: '48px',
               height: '32px',
               borderRadius: '4px',

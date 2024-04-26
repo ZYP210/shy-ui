@@ -3,6 +3,7 @@
 .@{prefix-cls} {
   display: flex;
   justify-content: space-between;
+  padding-top: 1px;
 
   :is(.ant-input-number) {
     width: 100%;
@@ -53,7 +54,20 @@
   &-content-col {
     & > .ant-row > .ant-col {
       flex: var(--col-span);
+      width: var(--col-span);
       max-width: var(--col-span);
+    }
+
+    @media (width > 1920px) {
+      & > .ant-row > .@{prefix-cls}-table-form-item:has(.ant-picker) {
+        flex: var(--col-span);
+        max-width: 410px;
+      }
+
+      & > .ant-row > .@{prefix-cls}-table-form-item:not(:has(.ant-picker)) {
+        flex: var(--col-span);
+        max-width: 273px;
+      }
     }
   }
 

@@ -84,7 +84,7 @@ export default defineComponent({
           realHeightRef
         )}px`,
         overflow: 'auto',
-        margin: '16px'
+        padding: '16px'
       }
     })
 
@@ -153,7 +153,7 @@ export default defineComponent({
       }
     }
 
-    return { wrapperRef, spinRef, spinStyle, setModalHeight }
+    return { wrapperRef, spinRef, spinStyle, setModalHeight } as any
   }
-}) as any
+})
 </script>

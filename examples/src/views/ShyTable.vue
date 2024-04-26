@@ -1,57 +1,55 @@
 <template>
-  <div class="w-full h-full flex flex-col p-16px">
-    <ShyTable
-      titleHelpMessage="温馨提醒"
-      @register="register"
-      @selection-change="handleSelectChange"
-    >
-      <template #toolbar>
-        <Button type="primary"> 主要 </Button>
-        <BasicButton type="danger" @click="pushApi">危险</BasicButton>
-        <BasicButton type="success" @click="pushApi">完成</BasicButton>
-        <BasicButton type="waring" @click="pushApi">警告</BasicButton>
-        <BasicButton type="message" @click="pushApi">信息</BasicButton>
-        <Button> 默认 </Button>
-      </template>
-
-      <template #headerCell="{ column }">
-        <div v-if="column.flag === 'INDEX'">111</div>
-        <div v-else>{{ column.customTitle }}</div>
-      </template>
-
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'action'">
-          <ShyTableAction
-            :actions="[
-              {
-                label: '编辑',
-                // disabled: true,
-                onClick: handleEdit.bind(null, record)
-              },
-              {
-                label: '保存',
-                onClick: handleSave.bind(null, record)
-              },
-              {
-                label: '测试',
-                onClick: handleSave.bind(null, record)
-              },
-              {
-                label: '取消',
-                popConfirm: {
-                  title: '是否取消编辑',
-                  confirm: handleCancel.bind(null, record)
-                }
-              }
-            ]"
-          />
+  <div class="w-full h-full flex flex-col p-16px overflow-hidden">
+    <div class="flex-1 overflow-hidden">
+      <ShyTable @register="register" @selection-change="handleSelectChange">
+        <template #toolbar>
+          <Button type="primary"> 主要 </Button>
+          <BasicButton type="danger" @click="pushApi">危险</BasicButton>
+          <BasicButton type="success" @click="pushApi">完成</BasicButton>
+          <BasicButton type="waring" @click="pushApi">警告</BasicButton>
+          <BasicButton type="message" @click="pushApi">信息</BasicButton>
+          <Button> 默认 </Button>
         </template>
-      </template>
 
-      <template #footer="data">
-        <ShyTableAction type="footer" :actions="getFooterActions(data)" />
-      </template>
-    </ShyTable>
+        <template #headerCell="{ column }">
+          <div v-if="column.flag === 'INDEX'">111</div>
+          <div v-else>{{ column.customTitle }}</div>
+        </template>
+
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.dataIndex === 'action'">
+            <ShyTableAction
+              :actions="[
+                {
+                  label: '编辑',
+                  // disabled: true,
+                  onClick: handleEdit.bind(null, record)
+                },
+                {
+                  label: '保存',
+                  onClick: handleSave.bind(null, record)
+                },
+                {
+                  label: '测试',
+                  onClick: handleSave.bind(null, record)
+                },
+                {
+                  label: '取消',
+                  popConfirm: {
+                    title: '是否取消编辑',
+                    confirm: handleCancel.bind(null, record)
+                  }
+                }
+              ]"
+            />
+          </template>
+        </template>
+
+        <template #footer="data">
+          <ShyTableAction type="footer" :actions="getFooterActions(data)" />
+        </template>
+      </ShyTable>
+    </div>
   </div>
 </template>
 
@@ -351,7 +349,7 @@ const [
     getForm
   }
 ] = useShyTable({
-  // isShowTitle: false,
+  isShowTitle: false,
   api: ({ current, size }): any => {
     // console.log(params)
     return {
@@ -376,6 +374,7 @@ const [
   // isShowHeader: false,
   // isShowFooter: false,
   // headerAlign: 'left',
+  // resizable: false,
   rowKey: 'id',
   columns,
   // isShowPagination: false,
@@ -392,8 +391,36 @@ const [
       {
         label: '日期范围',
         component: 'RangePicker',
+
         field: 'createTime',
         colProps: { span: 6 }
+      },
+      {
+        label: '日期范围',
+        component: 'RangePicker',
+        field: 'createTime',
+        colProps: { span: 6 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        componentProps: {
+          placeholder: ''
+        },
+        field: 'createTime',
+        colProps: { span: 4 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime',
+        colProps: { span: 4 }
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime',
+        colProps: { span: 4 }
       },
       {
         label: '日期范围',
@@ -420,40 +447,15 @@ const [
         colProps: { span: 4 }
       },
       {
-        label: '日期范围',
-        component: 'RangePicker',
-        field: 'createTime',
-        colProps: { span: 6 }
-      },
-      {
         label: '输入框',
         component: 'Input',
         field: 'createTime',
         colProps: { span: 4 }
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: 'createTime',
-        colProps: { span: 4 }
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: 'createTime',
-        colProps: { span: 4 }
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: 'createTime',
-        colProps: { span: 4 }
-      },
+      }
     ]
   },
-  resizable: true,
-  showSummaryTotal: true,
-  summaryTotalFields: ['qualifiedNum'],
+  // showSummaryTotal: true,
+  // summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
   // useAdvancedSearch: true,
   rowSelection: {},
@@ -465,8 +467,8 @@ const [
     title: '操作',
     fixed: 'right'
   },
-  showIndexColumn: true,
-  canResize: false,
+  showIndexColumn: true
+  // canResize: false,
   // indexColumn: {}
 })
 

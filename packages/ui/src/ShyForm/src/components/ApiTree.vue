@@ -1,23 +1,23 @@
 <template>
-  <a-tree v-bind="getAttrs" @change="handleChange">
+  <Tree v-bind="getAttrs" @change="handleChange">
     <template #[item]="data" v-for="item in Object.keys($slots)">
       <slot :name="item" v-bind="data || {}"></slot>
     </template>
     <template #suffixIcon v-if="loading">
       <LoadingOutlined spin />
     </template>
-  </a-tree>
+  </Tree>
 </template>
 
 <script lang="ts">
 import { computed, defineComponent, watch, ref, onMounted, unref } from 'vue'
 import { Tree } from 'ant-design-vue'
-import { isArray, isFunction, propTypes } from '@shy-plugins/utils'
+import { isArray, isFunction } from '@shy-plugins/utils'
 import { get } from 'lodash-es'
 import { LoadingOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
   name: 'ApiTree',
-  components: { ATree: Tree, LoadingOutlined },
+  components: { Tree, LoadingOutlined },
   props: {
     api: {
       type: Function as PropType<(arg?: Recordable) => Promise<Recordable>>

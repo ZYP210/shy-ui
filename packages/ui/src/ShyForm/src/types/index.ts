@@ -118,3 +118,4 @@ export type ComponentType =
   | 'Table'
   | 'ApiModalSelect'
   | 'Tinymce'
+  | 'ColorPicker'

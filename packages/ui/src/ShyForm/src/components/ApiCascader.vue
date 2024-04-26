@@ -1,5 +1,5 @@
 <template>
-  <a-cascader
+  <Cascader
     v-model:value="state"
     :options="options"
     :load-data="loadData"
@@ -16,7 +16,7 @@
         {{ '请等待数据加载完成...' }}
       </span>
     </template>
-  </a-cascader>
+  </Cascader>
 </template>
 <script lang="ts">
 import { defineComponent, PropType, ref, unref, watch, watchEffect } from 'vue'
@@ -37,7 +37,7 @@ export default defineComponent({
   name: 'ApiCascader',
   components: {
     LoadingOutlined,
-    [Cascader.name]: Cascader
+    Cascader
   },
   props: {
     value: {

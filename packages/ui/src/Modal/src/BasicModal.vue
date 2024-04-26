@@ -202,11 +202,6 @@ export default defineComponent({
         emit('visible-change', v)
         emit('update:visible', v)
         instance && modalMethods.emitVisible?.(v, instance.uid)
-        nextTick(() => {
-          if (props.scrollTop && v && unref(modalWrapperRef)) {
-            ;(unref(modalWrapperRef) as any).scrollTop()
-          }
-        })
       },
       {
         immediate: false
@@ -277,7 +272,6 @@ export default defineComponent({
       visibleRef,
       omitBindValue: omitBindValue as Object,
       omitSlotKeys,
-      // omit,
       modalWrapperRef,
       handleExtHeight,
       handleHeightChange,

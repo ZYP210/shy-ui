@@ -117,7 +117,7 @@ const ShyTableAction = defineComponent({
       const tooltipProp = {
         getPopupContainer: () =>
           unref((table as any)?.wrapRef.value) ?? document.body,
-        placement: 'bottom',
+        placement: 'bottom' as 'left' | 'right' | 'top' | 'bottom',
         ...(isString(tooltip) ? { title: tooltip } : tooltip)
       }
 

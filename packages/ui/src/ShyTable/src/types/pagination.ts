@@ -1,11 +1,4 @@
 import Pagination from 'ant-design-vue/lib/pagination'
-import { VNodeChild } from 'vue'
-
-interface PaginationRenderProps {
-  page: number
-  type: 'page' | 'prev' | 'next'
-  originalElement: any
-}
 
 type PaginationPosition =
   | 'topLeft'
@@ -95,7 +88,7 @@ export interface PaginationProps {
    * @default ''
    * @type string
    */
-  size?: string
+  size?:  "small" | "default" | undefined
 
   /**
    * whether to setting simple mode
@@ -107,7 +100,7 @@ export interface PaginationProps {
    * to customize item innerHTML
    * @type Function
    */
-  itemRender?: (props: PaginationRenderProps) => VNodeChild | JSX.Element
+  itemRender?: (opt: { page: number; type: "page" | "prev" | "next" | "jump-prev" | "jump-next"; originalElement: any; }) => any
 
   /**
    * specify the position of Pagination
