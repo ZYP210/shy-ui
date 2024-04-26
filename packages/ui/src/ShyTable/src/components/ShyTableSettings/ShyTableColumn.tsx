@@ -35,6 +35,7 @@ import Sortablejs from 'sortablejs'
 import type Sortable from 'sortablejs'
 import { ScrollContainer } from '../../../../Container'
 import '../../style/tableSettingColumn.less'
+import { watch } from 'vue'
 
 interface State {
   checkAll: boolean
@@ -46,6 +47,7 @@ interface State {
 interface Options {
   label: string
   value: string
+  width?: string | number | undefined
   fixed?: boolean | 'left' | 'right'
 }
 
@@ -81,6 +83,17 @@ const ShyTableColumn = defineComponent({
       return unref(table?.getBindValues) || {}
     })
 
+    watch(
+      () => table.getColumns(),
+      () => {
+        if (!state.isInit) return
+        reInit()
+      },
+      {
+        deep: true
+      }
+    )
+
     watchEffect(() => {
       setTimeout(() => {
         const columns = table.getColumns()
@@ -113,6 +126,7 @@ const ShyTableColumn = defineComponent({
     }
 
     function init() {
+      
       const columns = getColumns()
 
       const checkList = table
@@ -131,21 +145,49 @@ const ShyTableColumn = defineComponent({
         cachePlainOptions.value = columns
         state.defaultCheckList = checkList
       } else {
-        // const fixedColumns = columns.filter((item) =>
-        //   Reflect.has(item, 'fixed')
-        // ) as BasicColumn[];
-
         unref(plainOptions).forEach((item: BasicColumn) => {
           const findItem = columns.find(
             (col: BasicColumn) => col.dataIndex === item.dataIndex
           )
           if (findItem) {
             item.fixed = findItem.fixed
+            item.width = findItem.width
           }
         })
       }
       state.isInit = true
       state.checkedList = checkList
+    }
+
+    const  reInit = () => {
+      const columns = getColumns()
+      const checkList = table
+        .getColumns({ ignoreAction: true, ignoreIndex: true })
+        .map((item) => {
+          if (item.defaultHidden) {
+            return ''
+          }
+          return item.dataIndex || item.title
+        })
+        .filter(Boolean) as string[]
+
+      plainOptions.value = columns
+      plainSortOptions.value = columns
+      cachePlainOptions.value = columns
+      state.defaultCheckList = checkList
+      unref(plainOptions).forEach((item: BasicColumn) => {
+        const findItem = columns.find(
+          (col: BasicColumn) => col.dataIndex === item.dataIndex
+        )
+        if (findItem) {
+          item.fixed = findItem.fixed
+          item.width = findItem.width
+        }
+      })
+      state.checkedList = checkList
+
+      const data: ColumnChangeParam[] = getResult(columns)
+      emit('columns-change', data)
     }
 
     // checkAll change
@@ -273,18 +315,26 @@ const ShyTableColumn = defineComponent({
       setColumns(columns)
     }
 
-    function setColumns(columns: BasicColumn[] | string[]) {
-      table.setColumns(columns)
-      const data: ColumnChangeParam[] = unref(plainSortOptions).map((col) => {
+    function getResult(columns) {
+      return unref(plainOptions).map((col) => {
         const visible =
           columns.findIndex(
             (c: BasicColumn | string) =>
               c === col.value ||
               (typeof c !== 'string' && c.dataIndex === col.value)
           ) !== -1
-        return { dataIndex: col.value, fixed: col.fixed, visible }
+        return {
+          dataIndex: col.value,
+          fixed: col.fixed,
+          visible,
+          width: col.width
+        }
       })
+    }
 
+    function setColumns(columns: BasicColumn[] | string[]) {
+      table.setColumns(columns)
+      const data: ColumnChangeParam[] = getResult(columns)
       emit('columns-change', data)
     }
 
