@@ -310,7 +310,7 @@ const ShyTableColumn = defineComponent({
               c === col.value ||
               (typeof c !== 'string' &&
                 c.dataIndex === col.value &&
-                (isBoolean(c.defaultHidden) ? !c.defaultHidden : true))
+                (isBoolean(c.defaultHidden) ? !c.defaultHidden : false))
           ) !== -1
         return {
           dataIndex: col.value,
