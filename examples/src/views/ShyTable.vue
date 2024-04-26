@@ -136,12 +136,12 @@ const columns: any[] = [
     title: '产地',
     dataIndex: 'place'
   },
-  ...Array.from({ length: 20 }, (_, i) => {
-  return {
-    title: i + '',
-    dataIndex: i
-  }
-})
+//   ...Array.from({ length: 20 }, (_, i) => {
+//   return {
+//     title: i + '',
+//     dataIndex: i
+//   }
+// })
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -313,7 +313,7 @@ const [
   actionColumn: {
     dataIndex: 'action',
     title: '操作',
-    fixed: 'right'
+    // fixed: 'right'
   },
   showIndexColumn: true
   // canResize: false,

@@ -183,7 +183,7 @@ export function useTableScroll(
   const getScrollX = computed(() => {
     let width = 0
     if (unref(rowSelectionRef)) {
-      width += 60
+      width += 36
     }
 
     // TODO props ?? 0;
