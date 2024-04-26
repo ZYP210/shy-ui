@@ -9,29 +9,22 @@
     align="center"
   >
     <template #headerCell="{ column }">
-      <template v-if="column.dataIndex === 'index'">
-        <div
-          v-if="isShowAction"
-          class="shy-table-edit-icon-plus"
-          @click="plusClickEvent"
-        >
-          <plus-circle-filled :style="{ color: '#006eff' }" />
-        </div>
-        <div v-else>序号</div>
-      </template>
-
-      <template v-else>
-        <span
-          v-if="column.required || column?.rules?.length"
-          class="table-children-required"
-          >*</span
-        >
-        <span>{{ column.title }}</span>
-      </template>
+      <span
+        v-if="column.required || column?.rules?.length"
+        class="table-children-required"
+        >*</span
+      >
+      <span>{{ column.title }}</span>
     </template>
 
     <template #bodyCell="{ column, record, index, ...args }">
-      <template v-if="column.dataIndex !== 'index' && column.type !== 'text'">
+      <template
+        v-if="
+          column.dataIndex !== 'index' &&
+          column.type !== 'text' &&
+          column.dataIndex !== '_action'
+        "
+      >
         <FormItem
           :required="column.required"
           :rules="getRules({ column, record, index, ...args })"
@@ -92,27 +85,21 @@
         </FormItem>
       </template>
 
-      <template v-else-if="column.dataIndex === 'index'">
-        <div class="table-children-delete-wrapper" :key="record[rowKey]">
-          <span v-if="isShowAction" class="table-children-delete-index">
-            {{ index + 1 }}
-          </span>
-
-          <div
-            v-if="isShowAction"
-            class="table-children-delete-item"
-            @click="rowClickEvent(record[rowKey])"
-          >
-            <delete-filled :style="{ color: '#fff' }" />
-          </div>
-
-          <span v-else class="table-children-delete-index">
-            {{ index + 1 }}
-          </span>
-        </div>
+      <template v-if="column.dataIndex === '_action'">
+        <ShyTableAction :actions="getActions(record)" />
       </template>
     </template>
   </Table>
+  <div
+    class="border-left-1px border-right-1px border-bottom-1px h-50px border-color-[#f0f0f0] rounded-b-4px flex items-center pl-8px pr-8px"
+  >
+    <div
+      @click="plusClickEvent"
+      class="text-center w-full text-[#2DA44E] border-1px border-dashed border-color-[#2DA44E] h-32px leading-32px cursor-pointer"
+    >
+      新增
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -135,6 +122,7 @@ import { Popover } from 'ant-design-vue'
 import { reactive } from 'vue'
 import { onMounted } from 'vue'
 import { onUnmounted } from 'vue'
+import { ShyTableAction } from '../../../ShyTable'
 
 const formActionType: FormActionType = inject('formActionType')!
 const emit = defineEmits(['update:value', 'change', 'add', 'remove'])
@@ -155,6 +143,12 @@ const props = defineProps({
   isShowAction: {
     type: Boolean,
     default: () => true
+  },
+  tableAction: {
+    type: Function,
+    default: (res) => {
+      return []
+    }
   }
 })
 
@@ -171,12 +165,21 @@ const getColumns = computed(() => {
     width: 50,
     align: 'center'
   }
+
+  const actionColumn = {
+    title: '操作',
+    dataIndex: '_action',
+    width: 80,
+    align: 'center'
+  }
+
   return [
     indexColumn,
     ...props.columns.map((item: any) => ({
       ...item,
       type: item.type ? item.type : 'input'
-    }))
+    })),
+    ...(props?.isShowAction ? [actionColumn] : [])
   ]
 })
 
@@ -249,6 +252,19 @@ const getRules = ({ column, record, index, ...args }) => {
     }
   })
   return rulesRef[errKey].rules
+}
+
+const getActions = (record) => {
+  return [
+    {
+      label: '删除',
+      popConfirm: {
+        title: '确定删除',
+        confirm: rowClickEvent.bind(null, record[props.rowKey])
+      }
+    },
+    ...props.tableAction(record)
+  ]
 }
 
 watch(

@@ -3,6 +3,7 @@
     <Button @click="handleGetForm">获取form</Button>
     <Button @click="handleReset">reset</Button>
     <div class="h-500px"></div>
+
     <ShyForm
       :labelWidth="100"
       @register="registerForm"
@@ -17,6 +18,7 @@
         />
       </template>
     </ShyForm>
+
     <div class="h-1000px"></div>
   </div>
 </template>
@@ -28,7 +30,8 @@ import {
   useShyForm,
   TableChildren,
   ApiModalSelect,
-  ShyForm
+  ShyForm,
+  FromWrapper
 } from '3h1-ui'
 import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
@@ -60,7 +63,8 @@ const schemas = ref<FormSchema[]>([
           console.log(ppp)
           return [
             {
-              label: 'a11111111111111asKLHDSAKJDHSAJKDHSADJKHSADKJSAHDASJDHSADKJASHDKJASHDKJSAHDASKJHD',
+              label:
+                'a11111111111111asKLHDSAKJDHSAJKDHSADJKHSADKJSAHDASJDHSADKJASHDKJASHDKJSAHDASKJHD',
               value: 'a'
             },
             {
@@ -77,8 +81,8 @@ const schemas = ref<FormSchema[]>([
   {
     label: 'b',
     field: 'b',
-    component: 'Input',
-    colProps: { span: 8 }
+    component: 'Divider',
+    colProps: { span: 24 }
     // componentProps: ({ formModel }) => {
     //   console.log(formModel, 999)
     //   return {
@@ -220,27 +224,6 @@ const schemas = ref<FormSchema[]>([
       }
     }
   }
-  // {
-  //   field: 'z',
-  //   label: 'Divider',
-  //   component: 'Divider',
-  //   colProps: { span: 24 }
-  // },
-  // {
-  //   field: 'c',
-  //   label: '选择弹框',
-  //   component: 'Input',
-  //   slot: 'ApiModalSelect',
-  //   componentProps: {
-  //     autoLink: false
-  //   },
-  //   required: true
-  // },
-  // {
-  //   label: 'Tinymce',
-  //   field: 'Tinymce',
-  //   component: 'Tinymce'
-  // }
 ])
 const { createMessage } = useMessage()
 const [

@@ -19,7 +19,8 @@ import {
   Slider,
   Rate
 } from 'ant-design-vue'
-import Divider from './components/Divider'
+// import Divider from './components/Divider'
+import Divider from '../../Basic/src/BasicTitle.vue'
 
 import ApiRadioGroup from './components/ApiRadioGroup.vue'
 import RadioButtonGroup from './components/RadioButtonGroup.vue'
