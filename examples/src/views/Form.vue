@@ -7,7 +7,6 @@
     <ShyForm
       :labelWidth="100"
       @register="registerForm"
-      :actionColOptions="{ span: 24 }"
       @submit="handleSubmit"
     >
       <template #ApiModalSelect="{ model, field }">
