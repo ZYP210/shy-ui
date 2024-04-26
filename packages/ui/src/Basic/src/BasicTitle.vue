@@ -76,6 +76,7 @@ const isExpand = ref(false)
   color: var(--gray-10);
   line-height: 20px;
   padding: 0 0 0 10px;
+  margin: 10px 0;
   justify-content: space-between;
   align-items: center;
 
