@@ -449,7 +449,7 @@ export default defineComponent({
       const showTitle = title || toolbar || search || slots.headerTitle
       const scrollStyle: CSSProperties = { height: 'calc(100% - 38px)' }
       return (
-        <div class={[bem(), 'h-full', attrs.class]}>
+        <div class={['h-full border-1px rounded-4px p-8px', attrs.class]}>
           {showTitle && (
             <TreeHeader
               checkable={checkable}

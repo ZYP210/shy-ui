@@ -8,11 +8,16 @@
         <template v-for="(item, index) in data" :key="index">
           <TimelineItem>
             <template
-              v-for="({ key, label }, cIndex) in props.columns"
+              v-for="({ key, label, customRender }, cIndex) in props.columns"
               :key="cIndex"
             >
-              <div class="process-item" v-if="item[key]">
-                <span v-if="label"> {{ label }}:</span> {{ item[key] }}
+              <div
+                class="process-item"
+                :style="getStyle(cIndex)"
+                v-if="item[key]"
+              >
+                <span v-if="label"> {{ label }}:</span>
+                <span>{{ customRender ? customRender(item) : item[key] }}</span>
               </div>
             </template>
             <div class="process-time">
@@ -69,12 +74,35 @@ const props = defineProps({
   columns: {
     default: () => [
       { key: 'processName' },
-      { key: 'user' },
-      { key: 'suggestion', label: '建议' },
+      { key: 'user', label: '申请人' },
+      { key: 'suggestion', label: '建议', customRender: (record) => '123' },
       { key: 'result', label: '结果' }
     ]
   }
 })
+
+const getStyle = (index) => {
+  if (index === 0) {
+    return {
+      fontFamily: 'PingFangSC, PingFang SC',
+      fontWeight: 500,
+      fontSize: '14px',
+      color: '#1B1F24',
+      lineHeight: '20px',
+      textAlign: 'left',
+      fontStyle: 'normal'
+    }
+  } else {
+    return {
+      fontWeight: 400,
+      fontSize: '12px',
+      color: '#1B1F24',
+      lineHeight: '16px',
+      textAlign: 'left',
+      fontStyle: 'normal'
+    }
+  }
+}
 </script>
 
 <style scoped>
@@ -115,5 +143,6 @@ const props = defineProps({
   line-height: 16px;
   text-align: left;
   font-style: normal;
+  padding: 5px 0;
 }
 </style>

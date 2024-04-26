@@ -72,39 +72,9 @@ import { ref, onMounted } from 'vue'
 // console.log(zzz)
 
 const columns: any[] = [
-  // {
-  //   title: '产地范围',
-  //   dataIndex: 'rangePlace',
-  //   editRow: true,
-  //   editable: true,
-  //   editComponent: 'ApiSelect',
-  //   editRule: true,
-  //   editComponentProps: (params) => {
-  //     // console.log('params', params)
-  //     return {
-  //       params: { type: 1 },
-  //       api: (params) => {
-  //         // console.log(params)
-  //         return new Promise((resolve) => {
-  //           setTimeout(() => {
-  //             resolve([
-  //               { label: 'a', value: 'a' },
-  //               { label: 'b', value: 'b' }
-  //             ])
-  //           }, 3000)
-  //         })
-  //       }
-  //     }
-  //     // getPopupContainer: () => document.body
-  //   },
-  //   sorter: () => {},
-  //   globalShow: false
-  // },
   {
     title: '合格数',
     dataIndex: 'qualifiedNum',
-    // width: 200,
-
     editComponent: 'InputNumber',
     editComponentProps({ record, tableAction }) {
       return {
@@ -163,140 +133,15 @@ const columns: any[] = [
     dataIndex: 'remark'
   },
   {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-  {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
-  },
-
-  {
     title: '产地',
-    // editRow: true,
     dataIndex: 'place'
-
-    // editComponent: 'InputNumber',
-    // editRule: true,
+  },
+  ...Array.from({ length: 20 }, (_, i) => {
+  return {
+    title: i + '',
+    dataIndex: i
   }
+})
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -374,7 +219,10 @@ const [
   // isShowHeader: false,
   // isShowFooter: false,
   // headerAlign: 'left',
-  // resizable: false,
+  onColumnsChange: (data) => {
+    console.log(data);
+  },
+  resizable: true,
   rowKey: 'id',
   columns,
   // isShowPagination: false,

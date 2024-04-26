@@ -1,19 +1,18 @@
 <template>
   <div :class="bem()">
     <slot name="headerTitle" v-if="slots.headerTitle"></slot>
-    <BasicTitle :helpMessage="helpMessage" v-if="!slots.headerTitle && title">
-      {{ title }}
-    </BasicTitle>
-    <div class="shy-search" v-if="search || toolbar">
-      <div :class="getInputSearchCls" v-if="search">
-        <Input
-          :placeholder="t('common.searchText')"
-          allowClear
-          v-model:value="searchValue"
-        />
-      </div>
+    <div class="flex justify-between items-center">
+      <BasicTitle :helpMessage="helpMessage" v-if="!slots.headerTitle && title">
+        {{ title }}
+      </BasicTitle>
+
       <Dropdown @click.prevent v-if="toolbar">
-        <Icon icon="ion:ellipsis-vertical" />
+        <Icon
+          icon="ant-design:plus-square-outlined"
+          :style="{
+            color: '#2da44e'
+          }"
+        />
         <template #overlay>
           <Menu @click="handleMenuClick">
             <template v-for="item in toolbarList" :key="item.value">
@@ -25,6 +24,16 @@
           </Menu>
         </template>
       </Dropdown>
+    </div>
+
+    <div class="shy-search" v-if="search || toolbar">
+      <div :class="getInputSearchCls" v-if="search">
+        <Input
+          :placeholder="t('common.searchText')"
+          allowClear
+          v-model:value="searchValue"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -82,14 +91,8 @@ const slots = useSlots()
 const { t } = useI18n()
 
 const getInputSearchCls = computed(() => {
-  const titleExists = slots.headerTitle || props.title
-  return [
-    'mr-1',
-    'w-full',
-    {
-      ['ml-5']: titleExists
-    }
-  ]
+  // const titleExists = slots.headerTitle || props.title
+  return ['mr-1', 'w-full']
 })
 
 const toolbarList = computed(() => {
@@ -103,25 +106,27 @@ const toolbarList = computed(() => {
     }
   ]
 
-  return checkable
-    ? [
-        { label: t('component.tree.selectAll'), value: ToolbarEnum.SELECT_ALL },
-        {
-          label: t('component.tree.unSelectAll'),
-          value: ToolbarEnum.UN_SELECT_ALL,
-          divider: checkable
-        },
-        ...defaultToolbarList,
-        {
-          label: t('component.tree.checkStrictly'),
-          value: ToolbarEnum.CHECK_STRICTLY
-        },
-        {
-          label: t('component.tree.checkUnStrictly'),
-          value: ToolbarEnum.CHECK_UN_STRICTLY
-        }
-      ]
-    : defaultToolbarList
+  return defaultToolbarList
+
+  // return checkable
+  //   ? [
+  //       { label: t('component.tree.selectAll'), value: ToolbarEnum.SELECT_ALL },
+  //       {
+  //         label: t('component.tree.unSelectAll'),
+  //         value: ToolbarEnum.UN_SELECT_ALL,
+  //         divider: checkable
+  //       },
+  //       ...defaultToolbarList,
+  //       {
+  //         label: t('component.tree.checkStrictly'),
+  //         value: ToolbarEnum.CHECK_STRICTLY
+  //       },
+  //       {
+  //         label: t('component.tree.checkUnStrictly'),
+  //         value: ToolbarEnum.CHECK_UN_STRICTLY
+  //       }
+  //     ]
+  //   : defaultToolbarList
 })
 
 function handleMenuClick(e: { key: ToolbarEnum }) {
