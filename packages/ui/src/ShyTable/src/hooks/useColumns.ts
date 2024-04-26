@@ -49,17 +49,39 @@ function handleItem(item: BasicColumn, ellipsis: boolean) {
 
 function handleColumnResize(
   propsRef: ComputedRef<ShyTableProps>,
-  columns: BasicColumn[]
+  columns: BasicColumn[],
+  wrapRef: Ref
 ) {
+  const tableWidth =
+    wrapRef.value?.querySelector?.('.ant-table-body')?.clientWidth - 7 ||
+    wrapRef.value?.querySelector?.('.ant-table-content')?.clientWidth
+  const selectWidth = propsRef.value.rowSelection ? 36 : 0
+  const [sumWidth, sumLength] = columns.reduce(
+    ([sumWidth, length], cur) => {
+      console.log(cur)
+      if (typeof cur.width === 'number') {
+        return [sumWidth + cur.width, ++length]
+      }
+      return [sumWidth, length]
+    },
+    [0, 0]
+  )
+  const length = columns.length
+
   columns.forEach((item) => {
+    const colWidth = item.width || (item?.title + '').length * 12 + 16
+    const countWidth = tableWidth
+      ? (tableWidth - sumWidth - selectWidth) / (length - sumLength)
+      : colWidth
+
     if (item.flag) return
     if (propsRef.value.resizable) {
-      item.width = item.width || (item?.title + '').length * 12 + 16
+      item.width = colWidth > countWidth ? colWidth : countWidth
       item.minWidth = (item?.title + '').length * 12 + 16
       item.resizable = item.resizable === undefined ? true : item.resizable
     } else {
       if (item.resizable) {
-        item.width = item.width || (item?.title + '')?.length * 12 + 16
+        item.width = colWidth > countWidth ? colWidth : countWidth
         item.minWidth = (item?.title + '').length * 12 + 16
       }
     }
@@ -109,6 +131,7 @@ function handleIndexColumn(
   columns.unshift({
     flag: INDEX_COLUMN_FLAG,
     width: 50,
+    maxWidth: 50,
     title: '序号',
     align: 'center',
     customRender: ({ index }) => {
@@ -148,6 +171,7 @@ function handleActionColumn(
       fixed: 'right',
       width: ACTION_COLUMN_WIDTH,
       ...actionColumn,
+      maxWidth: actionColumn.width || ACTION_COLUMN_WIDTH,
       flag: ACTION_COLUMN_FLAG
     })
   }
@@ -169,7 +193,7 @@ export function useColumns(
 
     handleIndexColumn(propsRef, getPaginationRef, columns)
     handleActionColumn(propsRef, columns)
-    handleColumnResize(propsRef, columns)
+    handleColumnResize(propsRef, columns, wrapRef)
 
     if (!columns) {
       return []
