@@ -548,7 +548,7 @@ export type BasicColumn = {
 export type ColumnChangeParam = {
   dataIndex: string
   fixed: boolean | 'left' | 'right' | undefined
-  visible: boolean
+  defaultHidden: boolean
 }
 
 export interface InnerHandlers {
