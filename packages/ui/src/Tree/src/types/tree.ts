@@ -58,8 +58,14 @@ export const treeProps = buildProps({
     type: String,
     default: ''
   },
-  toolbar: Boolean,
-  search: Boolean,
+  toolbar: {
+    type: Boolean,
+    default: true
+  },
+  search: {
+    type: Boolean,
+    default: true
+  },
   searchValue: {
     type: String,
     default: ''
@@ -69,7 +75,7 @@ export const treeProps = buildProps({
     type: Boolean,
     default: false
   },
-  checkable: Boolean,
+  checkable: { type: Boolean, default: true },
   defaultExpandLevel: {
     type: [String, Number] as PropType<string | number>,
     default: ''
