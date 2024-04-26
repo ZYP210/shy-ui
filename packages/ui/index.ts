@@ -36,7 +36,7 @@ export * from './src/ColorPickerPopover'
 export * from './src/ShyTable'
 export * from './src/ShyForm'
 export * from './src/ShyContainer'
-
+export * from './src/Process'
 import { registerGlobalConfig } from './config/index'
 
 export { registerGlobalConfig }
