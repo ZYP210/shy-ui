@@ -19,6 +19,8 @@ fi
 
 echo $CONTENT
 
+cd ../packages/ui
 pnpm publish --no-git-checks --tag $CONTENT
+cd -
 
 echo "✅ Publish completed"
