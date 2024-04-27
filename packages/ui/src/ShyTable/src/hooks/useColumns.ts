@@ -58,7 +58,6 @@ function handleColumnResize(
   const selectWidth = propsRef.value.rowSelection ? 36 : 0
   const [sumWidth, sumLength] = columns.reduce(
     ([sumWidth, length], cur) => {
-      console.log(cur)
       if (typeof cur.width === 'number') {
         return [sumWidth + cur.width, ++length]
       }

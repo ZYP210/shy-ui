@@ -30,7 +30,7 @@ import {
   isNullAndUnDef,
   getPopupContainer as getParentContainer
 } from '@shy-plugins/utils'
-import { cloneDeep, omit } from 'lodash-es'
+import { cloneDeep, isBoolean, omit } from 'lodash-es'
 import Sortablejs from 'sortablejs'
 import type Sortable from 'sortablejs'
 import { ScrollContainer } from '../../../../Container'
@@ -49,6 +49,7 @@ interface Options {
   value: string
   width?: string | number | undefined
   fixed?: boolean | 'left' | 'right'
+  defaultHidden?: boolean
 }
 
 const ShyTableColumn = defineComponent({
@@ -126,7 +127,6 @@ const ShyTableColumn = defineComponent({
     }
 
     function init() {
-      
       const columns = getColumns()
 
       const checkList = table
@@ -159,22 +159,10 @@ const ShyTableColumn = defineComponent({
       state.checkedList = checkList
     }
 
-    const  reInit = () => {
+    const reInit = () => {
       const columns = getColumns()
-      const checkList = table
-        .getColumns({ ignoreAction: true, ignoreIndex: true })
-        .map((item) => {
-          if (item.defaultHidden) {
-            return ''
-          }
-          return item.dataIndex || item.title
-        })
-        .filter(Boolean) as string[]
-
       plainOptions.value = columns
-      plainSortOptions.value = columns
       cachePlainOptions.value = columns
-      state.defaultCheckList = checkList
       unref(plainOptions).forEach((item: BasicColumn) => {
         const findItem = columns.find(
           (col: BasicColumn) => col.dataIndex === item.dataIndex
@@ -184,7 +172,6 @@ const ShyTableColumn = defineComponent({
           item.width = findItem.width
         }
       })
-      state.checkedList = checkList
 
       const data: ColumnChangeParam[] = getResult(columns)
       emit('columns-change', data)
@@ -317,16 +304,18 @@ const ShyTableColumn = defineComponent({
 
     function getResult(columns) {
       return unref(plainOptions).map((col) => {
-        const visible =
+        const defaultHidden =
           columns.findIndex(
             (c: BasicColumn | string) =>
               c === col.value ||
-              (typeof c !== 'string' && c.dataIndex === col.value)
+              (typeof c !== 'string' &&
+                c.dataIndex === col.value &&
+                (isBoolean(c.defaultHidden) ? !c.defaultHidden : false))
           ) !== -1
         return {
           dataIndex: col.value,
           fixed: col.fixed,
-          visible,
+          defaultHidden,
           width: col.width
         }
       })

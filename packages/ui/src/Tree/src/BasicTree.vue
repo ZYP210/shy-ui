@@ -432,7 +432,7 @@ export default defineComponent({
               <>
                 {icon && <TreeIcon icon={icon} />}
                 {titleDom}
-                <span class={bem('actions')}>{renderAction(item)}123</span>
+                <span class={bem('actions')}>{renderAction(item)}</span>
               </>
             )}
           </span>
