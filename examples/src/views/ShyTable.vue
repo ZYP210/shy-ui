@@ -90,7 +90,8 @@ const columns: any[] = [
     editable: false,
     edit: false,
     editRule: true,
-    globalShow: false
+    globalShow: false,
+    // defaultHidden: true
   },
   {
     title: '创建/更新时间',
@@ -135,13 +136,13 @@ const columns: any[] = [
   {
     title: '产地',
     dataIndex: 'place'
-  },
-//   ...Array.from({ length: 20 }, (_, i) => {
-//   return {
-//     title: i + '',
-//     dataIndex: i
-//   }
-// })
+  }
+  //   ...Array.from({ length: 20 }, (_, i) => {
+  //   return {
+  //     title: i + '',
+  //     dataIndex: i
+  //   }
+  // })
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -220,7 +221,7 @@ const [
   // isShowFooter: false,
   // headerAlign: 'left',
   onColumnsChange: (data) => {
-    console.log(data);
+    console.log(data)
   },
   resizable: true,
   rowKey: 'id',
@@ -312,7 +313,7 @@ const [
   // canResize: false,
   actionColumn: {
     dataIndex: 'action',
-    title: '操作',
+    title: '操作'
     // fixed: 'right'
   },
   showIndexColumn: true

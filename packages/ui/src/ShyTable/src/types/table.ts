@@ -546,9 +546,11 @@ export type BasicColumn = {
 } & ColumnProps<Recordable>
 
 export type ColumnChangeParam = {
+  title: string
   dataIndex: string
-  fixed: boolean | 'left' | 'right' | undefined
-  defaultHidden: boolean
+  width?: string | number | undefined
+  fixed?: boolean | 'left' | 'right'
+  defaultHidden?: boolean
 }
 
 export interface InnerHandlers {

@@ -36,6 +36,7 @@ import type Sortable from 'sortablejs'
 import { ScrollContainer } from '../../../../Container'
 import '../../style/tableSettingColumn.less'
 import { watch } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 
 interface State {
   checkAll: boolean
@@ -45,8 +46,8 @@ interface State {
 }
 
 interface Options {
-  label: string
-  value: string
+  title: string
+  dataIndex: string
   width?: string | number | undefined
   fixed?: boolean | 'left' | 'right'
   defaultHidden?: boolean
@@ -61,11 +62,10 @@ const ShyTableColumn = defineComponent({
 
     const defaultRowSelection = omit(table.getRowSelection(), 'selectedRowKeys')
     let inited = false
+    let inset = false
 
     const cachePlainOptions = ref<Options[]>([])
     const plainOptions = ref<Options[]>([])
-
-    const plainSortOptions = ref<Options[]>([])
 
     const columnListRef = ref<ComponentRef>(null)
 
@@ -87,7 +87,7 @@ const ShyTableColumn = defineComponent({
     watch(
       () => table.getColumns(),
       () => {
-        if (!state.isInit) return
+        if (!state.isInit || inset) return
         reInit()
       },
       {
@@ -118,9 +118,9 @@ const ShyTableColumn = defineComponent({
         .getColumns({ ignoreIndex: true, ignoreAction: true })
         .forEach((item) => {
           ret.push({
-            label: (item.title as string) || (item.customTitle as string),
-            value: (item.dataIndex || item.title) as string,
-            ...item
+            ...item,
+            title: (item.title as string) || (item.customTitle as string),
+            dataIndex: (item.dataIndex || item.title) as string
           })
         })
       return ret
@@ -141,7 +141,7 @@ const ShyTableColumn = defineComponent({
 
       if (!plainOptions.value.length) {
         plainOptions.value = columns
-        plainSortOptions.value = columns
+        // plainSortOptions.value = columns
         cachePlainOptions.value = columns
         state.defaultCheckList = checkList
       } else {
@@ -161,8 +161,7 @@ const ShyTableColumn = defineComponent({
 
     const reInit = () => {
       const columns = getColumns()
-      plainOptions.value = columns
-      cachePlainOptions.value = columns
+      // plainOptions.value = columns
       unref(plainOptions).forEach((item: BasicColumn) => {
         const findItem = columns.find(
           (col: BasicColumn) => col.dataIndex === item.dataIndex
@@ -173,19 +172,18 @@ const ShyTableColumn = defineComponent({
         }
       })
 
-      const data: ColumnChangeParam[] = getResult(columns)
-      emit('columns-change', data)
+      handleEmit(columns, false)
     }
 
     // checkAll change
     function onCheckAllChange(e: CheckboxChangeEvent) {
-      const checkList = plainOptions.value.map((item) => item.value)
+      const checkList = plainOptions.value.map((item) => item.dataIndex)
       if (e.target.checked) {
         state.checkedList = checkList
-        setColumns(checkList)
+        handleEmit(checkList)
       } else {
         state.checkedList = []
-        setColumns([])
+        handleEmit([])
       }
     }
 
@@ -198,13 +196,13 @@ const ShyTableColumn = defineComponent({
 
     // Trigger when check/uncheck a column
     function onChange(checkedList: string[]) {
-      const len = plainSortOptions.value.length
+      const len = plainOptions.value.length
       state.checkAll = checkedList.length === len
-      const sortList = unref(plainSortOptions).map((item) => item.value)
+      const sortList = unref(plainOptions).map((item) => item.dataIndex)
       checkedList.sort((prev, next) => {
         return sortList.indexOf(prev) - sortList.indexOf(next)
       })
-      setColumns(checkedList)
+      handleEmit(checkedList)
     }
 
     let sortable: Sortable
@@ -214,8 +212,8 @@ const ShyTableColumn = defineComponent({
       state.checkedList = [...state.defaultCheckList]
       state.checkAll = true
       plainOptions.value = unref(cachePlainOptions)
-      plainSortOptions.value = unref(cachePlainOptions)
-      setColumns(table.getCacheColumns()!)
+      // plainSortOptions.value = unref(cachePlainOptions)
+      handleEmit(table.getCacheColumns()!)
       sortable.sort(sortableOrder)
     }
 
@@ -243,7 +241,7 @@ const ShyTableColumn = defineComponent({
               return
             }
             // Sort column
-            const columns = cloneDeep(plainSortOptions.value)
+            const columns = cloneDeep(plainOptions.value)
 
             if (oldIndex > newIndex) {
               columns.splice(newIndex, 0, columns[oldIndex])
@@ -253,13 +251,11 @@ const ShyTableColumn = defineComponent({
               columns.splice(oldIndex, 1)
             }
 
-            plainSortOptions.value = columns
+            const tempCol = columns
+              .map((col: Options) => col.dataIndex)
+              .filter((value: string) => state.checkedList.includes(value))
 
-            setColumns(
-              columns
-                .map((col: Options) => col.value)
-                .filter((value: string) => state.checkedList.includes(value))
-            )
+            handleEmit(tempCol)
           }
         })
         // 记录原始order 序列
@@ -299,32 +295,50 @@ const ShyTableColumn = defineComponent({
       table.setCacheColumnsByField?.(item.dataIndex as string, {
         fixed: isFixed
       })
-      setColumns(columns)
+      handleEmit(columns)
     }
 
-    function getResult(columns) {
-      return unref(plainOptions).map((col) => {
-        const defaultHidden =
-          columns.findIndex(
-            (c: BasicColumn | string) =>
-              c === col.value ||
-              (typeof c !== 'string' &&
-                c.dataIndex === col.value &&
-                (isBoolean(c.defaultHidden) ? !c.defaultHidden : false))
-          ) !== -1
+    function getResult(columns: any[]) {
+      const tempOptions = unref(plainOptions).map((col) => {
+        let defaultHidden = false
+
+        if (columns.every((val) => typeof val === 'string')) {
+          defaultHidden =
+            columns.findIndex((val: string) => val === col.dataIndex) === -1
+        } else {
+          const find = columns.find(
+            (val: BasicColumn) => val.dataIndex === col.dataIndex
+          )
+          defaultHidden = find
+            ? isBoolean(find.defaultHidden)
+              ? find.defaultHidden
+              : false
+            : true
+        }
+
         return {
-          dataIndex: col.value,
+          title: col.title,
+          dataIndex: col.dataIndex,
           fixed: col.fixed,
           defaultHidden,
           width: col.width
         }
       })
-    }
 
-    function setColumns(columns: BasicColumn[] | string[]) {
-      table.setColumns(columns)
-      const data: ColumnChangeParam[] = getResult(columns)
-      emit('columns-change', data)
+      if (!columns.every((val) => typeof val === 'string')) {
+        const sortList = columns.map((item) => item.dataIndex)
+        tempOptions.sort((prev, next) => {
+          return (
+            sortList.indexOf(prev.dataIndex) - sortList.indexOf(next.dataIndex)
+          )
+        })
+        return tempOptions
+      }
+
+      tempOptions.sort((prev, next) => {
+        return columns.indexOf(prev.dataIndex) - columns.indexOf(next.dataIndex)
+      })
+      return tempOptions
     }
 
     function getPopupContainer() {
@@ -332,6 +346,18 @@ const ShyTableColumn = defineComponent({
         ? attrs.getPopupContainer()
         : getParentContainer()
     }
+
+    const handleEmit = useDebounceFn((columns, set = true) => {
+      const data: ColumnChangeParam[] = getResult(columns)
+      emit('columns-change', data)
+      if (set) {
+        inset = true
+        table.setColumns(columns)
+        setTimeout(() => {
+          inset = false
+        })
+      }
+    }, 100)
 
     return () => {
       return (
@@ -390,7 +416,9 @@ const ShyTableColumn = defineComponent({
                         !('ifShow' in item && !item.ifShow) ? (
                           <div class={`${prefixCls}__check-item`}>
                             <DragOutlined class="table-column-drag-icon" />
-                            <Checkbox value={item.value}>{item.label}</Checkbox>
+                            <Checkbox value={item.dataIndex}>
+                              {item.title}
+                            </Checkbox>
 
                             <Tooltip
                               placement="bottomLeft"
@@ -405,7 +433,7 @@ const ShyTableColumn = defineComponent({
                                   {
                                     active: item.fixed === 'left',
                                     disabled: !state.checkedList.includes(
-                                      item.value
+                                      item.dataIndex
                                     )
                                   }
                                 ]}
@@ -426,7 +454,7 @@ const ShyTableColumn = defineComponent({
                                   {
                                     active: item.fixed === 'right',
                                     disabled: !state.checkedList.includes(
-                                      item.value
+                                      item.dataIndex
                                     )
                                   }
                                 ]}
