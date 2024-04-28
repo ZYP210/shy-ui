@@ -471,6 +471,8 @@ export interface ShyTableProps<T = any> {
   onExpandedRowsChange?: (expandedRows: string[] | number[]) => void
 
   onColumnsChange?: (data: ColumnChangeParam[]) => void
+
+  onColumnsReset?: () => void
 }
 export type AlignType = 'left' | 'center' | 'right'
 
@@ -555,6 +557,7 @@ export type ColumnChangeParam = {
 
 export interface InnerHandlers {
   onColumnsChange: (data: ColumnChangeParam[]) => void
+  onColumnsReset: () => void
 }
 
 export type schemasAdvancedSearch = {

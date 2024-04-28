@@ -31,7 +31,8 @@ export const useTableHeader = (
       titleHelpMessage,
       showTableSetting,
       tableSetting,
-      onColumnsChange: handlers.onColumnsChange
+      onColumnsChange: handlers.onColumnsChange,
+      onColumnsReset: handlers.onColumnsReset
     }
 
     return {

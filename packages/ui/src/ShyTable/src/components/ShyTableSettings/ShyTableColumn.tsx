@@ -54,7 +54,7 @@ interface Options {
 }
 
 const ShyTableColumn = defineComponent({
-  emits: ['columns-change'],
+  emits: ['columns-change', 'columns-reset'],
   setup(props, { emit }) {
     const attrs = useAttrs()
 
@@ -207,14 +207,17 @@ const ShyTableColumn = defineComponent({
 
     let sortable: Sortable
     let sortableOrder: string[] = []
-    // reset columns
+
     function reset() {
       state.checkedList = [...state.defaultCheckList]
       state.checkAll = true
       plainOptions.value = unref(cachePlainOptions)
-      // plainSortOptions.value = unref(cachePlainOptions)
-      handleEmit(table.getCacheColumns()!)
       sortable.sort(sortableOrder)
+      inset = true
+      emit('columns-reset')
+      setTimeout(() => {
+        inset = false
+      })
     }
 
     // Open the pop-up window for drag and drop initialization

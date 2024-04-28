@@ -223,6 +223,9 @@ const [
   onColumnsChange: (data) => {
     console.log(data)
   },
+  onColumnsReset: () => {
+    console.log('columns-reset')
+  },
   resizable: true,
   rowKey: 'id',
   columns,

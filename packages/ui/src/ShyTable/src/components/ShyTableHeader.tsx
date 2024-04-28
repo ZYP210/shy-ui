@@ -23,7 +23,7 @@ const ShyTableSetting = defineComponent({
       default: () => ({})
     }
   },
-  emits: ['columns-change'],
+  emits: ['columns-change', 'columns-reset'],
   setup(props, { emit }) {
     const { prefixCls } = useDesign('table-header-settings')
 
@@ -41,6 +41,10 @@ const ShyTableSetting = defineComponent({
 
     const handleColumnChange = (data: ColumnChangeParam[]) => {
       emit('columns-change', data)
+    }
+
+    const handleColumnsReset = () => {
+      emit('columns-reset')
     }
 
     const getTableContainer = () => {
@@ -82,6 +86,7 @@ const ShyTableSetting = defineComponent({
       return getSetting.value.setting ? (
         <ShyTableColumn
           onColumnsChange={handleColumnChange}
+          onColumnsReset={handleColumnsReset}
           getPopupContainer={getTableContainer}
         />
       ) : null
@@ -155,15 +160,24 @@ const ShyTableHeader = defineComponent({
       type: Boolean
     }
   },
-  emits: ['columns-change'],
+  emits: ['columns-change', 'columns-reset'],
   setup(props, { emit, slots }) {
     const { prefixCls } = useDesign('table-header')
+
+    const handleColumnChange = (data: ColumnChangeParam[]) => {
+      emit('columns-change', data)
+    }
+
+    const handleColumnsReset = () => {
+      emit('columns-reset')
+    }
 
     const isShowSetting = () => {
       return props.showTableSetting ? (
         <ShyTableSetting
           setting={props.tableSetting}
           onColumnsChange={handleColumnChange}
+          onColumnsReset={handleColumnsReset}
         />
       ) : null
     }
@@ -178,11 +192,9 @@ const ShyTableHeader = defineComponent({
                 : null
           }}
         </ShyTableTitle>
-      ) : <div class={`${prefixCls}-placeholder`}></div>
-    }
-
-    const handleColumnChange = (data: ColumnChangeParam[]) => {
-      emit('columns-change', data)
+      ) : (
+        <div class={`${prefixCls}-placeholder`}></div>
+      )
     }
 
     const getAlignClass = computed(() => [
