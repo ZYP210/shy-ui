@@ -35,7 +35,7 @@ export const getVersion = async () => {
         const parts = version.split('.')
         if (parts.length > 1) {
           const last = parts.pop()!
-          if (last && /^\d+$/.test(last)) {
+          if (/^\d+$/.test(last)) {
             parts.push((parseInt(last) + 1).toString())
             value = parts.join('.')
           }
