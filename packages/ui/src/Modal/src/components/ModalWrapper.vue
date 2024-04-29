@@ -79,6 +79,7 @@ export default defineComponent({
 
     const spinStyle = computed((): CSSProperties => {
       return {
+        flex: 1,
         minHeight: `${props.minHeight}px`,
         [props.fullScreen ? 'height' : 'maxHeight']: `${unref(
           realHeightRef
