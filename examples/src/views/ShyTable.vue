@@ -59,7 +59,7 @@ import { ShyTable, useShyTable, ShyTableAction, BasicButton } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
 const { createMessage, createConfirm } = useMessage()
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, h } from 'vue'
 // const schemas = [
 //   { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
 //   { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
@@ -73,70 +73,66 @@ import { ref, onMounted } from 'vue'
 
 const columns: any[] = [
   {
-    title: '合格数',
-    dataIndex: 'qualifiedNum',
-    editComponent: 'InputNumber',
-    editComponentProps({ record, tableAction }) {
-      return {
-        max: 5,
-        precision: 0,
-        onChange: (val) => {
-          if (typeof val === 'number') {
-            // console.log('222')
-          }
-        }
-      }
-    },
-    editable: false,
-    edit: false,
-    editRule: true,
-    globalShow: false,
-    // defaultHidden: true
+    title: '状态',
+    dataIndex: 'status'
   },
   {
-    title: '创建/更新时间',
-    dataIndex: 'createTime',
-    editRow: true,
-    editRule: true,
-    customRender: ({ text }) => {
-      return text
-    },
-    globalShow: false
+    title: '商机名称',
+    dataIndex: 'businessName'
   },
   {
-    title: '厂家名称',
-    dataIndex: 'name',
-    editRow: true,
-    globalShow: false,
-    resizable: true
+    title: '商机编号',
+    dataIndex: 'businessCode'
   },
   {
-    title: '电话',
-    dataIndex: 'phone',
-    component: 'Select',
-    componentProps: {
-      options: Array.from({ length: 100 }, (_, i) => {
-        return { label: i, value: i }
-      })
-    },
-    editRow: true,
-    globalShow: false
+    title: '业务员',
+    dataIndex: 'transactionUserName'
   },
   {
-    title: '地址',
-    dataIndex: 'address',
-    editRow: true,
-    globalShow: false
+    title: '业务部门',
+    dataIndex: 'transactionDeptName'
   },
   {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
+    title: '商机预算（万元）',
+    dataIndex: 'budget'
   },
   {
-    title: '产地',
-    dataIndex: 'place'
-  }
+    title: '预计利润（万元）',
+    dataIndex: 'expectedProfit'
+  },
+  {
+    title: '最新大事件',
+    dataIndex: 'lastEvent'
+  },
+  {
+    title: '最近跟进时间',
+    dataIndex: 'lastFollowedTime'
+  },
+  {
+    title: '客户名称',
+    dataIndex: 'customName'
+  },
+  {
+    title: '预计招标时间',
+    dataIndex: 'expectedBidTime'
+  },
+  {
+    title: '商机当前进度',
+    dataIndex: 'businessProgress'
+  },
+  {
+    title: '商机把握度',
+    dataIndex: 'businessRate'
+  },
+  {
+    title: '商机级别',
+    dataIndex: 'businessLevel'
+  },
+  {
+    title: '刷新时间',
+    dataIndex: 'refreshTime'
+  },
+  { title: '备注', dataIndex: 'remark' }
   //   ...Array.from({ length: 20 }, (_, i) => {
   //   return {
   //     title: i + '',

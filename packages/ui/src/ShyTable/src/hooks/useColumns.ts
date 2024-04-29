@@ -68,20 +68,22 @@ function handleColumnResize(
   const length = columns.length
 
   columns.forEach((item) => {
-    const colWidth = item.width || (item?.title + '').length * 12 + 16
-    const countWidth = tableWidth
-      ? (tableWidth - sumWidth - selectWidth) / (length - sumLength)
-      : colWidth
+    const minWidth = (item?.title + '').length * 14 + 16
+    const colWidth = item.width || minWidth
+    const countWidth =
+      tableWidth && length - sumLength
+        ? (tableWidth - sumWidth - selectWidth) / (length - sumLength)
+        : colWidth
 
     if (item.flag) return
     if (propsRef.value.resizable) {
       item.width = colWidth > countWidth ? colWidth : countWidth
-      item.minWidth = (item?.title + '').length * 12 + 16
+      item.minWidth = minWidth
       item.resizable = item.resizable === undefined ? true : item.resizable
     } else {
       if (item.resizable) {
         item.width = colWidth > countWidth ? colWidth : countWidth
-        item.minWidth = (item?.title + '').length * 12 + 16
+        item.minWidth = minWidth
       }
     }
   })
