@@ -56,6 +56,7 @@ function handleColumnResize(
     wrapRef.value?.querySelector?.('.ant-table-body')?.clientWidth - 7 ||
     wrapRef.value?.querySelector?.('.ant-table-content')?.clientWidth
   const selectWidth = propsRef.value.rowSelection ? 36 : 0
+
   const [sumWidth, sumLength] = columns.reduce(
     ([sumWidth, length], cur) => {
       if (typeof cur.width === 'number') {
@@ -69,20 +70,19 @@ function handleColumnResize(
 
   columns.forEach((item) => {
     const minWidth = (item?.title + '').length * 14 + 16
-    const colWidth = item.width || minWidth
     const countWidth =
-      tableWidth && length - sumLength
-        ? (tableWidth - sumWidth - selectWidth) / (length - sumLength)
-        : colWidth
+      (tableWidth - sumWidth - selectWidth) / (length - sumLength)
 
     if (item.flag) return
+    const finallyWidth = minWidth > countWidth ? minWidth : countWidth
+
     if (propsRef.value.resizable) {
-      item.width = colWidth > countWidth ? colWidth : countWidth
+      item.width = item.width ? item.width : finallyWidth
       item.minWidth = minWidth
       item.resizable = item.resizable === undefined ? true : item.resizable
     } else {
       if (item.resizable) {
-        item.width = colWidth > countWidth ? colWidth : countWidth
+        item.width = item.width ? item.width : finallyWidth
         item.minWidth = minWidth
       }
     }
@@ -132,6 +132,7 @@ function handleIndexColumn(
   columns.unshift({
     flag: INDEX_COLUMN_FLAG,
     width: 50,
+    minWidth: 50,
     maxWidth: 50,
     title: '序号',
     align: 'center',
@@ -171,6 +172,7 @@ function handleActionColumn(
       ...columns[hasIndex],
       fixed: 'right',
       width: ACTION_COLUMN_WIDTH,
+      minWidth: ACTION_COLUMN_WIDTH,
       ...actionColumn,
       maxWidth: actionColumn.width || ACTION_COLUMN_WIDTH,
       flag: ACTION_COLUMN_FLAG

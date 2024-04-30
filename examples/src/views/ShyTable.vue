@@ -73,72 +73,40 @@ import { ref, onMounted, h } from 'vue'
 
 const columns: any[] = [
   {
+    title: '菜单名称',
+    dataIndex: 'name',
+    align: 'left',
+    width: 120,
+  },
+  {
+    title: '图标',
+    dataIndex: 'icon',
+  },
+  {
+    title: '权限标识',
+    dataIndex: 'permission',
+    width: 160,
+  },
+  {
+    title: '组件',
+    dataIndex: 'component',
+    width: 160,
+  },
+  {
+    title: '排序',
+    dataIndex: 'sort',
+    width: 60,
+  },
+  {
     title: '状态',
-    dataIndex: 'status'
+    dataIndex: 'status',
+    width: 60,
   },
   {
-    title: '商机名称',
-    dataIndex: 'businessName'
+    title: '创建时间',
+    dataIndex: 'createTime',
+    width: 180,
   },
-  {
-    title: '商机编号',
-    dataIndex: 'businessCode'
-  },
-  {
-    title: '业务员',
-    dataIndex: 'transactionUserName'
-  },
-  {
-    title: '业务部门',
-    dataIndex: 'transactionDeptName'
-  },
-  {
-    title: '商机预算（万元）',
-    dataIndex: 'budget'
-  },
-  {
-    title: '预计利润（万元）',
-    dataIndex: 'expectedProfit'
-  },
-  {
-    title: '最新大事件',
-    dataIndex: 'lastEvent'
-  },
-  {
-    title: '最近跟进时间',
-    dataIndex: 'lastFollowedTime'
-  },
-  {
-    title: '客户名称',
-    dataIndex: 'customName'
-  },
-  {
-    title: '预计招标时间',
-    dataIndex: 'expectedBidTime'
-  },
-  {
-    title: '商机当前进度',
-    dataIndex: 'businessProgress'
-  },
-  {
-    title: '商机把握度',
-    dataIndex: 'businessRate'
-  },
-  {
-    title: '商机级别',
-    dataIndex: 'businessLevel'
-  },
-  {
-    title: '刷新时间',
-    dataIndex: 'refreshTime'
-  },
-  { title: '备注', dataIndex: 'remark' }
-  //   ...Array.from({ length: 20 }, (_, i) => {
-  //   return {
-  //     title: i + '',
-  //     dataIndex: i
-  //   }
-  // })
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -312,8 +280,8 @@ const [
   // canResize: false,
   actionColumn: {
     dataIndex: 'action',
-    title: '操作'
-    // fixed: 'right'
+    title: '操作',
+    fixed: 'right'
   },
   showIndexColumn: true
   // canResize: false,

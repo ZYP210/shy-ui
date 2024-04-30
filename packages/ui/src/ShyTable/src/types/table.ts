@@ -488,6 +488,7 @@ export type CellFormat =
 
 // @ts-ignore
 export type BasicColumn = {
+  width?: number | undefined
   children?: BasicColumn[]
   filters?: {
     text: string
@@ -550,7 +551,7 @@ export type BasicColumn = {
 export type ColumnChangeParam = {
   title: string
   dataIndex: string
-  width?: string | number | undefined
+  width?: number | undefined
   fixed?: boolean | 'left' | 'right'
   defaultHidden?: boolean
 }
