@@ -471,6 +471,8 @@ export interface ShyTableProps<T = any> {
   onExpandedRowsChange?: (expandedRows: string[] | number[]) => void
 
   onColumnsChange?: (data: ColumnChangeParam[]) => void
+
+  onColumnsReset?: () => void
 }
 export type AlignType = 'left' | 'center' | 'right'
 
@@ -486,6 +488,7 @@ export type CellFormat =
 
 // @ts-ignore
 export type BasicColumn = {
+  width?: number | undefined
   children?: BasicColumn[]
   filters?: {
     text: string
@@ -546,13 +549,16 @@ export type BasicColumn = {
 } & ColumnProps<Recordable>
 
 export type ColumnChangeParam = {
+  title: string
   dataIndex: string
-  fixed: boolean | 'left' | 'right' | undefined
-  visible: boolean
+  width?: number | undefined
+  fixed?: boolean | 'left' | 'right'
+  defaultHidden?: boolean
 }
 
 export interface InnerHandlers {
   onColumnsChange: (data: ColumnChangeParam[]) => void
+  onColumnsReset: () => void
 }
 
 export type schemasAdvancedSearch = {

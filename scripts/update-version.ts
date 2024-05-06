@@ -25,7 +25,7 @@ async function main() {
 
   const shyui = pkgs['3h1-ui']
 
-  const version = await getVersion(shyui.manifest)
+  const version = await getVersion()
 
   rewritePackage(shyui, version)
 }

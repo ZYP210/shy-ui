@@ -59,7 +59,7 @@ import { ShyTable, useShyTable, ShyTableAction, BasicButton } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
 const { createMessage, createConfirm } = useMessage()
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, h } from 'vue'
 // const schemas = [
 //   { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
 //   { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
@@ -73,75 +73,40 @@ import { ref, onMounted } from 'vue'
 
 const columns: any[] = [
   {
-    title: '合格数',
-    dataIndex: 'qualifiedNum',
-    editComponent: 'InputNumber',
-    editComponentProps({ record, tableAction }) {
-      return {
-        max: 5,
-        precision: 0,
-        onChange: (val) => {
-          if (typeof val === 'number') {
-            // console.log('222')
-          }
-        }
-      }
-    },
-    editable: false,
-    edit: false,
-    editRule: true,
-    globalShow: false
-  },
-  {
-    title: '创建/更新时间',
-    dataIndex: 'createTime',
-    editRow: true,
-    editRule: true,
-    customRender: ({ text }) => {
-      return text
-    },
-    globalShow: false
-  },
-  {
-    title: '厂家名称',
+    title: '菜单名称',
     dataIndex: 'name',
-    editRow: true,
-    globalShow: false,
-    resizable: true
+    align: 'left',
+    width: 120,
   },
   {
-    title: '电话',
-    dataIndex: 'phone',
-    component: 'Select',
-    componentProps: {
-      options: Array.from({ length: 100 }, (_, i) => {
-        return { label: i, value: i }
-      })
-    },
-    editRow: true,
-    globalShow: false
+    title: '图标',
+    dataIndex: 'icon',
   },
   {
-    title: '地址',
-    dataIndex: 'address',
-    editRow: true,
-    globalShow: false
+    title: '权限标识',
+    dataIndex: 'permission',
+    width: 160,
   },
   {
-    title: '备注',
-    editRow: true,
-    dataIndex: 'remark'
+    title: '组件',
+    dataIndex: 'component',
+    width: 160,
   },
   {
-    title: '产地',
-    dataIndex: 'place'
+    title: '排序',
+    dataIndex: 'sort',
+    width: 60,
   },
-//   ...Array.from({ length: 20 }, (_, i) => {
-//   return {
-//     title: i + '',
-//     dataIndex: i
-//   }
-// })
+  {
+    title: '状态',
+    dataIndex: 'status',
+    width: 60,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    width: 180,
+  },
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -220,7 +185,10 @@ const [
   // isShowFooter: false,
   // headerAlign: 'left',
   onColumnsChange: (data) => {
-    console.log(data);
+    console.log(data)
+  },
+  onColumnsReset: () => {
+    console.log('columns-reset')
   },
   resizable: true,
   rowKey: 'id',
@@ -313,7 +281,7 @@ const [
   actionColumn: {
     dataIndex: 'action',
     title: '操作',
-    // fixed: 'right'
+    fixed: 'right'
   },
   showIndexColumn: true
   // canResize: false,

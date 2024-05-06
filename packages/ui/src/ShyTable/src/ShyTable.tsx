@@ -57,7 +57,8 @@ const ShyTable = defineComponent({
     'edit-change',
     'expanded-rows-change',
     'change',
-    'columns-change'
+    'columns-change',
+    'columns-reset'
   ],
   props: shyTableBasicProps,
   setup(props, { attrs, slots, emit, expose }) {
@@ -285,8 +286,12 @@ const ShyTable = defineComponent({
     const handlers: InnerHandlers = {
       onColumnsChange: (data: ColumnChangeParam[]) => {
         emit('columns-change', data)
-        // support useTable
         unref(getProps).onColumnsChange?.(data)
+      },
+      onColumnsReset: () => {
+        setColumns(getCacheColumns())
+        emit('columns-reset')
+        unref(getProps).onColumnsReset?.()
       }
     }
 

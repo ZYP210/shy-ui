@@ -56,9 +56,9 @@ function handleColumnResize(
     wrapRef.value?.querySelector?.('.ant-table-body')?.clientWidth - 7 ||
     wrapRef.value?.querySelector?.('.ant-table-content')?.clientWidth
   const selectWidth = propsRef.value.rowSelection ? 36 : 0
+
   const [sumWidth, sumLength] = columns.reduce(
     ([sumWidth, length], cur) => {
-      console.log(cur)
       if (typeof cur.width === 'number') {
         return [sumWidth + cur.width, ++length]
       }
@@ -69,20 +69,21 @@ function handleColumnResize(
   const length = columns.length
 
   columns.forEach((item) => {
-    const colWidth = item.width || (item?.title + '').length * 12 + 16
-    const countWidth = tableWidth
-      ? (tableWidth - sumWidth - selectWidth) / (length - sumLength)
-      : colWidth
+    const minWidth = (item?.title + '').length * 14 + 16
+    const countWidth =
+      (tableWidth - sumWidth - selectWidth) / (length - sumLength)
 
     if (item.flag) return
+    const finallyWidth = minWidth > countWidth ? minWidth : countWidth
+
     if (propsRef.value.resizable) {
-      item.width = colWidth > countWidth ? colWidth : countWidth
-      item.minWidth = (item?.title + '').length * 12 + 16
+      item.width = item.width ? item.width : finallyWidth
+      item.minWidth = minWidth
       item.resizable = item.resizable === undefined ? true : item.resizable
     } else {
       if (item.resizable) {
-        item.width = colWidth > countWidth ? colWidth : countWidth
-        item.minWidth = (item?.title + '').length * 12 + 16
+        item.width = item.width ? item.width : finallyWidth
+        item.minWidth = minWidth
       }
     }
   })
@@ -131,6 +132,7 @@ function handleIndexColumn(
   columns.unshift({
     flag: INDEX_COLUMN_FLAG,
     width: 50,
+    minWidth: 50,
     maxWidth: 50,
     title: '序号',
     align: 'center',
@@ -170,6 +172,7 @@ function handleActionColumn(
       ...columns[hasIndex],
       fixed: 'right',
       width: ACTION_COLUMN_WIDTH,
+      minWidth: ACTION_COLUMN_WIDTH,
       ...actionColumn,
       maxWidth: actionColumn.width || ACTION_COLUMN_WIDTH,
       flag: ACTION_COLUMN_FLAG

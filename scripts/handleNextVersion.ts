@@ -3,113 +3,121 @@ const prompts = require('prompts')
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const fs = require('fs')
+const { exec } = require('child_process')
+import { resolve } from 'path'
 
-export const getVersion = async (jsonData: any) => {
-  // 先截取- 版本取【0】，tag【1】
-  const [version, tag] = (jsonData &&
-    jsonData.version &&
-    jsonData.version.split('-')) as string[]
+const getRemoteVersion = (tag: string) => {
+  const packageName = '3h1-ui'
 
-  const [versionMajor, versionMinor, versionPatch] =
-    version && version.split('.')
-  const tagList = (tag && tag.split('.')) || []
-  const [tagName, tagVersion] = tagList
+  return new Promise((resolve, reject) => {
+    // 执行命令获取包的版本号
+    exec(
+      `npm show ${packageName}@${tag} version`,
+      (error: any, stdout: any, stderr: any) => {
+        if (error) {
+          reject(`执行命令时发生错误: ${error.message}`)
+        }
+        if (stderr) {
+          reject(`命令执行产生错误输出: ${stderr}`)
+        }
+        //最新版本号
+        resolve(stdout.trim())
+      }
+    )
+  })
+}
 
-  const getNextVersion = (version: string, cbTag: any) => {
+export const getVersion = async () => {
+  const getNextVersion = (version: string, tag: string, type: number) => {
     let value = ''
-
-    const major = parseInt(versionMajor)
-    const minor = parseInt(versionMinor)
-    const patch = parseInt(versionPatch)
-
-    if (version === 'current') {
-      value = `${major}.${minor}.${patch}`
-    }
-
-    if (version === 'major') {
-      value = `${major + 1}.0.0`
-    }
-
-    if (version === 'minor') {
-      value = `${major}.${minor + 1}.0`
-    }
-
-    if (version === 'patch') {
-      value = `${major}.${minor}.${patch + 1}`
-    }
-
-    if ((cbTag || tagName) && cbTag !== 'latest') {
-      if (version !== 'current') {
-        value = `${value}-${cbTag || tagName}.1`
-      } else
-        value = `${value}-${cbTag || tagName}.${
-          tagVersion ? parseInt(tagVersion) + 1 : 1
-        }`
+    switch (type) {
+      case 1:
+        const parts = version.split('.')
+        if (parts.length > 1) {
+          const last = parts.pop()!
+          if (/^\d+$/.test(last)) {
+            parts.push((parseInt(last) + 1).toString())
+            value = parts.join('.')
+          }
+          break
+        }
     }
     return value
   }
 
-  const question = [
+  const getTagQuestion = [
     {
       type: 'select',
       name: 'tag',
       message: '请选择发布标签',
       choices: [
         {
-          title: '当前Tag',
-          value: ''
-        },
-        {
           title: 'latest',
           value: 'latest'
+        },
+        {
+          title: 'next',
+          value: 'next'
         },
         {
           title: 'alpha',
           value: 'alpha'
         },
-        {
-          title: 'beta',
-          value: 'beta'
-        },
-        { title: '自定义', value: 0 }
+        { title: '自定义', value: 'custom' }
       ]
     },
     {
-      type: (prev: any) => (prev === 0 ? 'text' : null),
+      type: (prev: any) => (prev === 'custom' ? 'text' : null),
       message: '请输入自定义标签',
       name: 'tag'
-    },
-    {
-      type: 'select',
-      name: 'version',
-      message: '请选择发布版本',
-      choices: (prev: any) => [
-        {
-          title: '当前版本',
-          value: getNextVersion('current', prev),
-          disabled: [prev, tagName].includes('latest')
-        },
-        {
-          title: `major(${getNextVersion('major', prev)})`,
-          value: getNextVersion('major', prev)
-        },
-        {
-          title: `major(${getNextVersion('minor', prev)})`,
-          value: getNextVersion('minor', prev)
-        },
-        {
-          title: `major(${getNextVersion('patch', prev)})`,
-          value: getNextVersion('patch', prev)
-        }
-      ]
     }
   ]
 
-  const res = await prompts(question)
+  const getVersionQuestion = (version: string, tag: string) => {
+    return [
+      {
+        type: 'select',
+        name: 'version',
+        message: '请选择发布版本',
+        choices: [
+          {
+            title: `当前版本自增：${getNextVersion(version, tag, 1)}`,
+            value: getNextVersion(version, tag, 1)
+          },
+          {
+            title: '自定义版本',
+            value: 'custom'
+          }
+        ]
+      },
+      {
+        type: (prev: any) => (prev === 'custom' ? 'text' : null),
+        message: '请输入自定义版本',
+        name: 'version'
+      }
+    ]
+  }
 
-  const filePath = '../../scripts/tag.txt'
-  fs.writeFile(filePath, res.tag, (err: string) => {
-    console.log(err)
-  })
-  return res.version
+  //选择tag
+  const { tag } = await prompts(getTagQuestion)
+  //获取当前tag最新的坂本
+  let version = ''
+  try {
+    version = (await getRemoteVersion(tag)) as string
+  } catch (e) {
+    version = '0.0.0'
+  }
+  console.log(`当前版本号: ${version}`)
+
+  //更新版本号
+  const { version: newVersion } = await prompts(
+    getVersionQuestion(version, tag)
+  )
+
+  const projRoot = resolve(__dirname, '..')
+  const filePath = resolve(projRoot, './scripts/tag.txt')
+
+  fs.writeFile(filePath, tag, (err: string) => {})
+
+  return newVersion
 }
