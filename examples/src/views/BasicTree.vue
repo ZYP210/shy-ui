@@ -1,10 +1,12 @@
 <template>
   <div class="w-300px ml-200px mt-200px h-600px">
-    <BasicTree :tree-data="treeData" title="123" />
+    <BasicTree :tree-data="treeData" title="123" @plus-click="handleClick" />
   </div>
 </template>
 <script lang="ts" setup>
 import { BasicTree } from '3h1-ui'
+
+const handleClick = () => {}
 
 // 悬停图标
 const actionList: any[] = [

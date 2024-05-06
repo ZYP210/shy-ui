@@ -11,6 +11,7 @@
         :style="{
           color: '#2da44e'
         }"
+        class="cursor-pointer"
         @click="handleMenuClick"
       />
 

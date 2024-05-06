@@ -442,7 +442,7 @@ export default defineComponent({
       return data
     })
 
-    async function handlePlusClick() {
+    function handlePlusClick() {
       emit('plus-click')
     }
 
@@ -466,9 +466,9 @@ export default defineComponent({
               onStrictlyChange={onStrictlyChange}
               onSearch={handleSearch}
               searchText={searchState.searchText}
+              onPlusClick={handlePlusClick}
             >
               {extendSlots(slots)}
-              plusClick={handlePlusClick}
             </TreeHeader>
           )}
           <Spin
