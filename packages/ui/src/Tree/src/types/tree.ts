@@ -18,7 +18,8 @@ export const treeEmits = [
   'update:value',
   'change',
   'check',
-  'update:searchValue'
+  'update:searchValue',
+  'plus-click'
 ]
 
 export interface TreeState {

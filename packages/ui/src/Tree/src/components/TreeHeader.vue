@@ -6,15 +6,24 @@
         {{ title }}
       </BasicTitle>
 
-      <Dropdown @click.prevent v-if="toolbar">
+      <Icon
+        icon="ant-design:plus-square-outlined"
+        :style="{
+          color: '#2da44e'
+        }"
+        @click="handleMenuClick"
+      />
+
+      <!-- <Dropdown @click.prevent>
         <Icon
           icon="ant-design:plus-square-outlined"
           :style="{
             color: '#2da44e'
           }"
+          @click="handleMenuClick"
         />
         <template #overlay>
-          <Menu @click="handleMenuClick">
+          <Menu>
             <template v-for="item in toolbarList" :key="item.value">
               <MenuItem v-bind="{ key: item.value }">
                 {{ item.label }}
@@ -23,7 +32,7 @@
             </template>
           </Menu>
         </template>
-      </Dropdown>
+      </Dropdown> -->
     </div>
 
     <div class="shy-search" v-if="search || toolbar">
@@ -85,7 +94,7 @@ const props = defineProps({
     default: undefined
   }
 } as const)
-const emit = defineEmits(['strictly-change', 'search'])
+const emit = defineEmits(['strictly-change', 'search', 'plus-click'])
 
 const slots = useSlots()
 const { t } = useI18n()
@@ -130,27 +139,7 @@ const toolbarList = computed(() => {
 })
 
 function handleMenuClick(e: { key: ToolbarEnum }) {
-  const { key } = e
-  switch (key) {
-    case ToolbarEnum.SELECT_ALL:
-      props.checkAll?.(true)
-      break
-    case ToolbarEnum.UN_SELECT_ALL:
-      props.checkAll?.(false)
-      break
-    case ToolbarEnum.EXPAND_ALL:
-      props.expandAll?.(true)
-      break
-    case ToolbarEnum.UN_EXPAND_ALL:
-      props.expandAll?.(false)
-      break
-    case ToolbarEnum.CHECK_STRICTLY:
-      emit('strictly-change', false)
-      break
-    case ToolbarEnum.CHECK_UN_STRICTLY:
-      emit('strictly-change', true)
-      break
-  }
+  emit('plus-click')
 }
 
 function emitChange(value?: string): void {

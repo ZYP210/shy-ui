@@ -442,6 +442,10 @@ export default defineComponent({
       return data
     })
 
+    async function handlePlusClick() {
+      emit('plus-click')
+    }
+
     expose(instance)
 
     return () => {
@@ -464,6 +468,7 @@ export default defineComponent({
               searchText={searchState.searchText}
             >
               {extendSlots(slots)}
+              plusClick={handlePlusClick}
             </TreeHeader>
           )}
           <Spin
