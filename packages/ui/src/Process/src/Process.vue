@@ -1,5 +1,5 @@
 <template>
-  <div class="process-wrapper m-15px">
+  <div class="process-wrapper">
     <div class="process-header text-[#1B1F24] text-14px">
       {{ props.title }}
     </div>
