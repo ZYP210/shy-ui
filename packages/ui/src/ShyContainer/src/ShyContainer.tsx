@@ -15,7 +15,7 @@ export default defineComponent({
     BreadcrumbItem
   },
   props: shyContainerProps,
-  emits: ['submit', 'cancel', 'save'],
+  emits: ['submit', 'cancel', 'save', 'route-change'],
   setup(props, { slots, emit }) {
     const { prefixCls } = useDesign('container')
 
@@ -91,11 +91,16 @@ export default defineComponent({
           {props.navBars.map((item: any) => {
             return (
               <BreadcrumbItem>
-              {item.path ? 
-               <router-link to={item.path}>{item.name}</router-link> 
-                : 
-               <span>{item.name}</span>
-              }
+                {item.path ? (
+                  <router-link
+                    to={item.path}
+                    onClick={() => emit('route-change', item)}
+                  >
+                    {item.name}
+                  </router-link>
+                ) : (
+                  <span>{item.name}</span>
+                )}
               </BreadcrumbItem>
             )
           })}

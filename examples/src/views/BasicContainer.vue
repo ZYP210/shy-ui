@@ -13,6 +13,7 @@
       path: '',
     },
     ]"
+    @route-change="changePath"
   >
     <template #extra> 11111 </template>
     <div>
@@ -30,4 +31,8 @@ import { Button } from 'ant-design-vue'
 import { ShyContainer } from '3h1-ui'
 import { ShyTable } from '3h1-ui'
 const loading = ref(false)
+
+const changePath = (path: string) => {
+  console.log(path)
+}
 </script>
