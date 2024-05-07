@@ -14,7 +14,9 @@ export interface DescItem {
 
 export interface DescriptionProps {
   schema: DescItem[]
-  data: Recordable
+  data: Recordable,
+  summaryPrecision: number
+  summaryTotalFields: string[]
   labelWidth?: number
   isShowColon?: boolean
   labelAlign?: 'left' | 'center' | 'right'

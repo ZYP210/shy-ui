@@ -72,41 +72,41 @@ import { ref, onMounted, h } from 'vue'
 // console.log(zzz)
 
 const columns: any[] = [
+  // {
+  //   title: '菜单名称',
+  //   dataIndex: 'name',
+  //   align: 'left',
+  //   width: 120,
+  // },
+  // {
+  //   title: '图标',
+  //   dataIndex: 'icon',
+  // },
   {
-    title: '菜单名称',
-    dataIndex: 'name',
-    align: 'left',
-    width: 120,
+    title: '数',
+    dataIndex: 'qualifiedNum',
+    // width: 160,
   },
-  {
-    title: '图标',
-    dataIndex: 'icon',
-  },
-  {
-    title: '权限标识',
-    dataIndex: 'permission',
-    width: 160,
-  },
-  {
-    title: '组件',
-    dataIndex: 'component',
-    width: 160,
-  },
-  {
-    title: '排序',
-    dataIndex: 'sort',
-    width: 60,
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    width: 60,
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createTime',
-    width: 180,
-  },
+  // {
+  //   title: '组件',
+  //   dataIndex: 'component',
+  //   width: 160,
+  // },
+  // {
+  //   title: '排序',
+  //   dataIndex: 'sort',
+  //   width: 60,
+  // },
+  // {
+  //   title: '状态',
+  //   dataIndex: 'status',
+  //   width: 60,
+  // },
+  // {
+  //   title: '创建时间',
+  //   dataIndex: 'createTime',
+  //   width: 180,
+  // },
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -163,7 +163,7 @@ const [
   api: ({ current, size }): any => {
     // console.log(params)
     return {
-      records: Array.from({ length: 1 }, (_, i) => {
+      records: Array.from({ length: 10 }, (_, i) => {
         return {
           id: i,
           status: i,
@@ -174,7 +174,7 @@ const [
           phone: '1212121',
           address: '1111',
           remark: 999,
-          qualifiedNum: 100000.11111111
+          qualifiedNum: 122
         }
       }),
       total: 100
@@ -270,9 +270,10 @@ const [
       }
     ]
   },
-  // showSummaryTotal: true,
-  // summaryTotalFields: ['qualifiedNum'],
+  showSummaryTotal: true,
+  summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
+  // summaryPrecision: 2,
   // useAdvancedSearch: true,
   rowSelection: {},
   clickToRowSelect: false,

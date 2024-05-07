@@ -9,7 +9,7 @@ import { h } from 'vue'
 import { Tag } from 'ant-design-vue'
 const mockData: any = {
   username: 'test',
-  // nickName: 'VB',
+  summary: 1111111,
   age: 123,
   phone: '15695909xxx',
   email: '190848757@qq.com',
@@ -19,10 +19,6 @@ const mockData: any = {
   tag: 'orange'
 }
 const schema: any[] = [
-  // {
-  //   label: '基本信息',
-  //   component: 'Group'
-  // },
   {
     field: 'username',
     label: '测试',
@@ -30,21 +26,22 @@ const schema: any[] = [
     isCopy: true
   },
   {
-    field: 'nickName',
-    label: '昵称',
-    colProps: { span: 16 },
-    isCopy: false,
-    customRender: (data) => {
-      return h(Tag, { color: 'success' }, data.phone)
-    },
-    ifShow: (data) => {
-      console.log(data)
-      return !!data.nickName
-    }
+    field: 'summary',
+    label: '合计',
+    colProps: { span: 8 }
   },
   // {
-  //   label: '用户信息',
-  //   component: 'Divider'
+  //   field: 'nickName',
+  //   label: '昵称',
+  //   colProps: { span: 16 },
+  //   isCopy: false,
+  //   customRender: (data) => {
+  //     return h(Tag, { color: 'success' }, data.phone)
+  //   },
+  //   ifShow: (data) => {
+  //     console.log(data)
+  //     return !!data.nickName
+  //   }
   // },
   {
     field: 'phone',
@@ -52,11 +49,12 @@ const schema: any[] = [
     colProps: { span: 8 },
     helpMessage: '这是一个'
   },
-  {
-    field: 'email',
-    label: '邮箱',
-    colProps: { span: 8 }
-  },
+  // {
+  //   field: 'email',
+  //   label: '邮箱',
+  //   colProps: { span: 8 }
+  // },
+
   {
     field: 'addr',
     label: '地址',
@@ -68,9 +66,11 @@ const fun = (color) => {
 }
 const [register, { setDescProps }] = useDescription({
   // data: mockData,
-  bordered: false,
+  labelWidth: 100,
+  bordered: true,
   schema,
-  mode: 'vertical'
+  summaryTotalFields: ['summary']
+  // mode: 'vertical'
 })
 
 onMounted(() => {
