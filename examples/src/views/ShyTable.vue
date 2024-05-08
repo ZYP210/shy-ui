@@ -22,24 +22,26 @@
               :actions="[
                 {
                   label: '编辑',
-                  // disabled: true,
+                  // ifShow: false,
                   onClick: handleEdit.bind(null, record)
                 },
                 {
                   label: '保存',
+                  // ifShow: false,
                   onClick: handleSave.bind(null, record)
                 },
                 {
                   label: '测试',
+                  // ifShow: false,
                   onClick: handleSave.bind(null, record)
                 },
-                {
-                  label: '取消',
-                  popConfirm: {
-                    title: '是否取消编辑',
-                    confirm: handleCancel.bind(null, record)
-                  }
-                }
+                // {
+                //   label: '取消',
+                //   popConfirm: {
+                //     title: '是否取消编辑',
+                //     confirm: handleCancel.bind(null, record)
+                //   }
+                // }
               ]"
             />
           </template>
@@ -72,41 +74,41 @@ import { ref, onMounted, h } from 'vue'
 // console.log(zzz)
 
 const columns: any[] = [
-  // {
-  //   title: '菜单名称',
-  //   dataIndex: 'name',
-  //   align: 'left',
-  //   width: 120,
-  // },
-  // {
-  //   title: '图标',
-  //   dataIndex: 'icon',
-  // },
+  {
+    title: '菜单名称',
+    dataIndex: 'name',
+    align: 'left',
+    width: 120,
+  },
+  {
+    title: '图标',
+    dataIndex: 'icon',
+  },
   {
     title: '数',
     dataIndex: 'qualifiedNum',
-    // width: 160,
+    width: 800,
   },
-  // {
-  //   title: '组件',
-  //   dataIndex: 'component',
-  //   width: 160,
-  // },
-  // {
-  //   title: '排序',
-  //   dataIndex: 'sort',
-  //   width: 60,
-  // },
-  // {
-  //   title: '状态',
-  //   dataIndex: 'status',
-  //   width: 60,
-  // },
-  // {
-  //   title: '创建时间',
-  //   dataIndex: 'createTime',
-  //   width: 180,
-  // },
+  {
+    title: '组件',
+    dataIndex: 'component',
+    width: 160,
+  },
+  {
+    title: '排序',
+    dataIndex: 'sort',
+    width: 60,
+  },
+  {
+    title: '状态',
+    dataIndex: 'status',
+    width: 60,
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    width: 180,
+  },
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -163,7 +165,7 @@ const [
   api: ({ current, size }): any => {
     // console.log(params)
     return {
-      records: Array.from({ length: 10 }, (_, i) => {
+      records: Array.from({ length: 20 }, (_, i) => {
         return {
           id: i,
           status: i,

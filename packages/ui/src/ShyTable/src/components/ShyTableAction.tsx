@@ -162,7 +162,7 @@ const ShyTableAction = defineComponent({
 
     const renderDivider = (index, length) => {
       const isShow =
-        props.divider && index < length && ['action'].includes(props.type)
+        props.divider && index < length - (+!getDropdownList.value.length) && ['action'].includes(props.type)
       return isShow ? <Divider type="vertical" class="action-divider" /> : null
     }
 
@@ -239,6 +239,7 @@ const ShyTableAction = defineComponent({
           return false
         } else if (isIfShow(action)) return true
       })
+
       return list.map((action, index) => {
         const { label, popConfirm } = action
         return {
