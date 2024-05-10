@@ -29,14 +29,13 @@ import { useAutoFocus } from './hooks/useAutoFocus'
 import { useModalContext } from '../../Modal'
 import { useDebounceFn } from '@vueuse/core'
 
-import { basicProps } from './props'
+import { basicProps, defaultAntConfig } from './props'
 import { cloneDeep } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
 import { isEqual, omit, pick } from 'lodash-es'
 import { useDesign } from '@shy-plugins/use'
 import { LeftOutlined } from '@ant-design/icons-vue'
 import './style/index.less'
-
 
 const ShyForm = defineComponent({
   props: basicProps,
@@ -96,6 +95,7 @@ const ShyForm = defineComponent({
     const getBindValue = computed(() => ({
       ...attrs,
       ...props,
+      ...defaultAntConfig,
       ...unref(getProps)
     }))
 
@@ -282,7 +282,11 @@ const ShyForm = defineComponent({
     function handleEnterPress(e: Event) {
       const { autoSubmitOnEnter } = unref(getProps)
       if (!autoSubmitOnEnter) return
-      if ((e as KeyboardEvent).key === 'Enter' && e.target && e.target instanceof HTMLElement) {
+      if (
+        (e as KeyboardEvent).key === 'Enter' &&
+        e.target &&
+        e.target instanceof HTMLElement
+      ) {
         const target: HTMLElement = e.target as HTMLElement
         if (
           target &&

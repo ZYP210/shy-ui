@@ -195,3 +195,7 @@ export const basicProps = {
     default: () => []
   }
 }
+
+export const defaultAntConfig = {
+  layout: 'vertical'
+}
