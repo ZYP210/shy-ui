@@ -50,7 +50,7 @@ export default defineComponent({
     const optionBtnKeys = ['cancel', 'save', 'submit'] as const
 
     enum BtnTypeEnum {
-      cancel = 'danger',
+      cancel = 'default',
       save = 'primary',
       submit = 'primary'
     }

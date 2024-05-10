@@ -2,7 +2,7 @@
   <div>
     <slot name="insertFooter"></slot>
     <BasicButton
-      type="danger"
+      type="default"
       v-bind="cancelButtonProps"
       @click="handleCancel"
       v-if="showCancelBtn"
