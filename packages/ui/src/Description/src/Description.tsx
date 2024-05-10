@@ -6,7 +6,7 @@ import { CopyOutlined } from '@ant-design/icons-vue'
 import { useMessage } from '@shy-plugins/use'
 import { BasicHelp } from '../../Basic/index'
 import { DescriptionProps } from './typing'
-import { isBoolean, isFunction } from '@shy-plugins/utils'
+import { isBoolean, isFunction, isNumber } from '@shy-plugins/utils'
 
 export default defineComponent({
   name: 'Description',
@@ -75,23 +75,35 @@ export default defineComponent({
             </div>
           )
         } else {
+          const data = getProps.value.data
+
           if (item?.customRender) {
             element = item?.customRender
-              ? item.customRender(getProps.value.data)
+              ? item.customRender(data)
               : null
+          } else if (getProps.value.summaryTotalFields?.length) {
+            element = slots[`${item.field}Value`]
+              ? slots[`${item.field}Value`]?.({
+                  model: data,
+                  field: data[`${item.field}`]
+                })
+              : isNumber(+data[`${item.field}`]) &&
+                !isNaN(+data[`${item.field}`])
+              ? (+data[`${item.field}`]).toFixed(getProps.value.summaryPrecision).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+              : data[`${item.field}`]
           } else {
             element = slots[`${item.field}Value`]
               ? slots[`${item.field}Value`]?.({
-                  model: getProps.value.data,
-                  field: getProps.value.data[`${item.field}`]
+                  model: data,
+                  field: data[`${item.field}`]
                 })
-              : getProps.value.data[`${item.field}`]
+              : data[`${item.field}`]
           }
 
           const ifShow =
             isBoolean(item?.ifShow) || isFunction(item?.ifShow)
               ? isFunction(item.ifShow)
-                ? item.ifShow(getProps.value.data)
+                ? item.ifShow(data)
                 : item.ifShow
               : true
 

@@ -21,6 +21,10 @@ import {
 } from './const'
 
 export const shyTableBasicProps = reactive({
+  summaryPrecision: {
+    type: Number,
+    default: 2,
+  },
   isShowTitle: {
     type: Boolean,
     default: true

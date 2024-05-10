@@ -89,7 +89,7 @@ export const INDEX_COLUMN_FLAG = 'INDEX'
 
 export const ACTION_COLUMN_FLAG = 'ACTION'
 
-export const ACTION_COLUMN_WIDTH = 90
+export const ACTION_COLUMN_WIDTH = 65
 
 export const setConstConfig = (config) => {
   DEFAULT_ALIGN = config.align

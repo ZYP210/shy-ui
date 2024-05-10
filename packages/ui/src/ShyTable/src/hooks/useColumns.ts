@@ -242,14 +242,13 @@ export function useColumns(
       })
       .map((column) => {
         const isSummaryCol =
-          unref(propsRef).showSummaryTotal &&
           unref(propsRef).summaryTotalFields?.includes?.(
             column.dataIndex! as string
           )
         const summaryFormat = (text) => {
           return text
             ? isNumber(+text) && !isNaN(+text)
-              ? Number.parseFloat((+text).toFixed(2)).toLocaleString('en-US')
+              ? (+text).toFixed(unref(propsRef).summaryPrecision).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
               : text
             : ''
         }

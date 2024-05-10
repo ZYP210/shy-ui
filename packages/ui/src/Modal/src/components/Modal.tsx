@@ -4,6 +4,7 @@ import { basicProps } from '../props'
 import { useModalDragMove } from '../hooks/useModalDrag'
 import { useAttrs } from '../hooks/useAttrs'
 import { extendSlots } from '../utils/tsxHelper'
+import { omit } from 'lodash-es'
 
 export default defineComponent({
   name: 'Modal',
@@ -25,7 +26,8 @@ export default defineComponent({
 
     return () => {
       const propsData = { ...unref(attrs), ...props, onCancel } as Recordable
-      return <Modal {...propsData}>{extendSlots(slots)}</Modal>
+      const modalProps = omit(propsData, 'visible')
+      return <Modal {...modalProps}>{extendSlots(slots)}</Modal>
     }
   }
 })

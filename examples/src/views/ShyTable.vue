@@ -22,24 +22,26 @@
               :actions="[
                 {
                   label: '编辑',
-                  // disabled: true,
+                  // ifShow: false,
                   onClick: handleEdit.bind(null, record)
                 },
                 {
                   label: '保存',
+                  // ifShow: false,
                   onClick: handleSave.bind(null, record)
                 },
                 {
                   label: '测试',
+                  // ifShow: false,
                   onClick: handleSave.bind(null, record)
                 },
-                {
-                  label: '取消',
-                  popConfirm: {
-                    title: '是否取消编辑',
-                    confirm: handleCancel.bind(null, record)
-                  }
-                }
+                // {
+                //   label: '取消',
+                //   popConfirm: {
+                //     title: '是否取消编辑',
+                //     confirm: handleCancel.bind(null, record)
+                //   }
+                // }
               ]"
             />
           </template>
@@ -83,9 +85,9 @@ const columns: any[] = [
     dataIndex: 'icon',
   },
   {
-    title: '权限标识',
-    dataIndex: 'permission',
-    width: 160,
+    title: '数',
+    dataIndex: 'qualifiedNum',
+    width: 800,
   },
   {
     title: '组件',
@@ -163,7 +165,7 @@ const [
   api: ({ current, size }): any => {
     // console.log(params)
     return {
-      records: Array.from({ length: 1 }, (_, i) => {
+      records: Array.from({ length: 20 }, (_, i) => {
         return {
           id: i,
           status: i,
@@ -174,7 +176,7 @@ const [
           phone: '1212121',
           address: '1111',
           remark: 999,
-          qualifiedNum: 100000.11111111
+          qualifiedNum: 122
         }
       }),
       total: 100
@@ -270,9 +272,10 @@ const [
       }
     ]
   },
-  // showSummaryTotal: true,
-  // summaryTotalFields: ['qualifiedNum'],
+  showSummaryTotal: true,
+  summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
+  // summaryPrecision: 2,
   // useAdvancedSearch: true,
   rowSelection: {},
   clickToRowSelect: false,

@@ -82,11 +82,11 @@ input:focus.ant-input {
 }
 
 :is(.ant-table-thead) {
-  .ant-table-selection-column {
-    &::before {
-      content: unset !important;
-    }
-  }
+  // .ant-table-selection-column {
+  //   &::before {
+  //     content: unset !important;
+  //   }
+  // }
 
   .ant-table-cell:nth-last-child(2) {
     &::before {
@@ -99,13 +99,13 @@ input:focus.ant-input {
   }
 }
 
-.ant-table-cell-fix-right-first {
-  border-left: 1px solid var(--gray-3);
-}
+// .ant-table-cell-fix-right-first {
+//   border-left: 1px solid var(--gray-3);
+// }
 
-.ant-table-cell-fix-left-last {
-  border-right: 1px solid var(--gray-3);
-}
+// .ant-table-cell-fix-left-last {
+//   border-right: 1px solid var(--gray-3);
+// }
 
 .ant-table-wrapper .ant-table-ping-right .ant-table-cell-fix-right-last {
   &::after {
@@ -117,4 +117,12 @@ input:focus.ant-input {
   &::after {
     box-shadow: inset 10px 0 8px -8px rgba(0, 0, 0, 0.08) !important;
   }
+}
+
+.ant-table-body {
+  overflow: auto auto !important;
+}
+
+.ant-table-cell-fix-right-first {
+  right: 0 !important;
 }

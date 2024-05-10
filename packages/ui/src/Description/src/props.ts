@@ -22,6 +22,14 @@ export const basicProps = reactive({
     type: Array as PropType<Schema[]>,
     default: () => []
   },
+  summaryPrecision: {
+    type: Number,
+    default: 2,
+  },
+  summaryTotalFields: {
+     type: Array as PropType<string[]>,
+    default: () => []
+  },
   labelAlign: {
     type: String as PropType<'left' | 'center' | 'right'>,
     default: () => 'right'
