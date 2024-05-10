@@ -87,7 +87,7 @@ const columns: any[] = [
   {
     title: '数',
     dataIndex: 'qualifiedNum',
-    width: 800,
+    width: 1000,
   },
   {
     title: '组件',

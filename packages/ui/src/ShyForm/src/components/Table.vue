@@ -1,6 +1,10 @@
 <template>
   <Table
+    ref="tableElRef"
     :columns="getColumns"
+    :scroll="{
+      x: getScrollX
+    }"
     :data-source="state"
     :pagination="false"
     bordered
@@ -34,13 +38,16 @@
           <Popover
             overlayClassName="table-children-err-popover"
             :visible="
-              !!rulesRef?.[`${column.dataIndex}-${record.uuid}Info`]?.show &&
-              !isScroll
+              !!rulesRef?.[`${column.dataIndex}-${record[props.rowKey]}Info`]
+                ?.show && !isScroll
             "
           >
             <template #content>
               <span class="text-red-500">
-                {{ rulesRef[`${column.dataIndex}-${record.uuid}Info`]?.msg }}
+                {{
+                  rulesRef[`${column.dataIndex}-${record[props.rowKey]}Info`]
+                    ?.msg
+                }}
               </span>
             </template>
             <Select
@@ -90,15 +97,11 @@
       </template>
     </template>
   </Table>
-  <div
-    class="border-left-1px border-right-1px border-bottom-1px h-50px border-color-[#f0f0f0] rounded-b-4px flex items-center pl-8px pr-8px"
-  >
-    <div
-      @click="plusClickEvent"
-      class="text-center w-full text-[#2DA44E] border-1px border-dashed border-color-[#2DA44E] h-32px leading-32px cursor-pointer"
-    >
-      新增
-    </div>
+  <div class="table-children-add-btn">
+    <BasicButton @click="plusClickEvent" type="dashed"> 新增 </BasicButton>
+  </div>
+  <div class="w-full h-[fit-content] py-8px flex justify-end items-center">
+    <component :is="h('span', null, footerRender())"></component>
   </div>
 </template>
 
@@ -111,9 +114,9 @@ import {
   DatePicker,
   InputNumber
 } from 'ant-design-vue'
-import { ref, computed, watch, toRaw, inject } from 'vue'
+import { ref, computed, watch, toRaw, inject, VNode, h, unref } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
-import { DeleteFilled, PlusCircleFilled } from '@ant-design/icons-vue'
+
 import { buildUUID, isFunction } from '@shy-plugins/utils'
 import { ShyComponentMap } from '../ShyComponentMap'
 import { cloneDeep, isArray, isEqual } from 'lodash-es'
@@ -123,6 +126,7 @@ import { reactive } from 'vue'
 import { onMounted } from 'vue'
 import { onUnmounted } from 'vue'
 import { ShyTableAction } from '../../../ShyTable'
+import { BasicButton } from '../../../Button'
 
 const formActionType: FormActionType = inject('formActionType')!
 const emit = defineEmits(['update:value', 'change', 'add', 'remove'])
@@ -140,6 +144,14 @@ const props = defineProps({
     type: Array,
     default: () => []
   },
+  isShowFooter: {
+    type: Boolean,
+    default: () => false
+  },
+  footerRender: {
+    type: Function as PropType<() => VNode | VNode[] | string | number>,
+    default: () => ''
+  },
   isShowAction: {
     type: Boolean,
     default: () => true
@@ -151,6 +163,8 @@ const props = defineProps({
     }
   }
 })
+
+const tableElRef = ref()
 
 const emitData = ref<unknown[]>([])
 const [state] = useRuleFormItem(props, 'value', 'change', emitData)
@@ -183,6 +197,31 @@ const getColumns = computed(() => {
   ]
 })
 
+const getScrollX = computed(() => {
+  let width = 0
+
+  // TODO props ?? 0;
+  const NORMAL_WIDTH = 150
+
+  const columns = unref(props.columns).filter((item) => !item.defaultHidden)
+  columns.forEach((item) => {
+    width += Number.parseFloat(item.width as string) || 0
+  })
+  const unsetWidthColumns = columns.filter(
+    (item) => !Reflect.has(item, 'width')
+  )
+
+  const len = unsetWidthColumns.length
+  if (len !== 0) {
+    width += len * NORMAL_WIDTH
+  }
+
+  const table = unref(tableElRef)
+  const tableWidth = table?.$el?.offsetWidth ?? 0
+
+  return tableWidth > width ? '100%' : width
+})
+
 const plusClickEvent = () => {
   state.value = [{ [props.rowKey]: buildUUID() }, ...toRaw(state.value)]
   emit('add', state.value)
@@ -201,7 +240,7 @@ const getPopupContainer = () => document.body
 
 const rulesRef = reactive({})
 const getRules = ({ column, record, index, ...args }) => {
-  const errKey = `${column.dataIndex}-${record.uuid}Info`
+  const errKey = `${column.dataIndex}-${record[props.rowKey]}Info`
   if (!column.required) return []
   if (rulesRef[errKey]?.rules) return rulesRef[errKey]?.rules
   rulesRef[errKey] = {
@@ -271,15 +310,12 @@ watch(
   () => state.value,
   (v, old) => {
     if (!isEqual(toRaw(v), toRaw(old))) {
-      emit(
-        'update:value',
-        toRaw(v).map((ele: any) => {
-          return {
-            ...ele,
-            [props.rowKey]: ele[props.rowKey] || buildUUID()
-          }
-        })
-      )
+      state.value = toRaw(v).map((ele: any) => {
+        return {
+          ...ele,
+          [props.rowKey]: ele[props.rowKey] || buildUUID()
+        }
+      })
     }
   },
   {
@@ -346,6 +382,8 @@ defineExpose({ validate })
 }
 
 .table-children {
+  width: 100%;
+
   &-required {
     color: #ff4d4f;
     margin-right: 4px;
@@ -358,38 +396,20 @@ defineExpose({ validate })
       display: none;
     }
   }
+}
 
-  &-delete-wrapper {
-    display: flex;
-    height: 100%;
-    justify-content: center;
+.table-children-add-btn {
+  display: flex;
+  align-items: center;
+  padding-inline: 8px;
+  height: 50px;
+  border-inline: 1px solid var(--gray-3);
+  border-bottom: 1px solid var(--gray-3);
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 
-    &:hover {
-      .table-children-delete-item {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .table-children-delete-index {
-        display: none;
-      }
-    }
-  }
-
-  &-delete-item {
-    background-color: red;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    display: none;
-    cursor: pointer;
-  }
-
-  &-delete-index {
-    user-select: none;
-    display: inline-block;
+  ::v-deep(.ant-btn) {
+    width: 100%;
   }
 }
 </style>

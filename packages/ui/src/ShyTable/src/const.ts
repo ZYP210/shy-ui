@@ -18,7 +18,7 @@ const componentSetting = {
     // Number of pages that can be selected
     pageSizeOptions: ['10', '20', '50', '100'],
     // Default display quantity on one page
-    defaultPageSize: 10,
+    defaultPageSize: 20,
     // Default Size
     defaultSize: 'small',
     // Custom general sort function

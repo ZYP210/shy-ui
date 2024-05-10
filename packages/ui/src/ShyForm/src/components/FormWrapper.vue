@@ -1,5 +1,5 @@
 <template>
-  <div :class="getClass">
+  <div :class="[prefixCls, getClass]">
     <slot></slot>
   </div>
 </template>
@@ -8,7 +8,7 @@
 import { useDesign } from '@shy-plugins/use'
 import { computed } from 'vue'
 
-const { prefixCls } = useDesign('ant-form')
+const { prefixCls } = useDesign('ant-form-wrapper')
 
 const props = defineProps({
   span: {
@@ -20,11 +20,11 @@ const props = defineProps({
 const getClass = computed(() => {
   switch (props.span) {
     case 1:
-      return `${prefixCls}-wrapper-col-1`
+      return `${prefixCls}-col-1`
     case 2:
-      return `${prefixCls}-wrapper-col-2`
+      return `${prefixCls}-col-2`
     case 3:
-      return `${prefixCls}-wrapper-col-3`
+      return `${prefixCls}-col-3`
     default:
       return ''
   }
