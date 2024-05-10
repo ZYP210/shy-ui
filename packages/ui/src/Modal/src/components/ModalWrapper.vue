@@ -51,9 +51,9 @@ export default defineComponent({
     const minRealHeightRef = ref(0)
 
     enum maxHeightEnum {
-      small = 500,
-      default = 600,
-      large = 700
+      small = 600,
+      default = 700,
+      large = 800
     }
 
     let realHeight = 0
