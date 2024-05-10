@@ -22,11 +22,12 @@ import {
   TableChildren,
   ApiModalSelect,
   ShyForm,
-  ShyFormWrapper
+  ShyFormWrapper,
+  BasicButton
 } from '3h1-ui'
 import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
-import { onMounted } from 'vue'
+import { h, onMounted } from 'vue'
 import { ref } from 'vue'
 import dayjs from 'dayjs'
 import { theme } from 'ant-design-vue'
@@ -392,6 +393,14 @@ const schemas = ref<FormSchema[]>([
   //   colProps: { span: 24 }
   // },
   {
+    label: '111',
+    component: 'Divider',
+    componentProps: {
+      extra: h(BasicButton, null, 1111)
+    },
+    colProps: { span: 24 }
+  },
+  {
     label: 'Table',
     field: 'Table',
     component: 'Table',
@@ -432,7 +441,7 @@ const schemas = ref<FormSchema[]>([
             ],
             componentProps: {
               valueFormat: 'YYYY-MM-DD HH:mm:ss'
-            },
+            }
           },
           {
             title: '预计回款时间',
@@ -472,7 +481,7 @@ const schemas = ref<FormSchema[]>([
             title: 'c',
             dataIndex: 'c',
             type: 'InputNumber',
-            required: true,
+            required: true
             // width: 1000,
           },
           {

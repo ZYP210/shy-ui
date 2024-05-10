@@ -1,12 +1,22 @@
 <template>
   <span :class="getClass">
-    <div>
+    <div :class="`${prefixCls}-label`">
       <slot></slot>
       <BasicHelp
         :class="`${prefixCls}-help`"
         v-if="helpMessage"
         :text="helpMessage"
       />
+      <slot name="extra">
+        <component
+          v-if="$attrs?.extra"
+          :is="
+            isFunction($attrs.extra)
+              ? $attrs.extra?.()
+              : h('span', $attrs.extra)
+          "
+        ></component>
+      </slot>
     </div>
     <div :class="`${prefixCls}-expand`" v-if="expand" @click="handleExpand">
       <BasicArrow down :expand="isExpand" :class="`${prefixCls}-expand-icon`" />
@@ -16,10 +26,11 @@
 </template>
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-import { useSlots, computed, ref } from 'vue'
+import { useSlots, computed, ref, h } from 'vue'
 import BasicHelp from './BasicHelp.vue'
 import BasicArrow from './BasicArrow.vue'
 import { useDesign } from '@shy-plugins/use'
+import { isFunction } from '@shy-plugins/utils'
 
 const props = defineProps({
   /**
@@ -79,6 +90,12 @@ const isExpand = ref(false)
   margin: 10px 0;
   justify-content: space-between;
   align-items: center;
+
+  &-label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
 
   &-show-span::before {
     content: '';
