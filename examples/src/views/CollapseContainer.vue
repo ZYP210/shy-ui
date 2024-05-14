@@ -1,6 +1,7 @@
 <template>
   <div>
     <CollapseContainer title="区域折叠卡片容器" helpMessage="helpMessage">
+      <div class="body"></div>
       <div>123</div>
       <div>235</div>
       <div>123</div>
@@ -22,3 +23,10 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped lang="less">
+.body {
+  height: 300px;
+  background-color: #eee;
+}
+</style>

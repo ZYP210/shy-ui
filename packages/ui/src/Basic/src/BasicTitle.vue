@@ -1,34 +1,24 @@
 <template>
   <span :class="getClass">
-    <div :class="`${prefixCls}-label`">
-      <slot></slot>
-      <BasicHelp
-        :class="`${prefixCls}-help`"
-        v-if="helpMessage"
-        :text="helpMessage"
-      />
-      <slot name="extra">
-        <component
-          v-if="$attrs?.extra"
-          :is="
-            isFunction($attrs.extra)
-              ? $attrs.extra?.()
-              : h('span', $attrs.extra)
-          "
-        ></component>
-      </slot>
-    </div>
-    <div :class="`${prefixCls}-expand`" v-if="expand" @click="handleExpand">
-      <BasicArrow down :expand="isExpand" :class="`${prefixCls}-expand-icon`" />
-      <span>{{ isExpand ? '收起' : '展开' }}</span>
-    </div>
+    <slot></slot>
+    <BasicHelp
+      :class="`${prefixCls}-help`"
+      v-if="helpMessage"
+      :text="helpMessage"
+    />
+    <slot name="extra"> </slot>
+    <component
+      v-if="$attrs?.extra"
+      :is="
+        isFunction($attrs.extra) ? $attrs.extra?.() : h('span', $attrs.extra)
+      "
+    ></component>
   </span>
 </template>
 <script lang="ts" setup>
 import type { PropType } from 'vue'
-import { useSlots, computed, ref, h } from 'vue'
+import { useSlots, computed, h } from 'vue'
 import BasicHelp from './BasicHelp.vue'
-import BasicArrow from './BasicArrow.vue'
 import { useDesign } from '@shy-plugins/use'
 import { isFunction } from '@shy-plugins/utils'
 
@@ -45,36 +35,17 @@ const props = defineProps({
    * Whether the color block on the left side of the title
    * @default: false
    */
-  span: { type: Boolean, default: true },
-
-  /**
-   * Whether show to expand
-   * @default: false
-   */
-  expand: {
-    type: Boolean,
-    default: false
-  }
+  span: { type: Boolean, default: true }
 })
 
-const emit = defineEmits(['handleExpand'])
-
-const handleExpand = () => {
-  isExpand.value = !isExpand.value
-  emit('handleExpand')
-}
-
 const { prefixCls } = useDesign('basic-title')
-
 const slots = useSlots()
-
 const getClass = computed(() => [
   prefixCls,
   { [`${prefixCls}-show-span`]: props.span && slots.default }
 ])
-
-const isExpand = ref(false)
 </script>
+
 <style lang="less" scoped>
 @prefix-cls: ~'@{namespace}-basic-title';
 
@@ -111,18 +82,6 @@ const isExpand = ref(false)
 
   &-help {
     margin-left: 10px;
-  }
-
-  &-expand {
-    cursor: pointer;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    color: var(--primary-5);
-
-    &-icon {
-      margin-right: 3px;
-    }
   }
 }
 </style>

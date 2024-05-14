@@ -10,7 +10,14 @@
     </BasicTitle>
     <div :class="`${prefixCls}__action`">
       <slot name="action"></slot>
-      <BasicArrow v-if="canExpan" up :expand="show" @click="$emit('expand')" />
+      <div
+        v-if="canExpan"
+        @click="$emit('expand')"
+        :class="`${prefixCls}-arrow`"
+      >
+        <BasicArrow down :expand="show" />
+        <span>{{ show ? '收起' : '展开' }}</span>
+      </div>
     </div>
   </div>
 </template>
@@ -36,3 +43,13 @@ export default defineComponent({
   emits: ['expand']
 })
 </script>
+
+<style lang="less">
+@prefix-cls: ~'@{namespace}-collapse-container';
+
+.@{prefix-cls}-arrow {
+  font-size: 14px !important;
+  color: var(--primary-5);
+  cursor: pointer;
+}
+</style>

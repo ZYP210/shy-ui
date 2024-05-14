@@ -5,6 +5,10 @@
       :prefixCls="prefixCls"
       :show="show"
       @expand="handleExpand"
+      :class="[
+        `${prefixCls}__header`,
+        show ? '' : `${prefixCls}__header-action`
+      ]"
     >
       <template #title>
         <slot name="title"></slot>
@@ -95,7 +99,9 @@ defineExpose({
     justify-content: space-between;
     align-items: center;
     height: 32px;
-    border-bottom: 1px solid @border-color-light;
+    &-action {
+      background: var(--gray-1);
+    }
   }
 
   &__footer {
