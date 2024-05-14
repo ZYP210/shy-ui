@@ -1,6 +1,6 @@
 <template>
   <Drawer
-    v-model:visible="visible"
+    v-model:open="visible"
     class="set_promoter"
     :width="550"
     title="发起人"
@@ -14,7 +14,9 @@
         <RadioButton class="btn" value="2">设置字段权限</RadioButton>
       </RadioGroup>
     </div>
-    <template v-if="type==2"> <AuthorityTable v-model:fieldPermissions="fieldPermissions" /> </template>
+    <template v-if="type == 2">
+      <AuthorityTable v-model:fieldPermissions="fieldPermissions" />
+    </template>
     <!-- <template #footer>
       <a-space>
         <a-button type="primary" @click="savePromoter">确 定</a-button>
@@ -24,43 +26,43 @@
   </Drawer>
 </template>
 <script setup>
-import { mapState, mapMutations } from "../../config/lib";
-import { computed,watch, ref , reactive } from "vue";
-import AuthorityTable from "./authorityTable.vue";
+import { mapState, mapMutations } from '../../config/lib'
+import { computed, watch, ref, reactive } from 'vue'
+import AuthorityTable from './authorityTable.vue'
 import { Drawer, RadioGroup, RadioButton } from 'ant-design-vue'
-const { types } = mapState();
+const { types } = mapState()
 const filterOption = (inputValue, option) => {
-  return option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1;
-};
-const type = ref("2");
-let { promoterDrawer, flowPermission1} = mapState();
+  return option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
+}
+const type = ref('2')
+let { promoterDrawer, flowPermission1 } = mapState()
 let visible = computed({
   get() {
-    type.value = "2";
-    return promoterDrawer.value;
+    type.value = '2'
+    return promoterDrawer.value
   },
   set() {
-    closeDrawer();
-  },
-});
-const fieldPermissions = ref([]);
+    closeDrawer()
+  }
+})
+const fieldPermissions = ref([])
 watch(flowPermission1, (val) => {
-  fieldPermissions.value = val.fieldPermissions;
-});
+  fieldPermissions.value = val.fieldPermissions
+})
 
-const { setPromoter, setFlowPermission } = mapMutations();
+const { setPromoter, setFlowPermission } = mapMutations()
 const savePromoter = () => {
   setFlowPermission({
     flag: true,
     id: flowPermission1.value.id,
-    fieldPermissions: fieldPermissions.value,
-  });
-  closeDrawer();
-};
+    fieldPermissions: fieldPermissions.value
+  })
+  closeDrawer()
+}
 
 const closeDrawer = () => {
-  setPromoter(false);
-};
+  setPromoter(false)
+}
 </script>
 <style lang="less" scoped>
 .icon {
@@ -107,4 +109,3 @@ const closeDrawer = () => {
   }
 }
 </style>
-

@@ -1,5 +1,5 @@
 import ShyFlowDingDing from "./src/pages/index.vue";
-import "ant-design-vue/dist/antd.min.css";
+// import "ant-design-vue/dist/antd.min.css";
 import nodeWrap from "./src/components/nodeWrap.vue";
 import addNode from "./src/components/addNode.vue";
 import displayNodeWrap from "./src/components/displayNodeWrap.vue";

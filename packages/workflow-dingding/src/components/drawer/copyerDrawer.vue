@@ -1,6 +1,6 @@
 <template>
   <Drawer
-    v-model:visible="visible"
+    v-model:open="visible"
     class="set_copyer"
     :width="550"
     title="触发器"
@@ -9,7 +9,11 @@
     :footer-style="{ textAlign: 'right' }"
   >
     <Form ref="formRef">
-      <Space v-for="(item, index) in conditionList" style="display: flex; margin-bottom: 8px" align="baseline">
+      <Space
+        v-for="(item, index) in conditionList"
+        style="display: flex; margin-bottom: 8px"
+        align="baseline"
+      >
         <FormItem label="类型">
           <Select
             v-model:value="item.type"
@@ -42,66 +46,78 @@
   </Drawer>
 </template>
 <script setup>
-import $func from "../../config/preload";
-import { mapState, mapMutations } from "../../config/lib.js";
-import { ref, watch, computed } from "vue";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons-vue";
-import {Drawer, Form, FormItem, Input, Select, Button, Space, Checkbox } from 'ant-design-vue'
-let copyerConfig = ref({});
-let conditionList = ref([]);
-let { copyerDrawer, copyerConfig1 } = mapState();
+import $func from '../../config/preload'
+import { mapState, mapMutations } from '../../config/lib.js'
+import { ref, watch, computed } from 'vue'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons-vue'
+import {
+  Drawer,
+  Form,
+  FormItem,
+  Input,
+  Select,
+  Button,
+  Space,
+  Checkbox
+} from 'ant-design-vue'
+let copyerConfig = ref({})
+let conditionList = ref([])
+let { copyerDrawer, copyerConfig1 } = mapState()
 
 let visible = computed({
   get() {
-    return copyerDrawer.value;
+    return copyerDrawer.value
   },
   set() {
-    closeDrawer();
-  },
-});
-let { setCopyerConfig, setCopyer } = mapMutations();
-watch(copyerConfig1, (val) => {
-  copyerConfig.value = val.value;
-  if (copyerConfig.value.conditionList && copyerConfig.value.conditionList.length > 0) {
-    conditionList.value = [...copyerConfig.value.conditionList];
-  } else {
-    conditionList.value = [{ type: "class", name: "" }];
+    closeDrawer()
   }
-});
+})
+let { setCopyerConfig, setCopyer } = mapMutations()
+watch(copyerConfig1, (val) => {
+  copyerConfig.value = val.value
+  if (
+    copyerConfig.value.conditionList &&
+    copyerConfig.value.conditionList.length > 0
+  ) {
+    conditionList.value = [...copyerConfig.value.conditionList]
+  } else {
+    conditionList.value = [{ type: 'class', name: '' }]
+  }
+})
 
 const saveCopyer = () => {
-  copyerConfig.value.conditionList = conditionList.value;
+  copyerConfig.value.conditionList = conditionList.value
   setCopyerConfig({
     value: copyerConfig.value,
     flag: true,
-    id: copyerConfig1.value.id,
-  });
-  closeDrawer();
-};
+    id: copyerConfig1.value.id
+  })
+  closeDrawer()
+}
 const closeDrawer = () => {
-  setCopyer(false);
-};
+  setCopyer(false)
+}
 
 const typeList = [
   {
-    label: "类",
-    value: "class",
-  },
-];
+    label: '类',
+    value: 'class'
+  }
+]
 
 const removeSight = (item) => {
-  let index = conditionList.value.indexOf(item);
+  let index = conditionList.value.indexOf(item)
   if (index !== -1) {
-    conditionList.value.splice(index, 1);
+    conditionList.value.splice(index, 1)
   }
-};
+}
 
 const addSight = () => {
   conditionList.value.push({
     type: typeList[0].value,
-    value: "",
-  });
-};
+    value: ''
+  })
+}
 </script>
 
 <style lang="less">

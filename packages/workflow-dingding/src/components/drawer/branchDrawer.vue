@@ -1,6 +1,6 @@
 <template>
   <Drawer
-    v-model:visible="visible"
+    v-model:open="visible"
     class="set_promoter"
     :width="550"
     title="分支设置"
@@ -18,19 +18,19 @@
   </Drawer>
 </template>
 <script setup>
-import { mapState, mapMutations } from "../../config/lib.js";
+import { mapState, mapMutations } from '../../config/lib.js'
 
-import { Form ,Drawer, Input, Button, Space } from "ant-design-vue";
-import { reactive, ref, computed, watch } from "vue";
-const useForm = Form.useForm;
+import { Form, Drawer, Input, Button, Space } from 'ant-design-vue'
+import { reactive, ref, computed, watch } from 'vue'
+const useForm = Form.useForm
 
-const modelRef = reactive({ expression: "" });
+const modelRef = reactive({ expression: '' })
 
 let conditionsConfig = reactive({
-  conditionNodes: [],
-});
-let conditionConfig = reactive({});
-let priorityLevel = ref("");
+  conditionNodes: []
+})
+let conditionConfig = reactive({})
+let priorityLevel = ref('')
 
 const { validate, validateInfos } = useForm(
   modelRef,
@@ -38,24 +38,24 @@ const { validate, validateInfos } = useForm(
     expression: [
       {
         required: true,
-        message: "请输入条件组表达式",
-      },
-    ],
-  }),
-);
+        message: '请输入条件组表达式'
+      }
+    ]
+  })
+)
 
-let { deploymentId, branchConfig1, branchDrawer } = mapState();
+let { deploymentId, branchConfig1, branchDrawer } = mapState()
 let visible = computed({
   get() {
-    return branchDrawer.value;
+    return branchDrawer.value
   },
   set() {
-    closeDrawer();
-  },
-});
+    closeDrawer()
+  }
+})
 
-watch(branchConfig1, (val) => {});
-let { setBranch, setBranchConfig } = mapMutations();
+watch(branchConfig1, (val) => {})
+let { setBranch, setBranchConfig } = mapMutations()
 
 const saveCondition = () => {
   validate()
@@ -74,12 +74,12 @@ const saveCondition = () => {
     })
     .catch(() => {})
     .finally(() => {
-      closeDrawer();
-    });
-};
+      closeDrawer()
+    })
+}
 
 const closeDrawer = (val) => {
-  setBranch(false);
-};
+  setBranch(false)
+}
 </script>
 <style lang="less" scoped></style>

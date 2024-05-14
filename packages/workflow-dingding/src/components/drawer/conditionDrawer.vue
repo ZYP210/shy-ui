@@ -1,6 +1,6 @@
 <template>
   <Drawer
-    v-model:visible="visible"
+    v-model:open="visible"
     class="set_promoter"
     :width="550"
     title="条件设置"
@@ -28,18 +28,18 @@
   </Drawer>
 </template>
 <script setup>
-import { mapState, mapMutations } from "../../config/lib.js";
+import { mapState, mapMutations } from '../../config/lib.js'
 
-import { Form, FormItem, Drawer,Input, Space, Button } from "ant-design-vue";
-import { reactive , ref, computed, watch } from "vue";
-const useForm = Form.useForm;
+import { Form, FormItem, Drawer, Input, Space, Button } from 'ant-design-vue'
+import { reactive, ref, computed, watch } from 'vue'
+const useForm = Form.useForm
 
-const modelRef = reactive({ expression: "" });
+const modelRef = reactive({ expression: '' })
 let conditionsConfig = reactive({
-  conditionNodes: [],
-});
-let conditionConfig = reactive({});
-let priorityLevel = ref("");
+  conditionNodes: []
+})
+let conditionConfig = reactive({})
+let priorityLevel = ref('')
 
 const { validate, validateInfos } = useForm(
   modelRef,
@@ -47,62 +47,64 @@ const { validate, validateInfos } = useForm(
     expression: [
       {
         required: true,
-        message: "请输入条件组表达式",
-      },
-    ],
-  }),
-);
+        message: '请输入条件组表达式'
+      }
+    ]
+  })
+)
 
-let { deploymentId, conditionsConfig1, conditionDrawer } = mapState();
+let { deploymentId, conditionsConfig1, conditionDrawer } = mapState()
 let visible = computed({
   get() {
-    return conditionDrawer.value;
+    return conditionDrawer.value
   },
   set() {
-    closeDrawer();
-  },
-});
+    closeDrawer()
+  }
+})
 
 watch(conditionsConfig1, (val) => {
-  conditionsConfig = val.value;
-  priorityLevel.value = val.priorityLevel;
+  conditionsConfig = val.value
+  priorityLevel.value = val.priorityLevel
   conditionConfig = val.priorityLevel
     ? conditionsConfig.conditionNodes[val.priorityLevel - 1]
-    : { expression: '' };
+    : { expression: '' }
 
   if (conditionConfig.expression) {
-    const regex = /\${(.*?)}/g;
-    const matches = conditionConfig.expression.match(regex);
+    const regex = /\${(.*?)}/g
+    const matches = conditionConfig.expression.match(regex)
     if (matches) {
-  const contents = matches.map(match => match.replace('${', '').replace('}', ''));
-      
-      modelRef.expression = contents[0];
-  }
-    
+      const contents = matches.map((match) =>
+        match.replace('${', '').replace('}', '')
+      )
+
+      modelRef.expression = contents[0]
+    }
   } else {
-    modelRef.expression = "";
+    modelRef.expression = ''
   }
-});
-let { setCondition, setConditionsConfig } = mapMutations();
+})
+let { setCondition, setConditionsConfig } = mapMutations()
 
 const saveCondition = () => {
   validate()
     .then((res) => {
-      if (res !== "error") {
-        conditionsConfig.conditionNodes[priorityLevel.value - 1].expression = '${' + modelRef.expression + '}';
+      if (res !== 'error') {
+        conditionsConfig.conditionNodes[priorityLevel.value - 1].expression =
+          '${' + modelRef.expression + '}'
         setConditionsConfig({
           value: conditionsConfig,
           flag: true,
-          id: conditionsConfig1.value.id,
-        });
-        closeDrawer();
+          id: conditionsConfig1.value.id
+        })
+        closeDrawer()
       }
     })
-    .catch(() => {});
-};
+    .catch(() => {})
+}
 
 const closeDrawer = (val) => {
-  setCondition(false);
-};
+  setCondition(false)
+}
 </script>
 <style lang="less" scoped></style>

@@ -1,5 +1,5 @@
 <template>
-  <Modal v-model:visible="visibleDialog" title="提示" :width="650">
+  <Modal v-model:open="visibleDialog" title="提示" :width="650">
     <div class="ant-confirm-body">
       <!-- <i class="anticon anticon-close-circle" style="color: #f00"></i> -->
       <span class="ant-confirm-title">当前无法发布</span>
@@ -7,9 +7,15 @@
         <div>
           <p class="error-modal-desc">以下内容不完善，需进行修改</p>
           <div class="error-modal-list">
-            <div class="error-modal-item" v-for="(item, index) in list" :key="index">
+            <div
+              class="error-modal-item"
+              v-for="(item, index) in list"
+              :key="index"
+            >
               <div class="error-modal-item-label">流程设计</div>
-              <div class="error-modal-item-content">{{ item.name }} 未选择{{ item.type }}</div>
+              <div class="error-modal-item-content">
+                {{ item.name }} 未选择{{ item.type }}
+              </div>
             </div>
           </div>
         </div>
@@ -23,28 +29,28 @@
 </template>
 
 <script setup>
-import { computed, defineProps, defineEmits } from "vue";
-import { Modal, Button } from "ant-design-vue";
+import { computed, defineProps, defineEmits } from 'vue'
+import { Modal, Button } from 'ant-design-vue'
 let props = defineProps({
   list: {
     type: Array,
-    default: () => [],
+    default: () => []
   },
   visible: {
     type: Boolean,
-    default: false,
-  },
-});
-let emits = defineEmits(["update:visible"]);
+    default: false
+  }
+})
+let emits = defineEmits(['update:visible'])
 
 let visibleDialog = computed({
   get() {
-    return props.visible;
+    return props.visible
   },
   set(val) {
-    emits("update:visible", val);
-  },
-});
+    emits('update:visible', val)
+  }
+})
 </script>
 
 <style scoped>

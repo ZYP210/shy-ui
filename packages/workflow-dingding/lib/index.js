@@ -1,7 +1,7 @@
 "use strict";
 const vue = require("vue");
 const antDesignVue = require("ant-design-vue");
-const errorDialog_vue_vue_type_style_index_0_scoped_44e27890_lang = "";
+const errorDialog_vue_vue_type_style_index_0_scoped_924aa8bd_lang = "";
 const _export_sfc = (sfc, props) => {
   const target2 = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -9,7 +9,7 @@ const _export_sfc = (sfc, props) => {
   }
   return target2;
 };
-const _withScopeId$3 = (n) => (vue.pushScopeId("data-v-44e27890"), n = n(), vue.popScopeId(), n);
+const _withScopeId$3 = (n) => (vue.pushScopeId("data-v-924aa8bd"), n = n(), vue.popScopeId(), n);
 const _hoisted_1$7 = { class: "ant-confirm-body" };
 const _hoisted_2$5 = /* @__PURE__ */ _withScopeId$3(() => /* @__PURE__ */ vue.createElementVNode("span", { class: "ant-confirm-title" }, "当前无法发布", -1));
 const _hoisted_3$5 = { class: "ant-confirm-content" };
@@ -30,8 +30,9 @@ const _sfc_main$a = {
     }
   },
   emits: ["update:visible"],
-  setup(__props, { emit: emits }) {
-    const props = __props;
+  setup(__props, { emit: __emit }) {
+    let props = __props;
+    let emits = __emit;
     let visibleDialog = vue.computed({
       get() {
         return props.visible;
@@ -92,7 +93,7 @@ const _sfc_main$a = {
     };
   }
 };
-const errorDialog = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-44e27890"]]);
+const errorDialog = /* @__PURE__ */ _export_sfc(_sfc_main$a, [["__scopeId", "data-v-924aa8bd"]]);
 /*!
  * vuex v4.0.0
  * (c) 2021 Evan You
@@ -817,8 +818,9 @@ const _sfc_main$9 = /* @__PURE__ */ vue.defineComponent({
     }
   },
   emits: ["update:fieldPermissions"],
-  setup(__props, { emit: emits }) {
+  setup(__props, { emit: __emit }) {
     const props = __props;
+    const emits = __emit;
     const columns = [
       {
         title: "组件名称",
@@ -910,9 +912,9 @@ const _sfc_main$9 = /* @__PURE__ */ vue.defineComponent({
     };
   }
 });
-const authorityTable_vue_vue_type_style_index_0_scoped_cd922ca4_lang = "";
-const AuthorityTable = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-cd922ca4"]]);
-const promoterDrawer_vue_vue_type_style_index_0_scoped_9dd2dd80_lang = "";
+const authorityTable_vue_vue_type_style_index_0_scoped_f047ab41_lang = "";
+const AuthorityTable = /* @__PURE__ */ _export_sfc(_sfc_main$9, [["__scopeId", "data-v-f047ab41"]]);
+const promoterDrawer_vue_vue_type_style_index_0_scoped_0cddcec2_lang = "";
 const _hoisted_1$5 = { class: "btn-group" };
 const _sfc_main$8 = {
   __name: "promoterDrawer",
@@ -988,7 +990,7 @@ const _sfc_main$8 = {
     };
   }
 };
-const promoterDrawer = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId", "data-v-9dd2dd80"]]);
+const promoterDrawer = /* @__PURE__ */ _export_sfc(_sfc_main$8, [["__scopeId", "data-v-0cddcec2"]]);
 function bound01(n, max) {
   if (isOnePointZero(n)) {
     n = "100%";
@@ -2079,7 +2081,7 @@ var ClockCircleOutlined = function ClockCircleOutlined2(props, context) {
 ClockCircleOutlined.displayName = "ClockCircleOutlined";
 ClockCircleOutlined.inheritAttrs = false;
 const ClockCircleOutlined$1 = ClockCircleOutlined;
-var CloseOutlined$2 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z" } }] }, "name": "close", "theme": "outlined" };
+var CloseOutlined$2 = { "icon": { "tag": "svg", "attrs": { "fill-rule": "evenodd", "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M799.86 166.31c.02 0 .04.02.08.06l57.69 57.7c.04.03.05.05.06.08a.12.12 0 010 .06c0 .03-.02.05-.06.09L569.93 512l287.7 287.7c.04.04.05.06.06.09a.12.12 0 010 .07c0 .02-.02.04-.06.08l-57.7 57.69c-.03.04-.05.05-.07.06a.12.12 0 01-.07 0c-.03 0-.05-.02-.09-.06L512 569.93l-287.7 287.7c-.04.04-.06.05-.09.06a.12.12 0 01-.07 0c-.02 0-.04-.02-.08-.06l-57.69-57.7c-.04-.03-.05-.05-.06-.07a.12.12 0 010-.07c0-.03.02-.05.06-.09L454.07 512l-287.7-287.7c-.04-.04-.05-.06-.06-.09a.12.12 0 010-.07c0-.02.02-.04.06-.08l57.7-57.69c.03-.04.05-.05.07-.06a.12.12 0 01.07 0c.03 0 .05.02.09.06L512 454.07l287.7-287.7c.04-.04.06-.05.09-.06a.12.12 0 01.07 0z" } }] }, "name": "close", "theme": "outlined" };
 const CloseOutlinedSvg = CloseOutlined$2;
 function _objectSpread$a(target2) {
   for (var i = 1; i < arguments.length; i++) {
@@ -2283,7 +2285,7 @@ var NodeIndexOutlined = function NodeIndexOutlined2(props, context) {
 NodeIndexOutlined.displayName = "NodeIndexOutlined";
 NodeIndexOutlined.inheritAttrs = false;
 const NodeIndexOutlined$1 = NodeIndexOutlined;
-var PlusOutlined$2 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "defs", "attrs": {}, "children": [{ "tag": "style", "attrs": {} }] }, { "tag": "path", "attrs": { "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z" } }, { "tag": "path", "attrs": { "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z" } }] }, "name": "plus", "theme": "outlined" };
+var PlusOutlined$2 = { "icon": { "tag": "svg", "attrs": { "viewBox": "64 64 896 896", "focusable": "false" }, "children": [{ "tag": "path", "attrs": { "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z" } }, { "tag": "path", "attrs": { "d": "M192 474h672q8 0 8 8v60q0 8-8 8H160q-8 0-8-8v-60q0-8 8-8z" } }] }, "name": "plus", "theme": "outlined" };
 const PlusOutlinedSvg = PlusOutlined$2;
 function _objectSpread$4(target2) {
   for (var i = 1; i < arguments.length; i++) {
@@ -2705,8 +2707,8 @@ All.prototype = {
   }
 };
 const $func = new All();
-const approverDrawer_vue_vue_type_style_index_0_scoped_ec1405e4_lang = "";
-const _withScopeId$2 = (n) => (vue.pushScopeId("data-v-ec1405e4"), n = n(), vue.popScopeId(), n);
+const approverDrawer_vue_vue_type_style_index_0_scoped_0b6c1b04_lang = "";
+const _withScopeId$2 = (n) => (vue.pushScopeId("data-v-0b6c1b04"), n = n(), vue.popScopeId(), n);
 const _hoisted_1$4 = { class: "btn-group" };
 const _hoisted_2$4 = /* @__PURE__ */ _withScopeId$2(() => /* @__PURE__ */ vue.createElementVNode("span", { class: "tips" }, "选择能发起该审批的人员/部门，不选则默认开放给所有人", -1));
 const _hoisted_3$4 = {
@@ -2718,7 +2720,7 @@ const _hoisted_5$4 = { class: "list-row" };
 const _sfc_main$7 = {
   __name: "approverDrawer",
   emits: ["update:nodeConfig"],
-  setup(__props, { emit: emits }) {
+  setup(__props, { emit: __emit }) {
     const ruleTypeDic = $func.getRuleTypeDic();
     const type = vue.ref("1");
     const authorityTableOptions = vue.computed(() => {
@@ -2923,7 +2925,7 @@ const _sfc_main$7 = {
             key: 1,
             fieldPermissions: fieldPermissions.value,
             "onUpdate:fieldPermissions": _cache[1] || (_cache[1] = ($event) => fieldPermissions.value = $event),
-            options: vue.unref(authorityTableOptions)
+            options: authorityTableOptions.value
           }, null, 8, ["fieldPermissions", "options"]))
         ]),
         _: 1
@@ -2931,7 +2933,7 @@ const _sfc_main$7 = {
     };
   }
 };
-const approverDrawer = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-ec1405e4"]]);
+const approverDrawer = /* @__PURE__ */ _export_sfc(_sfc_main$7, [["__scopeId", "data-v-0b6c1b04"]]);
 const copyerDrawer_vue_vue_type_style_index_0_lang = "";
 const _sfc_main$6 = {
   __name: "copyerDrawer",
@@ -3282,9 +3284,10 @@ const _sfc_main$3 = {
   __name: "index",
   props: ["initData", "customApi", "option"],
   emits: ["getNodeJson"],
-  setup(__props, { emit }) {
-    const props = __props;
+  setup(__props, { emit: __emit }) {
     let { setTableId, setNodeTypeList, setUserList, setRoleList, setDeptList, setIsLook, setAuthorityTableList, setPostList, setUserGroupList, setScriptList, setTypeList } = mapMutations();
+    const emit = __emit;
+    const props = __props;
     let tipList = vue.ref([]);
     let tipVisible = vue.ref(false);
     let nowVal = vue.ref(100);
@@ -3433,7 +3436,6 @@ const _sfc_main$3 = {
     };
   }
 };
-const antd_min = "";
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
 var lodash = { exports: {} };
 /**
@@ -8969,11 +8971,11 @@ const _sfc_main$2 = {
     }
   },
   emits: ["update:nodeConfig", "update:rootFieldPermissions"],
-  setup(__props, { emit: emits }) {
-    const props = __props;
+  setup(__props, { emit: __emit }) {
     let _uid = vue.getCurrentInstance().uid;
     let bgColors = ["87, 106, 149", "255, 148, 62", "50, 150, 250", , , "71, 188, 130"];
     let placeholderList = [, "发起人", "审核人", "触发器", "条件", "条件分支"];
+    let props = __props;
     let defaultText = vue.computed(() => {
       return placeholderList[props.nodeConfig.type];
     });
@@ -9013,6 +9015,7 @@ const _sfc_main$2 = {
         resetConditionNodesErr();
       }
     });
+    let emits = __emit;
     let { isTried, approverConfig1, copyerConfig1, conditionsConfig1, branchConfig1, authorityTableList, flowPermission1 } = mapState();
     vue.watch(
       [approverConfig1, copyerConfig1, conditionsConfig1, branchConfig1],
@@ -9211,7 +9214,7 @@ const _sfc_main$2 = {
                 vue.createVNode(vue.unref(CloseOutlined$1), {
                   class: "close",
                   onClick: vue.withModifiers(delNode, ["stop"])
-                }, null, 8, ["onClick"])
+                })
               ], 64))
             ], 4),
             vue.createElementVNode("div", {
@@ -9330,7 +9333,7 @@ const _sfc_main$2 = {
     };
   }
 };
-const _withScopeId$1 = (n) => (vue.pushScopeId("data-v-e852c5d6"), n = n(), vue.popScopeId(), n);
+const _withScopeId$1 = (n) => (vue.pushScopeId("data-v-6723973f"), n = n(), vue.popScopeId(), n);
 const _hoisted_1$1 = { class: "add-node-btn-box" };
 const _hoisted_2$1 = { class: "add-node-btn" };
 const _hoisted_3$1 = { class: "node-select" };
@@ -9349,8 +9352,9 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
     }
   },
   emits: ["update:childNodeP"],
-  setup(__props, { emit: emits }) {
-    const props = __props;
+  setup(__props, { emit: __emit }) {
+    let props = __props;
+    const emits = __emit;
     const { nodeList, isLook } = mapState();
     const hasNode = vue.computed(() => {
       return (type) => {
@@ -9412,7 +9416,7 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
           }, {
             content: vue.withCtx(() => [
               vue.createElementVNode("ul", _hoisted_3$1, [
-                vue.unref(hasNode)(2) ? (vue.openBlock(), vue.createElementBlock("li", {
+                hasNode.value(2) ? (vue.openBlock(), vue.createElementBlock("li", {
                   key: 0,
                   onClick: _cache[0] || (_cache[0] = ($event) => addType(2))
                 }, [
@@ -9422,7 +9426,7 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
                   }),
                   _hoisted_4$1
                 ])) : vue.createCommentVNode("", true),
-                vue.unref(hasNode)(5) ? (vue.openBlock(), vue.createElementBlock("li", {
+                hasNode.value(5) ? (vue.openBlock(), vue.createElementBlock("li", {
                   key: 1,
                   onClick: _cache[1] || (_cache[1] = ($event) => addType(5))
                 }, [
@@ -9446,10 +9450,10 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
     };
   }
 });
-const addNode_vue_vue_type_style_index_0_scoped_e852c5d6_lang = "";
-const addNode = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-e852c5d6"]]);
-const displayNodeWrap_vue_vue_type_style_index_0_scoped_9c0e4d32_lang = "";
-const _withScopeId = (n) => (vue.pushScopeId("data-v-9c0e4d32"), n = n(), vue.popScopeId(), n);
+const addNode_vue_vue_type_style_index_0_scoped_6723973f_lang = "";
+const addNode = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-6723973f"]]);
+const displayNodeWrap_vue_vue_type_style_index_0_scoped_8feddb07_lang = "";
+const _withScopeId = (n) => (vue.pushScopeId("data-v-8feddb07"), n = n(), vue.popScopeId(), n);
 const _hoisted_1 = {
   key: 0,
   class: "node-wrap"
@@ -9503,9 +9507,9 @@ const _sfc_main = {
     }
   },
   setup(__props) {
-    const props = __props;
     let bgColors = ["#464747", "#2991FF", "#21A64B"];
     let placeholderList = [, "发起人", "审核人", "触发器", "条件", "条件分支"];
+    let props = __props;
     let defaultText = vue.computed(() => {
       return placeholderList[props.nodeConfig.type];
     });
@@ -9679,7 +9683,7 @@ const _sfc_main = {
     };
   }
 };
-const displayNodeWrap = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-9c0e4d32"]]);
+const displayNodeWrap = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-8feddb07"]]);
 const store = createStore({
   state: {
     deploymentId: "",
