@@ -6,7 +6,7 @@
         borderRadius: 4,
         colorPrimary: '#2da44e',
         blue: '#0969DA',
-        green: '#2DA44E'
+        green: '#2DA44E',
       },
       components: {
         Input: {
