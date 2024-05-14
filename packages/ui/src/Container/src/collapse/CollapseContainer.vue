@@ -99,6 +99,8 @@ defineExpose({
     justify-content: space-between;
     align-items: center;
     height: 32px;
+    border-radius: 4px;
+    
     &-action {
       background: var(--gray-1);
     }
