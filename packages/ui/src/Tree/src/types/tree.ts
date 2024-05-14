@@ -76,7 +76,9 @@ export const treeProps = buildProps({
     type: Boolean,
     default: false
   },
-  checkable: { type: Boolean, default: true },
+  checkable: { type: Boolean, default: false },
+  addable: { type: Boolean, default: false },
+
   defaultExpandLevel: {
     type: [String, Number] as PropType<string | number>,
     default: ''
