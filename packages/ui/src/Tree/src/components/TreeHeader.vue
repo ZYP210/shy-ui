@@ -7,6 +7,7 @@
       </BasicTitle>
 
       <Icon
+        v-if="addable"
         icon="ant-design:plus-square-outlined"
         :style="{
           color: '#2da44e'
@@ -75,6 +76,10 @@ const props = defineProps({
     default: false
   },
   checkable: {
+    type: Boolean,
+    default: false
+  },
+  addable: {
     type: Boolean,
     default: false
   },

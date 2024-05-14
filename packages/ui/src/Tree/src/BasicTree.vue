@@ -449,7 +449,7 @@ export default defineComponent({
     expose(instance)
 
     return () => {
-      const { title, helpMessage, toolbar, search, checkable } = props
+      const { title, helpMessage, toolbar, search, checkable, addable } = props
       const showTitle = title || toolbar || search || slots.headerTitle
       const scrollStyle: CSSProperties = { height: 'calc(100% - 38px)' }
       return (
@@ -467,6 +467,7 @@ export default defineComponent({
               onSearch={handleSearch}
               searchText={searchState.searchText}
               onPlusClick={handlePlusClick}
+              addable={addable}
             >
               {extendSlots(slots)}
             </TreeHeader>
