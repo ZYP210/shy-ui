@@ -24,15 +24,15 @@ export const basicProps = reactive({
   },
   summaryPrecision: {
     type: Number,
-    default: 2,
+    default: 2
   },
   summaryTotalFields: {
-     type: Array as PropType<string[]>,
+    type: Array as PropType<string[]>,
     default: () => []
   },
   labelAlign: {
     type: String as PropType<'left' | 'center' | 'right'>,
-    default: () => 'right'
+    default: () => 'left'
   },
   labelWidth: {
     type: Number as PropType<number | string>,
