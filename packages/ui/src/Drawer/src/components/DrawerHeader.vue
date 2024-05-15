@@ -1,5 +1,5 @@
 <template>
-  <BasicTitle v-if="!isDetail" :class="prefixCls">
+  <BasicTitle v-if="!isDetail" :class="prefixCls" :span="false">
     <slot name="title"></slot>
     {{ !$slots.title ? title : '' }}
   </BasicTitle>
