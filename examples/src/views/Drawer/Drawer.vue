@@ -1,5 +1,5 @@
 <template>
-  <BasicDrawer @register="register" :title="title" width="50%">
+  <BasicDrawer @register="register" title="zzz" width="50%">
     Drawer Info.
   </BasicDrawer>
 </template>
