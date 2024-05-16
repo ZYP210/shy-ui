@@ -416,7 +416,10 @@ const ShyForm = defineComponent({
             class={{ [`${prefixCls}-table-form-item`]: isTableForm.value }}
             style={{
               [`--col-span`]: `${
-                (schema.colProps?.span / (ROW_SLICE + ACTION_COL)) * 100
+                ((schema.colProps?.span ??
+                  getBindValue.value.baseColProps.span) /
+                  (ROW_SLICE + ACTION_COL)) *
+                100
               }%`
             }}
           >

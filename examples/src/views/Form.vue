@@ -1,5 +1,5 @@
 <template>
-  <div class="p-16px w-full h-full overflow-hidden bg-white">
+  <div class="p-16px w-full h-full bg-white">
     <Button @click="handleGetForm">获取form</Button>
     <Button @click="handleReset">reset</Button>
     <ShyForm :labelWidth="100" @register="registerForm" @submit="handleSubmit">
@@ -44,7 +44,6 @@ const schemas = ref<FormSchema[]>([
     componentProps: {
       // disabled: true
     },
-    colProps: { span: 8 }
   },
   {
     label: 'InputTextArea',
@@ -54,31 +53,31 @@ const schemas = ref<FormSchema[]>([
     componentProps: {
       // disabled: true
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'InputNumber',
     field: 'InputNumber',
     component: 'InputNumber',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'InputPassword',
     field: 'InputPassword',
     component: 'InputPassword',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'InputSearch',
     field: 'InputSearch',
     component: 'InputSearch',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'AutoComplete',
     field: 'AutoComplete',
     component: 'AutoComplete',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'ApiSelect',
@@ -104,7 +103,7 @@ const schemas = ref<FormSchema[]>([
         params: { c: formModel.b }
       }
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'b',
@@ -136,7 +135,7 @@ const schemas = ref<FormSchema[]>([
         ]
       }
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'TreeSelect',
@@ -150,7 +149,7 @@ const schemas = ref<FormSchema[]>([
         }
       ]
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'ApiTreeSelect',
@@ -166,7 +165,7 @@ const schemas = ref<FormSchema[]>([
         ]
       }
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'ApiRadioGroup',
@@ -186,13 +185,13 @@ const schemas = ref<FormSchema[]>([
         ]
       }
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'Switch',
     field: 'Switch',
     component: 'Switch',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'RadioButtonGroup',
@@ -210,7 +209,7 @@ const schemas = ref<FormSchema[]>([
         }
       ]
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'RadioGroup',
@@ -228,13 +227,13 @@ const schemas = ref<FormSchema[]>([
         }
       ]
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'Checkbox',
     field: 'Checkbox',
     component: 'Checkbox',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'CheckboxGroup',
@@ -252,7 +251,7 @@ const schemas = ref<FormSchema[]>([
         }
       ]
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'ApiCascader',
@@ -272,7 +271,7 @@ const schemas = ref<FormSchema[]>([
         ]
       }
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'Cascader',
@@ -290,19 +289,19 @@ const schemas = ref<FormSchema[]>([
         }
       ]
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'Slider',
     field: 'Slider',
     component: 'Slider',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'Rate',
     field: 'Rate',
     component: 'Rate',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'ApiTransfer',
@@ -322,7 +321,7 @@ const schemas = ref<FormSchema[]>([
         ]
       }
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'Upload',
@@ -331,49 +330,49 @@ const schemas = ref<FormSchema[]>([
     componentProps: {
       api: () => {}
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'DatePicker',
     field: 'DatePicker',
     component: 'DatePicker',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'MonthPicker',
     field: 'MonthPicker',
     component: 'MonthPicker',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'RangePicker',
     field: 'RangePicker',
     component: 'RangePicker',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'WeekPicker',
     field: 'WeekPicker',
     component: 'WeekPicker',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'TimePicker',
     field: 'TimePicker',
     component: 'TimePicker',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'StrengthMeter',
     field: 'StrengthMeter',
     component: 'StrengthMeter',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'IconPicker',
     field: 'IconPicker',
     component: 'IconPicker',
-    colProps: { span: 8 }
+    
   },
   {
     label: 'ColorPicker',
@@ -384,7 +383,7 @@ const schemas = ref<FormSchema[]>([
         token.value.colorPrimary = val
       }
     },
-    colProps: { span: 8 }
+    
   },
   {
     label: 'Tinymce',
@@ -503,7 +502,8 @@ const [
   { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useShyForm({
   schemas: schemas as any,
-  layout: 'vertical'
+  layout: 'vertical',
+  baseColProps: { span: 8 }
 })
 
 const handleReset = () => {
