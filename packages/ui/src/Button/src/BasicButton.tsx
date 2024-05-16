@@ -33,7 +33,7 @@ const BasicButton = defineComponent({
             break
 
           case 'success':
-            colorPrimary = getVarColor('--primary-5')
+            colorPrimary = getVarColor('--green-5')
             break
 
           case 'message':
