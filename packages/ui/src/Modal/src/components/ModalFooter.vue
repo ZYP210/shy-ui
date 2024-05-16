@@ -11,7 +11,7 @@
     </BasicButton>
     <slot name="centerFooter"></slot>
     <BasicButton
-      type="success"
+      type="primary"
       @click="handleOk"
       :loading="confirmLoading"
       v-bind="okButtonProps"

@@ -6,13 +6,14 @@
       v-if="helpMessage"
       :text="helpMessage"
     />
-    <slot name="extra"> </slot>
-    <component
-      v-if="$attrs?.extra"
-      :is="
-        isFunction($attrs.extra) ? $attrs.extra?.() : h('span', $attrs.extra)
-      "
-    ></component>
+    <slot name="extra">
+      <component
+        v-if="$attrs?.extra"
+        :is="
+          isFunction($attrs.extra) ? $attrs.extra?.() : h('span', $attrs.extra)
+        "
+      ></component>
+    </slot>
   </span>
 </template>
 <script lang="ts" setup>
@@ -59,14 +60,8 @@ const getClass = computed(() => [
   line-height: 20px;
   padding: 0 0 0 10px;
   margin: 10px 0;
-  justify-content: space-between;
   align-items: center;
-
-  &-label {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
+  gap: 8px;
 
   &-show-span::before {
     content: '';
