@@ -2,7 +2,7 @@ import { computed, defineComponent } from 'vue'
 import { buttonProps } from './props'
 import { Button, ConfigProvider } from 'ant-design-vue'
 import { Icon } from '../../Icon'
-
+import { getVarColor } from '../../style'
 const BasicButton = defineComponent({
   props: buttonProps,
   setup(props, { attrs, slots }) {
@@ -25,23 +25,23 @@ const BasicButton = defineComponent({
         let colorPrimary: string
         switch (props.type || props.color) {
           case 'danger':
-            colorPrimary = '#CF222E'
+            colorPrimary = getVarColor('--red-6')
             break
 
           case 'waring':
-            colorPrimary = '#BF8700'
+            colorPrimary = getVarColor('--yellow-5')
             break
 
           case 'success':
-            colorPrimary = '#2DA44E'
+            colorPrimary = getVarColor('--primary-5')
             break
 
           case 'message':
-            colorPrimary = '#0969DA'
+            colorPrimary = getVarColor('--blue-6')
             break
 
           default:
-            colorPrimary = '#2DA44E'
+            colorPrimary = getVarColor('--primary-5')
             break
         }
 
