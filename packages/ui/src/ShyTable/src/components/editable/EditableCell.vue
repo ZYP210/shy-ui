@@ -9,7 +9,7 @@ import {
   unref,
   watchEffect
 } from 'vue'
-import type { BasicColumn, TableActionType } from '../../types/table'
+import type { ShyColumn, TableActionType } from '../../types/table'
 // import type { EditRecordRow } from './index'
 import {
   CheckOutlined,
@@ -60,7 +60,7 @@ export default defineComponent({
       type: Object as any
     },
     column: {
-      type: Object as PropType<BasicColumn>,
+      type: Object as PropType<ShyColumn>,
       default: () => ({})
     },
     uuId: {

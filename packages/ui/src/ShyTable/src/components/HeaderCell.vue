@@ -17,14 +17,14 @@ export default {
 </script>
 <script lang="ts" setup>
 // import type { PropType } from 'vue'
-import type { BasicColumn } from '../types/table'
+import type { ShyColumn } from '../types/table'
 import { computed } from 'vue'
 import { BasicHelp } from '../../../Basic'
 import EditTableHeaderCell from './EditTableHeaderIcon.vue'
 import { useDesign } from '@shy-plugins/use'
 
 type Props = {
-  column: BasicColumn
+  column: ShyColumn
 }
 
 const props = withDefaults(defineProps<Props>(), {

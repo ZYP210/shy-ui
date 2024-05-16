@@ -1,5 +1,5 @@
 import { defineComponent } from 'vue'
-import type { BasicColumn, ColumnChangeParam } from '../../types/table'
+import type { ShyColumn, ColumnChangeParam } from '../../types/table'
 import {
   ref,
   reactive,
@@ -145,9 +145,9 @@ const ShyTableColumn = defineComponent({
         cachePlainOptions.value = columns
         state.defaultCheckList = checkList
       } else {
-        unref(plainOptions).forEach((item: BasicColumn) => {
+        unref(plainOptions).forEach((item: ShyColumn) => {
           const findItem = columns.find(
-            (col: BasicColumn) => col.dataIndex === item.dataIndex
+            (col: ShyColumn) => col.dataIndex === item.dataIndex
           )
           if (findItem) {
             item.fixed = findItem.fixed
@@ -162,9 +162,9 @@ const ShyTableColumn = defineComponent({
     const reInit = () => {
       const columns = getColumns()
       // plainOptions.value = columns
-      unref(plainOptions).forEach((item: BasicColumn) => {
+      unref(plainOptions).forEach((item: ShyColumn) => {
         const findItem = columns.find(
-          (col: BasicColumn) => col.dataIndex === item.dataIndex
+          (col: ShyColumn) => col.dataIndex === item.dataIndex
         )
         if (findItem) {
           item.fixed = findItem.fixed
@@ -281,10 +281,10 @@ const ShyTableColumn = defineComponent({
       })
     }
 
-    function handleColumnFixed(item: BasicColumn, fixed?: 'left' | 'right') {
+    function handleColumnFixed(item: ShyColumn, fixed?: 'left' | 'right') {
       if (!state.checkedList.includes(item.dataIndex as string)) return
 
-      const columns = getColumns() as BasicColumn[]
+      const columns = getColumns() as ShyColumn[]
       const isFixed = item.fixed === fixed ? false : fixed
       const index = columns.findIndex((col) => col.dataIndex === item.dataIndex)
       if (index !== -1) {
@@ -310,7 +310,7 @@ const ShyTableColumn = defineComponent({
             columns.findIndex((val: string) => val === col.dataIndex) === -1
         } else {
           const find = columns.find(
-            (val: BasicColumn) => val.dataIndex === col.dataIndex
+            (val: ShyColumn) => val.dataIndex === col.dataIndex
           )
           defaultHidden = find
             ? isBoolean(find.defaultHidden)

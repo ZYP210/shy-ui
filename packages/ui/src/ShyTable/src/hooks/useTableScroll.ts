@@ -1,7 +1,7 @@
 import type {
   ShyTableProps,
   TableRowSelection,
-  BasicColumn
+  ShyColumn
 } from '../types/table'
 import { Ref, ComputedRef, ref } from 'vue'
 import { computed, unref, nextTick, watch } from 'vue'
@@ -15,7 +15,7 @@ import Sortable from 'sortablejs'
 export function useTableScroll(
   propsRef: ComputedRef<ShyTableProps>,
   tableElRef: Ref<ComponentRef>,
-  columnsRef: ComputedRef<BasicColumn[]>,
+  columnsRef: ComputedRef<ShyColumn[]>,
   rowSelectionRef: ComputedRef<TableRowSelection | null>,
   getDataSourceRef: ComputedRef<Recordable[]>,
   wrapRef: Ref<HTMLElement | null>,

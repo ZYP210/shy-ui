@@ -2,7 +2,7 @@ import type {
   ShyTableProps,
   TableActionType,
   FetchParams,
-  BasicColumn
+  ShyColumn
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 // import type { DynamicProps } from '/#/utils'
@@ -98,7 +98,7 @@ export function useShyTable(tableProps?: Props): [
       const columns = getTableInstance()?.getColumns({ ignoreIndex }) || []
       return toRaw(columns)
     },
-    setColumns: (columns: BasicColumn[] | string[]) => {
+    setColumns: (columns: ShyColumn[] | string[]) => {
       getTableInstance()?.setColumns(columns)
     },
     setTableData: (values: any[]) => {
