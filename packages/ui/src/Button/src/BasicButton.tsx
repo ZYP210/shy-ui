@@ -2,7 +2,7 @@ import { computed, defineComponent } from 'vue'
 import { buttonProps } from './props'
 import { Button, ConfigProvider } from 'ant-design-vue'
 import { Icon } from '../../Icon'
-import { getVarColor } from '../../style'
+import { getVarColor } from '@shy-plugins/use'
 const BasicButton = defineComponent({
   props: buttonProps,
   setup(props, { attrs, slots }) {
