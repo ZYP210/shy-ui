@@ -28,7 +28,10 @@
                 {
                   label: '保存',
                   // ifShow: false,
-                  onClick: handleSave.bind(null, record)
+                  popConfirm: {
+                    title: '确认保存?',
+                    confirm: handleSave.bind(null, record)
+                  }
                 },
                 {
                   label: '测试',
@@ -105,7 +108,7 @@ const columns: any[] = [
         label: '危险',
         value: '4',
         colorType: 'var(--red-5)'
-      },
+      }
     ]
   },
   {

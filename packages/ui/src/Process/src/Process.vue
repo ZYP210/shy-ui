@@ -11,7 +11,7 @@
           <template #dot>
             <div
               class="process-dot"
-              :class="{ ['process-dot-last']: data.length - 1 === +index }"
+              :class="{ ['process-dot-first']: +index === 0 }"
             ></div>
           </template>
 
@@ -201,7 +201,7 @@ const props = defineProps({
       }
     }
 
-    .process-dot-last {
+    .process-dot-first {
       border: 1px solid var(--primary-5);
 
       &::before {
