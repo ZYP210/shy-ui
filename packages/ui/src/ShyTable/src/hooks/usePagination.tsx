@@ -29,7 +29,6 @@ export function usePagination(refProps: ComputedRef<ShyTableProps>) {
       isShowPagination,
       current: 1,
       pageSize: PAGE_SIZE,
-      // size: '',
       defaultPageSize: PAGE_SIZE,
       showTotal: (total) => (
         <span>

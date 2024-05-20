@@ -202,11 +202,32 @@ input:focus.ant-input {
   border-color: var(--primary-5);
 
   &:hover {
-    color: var(--gray-0);
+    color: var(--light);
     background-color: var(--primary-5);
   }
 }
 
 .ant-popconfirm-buttons {
   display: flex;
+}
+
+.ant-picker-cell-today {
+  .ant-picker-cell-inner {
+    &::before {
+      border-width: 1px !important;
+    }
+  }
+}
+
+.ant-picker-cell-now {
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--primary-5);
+    border-radius: 4px;
+  }
 }

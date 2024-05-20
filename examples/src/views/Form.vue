@@ -14,7 +14,7 @@
         />
       </template>
     </ShyForm>
-    <div class="h-2000px"></div>
+    <!-- <div class="h-2000px"></div> -->
   </div>
 </template>
 <script lang="ts" setup>
@@ -45,7 +45,7 @@ const handlePush = () => {
       return {
         a: 1,
         b: 2,
-        
+
         d: 4,
         e: 5
       }
@@ -152,8 +152,7 @@ const schemas = ref<FormSchema[]>([
   //         }
   //       ]
   //     }
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'TreeSelect',
@@ -354,7 +353,9 @@ const schemas = ref<FormSchema[]>([
   //   label: 'DatePicker',
   //   field: 'DatePicker',
   //   component: 'DatePicker',
-
+  //   componentProps: {
+  //     picker: 'month',
+  //   }
   // },
   // {
   //   label: 'MonthPicker',
@@ -366,7 +367,9 @@ const schemas = ref<FormSchema[]>([
   //   label: 'RangePicker',
   //   field: 'RangePicker',
   //   component: 'RangePicker',
-
+  //   componentProps: {
+  //     picker: 'month',
+  //   }
   // },
   // {
   //   label: 'WeekPicker',
@@ -501,7 +504,7 @@ const schemas = ref<FormSchema[]>([
             dataIndex: 'c',
             type: 'InputNumber',
             required: true,
-            width: 200
+            width: 2000
           },
           {
             title: 'd',

@@ -1,7 +1,6 @@
 import type { FormActionType, FormProps, FormSchema } from './types/form'
 import type { AdvanceState } from './types/hooks'
 import type { Ref } from 'vue'
-
 import {
   toRaw,
   defineComponent,
@@ -16,19 +15,16 @@ import {
   withModifiers
 } from 'vue'
 import { Col, Form, Row } from 'ant-design-vue'
-import FormItem from './components/FormItem.vue'
+import FormItem from './components/FormItem'
 import FormAction from './components/FormAction.vue'
-
 import { dateItemType } from './helper'
 import { dateUtil, deepMerge, isFunction } from '@shy-plugins/utils'
-
 import { useFormValues } from './hooks/useFormValues'
 import { useFormEvents } from './hooks/useFormEvents'
 import { createFormContext } from './hooks/useFormContext'
 import { useAutoFocus } from './hooks/useAutoFocus'
 import { useModalContext } from '../../Modal'
 import { useDebounceFn } from '@vueuse/core'
-
 import { basicProps, defaultAntConfig } from './props'
 import { cloneDeep } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'

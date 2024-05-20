@@ -1,7 +1,7 @@
 <template>
-  <div :class="bem()">
+  <div :class="prefixCls">
     <slot name="headerTitle" v-if="slots.headerTitle"></slot>
-    <div class="flex justify-between items-center">
+    <div :class="`${prefixCls}-title`" v-if="slots.headerTitle || title || addable">
       <BasicTitle :helpMessage="helpMessage" v-if="!slots.headerTitle && title">
         {{ title }}
       </BasicTitle>
@@ -15,26 +15,6 @@
         class="cursor-pointer"
         @click="handleMenuClick"
       />
-
-      <!-- <Dropdown @click.prevent>
-        <Icon
-          icon="ant-design:plus-square-outlined"
-          :style="{
-            color: '#2da44e'
-          }"
-          @click="handleMenuClick"
-        />
-        <template #overlay>
-          <Menu>
-            <template v-for="item in toolbarList" :key="item.value">
-              <MenuItem v-bind="{ key: item.value }">
-                {{ item.label }}
-              </MenuItem>
-              <MenuDivider v-if="item.divider" />
-            </template>
-          </Menu>
-        </template>
-      </Dropdown> -->
     </div>
 
     <div class="shy-search" v-if="search || toolbar">
@@ -50,17 +30,17 @@
 </template>
 <script lang="ts" setup>
 import { computed, ref, watch, useSlots } from 'vue'
-import { Dropdown, Menu, MenuItem, MenuDivider, Input } from 'ant-design-vue'
+import { Input } from 'ant-design-vue'
 import { Icon } from '../../../Icon'
 import { BasicTitle } from '../../../Basic'
 import { useI18n } from '@shy-plugins/use'
 import { useDebounceFn } from '@vueuse/core'
-import { createBEM } from '@shy-plugins/utils'
 import { ToolbarEnum } from '../types/tree'
+import { useDesign } from '@shy-plugins/use'
 
 const searchValue = ref('')
 
-const [bem] = createBEM('tree-header')
+const { prefixCls } = useDesign('ant-tree-header')
 
 const props = defineProps({
   helpMessage: {
@@ -106,43 +86,9 @@ const slots = useSlots()
 const { t } = useI18n()
 
 const getInputSearchCls = computed(() => {
-  // const titleExists = slots.headerTitle || props.title
   return ['mr-1', 'w-full']
 })
 
-const toolbarList = computed(() => {
-  const { checkable } = props
-  const defaultToolbarList = [
-    { label: t('component.tree.expandAll'), value: ToolbarEnum.EXPAND_ALL },
-    {
-      label: t('component.tree.unExpandAll'),
-      value: ToolbarEnum.UN_EXPAND_ALL,
-      divider: checkable
-    }
-  ]
-
-  return defaultToolbarList
-
-  // return checkable
-  //   ? [
-  //       { label: t('component.tree.selectAll'), value: ToolbarEnum.SELECT_ALL },
-  //       {
-  //         label: t('component.tree.unSelectAll'),
-  //         value: ToolbarEnum.UN_SELECT_ALL,
-  //         divider: checkable
-  //       },
-  //       ...defaultToolbarList,
-  //       {
-  //         label: t('component.tree.checkStrictly'),
-  //         value: ToolbarEnum.CHECK_STRICTLY
-  //       },
-  //       {
-  //         label: t('component.tree.checkUnStrictly'),
-  //         value: ToolbarEnum.CHECK_UN_STRICTLY
-  //       }
-  //     ]
-  //   : defaultToolbarList
-})
 
 function handleMenuClick(e: { key: ToolbarEnum }) {
   emit('plus-click')

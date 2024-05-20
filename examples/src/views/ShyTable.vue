@@ -37,14 +37,14 @@
                   label: '测试',
                   // ifShow: false,
                   onClick: handleSave.bind(null, record)
+                },
+                {
+                  label: '删除',
+                  popConfirm: {
+                    title: '确认删除吗?',
+                    confirm: handleRemove.bind(null, record)
+                  }
                 }
-                // {
-                //   label: '取消',
-                //   popConfirm: {
-                //     title: '是否取消编辑',
-                //     confirm: handleCancel.bind(null, record)
-                //   }
-                // }
               ]"
             />
           </template>
@@ -182,6 +182,8 @@ const getFooterActions = ({ rows, rowKeys, disabled }) => {
   ]
 }
 
+const length = ref(21)
+
 const [
   register,
   {
@@ -193,24 +195,25 @@ const [
   }
 ] = useShyTable({
   isShowTitle: false,
-  api: ({ current, size }): any => {
-    // console.log(params)
+  api: (params): any => {
+    const records = Array.from({ length: length.value }, (_, i) => {
+      return {
+        id: i,
+        status: i,
+        rangePlace: i,
+        place: '河北',
+        createTime: 1695024076000,
+        name: i,
+        phone: '1212121',
+        address: '1111',
+        remark: 999,
+        qualifiedNum: 122
+      }
+    })
+
     return {
-      records: Array.from({ length: 20 }, (_, i) => {
-        return {
-          id: i,
-          status: i,
-          rangePlace: i,
-          place: '河北',
-          createTime: 1695024076000,
-          name: i,
-          phone: '1212121',
-          address: '1111',
-          remark: 999,
-          qualifiedNum: 122
-        }
-      }),
-      total: 100
+      records,
+      total: records.length
     }
   },
   // isShowFooterSettings: false,
@@ -373,6 +376,11 @@ const pushApi = async () => {
   //     return await item.onValid()
   //   })
   // )
+}
+
+const handleRemove = () => {
+  --length.value
+  reload()
 }
 
 onMounted(() => {

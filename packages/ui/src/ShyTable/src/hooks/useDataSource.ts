@@ -306,7 +306,7 @@ export function useDataSource(
       ) {
         pageParams = {}
       } else {
-        pageParams[pageField] = (opt && opt.page) || current
+        pageParams[pageField] = (opt && opt.page) || current || 1
         pageParams[sizeField] = pageSize
       }
 

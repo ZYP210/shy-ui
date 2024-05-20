@@ -131,9 +131,10 @@ const ShyFormTable = defineComponent({
 
     const handleScroll = (e) => {
       const { scrollTop, scrollHeight } = e.target
+      if (e.target.className !== `${prefixCls}-scroll-bar-wrapper`) return
+
       let lenMax = state.value.length,
         nIdx
-
       if (scrollTop === 0) {
         dataSource.value = state.value.slice(0, SHOW_ROW_COUNT)
         curIndex.value = 0
@@ -540,9 +541,7 @@ const ShyFormTable = defineComponent({
               新增
             </BasicButton>
           </div>
-          <div class={`${prefixCls}-footer`}>
-            {props.footerRender()}
-          </div>
+          <div class={`${prefixCls}-footer`}>{props.footerRender()}</div>
         </>
       )
     }

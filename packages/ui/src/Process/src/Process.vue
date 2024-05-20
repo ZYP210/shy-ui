@@ -119,9 +119,8 @@ const props = defineProps({
   overflow: hidden;
   border-radius: 4px;
   border: 1px solid var(--gray-3);
-  background: var(--gray-0);
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.04),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.02);
+  background: var(--light);
+  box-shadow: var(--shadow-2);
   z-index: 100;
 
   .process-header {
