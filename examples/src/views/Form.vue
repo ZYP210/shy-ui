@@ -1,7 +1,10 @@
 <template>
   <div class="p-16px w-full h-full bg-white">
-    <Button @click="handleGetForm">获取form</Button>
-    <Button @click="handleReset">reset</Button>
+    <div class="flex gap-8px">
+      <Button @click="handleGetForm">获取form</Button>
+      <Button @click="handlePush">push200条数据</Button>
+      <Button @click="handleReset">reset</Button>
+    </div>
     <ShyForm :labelWidth="100" @register="registerForm" @submit="handleSubmit">
       <template #ApiModalSelect="{ model, field }">
         <ApiModalSelect
@@ -11,6 +14,7 @@
         />
       </template>
     </ShyForm>
+    <div class="h-2000px"></div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -35,370 +39,384 @@ import { theme } from 'ant-design-vue'
 const { useToken } = theme
 const { token } = useToken()
 
-const schemas = ref<FormSchema[]>([
-  {
-    label: 'Input',
-    field: 'Input',
-    defaultValue: '111',
-    component: 'Input',
-    componentProps: {
-      // disabled: true
-    },
-  },
-  {
-    label: 'InputTextArea',
-    field: 'InputTextArea',
-    defaultValue: '111',
-    component: 'InputTextArea',
-    componentProps: {
-      // disabled: true
-    },
-    
-  },
-  {
-    label: 'InputNumber',
-    field: 'InputNumber',
-    component: 'InputNumber',
-    
-  },
-  {
-    label: 'InputPassword',
-    field: 'InputPassword',
-    component: 'InputPassword',
-    
-  },
-  {
-    label: 'InputSearch',
-    field: 'InputSearch',
-    component: 'InputSearch',
-    
-  },
-  {
-    label: 'AutoComplete',
-    field: 'AutoComplete',
-    component: 'AutoComplete',
-    
-  },
-  {
-    label: 'ApiSelect',
-    field: 'ApiSelect',
-    required: true,
-    component: 'ApiSelect',
-    componentProps: ({ formModel }) => {
+const handlePush = () => {
+  setFieldsValue({
+    Table: Array.from({ length: 200 }, (_, i) => {
       return {
-        api: async (ppp) => {
-          console.log(ppp)
-          return [
-            {
-              label:
-                'a11111111111111asKLHDSAKJDHSAJKDHSADJKHSADKJSAHDASJDHSADKJASHDKJASHDKJSAHDASKJHD',
-              value: 'a'
-            },
-            {
-              label: 'b',
-              value: 'b'
-            }
-          ]
-        },
-        params: { c: formModel.b }
+        a: 1,
+        b: 2,
+        
+        d: 4,
+        e: 5
       }
-    },
-    
-  },
-  {
-    label: 'b',
-    field: 'b',
-    component: 'Divider',
-    colProps: { span: 24 }
-    // componentProps: ({ formModel }) => {
-    //   console.log(formModel, 999)
-    //   return {
-    //     api: async (ppp) => {
-    //       console.log(ppp, 222)
-    //       if (ppp?.aaa) return [{ label: '777', value: '777' }]
-    //       return []
-    //     },
-    //     params: { aaa: formModel.aaa }
-    //   }
-    // }
-  },
-  {
-    label: 'ApiTree',
-    field: 'ApiTree',
-    component: 'ApiTree',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            title: '1111'
-          }
-        ]
-      }
-    },
-    
-  },
-  {
-    label: 'TreeSelect',
-    field: 'TreeSelect',
-    component: 'TreeSelect',
-    componentProps: {
-      treeData: [
-        {
-          label: '111',
-          value: '1'
-        }
-      ]
-    },
-    
-  },
-  {
-    label: 'ApiTreeSelect',
-    field: 'ApiTreeSelect',
-    component: 'ApiTreeSelect',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            label: '1',
-            value: '1'
-          }
-        ]
-      }
-    },
-    
-  },
-  {
-    label: 'ApiRadioGroup',
-    field: 'ApiRadioGroup',
-    component: 'ApiRadioGroup',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            label: '111',
-            value: '888'
-          },
-          {
-            label: '222',
-            value: '333'
-          }
-        ]
-      }
-    },
-    
-  },
-  {
-    label: 'Switch',
-    field: 'Switch',
-    component: 'Switch',
-    
-  },
-  {
-    label: 'RadioButtonGroup',
-    field: 'RadioButtonGroup',
-    component: 'RadioButtonGroup',
-    componentProps: {
-      options: [
-        {
-          label: '111',
-          value: '888'
-        },
-        {
-          label: '222',
-          value: '333'
-        }
-      ]
-    },
-    
-  },
-  {
-    label: 'RadioGroup',
-    field: 'RadioGroup',
-    component: 'RadioGroup',
-    componentProps: {
-      options: [
-        {
-          label: '111',
-          value: '888'
-        },
-        {
-          label: '222',
-          value: '333'
-        }
-      ]
-    },
-    
-  },
-  {
-    label: 'Checkbox',
-    field: 'Checkbox',
-    component: 'Checkbox',
-    
-  },
-  {
-    label: 'CheckboxGroup',
-    field: 'CheckboxGroup',
-    component: 'CheckboxGroup',
-    componentProps: {
-      options: [
-        {
-          label: '111',
-          value: '888'
-        },
-        {
-          label: '222',
-          value: '333'
-        }
-      ]
-    },
-    
-  },
-  {
-    label: 'ApiCascader',
-    field: 'ApiCascader',
-    component: 'ApiCascader',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            label: '111',
-            value: '888'
-          },
-          {
-            label: '222',
-            value: '333'
-          }
-        ]
-      }
-    },
-    
-  },
-  {
-    label: 'Cascader',
-    field: 'Cascader',
-    component: 'Cascader',
-    componentProps: {
-      options: [
-        {
-          label: '111',
-          value: '888'
-        },
-        {
-          label: '222',
-          value: '333'
-        }
-      ]
-    },
-    
-  },
-  {
-    label: 'Slider',
-    field: 'Slider',
-    component: 'Slider',
-    
-  },
-  {
-    label: 'Rate',
-    field: 'Rate',
-    component: 'Rate',
-    
-  },
-  {
-    label: 'ApiTransfer',
-    field: 'ApiTransfer',
-    component: 'ApiTransfer',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            title: '1111',
-            key: '888'
-          },
-          {
-            title: '222',
-            key: '333'
-          }
-        ]
-      }
-    },
-    
-  },
-  {
-    label: 'Upload',
-    field: 'Upload',
-    component: 'Upload',
-    componentProps: {
-      api: () => {}
-    },
-    
-  },
-  {
-    label: 'DatePicker',
-    field: 'DatePicker',
-    component: 'DatePicker',
-    
-  },
-  {
-    label: 'MonthPicker',
-    field: 'MonthPicker',
-    component: 'MonthPicker',
-    
-  },
-  {
-    label: 'RangePicker',
-    field: 'RangePicker',
-    component: 'RangePicker',
-    
-  },
-  {
-    label: 'WeekPicker',
-    field: 'WeekPicker',
-    component: 'WeekPicker',
-    
-  },
-  {
-    label: 'TimePicker',
-    field: 'TimePicker',
-    component: 'TimePicker',
-    
-  },
-  {
-    label: 'StrengthMeter',
-    field: 'StrengthMeter',
-    component: 'StrengthMeter',
-    
-  },
-  {
-    label: 'IconPicker',
-    field: 'IconPicker',
-    component: 'IconPicker',
-    
-  },
-  {
-    label: 'ColorPicker',
-    field: 'ColorPicker',
-    component: 'ColorPicker',
-    componentProps: {
-      onChange: (val) => {
-        token.value.colorPrimary = val
-      }
-    },
-    
-  },
-  {
-    label: 'Tinymce',
-    field: 'Tinymce',
-    component: 'Tinymce',
-    colProps: { span: 24 }
-  },
-  {
-    label: '111',
-    component: 'Divider',
-    componentProps: {
-      extra: h(BasicButton, null, 1111)
-    },
-    colProps: { span: 24 }
-  },
+    })
+  })
+}
+
+const schemas = ref<FormSchema[]>([
+  // {
+  //   label: 'Input',
+  //   field: 'Input',
+  //   defaultValue: '111',
+  //   component: 'Input',
+  //   componentProps: {
+  //     // disabled: true
+  //   },
+  // },
+  // {
+  //   label: 'InputTextArea',
+  //   field: 'InputTextArea',
+  //   defaultValue: '111',
+  //   component: 'InputTextArea',
+  //   componentProps: {
+  //     // disabled: true
+  //   },
+
+  // },
+  // {
+  //   label: 'InputNumber',
+  //   field: 'InputNumber',
+  //   component: 'InputNumber',
+
+  // },
+  // {
+  //   label: 'InputPassword',
+  //   field: 'InputPassword',
+  //   component: 'InputPassword',
+
+  // },
+  // {
+  //   label: 'InputSearch',
+  //   field: 'InputSearch',
+  //   component: 'InputSearch',
+
+  // },
+  // {
+  //   label: 'AutoComplete',
+  //   field: 'AutoComplete',
+  //   component: 'AutoComplete',
+
+  // },
+  // {
+  //   label: 'ApiSelect',
+  //   field: 'ApiSelect',
+  //   required: true,
+  //   component: 'ApiSelect',
+  //   componentProps: ({ formModel }) => {
+  //     return {
+  //       api: async (ppp) => {
+  //         console.log(ppp)
+  //         return [
+  //           {
+  //             label:
+  //               'a11111111111111asKLHDSAKJDHSAJKDHSADJKHSADKJSAHDASJDHSADKJASHDKJASHDKJSAHDASKJHD',
+  //             value: 'a'
+  //           },
+  //           {
+  //             label: 'b',
+  //             value: 'b'
+  //           }
+  //         ]
+  //       },
+  //       params: { c: formModel.b }
+  //     }
+  //   },
+
+  // },
+  // {
+  //   label: 'b',
+  //   field: 'b',
+  //   component: 'Divider',
+  //   colProps: { span: 24 }
+  //   // componentProps: ({ formModel }) => {
+  //   //   console.log(formModel, 999)
+  //   //   return {
+  //   //     api: async (ppp) => {
+  //   //       console.log(ppp, 222)
+  //   //       if (ppp?.aaa) return [{ label: '777', value: '777' }]
+  //   //       return []
+  //   //     },
+  //   //     params: { aaa: formModel.aaa }
+  //   //   }
+  //   // }
+  // },
+  // {
+  //   label: 'ApiTree',
+  //   field: 'ApiTree',
+  //   component: 'ApiTree',
+  //   componentProps: {
+  //     api: () => {
+  //       return [
+  //         {
+  //           title: '1111'
+  //         }
+  //       ]
+  //     }
+  //   },
+
+  // },
+  // {
+  //   label: 'TreeSelect',
+  //   field: 'TreeSelect',
+  //   component: 'TreeSelect',
+  //   componentProps: {
+  //     treeData: [
+  //       {
+  //         label: '111',
+  //         value: '1'
+  //       }
+  //     ]
+  //   },
+
+  // },
+  // {
+  //   label: 'ApiTreeSelect',
+  //   field: 'ApiTreeSelect',
+  //   component: 'ApiTreeSelect',
+  //   componentProps: {
+  //     api: () => {
+  //       return [
+  //         {
+  //           label: '1',
+  //           value: '1'
+  //         }
+  //       ]
+  //     }
+  //   },
+
+  // },
+  // {
+  //   label: 'ApiRadioGroup',
+  //   field: 'ApiRadioGroup',
+  //   component: 'ApiRadioGroup',
+  //   componentProps: {
+  //     api: () => {
+  //       return [
+  //         {
+  //           label: '111',
+  //           value: '888'
+  //         },
+  //         {
+  //           label: '222',
+  //           value: '333'
+  //         }
+  //       ]
+  //     }
+  //   },
+
+  // },
+  // {
+  //   label: 'Switch',
+  //   field: 'Switch',
+  //   component: 'Switch',
+
+  // },
+  // {
+  //   label: 'RadioButtonGroup',
+  //   field: 'RadioButtonGroup',
+  //   component: 'RadioButtonGroup',
+  //   componentProps: {
+  //     options: [
+  //       {
+  //         label: '111',
+  //         value: '888'
+  //       },
+  //       {
+  //         label: '222',
+  //         value: '333'
+  //       }
+  //     ]
+  //   },
+
+  // },
+  // {
+  //   label: 'RadioGroup',
+  //   field: 'RadioGroup',
+  //   component: 'RadioGroup',
+  //   componentProps: {
+  //     options: [
+  //       {
+  //         label: '111',
+  //         value: '888'
+  //       },
+  //       {
+  //         label: '222',
+  //         value: '333'
+  //       }
+  //     ]
+  //   },
+
+  // },
+  // {
+  //   label: 'Checkbox',
+  //   field: 'Checkbox',
+  //   component: 'Checkbox',
+
+  // },
+  // {
+  //   label: 'CheckboxGroup',
+  //   field: 'CheckboxGroup',
+  //   component: 'CheckboxGroup',
+  //   componentProps: {
+  //     options: [
+  //       {
+  //         label: '111',
+  //         value: '888'
+  //       },
+  //       {
+  //         label: '222',
+  //         value: '333'
+  //       }
+  //     ]
+  //   },
+
+  // },
+  // {
+  //   label: 'ApiCascader',
+  //   field: 'ApiCascader',
+  //   component: 'ApiCascader',
+  //   componentProps: {
+  //     api: () => {
+  //       return [
+  //         {
+  //           label: '111',
+  //           value: '888'
+  //         },
+  //         {
+  //           label: '222',
+  //           value: '333'
+  //         }
+  //       ]
+  //     }
+  //   },
+
+  // },
+  // {
+  //   label: 'Cascader',
+  //   field: 'Cascader',
+  //   component: 'Cascader',
+  //   componentProps: {
+  //     options: [
+  //       {
+  //         label: '111',
+  //         value: '888'
+  //       },
+  //       {
+  //         label: '222',
+  //         value: '333'
+  //       }
+  //     ]
+  //   },
+
+  // },
+  // {
+  //   label: 'Slider',
+  //   field: 'Slider',
+  //   component: 'Slider',
+
+  // },
+  // {
+  //   label: 'Rate',
+  //   field: 'Rate',
+  //   component: 'Rate',
+
+  // },
+  // {
+  //   label: 'ApiTransfer',
+  //   field: 'ApiTransfer',
+  //   component: 'ApiTransfer',
+  //   componentProps: {
+  //     api: () => {
+  //       return [
+  //         {
+  //           title: '1111',
+  //           key: '888'
+  //         },
+  //         {
+  //           title: '222',
+  //           key: '333'
+  //         }
+  //       ]
+  //     }
+  //   },
+
+  // },
+  // {
+  //   label: 'Upload',
+  //   field: 'Upload',
+  //   component: 'Upload',
+  //   componentProps: {
+  //     api: () => {}
+  //   },
+
+  // },
+  // {
+  //   label: 'DatePicker',
+  //   field: 'DatePicker',
+  //   component: 'DatePicker',
+
+  // },
+  // {
+  //   label: 'MonthPicker',
+  //   field: 'MonthPicker',
+  //   component: 'MonthPicker',
+
+  // },
+  // {
+  //   label: 'RangePicker',
+  //   field: 'RangePicker',
+  //   component: 'RangePicker',
+
+  // },
+  // {
+  //   label: 'WeekPicker',
+  //   field: 'WeekPicker',
+  //   component: 'WeekPicker',
+
+  // },
+  // {
+  //   label: 'TimePicker',
+  //   field: 'TimePicker',
+  //   component: 'TimePicker',
+
+  // },
+  // {
+  //   label: 'StrengthMeter',
+  //   field: 'StrengthMeter',
+  //   component: 'StrengthMeter',
+
+  // },
+  // {
+  //   label: 'IconPicker',
+  //   field: 'IconPicker',
+  //   component: 'IconPicker',
+
+  // },
+  // {
+  //   label: 'ColorPicker',
+  //   field: 'ColorPicker',
+  //   component: 'ColorPicker',
+  //   componentProps: {
+  //     onChange: (val) => {
+  //       token.value.colorPrimary = val
+  //     }
+  //   },
+
+  // },
+  // {
+  //   label: 'Tinymce',
+  //   field: 'Tinymce',
+  //   component: 'Tinymce',
+  //   colProps: { span: 24 }
+  // },
+  // {
+  //   label: '111',
+  //   component: 'Divider',
+  //   componentProps: {
+  //     extra: h(BasicButton, null, 1111)
+  //   },
+  //   colProps: { span: 24 }
+  // },
   {
     label: 'Table',
     field: 'Table',
@@ -408,89 +426,98 @@ const schemas = ref<FormSchema[]>([
     componentProps: ({ formModel }) => {
       return {
         columns: [
-          {
-            title: '预计付款时间',
-            dataIndex: 'expectPayTime',
-            type: 'DatePicker',
-            required: true,
-            rules: [
-              {
-                required: true,
-                validator: async (rule, value, { record }, formActionType) => {
-                  if (!value) return Promise.reject('请选择预计付款时间')
-                  if (value && !record.expectReturnTime) {
-                    try {
-                      const errIndex = formModel.table.findIndex(
-                        (ele) => ele.uuid === record.uuid
-                      )
-                      console.log(errIndex, 'ppp', record.uuid)
-                      await formActionType.validate([
-                        ['table', errIndex, 'expectReturnTime']
-                      ])
-                    } catch (error) {}
-                    return Promise.resolve()
-                  }
-                  if (dayjs(value).isBefore(record.expectReturnTime)) {
-                    return Promise.resolve()
-                  } else {
-                    return Promise.reject('付款时间不能大于回款时间')
-                  }
-                }
-              }
-            ],
-            componentProps: {
-              valueFormat: 'YYYY-MM-DD HH:mm:ss'
-            }
-          },
-          {
-            title: '预计回款时间',
-            dataIndex: 'expectReturnTime',
-            type: 'DatePicker',
-            required: true,
-            rules: [
-              {
-                required: true,
-                validator: async (rule, value, { record }, formActionType) => {
-                  console.log('zzz', record.uuid)
-                  if (!value) return Promise.reject('请选择预计回款时间')
-                  if (value && !record.expectPayTime) {
-                    try {
-                      const errIndex = formModel.table.findIndex(
-                        (ele) => ele.uuid === record.uuid
-                      )
-                      console.log(errIndex, 'zzz', record.uuid)
-                      await formActionType.validate([
-                        ['table', errIndex, 'expectPayTime']
-                      ])
-                    } catch (error) {}
-                    return Promise.resolve()
-                  }
-                  if (dayjs(value).isAfter(record.expectPayTime)) {
-                    return Promise.resolve()
-                  }
-                  return Promise.reject('回款时间不能小于付款时间')
-                }
-              }
-            ],
-            componentProps: {
-              valueFormat: 'YYYY-MM-DD HH:mm:ss'
-            }
-          },
+          // {
+          //   title: '预计付款时间',
+          //   dataIndex: 'expectPayTime',
+          //   type: 'DatePicker',
+          //   required: true,
+          //   width: 200,
+          //   rules: [
+          //     {
+          //       required: true,
+          //       validator: async (rule, value, { record }, formActionType) => {
+          //         if (!value) return Promise.reject('请选择预计付款时间')
+          //         if (value && !record.expectReturnTime) {
+          //           try {
+          //             const errIndex = formModel.table.findIndex(
+          //               (ele) => ele.uuid === record.uuid
+          //             )
+          //             console.log(errIndex, 'ppp', record.uuid)
+          //             await formActionType.validate([
+          //               ['table', errIndex, 'expectReturnTime']
+          //             ])
+          //           } catch (error) {}
+          //           return Promise.resolve()
+          //         }
+          //         if (dayjs(value).isBefore(record.expectReturnTime)) {
+          //           return Promise.resolve()
+          //         } else {
+          //           return Promise.reject('付款时间不能大于回款时间')
+          //         }
+          //       }
+          //     }
+          //   ],
+          //   componentProps: {
+          //     valueFormat: 'YYYY-MM-DD HH:mm:ss'
+          //   }
+          // },
+          // {
+          //   title: '预计回款时间',
+          //   dataIndex: 'expectReturnTime',
+          //   type: 'DatePicker',
+          //   required: true,
+          //   width: 200,
+          //   rules: [
+          //     {
+          //       required: true,
+          //       validator: async (rule, value, { record }, formActionType) => {
+          //         console.log('zzz', record.uuid)
+          //         if (!value) return Promise.reject('请选择预计回款时间')
+          //         if (value && !record.expectPayTime) {
+          //           try {
+          //             const errIndex = formModel.table.findIndex(
+          //               (ele) => ele.uuid === record.uuid
+          //             )
+          //             console.log(errIndex, 'zzz', record.uuid)
+          //             await formActionType.validate([
+          //               ['table', errIndex, 'expectPayTime']
+          //             ])
+          //           } catch (error) {}
+          //           return Promise.resolve()
+          //         }
+          //         if (dayjs(value).isAfter(record.expectPayTime)) {
+          //           return Promise.resolve()
+          //         }
+          //         return Promise.reject('回款时间不能小于付款时间')
+          //       }
+          //     }
+          //   ],
+          //   componentProps: {
+          //     valueFormat: 'YYYY-MM-DD HH:mm:ss'
+          //   }
+          // },
           {
             title: 'c',
             dataIndex: 'c',
             type: 'InputNumber',
-            required: true
-            // width: 1000,
+            required: true,
+            width: 200
           },
           {
             title: 'd',
-            dataIndex: 'd'
+            dataIndex: 'd',
+            type: 'text'
           },
           {
             title: 'e',
-            dataIndex: 'e'
+            dataIndex: 'e',
+            type: 'text'
           }
+        ],
+        footerRender: () => [
+          h('span', null, `不含税金额: 1`),
+          h('span', null, `税额: 1`),
+          h('span', null, `含税总价: 1`)
         ]
       }
     }
@@ -512,7 +539,7 @@ const handleReset = () => {
 
 onMounted(() => {
   setFieldsValue({
-    Table: [{ c: 1 }]
+    Table: [{ c: 1, d: 2, e: 3 }]
   })
   // setTimeout(() => {
   //   setFieldsValue({

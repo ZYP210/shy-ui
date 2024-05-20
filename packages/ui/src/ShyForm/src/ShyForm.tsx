@@ -417,7 +417,7 @@ const ShyForm = defineComponent({
             style={{
               [`--col-span`]: `${
                 ((schema.colProps?.span ??
-                  getBindValue.value.baseColProps.span) /
+                  getBindValue.value?.baseColProps?.span) /
                   (ROW_SLICE + ACTION_COL)) *
                 100
               }%`

@@ -23,51 +23,6 @@ const columns = [
     label: '审批结果'
   },
   {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
-    key: 'reason',
-    label: '审批评论'
-  },
-  {
     key: 'createTime',
     customRender: ({ createTime }) => formatToDateTime(createTime)
   }

@@ -21,11 +21,12 @@
           >
             <div v-if="item[key]" class="process-item">
               <span v-if="label"> {{ label }}：</span>
-              <span v-if="customRender">
-                <component
-                  :is="h('span', null, customRender(item))"
-                ></component>
-              </span>
+              <component
+                v-if="customRender"
+                :is="h('span', null, customRender(item))"
+              >
+              </component>
+
               <span v-else>
                 {{ item[key] }}
               </span>

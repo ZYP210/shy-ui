@@ -1,4 +1,4 @@
-import type { Component } from 'vue'
+import type { JSXComponent } from 'vue'
 import type { ComponentType } from './types/index'
 
 /**
@@ -34,13 +34,13 @@ import { StrengthMeter } from '../../StrengthMeter'
 import { IconPicker } from '../../Icon'
 import { CountdownInput } from '../../CountDown'
 import Tinymce from './components/Tinymce.vue'
-import Table from './components/Table.vue'
+import { ShyFormTable } from './components/Table'
 import { BasicUpload } from '../../Upload'
 import { ColorPickerPopover } from '../../ColorPickerPopover'
 
 // import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
 
-const ShyComponentMap = new Map<ComponentType, Component>()
+const ShyComponentMap = new Map<ComponentType, JSXComponent>()
 
 ShyComponentMap.set('Input', Input)
 ShyComponentMap.set('InputGroup', Input.Group)
@@ -78,14 +78,14 @@ ShyComponentMap.set('TimePicker', TimePicker)
 ShyComponentMap.set('StrengthMeter', StrengthMeter)
 ShyComponentMap.set('IconPicker', IconPicker)
 ShyComponentMap.set('InputCountDown', CountdownInput)
-ShyComponentMap.set('Table', Table)
+ShyComponentMap.set('Table', ShyFormTable)
 ShyComponentMap.set('Tinymce', Tinymce)
 
 // ShyComponentMap.set('Upload', Upload)
 ShyComponentMap.set('Divider', Divider)
-ShyComponentMap.set('ColorPicker', ColorPickerPopover);
+ShyComponentMap.set('ColorPicker', ColorPickerPopover)
 
-export function add(compName: ComponentType, component: Component) {
+export function add(compName: ComponentType, component: JSXComponent) {
   ShyComponentMap.set(compName, component)
 }
 
@@ -93,4 +93,4 @@ export function del(compName: ComponentType) {
   ShyComponentMap.delete(compName)
 }
 
-export { ShyComponentMap as ShyComponentMap }
+export { ShyComponentMap }

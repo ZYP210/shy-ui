@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 w-1600px mt-200px">
+  <div class="p-16px">
     <Description title="基础示例" @register="register"> </Description>
   </div>
 </template>
@@ -10,6 +10,7 @@ import { Tag } from 'ant-design-vue'
 const mockData: any = {
   username: 'test',
   summary: 1111111,
+  summary1: 888888,
   age: 123,
   phone: '15695909xxx',
   email: '190848757@qq.com',
@@ -30,6 +31,11 @@ const schema: any[] = [
     label: '合计',
     colProps: { span: 8 }
   },
+  {
+    field: 'summary1',
+    label: '合计1',
+    colProps: { span: 8 }
+  },
   // {
   //   field: 'nickName',
   //   label: '昵称',
@@ -46,7 +52,7 @@ const schema: any[] = [
   {
     field: 'phone',
     label: '联系电话',
-    colProps: { span: 8 },
+    colProps: { span: 24 },
     helpMessage: '这是一个'
   },
   // {
@@ -69,7 +75,7 @@ const [register, { setDescProps }] = useDescription({
   labelWidth: 100,
   bordered: true,
   schema,
-  summaryTotalFields: ['summary']
+  summaryTotalFields: ['summary', 'summary1']
   // mode: 'vertical'
 })
 
