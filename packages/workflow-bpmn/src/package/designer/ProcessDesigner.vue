@@ -128,7 +128,7 @@
         class="my-process-designer__canvas"
         ref="bpmnCanvas"
         id="bpmnCanvas"
-        style="width: 1680px; height: 800px"
+        style="width: 100%; height: 100%"
       ></div>
       <!-- <div id="js-properties-panel" class="panel"></div> -->
       <!-- <div class="my-process-designer__canvas" ref="bpmn-canvas"></div> -->

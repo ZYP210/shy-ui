@@ -45360,11 +45360,12 @@ const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
     // eventName.name
     "element-click"
   ],
-  setup(__props, { emit }) {
-    const props = __props;
+  setup(__props, { emit: __emit }) {
     const { createConfirm, createMessage } = use.useMessage();
     const bpmnCanvas = vue.ref();
     const refFile = vue.ref();
+    const emit = __emit;
+    const props = __props;
     vue.provide("configGlobal", props);
     let bpmnModeler = null;
     const defaultZoom = vue.ref(1);
@@ -46006,7 +46007,7 @@ const _sfc_main$a = /* @__PURE__ */ vue.defineComponent({
             ref_key: "bpmnCanvas",
             ref: bpmnCanvas,
             id: "bpmnCanvas",
-            style: { "width": "1680px", "height": "800px" }
+            style: { "width": "100%", "height": "100%" }
           }, null, 512)
         ]),
         vue.createVNode(vue.unref(antDesignVue.Modal), {
@@ -46119,10 +46120,10 @@ const _sfc_main$9 = /* @__PURE__ */ vue.defineComponent({
     }
   },
   setup(__props) {
-    const props = __props;
     const labelCol = {
       style: { width: "90px" }
     };
+    const props = __props;
     const needProps = vue.ref({});
     const bpmnElement = vue.ref();
     const elementBaseInfo = vue.ref({});
@@ -46928,7 +46929,7 @@ const _sfc_main$5 = /* @__PURE__ */ vue.defineComponent({
         vue.createVNode(vue.unref(_3h1Ui.BasicModal), {
           visible: dialogVisible.value,
           "onUpdate:visible": _cache[5] || (_cache[5] = ($event) => dialogVisible.value = $event),
-          title: vue.unref(modelConfig).title,
+          title: modelConfig.value.title,
           "close-on-click-modal": false,
           "append-to-body": "",
           "destroy-on-close": ""
@@ -46961,7 +46962,7 @@ const _sfc_main$5 = /* @__PURE__ */ vue.defineComponent({
             }, {
               default: vue.withCtx(() => [
                 vue.createVNode(vue.unref(antDesignVue.FormItem), {
-                  label: vue.unref(modelConfig).idLabel,
+                  label: modelConfig.value.idLabel,
                   name: "id"
                 }, {
                   default: vue.withCtx(() => [
@@ -46974,7 +46975,7 @@ const _sfc_main$5 = /* @__PURE__ */ vue.defineComponent({
                   _: 1
                 }, 8, ["label"]),
                 vue.createVNode(vue.unref(antDesignVue.FormItem), {
-                  label: vue.unref(modelConfig).nameLabel,
+                  label: modelConfig.value.nameLabel,
                   name: "name"
                 }, {
                   default: vue.withCtx(() => [
@@ -47069,7 +47070,6 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
     type: String
   },
   setup(__props) {
-    const props = __props;
     const { createConfirm } = use.useMessage();
     const sourceObj = vue.ref({});
     const listenerObject = vue.ref({});
@@ -47125,6 +47125,7 @@ const _sfc_main$4 = /* @__PURE__ */ vue.defineComponent({
         }
       };
     };
+    const props = __props;
     const prefix2 = vue.inject("prefix");
     const width = vue.inject("width");
     const elementListenersList = vue.ref([]);
@@ -47725,8 +47726,8 @@ const _sfc_main$3 = /* @__PURE__ */ vue.defineComponent({
     type: String
   },
   setup(__props) {
-    const props = __props;
     const { createConfirm } = use.useMessage();
+    const props = __props;
     const prefix2 = vue.inject("prefix");
     const elementPropertyColumns = [
       {
@@ -47954,7 +47955,6 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
     type: String
   },
   setup(__props) {
-    const props = __props;
     const sourceObj = vue.ref({});
     const targetObj = vue.ref({});
     const listenerObject = vue.ref({});
@@ -48010,6 +48010,7 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
       };
     };
     const { createConfirm } = use.useMessage();
+    const props = __props;
     const prefix2 = vue.inject("prefix");
     const width = vue.inject("width");
     const elementListenersList = vue.ref([]);
@@ -51481,160 +51482,153 @@ function requireCipherCore() {
   })(cipherCore);
   return cipherCore.exports;
 }
-var hasRequiredAes;
-function requireAes() {
-  if (hasRequiredAes)
-    return aes.exports;
-  hasRequiredAes = 1;
-  (function(module2, exports2) {
-    (function(root2, factory, undef) {
-      {
-        module2.exports = factory(requireCore(), requireEncBase64(), requireMd5(), requireEvpkdf(), requireCipherCore());
-      }
-    })(commonjsGlobal, function(CryptoJS) {
+(function(module2, exports2) {
+  (function(root2, factory, undef) {
+    {
+      module2.exports = factory(requireCore(), requireEncBase64(), requireMd5(), requireEvpkdf(), requireCipherCore());
+    }
+  })(commonjsGlobal, function(CryptoJS) {
+    (function() {
+      var C = CryptoJS;
+      var C_lib = C.lib;
+      var BlockCipher = C_lib.BlockCipher;
+      var C_algo = C.algo;
+      var SBOX = [];
+      var INV_SBOX = [];
+      var SUB_MIX_0 = [];
+      var SUB_MIX_1 = [];
+      var SUB_MIX_2 = [];
+      var SUB_MIX_3 = [];
+      var INV_SUB_MIX_0 = [];
+      var INV_SUB_MIX_1 = [];
+      var INV_SUB_MIX_2 = [];
+      var INV_SUB_MIX_3 = [];
       (function() {
-        var C = CryptoJS;
-        var C_lib = C.lib;
-        var BlockCipher = C_lib.BlockCipher;
-        var C_algo = C.algo;
-        var SBOX = [];
-        var INV_SBOX = [];
-        var SUB_MIX_0 = [];
-        var SUB_MIX_1 = [];
-        var SUB_MIX_2 = [];
-        var SUB_MIX_3 = [];
-        var INV_SUB_MIX_0 = [];
-        var INV_SUB_MIX_1 = [];
-        var INV_SUB_MIX_2 = [];
-        var INV_SUB_MIX_3 = [];
-        (function() {
-          var d2 = [];
-          for (var i2 = 0; i2 < 256; i2++) {
-            if (i2 < 128) {
-              d2[i2] = i2 << 1;
-            } else {
-              d2[i2] = i2 << 1 ^ 283;
-            }
+        var d2 = [];
+        for (var i2 = 0; i2 < 256; i2++) {
+          if (i2 < 128) {
+            d2[i2] = i2 << 1;
+          } else {
+            d2[i2] = i2 << 1 ^ 283;
           }
-          var x2 = 0;
-          var xi = 0;
-          for (var i2 = 0; i2 < 256; i2++) {
-            var sx = xi ^ xi << 1 ^ xi << 2 ^ xi << 3 ^ xi << 4;
-            sx = sx >>> 8 ^ sx & 255 ^ 99;
-            SBOX[x2] = sx;
-            INV_SBOX[sx] = x2;
-            var x22 = d2[x2];
-            var x4 = d2[x22];
-            var x8 = d2[x4];
-            var t2 = d2[sx] * 257 ^ sx * 16843008;
-            SUB_MIX_0[x2] = t2 << 24 | t2 >>> 8;
-            SUB_MIX_1[x2] = t2 << 16 | t2 >>> 16;
-            SUB_MIX_2[x2] = t2 << 8 | t2 >>> 24;
-            SUB_MIX_3[x2] = t2;
-            var t2 = x8 * 16843009 ^ x4 * 65537 ^ x22 * 257 ^ x2 * 16843008;
-            INV_SUB_MIX_0[sx] = t2 << 24 | t2 >>> 8;
-            INV_SUB_MIX_1[sx] = t2 << 16 | t2 >>> 16;
-            INV_SUB_MIX_2[sx] = t2 << 8 | t2 >>> 24;
-            INV_SUB_MIX_3[sx] = t2;
-            if (!x2) {
-              x2 = xi = 1;
-            } else {
-              x2 = x22 ^ d2[d2[d2[x8 ^ x22]]];
-              xi ^= d2[d2[xi]];
-            }
+        }
+        var x2 = 0;
+        var xi = 0;
+        for (var i2 = 0; i2 < 256; i2++) {
+          var sx = xi ^ xi << 1 ^ xi << 2 ^ xi << 3 ^ xi << 4;
+          sx = sx >>> 8 ^ sx & 255 ^ 99;
+          SBOX[x2] = sx;
+          INV_SBOX[sx] = x2;
+          var x22 = d2[x2];
+          var x4 = d2[x22];
+          var x8 = d2[x4];
+          var t2 = d2[sx] * 257 ^ sx * 16843008;
+          SUB_MIX_0[x2] = t2 << 24 | t2 >>> 8;
+          SUB_MIX_1[x2] = t2 << 16 | t2 >>> 16;
+          SUB_MIX_2[x2] = t2 << 8 | t2 >>> 24;
+          SUB_MIX_3[x2] = t2;
+          var t2 = x8 * 16843009 ^ x4 * 65537 ^ x22 * 257 ^ x2 * 16843008;
+          INV_SUB_MIX_0[sx] = t2 << 24 | t2 >>> 8;
+          INV_SUB_MIX_1[sx] = t2 << 16 | t2 >>> 16;
+          INV_SUB_MIX_2[sx] = t2 << 8 | t2 >>> 24;
+          INV_SUB_MIX_3[sx] = t2;
+          if (!x2) {
+            x2 = xi = 1;
+          } else {
+            x2 = x22 ^ d2[d2[d2[x8 ^ x22]]];
+            xi ^= d2[d2[xi]];
           }
-        })();
-        var RCON = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54];
-        var AES = C_algo.AES = BlockCipher.extend({
-          _doReset: function() {
-            var t2;
-            if (this._nRounds && this._keyPriorReset === this._key) {
-              return;
-            }
-            var key = this._keyPriorReset = this._key;
-            var keyWords = key.words;
-            var keySize = key.sigBytes / 4;
-            var nRounds = this._nRounds = keySize + 6;
-            var ksRows = (nRounds + 1) * 4;
-            var keySchedule = this._keySchedule = [];
-            for (var ksRow = 0; ksRow < ksRows; ksRow++) {
-              if (ksRow < keySize) {
-                keySchedule[ksRow] = keyWords[ksRow];
-              } else {
-                t2 = keySchedule[ksRow - 1];
-                if (!(ksRow % keySize)) {
-                  t2 = t2 << 8 | t2 >>> 24;
-                  t2 = SBOX[t2 >>> 24] << 24 | SBOX[t2 >>> 16 & 255] << 16 | SBOX[t2 >>> 8 & 255] << 8 | SBOX[t2 & 255];
-                  t2 ^= RCON[ksRow / keySize | 0] << 24;
-                } else if (keySize > 6 && ksRow % keySize == 4) {
-                  t2 = SBOX[t2 >>> 24] << 24 | SBOX[t2 >>> 16 & 255] << 16 | SBOX[t2 >>> 8 & 255] << 8 | SBOX[t2 & 255];
-                }
-                keySchedule[ksRow] = keySchedule[ksRow - keySize] ^ t2;
-              }
-            }
-            var invKeySchedule = this._invKeySchedule = [];
-            for (var invKsRow = 0; invKsRow < ksRows; invKsRow++) {
-              var ksRow = ksRows - invKsRow;
-              if (invKsRow % 4) {
-                var t2 = keySchedule[ksRow];
-              } else {
-                var t2 = keySchedule[ksRow - 4];
-              }
-              if (invKsRow < 4 || ksRow <= 4) {
-                invKeySchedule[invKsRow] = t2;
-              } else {
-                invKeySchedule[invKsRow] = INV_SUB_MIX_0[SBOX[t2 >>> 24]] ^ INV_SUB_MIX_1[SBOX[t2 >>> 16 & 255]] ^ INV_SUB_MIX_2[SBOX[t2 >>> 8 & 255]] ^ INV_SUB_MIX_3[SBOX[t2 & 255]];
-              }
-            }
-          },
-          encryptBlock: function(M2, offset) {
-            this._doCryptBlock(M2, offset, this._keySchedule, SUB_MIX_0, SUB_MIX_1, SUB_MIX_2, SUB_MIX_3, SBOX);
-          },
-          decryptBlock: function(M2, offset) {
-            var t2 = M2[offset + 1];
-            M2[offset + 1] = M2[offset + 3];
-            M2[offset + 3] = t2;
-            this._doCryptBlock(M2, offset, this._invKeySchedule, INV_SUB_MIX_0, INV_SUB_MIX_1, INV_SUB_MIX_2, INV_SUB_MIX_3, INV_SBOX);
-            var t2 = M2[offset + 1];
-            M2[offset + 1] = M2[offset + 3];
-            M2[offset + 3] = t2;
-          },
-          _doCryptBlock: function(M2, offset, keySchedule, SUB_MIX_02, SUB_MIX_12, SUB_MIX_22, SUB_MIX_32, SBOX2) {
-            var nRounds = this._nRounds;
-            var s0 = M2[offset] ^ keySchedule[0];
-            var s1 = M2[offset + 1] ^ keySchedule[1];
-            var s2 = M2[offset + 2] ^ keySchedule[2];
-            var s3 = M2[offset + 3] ^ keySchedule[3];
-            var ksRow = 4;
-            for (var round2 = 1; round2 < nRounds; round2++) {
-              var t0 = SUB_MIX_02[s0 >>> 24] ^ SUB_MIX_12[s1 >>> 16 & 255] ^ SUB_MIX_22[s2 >>> 8 & 255] ^ SUB_MIX_32[s3 & 255] ^ keySchedule[ksRow++];
-              var t1 = SUB_MIX_02[s1 >>> 24] ^ SUB_MIX_12[s2 >>> 16 & 255] ^ SUB_MIX_22[s3 >>> 8 & 255] ^ SUB_MIX_32[s0 & 255] ^ keySchedule[ksRow++];
-              var t2 = SUB_MIX_02[s2 >>> 24] ^ SUB_MIX_12[s3 >>> 16 & 255] ^ SUB_MIX_22[s0 >>> 8 & 255] ^ SUB_MIX_32[s1 & 255] ^ keySchedule[ksRow++];
-              var t3 = SUB_MIX_02[s3 >>> 24] ^ SUB_MIX_12[s0 >>> 16 & 255] ^ SUB_MIX_22[s1 >>> 8 & 255] ^ SUB_MIX_32[s2 & 255] ^ keySchedule[ksRow++];
-              s0 = t0;
-              s1 = t1;
-              s2 = t2;
-              s3 = t3;
-            }
-            var t0 = (SBOX2[s0 >>> 24] << 24 | SBOX2[s1 >>> 16 & 255] << 16 | SBOX2[s2 >>> 8 & 255] << 8 | SBOX2[s3 & 255]) ^ keySchedule[ksRow++];
-            var t1 = (SBOX2[s1 >>> 24] << 24 | SBOX2[s2 >>> 16 & 255] << 16 | SBOX2[s3 >>> 8 & 255] << 8 | SBOX2[s0 & 255]) ^ keySchedule[ksRow++];
-            var t2 = (SBOX2[s2 >>> 24] << 24 | SBOX2[s3 >>> 16 & 255] << 16 | SBOX2[s0 >>> 8 & 255] << 8 | SBOX2[s1 & 255]) ^ keySchedule[ksRow++];
-            var t3 = (SBOX2[s3 >>> 24] << 24 | SBOX2[s0 >>> 16 & 255] << 16 | SBOX2[s1 >>> 8 & 255] << 8 | SBOX2[s2 & 255]) ^ keySchedule[ksRow++];
-            M2[offset] = t0;
-            M2[offset + 1] = t1;
-            M2[offset + 2] = t2;
-            M2[offset + 3] = t3;
-          },
-          keySize: 256 / 32
-        });
-        C.AES = BlockCipher._createHelper(AES);
+        }
       })();
-      return CryptoJS.AES;
-    });
-  })(aes);
-  return aes.exports;
-}
-requireAes();
+      var RCON = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54];
+      var AES = C_algo.AES = BlockCipher.extend({
+        _doReset: function() {
+          var t2;
+          if (this._nRounds && this._keyPriorReset === this._key) {
+            return;
+          }
+          var key = this._keyPriorReset = this._key;
+          var keyWords = key.words;
+          var keySize = key.sigBytes / 4;
+          var nRounds = this._nRounds = keySize + 6;
+          var ksRows = (nRounds + 1) * 4;
+          var keySchedule = this._keySchedule = [];
+          for (var ksRow = 0; ksRow < ksRows; ksRow++) {
+            if (ksRow < keySize) {
+              keySchedule[ksRow] = keyWords[ksRow];
+            } else {
+              t2 = keySchedule[ksRow - 1];
+              if (!(ksRow % keySize)) {
+                t2 = t2 << 8 | t2 >>> 24;
+                t2 = SBOX[t2 >>> 24] << 24 | SBOX[t2 >>> 16 & 255] << 16 | SBOX[t2 >>> 8 & 255] << 8 | SBOX[t2 & 255];
+                t2 ^= RCON[ksRow / keySize | 0] << 24;
+              } else if (keySize > 6 && ksRow % keySize == 4) {
+                t2 = SBOX[t2 >>> 24] << 24 | SBOX[t2 >>> 16 & 255] << 16 | SBOX[t2 >>> 8 & 255] << 8 | SBOX[t2 & 255];
+              }
+              keySchedule[ksRow] = keySchedule[ksRow - keySize] ^ t2;
+            }
+          }
+          var invKeySchedule = this._invKeySchedule = [];
+          for (var invKsRow = 0; invKsRow < ksRows; invKsRow++) {
+            var ksRow = ksRows - invKsRow;
+            if (invKsRow % 4) {
+              var t2 = keySchedule[ksRow];
+            } else {
+              var t2 = keySchedule[ksRow - 4];
+            }
+            if (invKsRow < 4 || ksRow <= 4) {
+              invKeySchedule[invKsRow] = t2;
+            } else {
+              invKeySchedule[invKsRow] = INV_SUB_MIX_0[SBOX[t2 >>> 24]] ^ INV_SUB_MIX_1[SBOX[t2 >>> 16 & 255]] ^ INV_SUB_MIX_2[SBOX[t2 >>> 8 & 255]] ^ INV_SUB_MIX_3[SBOX[t2 & 255]];
+            }
+          }
+        },
+        encryptBlock: function(M2, offset) {
+          this._doCryptBlock(M2, offset, this._keySchedule, SUB_MIX_0, SUB_MIX_1, SUB_MIX_2, SUB_MIX_3, SBOX);
+        },
+        decryptBlock: function(M2, offset) {
+          var t2 = M2[offset + 1];
+          M2[offset + 1] = M2[offset + 3];
+          M2[offset + 3] = t2;
+          this._doCryptBlock(M2, offset, this._invKeySchedule, INV_SUB_MIX_0, INV_SUB_MIX_1, INV_SUB_MIX_2, INV_SUB_MIX_3, INV_SBOX);
+          var t2 = M2[offset + 1];
+          M2[offset + 1] = M2[offset + 3];
+          M2[offset + 3] = t2;
+        },
+        _doCryptBlock: function(M2, offset, keySchedule, SUB_MIX_02, SUB_MIX_12, SUB_MIX_22, SUB_MIX_32, SBOX2) {
+          var nRounds = this._nRounds;
+          var s0 = M2[offset] ^ keySchedule[0];
+          var s1 = M2[offset + 1] ^ keySchedule[1];
+          var s2 = M2[offset + 2] ^ keySchedule[2];
+          var s3 = M2[offset + 3] ^ keySchedule[3];
+          var ksRow = 4;
+          for (var round2 = 1; round2 < nRounds; round2++) {
+            var t0 = SUB_MIX_02[s0 >>> 24] ^ SUB_MIX_12[s1 >>> 16 & 255] ^ SUB_MIX_22[s2 >>> 8 & 255] ^ SUB_MIX_32[s3 & 255] ^ keySchedule[ksRow++];
+            var t1 = SUB_MIX_02[s1 >>> 24] ^ SUB_MIX_12[s2 >>> 16 & 255] ^ SUB_MIX_22[s3 >>> 8 & 255] ^ SUB_MIX_32[s0 & 255] ^ keySchedule[ksRow++];
+            var t2 = SUB_MIX_02[s2 >>> 24] ^ SUB_MIX_12[s3 >>> 16 & 255] ^ SUB_MIX_22[s0 >>> 8 & 255] ^ SUB_MIX_32[s1 & 255] ^ keySchedule[ksRow++];
+            var t3 = SUB_MIX_02[s3 >>> 24] ^ SUB_MIX_12[s0 >>> 16 & 255] ^ SUB_MIX_22[s1 >>> 8 & 255] ^ SUB_MIX_32[s2 & 255] ^ keySchedule[ksRow++];
+            s0 = t0;
+            s1 = t1;
+            s2 = t2;
+            s3 = t3;
+          }
+          var t0 = (SBOX2[s0 >>> 24] << 24 | SBOX2[s1 >>> 16 & 255] << 16 | SBOX2[s2 >>> 8 & 255] << 8 | SBOX2[s3 & 255]) ^ keySchedule[ksRow++];
+          var t1 = (SBOX2[s1 >>> 24] << 24 | SBOX2[s2 >>> 16 & 255] << 16 | SBOX2[s3 >>> 8 & 255] << 8 | SBOX2[s0 & 255]) ^ keySchedule[ksRow++];
+          var t2 = (SBOX2[s2 >>> 24] << 24 | SBOX2[s3 >>> 16 & 255] << 16 | SBOX2[s0 >>> 8 & 255] << 8 | SBOX2[s1 & 255]) ^ keySchedule[ksRow++];
+          var t3 = (SBOX2[s3 >>> 24] << 24 | SBOX2[s0 >>> 16 & 255] << 16 | SBOX2[s1 >>> 8 & 255] << 8 | SBOX2[s2 & 255]) ^ keySchedule[ksRow++];
+          M2[offset] = t0;
+          M2[offset + 1] = t1;
+          M2[offset + 2] = t2;
+          M2[offset + 3] = t3;
+        },
+        keySize: 256 / 32
+      });
+      C.AES = BlockCipher._createHelper(AES);
+    })();
+    return CryptoJS.AES;
+  });
+})(aes);
+var aesExports = aes.exports;
 var encUtf8 = { exports: {} };
 (function(module2, exports2) {
   (function(root2, factory) {
@@ -51656,37 +51650,30 @@ var padPkcs7 = { exports: {} };
   });
 })(padPkcs7);
 var modeEcb = { exports: {} };
-var hasRequiredModeEcb;
-function requireModeEcb() {
-  if (hasRequiredModeEcb)
-    return modeEcb.exports;
-  hasRequiredModeEcb = 1;
-  (function(module2, exports2) {
-    (function(root2, factory, undef) {
-      {
-        module2.exports = factory(requireCore(), requireCipherCore());
-      }
-    })(commonjsGlobal, function(CryptoJS) {
-      CryptoJS.mode.ECB = function() {
-        var ECB2 = CryptoJS.lib.BlockCipherMode.extend();
-        ECB2.Encryptor = ECB2.extend({
-          processBlock: function(words, offset) {
-            this._cipher.encryptBlock(words, offset);
-          }
-        });
-        ECB2.Decryptor = ECB2.extend({
-          processBlock: function(words, offset) {
-            this._cipher.decryptBlock(words, offset);
-          }
-        });
-        return ECB2;
-      }();
-      return CryptoJS.mode.ECB;
-    });
-  })(modeEcb);
-  return modeEcb.exports;
-}
-requireModeEcb();
+(function(module2, exports2) {
+  (function(root2, factory, undef) {
+    {
+      module2.exports = factory(requireCore(), requireCipherCore());
+    }
+  })(commonjsGlobal, function(CryptoJS) {
+    CryptoJS.mode.ECB = function() {
+      var ECB2 = CryptoJS.lib.BlockCipherMode.extend();
+      ECB2.Encryptor = ECB2.extend({
+        processBlock: function(words, offset) {
+          this._cipher.encryptBlock(words, offset);
+        }
+      });
+      ECB2.Decryptor = ECB2.extend({
+        processBlock: function(words, offset) {
+          this._cipher.decryptBlock(words, offset);
+        }
+      });
+      return ECB2;
+    }();
+    return CryptoJS.mode.ECB;
+  });
+})(modeEcb);
+var modeEcbExports = modeEcb.exports;
 requireMd5();
 requireEncBase64();
 var cryptoJs = { exports: {} };
@@ -55034,7 +55021,7 @@ function requireRabbitLegacy() {
 (function(module2, exports2) {
   (function(root2, factory, undef) {
     {
-      module2.exports = factory(requireCore(), requireX64Core(), requireLibTypedarrays(), requireEncUtf16(), requireEncBase64(), requireEncBase64url(), requireMd5(), requireSha1(), requireSha256(), requireSha224(), requireSha512(), requireSha384(), requireSha3(), requireRipemd160(), requireHmac(), requirePbkdf2(), requireEvpkdf(), requireCipherCore(), requireModeCfb(), requireModeCtr(), requireModeCtrGladman(), requireModeOfb(), requireModeEcb(), requirePadAnsix923(), requirePadIso10126(), requirePadIso97971(), requirePadZeropadding(), requirePadNopadding(), requireFormatHex(), requireAes(), requireTripledes(), requireRc4(), requireRabbit(), requireRabbitLegacy());
+      module2.exports = factory(requireCore(), requireX64Core(), requireLibTypedarrays(), requireEncUtf16(), requireEncBase64(), requireEncBase64url(), requireMd5(), requireSha1(), requireSha256(), requireSha224(), requireSha512(), requireSha384(), requireSha3(), requireRipemd160(), requireHmac(), requirePbkdf2(), requireEvpkdf(), requireCipherCore(), requireModeCfb(), requireModeCtr(), requireModeCtrGladman(), requireModeOfb(), modeEcbExports, requirePadAnsix923(), requirePadIso10126(), requirePadIso97971(), requirePadZeropadding(), requirePadNopadding(), requireFormatHex(), aesExports, requireTripledes(), requireRc4(), requireRabbit(), requireRabbitLegacy());
     }
   })(commonjsGlobal, function(CryptoJS) {
     return CryptoJS;
@@ -55045,7 +55032,7 @@ var dayjs_min = { exports: {} };
   !function(t2, e) {
     module2.exports = e();
   }(commonjsGlobal, function() {
-    var t2 = 1e3, e = 6e4, n2 = 36e5, r2 = "millisecond", i2 = "second", s2 = "minute", u2 = "hour", a2 = "day", o2 = "week", f2 = "month", h2 = "quarter", c2 = "year", d2 = "date", l2 = "Invalid Date", $2 = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y2 = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M2 = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t3) {
+    var t2 = 1e3, e = 6e4, n2 = 36e5, r2 = "millisecond", i2 = "second", s2 = "minute", u2 = "hour", a2 = "day", o2 = "week", c2 = "month", f2 = "quarter", h2 = "year", d2 = "date", l2 = "Invalid Date", $2 = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y2 = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M2 = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t3) {
       var e2 = ["th", "st", "nd", "rd"], n3 = t3 % 100;
       return "[" + t3 + (e2[(n3 - 20) % 10] || e2[n3] || e2[0]) + "]";
     } }, m2 = function(t3, e2, n3) {
@@ -55057,19 +55044,19 @@ var dayjs_min = { exports: {} };
     }, m: function t3(e2, n3) {
       if (e2.date() < n3.date())
         return -t3(n3, e2);
-      var r3 = 12 * (n3.year() - e2.year()) + (n3.month() - e2.month()), i3 = e2.clone().add(r3, f2), s3 = n3 - i3 < 0, u3 = e2.clone().add(r3 + (s3 ? -1 : 1), f2);
+      var r3 = 12 * (n3.year() - e2.year()) + (n3.month() - e2.month()), i3 = e2.clone().add(r3, c2), s3 = n3 - i3 < 0, u3 = e2.clone().add(r3 + (s3 ? -1 : 1), c2);
       return +(-(r3 + (n3 - i3) / (s3 ? i3 - u3 : u3 - i3)) || 0);
     }, a: function(t3) {
       return t3 < 0 ? Math.ceil(t3) || 0 : Math.floor(t3);
     }, p: function(t3) {
-      return { M: f2, y: c2, w: o2, d: a2, D: d2, h: u2, m: s2, s: i2, ms: r2, Q: h2 }[t3] || String(t3 || "").toLowerCase().replace(/s$/, "");
+      return { M: c2, y: h2, w: o2, d: a2, D: d2, h: u2, m: s2, s: i2, ms: r2, Q: f2 }[t3] || String(t3 || "").toLowerCase().replace(/s$/, "");
     }, u: function(t3) {
       return void 0 === t3;
     } }, g2 = "en", D2 = {};
     D2[g2] = M2;
-    var p2 = function(t3) {
-      return t3 instanceof _2;
-    }, S2 = function t3(e2, n3, r3) {
+    var p2 = "$isDayjsObject", S2 = function(t3) {
+      return t3 instanceof _2 || !(!t3 || !t3[p2]);
+    }, w2 = function t3(e2, n3, r3) {
       var i3;
       if (!e2)
         return g2;
@@ -55084,18 +55071,18 @@ var dayjs_min = { exports: {} };
         D2[a3] = e2, i3 = a3;
       }
       return !r3 && i3 && (g2 = i3), i3 || !r3 && g2;
-    }, w2 = function(t3, e2) {
-      if (p2(t3))
+    }, O2 = function(t3, e2) {
+      if (S2(t3))
         return t3.clone();
       var n3 = "object" == typeof e2 ? e2 : {};
       return n3.date = t3, n3.args = arguments, new _2(n3);
-    }, O2 = v2;
-    O2.l = S2, O2.i = p2, O2.w = function(t3, e2) {
-      return w2(t3, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
+    }, b2 = v2;
+    b2.l = w2, b2.i = S2, b2.w = function(t3, e2) {
+      return O2(t3, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
     };
     var _2 = function() {
       function M3(t3) {
-        this.$L = S2(t3.locale, null, true), this.parse(t3);
+        this.$L = w2(t3.locale, null, true), this.parse(t3), this.$x = this.$x || t3.x || {}, this[p2] = true;
       }
       var m3 = M3.prototype;
       return m3.parse = function(t3) {
@@ -55103,7 +55090,7 @@ var dayjs_min = { exports: {} };
           var e2 = t4.date, n3 = t4.utc;
           if (null === e2)
             return /* @__PURE__ */ new Date(NaN);
-          if (O2.u(e2))
+          if (b2.u(e2))
             return /* @__PURE__ */ new Date();
           if (e2 instanceof Date)
             return new Date(e2);
@@ -55115,38 +55102,38 @@ var dayjs_min = { exports: {} };
             }
           }
           return new Date(e2);
-        }(t3), this.$x = t3.x || {}, this.init();
+        }(t3), this.init();
       }, m3.init = function() {
         var t3 = this.$d;
         this.$y = t3.getFullYear(), this.$M = t3.getMonth(), this.$D = t3.getDate(), this.$W = t3.getDay(), this.$H = t3.getHours(), this.$m = t3.getMinutes(), this.$s = t3.getSeconds(), this.$ms = t3.getMilliseconds();
       }, m3.$utils = function() {
-        return O2;
+        return b2;
       }, m3.isValid = function() {
         return !(this.$d.toString() === l2);
       }, m3.isSame = function(t3, e2) {
-        var n3 = w2(t3);
+        var n3 = O2(t3);
         return this.startOf(e2) <= n3 && n3 <= this.endOf(e2);
       }, m3.isAfter = function(t3, e2) {
-        return w2(t3) < this.startOf(e2);
+        return O2(t3) < this.startOf(e2);
       }, m3.isBefore = function(t3, e2) {
-        return this.endOf(e2) < w2(t3);
+        return this.endOf(e2) < O2(t3);
       }, m3.$g = function(t3, e2, n3) {
-        return O2.u(t3) ? this[e2] : this.set(n3, t3);
+        return b2.u(t3) ? this[e2] : this.set(n3, t3);
       }, m3.unix = function() {
         return Math.floor(this.valueOf() / 1e3);
       }, m3.valueOf = function() {
         return this.$d.getTime();
       }, m3.startOf = function(t3, e2) {
-        var n3 = this, r3 = !!O2.u(e2) || e2, h3 = O2.p(t3), l3 = function(t4, e3) {
-          var i3 = O2.w(n3.$u ? Date.UTC(n3.$y, e3, t4) : new Date(n3.$y, e3, t4), n3);
+        var n3 = this, r3 = !!b2.u(e2) || e2, f3 = b2.p(t3), l3 = function(t4, e3) {
+          var i3 = b2.w(n3.$u ? Date.UTC(n3.$y, e3, t4) : new Date(n3.$y, e3, t4), n3);
           return r3 ? i3 : i3.endOf(a2);
         }, $3 = function(t4, e3) {
-          return O2.w(n3.toDate()[t4].apply(n3.toDate("s"), (r3 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n3);
+          return b2.w(n3.toDate()[t4].apply(n3.toDate("s"), (r3 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n3);
         }, y3 = this.$W, M4 = this.$M, m4 = this.$D, v3 = "set" + (this.$u ? "UTC" : "");
-        switch (h3) {
-          case c2:
+        switch (f3) {
+          case h2:
             return r3 ? l3(1, 0) : l3(31, 11);
-          case f2:
+          case c2:
             return r3 ? l3(1, M4) : l3(0, M4 + 1);
           case o2:
             var g3 = this.$locale().weekStart || 0, D3 = (y3 < g3 ? y3 + 7 : y3) - g3;
@@ -55166,8 +55153,8 @@ var dayjs_min = { exports: {} };
       }, m3.endOf = function(t3) {
         return this.startOf(t3, false);
       }, m3.$set = function(t3, e2) {
-        var n3, o3 = O2.p(t3), h3 = "set" + (this.$u ? "UTC" : ""), l3 = (n3 = {}, n3[a2] = h3 + "Date", n3[d2] = h3 + "Date", n3[f2] = h3 + "Month", n3[c2] = h3 + "FullYear", n3[u2] = h3 + "Hours", n3[s2] = h3 + "Minutes", n3[i2] = h3 + "Seconds", n3[r2] = h3 + "Milliseconds", n3)[o3], $3 = o3 === a2 ? this.$D + (e2 - this.$W) : e2;
-        if (o3 === f2 || o3 === c2) {
+        var n3, o3 = b2.p(t3), f3 = "set" + (this.$u ? "UTC" : ""), l3 = (n3 = {}, n3[a2] = f3 + "Date", n3[d2] = f3 + "Date", n3[c2] = f3 + "Month", n3[h2] = f3 + "FullYear", n3[u2] = f3 + "Hours", n3[s2] = f3 + "Minutes", n3[i2] = f3 + "Seconds", n3[r2] = f3 + "Milliseconds", n3)[o3], $3 = o3 === a2 ? this.$D + (e2 - this.$W) : e2;
+        if (o3 === c2 || o3 === h2) {
           var y3 = this.clone().set(d2, 1);
           y3.$d[l3]($3), y3.init(), this.$d = y3.set(d2, Math.min(this.$D, y3.daysInMonth())).$d;
         } else
@@ -55176,57 +55163,139 @@ var dayjs_min = { exports: {} };
       }, m3.set = function(t3, e2) {
         return this.clone().$set(t3, e2);
       }, m3.get = function(t3) {
-        return this[O2.p(t3)]();
-      }, m3.add = function(r3, h3) {
+        return this[b2.p(t3)]();
+      }, m3.add = function(r3, f3) {
         var d3, l3 = this;
         r3 = Number(r3);
-        var $3 = O2.p(h3), y3 = function(t3) {
-          var e2 = w2(l3);
-          return O2.w(e2.date(e2.date() + Math.round(t3 * r3)), l3);
+        var $3 = b2.p(f3), y3 = function(t3) {
+          var e2 = O2(l3);
+          return b2.w(e2.date(e2.date() + Math.round(t3 * r3)), l3);
         };
-        if ($3 === f2)
-          return this.set(f2, this.$M + r3);
         if ($3 === c2)
-          return this.set(c2, this.$y + r3);
+          return this.set(c2, this.$M + r3);
+        if ($3 === h2)
+          return this.set(h2, this.$y + r3);
         if ($3 === a2)
           return y3(1);
         if ($3 === o2)
           return y3(7);
         var M4 = (d3 = {}, d3[s2] = e, d3[u2] = n2, d3[i2] = t2, d3)[$3] || 1, m4 = this.$d.getTime() + r3 * M4;
-        return O2.w(m4, this);
+        return b2.w(m4, this);
       }, m3.subtract = function(t3, e2) {
         return this.add(-1 * t3, e2);
       }, m3.format = function(t3) {
         var e2 = this, n3 = this.$locale();
         if (!this.isValid())
           return n3.invalidDate || l2;
-        var r3 = t3 || "YYYY-MM-DDTHH:mm:ssZ", i3 = O2.z(this), s3 = this.$H, u3 = this.$m, a3 = this.$M, o3 = n3.weekdays, f3 = n3.months, h3 = function(t4, n4, i4, s4) {
+        var r3 = t3 || "YYYY-MM-DDTHH:mm:ssZ", i3 = b2.z(this), s3 = this.$H, u3 = this.$m, a3 = this.$M, o3 = n3.weekdays, c3 = n3.months, f3 = n3.meridiem, h3 = function(t4, n4, i4, s4) {
           return t4 && (t4[n4] || t4(e2, r3)) || i4[n4].slice(0, s4);
-        }, c3 = function(t4) {
-          return O2.s(s3 % 12 || 12, t4, "0");
-        }, d3 = n3.meridiem || function(t4, e3, n4) {
+        }, d3 = function(t4) {
+          return b2.s(s3 % 12 || 12, t4, "0");
+        }, $3 = f3 || function(t4, e3, n4) {
           var r4 = t4 < 12 ? "AM" : "PM";
           return n4 ? r4.toLowerCase() : r4;
-        }, $3 = { YY: String(this.$y).slice(-2), YYYY: this.$y, M: a3 + 1, MM: O2.s(a3 + 1, 2, "0"), MMM: h3(n3.monthsShort, a3, f3, 3), MMMM: h3(f3, a3), D: this.$D, DD: O2.s(this.$D, 2, "0"), d: String(this.$W), dd: h3(n3.weekdaysMin, this.$W, o3, 2), ddd: h3(n3.weekdaysShort, this.$W, o3, 3), dddd: o3[this.$W], H: String(s3), HH: O2.s(s3, 2, "0"), h: c3(1), hh: c3(2), a: d3(s3, u3, true), A: d3(s3, u3, false), m: String(u3), mm: O2.s(u3, 2, "0"), s: String(this.$s), ss: O2.s(this.$s, 2, "0"), SSS: O2.s(this.$ms, 3, "0"), Z: i3 };
-        return r3.replace(y2, function(t4, e3) {
-          return e3 || $3[t4] || i3.replace(":", "");
+        };
+        return r3.replace(y2, function(t4, r4) {
+          return r4 || function(t5) {
+            switch (t5) {
+              case "YY":
+                return String(e2.$y).slice(-2);
+              case "YYYY":
+                return b2.s(e2.$y, 4, "0");
+              case "M":
+                return a3 + 1;
+              case "MM":
+                return b2.s(a3 + 1, 2, "0");
+              case "MMM":
+                return h3(n3.monthsShort, a3, c3, 3);
+              case "MMMM":
+                return h3(c3, a3);
+              case "D":
+                return e2.$D;
+              case "DD":
+                return b2.s(e2.$D, 2, "0");
+              case "d":
+                return String(e2.$W);
+              case "dd":
+                return h3(n3.weekdaysMin, e2.$W, o3, 2);
+              case "ddd":
+                return h3(n3.weekdaysShort, e2.$W, o3, 3);
+              case "dddd":
+                return o3[e2.$W];
+              case "H":
+                return String(s3);
+              case "HH":
+                return b2.s(s3, 2, "0");
+              case "h":
+                return d3(1);
+              case "hh":
+                return d3(2);
+              case "a":
+                return $3(s3, u3, true);
+              case "A":
+                return $3(s3, u3, false);
+              case "m":
+                return String(u3);
+              case "mm":
+                return b2.s(u3, 2, "0");
+              case "s":
+                return String(e2.$s);
+              case "ss":
+                return b2.s(e2.$s, 2, "0");
+              case "SSS":
+                return b2.s(e2.$ms, 3, "0");
+              case "Z":
+                return i3;
+            }
+            return null;
+          }(t4) || i3.replace(":", "");
         });
       }, m3.utcOffset = function() {
         return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
       }, m3.diff = function(r3, d3, l3) {
-        var $3, y3 = O2.p(d3), M4 = w2(r3), m4 = (M4.utcOffset() - this.utcOffset()) * e, v3 = this - M4, g3 = O2.m(this, M4);
-        return g3 = ($3 = {}, $3[c2] = g3 / 12, $3[f2] = g3, $3[h2] = g3 / 3, $3[o2] = (v3 - m4) / 6048e5, $3[a2] = (v3 - m4) / 864e5, $3[u2] = v3 / n2, $3[s2] = v3 / e, $3[i2] = v3 / t2, $3)[y3] || v3, l3 ? g3 : O2.a(g3);
+        var $3, y3 = this, M4 = b2.p(d3), m4 = O2(r3), v3 = (m4.utcOffset() - this.utcOffset()) * e, g3 = this - m4, D3 = function() {
+          return b2.m(y3, m4);
+        };
+        switch (M4) {
+          case h2:
+            $3 = D3() / 12;
+            break;
+          case c2:
+            $3 = D3();
+            break;
+          case f2:
+            $3 = D3() / 3;
+            break;
+          case o2:
+            $3 = (g3 - v3) / 6048e5;
+            break;
+          case a2:
+            $3 = (g3 - v3) / 864e5;
+            break;
+          case u2:
+            $3 = g3 / n2;
+            break;
+          case s2:
+            $3 = g3 / e;
+            break;
+          case i2:
+            $3 = g3 / t2;
+            break;
+          default:
+            $3 = g3;
+        }
+        return l3 ? $3 : b2.a($3);
       }, m3.daysInMonth = function() {
-        return this.endOf(f2).$D;
+        return this.endOf(c2).$D;
       }, m3.$locale = function() {
         return D2[this.$L];
       }, m3.locale = function(t3, e2) {
         if (!t3)
           return this.$L;
-        var n3 = this.clone(), r3 = S2(t3, e2, true);
+        var n3 = this.clone(), r3 = w2(t3, e2, true);
         return r3 && (n3.$L = r3), n3;
       }, m3.clone = function() {
-        return O2.w(this.$d, this);
+        return b2.w(this.$d, this);
       }, m3.toDate = function() {
         return new Date(this.valueOf());
       }, m3.toJSON = function() {
@@ -55236,16 +55305,16 @@ var dayjs_min = { exports: {} };
       }, m3.toString = function() {
         return this.$d.toUTCString();
       }, M3;
-    }(), T2 = _2.prototype;
-    return w2.prototype = T2, [["$ms", r2], ["$s", i2], ["$m", s2], ["$H", u2], ["$W", a2], ["$M", f2], ["$y", c2], ["$D", d2]].forEach(function(t3) {
-      T2[t3[1]] = function(e2) {
+    }(), k2 = _2.prototype;
+    return O2.prototype = k2, [["$ms", r2], ["$s", i2], ["$m", s2], ["$H", u2], ["$W", a2], ["$M", c2], ["$y", h2], ["$D", d2]].forEach(function(t3) {
+      k2[t3[1]] = function(e2) {
         return this.$g(e2, t3[0], t3[1]);
       };
-    }), w2.extend = function(t3, e2) {
-      return t3.$i || (t3(e2, _2, w2), t3.$i = true), w2;
-    }, w2.locale = S2, w2.isDayjs = p2, w2.unix = function(t3) {
-      return w2(1e3 * t3);
-    }, w2.en = D2[g2], w2.Ls = D2, w2.p = {}, w2;
+    }), O2.extend = function(t3, e2) {
+      return t3.$i || (t3(e2, _2, O2), t3.$i = true), O2;
+    }, O2.locale = w2, O2.isDayjs = S2, O2.unix = function(t3) {
+      return O2(1e3 * t3);
+    }, O2.en = D2[g2], O2.Ls = D2, O2.p = {}, O2;
   });
 })(dayjs_min);
 var dayjs_minExports = dayjs_min.exports;
@@ -55734,9 +55803,10 @@ const _sfc_main = /* @__PURE__ */ vue.defineComponent({
     }
   },
   emits: ["destroy"],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
     const props = __props;
     vue.provide("configGlobal", props);
+    const emit = __emit;
     let bpmnModeler;
     const xml2 = vue.ref("");
     const activityLists = vue.ref([]);
