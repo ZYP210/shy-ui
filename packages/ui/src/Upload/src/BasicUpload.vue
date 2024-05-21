@@ -1,13 +1,13 @@
 <template>
   <div>
     <Space>
-      <Button
+      <BasicButton
         type="primary"
         @click="openUploadModal"
         preIcon="carbon:cloud-upload"
       >
         {{ t('component.upload.upload') }}
-      </Button>
+      </BasicButton>
       <Tooltip placement="bottom" v-if="showPreview">
         <template #title>
           {{ t('component.upload.uploaded') }}
@@ -52,7 +52,7 @@ import { useI18n } from '@shy-plugins/use'
 import { isArray } from '@shy-plugins/utils'
 import UploadModal from './components/UploadModal.vue'
 import UploadPreviewModal from './components/UploadPreviewModal.vue'
-
+import { BasicButton } from '../../Button'
 // defineOptions({ name: 'BasicUpload' })
 
 const props = defineProps(uploadContainerProps)
