@@ -1,10 +1,16 @@
 <template>
   <div class="p-16px">
-    <Description title="基础示例" @register="register"> </Description>
+    <Description size="middle" title="基础示例" @register="register">
+      <template #phoneValue>
+        <div class="w-full h-300px">
+          <ShyTable @register="registerTable" />
+        </div>
+      </template>
+    </Description>
   </div>
 </template>
 <script lang="ts" setup>
-import { Description, useDescription } from '3h1-ui'
+import { Description, useDescription, ShyTable, useShyTable } from '3h1-ui'
 import { h } from 'vue'
 import { Tag } from 'ant-design-vue'
 const mockData: any = {
@@ -77,6 +83,19 @@ const [register, { setDescProps }] = useDescription({
   schema,
   summaryTotalFields: ['summary', 'summary1']
   // mode: 'vertical'
+})
+
+const [registerTable] = useShyTable({
+  dataSource: [{}],
+  columns: [
+    {
+      title: '测试',
+      dataIndex: 'test'
+    }
+  ],
+  isShowFooter: false,
+  showIndexColumn: true,
+  showTableSetting: false
 })
 
 onMounted(() => {

@@ -87,12 +87,20 @@ const FormItem = defineComponent({
           componentProps({ schema, tableAction, formModel, formActionType }) ??
           {}
       }
+
       if (schema.component === 'Divider') {
         componentProps = Object.assign({ type: 'horizontal' }, componentProps, {
           orientation: 'left',
           plain: true,
           label: schema?.label || ''
         })
+      }
+
+      if (
+        schema.component.includes('Picker') ||
+        schema.component.includes('Select')
+      ) {
+        componentProps.getPopupContainer = () => document.body
       }
 
       if (['RangePicker', 'DatePicker'].includes(schema.component)) {

@@ -465,6 +465,9 @@ importers:
       '@ant-design/icons-vue':
         specifier: ^6.1.0
         version: 6.1.0(vue@3.4.23)
+      '@ctrl/tinycolor':
+        specifier: ^4.1.0
+        version: 4.1.0
       '@shy-plugins/utils':
         specifier: workspace:*
         version: link:../utils
@@ -2174,6 +2177,11 @@ packages:
   /@ctrl/tinycolor@3.6.1:
     resolution: {integrity: sha512-SITSV6aIXsuVNV3f3O0f2n/cgyEDWoSqtZMYiAmcsYHydcKrOz3gUxB/iXd/Qf08+IZX4KpgNbvUdMBmWz+kcA==}
     engines: {node: '>=10'}
+
+  /@ctrl/tinycolor@4.1.0:
+    resolution: {integrity: sha512-WyOx8cJQ+FQus4Mm4uPIZA64gbk3Wxh0so5Lcii0aJifqwoVOlfFtorjLE0Hen4OYyHZMXDWqMmaQemBhgxFRQ==}
+    engines: {node: '>=14'}
+    dev: false
 
   /@cypress/request@2.88.12:
     resolution: {integrity: sha512-tOn+0mDZxASFM+cuAP9szGUGPI1HwWVSvdzm7V4cCsPdFTx6qMj29CwaQmRAMIEhORIUBFBsYROYJcveK4uOjA==}
@@ -4597,7 +4605,7 @@ packages:
       vue: ^3.2.25
     dependencies:
       vite: 4.4.9(@types/node@20.8.9)(less@4.2.0)
-      vue: 3.3.13(typescript@5.0.4)
+      vue: 3.3.13(typescript@4.8.4)
     dev: true
 
   /@vitejs/plugin-vue@4.2.3(vite@4.4.9)(vue@3.4.23):
@@ -16864,6 +16872,7 @@ packages:
 
   /workbox-cacheable-response@6.6.0:
     resolution: {integrity: sha512-JfhJUSQDwsF1Xv3EV1vWzSsCOZn4mQ38bWEBR3LdvOxSPgB65gAM6cS2CX8rkkKHRgiLrN7Wxoyu+TuH67kHrw==}
+    deprecated: workbox-background-sync@6.6.0
     dependencies:
       workbox-core: 6.6.0
     dev: true

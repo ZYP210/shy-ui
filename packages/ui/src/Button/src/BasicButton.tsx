@@ -2,10 +2,16 @@ import { computed, defineComponent } from 'vue'
 import { buttonProps } from './props'
 import { Button, ConfigProvider } from 'ant-design-vue'
 import { Icon } from '../../Icon'
-import { getVarColor } from '@shy-plugins/use'
+import { useTheme } from '@shy-plugins/use'
+
+
+
 const BasicButton = defineComponent({
   props: buttonProps,
   setup(props, { attrs, slots }) {
+    const { getVarColor } = useTheme();
+
+
     const getBindValue = computed(() => {
       return {
         ...attrs,
@@ -25,7 +31,7 @@ const BasicButton = defineComponent({
         let colorPrimary: string
         switch (props.type || props.color) {
           case 'danger':
-            colorPrimary = getVarColor('--red-6')
+            colorPrimary = getVarColor('--red-5')
             break
 
           case 'waring':
@@ -37,7 +43,7 @@ const BasicButton = defineComponent({
             break
 
           case 'message':
-            colorPrimary = getVarColor('--blue-6')
+            colorPrimary = getVarColor('--blue-5')
             break
 
           default:

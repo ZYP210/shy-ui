@@ -7,7 +7,7 @@
     }"
     :data-source="state"
     :pagination="false"
-    bordered
+    :bordered="false"
     size="small"
     class="table-children"
     align="center"

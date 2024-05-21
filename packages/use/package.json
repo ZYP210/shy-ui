@@ -1,6 +1,6 @@
 {
   "name": "@shy-plugins/use",
-  "version": "1.0.1-next.1",
+  "version": "1.0.1-next.2",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",

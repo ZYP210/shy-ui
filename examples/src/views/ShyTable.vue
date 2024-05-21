@@ -318,7 +318,7 @@ const [
   actionColumn: {
     dataIndex: 'action',
     title: '操作',
-    fixed: 'right'
+    // fixed: 'right'
   },
   showIndexColumn: true
   // canResize: false,

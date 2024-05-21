@@ -37,6 +37,7 @@ export const URLData: MenuList[] = [
   {
     title: '基础组件',
     urlAry: [
+      'BasicButton',
       'BasicHelp',
       'BasicTitle',
       'ButtonView',
