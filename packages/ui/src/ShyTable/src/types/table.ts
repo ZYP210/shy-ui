@@ -113,8 +113,8 @@ export interface TableActionType {
     index: number
   ) => Recordable<any> | undefined
   findTableDataRecord: (rowKey: string | number) => Recordable | void
-  getColumns: (opt?: GetColumnsParams) => BasicColumn[]
-  setColumns: (columns: BasicColumn[] | string[]) => void
+  getColumns: (opt?: GetColumnsParams) => ShyColumn[]
+  setColumns: (columns: ShyColumn[] | string[]) => void
   getDataSource: <T = Recordable>() => T[] | undefined
   getRawDataSource: <T = Recordable>() => T
   setLoading: (loading: boolean) => void
@@ -124,7 +124,7 @@ export interface TableActionType {
   getPaginationRef: () => PaginationProps | boolean | undefined
   getSize: () => SizeType | undefined
   getRowSelection: () => TableRowSelection<Recordable> | undefined
-  getCacheColumns: () => BasicColumn[] | undefined
+  getCacheColumns: () => ShyColumn[] | undefined
   emit?: EmitType
   updateTableData: (
     index: number,
@@ -135,7 +135,7 @@ export interface TableActionType {
   getShowPagination: () => boolean | undefined
   setCacheColumnsByField?: (
     dataIndex: string | undefined,
-    value: BasicColumn
+    value: ShyColumn
   ) => void
   setEditByRow?: any
   cancelEditByRow?: any
@@ -249,12 +249,12 @@ export interface ShyTableProps<T = any> {
   // 表单配置
   formConfig?: Partial<FormProps>
   // 列配置
-  columns: BasicColumn[]
+  columns: ShyColumn[]
   // 是否显示序号列
   showIndexColumn?: boolean
   // 序号列配置
-  indexColumnProps?: BasicColumn
-  actionColumn?: BasicColumn
+  indexColumnProps?: ShyColumn
+  actionColumn?: ShyColumn
   // 文本超过宽度是否显示。。。
   ellipsis?: boolean
   // 是否继承父级高度（父级高度-表单高度-padding高度）
@@ -488,9 +488,9 @@ export type CellFormat =
   | Map<string | number, any>
 
 // @ts-ignore
-export type BasicColumn = {
+export type ShyColumn = {
   width?: number | undefined
-  children?: BasicColumn[]
+  children?: ShyColumn[]
   filters?: {
     text: string
     value: string
@@ -516,6 +516,8 @@ export type BasicColumn = {
   helpMessage?: string | string[]
 
   format?: CellFormat
+  tag?: boolean
+  options?: Recordable[]
 
   // Editable
   edit?: boolean
@@ -526,7 +528,7 @@ export type BasicColumn = {
     | ((opt: {
         text: string | number | boolean | Recordable
         record: Recordable
-        column: BasicColumn
+        column: ShyColumn
         index: number
         typeAction: TableActionType
       }) => Recordable)
@@ -537,12 +539,12 @@ export type BasicColumn = {
   // 权限编码控制是否显示
   auth?: RoleEnum | RoleEnum[] | string | string[]
   // 业务控制是否显示
-  ifShow?: boolean | ((column: BasicColumn) => boolean)
+  ifShow?: boolean | ((column: ShyColumn) => boolean)
   // 自定义修改后显示的内容
   editRender?: (opt: {
     text: string | number | boolean | Recordable
     record: Recordable
-    column: BasicColumn
+    column: ShyColumn
     index: number
   }) => VNodeChild | JSX.Element
   // 动态 Disabled

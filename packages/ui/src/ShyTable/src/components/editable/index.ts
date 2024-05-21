@@ -1,4 +1,4 @@
-import type { BasicColumn, TableActionType } from '../../types/table'
+import type { ShyColumn, TableActionType } from '../../types/table'
 
 import { h, Ref, toRaw, ref } from 'vue'
 
@@ -18,7 +18,7 @@ export function isNeedRefresh() {
 }
 
 export function renderEditCell(
-  column: BasicColumn,
+  column: ShyColumn,
   tableAction: TableActionType
 ) {
   return ({ text: value, record, index }: Params) => {

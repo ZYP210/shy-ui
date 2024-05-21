@@ -28,20 +28,23 @@
                 {
                   label: '保存',
                   // ifShow: false,
-                  onClick: handleSave.bind(null, record)
+                  popConfirm: {
+                    title: '确认保存?',
+                    confirm: handleSave.bind(null, record)
+                  }
                 },
                 {
                   label: '测试',
                   // ifShow: false,
                   onClick: handleSave.bind(null, record)
                 },
-                // {
-                //   label: '取消',
-                //   popConfirm: {
-                //     title: '是否取消编辑',
-                //     confirm: handleCancel.bind(null, record)
-                //   }
-                // }
+                {
+                  label: '删除',
+                  popConfirm: {
+                    title: '确认删除吗?',
+                    confirm: handleRemove.bind(null, record)
+                  }
+                }
               ]"
             />
           </template>
@@ -79,36 +82,64 @@ const columns: any[] = [
     dataIndex: 'name',
     align: 'left',
     width: 120,
+    tag: true,
+    options: [
+      {
+        label: '信息',
+        value: '0',
+        colorType: 'var(--gray-5)'
+      },
+      {
+        label: '完成',
+        value: '1',
+        colorType: 'var(--primary-5)'
+      },
+      {
+        label: '警告',
+        value: '2',
+        colorType: 'var(--orange-5)'
+      },
+      {
+        label: '等待',
+        value: '3',
+        colorType: 'var(--blue-5)'
+      },
+      {
+        label: '危险',
+        value: '4',
+        colorType: 'var(--red-5)'
+      }
+    ]
   },
   {
     title: '图标',
-    dataIndex: 'icon',
+    dataIndex: 'icon'
   },
   {
     title: '数',
     dataIndex: 'qualifiedNum',
-    width: 1000,
+    width: 1000
   },
   {
     title: '组件',
     dataIndex: 'component',
-    width: 160,
+    width: 160
   },
   {
     title: '排序',
     dataIndex: 'sort',
-    width: 60,
+    width: 60
   },
   {
     title: '状态',
     dataIndex: 'status',
-    width: 60,
+    width: 60
   },
   {
     title: '创建时间',
     dataIndex: 'createTime',
-    width: 180,
-  },
+    width: 180
+  }
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -151,6 +182,8 @@ const getFooterActions = ({ rows, rowKeys, disabled }) => {
   ]
 }
 
+const length = ref(21)
+
 const [
   register,
   {
@@ -162,24 +195,25 @@ const [
   }
 ] = useShyTable({
   isShowTitle: false,
-  api: ({ current, size }): any => {
-    // console.log(params)
+  api: (params): any => {
+    const records = Array.from({ length: length.value }, (_, i) => {
+      return {
+        id: i,
+        status: i,
+        rangePlace: i,
+        place: '河北',
+        createTime: 1695024076000,
+        name: i,
+        phone: '1212121',
+        address: '1111',
+        remark: 999,
+        qualifiedNum: 122
+      }
+    })
+
     return {
-      records: Array.from({ length: 20 }, (_, i) => {
-        return {
-          id: i,
-          status: i,
-          rangePlace: i,
-          place: '河北',
-          createTime: 1695024076000,
-          name: 'zzz',
-          phone: '1212121',
-          address: '1111',
-          remark: 999,
-          qualifiedNum: 122
-        }
-      }),
-      total: 100
+      records,
+      total: records.length
     }
   },
   // isShowFooterSettings: false,
@@ -342,6 +376,11 @@ const pushApi = async () => {
   //     return await item.onValid()
   //   })
   // )
+}
+
+const handleRemove = () => {
+  --length.value
+  reload()
 }
 
 onMounted(() => {

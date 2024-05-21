@@ -1,4 +1,3 @@
-<script lang="tsx">
 import type { PropType, Ref } from 'vue'
 import { computed, defineComponent, toRefs, unref, ref } from 'vue'
 import type { FormActionType, FormProps, FormSchema } from '../types/form'
@@ -9,16 +8,13 @@ import { Col, Form } from 'ant-design-vue'
 import { ShyComponentMap } from '../ShyComponentMap'
 import { BasicHelp } from '../../..//Basic'
 import { isBoolean, isFunction, isNull, getSlot } from '@shy-plugins/utils'
-
 import { createPlaceholderMessage, setComponentRuleType } from '../helper'
 import { cloneDeep, upperFirst } from 'lodash-es'
 import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import Divider from '../../../Basic/src/BasicTitle.vue'
-
-// import dayjs from 'dayjs'
 import { useGlobalConfig } from '../../../../config/index'
 
-export default defineComponent({
+const FormItem = defineComponent({
   name: 'BasicFormItem',
   inheritAttrs: false,
   props: {
@@ -98,6 +94,24 @@ export default defineComponent({
           label: schema?.label || ''
         })
       }
+
+      if (['RangePicker', 'DatePicker'].includes(schema.component)) {
+        componentProps.monthCellRender = ({ current }) => {
+          if (current.month() === new Date().getMonth()) {
+            return (
+              <div class="ant-picker-cell-inner ant-picker-cell-now">
+                {`${current.month() + 1}月`}
+              </div>
+            )
+          }
+          return (
+            <div class="ant-picker-cell-inner">
+              {`${current.month() + 1}月`}
+            </div>
+          )
+        }
+      }
+
       if (schema.component === 'Input') {
         const maxlength =
           componentProps?.maxlength === undefined
@@ -486,4 +500,5 @@ export default defineComponent({
     }
   }
 })
-</script>
+
+export default FormItem

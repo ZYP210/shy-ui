@@ -1,8 +1,16 @@
-@tree-prefix-cls: ~'@{namespace}-tree';
+@prefix-cls: ~'@{namespace}-ant-tree';
 
-.@{tree-prefix-cls} {
-  padding: 20px;
-  background-color: @component-background;
+.@{prefix-cls} {
+  &-wrapper {
+    position: relative;
+    padding: 0 8px 8px;
+    height: 100%;
+    border: 1px solid var(--gray-3);
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: var(--shadow-2);
+    z-index: 100;
+  }
 
   .ant-tree-node-content-wrapper {
     position: relative;
@@ -10,44 +18,53 @@
     .ant-tree-title {
       position: absolute;
       left: 0;
-      overflow: hidden;
+      display: flex;
       width: 100%;
       text-overflow: ellipsis;
       white-space: nowrap;
+      overflow: hidden;
     }
   }
 
-  &__title {
-    position: relative;
-    display: flex;
-    align-items: center;
+  &-node-title {
+    flex: 1;
+    display: block;
     padding-right: 10px;
-    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 
     &:hover {
-      .@{tree-prefix-cls}__action {
+      .@{prefix-cls}__action {
         visibility: visible;
       }
     }
   }
 
-  &__content {
-    overflow: hidden;
-  }
+  // &__content {
+  //   overflow: hidden;
+  // }
 
-  &__actions {
-    position: absolute;
-    //top: 2px;
-    right: 3px;
+  // &__actions {
+  //   position: absolute;
+  //   //top: 2px;
+  //   right: 3px;
+  //   display: flex;
+  // }
+
+  // &__action {
+  //   margin-left: 4px;
+  //   visibility: hidden;
+  // }
+
+  &-header-title {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 38px;
   }
 
-  &__action {
-    margin-left: 4px;
-    visibility: hidden;
-  }
-
-  &-header {
-    // border-bottom: 1px solid @border-color-base;
+  &-header:not(:has(.@{prefix-cls}-header-title)) .shy-search {
+    margin-top: 8px;
   }
 }

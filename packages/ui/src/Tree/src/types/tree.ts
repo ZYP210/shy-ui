@@ -2,6 +2,7 @@ import type { ExtractPropTypes } from 'vue'
 import type { TreeDataItem } from 'ant-design-vue/es/tree/Tree'
 
 import { buildProps } from '@shy-plugins/utils'
+import { ButtonProps, TooltipProps } from 'ant-design-vue'
 
 export enum ToolbarEnum {
   SELECT_ALL,
@@ -170,9 +171,44 @@ export interface TreeItem extends TreeDataItem {
   icon?: any
 }
 
-export interface TreeActionItem {
-  render: (record: Recordable) => any
-  show?: boolean | ((record: Recordable) => boolean)
+// export interface  {
+//   render: (record: Recordable) => any
+//   show?: boolean | ((record: Recordable) => boolean)
+// }
+
+export interface TreeActionItem extends ButtonProps {
+  onClick?: Fn
+  label?: string
+  color?: 'success' | 'error' | 'warning'
+  icon?: string
+  popConfirm?: PopConfirm
+  disabled?: boolean
+  divider?: boolean
+  // 业务控制是否显示
+  ifShow?: boolean | ((action: TreeActionItem) => boolean)
+  tooltip?: string | TooltipProps
+}
+
+export interface PopConfirm {
+  title: string
+  okText?: string
+  cancelText?: string
+  confirm: Fn
+  cancel?: Fn
+  icon?: string
+  placement?:
+    | 'top'
+    | 'left'
+    | 'right'
+    | 'bottom'
+    | 'topLeft'
+    | 'topRight'
+    | 'leftTop'
+    | 'leftBottom'
+    | 'rightTop'
+    | 'rightBottom'
+    | 'bottomLeft'
+    | 'bottomRight'
 }
 
 export interface InsertNodeParams {

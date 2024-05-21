@@ -80,8 +80,8 @@ export const basicProps = {
     type: Boolean
   },
   size: {
-    type: String as PropType<'default' | 'middle' | 'small' | 'large'>,
-    default: 'default'
+    type: String as PropType<'middle' | 'small' | 'large' | undefined>,
+    default: undefined
   },
   // // 禁用表单
   disabled: {
@@ -184,7 +184,7 @@ export const basicProps = {
   },
 
   labelAlign: {
-    type: String
+    type: String as PropType<'left' | 'right'>
   },
 
   rowProps: {

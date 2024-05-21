@@ -38,9 +38,10 @@ import {
 } from '@shy-plugins/utils'
 import { useTree } from './hooks/useTree'
 import { useContextMenu } from '../../ContextMenu'
-import { CreateContextOptions } from '@shy-plugins/use'
+import { CreateContextOptions, useDesign } from '@shy-plugins/use'
 import { treeEmits, treeProps } from './types/tree'
 import { createBEM } from '@shy-plugins/utils'
+import { ShyTableAction } from '../../ShyTable'
 
 export default defineComponent({
   name: 'BasicTree',
@@ -48,6 +49,8 @@ export default defineComponent({
   props: treeProps,
   emits: treeEmits,
   setup(props, { attrs, slots, emit, expose }) {
+    const { prefixCls } = useDesign('ant-tree')
+
     const [bem] = createBEM('tree')
 
     const state = reactive<TreeState>({
@@ -362,22 +365,28 @@ export default defineComponent({
     function renderAction(node: TreeItem) {
       const { actionList } = props
       if (!actionList || actionList.length === 0) return
-      return actionList.map((item, index) => {
-        let nodeShow = true
-        if (isFunction(item.show)) {
-          nodeShow = item.show?.(node)
-        } else if (isBoolean(item.show)) {
-          nodeShow = item.show
-        }
 
-        if (!nodeShow) return null
+      const getActions = (record) => {
+        return actionList.map((ele) => {
+          let { onClick, popConfirm } = ele
 
-        return (
-          <span key={index} class={bem('action')}>
-            {item.render(node)}
-          </span>
-        )
-      })
+          if (onClick && isFunction(onClick)) {
+            onClick = onClick.bind(null, record)
+          }
+
+          if (popConfirm && isFunction(popConfirm.confirm)) {
+            popConfirm.confirm = popConfirm.confirm.bind(null, record)
+          }
+
+          return {
+            ...ele,
+            onClick,
+            popConfirm
+          }
+        })
+      }
+
+      return <ShyTableAction showCount={0} actions={getActions(node)} />
     }
 
     const treeData = computed(() => {
@@ -418,24 +427,28 @@ export default defineComponent({
           title
         )
         item[titleField] = (
-          <span
-            class={`${bem('title')} pl-2`}
-            onClick={handleClickNode.bind(
-              null,
-              item[keyField],
-              item[childrenField]
-            )}
-          >
-            {slots?.title ? (
-              getSlot(slots, 'title', item)
-            ) : (
-              <>
-                {icon && <TreeIcon icon={icon} />}
-                {titleDom}
-                <span class={bem('actions')}>{renderAction(item)}</span>
-              </>
-            )}
-          </span>
+          <>
+            <span
+              class={`${prefixCls}-node-title`}
+              onClick={handleClickNode.bind(
+                null,
+                item[keyField],
+                item[childrenField]
+              )}
+            >
+              {slots?.title ? (
+                getSlot(slots, 'title', item)
+              ) : (
+                <>
+                  {icon && <TreeIcon icon={icon} />}
+                  {titleDom}
+                </>
+              )}
+            </span>
+            <span class={`${prefixCls}-node-actions`}>
+              {renderAction(item)}
+            </span>
+          </>
         )
         return item
       })
@@ -453,7 +466,7 @@ export default defineComponent({
       const showTitle = title || toolbar || search || slots.headerTitle
       const scrollStyle: CSSProperties = { height: 'calc(100% - 38px)' }
       return (
-        <div class={['h-full border-1px rounded-4px p-8px pt-0', attrs.class]}>
+        <div class={[`${prefixCls}-wrapper`, attrs.class]}>
           {showTitle && (
             <TreeHeader
               checkable={checkable}
@@ -482,6 +495,7 @@ export default defineComponent({
                 {...unref(getBindValues)}
                 showIcon={false}
                 treeData={treeData.value}
+                class={prefixCls}
               />
             </ScrollContainer>
             <Empty

@@ -92,7 +92,7 @@ export interface FormProps {
   // Blank line span
   emptySpan?: number | Partial<ColEx>
   // Internal component size of the form
-  size?: 'default' | 'small' | 'large'
+  size?: 'middle' | 'small' | 'large' | undefined
   // Whether to disable
   disabled?: boolean
   // Time interval fields are mapped into multiple

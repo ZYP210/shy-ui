@@ -11,7 +11,7 @@
           <template #dot>
             <div
               class="process-dot"
-              :class="{ ['process-dot-last']: data.length - 1 === +index }"
+              :class="{ ['process-dot-first']: +index === 0 }"
             ></div>
           </template>
 
@@ -21,11 +21,12 @@
           >
             <div v-if="item[key]" class="process-item">
               <span v-if="label"> {{ label }}：</span>
-              <span v-if="customRender">
-                <component
-                  :is="h('span', null, customRender(item))"
-                ></component>
-              </span>
+              <component
+                v-if="customRender"
+                :is="h('span', null, customRender(item))"
+              >
+              </component>
+
               <span v-else>
                 {{ item[key] }}
               </span>
@@ -118,9 +119,8 @@ const props = defineProps({
   overflow: hidden;
   border-radius: 4px;
   border: 1px solid var(--gray-3);
-  background: var(--gray-0);
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.04),
-    0px 1px 1px 0px rgba(0, 0, 0, 0.02);
+  background: var(--light);
+  box-shadow: var(--shadow-2);
   z-index: 100;
 
   .process-header {
@@ -201,7 +201,7 @@ const props = defineProps({
       }
     }
 
-    .process-dot-last {
+    .process-dot-first {
       border: 1px solid var(--primary-5);
 
       &::before {

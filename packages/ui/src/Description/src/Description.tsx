@@ -78,18 +78,19 @@ export default defineComponent({
           const data = getProps.value.data
 
           if (item?.customRender) {
-            element = item?.customRender
-              ? item.customRender(data)
-              : null
+            element = item?.customRender ? item.customRender(data) : null
           } else if (getProps.value.summaryTotalFields?.length) {
             element = slots[`${item.field}Value`]
               ? slots[`${item.field}Value`]?.({
                   model: data,
                   field: data[`${item.field}`]
                 })
-              : isNumber(+data[`${item.field}`]) &&
+              : getProps.value.summaryTotalFields.includes(item.field!) &&
+                isNumber(+data[`${item.field}`]) &&
                 !isNaN(+data[`${item.field}`])
-              ? (+data[`${item.field}`]).toFixed(getProps.value.summaryPrecision).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+              ? (+data[`${item.field}`])
+                  .toFixed(getProps.value.summaryPrecision)
+                  .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
               : data[`${item.field}`]
           } else {
             element = slots[`${item.field}Value`]

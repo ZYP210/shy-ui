@@ -1,5 +1,5 @@
 import type {
-  BasicColumn,
+  ShyColumn,
   ShyTableProps,
   CellFormat,
   GetColumnsParams,
@@ -7,10 +7,18 @@ import type {
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 import type { ComputedRef } from 'vue'
-import { computed, Ref, ref, reactive, toRaw, unref, watch, h } from 'vue'
+import {
+  computed,
+  Ref,
+  ref,
+  reactive,
+  toRaw,
+  unref,
+  watch,
+  h,
+  defineComponent
+} from 'vue'
 import { renderEditCell } from '../components/editable'
-// import { usePermission } from '@shy-plugins/use'
-// import { useI18n } from '/@/hooks/web/useI18n'
 import { cloneDeep, isEqual } from 'lodash-es'
 import {
   formatToDate,
@@ -28,8 +36,45 @@ import {
   PAGE_SIZE,
   ACTION_COLUMN_WIDTH
 } from '../const'
+import { useDesign } from '@shy-plugins/use'
 
-function handleItem(item: BasicColumn, ellipsis: boolean) {
+const ShyTableTag = defineComponent({
+  props: {
+    options: {
+      type: Array as PropType<Recordable[]>,
+      default: () => []
+    },
+    value: {
+      type: [String, Number]
+    }
+  },
+  setup(props) {
+    const { prefixCls } = useDesign('ant-table-column-tag')
+
+    const tag = computed(
+      () =>
+        props.options.find((item) => item.value == props.value) ?? {
+          label: '-',
+          colorType: 'var(--gray-5)',
+          cssClass: ''
+        }
+    )
+
+    return () => {
+      return (
+        <div
+          class={[prefixCls, tag.value.cssClass]}
+          style={{ '--pointer-color': tag.value.colorType }}
+        >
+          <div class={`${prefixCls}-pointer`}></div>
+          <span class={`${prefixCls}-label`}>{tag.value.label}</span>
+        </div>
+      )
+    }
+  }
+})
+
+const handleItem = (item: ShyColumn, ellipsis: boolean) => {
   const { key, dataIndex, children } = item
   item.align = item.align || DEFAULT_ALIGN
   if (ellipsis) {
@@ -47,11 +92,11 @@ function handleItem(item: BasicColumn, ellipsis: boolean) {
   }
 }
 
-function handleColumnResize(
+const handleColumnResize = (
   propsRef: ComputedRef<ShyTableProps>,
-  columns: BasicColumn[],
+  columns: ShyColumn[],
   wrapRef: Ref
-) {
+) => {
   const tableWidth =
     wrapRef.value?.querySelector?.('.ant-table-body')?.clientWidth - 7 ||
     wrapRef.value?.querySelector?.('.ant-table-content')?.clientWidth
@@ -89,10 +134,10 @@ function handleColumnResize(
   })
 }
 
-function handleChildren(
-  children: BasicColumn[] | undefined,
+const handleChildren = (
+  children: ShyColumn[] | undefined,
   ellipsis: boolean
-) {
+) => {
   if (!children) return
   children.forEach((item) => {
     const { children } = item
@@ -101,13 +146,11 @@ function handleChildren(
   })
 }
 
-function handleIndexColumn(
+const handleIndexColumn = (
   propsRef: ComputedRef<ShyTableProps>,
   getPaginationRef: ComputedRef<boolean | PaginationProps>,
-  columns: BasicColumn[]
-) {
-  // const { t } = useI18n()
-
+  columns: ShyColumn[]
+) => {
   const { showIndexColumn, indexColumnProps, isTreeTable } = unref(propsRef)
 
   let pushIndexColumns = false
@@ -157,10 +200,10 @@ function handleIndexColumn(
   })
 }
 
-function handleActionColumn(
+const handleActionColumn = (
   propsRef: ComputedRef<ShyTableProps>,
-  columns: BasicColumn[]
-) {
+  columns: ShyColumn[]
+) => {
   const { actionColumn } = unref(propsRef)
   if (!actionColumn) return
 
@@ -180,15 +223,13 @@ function handleActionColumn(
   }
 }
 
-export function useColumns(
+export const useColumns = (
   propsRef: ComputedRef<ShyTableProps>,
   getPaginationRef: ComputedRef<boolean | PaginationProps>,
   tableAction: ComputedRef<TableActionType>,
   wrapRef: Ref<ComponentRef>
-) {
-  const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<
-    BasicColumn[]
-  >
+) => {
+  const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<ShyColumn[]>
   let cacheColumns = unref(propsRef).columns
 
   const getColumnsRef = computed(() => {
@@ -216,7 +257,7 @@ export function useColumns(
     return columns
   })
 
-  function isIfShow(column: BasicColumn): boolean {
+  const isIfShow = (column: ShyColumn): boolean => {
     const ifShow = column.ifShow
 
     let isIfShow = true
@@ -241,14 +282,15 @@ export function useColumns(
         return hasPermission(column.auth) && isIfShow(column)
       })
       .map((column) => {
-        const isSummaryCol =
-          unref(propsRef).summaryTotalFields?.includes?.(
-            column.dataIndex! as string
-          )
+        const isSummaryCol = unref(propsRef).summaryTotalFields?.includes?.(
+          column.dataIndex! as string
+        )
         const summaryFormat = (text) => {
           return text
             ? isNumber(+text) && !isNaN(+text)
-              ? (+text).toFixed(unref(propsRef).summaryPrecision).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+              ? (+text)
+                  .toFixed(unref(propsRef).summaryPrecision)
+                  .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
               : text
             : ''
         }
@@ -259,8 +301,14 @@ export function useColumns(
           format = isSummaryCol ? summaryFormat : undefined,
           edit,
           editRow,
-          flag
+          flag,
+          tag,
+          options
         } = column
+
+        const renderTag = ({ value }) => {
+          return <ShyTableTag value={value} options={options} />
+        }
 
         if (!slots || !slots?.title) {
           // column.slots = { title: `header-${dataIndex}`, ...(slots || {}) };
@@ -271,16 +319,30 @@ export function useColumns(
           INDEX_COLUMN_FLAG,
           ACTION_COLUMN_FLAG
         ].includes(flag!)
-        if (!customRender && format && !edit && !isDefaultAction) {
+        if (
+          !customRender &&
+          format &&
+          !edit &&
+          !isDefaultAction &&
+          !(tag && options)
+        ) {
           column.customRender = ({ text, record, index }) => {
             return formatCell(text, format, record, index, tableAction.value)
           }
         }
 
-        if (customRender) {
-          column.customRender = ({ ...ages }) =>
+        if (customRender && !(tag && options)) {
+          column.customRender = ({ ...args }) =>
             customRender({
-              ...ages,
+              ...args,
+              ...{ tableAction: tableAction.value }
+            })
+        }
+
+        if (tag && options) {
+          column.customRender = ({ ...args }) =>
+            renderTag({
+              ...args,
               ...{ tableAction: tableAction.value }
             })
         }
@@ -296,7 +358,7 @@ export function useColumns(
             column.sorter = column?.sorter === undefined ? true : column.sorter
           }
         }
-        return reactive<BasicColumn>(column)
+        return reactive<ShyColumn>(column)
       })
   })
 
@@ -316,10 +378,10 @@ export function useColumns(
     }
   )
 
-  function setCacheColumnsByField(
+  const setCacheColumnsByField = (
     dataIndex: string | undefined,
-    value: Partial<BasicColumn>
-  ) {
+    value: Partial<ShyColumn>
+  ) => {
     if (!dataIndex || !value) {
       return
     }
@@ -334,9 +396,9 @@ export function useColumns(
    * set columns
    * @param columnList key｜column
    */
-  function setColumns(
-    columnList: Partial<BasicColumn>[] | (string | string[])[]
-  ) {
+  const setColumns = (
+    columnList: Partial<ShyColumn>[] | (string | string[])[]
+  ) => {
     const columns = cloneDeep(columnList)
     if (!isArray(columns)) return
 
@@ -350,13 +412,13 @@ export function useColumns(
     const cacheKeys = cacheColumns.map((item) => item.dataIndex)
 
     if (!isString(firstColumn) && !isArray(firstColumn)) {
-      columnsRef.value = columns as BasicColumn[]
-      cacheColumns = columns as BasicColumn[]
+      columnsRef.value = columns as ShyColumn[]
+      cacheColumns = columns as ShyColumn[]
     } else {
       const columnKeys = (columns as (string | string[])[]).map((m) =>
         m.toString()
       )
-      const newColumns: BasicColumn[] = []
+      const newColumns: ShyColumn[] = []
       cacheColumns.forEach((item) => {
         newColumns.push({
           ...item,
@@ -378,7 +440,7 @@ export function useColumns(
     }
   }
 
-  function getColumns(opt?: GetColumnsParams) {
+  const getColumns = (opt?: GetColumnsParams) => {
     const { ignoreIndex, ignoreAction, sort } = opt || {}
     let columns = toRaw(unref(getColumnsRef))
     if (ignoreIndex) {
@@ -394,7 +456,7 @@ export function useColumns(
 
     return columns
   }
-  function getCacheColumns() {
+  const getCacheColumns = () => {
     return cacheColumns
   }
 
@@ -409,10 +471,10 @@ export function useColumns(
   }
 }
 
-function sortFixedColumn(columns: BasicColumn[]) {
-  const fixedLeftColumns: BasicColumn[] = []
-  const fixedRightColumns: BasicColumn[] = []
-  const defColumns: BasicColumn[] = []
+const sortFixedColumn = (columns: ShyColumn[]) => {
+  const fixedLeftColumns: ShyColumn[] = []
+  const fixedRightColumns: ShyColumn[] = []
+  const defColumns: ShyColumn[] = []
   for (const column of columns) {
     if (column.fixed === 'left') {
       fixedLeftColumns.push(column)
@@ -430,18 +492,18 @@ function sortFixedColumn(columns: BasicColumn[]) {
 }
 
 // format cell
-export function formatCell(
+export const formatCell = (
   text: string,
   format: CellFormat,
   record: Recordable,
   index: number,
   tableAction: TableActionType
-) {
+) => {
   if (!format) {
     return text
   }
 
-  // custom function
+  // custom const
   if (isFunction(format)) {
     return format(text, record, index, tableAction)
   }

@@ -2,7 +2,7 @@ import type { PropType, RendererElement, RendererNode, VNode } from 'vue'
 import { reactive } from 'vue'
 import type { PaginationProps } from './types/pagination'
 import type {
-  BasicColumn,
+  ShyColumn,
   FetchSetting,
   TableSetting,
   SorterResult,
@@ -145,16 +145,16 @@ export const shyTableBasicProps = reactive({
     default: null
   },
   columns: {
-    type: [Array] as PropType<BasicColumn[]>,
+    type: [Array] as PropType<ShyColumn[]>,
     default: () => []
   },
   showIndexColumn: { type: Boolean, default: false },
   indexColumnProps: {
-    type: Object as PropType<BasicColumn>,
+    type: Object as PropType<ShyColumn>,
     default: null
   },
   actionColumn: {
-    type: Object as PropType<BasicColumn>,
+    type: Object as PropType<ShyColumn>,
     default: null
   },
   ellipsis: { type: Boolean, default: true },
