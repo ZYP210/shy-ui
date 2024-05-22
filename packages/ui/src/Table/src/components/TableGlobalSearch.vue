@@ -154,7 +154,7 @@ export default defineComponent({
   width: 200px;
   max-height: 800px;
   overflow: auto;
-  background-color: #fff;
+  background-color: var(--theme);
   z-index: 1000;
   border: 1px solid #ebebeb;
   padding: 10px;

@@ -10,9 +10,14 @@
     >
       <!-- <div class="h-1000px bg-pink-100"></div> -->
       <!-- <ShyTable @register="register"> </ShyTable> -->
-      <ShyFormWrapper :span="3">
-        <ShyForm @register="registerForm" />
-      </ShyFormWrapper>
+      <!-- <ShyForm @register="registerForm" /> -->
+      <Description size="middle" title="基础示例" @register="registerDescription">
+        <template #phoneValue>
+          <div class="w-full h-300px">
+            <ShyTable @register="registerTable" />
+          </div>
+        </template>
+      </Description>
     </BasicModal>
   </div>
 </template>
@@ -27,7 +32,8 @@ import {
   BasicButton,
   ShyForm,
   useShyForm,
-  ShyFormWrapper
+  Description,
+  useDescription
 } from '3h1-ui'
 
 const modal = useModal()
@@ -474,11 +480,82 @@ const schemas = [
   }
 ]
 
+const schema: any[] = [
+  {
+    field: 'username',
+    label: '测试',
+    colProps: { span: 8 },
+    isCopy: true
+  },
+  {
+    field: 'summary',
+    label: '合计',
+    colProps: { span: 8 }
+  },
+  {
+    field: 'summary1',
+    label: '合计1',
+    colProps: { span: 8 }
+  },
+  // {
+  //   field: 'nickName',
+  //   label: '昵称',
+  //   colProps: { span: 16 },
+  //   isCopy: false,
+  //   customRender: (data) => {
+  //     return h(Tag, { color: 'success' }, data.phone)
+  //   },
+  //   ifShow: (data) => {
+  //     console.log(data)
+  //     return !!data.nickName
+  //   }
+  // },
+  {
+    field: 'phone',
+    label: '联系电话',
+    colProps: { span: 24 },
+    helpMessage: '这是一个'
+  },
+  // {
+  //   field: 'email',
+  //   label: '邮箱',
+  //   colProps: { span: 8 }
+  // },
+
+  {
+    field: 'addr',
+    label: '地址',
+    colProps: { span: 24 }
+  }
+]
+
 const [
   registerForm,
   { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useShyForm({
   schemas: schemas as any
+})
+
+const [registerDescription, { setDescProps }] = useDescription({
+  // data: mockData,
+  labelWidth: 100,
+  bordered: true,
+  schema,
+  summaryTotalFields: ['summary', 'summary1']
+  // mode: 'vertical'
+})
+
+const [registerTable] = useShyTable({
+  dataSource: [{}],
+  columns: [
+    {
+      title: '测试',
+      dataIndex: 'test'
+    }
+  ],
+  isShowFooter: false,
+  showIndexColumn: true,
+  showTableSetting: false
 })
 </script>
 

@@ -84,7 +84,6 @@ export default defineComponent({
         }
         return prev
       }, [] as TransferItem[])
-      console.log(data)
       return data
     })
     const getTargetKeys = computed<string[]>(() => {
@@ -145,7 +144,6 @@ export default defineComponent({
       } catch (error) {
         console.warn(error)
       } finally {
-        console.log('no')
       }
     }
     function emitChange() {

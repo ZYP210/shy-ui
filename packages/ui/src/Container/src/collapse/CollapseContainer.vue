@@ -102,7 +102,7 @@ defineExpose({
     border-radius: 4px;
     
     &-action {
-      background: var(--gray-1);
+      background: var(--gray-0);
     }
   }
 

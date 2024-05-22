@@ -23,7 +23,6 @@ import {
 import TreeHeader from './components/TreeHeader.vue'
 import { Tree, Spin, Empty } from 'ant-design-vue'
 import { TreeIcon } from './TreeIcon'
-import { ScrollContainer } from '../../Container'
 import { omit, get, difference, cloneDeep } from 'lodash-es'
 import {
   isArray,
@@ -464,7 +463,7 @@ export default defineComponent({
     return () => {
       const { title, helpMessage, toolbar, search, checkable, addable } = props
       const showTitle = title || toolbar || search || slots.headerTitle
-      const scrollStyle: CSSProperties = { height: 'calc(100% - 38px)' }
+
       return (
         <div class={[`${prefixCls}-wrapper`, attrs.class]}>
           {showTitle && (
@@ -490,14 +489,13 @@ export default defineComponent({
             spinning={unref(props.loading)}
             tip="加载中..."
           >
-            <ScrollContainer style={scrollStyle} v-show={!unref(getNotFound)}>
-              <Tree
-                {...unref(getBindValues)}
-                showIcon={false}
-                treeData={treeData.value}
-                class={prefixCls}
-              />
-            </ScrollContainer>
+            <Tree
+              v-show={!unref(getNotFound)}
+              {...unref(getBindValues)}
+              showIcon={false}
+              treeData={treeData.value}
+              class={prefixCls}
+            />
             <Empty
               v-show={unref(getNotFound)}
               image={Empty.PRESENTED_IMAGE_SIMPLE}

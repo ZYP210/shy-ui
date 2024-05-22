@@ -388,8 +388,8 @@ const ShyForm = defineComponent({
                       class={`${prefixCls}-show`}
                       onClick={handleChangeState}
                     >
-                      <LeftOutlined rotate={isShowFormInside.value ? 270 : 0} />
-                      {isShowFormInside.value ? '展开' : '收起'}
+                      <LeftOutlined rotate={isShowFormInside.value ? 0 : 270} />
+                      {isShowFormInside.value ? '收起' : '展开'}
                     </div>
                   ) : null
               }}

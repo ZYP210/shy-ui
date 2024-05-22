@@ -1,5 +1,5 @@
 <template>
-  <div class="p-16px w-full h-full bg-white">
+  <div class="p-16px w-full h-full overflow-auto">
     <div class="flex gap-8px">
       <Button @click="handleGetForm">获取form</Button>
       <Button @click="handlePush">push200条数据</Button>
@@ -18,22 +18,17 @@
   </div>
 </template>
 <script lang="ts" setup>
+import type { FormSchema } from '3h1-ui'
 import {
-  BasicForm,
-  FormSchema,
-  useForm,
   useShyForm,
-  TableChildren,
   ApiModalSelect,
   ShyForm,
-  ShyFormWrapper,
   BasicButton
 } from '3h1-ui'
 import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
 import { h, onMounted } from 'vue'
 import { ref } from 'vue'
-import dayjs from 'dayjs'
 import { theme } from 'ant-design-vue'
 
 const { useToken } = theme
@@ -105,7 +100,6 @@ const schemas = ref<FormSchema[]>([
   //   componentProps: ({ formModel }) => {
   //     return {
   //       api: async (ppp) => {
-  //         console.log(ppp)
   //         return [
   //           {
   //             label:
@@ -122,23 +116,6 @@ const schemas = ref<FormSchema[]>([
   //     }
   //   },
 
-  // },
-  // {
-  //   label: 'b',
-  //   field: 'b',
-  //   component: 'Divider',
-  //   colProps: { span: 24 }
-  //   // componentProps: ({ formModel }) => {
-  //   //   console.log(formModel, 999)
-  //   //   return {
-  //   //     api: async (ppp) => {
-  //   //       console.log(ppp, 222)
-  //   //       if (ppp?.aaa) return [{ label: '777', value: '777' }]
-  //   //       return []
-  //   //     },
-  //   //     params: { aaa: formModel.aaa }
-  //   //   }
-  //   // }
   // },
   // {
   //   label: 'ApiTree',
@@ -414,6 +391,7 @@ const schemas = ref<FormSchema[]>([
   // },
   // {
   //   label: '111',
+  //   field: '',
   //   component: 'Divider',
   //   componentProps: {
   //     extra: h(BasicButton, null, 1111)
@@ -504,7 +482,7 @@ const schemas = ref<FormSchema[]>([
             dataIndex: 'c',
             type: 'InputNumber',
             required: true,
-            width: 2000
+            width: 1000
           },
           {
             title: 'd',

@@ -91,7 +91,7 @@ const ShyFormTable = defineComponent({
         title: '操作',
         dataIndex: '_action',
         width: 80,
-        align: 'center'
+        align: 'left'
       }
 
       return [
@@ -169,7 +169,7 @@ const ShyFormTable = defineComponent({
             }}
             data-source={dataSource.value}
             pagination={false}
-            bordered
+            bordered={false}
             size="small"
             class={`${prefixCls}-body`}
             align="center"

@@ -1,32 +1,7 @@
 <template>
   <ConfigProvider
     :locale="zhCN"
-    :theme="{
-      token: {
-        borderRadius: 4,
-        colorPrimary: '#2da44e',
-        blue: '#0969DA',
-        green: '#2DA44E',
-      },
-      components: {
-        Input: {
-          colorBgContainer: '#eaeef2',
-          lineWidth: 0
-        },
-        DatePicker: {
-          colorBgContainer: '#eaeef2',
-          lineWidth: 0
-        },
-        InputNumber: {
-          colorBgContainer: '#eaeef2',
-          lineWidth: 0
-        },
-        Select: {
-          colorBgContainer: '#eaeef2',
-          lineWidth: 0
-        }
-      }
-    }"
+    :theme="getAntTheme"
   >
     <div class="controlBox" :style="controlBoxStyle">
       <div class="controlBox-btn" @click="handleSwitch">
@@ -62,25 +37,12 @@
 
 <script lang="ts" setup>
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
-import { ConfigProvider, theme } from 'ant-design-vue'
+import { ConfigProvider } from 'ant-design-vue'
 import { URLData } from '/@/database/menu.data'
 import { ref, reactive } from 'vue'
+import { useTheme } from '@shy-plugins/use'
 
-const handleToken = () => {
-  const { useToken } = theme
-
-  const { token } = useToken()
-  console.log(token)
-
-  for (let i = 1; i < 11; i++) {
-    console.log()
-    console.log(
-      `%c${token.value[`blue-${i}`]} %c${token.value[`green-${i}`]}`,
-      `background:${token.value[`blue-${i}`]}`,
-      `background:${token.value[`green-${i}`]}`
-    )
-  }
-}
+const { setThemeType, getAntTheme, setPrimaryColor } = useTheme()
 
 const controlBoxStyle = reactive({
   top: '30px',
@@ -100,7 +62,10 @@ const handleSwitch = () => {
 }
 
 onMounted(() => {
-  // handleToken()
+  // setThemeType('dark')
+  // setTimeout(() => {
+  //   setPrimaryColor('#66ccff')
+  // }, 2000)
 })
 </script>
 
