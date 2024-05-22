@@ -1,9 +1,9 @@
 import { inputToRGB, rgbToHex, rgbToHsv } from '@ctrl/tinycolor'
 
-const hueStep = 2 // 色相阶梯
+const hueStep = -2 // 色相阶梯
 const saturationStep = 0.16 // 饱和度阶梯，浅色部分
 const saturationStep2 = 0.05 // 饱和度阶梯，深色部分
-const brightnessStep1 = 0.073 // 亮度阶梯，浅色部分
+const brightnessStep1 = 0.08 // 亮度阶梯，浅色部分
 const brightnessStep2 = 0.15 // 亮度阶梯，深色部分
 const lightColorCount = 5 // 浅色数量，主色上
 const darkColorCount = 4 // 深色数量，主色下
@@ -100,8 +100,8 @@ function getSaturation(hsv: HsvObject, i: number, light?: boolean): number {
   if (light && i === lightColorCount && saturation > 0.1) {
     saturation = 0.1
   }
-  if (saturation < 0.02) {
-    saturation = 0.02
+  if (saturation < 0.015) {
+    saturation = 0.015
   }
   return Number(saturation.toFixed(2))
 }
@@ -113,8 +113,8 @@ function getValue(hsv: HsvObject, i: number, light?: boolean): number {
   } else {
     value = hsv.v - brightnessStep2 * i
   }
-  if (value > 1) {
-    value = 1
+  if (value > 0.98) {
+    value = 0.98
   }
   return Number(value.toFixed(2))
 }

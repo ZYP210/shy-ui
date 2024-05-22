@@ -12,7 +12,7 @@ const themeRef = ref<ThemeType>('light')
 const primaryColor = ref<string>('#2DA44E')
 const presetPrimaryColors: Record<string, string> = reactive({
   red: '#CF222E',
-  pink: '#E85AAD',
+  pink: '#BF3989',
   volcano: '#FA541C',
   orange: '#E16F24',
   gold: '#FAAD14',
@@ -22,7 +22,7 @@ const presetPrimaryColors: Record<string, string> = reactive({
   cyan: '#13C2C2',
   blue: '#0969DA',
   geekblue: '#2F54EB',
-  purple: '#8250DF',
+  purple: '#8439BA',
   magenta: '#EB2F96',
   grey: '#8C959F',
   gray: '#8C959F',
@@ -120,7 +120,7 @@ export const useTheme = () => {
 
       presetDarkPalettes[key] = generate(presetPrimaryColors[key], {
         theme: 'dark',
-        backgroundColor: '#000000'
+        backgroundColor: '#141414'
       })
       presetDarkPalettes[key].primary = presetDarkPalettes[key][5]
     })

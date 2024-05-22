@@ -403,8 +403,8 @@ defineExpose({ validate })
   align-items: center;
   padding-inline: 8px;
   height: 50px;
-  border-inline: 1px solid var(--gray-3);
-  border-bottom: 1px solid var(--gray-3);
+  border-inline: 1px solid var(--gray-2);
+  border-bottom: 1px solid var(--gray-2);
   border-bottom-left-radius: 4px;
   border-bottom-right-radius: 4px;
 

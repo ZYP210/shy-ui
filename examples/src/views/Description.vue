@@ -15,7 +15,7 @@ import { h } from 'vue'
 import { Tag } from 'ant-design-vue'
 const mockData: any = {
   username: 'test',
-  summary: 1111111,
+  summary: '1111',
   summary1: 888888,
   age: 123,
   phone: '15695909xxx',

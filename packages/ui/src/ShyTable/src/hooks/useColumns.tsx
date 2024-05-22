@@ -55,7 +55,7 @@ const ShyTableTag = defineComponent({
       () =>
         props.options.find((item) => item.value == props.value) ?? {
           label: '-',
-          colorType: 'var(--gray-5)',
+          colorType: 'var(--gray-4)',
           cssClass: ''
         }
     )

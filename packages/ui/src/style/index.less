@@ -199,7 +199,7 @@ input:focus.ant-input {
   box-shadow: none;
 }
 
-.ant-btn-default.ant-btn-default {
+.ant-btn-default:not(:disabled) {
   &:hover {
     color: var(--text-color);
     border-color: var(--gray-2);
@@ -207,7 +207,7 @@ input:focus.ant-input {
   }
 }
 
-.ant-btn-dashed.ant-btn-dashed {
+.ant-btn-dashed:not(:disabled) {
   color: var(--primary-5);
   border-color: var(--primary-5);
 

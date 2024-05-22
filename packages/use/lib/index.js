@@ -2193,10 +2193,10 @@ function isValidCSSUnit(color) {
   }
   return matchers.CSS_UNIT.test(color);
 }
-const hueStep = 2;
+const hueStep = -2;
 const saturationStep = 0.16;
 const saturationStep2 = 0.05;
-const brightnessStep1 = 0.073;
+const brightnessStep1 = 0.08;
 const brightnessStep2 = 0.15;
 const lightColorCount = 5;
 const darkColorCount = 4;
@@ -2260,8 +2260,8 @@ function getSaturation(hsv, i, light) {
   if (light && i === lightColorCount && saturation > 0.1) {
     saturation = 0.1;
   }
-  if (saturation < 0.02) {
-    saturation = 0.02;
+  if (saturation < 0.015) {
+    saturation = 0.015;
   }
   return Number(saturation.toFixed(2));
 }
@@ -2272,8 +2272,8 @@ function getValue(hsv, i, light) {
   } else {
     value = hsv.v - brightnessStep2 * i;
   }
-  if (value > 1) {
-    value = 1;
+  if (value > 0.98) {
+    value = 0.98;
   }
   return Number(value.toFixed(2));
 }
@@ -2323,7 +2323,7 @@ const themeRef = vue.ref("light");
 const primaryColor = vue.ref("#2DA44E");
 const presetPrimaryColors = vue.reactive({
   red: "#CF222E",
-  pink: "#E85AAD",
+  pink: "#BF3989",
   volcano: "#FA541C",
   orange: "#E16F24",
   gold: "#FAAD14",
@@ -2333,7 +2333,7 @@ const presetPrimaryColors = vue.reactive({
   cyan: "#13C2C2",
   blue: "#0969DA",
   geekblue: "#2F54EB",
-  purple: "#8250DF",
+  purple: "#8439BA",
   magenta: "#EB2F96",
   grey: "#8C959F",
   gray: "#8C959F",
@@ -2420,7 +2420,7 @@ const useTheme = () => {
       presetPalettes[key].primary = presetPalettes[key][5];
       presetDarkPalettes[key] = generate(presetPrimaryColors[key], {
         theme: "dark",
-        backgroundColor: "#000000"
+        backgroundColor: "#141414"
       });
       presetDarkPalettes[key].primary = presetDarkPalettes[key][5];
     });

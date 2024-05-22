@@ -118,15 +118,15 @@ const props = defineProps({
   height: 100%;
   overflow: hidden;
   border-radius: 4px;
-  border: 1px solid var(--gray-3);
-  background: var(--light);
+  border: 1px solid var(--gray-2);
+  background: var(--theme);
   box-shadow: var(--shadow-2);
   z-index: 100;
 
   .process-header {
     font-family: PingFangSC, PingFang SC;
     font-weight: 500;
-    color: #1b1f24;
+    color: var(--text-color);
     text-align: left;
     font-style: normal;
   }
@@ -143,14 +143,14 @@ const props = defineProps({
     }
 
     &::-webkit-scrollbar-thumb {
-      box-shadow: inset 0 0 10px 10px var(--gray-2);
+      box-shadow: inset 0 0 10px 10px var(--gray-1);
       border: solid 2px transparent;
       background-color: transparent;
       border-radius: 10px;
 
       &:active,
       &:hover {
-        box-shadow: inset 0 0 10px 10px var(--gray-3);
+        box-shadow: inset 0 0 10px 10px var(--gray-2);
         background-color: transparent;
       }
     }
@@ -165,7 +165,7 @@ const props = defineProps({
       font-family: PingFangSC, PingFang SC;
       font-weight: 400;
       font-size: 12px;
-      color: #1b1f24;
+      color: var(--text-color);
       line-height: 16px;
       text-align: left;
       font-style: normal;
@@ -186,14 +186,14 @@ const props = defineProps({
       width: 12px;
       height: 12px;
       border-radius: 12px;
-      border: 1px solid var(--gray-3);
+      border: 1px solid var(--gray-2);
 
       &::before {
         content: '';
         width: 6px;
         height: 6px;
         border-radius: 6px;
-        background: var(--gray-3);
+        background: var(--gray-2);
         position: absolute;
         top: 50%;
         left: 50%;
