@@ -1,8 +1,9 @@
 {
   "name": "@shy-plugins/workflow-dingding",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "仿钉钉工作流",
-  "main": "./index.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "vite build",
