@@ -19,7 +19,7 @@ export default defineConfig({
     //cssCodeSplit: true,
     rollupOptions: {
       //忽略打包vue文件
-      external: ['vue','ant-design-vue'],
+      external: ['vue', '3h1-ui', '@shy-plugins/use', 'ant-design-vue'],
       input: ['./index.ts'],
       output: [
         {
