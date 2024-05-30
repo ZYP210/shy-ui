@@ -338,7 +338,7 @@ const ShyFormTable = defineComponent({
     })
 
     const create = () => {
-      state.value = [{ [props.rowKey]: buildUUID() }, ...toRaw(state.value)]
+      state.value = [...toRaw(state.value), { [props.rowKey]: buildUUID() }]
       curIndex.value = 0
       document.querySelector(`.${prefixCls}-scroll-bar-wrapper`)!.scrollTop =
         curIndex.value * ROW_HEIGHT

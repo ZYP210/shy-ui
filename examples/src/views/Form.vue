@@ -49,355 +49,355 @@ const handlePush = () => {
 }
 
 const schemas = ref<FormSchema[]>([
-  // {
-  //   label: 'Input',
-  //   field: 'Input',
-  //   defaultValue: '111',
-  //   component: 'Input',
-  //   componentProps: {
-  //     // disabled: true
-  //   },
-  // },
-  // {
-  //   label: 'InputTextArea',
-  //   field: 'InputTextArea',
-  //   defaultValue: '111',
-  //   component: 'InputTextArea',
-  //   componentProps: {
-  //     // disabled: true
-  //   },
+  {
+    label: 'Input',
+    field: 'Input',
+    defaultValue: '111',
+    component: 'Input',
+    componentProps: {
+      // disabled: true
+    },
+  },
+  {
+    label: 'InputTextArea',
+    field: 'InputTextArea',
+    defaultValue: '111',
+    component: 'InputTextArea',
+    componentProps: {
+      // disabled: true
+    },
 
-  // },
-  // {
-  //   label: 'InputNumber',
-  //   field: 'InputNumber',
-  //   component: 'InputNumber',
+  },
+  {
+    label: 'InputNumber',
+    field: 'InputNumber',
+    component: 'InputNumber',
 
-  // },
-  // {
-  //   label: 'InputPassword',
-  //   field: 'InputPassword',
-  //   component: 'InputPassword',
+  },
+  {
+    label: 'InputPassword',
+    field: 'InputPassword',
+    component: 'InputPassword',
 
-  // },
-  // {
-  //   label: 'InputSearch',
-  //   field: 'InputSearch',
-  //   component: 'InputSearch',
+  },
+  {
+    label: 'InputSearch',
+    field: 'InputSearch',
+    component: 'InputSearch',
 
-  // },
-  // {
-  //   label: 'AutoComplete',
-  //   field: 'AutoComplete',
-  //   component: 'AutoComplete',
+  },
+  {
+    label: 'AutoComplete',
+    field: 'AutoComplete',
+    component: 'AutoComplete',
 
-  // },
-  // {
-  //   label: 'ApiSelect',
-  //   field: 'ApiSelect',
-  //   required: true,
-  //   component: 'ApiSelect',
-  //   componentProps: ({ formModel }) => {
-  //     return {
-  //       api: async (ppp) => {
-  //         return [
-  //           {
-  //             label:
-  //               'a11111111111111asKLHDSAKJDHSAJKDHSADJKHSADKJSAHDASJDHSADKJASHDKJASHDKJSAHDASKJHD',
-  //             value: 'a'
-  //           },
-  //           {
-  //             label: 'b',
-  //             value: 'b'
-  //           }
-  //         ]
-  //       },
-  //       params: { c: formModel.b }
-  //     }
-  //   },
+  },
+  {
+    label: 'ApiSelect',
+    field: 'ApiSelect',
+    required: true,
+    component: 'ApiSelect',
+    componentProps: ({ formModel }) => {
+      return {
+        api: async (ppp) => {
+          return [
+            {
+              label:
+                'a11111111111111asKLHDSAKJDHSAJKDHSADJKHSADKJSAHDASJDHSADKJASHDKJASHDKJSAHDASKJHD',
+              value: 'a'
+            },
+            {
+              label: 'b',
+              value: 'b'
+            }
+          ]
+        },
+        params: { c: formModel.b }
+      }
+    },
 
-  // },
-  // {
-  //   label: 'ApiTree',
-  //   field: 'ApiTree',
-  //   component: 'ApiTree',
-  //   componentProps: {
-  //     api: () => {
-  //       return [
-  //         {
-  //           title: '1111'
-  //         }
-  //       ]
-  //     }
-  //   }
-  // },
-  // {
-  //   label: 'TreeSelect',
-  //   field: 'TreeSelect',
-  //   component: 'TreeSelect',
-  //   componentProps: {
-  //     treeData: [
-  //       {
-  //         label: '111',
-  //         value: '1'
-  //       }
-  //     ]
-  //   },
+  },
+  {
+    label: 'ApiTree',
+    field: 'ApiTree',
+    component: 'ApiTree',
+    componentProps: {
+      api: () => {
+        return [
+          {
+            title: '1111'
+          }
+        ]
+      }
+    }
+  },
+  {
+    label: 'TreeSelect',
+    field: 'TreeSelect',
+    component: 'TreeSelect',
+    componentProps: {
+      treeData: [
+        {
+          label: '111',
+          value: '1'
+        }
+      ]
+    },
 
-  // },
-  // {
-  //   label: 'ApiTreeSelect',
-  //   field: 'ApiTreeSelect',
-  //   component: 'ApiTreeSelect',
-  //   componentProps: {
-  //     api: () => {
-  //       return [
-  //         {
-  //           label: '1',
-  //           value: '1'
-  //         }
-  //       ]
-  //     }
-  //   },
+  },
+  {
+    label: 'ApiTreeSelect',
+    field: 'ApiTreeSelect',
+    component: 'ApiTreeSelect',
+    componentProps: {
+      api: () => {
+        return [
+          {
+            label: '1',
+            value: '1'
+          }
+        ]
+      }
+    },
 
-  // },
-  // {
-  //   label: 'ApiRadioGroup',
-  //   field: 'ApiRadioGroup',
-  //   component: 'ApiRadioGroup',
-  //   componentProps: {
-  //     api: () => {
-  //       return [
-  //         {
-  //           label: '111',
-  //           value: '888'
-  //         },
-  //         {
-  //           label: '222',
-  //           value: '333'
-  //         }
-  //       ]
-  //     }
-  //   },
+  },
+  {
+    label: 'ApiRadioGroup',
+    field: 'ApiRadioGroup',
+    component: 'ApiRadioGroup',
+    componentProps: {
+      api: () => {
+        return [
+          {
+            label: '111',
+            value: '888'
+          },
+          {
+            label: '222',
+            value: '333'
+          }
+        ]
+      }
+    },
 
-  // },
-  // {
-  //   label: 'Switch',
-  //   field: 'Switch',
-  //   component: 'Switch',
+  },
+  {
+    label: 'Switch',
+    field: 'Switch',
+    component: 'Switch',
 
-  // },
-  // {
-  //   label: 'RadioButtonGroup',
-  //   field: 'RadioButtonGroup',
-  //   component: 'RadioButtonGroup',
-  //   componentProps: {
-  //     options: [
-  //       {
-  //         label: '111',
-  //         value: '888'
-  //       },
-  //       {
-  //         label: '222',
-  //         value: '333'
-  //       }
-  //     ]
-  //   },
+  },
+  {
+    label: 'RadioButtonGroup',
+    field: 'RadioButtonGroup',
+    component: 'RadioButtonGroup',
+    componentProps: {
+      options: [
+        {
+          label: '111',
+          value: '888'
+        },
+        {
+          label: '222',
+          value: '333'
+        }
+      ]
+    },
 
-  // },
-  // {
-  //   label: 'RadioGroup',
-  //   field: 'RadioGroup',
-  //   component: 'RadioGroup',
-  //   componentProps: {
-  //     options: [
-  //       {
-  //         label: '111',
-  //         value: '888'
-  //       },
-  //       {
-  //         label: '222',
-  //         value: '333'
-  //       }
-  //     ]
-  //   },
+  },
+  {
+    label: 'RadioGroup',
+    field: 'RadioGroup',
+    component: 'RadioGroup',
+    componentProps: {
+      options: [
+        {
+          label: '111',
+          value: '888'
+        },
+        {
+          label: '222',
+          value: '333'
+        }
+      ]
+    },
 
-  // },
-  // {
-  //   label: 'Checkbox',
-  //   field: 'Checkbox',
-  //   component: 'Checkbox',
+  },
+  {
+    label: 'Checkbox',
+    field: 'Checkbox',
+    component: 'Checkbox',
 
-  // },
-  // {
-  //   label: 'CheckboxGroup',
-  //   field: 'CheckboxGroup',
-  //   component: 'CheckboxGroup',
-  //   componentProps: {
-  //     options: [
-  //       {
-  //         label: '111',
-  //         value: '888'
-  //       },
-  //       {
-  //         label: '222',
-  //         value: '333'
-  //       }
-  //     ]
-  //   },
+  },
+  {
+    label: 'CheckboxGroup',
+    field: 'CheckboxGroup',
+    component: 'CheckboxGroup',
+    componentProps: {
+      options: [
+        {
+          label: '111',
+          value: '888'
+        },
+        {
+          label: '222',
+          value: '333'
+        }
+      ]
+    },
 
-  // },
-  // {
-  //   label: 'ApiCascader',
-  //   field: 'ApiCascader',
-  //   component: 'ApiCascader',
-  //   componentProps: {
-  //     api: () => {
-  //       return [
-  //         {
-  //           label: '111',
-  //           value: '888'
-  //         },
-  //         {
-  //           label: '222',
-  //           value: '333'
-  //         }
-  //       ]
-  //     }
-  //   },
+  },
+  {
+    label: 'ApiCascader',
+    field: 'ApiCascader',
+    component: 'ApiCascader',
+    componentProps: {
+      api: () => {
+        return [
+          {
+            label: '111',
+            value: '888'
+          },
+          {
+            label: '222',
+            value: '333'
+          }
+        ]
+      }
+    },
 
-  // },
-  // {
-  //   label: 'Cascader',
-  //   field: 'Cascader',
-  //   component: 'Cascader',
-  //   componentProps: {
-  //     options: [
-  //       {
-  //         label: '111',
-  //         value: '888'
-  //       },
-  //       {
-  //         label: '222',
-  //         value: '333'
-  //       }
-  //     ]
-  //   },
+  },
+  {
+    label: 'Cascader',
+    field: 'Cascader',
+    component: 'Cascader',
+    componentProps: {
+      options: [
+        {
+          label: '111',
+          value: '888'
+        },
+        {
+          label: '222',
+          value: '333'
+        }
+      ]
+    },
 
-  // },
-  // {
-  //   label: 'Slider',
-  //   field: 'Slider',
-  //   component: 'Slider',
+  },
+  {
+    label: 'Slider',
+    field: 'Slider',
+    component: 'Slider',
 
-  // },
-  // {
-  //   label: 'Rate',
-  //   field: 'Rate',
-  //   component: 'Rate',
+  },
+  {
+    label: 'Rate',
+    field: 'Rate',
+    component: 'Rate',
 
-  // },
-  // {
-  //   label: 'ApiTransfer',
-  //   field: 'ApiTransfer',
-  //   component: 'ApiTransfer',
-  //   componentProps: {
-  //     api: () => {
-  //       return [
-  //         {
-  //           title: '1111',
-  //           key: '888'
-  //         },
-  //         {
-  //           title: '222',
-  //           key: '333'
-  //         }
-  //       ]
-  //     }
-  //   },
+  },
+  {
+    label: 'ApiTransfer',
+    field: 'ApiTransfer',
+    component: 'ApiTransfer',
+    componentProps: {
+      api: () => {
+        return [
+          {
+            title: '1111',
+            key: '888'
+          },
+          {
+            title: '222',
+            key: '333'
+          }
+        ]
+      }
+    },
 
-  // },
-  // {
-  //   label: 'Upload',
-  //   field: 'Upload',
-  //   component: 'Upload',
-  //   componentProps: {
-  //     api: () => {}
-  //   },
+  },
+  {
+    label: 'Upload',
+    field: 'Upload',
+    component: 'Upload',
+    componentProps: {
+      api: () => {}
+    },
 
-  // },
-  // {
-  //   label: 'DatePicker',
-  //   field: 'DatePicker',
-  //   component: 'DatePicker',
-  //   componentProps: {
-  //     picker: 'month',
-  //   }
-  // },
-  // {
-  //   label: 'MonthPicker',
-  //   field: 'MonthPicker',
-  //   component: 'MonthPicker',
+  },
+  {
+    label: 'DatePicker',
+    field: 'DatePicker',
+    component: 'DatePicker',
+    componentProps: {
+      picker: 'month',
+    }
+  },
+  {
+    label: 'MonthPicker',
+    field: 'MonthPicker',
+    component: 'MonthPicker',
 
-  // },
-  // {
-  //   label: 'RangePicker',
-  //   field: 'RangePicker',
-  //   component: 'RangePicker',
-  //   componentProps: {
-  //     picker: 'month',
-  //   }
-  // },
-  // {
-  //   label: 'WeekPicker',
-  //   field: 'WeekPicker',
-  //   component: 'WeekPicker',
+  },
+  {
+    label: 'RangePicker',
+    field: 'RangePicker',
+    component: 'RangePicker',
+    componentProps: {
+      picker: 'month',
+    }
+  },
+  {
+    label: 'WeekPicker',
+    field: 'WeekPicker',
+    component: 'WeekPicker',
 
-  // },
-  // {
-  //   label: 'TimePicker',
-  //   field: 'TimePicker',
-  //   component: 'TimePicker',
+  },
+  {
+    label: 'TimePicker',
+    field: 'TimePicker',
+    component: 'TimePicker',
 
-  // },
-  // {
-  //   label: 'StrengthMeter',
-  //   field: 'StrengthMeter',
-  //   component: 'StrengthMeter',
+  },
+  {
+    label: 'StrengthMeter',
+    field: 'StrengthMeter',
+    component: 'StrengthMeter',
 
-  // },
-  // {
-  //   label: 'IconPicker',
-  //   field: 'IconPicker',
-  //   component: 'IconPicker',
+  },
+  {
+    label: 'IconPicker',
+    field: 'IconPicker',
+    component: 'IconPicker',
 
-  // },
-  // {
-  //   label: 'ColorPicker',
-  //   field: 'ColorPicker',
-  //   component: 'ColorPicker',
-  //   componentProps: {
-  //     onChange: (val) => {
-  //       token.value.colorPrimary = val
-  //     }
-  //   },
+  },
+  {
+    label: 'ColorPicker',
+    field: 'ColorPicker',
+    component: 'ColorPicker',
+    componentProps: {
+      onChange: (val) => {
+        token.value.colorPrimary = val
+      }
+    },
 
-  // },
-  // {
-  //   label: 'Tinymce',
-  //   field: 'Tinymce',
-  //   component: 'Tinymce',
-  //   colProps: { span: 24 }
-  // },
-  // {
-  //   label: '111',
-  //   field: '',
-  //   component: 'Divider',
-  //   componentProps: {
-  //     extra: h(BasicButton, null, 1111)
-  //   },
-  //   colProps: { span: 24 }
-  // },
+  },
+  {
+    label: 'Tinymce',
+    field: 'Tinymce',
+    component: 'Tinymce',
+    colProps: { span: 24 }
+  },
+  {
+    label: '111',
+    field: '',
+    component: 'Divider',
+    componentProps: {
+      extra: h(BasicButton, null, 1111)
+    },
+    colProps: { span: 24 }
+  },
   {
     label: 'Table',
     field: 'Table',
