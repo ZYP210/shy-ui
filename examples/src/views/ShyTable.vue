@@ -207,7 +207,7 @@ const [
         phone: '1212121',
         address: '1111',
         remark: 999,
-        qualifiedNum: 122
+        qualifiedNum: 0
       }
     })
 

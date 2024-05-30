@@ -286,13 +286,13 @@ export const useColumns = (
           column.dataIndex! as string
         )
         const summaryFormat = (text) => {
-          return text
+          return text || isNumber(text)
             ? isNumber(+text) && !isNaN(+text)
               ? (+text)
                   .toFixed(unref(propsRef).summaryPrecision)
                   .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
               : text
-            : ''
+            : text
         }
 
         const {

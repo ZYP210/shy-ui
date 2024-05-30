@@ -361,29 +361,33 @@ const ShyTable = defineComponent({
 
       const isShowSummary = () => {
         return getDataSourceRef.value?.length &&
-          getProps.value?.showSummaryTotal ? (
-          <TableSummary>
-            <TableSummaryRow>
-              {getColumnsSummary.value.map((item: Recordable, index) => {
-                if (index === 0)
-                  return (
-                    <TableSummaryCell
-                      class={`${prefixCls}-summary-cell-first`}
-                      align="center"
-                      index={0}
-                    >
-                      总计
-                    </TableSummaryCell>
-                  )
-                return (
-                  <TableSummaryCell index={index}>
-                    {summaryTotalData.value[item.dataIndex]}
-                  </TableSummaryCell>
-                )
-              })}
-            </TableSummaryRow>
-          </TableSummary>
-        ) : null
+          getProps.value?.showSummaryTotal
+          ? {
+              summary: () => (
+                <TableSummary>
+                  <TableSummaryRow>
+                    {getColumnsSummary.value.map((item: Recordable, index) => {
+                      if (index === 0)
+                        return (
+                          <TableSummaryCell
+                            class={`${prefixCls}-summary-cell-first`}
+                            align="center"
+                            index={0}
+                          >
+                            总计
+                          </TableSummaryCell>
+                        )
+                      return (
+                        <TableSummaryCell index={index}>
+                          {summaryTotalData.value[item.dataIndex]}
+                        </TableSummaryCell>
+                      )
+                    })}
+                  </TableSummaryRow>
+                </TableSummary>
+              )
+            }
+          : null
       }
 
       const isShowHeader = () => {
@@ -460,7 +464,7 @@ const ShyTable = defineComponent({
               headerCell: (data) => <HeaderCell column={data.column} />,
               emptyText,
               bodyCell: (data) => slots?.bodyCell?.(data || {}),
-              summary: isShowSummary,
+              ...isShowSummary(),
               ...getAfterIgnoreSlots(slots)
             }}
           </Table>

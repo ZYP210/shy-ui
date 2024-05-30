@@ -40,6 +40,23 @@
     padding-right: 20px;
   }
 
+  .ant-table-summary {
+    position: sticky;
+    left: 0;
+    bottom: 0;
+    td {
+      border-top: 1px solid var(--gray-1);
+    }
+  }
+
+  .ant-table-body:has(.ant-table-summary) {
+    .ant-table-tbody tr:nth-last-child(1) {
+      td {
+        border-bottom: none;
+      }
+    }
+  }
+
   &-column-tag {
     display: flex;
     gap: 8px;
