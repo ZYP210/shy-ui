@@ -48,7 +48,6 @@ const FormItem = defineComponent({
       type: Boolean
     }
   },
-  emits: ['clearCurrValidate'],
   setup(props, { slots, emit, attrs }) {
     const { config } = useGlobalConfig('form')
 
@@ -206,9 +205,6 @@ const FormItem = defineComponent({
         dynamicRules,
         required
       } = props.schema
-      if (props.schema.component !== 'Table') {
-        emit('clearCurrValidate', unref(getValues).field)
-      }
       if (isFunction(dynamicRules)) {
         return dynamicRules(unref(getValues)) as ValidationRule[]
       }
