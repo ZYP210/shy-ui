@@ -1,10 +1,15 @@
 node_modules
 packages/ui/es
 packages/ui/lib
+packages/ui/node_modules
 packages/use/es
 packages/use/lib
-
-packages/ui/node_modules
+packages/workflow-bpmn/es
+packages/workflow-bpmn/lib
+packages/workflow-bpmn/node_modules
+packages/workflow-dingding/es
+packages/workflow-dingding/lib
+packages/workflow-dingding/node_modules
 
 examples/dist
 */**/auto-imports.d.ts
