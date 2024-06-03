@@ -8,13 +8,14 @@ import {
   VNode,
   unref,
   defineComponent,
-  CSSProperties
+  CSSProperties,
+  nextTick
 } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 
 import { buildUUID, isFunction } from '@shy-plugins/utils'
 import { ShyComponentMap } from '../ShyComponentMap'
-import { cloneDeep, isArray, isEqual, upperFirst } from 'lodash-es'
+import { cloneDeep, isArray, isEqual, isNil, upperFirst } from 'lodash-es'
 import { FormActionType } from '../types/form'
 import { Popover } from 'ant-design-vue'
 import { reactive } from 'vue'
@@ -28,7 +29,7 @@ import { useDesign } from '@shy-plugins/use'
 import '../style/formTable.less'
 
 const SHOW_ROW_COUNT = 10
-const ROW_HEIGHT = 48.67
+const ROW_HEIGHT = 48.5
 const BODY_HEIGHT = ROW_HEIGHT * SHOW_ROW_COUNT
 
 const ShyFormTable = defineComponent({
@@ -338,10 +339,12 @@ const ShyFormTable = defineComponent({
     })
 
     const create = () => {
-      state.value = [{ [props.rowKey]: buildUUID() }, ...toRaw(state.value)]
+      state.value = [...toRaw(state.value), { [props.rowKey]: buildUUID() }]
       curIndex.value = 0
-      document.querySelector(`.${prefixCls}-scroll-bar-wrapper`)!.scrollTop =
-        curIndex.value * ROW_HEIGHT
+      nextTick(() => {
+        document.querySelector(`.${prefixCls}-scroll-bar-wrapper`)!.scrollTop =
+        (state.value.length + 1) * ROW_HEIGHT
+      })
       emit('add', state.value)
     }
 
@@ -358,7 +361,7 @@ const ShyFormTable = defineComponent({
     const rulesRef = reactive({})
     const getRules = ({ column, record, index, ...args }) => {
       const errKey = `${column.dataIndex}-${record[props.rowKey]}Info`
-      if (!column.required) return []
+      if (!column.required && !column.rules) return []
       if (rulesRef[errKey]?.rules) return rulesRef[errKey]?.rules
       rulesRef[errKey] = {
         rules: [],
@@ -389,7 +392,31 @@ const ShyFormTable = defineComponent({
       if (!isArray(column.rules)) return column.rules
       rulesRef[errKey].rules = cloneDeep(column.rules)
       rulesRef[errKey].rules.forEach((item) => {
-        if (!item.validator || !isFunction(item.validator)) return
+        if (!item.validator || !isFunction(item.validator)) {
+          item.validator = async (rule, value) => {
+            rulesRef[errKey].show = false
+            if (!rule.pattern && !rule.required) return Promise.resolve()
+
+            if ((column.required || rule.required) && isNil(value)) {
+              const prefix = column.type.toLocaleLowerCase().includes('input')
+                ? '请输入'
+                : '请选择'
+              const errMsg = `${prefix}${column.title}`
+              rulesRef[errKey].show = true
+              rulesRef[errKey].msg = errMsg
+              return Promise.reject(errMsg)
+            }
+            if (rule.pattern && !rule.pattern.test(value)) {
+              rulesRef[errKey].show = true
+              rulesRef[errKey].msg = rule.message
+              return Promise.reject(rule.message)
+            }
+
+            return Promise.resolve()
+          }
+
+          return
+        }
         const validator = item.validator
         item.validator = async (rule, value) => {
           try {
@@ -407,6 +434,7 @@ const ShyFormTable = defineComponent({
           }
         }
       })
+
       return rulesRef[errKey].rules
     }
 
@@ -506,6 +534,11 @@ const ShyFormTable = defineComponent({
         true
       )
       tableWrapperRef.value.addEventListener('scroll', handleScroll, true)
+
+      dataSource.value =
+        state.value.length > SHOW_ROW_COUNT
+          ? state.value.slice(curIndex.value, curIndex.value + SHOW_ROW_COUNT)
+          : state.value.slice(0, SHOW_ROW_COUNT)
     })
     onUnmounted(() => {
       window.removeEventListener('scroll', () => {})

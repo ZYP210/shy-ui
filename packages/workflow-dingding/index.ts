@@ -10,18 +10,18 @@ const myPlugin = {
   // 该插件有一个install方法
   // 方法的第一个参数是传入的Vue，第二个参数可以插件的自定义参数
   install(Vue, options) {
-    Vue.component("ShyFlowDingDing", ShyFlowDingDing);
-    Vue.component("nodeWrap", nodeWrap);
-    Vue.component("addNode", addNode);
-    Vue.component("displayNodeWrap", displayNodeWrap);
-    Vue.directive("focus", {
+    Vue.component('ShyFlowDingDing', ShyFlowDingDing)
+    Vue.component('nodeWrap', nodeWrap)
+    Vue.component('addNode', addNode)
+    Vue.component('displayNodeWrap', displayNodeWrap)
+    Vue.directive('focus', {
       mounted(el) {
         el.focus()
-      },
-    });
-    Vue.use(store);
-  },
-};
+      }
+    })
+    Vue.use(store)
+  }
+}
 
 // 最后将插件导出，并在main.js中通过Vue.use()即可使用插件
-export default myPlugin;
+export default myPlugin

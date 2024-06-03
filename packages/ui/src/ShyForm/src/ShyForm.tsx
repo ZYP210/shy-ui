@@ -311,10 +311,6 @@ const ShyForm = defineComponent({
     }
     provide('formActionType', formActionType)
 
-    const clearCurrValidate = (field: string) => {
-      clearValidate([field])
-    }
-
     const isTableForm = computed(() => {
       return !!getBindValue.value.tableAction
     })
@@ -408,7 +404,6 @@ const ShyForm = defineComponent({
             allDefaultValues={defaultValueRef.value}
             formModel={formModel}
             setFormModel={setFormModel}
-            onClearCurrValidate={clearCurrValidate}
             class={{ [`${prefixCls}-table-form-item`]: isTableForm.value }}
             style={{
               [`--col-span`]: `${

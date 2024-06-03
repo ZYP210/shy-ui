@@ -19,12 +19,7 @@
 </template>
 <script lang="ts" setup>
 import type { FormSchema } from '3h1-ui'
-import {
-  useShyForm,
-  ApiModalSelect,
-  ShyForm,
-  BasicButton
-} from '3h1-ui'
+import { useShyForm, ApiModalSelect, ShyForm, BasicButton } from '3h1-ui'
 import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
 import { h, onMounted } from 'vue'
@@ -399,100 +394,32 @@ const schemas = ref<FormSchema[]>([
   //   colProps: { span: 24 }
   // },
   {
+    label: '111',
+    field: 'ddd',
+    required: true,
+    component: 'Input'
+  },
+  {
     label: 'Table',
     field: 'Table',
     component: 'Table',
+    ifShow: ({ values }) => values.ddd === '111',
     required: true,
     colProps: { span: 24 },
     componentProps: ({ formModel }) => {
       return {
         columns: [
-          // {
-          //   title: '预计付款时间',
-          //   dataIndex: 'expectPayTime',
-          //   type: 'DatePicker',
-          //   required: true,
-          //   width: 200,
-          //   rules: [
-          //     {
-          //       required: true,
-          //       validator: async (rule, value, { record }, formActionType) => {
-          //         if (!value) return Promise.reject('请选择预计付款时间')
-          //         if (value && !record.expectReturnTime) {
-          //           try {
-          //             const errIndex = formModel.table.findIndex(
-          //               (ele) => ele.uuid === record.uuid
-          //             )
-          //             console.log(errIndex, 'ppp', record.uuid)
-          //             await formActionType.validate([
-          //               ['table', errIndex, 'expectReturnTime']
-          //             ])
-          //           } catch (error) {}
-          //           return Promise.resolve()
-          //         }
-          //         if (dayjs(value).isBefore(record.expectReturnTime)) {
-          //           return Promise.resolve()
-          //         } else {
-          //           return Promise.reject('付款时间不能大于回款时间')
-          //         }
-          //       }
-          //     }
-          //   ],
-          //   componentProps: {
-          //     valueFormat: 'YYYY-MM-DD HH:mm:ss'
-          //   }
-          // },
-          // {
-          //   title: '预计回款时间',
-          //   dataIndex: 'expectReturnTime',
-          //   type: 'DatePicker',
-          //   required: true,
-          //   width: 200,
-          //   rules: [
-          //     {
-          //       required: true,
-          //       validator: async (rule, value, { record }, formActionType) => {
-          //         console.log('zzz', record.uuid)
-          //         if (!value) return Promise.reject('请选择预计回款时间')
-          //         if (value && !record.expectPayTime) {
-          //           try {
-          //             const errIndex = formModel.table.findIndex(
-          //               (ele) => ele.uuid === record.uuid
-          //             )
-          //             console.log(errIndex, 'zzz', record.uuid)
-          //             await formActionType.validate([
-          //               ['table', errIndex, 'expectPayTime']
-          //             ])
-          //           } catch (error) {}
-          //           return Promise.resolve()
-          //         }
-          //         if (dayjs(value).isAfter(record.expectPayTime)) {
-          //           return Promise.resolve()
-          //         }
-          //         return Promise.reject('回款时间不能小于付款时间')
-          //       }
-          //     }
-          //   ],
-          //   componentProps: {
-          //     valueFormat: 'YYYY-MM-DD HH:mm:ss'
-          //   }
-          // },
           {
-            title: 'c',
-            dataIndex: 'c',
-            type: 'InputNumber',
+            title: '手机号',
+            dataIndex: 'contactsPhone',
             required: true,
-            width: 1000
-          },
-          {
-            title: 'd',
-            dataIndex: 'd',
-            type: 'text'
-          },
-          {
-            title: 'e',
-            dataIndex: 'e',
-            type: 'text'
+            rules: [
+              {
+                pattern: /^1[3-9]\d{9}$/,
+                message: '请输入正确的手机号码',
+                trigger: 'blur'
+              }
+            ]
           }
         ],
         footerRender: () => [
