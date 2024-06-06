@@ -33,8 +33,7 @@ import {
   ACTION_COLUMN_FLAG,
   DEFAULT_ALIGN,
   INDEX_COLUMN_FLAG,
-  PAGE_SIZE,
-  ACTION_COLUMN_WIDTH
+  PAGE_SIZE
 } from '../const'
 import { useDesign } from '@shy-plugins/use'
 
@@ -46,6 +45,9 @@ const ShyTableTag = defineComponent({
     },
     value: {
       type: [String, Number]
+    },
+    isTag: {
+      type: Boolean
     }
   },
   setup(props) {
@@ -61,7 +63,7 @@ const ShyTableTag = defineComponent({
     )
 
     return () => {
-      return (
+      return props.isTag ? (
         <div
           class={[prefixCls, tag.value.cssClass]}
           style={{ '--pointer-color': tag.value.colorType }}
@@ -69,6 +71,8 @@ const ShyTableTag = defineComponent({
           <div class={`${prefixCls}-pointer`}></div>
           <span class={`${prefixCls}-label`}>{tag.value.label}</span>
         </div>
+      ) : (
+        tag.value.label
       )
     }
   }
@@ -214,10 +218,10 @@ const handleActionColumn = (
     columns.push({
       ...columns[hasIndex],
       fixed: 'right',
-      width: ACTION_COLUMN_WIDTH,
-      minWidth: ACTION_COLUMN_WIDTH,
+      width: unref(propsRef).actionColWidth,
+      minWidth: unref(propsRef).actionColWidth,
       ...actionColumn,
-      maxWidth: actionColumn.width || ACTION_COLUMN_WIDTH,
+      maxWidth: actionColumn.width || unref(propsRef).actionColWidth,
       flag: ACTION_COLUMN_FLAG
     })
   }
@@ -307,7 +311,7 @@ export const useColumns = (
         } = column
 
         const renderTag = ({ value }) => {
-          return <ShyTableTag value={value} options={options} />
+          return <ShyTableTag value={value} options={options} isTag={tag} />
         }
 
         if (!slots || !slots?.title) {
@@ -319,19 +323,13 @@ export const useColumns = (
           INDEX_COLUMN_FLAG,
           ACTION_COLUMN_FLAG
         ].includes(flag!)
-        if (
-          !customRender &&
-          format &&
-          !edit &&
-          !isDefaultAction &&
-          !(tag && options)
-        ) {
+        if (!customRender && format && !edit && !isDefaultAction && !options) {
           column.customRender = ({ text, record, index }) => {
             return formatCell(text, format, record, index, tableAction.value)
           }
         }
 
-        if (customRender && !(tag && options)) {
+        if (customRender && !options) {
           column.customRender = ({ ...args }) =>
             customRender({
               ...args,
@@ -339,7 +337,7 @@ export const useColumns = (
             })
         }
 
-        if (tag && options) {
+        if (options) {
           column.customRender = ({ ...args }) =>
             renderTag({
               ...args,

@@ -33,6 +33,7 @@ registerGlobalConfig({ form: { rangePickerField: [['createTime']] } })
 
 shyTableBasicProps.headerAlign.default = 'right'
 shyTableBasicProps.isShowTitle.default = false
+shyTableBasicProps.actionColWidth.default = 110
 
 basicContainerProps.isShowBack.default = false
 

@@ -1,218 +1,258 @@
 <template>
   <div class="p-10px h-full overflow-hidden">
-    <Process :data="data" :columns="columns" />
+    <Process
+      :data="data"
+      :columns="columns"
+      :options="options"
+      :label-width="50"
+    />
   </div>
 </template>
 <script lang="ts" setup>
-import { formatToDateTime } from '@shy-plugins/utils'
 import { Process } from '3h1-ui'
-import { Tag } from 'ant-design-vue'
-import { h } from 'vue'
+
+const options = [
+  {
+    value: '1',
+    label: '处理中',
+    colorType: 'var(--blue-5)',
+    cssClass: ''
+  },
+  {
+    value: '2',
+    label: '通过',
+    colorType: 'var(--green-5)',
+    cssClass: ''
+  },
+  {
+    value: '3',
+    label: '不通过',
+    colorType: 'var(--red-5)',
+    cssClass: ''
+  },
+  {
+    value: '4',
+    label: '已取消',
+    colorType: 'var(--gray-5)',
+    cssClass: ''
+  },
+  {
+    value: '5',
+    label: '驳回',
+    colorType: 'var(--red-5)',
+    cssClass: ''
+  }
+]
 
 const columns = [
   {
-    key: 'name'
+    title: '审批人',
+    dataIndex: 'nickname',
   },
   {
-    key: 'user',
-    label: '审批人',
-    customRender: ({ user }) => user?.map((ele) => h(Tag, null, ele))
+    title: '审批结果',
+    tag: true,
+    options: options,
+    dataIndex: 'result'
   },
   {
-    key: 'result',
-    label: '审批结果'
-  },
-  {
-    key: 'createTime',
-    customRender: ({ createTime }) => formatToDateTime(createTime)
+    title: '审批评论',
+    dataIndex: 'reason'
   }
 ]
 
 const data = [
   {
-    id: '59ba2ccc-02c9-11ef-bf94-3ee9f734d794',
-    name: '业务申请提前开工',
+    id: '66217d9b-1d98-11ef-9749-5a3436b4e2c2',
+    name: '业务立项申请',
     claimTime: null,
-    createTime: 1714024929000,
+    createTime: 1716972586000,
     suspensionState: null,
     processInstance: {
-      id: 'a1026c64-02c8-11ef-82d6-3e6026be1055',
-      name: '提前开工',
-      startUserId: '1000000000000000001',
-      startUserNickname: 'admin',
+      id: '7cc73344-1ce6-11ef-9787-5a3436b4e2c2',
+      name: '项目立项',
+      startUserId: '1775385726868267009',
+      startUserNickname: '张莉',
       processDefinitionId:
-        'advance_work_flow:9:8d7451e3-02c8-11ef-82d6-3e6026be1055'
+        'create_project:15:1f1483a8-f554-11ee-b001-3e6026be1055'
     },
     endTime: null,
     durationInMillis: null,
-    result: '处理中',
+    result: 1,
     reason: null,
-    definitionKey: 'Activity_02hv1ud',
+    definitionKey: 'Activity_08j268u',
     assigneeUser: {
-      id: '1000000000000000001',
-      nickname: 'admin',
+      id: '1775385726868267009',
+      nickname: '张莉',
       deptId: null,
-      deptName: '安徽三禾一信息科技有限公司'
+      deptName: '企业数字化部',
+      result: 1,
+      reason: null,
+      endTime: null,
+      durationInMillis: null,
+      claimTime: null,
+      createTime: 1716972586000
     },
     parentTaskId: null,
     children: null,
     userList: [
       {
-        id: '1000000000000000001',
-        nickname: 'admin',
+        id: '1775385726868267009',
+        nickname: '张莉',
         deptId: null,
-        deptName: '安徽三禾一信息科技有限公司'
+        deptName: '企业数字化部',
+        result: 1,
+        reason: null,
+        endTime: null,
+        durationInMillis: null,
+        claimTime: null,
+        createTime: 1716972586000
       }
-    ],
-    user: ['admin']
+    ]
   },
   {
-    id: '53c66e9d-02c9-11ef-bf94-3ee9f734d794',
-    name: '职能部门会签',
+    id: '69facdb4-1d53-11ef-9787-5a3436b4e2c2',
+    name: '总经理审批',
     claimTime: null,
-    createTime: 1714024919000,
+    createTime: 1716942957000,
     suspensionState: null,
     processInstance: {
-      id: 'a1026c64-02c8-11ef-82d6-3e6026be1055',
-      name: '提前开工',
-      startUserId: '1000000000000000001',
-      startUserNickname: 'admin',
+      id: '7cc73344-1ce6-11ef-9787-5a3436b4e2c2',
+      name: '项目立项',
+      startUserId: '1775385726868267009',
+      startUserNickname: '张莉',
       processDefinitionId:
-        'advance_work_flow:9:8d7451e3-02c8-11ef-82d6-3e6026be1055'
+        'create_project:15:1f1483a8-f554-11ee-b001-3e6026be1055'
     },
-    endTime: 1714024930000,
-    durationInMillis: 9848,
-    result: '驳回',
-    reason: '不通过, 已回退',
-    definitionKey: 'Activity_16ejav7',
+    endTime: 1716972586000,
+    durationInMillis: 29628816,
+    result: 5,
+    reason: '123',
+    definitionKey: 'Activity_1h7ejot',
     assigneeUser: {
-      id: '1000000000000000271',
-      nickname: '孙晓敏',
+      id: '1775385397464408066',
+      nickname: '徐启胜',
       deptId: null,
-      deptName: '商务中心'
+      deptName: '徐启胜板块',
+      result: 5,
+      reason: '123',
+      endTime: 1716972586000,
+      durationInMillis: 29628816,
+      claimTime: null,
+      createTime: 1716942957000
     },
     parentTaskId: null,
     children: null,
     userList: [
       {
-        id: '1000000000000000271',
-        nickname: '孙晓敏',
+        id: '1775385397464408066',
+        nickname: '徐启胜',
         deptId: null,
-        deptName: '商务中心'
+        deptName: '徐启胜板块',
+        result: 5,
+        reason: '123',
+        endTime: 1716972586000,
+        durationInMillis: 29628816,
+        claimTime: null,
+        createTime: 1716942957000
       }
-    ],
-    user: ['孙晓敏']
+    ]
   },
   {
-    id: 'ff4dd418-02c8-11ef-82a5-3ee9f734d794',
-    name: '业务申请提前开工',
+    id: '7cf08d4e-1ce6-11ef-9787-5a3436b4e2c2',
+    name: '分管副总审批',
     claimTime: null,
-    createTime: 1714024777000,
+    createTime: 1716896174000,
     suspensionState: null,
     processInstance: {
-      id: 'a1026c64-02c8-11ef-82d6-3e6026be1055',
-      name: '提前开工',
-      startUserId: '1000000000000000001',
-      startUserNickname: 'admin',
+      id: '7cc73344-1ce6-11ef-9787-5a3436b4e2c2',
+      name: '项目立项',
+      startUserId: '1775385726868267009',
+      startUserNickname: '张莉',
       processDefinitionId:
-        'advance_work_flow:9:8d7451e3-02c8-11ef-82d6-3e6026be1055'
+        'create_project:15:1f1483a8-f554-11ee-b001-3e6026be1055'
     },
-    endTime: 1714024919000,
-    durationInMillis: 141551,
-    result: '通过',
+    endTime: 1716942957000,
+    durationInMillis: 46783329,
+    result: 2,
+    reason: '1',
+    definitionKey: 'Activity_0qqdtit',
+    assigneeUser: {
+      id: '1775385392611598338',
+      nickname: '江水',
+      deptId: null,
+      deptName: '江水板块',
+      result: 2,
+      reason: '1',
+      endTime: 1716942957000,
+      durationInMillis: 46783329,
+      claimTime: null,
+      createTime: 1716896174000
+    },
+    parentTaskId: null,
+    children: null,
+    userList: [
+      {
+        id: '1775385392611598338',
+        nickname: '江水',
+        deptId: null,
+        deptName: '江水板块',
+        result: 2,
+        reason: '1',
+        endTime: 1716942957000,
+        durationInMillis: 46783329,
+        claimTime: null,
+        createTime: 1716896174000
+      }
+    ]
+  },
+  {
+    id: '7cc7cf90-1ce6-11ef-9787-5a3436b4e2c2',
+    name: '业务立项申请',
+    claimTime: null,
+    createTime: 1716896173000,
+    suspensionState: null,
+    processInstance: {
+      id: '7cc73344-1ce6-11ef-9787-5a3436b4e2c2',
+      name: '项目立项',
+      startUserId: '1775385726868267009',
+      startUserNickname: '张莉',
+      processDefinitionId:
+        'create_project:15:1f1483a8-f554-11ee-b001-3e6026be1055'
+    },
+    endTime: 1716896174000,
+    durationInMillis: 263,
+    result: 2,
     reason: '',
-    definitionKey: 'Activity_02hv1ud',
+    definitionKey: 'Activity_08j268u',
     assigneeUser: {
-      id: '1000000000000000001',
-      nickname: 'admin',
+      id: '1775385726868267009',
+      nickname: '张莉',
       deptId: null,
-      deptName: '安徽三禾一信息科技有限公司'
+      deptName: '企业数字化部',
+      result: 2,
+      reason: '',
+      endTime: 1716896174000,
+      durationInMillis: 263,
+      claimTime: null,
+      createTime: 1716896173000
     },
     parentTaskId: null,
     children: null,
     userList: [
       {
-        id: '1000000000000000001',
-        nickname: 'admin',
+        id: '1775385726868267009',
+        nickname: '张莉',
         deptId: null,
-        deptName: '安徽三禾一信息科技有限公司'
+        deptName: '企业数字化部',
+        result: 2,
+        reason: '',
+        endTime: 1716896174000,
+        durationInMillis: 263,
+        claimTime: null,
+        createTime: 1716896173000
       }
-    ],
-    user: ['admin']
-  },
-  {
-    id: 'a166ac95-02c8-11ef-82d6-3e6026be1055',
-    name: '职能部门会签',
-    claimTime: null,
-    createTime: 1714024620000,
-    suspensionState: null,
-    processInstance: {
-      id: 'a1026c64-02c8-11ef-82d6-3e6026be1055',
-      name: '提前开工',
-      startUserId: '1000000000000000001',
-      startUserNickname: 'admin',
-      processDefinitionId:
-        'advance_work_flow:9:8d7451e3-02c8-11ef-82d6-3e6026be1055'
-    },
-    endTime: 1714024784000,
-    durationInMillis: 157461,
-    result: '驳回',
-    reason: '不通过, 已回退',
-    definitionKey: 'Activity_16ejav7',
-    assigneeUser: {
-      id: '1000000000000000271',
-      nickname: '孙晓敏',
-      deptId: null,
-      deptName: '商务中心'
-    },
-    parentTaskId: null,
-    children: null,
-    userList: [
-      {
-        id: '1000000000000000271',
-        nickname: '孙晓敏',
-        deptId: null,
-        deptName: '商务中心'
-      }
-    ],
-    user: ['孙晓敏']
-  },
-  {
-    id: 'a106d941-02c8-11ef-82d6-3e6026be1055',
-    name: '业务申请提前开工',
-    claimTime: null,
-    createTime: 1714024619000,
-    suspensionState: null,
-    processInstance: {
-      id: 'a1026c64-02c8-11ef-82d6-3e6026be1055',
-      name: '提前开工',
-      startUserId: '1000000000000000001',
-      startUserNickname: 'admin',
-      processDefinitionId:
-        'advance_work_flow:9:8d7451e3-02c8-11ef-82d6-3e6026be1055'
-    },
-    endTime: 1714024620000,
-    durationInMillis: 610,
-    result: '通过',
-    reason: '',
-    definitionKey: 'Activity_02hv1ud',
-    assigneeUser: {
-      id: '1000000000000000001',
-      nickname: 'admin',
-      deptId: null,
-      deptName: '安徽三禾一信息科技有限公司'
-    },
-    parentTaskId: null,
-    children: null,
-    userList: [
-      {
-        id: '1000000000000000001',
-        nickname: 'admin',
-        deptId: null,
-        deptName: '安徽三禾一信息科技有限公司'
-      }
-    ],
-    user: ['admin']
+    ]
   }
-]
+].map((ele) => ({ ...ele, ...ele.assigneeUser }))
 </script>

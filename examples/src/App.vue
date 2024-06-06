@@ -1,8 +1,5 @@
 <template>
-  <ConfigProvider
-    :locale="zhCN"
-    :theme="getAntTheme"
-  >
+  <ConfigProvider :locale="zhCN" :theme="getAntTheme">
     <div class="controlBox" :style="controlBoxStyle">
       <div class="controlBox-btn" @click="handleSwitch">
         {{ !flag ? 'MENU' : '⨉' }}
@@ -64,8 +61,8 @@ const handleSwitch = () => {
 onMounted(() => {
   // setThemeType('dark')
   // setTimeout(() => {
-  //   setPrimaryColor('#66ccff')
-  // }, 2000)
+  //   setThemeType('light')
+  // }, 5000)
 })
 </script>
 
