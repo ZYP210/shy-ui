@@ -36,7 +36,7 @@ export default defineComponent({
   align-items: center;
   padding: 0 24px;
   width: 100%;
-  background-color: @component-background;
+  background-color: var(--theme);
   box-shadow: 0 -6px 16px -8px rgb(0 0 0 / 8%), 0 -9px 28px 0 rgb(0 0 0 / 5%),
     0 -12px 48px 16px rgb(0 0 0 / 3%);
   transition: width 0.2s;

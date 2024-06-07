@@ -196,7 +196,7 @@ export default defineComponent({
   display: block;
   margin: 0;
   width: 156px;
-  background-color: @component-background;
+  background-color: var(--theme);
   background-clip: padding-box;
   border: 1px solid rgb(0 0 0 / 8%);
   border-radius: 0.25rem;

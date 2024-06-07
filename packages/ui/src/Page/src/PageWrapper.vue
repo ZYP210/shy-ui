@@ -209,7 +209,7 @@ export default defineComponent({
   }
 
   &-content-bg {
-    background-color: @component-background;
+    background-color: var(--theme);
   }
 
   &--dense {

@@ -76,7 +76,7 @@ export default defineComponent({
   padding: 0 12px 0 20px;
   width: 100%;
   text-align: right;
-  background-color: @component-background;
+  background-color: var(--theme);
   border-top: 1px solid @border-color-base;
 
   > * {

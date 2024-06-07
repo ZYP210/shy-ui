@@ -139,7 +139,7 @@ export default defineComponent({
   &-image-wrapper {
     overflow: hidden;
     cursor: pointer;
-    background: @component-background;
+    background: var(--theme);
     border: 1px solid @border-color-base;
     border-radius: 50%;
 
