@@ -17,13 +17,18 @@ import {
   FETCH_SETTING,
   DEFAULT_SIZE,
   PAGE_SIZE,
-  PAGE_SIZE_OPTIONS
+  PAGE_SIZE_OPTIONS,
+  ACTION_COLUMN_WIDTH
 } from './const'
 
 export const shyTableBasicProps = reactive({
+  actionColWidth: {
+    type: Number,
+    default: ACTION_COLUMN_WIDTH
+  },
   summaryPrecision: {
     type: Number,
-    default: 2,
+    default: 2
   },
   isShowTitle: {
     type: Boolean,

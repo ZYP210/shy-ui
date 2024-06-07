@@ -5,16 +5,20 @@
         title="测试"
         addable
         :treeData="treeData"
-        :actionList="actionList"
         @plusClick="handleClick"
-      ></BasicTree>
+      >
+        <template #action="item">
+          <ShyTableAction :showCount="0" :actions="getActions(item)" />
+        </template>
+      </BasicTree>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { BasicTree, TreeItem } from '3h1-ui'
+import { BasicTree, TreeItem, ShyTableAction } from '3h1-ui'
 import { ref } from 'vue'
+
 const treeData = ref<TreeItem[]>(
   Array.from({ length: 100 }, (_, i) => {
     return {
@@ -30,14 +34,27 @@ const treeData = ref<TreeItem[]>(
   })
 )
 
-const handleClick = (node) => {
-  console.log(node, 777)
+const handleClick = (...args) => {
+  console.log(args, 777)
 }
 
-const actionList = ref([
-  {
-    label: 777,
-    onClick: handleClick
-  }
-])
+const handleRemove = (record) => {
+  console.log(record, 'remove')
+}
+
+const getActions = (record) => {
+  return [
+    {
+      label: 777,
+      onClick: handleClick.bind(null, record)
+    },
+    {
+      label: 888,
+      popConfirm: {
+        title: '确定删除吗？',
+        confirm: handleRemove.bind(null, record)
+      }
+    }
+  ]
+}
 </script>

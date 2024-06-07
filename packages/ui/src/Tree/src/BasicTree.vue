@@ -1,5 +1,4 @@
 <script lang="tsx">
-import type { CSSProperties } from 'vue'
 import type {
   FieldNames,
   TreeState,
@@ -40,7 +39,6 @@ import { useContextMenu } from '../../ContextMenu'
 import { CreateContextOptions, useDesign } from '@shy-plugins/use'
 import { treeEmits, treeProps } from './types/tree'
 import { createBEM } from '@shy-plugins/utils'
-import { ShyTableAction } from '../../ShyTable'
 
 export default defineComponent({
   name: 'BasicTree',
@@ -361,33 +359,6 @@ export default defineComponent({
       }
     }
 
-    function renderAction(node: TreeItem) {
-      const { actionList } = props
-      if (!actionList || actionList.length === 0) return
-
-      const getActions = (record) => {
-        return actionList.map((ele) => {
-          let { onClick, popConfirm } = ele
-
-          if (onClick && isFunction(onClick)) {
-            onClick = onClick.bind(null, record)
-          }
-
-          if (popConfirm && isFunction(popConfirm.confirm)) {
-            popConfirm.confirm = popConfirm.confirm.bind(null, record)
-          }
-
-          return {
-            ...ele,
-            onClick,
-            popConfirm
-          }
-        })
-      }
-
-      return <ShyTableAction showCount={0} actions={getActions(node)} />
-    }
-
     const treeData = computed(() => {
       const data = cloneDeep(getTreeData.value)
       eachTree(data, (item, _parent) => {
@@ -445,7 +416,7 @@ export default defineComponent({
               )}
             </span>
             <span class={`${prefixCls}-node-actions`}>
-              {renderAction(item)}
+              {slots?.action?.(item)}
             </span>
           </>
         )

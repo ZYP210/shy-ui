@@ -82,12 +82,6 @@ input:focus.ant-input {
 }
 
 :is(.ant-table-thead) {
-  .ant-table-cell:nth-last-child(2) {
-    &::before {
-      content: unset !important;
-    }
-  }
-
   .ant-table-cell-scrollbar.ant-table-cell-scrollbar {
     box-shadow: unset;
   }
@@ -105,7 +99,7 @@ input:focus.ant-input {
   }
 }
 
-.ant-table-cell-fix-right-first {
+.ant-table-cell-fix-right-last {
   right: -1px !important;
 }
 
@@ -197,6 +191,9 @@ input:focus.ant-input {
 
 .ant-btn {
   box-shadow: none;
+}
+.ant-btn:not(:disabled):focus-visible {
+  outline: unset;
 }
 
 .ant-btn-default:not(:disabled) {

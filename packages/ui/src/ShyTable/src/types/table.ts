@@ -187,6 +187,7 @@ export interface TableSetting {
 }
 
 export interface ShyTableProps<T = any> {
+  actionColWidth: number,
   summaryPrecision: number
   isShowTitle: boolean
   headerAlign: 'left' | 'right'

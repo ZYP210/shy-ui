@@ -1,3 +1,3 @@
-import Process from './src/Process.vue'
+import { Process } from './src/Process'
 
 export { Process }

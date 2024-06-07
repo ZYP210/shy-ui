@@ -19,6 +19,7 @@
         <template #bodyCell="{ column, record }">
           <template v-if="column.dataIndex === 'action'">
             <ShyTableAction
+              :showCount="3"
               :actions="[
                 {
                   label: '编辑',
@@ -26,7 +27,7 @@
                   onClick: handleEdit.bind(null, record)
                 },
                 {
-                  label: '保存',
+                  label: '智能',
                   // ifShow: false,
                   popConfirm: {
                     title: '确认保存?',
@@ -80,9 +81,10 @@ const columns: any[] = [
   {
     title: '菜单名称',
     dataIndex: 'name',
-    align: 'left',
+    // align: 'left',
+    align: 'center',
     width: 120,
-    tag: true,
+    // tag: true,
     options: [
       {
         label: '信息',
@@ -138,7 +140,8 @@ const columns: any[] = [
   {
     title: '创建时间',
     dataIndex: 'createTime',
-    width: 180
+    width: 180,
+    fixed: 'right'
   }
 ]
 
@@ -311,13 +314,15 @@ const [
   showTableSetting: true,
   // summaryPrecision: 2,
   // useAdvancedSearch: true,
-  rowSelection: {},
-  clickToRowSelect: false,
+  rowSelection: {
+    type: 'checkbox'
+  },
+  // clickToRowSelect: true,
   // useSearchForm: true,
   // canResize: false,
   actionColumn: {
     dataIndex: 'action',
-    title: '操作',
+    title: '操作'
     // fixed: 'right'
   },
   showIndexColumn: true
