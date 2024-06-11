@@ -19,6 +19,7 @@ import {
   BasicTable,
   registerGlobalConfig,
   shyTableBasicProps,
+  shyTableActionProps,
   basicContainerProps
 } from '3h1-ui'
 import { Plugin } from 'vue'
@@ -34,6 +35,7 @@ registerGlobalConfig({ form: { rangePickerField: [['createTime']] } })
 shyTableBasicProps.headerAlign.default = 'right'
 shyTableBasicProps.isShowTitle.default = false
 shyTableBasicProps.actionColWidth.default = 110
+shyTableActionProps.showCount.default = 3
 
 basicContainerProps.isShowBack.default = false
 

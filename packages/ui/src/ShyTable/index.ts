@@ -1,5 +1,6 @@
 import ShyTable from './src/ShyTable'
 export { default as ShyTableAction } from './src/components/ShyTableAction'
+export { shyTableActionProps } from './src/components/ShyTableAction'
 import type { App, Plugin } from 'vue'
 import { basicPropChange } from './src/props'
 import { setConstConfig } from './src/const'

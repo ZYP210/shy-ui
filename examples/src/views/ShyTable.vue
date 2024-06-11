@@ -19,7 +19,6 @@
         <template #bodyCell="{ column, record }">
           <template v-if="column.dataIndex === 'action'">
             <ShyTableAction
-              :showCount="3"
               :actions="[
                 {
                   label: '编辑',
@@ -82,9 +81,9 @@ const columns: any[] = [
     title: '菜单名称',
     dataIndex: 'name',
     // align: 'left',
-    align: 'center',
+    // align: 'center',
     width: 120,
-    // tag: true,
+    tag: true,
     options: [
       {
         label: '信息',
@@ -120,7 +119,7 @@ const columns: any[] = [
   {
     title: '数',
     dataIndex: 'qualifiedNum',
-    width: 1000
+    // width: 1000
   },
   {
     title: '组件',

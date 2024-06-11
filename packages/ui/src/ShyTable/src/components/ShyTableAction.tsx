@@ -1,4 +1,11 @@
-import { PropType, computed, toRaw, unref, defineComponent } from 'vue'
+import {
+  PropType,
+  computed,
+  toRaw,
+  unref,
+  defineComponent,
+  reactive
+} from 'vue'
 import { Divider, Tooltip } from 'ant-design-vue'
 import { Icon } from '../../../Icon'
 import { ActionItem } from '../types/tableAction'
@@ -14,36 +21,38 @@ import { BasicButton } from '../../../Button'
 
 import '../style/tableAction.less'
 
-const ShyTableAction = defineComponent({
-  props: {
-    type: {
-      type: String as PropType<'action' | 'footer'>,
-      default: () => 'action'
-    },
-    actions: {
-      type: Array as PropType<ActionItem[]>,
-      default: null
-    },
-    dropDownActions: {
-      type: Array as PropType<ActionItem[]>,
-      default: null
-    },
-    divider: {
-      type: Boolean,
-      default: true
-    },
-    outside: {
-      type: Boolean
-    },
-    stopButtonPropagation: {
-      type: Boolean,
-      default: false
-    },
-    showCount: {
-      type: Number,
-      default: () => 2
-    }
+export const shyTableActionProps = reactive({
+  type: {
+    type: String as PropType<'action' | 'footer'>,
+    default: 'action'
   },
+  actions: {
+    type: Array as PropType<ActionItem[]>,
+    default: null
+  },
+  dropDownActions: {
+    type: Array as PropType<ActionItem[]>,
+    default: null
+  },
+  divider: {
+    type: Boolean,
+    default: true
+  },
+  outside: {
+    type: Boolean
+  },
+  stopButtonPropagation: {
+    type: Boolean,
+    default: false
+  },
+  showCount: {
+    type: Number,
+    default: 2
+  }
+})
+
+const ShyTableAction = defineComponent({
+  props: shyTableActionProps,
   setup(props, { slots }) {
     const { prefixCls } = useDesign('ant-table-action')
     let table: Partial<TableActionType> = {}
@@ -162,7 +171,9 @@ const ShyTableAction = defineComponent({
 
     const renderDivider = (index, length) => {
       const isShow =
-        props.divider && index < length - (+!getDropdownList.value.length) && ['action'].includes(props.type)
+        props.divider &&
+        index < length - +!getDropdownList.value.length &&
+        ['action'].includes(props.type)
       return isShow ? <Divider type="vertical" class="action-divider" /> : null
     }
 

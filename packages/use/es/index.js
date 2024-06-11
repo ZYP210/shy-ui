@@ -1729,7 +1729,7 @@ function bound01(n, max) {
   if (isOnePointZero(n)) {
     n = "100%";
   }
-  const isPercent = isPercentage(n);
+  var isPercent = isPercentage(n);
   n = max === 360 ? n : Math.min(max, Math.max(0, parseFloat(n)));
   if (isPercent) {
     n = parseInt(String(n * max), 10) / 100;
@@ -1758,8 +1758,8 @@ function boundAlpha(a) {
   return a;
 }
 function convertToPercentage(n) {
-  if (Number(n) <= 1) {
-    return `${Number(n) * 100}%`;
+  if (n <= 1) {
+    return "".concat(Number(n) * 100, "%");
   }
   return n;
 }
@@ -1792,9 +1792,9 @@ function hue2rgb(p, q, t) {
   return p;
 }
 function hslToRgb(h, s, l) {
-  let r;
-  let g;
-  let b;
+  var r;
+  var g;
+  var b;
   h = bound01(h, 360);
   s = bound01(s, 100);
   l = bound01(l, 100);
@@ -1803,8 +1803,8 @@ function hslToRgb(h, s, l) {
     b = l;
     r = l;
   } else {
-    const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-    const p = 2 * l - q;
+    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+    var p = 2 * l - q;
     r = hue2rgb(p, q, h + 1 / 3);
     g = hue2rgb(p, q, h);
     b = hue2rgb(p, q, h - 1 / 3);
@@ -1815,12 +1815,12 @@ function rgbToHsv(r, g, b) {
   r = bound01(r, 255);
   g = bound01(g, 255);
   b = bound01(b, 255);
-  const max = Math.max(r, g, b);
-  const min = Math.min(r, g, b);
-  let h = 0;
-  const v = max;
-  const d = max - min;
-  const s = max === 0 ? 0 : d / max;
+  var max = Math.max(r, g, b);
+  var min = Math.min(r, g, b);
+  var h = 0;
+  var v = max;
+  var d = max - min;
+  var s = max === 0 ? 0 : d / max;
   if (max === min) {
     h = 0;
   } else {
@@ -1843,19 +1843,19 @@ function hsvToRgb(h, s, v) {
   h = bound01(h, 360) * 6;
   s = bound01(s, 100);
   v = bound01(v, 100);
-  const i = Math.floor(h);
-  const f = h - i;
-  const p = v * (1 - s);
-  const q = v * (1 - f * s);
-  const t = v * (1 - (1 - f) * s);
-  const mod = i % 6;
-  const r = [v, q, p, p, t, v][mod];
-  const g = [t, v, v, q, p, p][mod];
-  const b = [p, p, t, v, v, q][mod];
+  var i = Math.floor(h);
+  var f = h - i;
+  var p = v * (1 - s);
+  var q = v * (1 - f * s);
+  var t = v * (1 - (1 - f) * s);
+  var mod = i % 6;
+  var r = [v, q, p, p, t, v][mod];
+  var g = [t, v, v, q, p, p][mod];
+  var b = [p, p, t, v, v, q][mod];
   return { r: r * 255, g: g * 255, b: b * 255 };
 }
 function rgbToHex(r, g, b, allow3Char) {
-  const hex = [
+  var hex = [
     pad2(Math.round(r).toString(16)),
     pad2(Math.round(g).toString(16)),
     pad2(Math.round(b).toString(16))
@@ -1865,23 +1865,13 @@ function rgbToHex(r, g, b, allow3Char) {
   }
   return hex.join("");
 }
-function cmykToRgb(c, m, y, k) {
-  const cConv = c / 100;
-  const mConv = m / 100;
-  const yConv = y / 100;
-  const kConv = k / 100;
-  const r = 255 * (1 - cConv) * (1 - kConv);
-  const g = 255 * (1 - mConv) * (1 - kConv);
-  const b = 255 * (1 - yConv) * (1 - kConv);
-  return { r, g, b };
-}
 function convertHexToDecimal(h) {
   return parseIntFromHex(h) / 255;
 }
 function parseIntFromHex(val) {
   return parseInt(val, 16);
 }
-const names = {
+var names = {
   aliceblue: "#f0f8ff",
   antiquewhite: "#faebd7",
   aqua: "#00ffff",
@@ -2032,13 +2022,13 @@ const names = {
   yellowgreen: "#9acd32"
 };
 function inputToRGB(color) {
-  let rgb = { r: 0, g: 0, b: 0 };
-  let a = 1;
-  let s = null;
-  let v = null;
-  let l = null;
-  let ok = false;
-  let format = false;
+  var rgb = { r: 0, g: 0, b: 0 };
+  var a = 1;
+  var s = null;
+  var v = null;
+  var l = null;
+  var ok = false;
+  var format = false;
   if (typeof color === "string") {
     color = stringInputToObject(color);
   }
@@ -2059,10 +2049,6 @@ function inputToRGB(color) {
       rgb = hslToRgb(color.h, s, l);
       ok = true;
       format = "hsl";
-    } else if (isValidCSSUnit(color.c) && isValidCSSUnit(color.m) && isValidCSSUnit(color.y) && isValidCSSUnit(color.k)) {
-      rgb = cmykToRgb(color.c, color.m, color.y, color.k);
-      ok = true;
-      format = "cmyk";
     }
     if (Object.prototype.hasOwnProperty.call(color, "a")) {
       a = color.a;
@@ -2078,15 +2064,12 @@ function inputToRGB(color) {
     a
   };
 }
-const CSS_INTEGER = "[-\\+]?\\d+%?";
-const CSS_NUMBER = "[-\\+]?\\d*\\.\\d+%?";
-const CSS_UNIT = "(?:" + CSS_NUMBER + ")|(?:" + CSS_INTEGER + ")";
-const PERMISSIVE_MATCH3 = "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?";
-const PERMISSIVE_MATCH4 = (
-  // eslint-disable-next-line prettier/prettier
-  "[\\s|\\(]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")[,|\\s]+(" + CSS_UNIT + ")\\s*\\)?"
-);
-const matchers = {
+var CSS_INTEGER = "[-\\+]?\\d+%?";
+var CSS_NUMBER = "[-\\+]?\\d*\\.\\d+%?";
+var CSS_UNIT = "(?:".concat(CSS_NUMBER, ")|(?:").concat(CSS_INTEGER, ")");
+var PERMISSIVE_MATCH3 = "[\\s|\\(]+(".concat(CSS_UNIT, ")[,|\\s]+(").concat(CSS_UNIT, ")[,|\\s]+(").concat(CSS_UNIT, ")\\s*\\)?");
+var PERMISSIVE_MATCH4 = "[\\s|\\(]+(".concat(CSS_UNIT, ")[,|\\s]+(").concat(CSS_UNIT, ")[,|\\s]+(").concat(CSS_UNIT, ")[,|\\s]+(").concat(CSS_UNIT, ")\\s*\\)?");
+var matchers = {
   CSS_UNIT: new RegExp(CSS_UNIT),
   rgb: new RegExp("rgb" + PERMISSIVE_MATCH3),
   rgba: new RegExp("rgba" + PERMISSIVE_MATCH4),
@@ -2094,7 +2077,6 @@ const matchers = {
   hsla: new RegExp("hsla" + PERMISSIVE_MATCH4),
   hsv: new RegExp("hsv" + PERMISSIVE_MATCH3),
   hsva: new RegExp("hsva" + PERMISSIVE_MATCH4),
-  cmyk: new RegExp("cmyk" + PERMISSIVE_MATCH4),
   hex3: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
   hex6: /^#?([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/,
   hex4: /^#?([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/,
@@ -2105,14 +2087,14 @@ function stringInputToObject(color) {
   if (color.length === 0) {
     return false;
   }
-  let named = false;
+  var named = false;
   if (names[color]) {
     color = names[color];
     named = true;
   } else if (color === "transparent") {
     return { r: 0, g: 0, b: 0, a: 0, format: "name" };
   }
-  let match = matchers.rgb.exec(color);
+  var match = matchers.rgb.exec(color);
   if (match) {
     return { r: match[1], g: match[2], b: match[3] };
   }
@@ -2135,15 +2117,6 @@ function stringInputToObject(color) {
   match = matchers.hsva.exec(color);
   if (match) {
     return { h: match[1], s: match[2], v: match[3], a: match[4] };
-  }
-  match = matchers.cmyk.exec(color);
-  if (match) {
-    return {
-      c: match[1],
-      m: match[2],
-      y: match[3],
-      k: match[4]
-    };
   }
   match = matchers.hex8.exec(color);
   if (match) {
@@ -2186,10 +2159,7 @@ function stringInputToObject(color) {
   return false;
 }
 function isValidCSSUnit(color) {
-  if (typeof color === "number") {
-    return !Number.isNaN(color);
-  }
-  return matchers.CSS_UNIT.test(color);
+  return Boolean(matchers.CSS_UNIT.exec(String(color)));
 }
 const hueStep = -2;
 const saturationStep = 0.16;
