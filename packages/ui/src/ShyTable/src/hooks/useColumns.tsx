@@ -183,6 +183,7 @@ const handleIndexColumn = (
     maxWidth: 50,
     title: '序号',
     align: 'center',
+    fixed: 'left',
     customRender: ({ index }) => {
       const getPagination = unref(getPaginationRef)
       if (isBoolean(getPagination)) {

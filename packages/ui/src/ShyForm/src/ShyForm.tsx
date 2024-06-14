@@ -30,7 +30,7 @@ import { cloneDeep } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
 import { isEqual, omit, pick } from 'lodash-es'
 import { useDesign } from '@shy-plugins/use'
-import { LeftOutlined } from '@ant-design/icons-vue'
+import { UpOutlined } from '@ant-design/icons-vue'
 import './style/index.less'
 
 const ShyForm = defineComponent({
@@ -384,7 +384,7 @@ const ShyForm = defineComponent({
                       class={`${prefixCls}-show`}
                       onClick={handleChangeState}
                     >
-                      <LeftOutlined rotate={isShowFormInside.value ? 0 : 270} />
+                      <UpOutlined rotate={isShowFormInside.value ? 0 : 180} />
                       {isShowFormInside.value ? '收起' : '展开'}
                     </div>
                   ) : null
