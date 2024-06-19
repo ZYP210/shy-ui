@@ -90,7 +90,18 @@ export default defineComponent({
                 !isNaN(+data[`${item.field}`])
               ? (+data[`${item.field}`])
                   .toFixed(getProps.value.summaryPrecision)
-                  .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+                  .replace(
+                    /\d(?=(?:\d{3})+(?:\.|$))/g,
+                    (match, offset, string) => {
+                      return (
+                        match +
+                        (string.charAt(offset + 1) === '.' ||
+                        offset === string.length - 1
+                          ? ''
+                          : ',')
+                      )
+                    }
+                  )
               : data[`${item.field}`]
           } else {
             element = slots[`${item.field}Value`]
