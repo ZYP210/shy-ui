@@ -112,35 +112,9 @@ const columns: any[] = [
     ]
   },
   {
-    title: '图标',
-    dataIndex: 'icon'
-  },
-  {
     title: '数',
     dataIndex: 'qualifiedNum',
-    // width: 1000
   },
-  {
-    title: '组件',
-    dataIndex: 'component',
-    width: 160
-  },
-  {
-    title: '排序',
-    dataIndex: 'sort',
-    width: 60
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    width: 60
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createTime',
-    width: 180,
-    fixed: 'right'
-  }
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
