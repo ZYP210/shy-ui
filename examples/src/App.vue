@@ -27,19 +27,38 @@
         </div>
       </div>
     </div>
-
+    <FloatButtonGroup trigger="hover" shape="square">
+      <template #icon>
+        <Icon icon="tabler:wand"></Icon>
+      </template>
+      <FloatButton @click="handleTheme">
+        <template #icon>
+          <Icon icon="tabler:moon"></Icon>
+        </template>
+      </FloatButton>
+      <FloatButton>
+        <template #icon>
+          <ColorPickerPopover
+            :value="getAntTheme.token.colorPrimary"
+            @change="handleColor"
+          />
+          <!-- <Icon icon="tabler:color-picker"></Icon> -->
+        </template>
+      </FloatButton>
+    </FloatButtonGroup>
     <router-view></router-view>
   </ConfigProvider>
 </template>
 
 <script lang="ts" setup>
 import zhCN from 'ant-design-vue/es/locale/zh_CN'
-import { ConfigProvider } from 'ant-design-vue'
+import { ConfigProvider, FloatButtonGroup, FloatButton } from 'ant-design-vue'
+import { Icon, ColorPickerPopover } from '3h1-ui'
 import { URLData } from '/@/database/menu.data'
 import { ref, reactive } from 'vue'
 import { useTheme } from '@shy-plugins/use'
 
-const { setThemeType, getAntTheme, setPrimaryColor } = useTheme()
+const { getThemeType, setThemeType, getAntTheme, setPrimaryColor } = useTheme()
 
 const controlBoxStyle = reactive({
   top: '30px',
@@ -58,12 +77,20 @@ const handleSwitch = () => {
   flag.value = !flag.value
 }
 
-onMounted(() => {
-  // setThemeType('dark')
-  // setTimeout(() => {
-  //   setThemeType('light')
-  // }, 5000)
-})
+const handleColor = (value) => {
+  setPrimaryColor(value)
+}
+
+const handleTheme = () => {
+  setThemeType(getThemeType.value === 'dark' ? 'light' : 'dark')
+}
+
+// onMounted(() => {
+//   setThemeType('dark')
+//   setTimeout(() => {
+//     setThemeType('light')
+//   }, 5000)
+// })
 </script>
 
 <style lang="less">
