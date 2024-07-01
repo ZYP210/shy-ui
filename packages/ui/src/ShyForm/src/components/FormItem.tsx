@@ -73,7 +73,7 @@ const FormItem = defineComponent({
       }
     })
 
-    const isTableForm = computed(() => !!props.tableAction)
+    const isTableForm = computed(() => !!formProps.value.formLabelInInput)
 
     const flag = ref(0)
 

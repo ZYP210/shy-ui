@@ -59,6 +59,7 @@ export default defineConfig({
     configSvgIconsPlugin()
   ],
   server: {
+    host: true,
     proxy: {
       '/api': {
         target: 'http://192.168.1.206:8093',

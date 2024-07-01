@@ -327,6 +327,7 @@ const ShyTable = defineComponent({
             ref={formRef}
             {...getFormProps.value}
             tableAction={tableAction}
+            formLabelInInput={getBindValues.value.formLabelInInput}
             onRegister={registerForm}
             onSubmit={handleSearchInfoChange}
             onAdvancedChange={redoHeight}

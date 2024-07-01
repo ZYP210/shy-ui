@@ -33,6 +33,10 @@ type ButtonProps = {
 }
 
 export const basicProps = {
+  formLabelInInput: {
+    type: Boolean,
+    default: false
+  },
   model: {
     type: Object as PropType<Recordable>,
     default: () => ({} as PropType<Recordable>)

@@ -209,6 +209,7 @@ const [
   isSortFetch: false,
   useSearchForm: true,
   formConfig: {
+    labelWidth: 60,
     schemas: [
       {
         label: '日期范围',

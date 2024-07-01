@@ -22,6 +22,7 @@ import {
 } from './const'
 
 export const shyTableBasicProps = reactive({
+  formLabelInInput: { type: Boolean, default: true },
   actionColWidth: {
     type: Number,
     default: ACTION_COLUMN_WIDTH
