@@ -3,12 +3,12 @@
     <div class="flex-1 overflow-hidden">
       <ShyTable @register="register" @selection-change="handleSelectChange">
         <template #toolbar>
-          <Button type="primary"> 主要 </Button>
+          <BasicButton type="primary"> 主要 </BasicButton>
           <BasicButton type="danger" @click="pushApi">危险</BasicButton>
           <BasicButton type="success" @click="pushApi">完成</BasicButton>
           <BasicButton type="waring" @click="pushApi">警告</BasicButton>
           <BasicButton type="message" @click="pushApi">信息</BasicButton>
-          <Button> 默认 </Button>
+          <BasicButton> 默认 </BasicButton>
         </template>
 
         <template #headerCell="{ column }">
@@ -59,7 +59,6 @@
 </template>
 
 <script lang="ts" setup>
-import { Button } from 'ant-design-vue'
 import { ShyTable, useShyTable, ShyTableAction, BasicButton } from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
@@ -113,35 +112,9 @@ const columns: any[] = [
     ]
   },
   {
-    title: '图标',
-    dataIndex: 'icon'
-  },
-  {
     title: '数',
     dataIndex: 'qualifiedNum',
-    // width: 1000
   },
-  {
-    title: '组件',
-    dataIndex: 'component',
-    width: 160
-  },
-  {
-    title: '排序',
-    dataIndex: 'sort',
-    width: 60
-  },
-  {
-    title: '状态',
-    dataIndex: 'status',
-    width: 60
-  },
-  {
-    title: '创建时间',
-    dataIndex: 'createTime',
-    width: 180,
-    fixed: 'right'
-  }
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -203,13 +176,13 @@ const [
         id: i,
         status: i,
         rangePlace: i,
+        qualifiedNum: 777777,
         place: '河北',
         createTime: 1695024076000,
         name: i,
         phone: '1212121',
         address: '1111',
         remark: 999,
-        qualifiedNum: 0
       }
     })
 
@@ -228,6 +201,7 @@ const [
   onColumnsReset: () => {
     console.log('columns-reset')
   },
+  // summaryPrecision: 0,
   resizable: true,
   rowKey: 'id',
   columns,
@@ -235,6 +209,7 @@ const [
   isSortFetch: false,
   useSearchForm: true,
   formConfig: {
+    labelWidth: 60,
     schemas: [
       {
         label: '日期范围',

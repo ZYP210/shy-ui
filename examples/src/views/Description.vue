@@ -79,9 +79,9 @@ const fun = (color) => {
 const [register, { setDescProps }] = useDescription({
   // data: mockData,
   labelWidth: 100,
-  bordered: true,
+  bordered: false,
   schema,
-  summaryTotalFields: ['summary', 'summary1']
+  summaryTotalFields: ['summary', 'summary1'],
   // mode: 'vertical'
 })
 

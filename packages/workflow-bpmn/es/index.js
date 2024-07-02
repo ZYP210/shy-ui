@@ -46208,16 +46208,6 @@ const _sfc_main$9 = /* @__PURE__ */ defineComponent({
         }, {
           default: withCtx(() => [
             needProps.value.type == "bpmn:Process" ? (openBlock(), createElementBlock("div", _hoisted_2$6, [
-              createVNode(unref(Button), {
-                href: "https://doc.iocoder.cn/bpm/#_3-%E6%B5%81%E7%A8%8B%E5%9B%BE%E7%A4%BA%E4%BE%8B",
-                type: "link",
-                target: "_blank"
-              }, {
-                default: withCtx(() => [
-                  createTextVNode(" 如何实现会签、或签？ ")
-                ]),
-                _: 1
-              }),
               createVNode(unref(FormItem), {
                 label: "流程标识",
                 name: "id"

@@ -183,6 +183,7 @@ const handleIndexColumn = (
     maxWidth: 50,
     title: '序号',
     align: 'center',
+    fixed: 'left',
     customRender: ({ index }) => {
       const getPagination = unref(getPaginationRef)
       if (isBoolean(getPagination)) {
@@ -294,7 +295,18 @@ export const useColumns = (
             ? isNumber(+text) && !isNaN(+text)
               ? (+text)
                   .toFixed(unref(propsRef).summaryPrecision)
-                  .replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+                  .replace(
+                    /\d(?=(?:\d{3})+(?:\.|$))/g,
+                    (match, offset, string) => {
+                      return (
+                        match +
+                        (string.charAt(offset + 1) === '.' ||
+                        offset === string.length - 1
+                          ? ''
+                          : ',')
+                      )
+                    }
+                  )
               : text
             : text
         }

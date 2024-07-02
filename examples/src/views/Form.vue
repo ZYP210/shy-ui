@@ -437,6 +437,7 @@ const [
   { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useShyForm({
   schemas: schemas as any,
+  // formLabelInInput: true,
   layout: 'vertical',
   baseColProps: { span: 8 }
 })

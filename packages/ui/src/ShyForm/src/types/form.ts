@@ -58,6 +58,7 @@ export type RegisterFn = (formInstance: FormActionType) => void
 export type UseFormReturnType = [RegisterFn, FormActionType]
 
 export interface FormProps {
+  formLabelInInput?: boolean, 
   name?: string
   layout?: 'vertical' | 'inline' | 'horizontal'
   // Form value

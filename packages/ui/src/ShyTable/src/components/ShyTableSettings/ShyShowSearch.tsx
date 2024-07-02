@@ -1,6 +1,6 @@
 import { defineComponent, unref } from 'vue'
 import { Tooltip } from 'ant-design-vue'
-import { BarsOutlined } from '@ant-design/icons-vue'
+import { FileSearchOutlined  } from '@ant-design/icons-vue'
 import { useTableContext } from '../../hooks/useShyTableContext'
 
 const ShyShowSearch = defineComponent({
@@ -18,7 +18,7 @@ const ShyShowSearch = defineComponent({
           placement="top"
           v-slots={{ title: () => <span>显隐搜索</span> }}
         >
-          <BarsOutlined onClick={redo} />
+          <FileSearchOutlined onClick={redo} />
         </Tooltip>
       )
     }

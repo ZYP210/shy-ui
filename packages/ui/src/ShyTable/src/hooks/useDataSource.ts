@@ -62,7 +62,16 @@ export function useDataSource(
       const total = dataSourceRef.value.reduce((acc, cur) => {
         return +acc + (+cur[field] || 0)
       }, 0)
-      obj[field] = total.toFixed(unref(propsRef).summaryPrecision).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+      obj[field] = total
+        .toFixed(unref(propsRef).summaryPrecision)
+        .replace(/\d(?=(?:\d{3})+(?:\.|$))/g, (match, offset, string) => {
+          return (
+            match +
+            (string.charAt(offset + 1) === '.' || offset === string.length - 1
+              ? ''
+              : ',')
+          )
+        })
     })
     return obj
   })
@@ -80,7 +89,7 @@ export function useDataSource(
 
   // const oldPaginationRef = ref<PaginationProps>({})
   // const oldFilterInfoRef = ref<Partial<Recordable<string[]>>>({})
-  let oldSortInfoRef;
+  let oldSortInfoRef
 
   function handleTableChange(
     pagination: PaginationProps,
@@ -298,7 +307,6 @@ export function useDataSource(
       const { current = 1, pageSize = PAGE_SIZE } = unref(
         getPaginationInfo
       ) as PaginationProps
-
 
       if (
         (isBoolean(pagination) && !pagination) ||
