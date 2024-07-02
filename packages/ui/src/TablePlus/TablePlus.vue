@@ -248,6 +248,7 @@ type Props = {
   isUseEdit?: boolean
   columnSeq: any
   transDataAfterReload?: any
+  beforeFetch?: any
 }
 
 const prefixCls = 'shy-basic-table-plus'
@@ -287,6 +288,9 @@ const props = withDefaults(defineProps<Props>(), {
     return (form) => {
       return form
     }
+  },
+  beforeFetch: (params) => {
+    return params
   }
 })
 const innerProps = ref({})

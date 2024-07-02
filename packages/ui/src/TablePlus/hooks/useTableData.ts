@@ -26,7 +26,9 @@ export const useTableData = (getProps, { setPage, params, tableRef }) => {
       // } else if (params.value.current > 1) {
 
       // }
-      const res = await getProps.value.api(params.value)
+      const res = await getProps.value.api(
+        getProps.value.beforeFetch(params.value)
+      )
 
       const isArrayResult = Array.isArray(res)
 
