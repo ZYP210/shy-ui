@@ -2,7 +2,7 @@
   <div :class="getClassName('wrapper')">
     <template v-if="getProps.isShowSearch">
       <div :class="getClassName('search')">
-        <BasicForm
+        <ShyForm
           v-bind="getFormConfig"
           @register="registerForm"
           @submit="handleSearchFormSubmit"
@@ -15,7 +15,7 @@
           >
             <slot :name="item" v-bind="data || {}"></slot>
           </template>
-        </BasicForm>
+        </ShyForm>
       </div>
     </template>
     <div v-if="getProps.isShowToolbar" :class="getClassName('toolbar')">
@@ -24,7 +24,7 @@
       </div>
       <div :class="getClassName('toolbar-right')">
         <slot name="tableSetting"></slot>
-        <TableSetting />
+        <!-- <TableSetting /> -->
       </div>
     </div>
     <div :class="getClassName('body')">
@@ -199,7 +199,7 @@
 
 <script lang="ts" setup>
 import { useSlots, useAttrs, computed, ref, toRaw, unref } from 'vue'
-import { BasicForm, useForm } from '../Form'
+import { ShyForm, useShyForm } from '../ShyForm'
 import { VxeColumnProps, VxeTable, VxeColumn } from 'vxe-table'
 import { basicProps } from './props'
 import { Pagination } from 'ant-design-vue'
@@ -290,7 +290,9 @@ const props = withDefaults(defineProps<Props>(), {
     }
   },
   beforeFetch: (params) => {
-    return params
+    return (params) => {
+      return params
+    }
   }
 })
 const innerProps = ref({})
@@ -340,8 +342,10 @@ const handleSortChange = (field, type) => {
 const getFormConfig = computed(() => {
   return {
     ...getProps.value.formConfig,
-    showAdvancedButton: true,
-    rowProps: { gutter: 20 }
+    showAdvancedButton: false,
+    rowProps: { gutter: 20 },
+    layout: 'horizontal',
+    formLabelInInput: true
   }
 })
 
@@ -357,7 +361,7 @@ function replaceFormSlotKey(key: string) {
   return key?.replace?.(/form-/, '') ?? ''
 }
 
-const [registerForm, formActions] = useForm()
+const [registerForm, formActions] = useShyForm()
 
 const formSearch = ref({})
 // 查询点击事件

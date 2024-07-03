@@ -21,7 +21,6 @@
 import { useTablePlus, TablePlus, TableAction } from '3h1-ui'
 import { onMounted, ref } from 'vue'
 import dayjs from 'dayjs'
-import { Button } from 'ant-design-vue'
 
 const getActions = (row) => {
   const data = getTableData()
@@ -42,11 +41,9 @@ const getActions = (row) => {
     // },
     {
       label: '删除',
-
       popConfirm: {
         title: '是否确认删除',
         confirm: () => {
-          --pageNumber.value
           reload()
         }
       }
@@ -95,26 +92,10 @@ const getList = (params) => {
       a: i + 1,
       b: i + 2,
       c: i + 3,
-      d: i + 4,
-      children: [
-        {
-          id: i + 'c',
-          a: 'dsssssssssssssssssssddddddddddddddddddsddddddddddddddddddsddddddddddddddddddsddddddddddddddddddsdddddddddddddddddd',
-          b: 2,
-          c: 3,
-          d: 4
-        },
-        {
-          id: i + 'd',
-          a: 1,
-          b: 2,
-          c: 3,
-          d: 4
-        }
-      ]
+      d: i + 4
     })
   }
-  console.log('params', params)
+
   if (params.current === 2) {
     return new Promise((resolve) => {
       return resolve({
@@ -136,19 +117,15 @@ const getList = (params) => {
 
 const formConfig = {
   schemas: [
-    { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
-    { label: 'b', field: 'b', component: 'Input', colProps: { span: 8 } },
-    { label: 'c', field: 'c', component: 'Input', colProps: { span: 8 } },
-    { label: 'd', field: 'd', component: 'Input', colProps: { span: 8 } },
-    { label: 'e', field: 'e', component: 'RangePicker', colProps: { span: 8 } }
+    { label: 'a', field: 'a', component: 'Input' },
+    { label: 'b', field: 'b', component: 'Input' },
+    { label: 'c', field: 'c', component: 'Input' },
+    { label: 'd', field: 'd', component: 'Input' }
+    // { label: 'e', field: 'e', component: 'RangePicker', colProps: { span: 8 } }
   ]
 }
 
 const handleSelectionChange = (value) => {}
-
-onMounted(() => {
-  getForm().setFieldsValue({ e: [dayjs(), dayjs()] })
-})
 
 const [
   register,
@@ -167,6 +144,7 @@ const [
   api: getList,
   columns,
   formConfig,
+  border: true,
   columnSeq: { fixed: 'left' },
   isImmediate: false,
   rowConfig: { keyField: 'id' },
@@ -174,11 +152,11 @@ const [
   actionColumn: { width: 200 }
 })
 
-onMounted(async () => {
-  setProps({ searchInfo: { id: 1 } })
-  await reload()
-  setSelectRowByKeys(['0c'], true)
-})
+// onMounted(async () => {
+//   setProps({ searchInfo: { id: 1 } })
+//   await reload()
+//   setSelectRowByKeys(['0c'], true)
+// })
 
 const handleClick = () => {}
 </script>
