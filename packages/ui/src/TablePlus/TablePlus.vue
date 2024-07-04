@@ -182,13 +182,11 @@
     <template v-if="page.total !== 0 && getProps.isShowPagination">
       <div :class="getClassName('pagination')">
         <Pagination
-          size="small"
           :total="page.total"
           v-model:current="page.current"
           v-model:page-size="page.pageSize"
           :pageSizeOptions="page.pageSizeOptions"
           show-size-changer
-          show-quick-jumper
           :show-total="(total) => `共 ${total} 条数据`"
           @change="handlePageChange"
         />

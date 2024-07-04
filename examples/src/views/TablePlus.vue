@@ -55,31 +55,29 @@ const columns = [
   {
     title: '类型编号',
     field: 'a',
-    width: 300,
     treeNode: true
   },
   {
     title: 'b',
-    field: 'b',
-    width: 100
+    field: 'b'
   },
-  // { title: 'c', field: 'c', width: 300 },
-  // { title: 'd', field: 'd', width: 300 },
-  // { title: 'e', field: 'e', width: 300 },
+  { title: 'c', field: 'c', width: 300 },
+  { title: 'd', field: 'd', width: 300 },
+  { title: 'e', field: 'e', width: 300 }
   // { title: 'f', field: 'f', width: 300 },
   // { title: 'g', field: 'g', width: 300 },
-  {
-    groupName: 'bb',
-    children: [
-      { title: '测试a', field: 'a-a', width: 100, sortable: true },
-      { title: '测试b', field: 'a-b', width: 100 },
-      { title: '测试c', field: 'a-c', width: 200 },
-      {
-        groupName: 'cc',
-        children: [{ title: '测试a', field: 'a-a', width: 200, sortable: true }]
-      }
-    ]
-  }
+  // {
+  //   groupName: 'bb',
+  //   children: [
+  //     { title: '测试a', field: 'a-a', width: 100, sortable: true },
+  //     { title: '测试b', field: 'a-b', width: 100 },
+  //     { title: '测试c', field: 'a-c', width: 200 },
+  //     {
+  //       groupName: 'cc',
+  //       children: [{ title: '测试a', field: 'a-a', width: 200, sortable: true }]
+  //     }
+  //   ]
+  // }
 ]
 
 const pageNumber = ref(41)
@@ -146,7 +144,6 @@ const [
   formConfig,
   border: true,
   columnSeq: { fixed: 'left' },
-  isImmediate: false,
   rowConfig: { keyField: 'id' },
   treeConfig: { expandRowKeys: [0] },
   actionColumn: { width: 200 }
