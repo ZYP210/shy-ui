@@ -120,8 +120,8 @@ const formConfig = {
     { label: 'a', field: 'a', component: 'Input' },
     { label: 'b', field: 'b', component: 'Input' },
     { label: 'c', field: 'c', component: 'Input' },
-    { label: 'd', field: 'd', component: 'Input' }
-    // { label: 'e', field: 'e', component: 'RangePicker', colProps: { span: 8 } }
+    { label: 'd', field: 'd', component: 'Input' },
+    { label: 'e', field: 'e', component: 'RangePicker' }
   ]
 }
 

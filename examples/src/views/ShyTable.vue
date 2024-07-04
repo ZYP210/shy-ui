@@ -113,8 +113,8 @@ const columns: any[] = [
   },
   {
     title: '数',
-    dataIndex: 'qualifiedNum',
-  },
+    dataIndex: 'qualifiedNum'
+  }
 ]
 
 const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
@@ -182,7 +182,7 @@ const [
         name: i,
         phone: '1212121',
         address: '1111',
-        remark: 999,
+        remark: 999
       }
     })
 

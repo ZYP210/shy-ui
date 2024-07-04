@@ -188,7 +188,7 @@ const ShyForm = defineComponent({
 
     createFormContext({
       resetAction: resetFields,
-      submitAction: handleSubmit,
+      submitAction: handleSubmit
     })
 
     watch(

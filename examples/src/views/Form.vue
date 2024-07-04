@@ -44,37 +44,34 @@ const handlePush = () => {
 }
 
 const schemas = ref<FormSchema[]>([
-  // {
-  //   label: 'Input',
-  //   field: 'Input',
-  //   defaultValue: '111',
-  //   component: 'Input',
-  //   componentProps: {
-  //     // disabled: true
-  //   },
-  // },
-  // {
-  //   label: 'InputTextArea',
-  //   field: 'InputTextArea',
-  //   defaultValue: '111',
-  //   component: 'InputTextArea',
-  //   componentProps: {
-  //     // disabled: true
-  //   },
-
-  // },
-  // {
-  //   label: 'InputNumber',
-  //   field: 'InputNumber',
-  //   component: 'InputNumber',
-
-  // },
-  // {
-  //   label: 'InputPassword',
-  //   field: 'InputPassword',
-  //   component: 'InputPassword',
-
-  // },
+  {
+    label: 'Input',
+    field: 'Input',
+    defaultValue: '111',
+    component: 'Input',
+    componentProps: {
+      // disabled: true
+    }
+  },
+  {
+    label: 'InputTextArea',
+    field: 'InputTextArea',
+    defaultValue: '111',
+    component: 'InputTextArea',
+    componentProps: {
+      // disabled: true
+    }
+  },
+  {
+    label: 'InputNumber',
+    field: 'InputNumber',
+    component: 'InputNumber'
+  },
+  {
+    label: 'InputPassword',
+    field: 'InputPassword',
+    component: 'InputPassword'
+  }
   // {
   //   label: 'InputSearch',
   //   field: 'InputSearch',
@@ -358,14 +355,12 @@ const schemas = ref<FormSchema[]>([
   // {
   //   label: 'StrengthMeter',
   //   field: 'StrengthMeter',
-  //   component: 'StrengthMeter',
-
+  //   component: 'StrengthMeter'
   // },
   // {
   //   label: 'IconPicker',
   //   field: 'IconPicker',
-  //   component: 'IconPicker',
-
+  //   component: 'IconPicker'
   // },
   // {
   //   label: 'ColorPicker',
@@ -393,43 +388,43 @@ const schemas = ref<FormSchema[]>([
   //   },
   //   colProps: { span: 24 }
   // },
-  {
-    label: '111',
-    field: 'ddd',
-    required: true,
-    component: 'Input'
-  },
-  {
-    label: 'Table',
-    field: 'Table',
-    component: 'Table',
-    ifShow: ({ values }) => values.ddd === '111',
-    required: true,
-    colProps: { span: 24 },
-    componentProps: ({ formModel }) => {
-      return {
-        columns: [
-          {
-            title: '手机号',
-            dataIndex: 'contactsPhone',
-            required: true,
-            rules: [
-              {
-                pattern: /^1[3-9]\d{9}$/,
-                message: '请输入正确的手机号码',
-                trigger: 'blur'
-              }
-            ]
-          }
-        ],
-        footerRender: () => [
-          h('span', null, `不含税金额: 1`),
-          h('span', null, `税额: 1`),
-          h('span', null, `含税总价: 1`)
-        ]
-      }
-    }
-  }
+  // {
+  //   label: '111',
+  //   field: 'ddd',
+  //   required: true,
+  //   component: 'Input'
+  // },
+  // {
+  //   label: 'Table',
+  //   field: 'Table',
+  //   component: 'Table',
+  //   ifShow: ({ values }) => values.ddd === '111',
+  //   required: true,
+  //   colProps: { span: 24 },
+  //   componentProps: ({ formModel }) => {
+  //     return {
+  //       columns: [
+  //         {
+  //           title: '手机号',
+  //           dataIndex: 'contactsPhone',
+  //           required: true,
+  //           rules: [
+  //             {
+  //               pattern: /^1[3-9]\d{9}$/,
+  //               message: '请输入正确的手机号码',
+  //               trigger: 'blur'
+  //             }
+  //           ]
+  //         }
+  //       ],
+  //       footerRender: () => [
+  //         h('span', null, `不含税金额: 1`),
+  //         h('span', null, `税额: 1`),
+  //         h('span', null, `含税总价: 1`)
+  //       ]
+  //     }
+  //   }
+  // }
 ])
 const { createMessage } = useMessage()
 const [
@@ -437,9 +432,9 @@ const [
   { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useShyForm({
   schemas: schemas as any,
-  // formLabelInInput: true,
-  layout: 'vertical',
-  baseColProps: { span: 8 }
+  formLabelInInput: true,
+  layout: 'horizontal',
+  showActionButtonGroup: true
 })
 
 const handleReset = () => {

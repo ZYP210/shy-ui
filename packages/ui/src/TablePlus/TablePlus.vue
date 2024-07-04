@@ -342,10 +342,12 @@ const handleSortChange = (field, type) => {
 const getFormConfig = computed(() => {
   return {
     ...getProps.value.formConfig,
-    showAdvancedButton: false,
-    rowProps: { gutter: 20 },
+    showActionButtonGroup: true,
+    // rowProps: { gutter: 20 },
     layout: 'horizontal',
-    formLabelInInput: true
+    formLabelInInput: true,
+    tableAction: {},
+    autoAdvancedLine: 1
   }
 })
 
