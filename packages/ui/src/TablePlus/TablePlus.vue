@@ -1,5 +1,5 @@
 <template>
-  <div :class="getClassName('wrapper')">
+  <div :class="getClassName('wrapper')" class="ant-table-form-container">
     <template v-if="getProps.isShowSearch">
       <div :class="getClassName('search')">
         <ShyForm
@@ -346,8 +346,9 @@ const getFormConfig = computed(() => {
     // rowProps: { gutter: 20 },
     layout: 'horizontal',
     formLabelInInput: true,
-    tableAction: {},
-    autoAdvancedLine: 1
+    tableAction: tableAction,
+    autoAdvancedLine: 1,
+    compact: true
   }
 })
 
