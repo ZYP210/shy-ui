@@ -1,54 +1,55 @@
 import { BasicTitle } from '../../Basic'
-import { Collapse, CollapsePanel, Tag } from 'ant-design-vue'
+import { Collapse, CollapsePanel } from 'ant-design-vue'
 import { RightOutlined } from '@ant-design/icons-vue'
-import { computed, defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { useDesign } from '@shy-plugins/use'
 import dayjs from 'dayjs'
 import './style/process.less'
+import { ShyTag } from '../../ShyTag'
 
-const ProcessTag = defineComponent({
-  props: {
-    options: {
-      type: Array as PropType<Recordable[]>,
-      default: () => []
-    },
-    value: {
-      type: [String, Number]
-    },
-    isTag: {
-      type: Boolean,
-      default: true
-    }
-  },
-  setup(props) {
-    const { prefixCls } = useDesign('process-tag')
+// const ProcessTag = defineComponent({
+//   props: {
+//     options: {
+//       type: Array as PropType<Recordable[]>,
+//       default: () => []
+//     },
+//     value: {
+//       type: [String, Number]
+//     },
+//     isTag: {
+//       type: Boolean,
+//       default: true
+//     }
+//   },
+//   setup(props) {
+//     const { prefixCls } = useDesign('process-tag')
 
-    const tag = computed(() => {
-      const option = props.options.find(
-        (item) => item.value == props.value
-      ) ?? {
-        label: '-',
-        colorType: 'var(--gray-4)',
-        cssClass: ''
-      }
+//     const tag = computed(() => {
+//       const option = props.options.find(
+//         (item) => item.value == props.value
+//       ) ?? {
+//         label: '-',
+//         colorType: 'var(--gray-4)',
+//         cssClass: ''
+//       }
 
-      return props.isTag ? (
-        <Tag style={{ '--color': option.colorType }}>{option.label}</Tag>
-      ) : (
-        <span
-          class={[prefixCls, option.cssClass]}
-          style={{ '--color': option.colorType }}
-        >
-          {option.label}
-        </span>
-      )
-    })
+//       return props.isTag ? (
+//         <Tag style={{ '--color': option.colorType }}>{option.label}</Tag>
+//       ) : (
+//         <span
+//           class={[prefixCls, option.cssClass]}
+//           style={{ '--color': option.colorType }}
+//         >
+//           {option.label}
+//         </span>
+//       )
+//     })
 
-    return () => {
-      return tag.value
-    }
-  }
-})
+//     return () => {
+//       return tag.value
+//     }
+//   }
+// })
 
 const Process = defineComponent({
   props: {
@@ -146,11 +147,12 @@ const Process = defineComponent({
               </div>
               <div class={`${prefixCls}-body-item-value`}>
                 {item.tag ? (
-                  <ProcessTag
-                    isTag={false}
+                  <ShyTag
+                    isTag={true}
+                    tagMode='text'
                     value={data[item.dataIndex]}
                     options={item.options ?? props.options}
-                  ></ProcessTag>
+                  ></ShyTag>
                 ) : customRender ? (
                   customRender(data)
                 ) : (
@@ -184,7 +186,9 @@ const Process = defineComponent({
             {{
               header: () => item[props.fieldNames.title],
               extra: () => (
-                <ProcessTag
+                <ShyTag
+                  isTag
+                  tagMode='tag'
                   value={item[props.fieldNames.status]}
                   options={props.options}
                 />

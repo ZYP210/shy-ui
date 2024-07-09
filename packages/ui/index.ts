@@ -37,6 +37,8 @@ export * from './src/ShyTable'
 export * from './src/ShyForm'
 export * from './src/ShyContainer'
 export * from './src/Process'
+export * from './src/ShyTag'
+
 import { registerGlobalConfig } from './config/index'
 
 export { registerGlobalConfig }

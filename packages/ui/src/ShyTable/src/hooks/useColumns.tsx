@@ -7,19 +7,9 @@ import type {
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 import type { ComputedRef } from 'vue'
-import {
-  computed,
-  Ref,
-  ref,
-  reactive,
-  toRaw,
-  unref,
-  watch,
-  h,
-  defineComponent
-} from 'vue'
+import { computed, Ref, ref, reactive, toRaw, unref, watch, h } from 'vue'
 import { renderEditCell } from '../components/editable'
-import { cloneDeep, isEqual } from 'lodash-es'
+import { cloneDeep, isEqual, pick } from 'lodash-es'
 import {
   formatToDate,
   isArray,
@@ -35,48 +25,7 @@ import {
   INDEX_COLUMN_FLAG,
   PAGE_SIZE
 } from '../const'
-import { useDesign } from '@shy-plugins/use'
-
-const ShyTableTag = defineComponent({
-  props: {
-    options: {
-      type: Array as PropType<Recordable[]>,
-      default: () => []
-    },
-    value: {
-      type: [String, Number]
-    },
-    isTag: {
-      type: Boolean
-    }
-  },
-  setup(props) {
-    const { prefixCls } = useDesign('ant-table-column-tag')
-
-    const tag = computed(
-      () =>
-        props.options.find((item) => item.value == props.value) ?? {
-          label: '-',
-          colorType: 'var(--gray-4)',
-          cssClass: ''
-        }
-    )
-
-    return () => {
-      return props.isTag ? (
-        <div
-          class={[prefixCls, tag.value.cssClass]}
-          style={{ '--pointer-color': tag.value.colorType }}
-        >
-          <div class={`${prefixCls}-pointer`}></div>
-          <span class={`${prefixCls}-label`}>{tag.value.label}</span>
-        </div>
-      ) : (
-        tag.value.label
-      )
-    }
-  }
-})
+import { ShyTag, shyTagBasicProps } from '../../../ShyTag'
 
 const handleItem = (item: ShyColumn, ellipsis: boolean) => {
   const { key, dataIndex, children } = item
@@ -323,7 +272,13 @@ export const useColumns = (
         } = column
 
         const renderTag = ({ value }) => {
-          return <ShyTableTag value={value} options={options} isTag={tag} />
+          return (
+            <ShyTag
+              isTag={tag}
+              value={value}
+              {...pick(column, Object.keys(shyTagBasicProps))}
+            />
+          )
         }
 
         if (!slots || !slots?.title) {

@@ -1,0 +1,25 @@
+.shy-tag {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  color: var(--color);
+}
+
+.shy-tag-pointer {
+  min-width: 6px;
+  max-width: 6px;
+  min-height: 6px;
+  max-height: 6px;
+  background-color: var(--color);
+  border-radius: 6px;
+}
+
+.shy-tag-label {
+  color: var(--color);
+}
+
+.shy-tag .ant-tag {
+  color: var(--color);
+  background-color: hsl(from var(--color) h calc(s * 0.9) calc(l * 1.5) / 30%);
+  border-color: hsl(from var(--color) h calc(s * 0.8) calc(l * 1.5));
+}
