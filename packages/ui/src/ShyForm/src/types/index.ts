@@ -119,3 +119,4 @@ export type ComponentType =
   | 'ApiModalSelect'
   | 'Tinymce'
   | 'ColorPicker'
+  | 'Group'

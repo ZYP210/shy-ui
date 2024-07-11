@@ -90,7 +90,6 @@ export function useFormEvents({
       if (hasKey && fields.includes(key)) {
         // time type
         if (itemIsDateType(key)) {
-          console.log(key, value)
           if (Array.isArray(value)) {
             const arr: any[] = []
             for (const ele of value) {

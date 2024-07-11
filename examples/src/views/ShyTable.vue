@@ -115,11 +115,75 @@ const columns: any[] = [
   {
     title: '菜单名称',
     dataIndex: 'name',
-    // align: 'left',
-    // align: 'center',
     width: 120,
     tag: true,
     // tagMode: 'tag',
+    options: [
+      {
+        label: '信息',
+        value: '0',
+        colorType: 'var(--gray-5)'
+      },
+      {
+        label: '完成',
+        value: '1',
+        colorType: 'var(--primary-5)'
+      },
+      {
+        label: '警告',
+        value: '2',
+        colorType: 'var(--orange-5)'
+      },
+      {
+        label: '等待',
+        value: '3',
+        colorType: 'var(--blue-5)'
+      },
+      {
+        label: '危险',
+        value: '4',
+        colorType: 'var(--red-5)'
+      }
+    ]
+  },
+  {
+    title: '菜单名称',
+    dataIndex: 'name',
+    width: 120,
+    tag: true,
+    tagMode: 'text',
+    options: [
+      {
+        label: '信息',
+        value: '0',
+        colorType: 'var(--gray-5)'
+      },
+      {
+        label: '完成',
+        value: '1',
+        colorType: 'var(--primary-5)'
+      },
+      {
+        label: '警告',
+        value: '2',
+        colorType: 'var(--orange-5)'
+      },
+      {
+        label: '等待',
+        value: '3',
+        colorType: 'var(--blue-5)'
+      },
+      {
+        label: '危险',
+        value: '4',
+        colorType: 'var(--red-5)'
+      }
+    ]
+  },
+  {
+    title: '菜单名称',
+    dataIndex: 'name',
+    width: 120,
     options: [
       {
         label: '信息',

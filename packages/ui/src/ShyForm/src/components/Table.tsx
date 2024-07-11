@@ -251,6 +251,7 @@ const ShyFormTable = defineComponent({
                     ...bindValue
                   }
 
+
                   return column.dataIndex !== 'index' &&
                     column.type !== 'text' &&
                     column.dataIndex !== '_action' ? (
@@ -259,7 +260,9 @@ const ShyFormTable = defineComponent({
                         required={column.required}
                         rules={getRules({ column, record, index, ...args })}
                         name={[
-                          attrs.codeField,
+                          ...(isArray(attrs.codeField)
+                            ? attrs.codeField
+                            : [attrs.codeField]),
                           index + curIndex.value,
                           column.dataIndex
                         ]}
@@ -343,7 +346,7 @@ const ShyFormTable = defineComponent({
       curIndex.value = 0
       nextTick(() => {
         document.querySelector(`.${prefixCls}-scroll-bar-wrapper`)!.scrollTop =
-        (state.value.length + 1) * ROW_HEIGHT
+          (state.value.length + 1) * ROW_HEIGHT
       })
       emit('add', state.value)
     }

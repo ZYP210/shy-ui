@@ -5,6 +5,25 @@
   justify-content: space-between;
   padding: 1px;
 
+  &-collapse {
+    flex: var(--col-span);
+    width: var(--col-span);
+    max-width: var(--col-span);
+    background: transparent;
+
+
+    .ant-collapse-header.ant-collapse-header {
+      align-items: center;
+      background: var(--gray-1);
+      padding: 0 8px;
+      border-radius: 4px !important;
+    }
+
+    .ant-collapse-content-box.ant-collapse-content-box {
+      padding: 8px 0;
+    }
+  }
+
   :is(.ant-input-number) {
     width: 100%;
   }

@@ -25,8 +25,15 @@ import { createFormContext } from './hooks/useFormContext'
 import { useAutoFocus } from './hooks/useAutoFocus'
 import { useModalContext } from '../../Modal'
 import { useDebounceFn } from '@vueuse/core'
-import { basicProps, defaultAntConfig } from './props'
-import { cloneDeep } from 'lodash-es'
+import {
+  basicProps,
+  defaultAntConfig,
+  ROW_SLICE,
+  RANGE_PICKER_COL,
+  OTHER_COL,
+  ACTION_COL
+} from './props'
+import { cloneDeep, set } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
 import { isEqual, omit, pick } from 'lodash-es'
 import { useDesign } from '@shy-plugins/use'
@@ -130,6 +137,10 @@ const ShyForm = defineComponent({
             schema.defaultValue = def
           }
         }
+
+        if (component === 'Group') {
+          schema.defaultValue = schema.defaultValue ?? {}
+        }
       }
       if (unref(getProps).showAdvancedButton) {
         return cloneDeep(
@@ -188,7 +199,8 @@ const ShyForm = defineComponent({
 
     createFormContext({
       resetAction: resetFields,
-      submitAction: handleSubmit
+      submitAction: handleSubmit,
+      contextBindValue: getBindValue
     })
 
     watch(
@@ -267,7 +279,7 @@ const ShyForm = defineComponent({
     }
 
     function setFormModel(key: string, value: any) {
-      formModel[key] = value
+      set(formModel, key, value)
       const { validateTrigger } = unref(getBindValue)
       if (!validateTrigger || validateTrigger === 'change') {
         validateFields([key]).catch(() => {})
@@ -315,7 +327,6 @@ const ShyForm = defineComponent({
       return !!getBindValue.value.tableAction
     })
 
-    const [ROW_SLICE, RANGE_PICKER_COL, OTHER_COL, ACTION_COL] = [18, 6, 4, 6]
     const COL_DIFF = (span) => {
       return span * ((ROW_SLICE + ACTION_COL) / ROW_SLICE)
     }

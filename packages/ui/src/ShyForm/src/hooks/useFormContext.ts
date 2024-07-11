@@ -1,9 +1,10 @@
-import type { InjectionKey } from 'vue'
+import type { ComputedRef, InjectionKey } from 'vue'
 import { createContext, useContext } from '@shy-plugins/use'
 
 export interface FormContextProps {
   resetAction: () => Promise<void>
   submitAction: () => Promise<void>
+  contextBindValue: ComputedRef<Recordable>
 }
 
 const key: InjectionKey<FormContextProps> = Symbol()

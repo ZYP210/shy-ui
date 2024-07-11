@@ -45,44 +45,86 @@ const handlePush = () => {
 
 const schemas = ref<FormSchema[]>([
   {
-    label: 'Input',
-    field: 'Input',
-    defaultValue: '111',
-    component: 'Input',
+    label: '分组表单',
+    field: 'zzz',
+    component: 'Group',
     componentProps: {
-      // disabled: true
-    }
-  },
-  {
-    label: 'InputTextArea',
-    field: 'InputTextArea',
-    defaultValue: '111',
-    component: 'InputTextArea',
-    componentProps: {
-      // disabled: true
-    }
-  },
-  {
-    label: 'InputNumber',
-    field: 'InputNumber',
-    component: 'InputNumber'
-  },
-  {
-    label: 'InputPassword',
-    field: 'InputPassword',
-    component: 'InputPassword'
+      extra: () => h('div', { class: 'flex-1' }, 111),
+      expandIconPosition: 'end',
+      schemas: [
+        {
+          field: 'Table',
+          component: 'Table',
+          required: true,
+          colProps: { span: 24 },
+          componentProps: {
+            columns: [
+              {
+                title: '手机号',
+                dataIndex: 'contactsPhone',
+                required: true,
+                type: 'DatePicker',
+                // rules: [
+                //   {
+                //     pattern: /^1[3-9]\d{9}$/,
+                //     message: '请输入正确的手机号码',
+                //     trigger: 'blur'
+                //   }
+                // ]
+              }
+            ]
+          }
+        },
+        {
+          label: 'Input',
+          field: 'Input',
+          defaultValue: '111',
+          component: 'Input',
+          componentProps: {
+            // disabled: true
+          }
+        }
+      ]
+    },
+    colProps: { span: 24 }
   }
+  // {
+  //   label: 'Input',
+  //   field: 'Input',
+  //   defaultValue: '111',
+  //   component: 'Input',
+  //   componentProps: {
+  //     // disabled: true
+  //   }
+  // },
+  // {
+  //   label: 'InputTextArea',
+  //   field: 'InputTextArea',
+  //   defaultValue: '111',
+  //   component: 'InputTextArea',
+  //   componentProps: {
+  //     // disabled: true
+  //   }
+  // },
+  // {
+  //   label: 'InputNumber',
+  //   field: 'InputNumber',
+  //   component: 'InputNumber'
+  // },
+  // {
+  //   label: 'InputPassword',
+  //   field: 'InputPassword',
+  //   component: 'InputPassword'
+  // },
   // {
   //   label: 'InputSearch',
   //   field: 'InputSearch',
-  //   component: 'InputSearch',
-
+  //   component: 'InputSearch'
   // },
   // {
   //   label: 'AutoComplete',
   //   field: 'AutoComplete',
-  //   component: 'AutoComplete',
-
+  //   component: 'AutoComplete'
   // },
   // {
   //   label: 'ApiSelect',
@@ -106,8 +148,7 @@ const schemas = ref<FormSchema[]>([
   //       },
   //       params: { c: formModel.b }
   //     }
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'ApiTree',
@@ -134,8 +175,7 @@ const schemas = ref<FormSchema[]>([
   //         value: '1'
   //       }
   //     ]
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'ApiTreeSelect',
@@ -150,8 +190,7 @@ const schemas = ref<FormSchema[]>([
   //         }
   //       ]
   //     }
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'ApiRadioGroup',
@@ -170,14 +209,12 @@ const schemas = ref<FormSchema[]>([
   //         }
   //       ]
   //     }
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'Switch',
   //   field: 'Switch',
-  //   component: 'Switch',
-
+  //   component: 'Switch'
   // },
   // {
   //   label: 'RadioButtonGroup',
@@ -194,8 +231,7 @@ const schemas = ref<FormSchema[]>([
   //         value: '333'
   //       }
   //     ]
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'RadioGroup',
@@ -212,14 +248,12 @@ const schemas = ref<FormSchema[]>([
   //         value: '333'
   //       }
   //     ]
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'Checkbox',
   //   field: 'Checkbox',
-  //   component: 'Checkbox',
-
+  //   component: 'Checkbox'
   // },
   // {
   //   label: 'CheckboxGroup',
@@ -236,8 +270,7 @@ const schemas = ref<FormSchema[]>([
   //         value: '333'
   //       }
   //     ]
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'ApiCascader',
@@ -256,8 +289,7 @@ const schemas = ref<FormSchema[]>([
   //         }
   //       ]
   //     }
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'Cascader',
@@ -274,20 +306,17 @@ const schemas = ref<FormSchema[]>([
   //         value: '333'
   //       }
   //     ]
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'Slider',
   //   field: 'Slider',
-  //   component: 'Slider',
-
+  //   component: 'Slider'
   // },
   // {
   //   label: 'Rate',
   //   field: 'Rate',
-  //   component: 'Rate',
-
+  //   component: 'Rate'
   // },
   // {
   //   label: 'ApiTransfer',
@@ -306,8 +335,7 @@ const schemas = ref<FormSchema[]>([
   //         }
   //       ]
   //     }
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'Upload',
@@ -315,42 +343,38 @@ const schemas = ref<FormSchema[]>([
   //   component: 'Upload',
   //   componentProps: {
   //     api: () => {}
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'DatePicker',
   //   field: 'DatePicker',
   //   component: 'DatePicker',
   //   componentProps: {
-  //     picker: 'month',
+  //     picker: 'month'
   //   }
   // },
   // {
   //   label: 'MonthPicker',
   //   field: 'MonthPicker',
-  //   component: 'MonthPicker',
-
+  //   component: 'MonthPicker'
   // },
   // {
   //   label: 'RangePicker',
   //   field: 'RangePicker',
   //   component: 'RangePicker',
   //   componentProps: {
-  //     picker: 'month',
+  //     picker: 'month'
   //   }
   // },
   // {
   //   label: 'WeekPicker',
   //   field: 'WeekPicker',
-  //   component: 'WeekPicker',
-
+  //   component: 'WeekPicker'
   // },
   // {
   //   label: 'TimePicker',
   //   field: 'TimePicker',
-  //   component: 'TimePicker',
-
+  //   component: 'TimePicker'
   // },
   // {
   //   label: 'StrengthMeter',
@@ -370,8 +394,7 @@ const schemas = ref<FormSchema[]>([
   //     onChange: (val) => {
   //       token.value.colorPrimary = val
   //     }
-  //   },
-
+  //   }
   // },
   // {
   //   label: 'Tinymce',
@@ -434,7 +457,8 @@ const [
   schemas: schemas as any,
   formLabelInInput: true,
   layout: 'horizontal',
-  showActionButtonGroup: true
+  baseColProps: { span: 8 }
+  // showActionButtonGroup: true
 })
 
 const handleReset = () => {

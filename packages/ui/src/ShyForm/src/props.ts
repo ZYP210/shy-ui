@@ -1,4 +1,4 @@
-import type { FieldMapToTime, FormSchema } from './types/form'
+import type { FormActionType, FieldMapToTime, FormSchema, FormProps } from './types/form'
 import type { CSSProperties, PropType } from 'vue'
 import type { ColEx } from './types'
 import type { TableActionType } from '../../Table'
@@ -31,6 +31,8 @@ type ButtonProps = {
   onClick: (event: MouseEvent) => void
   onMousedown?: ((event: MouseEvent) => void) | undefined
 }
+
+export const [ROW_SLICE, RANGE_PICKER_COL, OTHER_COL, ACTION_COL] = [18, 6, 4, 6]
 
 export const basicProps = {
   formLabelInInput: {
@@ -197,6 +199,38 @@ export const basicProps = {
   rangePickerField: {
     type: Array,
     default: () => []
+  }
+}
+
+export const FormItemProps = {
+  schema: {
+    type: Object as PropType<FormSchema>,
+    default: () => ({})
+  },
+  formProps: {
+    type: Object as PropType<FormProps>,
+    default: () => ({})
+  },
+  allDefaultValues: {
+    type: Object as PropType<Recordable>,
+    default: () => ({})
+  },
+  formModel: {
+    type: Object as PropType<Recordable>,
+    default: () => ({})
+  },
+  setFormModel: {
+    type: Function as PropType<(key: string, value: any) => void>,
+    default: null
+  },
+  tableAction: {
+    type: Object as PropType<TableActionType | ShyTableActionType>
+  },
+  formActionType: {
+    type: Object as PropType<FormActionType>
+  },
+  isAdvanced: {
+    type: Boolean
   }
 }
 

@@ -19,8 +19,7 @@ import {
   Slider,
   Rate
 } from 'ant-design-vue'
-// import Divider from './components/Divider'
-import Divider from '../../Basic/src/BasicTitle.vue'
+import { BasicTitle as Divider } from '../../Basic/'
 
 import ApiRadioGroup from './components/ApiRadioGroup.vue'
 import RadioButtonGroup from './components/RadioButtonGroup.vue'
@@ -37,6 +36,7 @@ import Tinymce from './components/Tinymce.vue'
 import { ShyFormTable } from './components/Table'
 import { BasicUpload } from '../../Upload'
 import { ColorPickerPopover } from '../../ColorPickerPopover'
+import { Group } from './components/Group'
 
 // import ApiModalSelect from './components/ApiModalSelect/ApiModalSelect.vue'
 
@@ -84,6 +84,7 @@ ShyComponentMap.set('Tinymce', Tinymce)
 // ShyComponentMap.set('Upload', Upload)
 ShyComponentMap.set('Divider', Divider)
 ShyComponentMap.set('ColorPicker', ColorPickerPopover)
+ShyComponentMap.set('Group', Group)
 
 export function add(compName: ComponentType, component: JSXComponent) {
   ShyComponentMap.set(compName, component)

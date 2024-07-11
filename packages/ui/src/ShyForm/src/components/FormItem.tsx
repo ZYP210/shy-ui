@@ -1,54 +1,23 @@
-import type { PropType, Ref } from 'vue'
+import type { Ref } from 'vue'
 import { computed, defineComponent, toRefs, unref, ref } from 'vue'
-import type { FormActionType, FormProps, FormSchema } from '../types/form'
+import type { FormProps, FormSchema } from '../types/form'
 import type { Rule as ValidationRule } from 'ant-design-vue/lib/form/interface'
-import type { TableActionType } from '../../../Table'
-import type { TableActionType as ShyTableActionType } from '../../../ShyTable'
+
 import { Col, Form } from 'ant-design-vue'
 import { ShyComponentMap } from '../ShyComponentMap'
 import { BasicHelp } from '../../..//Basic'
 import { isBoolean, isFunction, isNull, getSlot } from '@shy-plugins/utils'
 import { createPlaceholderMessage, setComponentRuleType } from '../helper'
-import { cloneDeep, upperFirst } from 'lodash-es'
+import { cloneDeep, get, upperFirst } from 'lodash-es'
 import { useItemLabelWidth } from '../hooks/useLabelWidth'
-import Divider from '../../../Basic/src/BasicTitle.vue'
+import { BasicTitle as Divider } from '../../../Basic/'
 import { useGlobalConfig } from '../../../../config/index'
+import { FormItemProps } from '../props'
 
 const FormItem = defineComponent({
-  name: 'BasicFormItem',
   inheritAttrs: false,
-  props: {
-    schema: {
-      type: Object as PropType<FormSchema>,
-      default: () => ({})
-    },
-    formProps: {
-      type: Object as PropType<FormProps>,
-      default: () => ({})
-    },
-    allDefaultValues: {
-      type: Object as PropType<Recordable>,
-      default: () => ({})
-    },
-    formModel: {
-      type: Object as PropType<Recordable>,
-      default: () => ({})
-    },
-    setFormModel: {
-      type: Function as PropType<(key: string, value: any) => void>,
-      default: null
-    },
-    tableAction: {
-      type: Object as PropType<TableActionType | ShyTableActionType>
-    },
-    formActionType: {
-      type: Object as PropType<FormActionType>
-    },
-    isAdvanced: {
-      type: Boolean
-    }
-  },
-  setup(props, { slots, emit, attrs }) {
+  props: FormItemProps,
+  setup(props, { slots, attrs }) {
     const { config } = useGlobalConfig('form')
 
     const { schema, formProps } = toRefs(props) as {
@@ -95,6 +64,12 @@ const FormItem = defineComponent({
         })
       }
 
+      if (schema.component === 'Group') {
+        componentProps = Object.assign(componentProps, {
+          ...props
+        })
+      }
+
       if (
         schema.component.includes('Picker') ||
         schema.component.includes('Select')
@@ -135,7 +110,7 @@ const FormItem = defineComponent({
               ? 100
               : componentProps.maxlength
 
-          if (!getValues.value.model[getValues.value.schema.field]) {
+          if (!get(getValues.value.model, getValues.value.schema.field)) {
             componentProps.showCount = true
           } else {
             componentProps.showCount = false
@@ -349,24 +324,31 @@ const FormItem = defineComponent({
       if (isCreatePlaceholder && component !== 'RangePicker' && component) {
         propsData.placeholder =
           unref(getComponentsProps)?.placeholder ||
-          createPlaceholderMessage(component, isTableForm.value ? label : '')
+          createPlaceholderMessage(
+            component,
+            isTableForm.value ? (label as string) : ''
+          )
       }
       propsData.codeField = field
       propsData.formValues = unref(getValues)
 
       const bindValue: Recordable = {
-        [valueField || (isCheck ? 'checked' : 'value')]: props.formModel[field]
+        [valueField || (isCheck ? 'checked' : 'value')]: get(
+          props.formModel,
+          field
+        )
       }
 
       const compAttr: Recordable = {
         ...propsData,
-        ...on,
+        ...(component === 'Group' ? {} : on),
         ...bindValue
       }
 
       const handleInput = (e) => {
         compAttr?.onInputEvent && compAttr.onInputEvent(e)
       }
+
 
       if (!renderComponentContent) {
         return <Comp {...compAttr} onInput={handleInput} />
@@ -436,22 +418,17 @@ const FormItem = defineComponent({
         const showSuffix = !!suffix
         const getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix
 
-        // if (component === 'Table') {
-        //   return (
-        //     <div style="display:flex">
-        //       <div style="flex:1;">{getContent()}</div>
-        //       {showSuffix && <span class="suffix">{getSuffix}</span>}
-        //     </div>
-        //   )
-        // }
-
         return (
           <Form.Item
             name={field}
             colon={colon}
             class={{ 'suffix-item': showSuffix }}
             {...(itemProps as Recordable)}
-            label={!isTableForm.value ? renderLabelHelpMessage() : undefined}
+            label={
+              !isTableForm.value && component !== 'Group'
+                ? renderLabelHelpMessage()
+                : undefined
+            }
             rules={handleRules()}
             labelCol={labelCol}
             wrapperCol={wrapperCol}

@@ -13,19 +13,8 @@ export { default as ShyApiTree } from './src/components/ApiTree.vue'
 export { default as ShyApiRadioGroup } from './src/components/ApiRadioGroup.vue'
 export { default as ShyApiCascader } from './src/components/ApiCascader.vue'
 export { default as ShyApiTransfer } from './src/components/ApiTransfer.vue'
-export { default as ShyTableChildren } from './src/components/Table.vue'
+export { ShyFormTable as ShyTableChildren } from './src/components/Table'
 export { default as ShyApiModalSelect } from './src/components/ApiModalSelect/ApiModalSelect.vue'
 export { default as ShyFormWrapper } from './src/components/FormWrapper.vue'
-// import { App } from 'vue'
-
-// const withInstall = <T>(component: T) => {
-//   const comp = component as any
-
-//   comp.install = (app: App) => {
-//     app.component('BasicForm', component)
-//   }
-//   return component as T & Plugin
-// }
-// withInstall(BasicForm)
 
 export { ShyForm }
