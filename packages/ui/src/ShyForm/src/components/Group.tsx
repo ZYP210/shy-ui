@@ -102,10 +102,16 @@ const Group = defineComponent({
     }
 
     const renderGroup = () => {
-      const { componentProps, colProps } = props.schema
+      const { schema, tableAction, formModel, formActionType } = props
+      let { componentProps, colProps } = props.schema
 
+      // if (isFunction(componentProps)) {
+      //   return null
+      // }
       if (isFunction(componentProps)) {
-        return null
+        componentProps =
+          componentProps({ schema, tableAction, formModel, formActionType: formActionType! }) ??
+          {}
       }
 
       switch (props.groupType) {

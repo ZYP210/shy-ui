@@ -48,43 +48,37 @@ const schemas = ref<FormSchema[]>([
     label: '分组表单',
     field: 'zzz',
     component: 'Group',
-    componentProps: {
-      extra: () => h('div', { class: 'flex-1' }, 111),
-      expandIconPosition: 'end',
-      schemas: [
-        {
-          field: 'Table',
-          component: 'Table',
-          required: true,
-          colProps: { span: 24 },
-          componentProps: {
-            columns: [
-              {
-                title: '手机号',
-                dataIndex: 'contactsPhone',
-                required: true,
-                type: 'DatePicker',
-                // rules: [
-                //   {
-                //     pattern: /^1[3-9]\d{9}$/,
-                //     message: '请输入正确的手机号码',
-                //     trigger: 'blur'
-                //   }
-                // ]
-              }
-            ]
+    componentProps: ({ formModel }) => {
+
+      return {
+        extra: () => h('div', { class: 'flex-1' }, 111),
+        expandIconPosition: 'end',
+        schemas: [
+          {
+            field: 'Table',
+            component: 'Table',
+            required: true,
+            colProps: { span: 24 },
+            componentProps: {
+              columns: [
+                {
+                  title: '手机号',
+                  dataIndex: 'contactsPhone',
+                  required: true,
+                  type: 'DatePicker'
+                  // rules: [
+                  //   {
+                  //     pattern: /^1[3-9]\d{9}$/,
+                  //     message: '请输入正确的手机号码',
+                  //     trigger: 'blur'
+                  //   }
+                  // ]
+                }
+              ]
+            }
           }
-        },
-        {
-          label: 'Input',
-          field: 'Input',
-          defaultValue: '111',
-          component: 'Input',
-          componentProps: {
-            // disabled: true
-          }
-        }
-      ]
+        ]
+      }
     },
     colProps: { span: 24 }
   }
