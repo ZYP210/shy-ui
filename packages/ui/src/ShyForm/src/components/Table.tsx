@@ -54,6 +54,10 @@ const ShyFormTable = defineComponent({
       type: Function as PropType<() => VNode | VNode[] | string | number>,
       default: () => ''
     },
+    isShowAddBtn: {
+      type: Boolean,
+      default: () => true
+    },
     isShowAction: {
       type: Boolean,
       default: () => true
@@ -250,7 +254,6 @@ const ShyFormTable = defineComponent({
                     ...on,
                     ...bindValue
                   }
-
 
                   return column.dataIndex !== 'index' &&
                     column.type !== 'text' &&
@@ -572,11 +575,13 @@ const ShyFormTable = defineComponent({
       return (
         <>
           {renderTable.value}
-          <div class={`${prefixCls}-add-btn`}>
-            <BasicButton onClick={create} type="dashed">
-              新增
-            </BasicButton>
-          </div>
+          {props.isShowAddBtn ? (
+            <div class={`${prefixCls}-add-btn`}>
+              <BasicButton onClick={create} type="dashed">
+                新增
+              </BasicButton>
+            </div>
+          ) : null}
           <div class={`${prefixCls}-footer`}>{props.footerRender()}</div>
         </>
       )
