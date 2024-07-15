@@ -62,6 +62,10 @@ const ShyFormTable = defineComponent({
       type: Boolean,
       default: () => true
     },
+    isVirtual: {
+      type: Boolean,
+      default: () => true
+    },
     tableAction: {
       type: Function,
       default: (res) => {
@@ -163,6 +167,20 @@ const ShyFormTable = defineComponent({
     }
 
     const renderTable = computed(() => {
+      const renderVirtual = () => {
+        return props.isVirtual ? (
+          <div
+            class={`${prefixCls}-scroll-bar-wrapper`}
+            style={{ '--height': `${BODY_HEIGHT}px` }}
+          >
+            <div
+              class={`${prefixCls}-scroll-bar-inner`}
+              style={{ '--height': `${sourceHeight.value}px` }}
+            ></div>
+          </div>
+        ) : null
+      }
+
       return (
         <div ref={tableWrapperRef} class={prefixCls}>
           <Table
@@ -170,9 +188,9 @@ const ShyFormTable = defineComponent({
             columns={getColumns.value}
             scroll={{
               x: state.value.length ? getScrollX.value : undefined,
-              y: BODY_HEIGHT
+              y: props.isVirtual ? BODY_HEIGHT : undefined
             }}
-            data-source={dataSource.value}
+            data-source={props.isVirtual ? dataSource.value : state.value}
             pagination={false}
             bordered={false}
             size="small"
@@ -331,15 +349,7 @@ const ShyFormTable = defineComponent({
               }
             }}
           </Table>
-          <div
-            class={`${prefixCls}-scroll-bar-wrapper`}
-            style={{ '--height': `${BODY_HEIGHT}px` }}
-          >
-            <div
-              class={`${prefixCls}-scroll-bar-inner`}
-              style={{ '--height': `${sourceHeight.value}px` }}
-            ></div>
-          </div>
+          {renderVirtual()}
         </div>
       )
     })
@@ -347,10 +357,13 @@ const ShyFormTable = defineComponent({
     const create = () => {
       state.value = [...toRaw(state.value), { [props.rowKey]: buildUUID() }]
       curIndex.value = 0
-      nextTick(() => {
-        document.querySelector(`.${prefixCls}-scroll-bar-wrapper`)!.scrollTop =
-          (state.value.length + 1) * ROW_HEIGHT
-      })
+      if (props.isVirtual) {
+        nextTick(() => {
+          document.querySelector(
+            `.${prefixCls}-scroll-bar-wrapper`
+          )!.scrollTop = (state.value.length + 1) * ROW_HEIGHT
+        })
+      }
       emit('add', state.value)
     }
 
@@ -482,12 +495,14 @@ const ShyFormTable = defineComponent({
               [props.rowKey]: ele[props.rowKey] || buildUUID()
             }
           })
-          sourceHeight.value = v.length * ROW_HEIGHT
+          if (props.isVirtual) {
+            sourceHeight.value = v.length * ROW_HEIGHT
 
-          dataSource.value =
-            v.length > SHOW_ROW_COUNT
-              ? v.slice(curIndex.value, curIndex.value + SHOW_ROW_COUNT)
-              : v.slice(0, SHOW_ROW_COUNT)
+            dataSource.value =
+              v.length > SHOW_ROW_COUNT
+                ? v.slice(curIndex.value, curIndex.value + SHOW_ROW_COUNT)
+                : v.slice(0, SHOW_ROW_COUNT)
+          }
         }
       },
       {
@@ -498,57 +513,68 @@ const ShyFormTable = defineComponent({
     const isScroll = ref(false)
     const timer = ref<NodeJS.Timeout>()
     onMounted(() => {
-      window.addEventListener(
-        'scroll',
-        (e) => {
-          clearTimeout(timer.value)
-          timer.value = setTimeout(() => {
-            isScroll.value = false
-          }, 500)
-          if (isScroll.value) return
-          isScroll.value = true
-        },
-        true
-      )
-      tableWrapperRef.value.addEventListener(
-        'wheel',
-        (e) => {
-          e.preventDefault()
-          if (state.value.length <= SHOW_ROW_COUNT) {
-            return
-          }
+      if (props.isVirtual) {
+        window.addEventListener(
+          'scroll',
+          (e) => {
+            clearTimeout(timer.value)
+            timer.value = setTimeout(() => {
+              isScroll.value = false
+            }, 500)
+            if (isScroll.value) return
+            isScroll.value = true
+          },
+          true
+        )
+        tableWrapperRef.value.addEventListener(
+          'wheel',
+          (e) => {
+            e.preventDefault()
+            if (state.value.length <= SHOW_ROW_COUNT) {
+              return
+            }
 
-          if (
-            e.deltaY > 0 &&
-            curIndex.value + SHOW_ROW_COUNT < state.value.length
-          ) {
-            dataSource.value = state.value.slice(
-              ++curIndex.value,
-              curIndex.value + SHOW_ROW_COUNT
-            )
-          }
-          if (e.deltaY < 0 && curIndex.value > 0) {
-            dataSource.value = state.value.slice(
-              --curIndex.value,
-              curIndex.value + SHOW_ROW_COUNT
-            )
-          }
-          document.querySelector(
-            `.${prefixCls}-scroll-bar-wrapper`
-          )!.scrollTop = curIndex.value * ROW_HEIGHT
-        },
-        true
-      )
-      tableWrapperRef.value.addEventListener('scroll', handleScroll, true)
+            if (
+              e.deltaY > 0 &&
+              curIndex.value + SHOW_ROW_COUNT < state.value.length
+            ) {
+              dataSource.value = state.value.slice(
+                ++curIndex.value,
+                curIndex.value + SHOW_ROW_COUNT
+              )
+            }
+            if (e.deltaY < 0 && curIndex.value > 0) {
+              dataSource.value = state.value.slice(
+                --curIndex.value,
+                curIndex.value + SHOW_ROW_COUNT
+              )
+            }
+            document.querySelector(
+              `.${prefixCls}-scroll-bar-wrapper`
+            )!.scrollTop = curIndex.value * ROW_HEIGHT
+          },
+          true
+        )
+        tableWrapperRef.value.addEventListener('scroll', handleScroll, true)
 
-      dataSource.value =
-        state.value.length > SHOW_ROW_COUNT
-          ? state.value.slice(curIndex.value, curIndex.value + SHOW_ROW_COUNT)
-          : state.value.slice(0, SHOW_ROW_COUNT)
+        dataSource.value =
+          state.value.length > SHOW_ROW_COUNT
+            ? state.value.slice(curIndex.value, curIndex.value + SHOW_ROW_COUNT)
+            : state.value.slice(0, SHOW_ROW_COUNT)
+      }
     })
     onUnmounted(() => {
       window.removeEventListener('scroll', () => {})
     })
+
+    const renderAddBtn = () =>
+      props.isShowAddBtn ? (
+        <div class={`${prefixCls}-add-btn`}>
+          <BasicButton onClick={create} type="dashed">
+            新增
+          </BasicButton>
+        </div>
+      ) : null
 
     const renderTdProps = (column): CSSProperties => {
       switch (column.align) {
@@ -575,13 +601,7 @@ const ShyFormTable = defineComponent({
       return (
         <>
           {renderTable.value}
-          {props.isShowAddBtn ? (
-            <div class={`${prefixCls}-add-btn`}>
-              <BasicButton onClick={create} type="dashed">
-                新增
-              </BasicButton>
-            </div>
-          ) : null}
+          {renderAddBtn()}
           <div class={`${prefixCls}-footer`}>{props.footerRender()}</div>
         </>
       )
