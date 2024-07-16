@@ -14,6 +14,7 @@ export interface Schema {
   customRender?: any
   helpMessage: string
   ifShow?: (data) => boolean | boolean
+  isForm?: boolean
 }
 export const basicColProps = 24
 

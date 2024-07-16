@@ -9,7 +9,6 @@ import { ref, unref, onUnmounted, watch, nextTick } from 'vue'
 export function useDescription(
   props?: Partial<DescriptionProps>
 ): UseDescReturnType {
-  
   const descRef = ref<Nullable<DescInstance>>(null)
   const loaded = ref(false)
 
@@ -48,8 +47,12 @@ export function useDescription(
 
   const methods: DescInstance = {
     setDescProps: async (descProps: Partial<DescriptionProps>) => {
-      const desc = await getDescription();
+      const desc = await getDescription()
       desc?.setDescProps(descProps)
+    },
+    getFieldsValue: async () => {
+      const desc = await getDescription()
+      return desc?.getFieldsValue()
     }
   }
 

@@ -1,4 +1,4 @@
-import { CSSProperties, computed, defineComponent, ref } from 'vue'
+import { CSSProperties, computed, defineComponent, ref, reactive } from 'vue'
 import { basicProps, Schema, basicColProps } from './props'
 import { Divider } from 'ant-design-vue'
 import DescriptionGroup from './DescriptionGroup'
@@ -7,6 +7,7 @@ import { useMessage } from '@shy-plugins/use'
 import { BasicHelp } from '../../Basic/index'
 import { DescriptionProps } from './typing'
 import { isBoolean, isFunction, isNumber } from '@shy-plugins/utils'
+import FormItem from './components/formItem'
 
 export default defineComponent({
   name: 'Description',
@@ -63,6 +64,24 @@ export default defineComponent({
       }
     })
 
+    const formModel = reactive({})
+    const setFormModel = (key, value) => {
+      formModel[key] = value
+    }
+
+    const getFieldsValue = () => {
+      return formModel
+    }
+    const renderItem = (schema) => {
+      return (
+        <FormItem
+          schema={schema}
+          formModel={formModel}
+          setFormModel={setFormModel}
+        ></FormItem>
+      )
+    }
+
     const rows = computed(() => {
       let element = null
       return getProps.value.schema.map((item: Schema) => {
@@ -103,6 +122,8 @@ export default defineComponent({
                     }
                   )
               : data[`${item.field}`]
+          } else if (item?.isForm) {
+            element = renderItem(item) as any
           } else {
             element = slots[`${item.field}Value`]
               ? slots[`${item.field}Value`]?.({
@@ -198,7 +219,7 @@ export default defineComponent({
       })
     })
 
-    emit('register', { setDescProps })
+    emit('register', { setDescProps, getFieldsValue })
     return () => (
       <div
         class={

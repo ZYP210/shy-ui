@@ -349,7 +349,6 @@ const FormItem = defineComponent({
         compAttr?.onInputEvent && compAttr.onInputEvent(e)
       }
 
-
       if (!renderComponentContent) {
         return <Comp {...compAttr} onInput={handleInput} />
       }

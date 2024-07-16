@@ -1,5 +1,6 @@
 <template>
   <div class="p-16px">
+    <a-button @click="handleClick"></a-button>
     <Description size="middle" title="基础示例" @register="register">
       <template #phoneValue>
         <div class="w-full h-300px">
@@ -25,12 +26,19 @@ const mockData: any = {
   certy: '3504256199xxxxxxxxx',
   tag: 'orange'
 }
+
+const handleClick = async () => {
+  const res = await getFieldsValue()
+  console.log('[ res ] >', res)
+}
+
 const schema: any[] = [
   {
     field: 'username',
     label: '测试',
     colProps: { span: 8 },
-    isCopy: true
+    isForm: true,
+    component: 'Input'
   },
   {
     field: 'summary',
@@ -76,12 +84,11 @@ const schema: any[] = [
 const fun = (color) => {
   return h(Tag, { style: { color } }, 222)
 }
-const [register, { setDescProps }] = useDescription({
+const [register, { setDescProps, getFieldsValue }] = useDescription({
   // data: mockData,
   labelWidth: 100,
-  bordered: false,
-  schema,
-  summaryTotalFields: ['summary', 'summary1'],
+  bordered: true,
+  schema
   // mode: 'vertical'
 })
 

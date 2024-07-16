@@ -14,7 +14,7 @@ export interface DescItem {
 
 export interface DescriptionProps {
   schema: DescItem[]
-  data: Recordable,
+  data: Recordable
   summaryPrecision: number
   summaryTotalFields: string[]
   labelWidth?: number
@@ -28,6 +28,7 @@ export interface DescriptionProps {
 
 export interface DescInstance {
   setDescProps(descProps: Partial<DescriptionProps>): void
+  getFieldsValue(): void
 }
 
 export type Register = (descInstance: DescInstance) => void
