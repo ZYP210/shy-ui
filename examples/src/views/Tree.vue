@@ -1,12 +1,18 @@
 <template>
   <div class="w-full h-full p-16px">
+    {{ searchValue }}
+    <Input v-model:value="searchValue" />
     <div class="w-288px h-full">
       <BasicTree
         title="测试"
         addable
         :treeData="treeData"
         @plusClick="handleClick"
+        :searchValue="searchValue"
       >
+        <template #searchExtra>
+          <BasicButton type="primary">搜索</BasicButton>
+        </template>
         <template #action="item">
           <ShyTableAction :showCount="0" :actions="getActions(item)" />
         </template>
@@ -16,7 +22,8 @@
 </template>
 
 <script setup lang="ts">
-import { BasicTree, TreeItem, ShyTableAction } from '3h1-ui'
+import { Input } from 'ant-design-vue'
+import { BasicTree, TreeItem, ShyTableAction, BasicButton } from '3h1-ui'
 import { ref } from 'vue'
 
 const treeData = ref<TreeItem[]>(
@@ -33,6 +40,8 @@ const treeData = ref<TreeItem[]>(
     }
   })
 )
+
+const searchValue = ref('')
 
 const handleClick = (...args) => {
   console.log(args, 777)
@@ -57,4 +66,12 @@ const getActions = (record) => {
     }
   ]
 }
+
+onMounted(() => {
+  setTimeout(() => {
+    searchValue.value = '999'
+  }, 1000)
+})
+
+onUnmounted(() => {})
 </script>

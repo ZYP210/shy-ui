@@ -214,6 +214,10 @@ export default defineComponent({
       }
     )
 
+    const searchValue = computed(() => {
+      return searchState.searchText
+    })
+
     watch(
       () => props.treeData,
       (val) => {
@@ -448,7 +452,7 @@ export default defineComponent({
               helpMessage={helpMessage}
               onStrictlyChange={onStrictlyChange}
               onSearch={handleSearch}
-              searchText={searchState.searchText}
+              searchText={searchValue}
               onPlusClick={handlePlusClick}
               addable={addable}
             >
