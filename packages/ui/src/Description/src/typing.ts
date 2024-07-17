@@ -29,6 +29,7 @@ export interface DescriptionProps {
 export interface DescInstance {
   setDescProps(descProps: Partial<DescriptionProps>): void
   getFieldsValue(): void
+  setFieldsValue(form): void
 }
 
 export type Register = (descInstance: DescInstance) => void

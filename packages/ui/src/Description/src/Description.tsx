@@ -72,6 +72,11 @@ export default defineComponent({
     const getFieldsValue = () => {
       return formModel
     }
+
+    const setFieldsValue = (values) => {
+      Object.assign(formModel, values)
+    }
+
     const renderItem = (schema) => {
       return (
         <FormItem
@@ -219,7 +224,7 @@ export default defineComponent({
       })
     })
 
-    emit('register', { setDescProps, getFieldsValue })
+    emit('register', { setDescProps, getFieldsValue, setFieldsValue })
     return () => (
       <div
         class={

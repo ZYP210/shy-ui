@@ -53,6 +53,10 @@ export function useDescription(
     getFieldsValue: async () => {
       const desc = await getDescription()
       return desc?.getFieldsValue()
+    },
+    setFieldsValue: async (form) => {
+      const desc = await getDescription()
+      return desc?.setFieldsValue(form)
     }
   }
 
