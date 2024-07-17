@@ -117,9 +117,12 @@ export default defineComponent({
       return omit(propsData, 'treeData', 'class')
     })
 
-    const getTreeData = computed((): TreeItem[] =>
-      searchState.startSearch ? searchState.searchData : unref(treeDataRef)
-    )
+    const getTreeData = computed((): TreeItem[] => {
+      handleSearch(searchState.searchText)
+      return searchState.searchText.length
+        ? searchState.searchData
+        : unref(treeDataRef)
+    })
 
     const getNotFound = computed((): boolean => {
       return !getTreeData.value || getTreeData.value.length === 0
@@ -218,15 +221,6 @@ export default defineComponent({
       return searchState.searchText
     })
 
-    watch(
-      () => props.treeData,
-      (val) => {
-        if (val) {
-          handleSearch(searchState.searchText)
-        }
-      }
-    )
-
     function handleSearch(searchValue: string) {
       if (searchValue !== searchState.searchText)
         searchState.searchText = searchValue
@@ -246,6 +240,7 @@ export default defineComponent({
       const { title: titleField, key: keyField } = unref(getFieldNames)
 
       const matchedKeys: string[] = []
+
       searchState.searchData = filter(
         unref(treeDataRef),
         (node) => {
@@ -259,6 +254,7 @@ export default defineComponent({
         },
         unref(getFieldNames)
       )
+
 
       if (expandOnSearch) {
         const expandKeys = treeToList(searchState.searchData).map((val) => {

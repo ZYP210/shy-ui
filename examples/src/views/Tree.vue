@@ -9,6 +9,7 @@
         :treeData="treeData"
         @plusClick="handleClick"
         :searchValue="searchValue"
+        :filter-fn="() => true"
       >
         <template #searchExtra>
           <BasicButton type="primary">搜索</BasicButton>
@@ -26,22 +27,9 @@ import { Input } from 'ant-design-vue'
 import { BasicTree, TreeItem, ShyTableAction, BasicButton } from '3h1-ui'
 import { ref } from 'vue'
 
-const treeData = ref<TreeItem[]>(
-  Array.from({ length: 100 }, (_, i) => {
-    return {
-      title: '77111111111111111111111111111111111111111111111111111111117',
-      key: i,
-      children: [
-        {
-          title: '999',
-          key: `${i}-${i}`
-        }
-      ]
-    }
-  })
-)
+const treeData = ref<TreeItem[]>([])
 
-const searchValue = ref('')
+const searchValue = ref('0.0')
 
 const handleClick = (...args) => {
   console.log(args, 777)
@@ -68,9 +56,20 @@ const getActions = (record) => {
 }
 
 onMounted(() => {
-  setTimeout(() => {
-    searchValue.value = '999'
-  }, 1000)
+  treeData.value = Array.from({ length: 100 }, (_, i) => {
+    return {
+      title: `${Math.random()}`,
+      key: i
+    }
+  })
+  // setInterval(() => {
+  //   treeData.value = Array.from({ length: 100 }, (_, i) => {
+  //     return {
+  //       title: `${Math.random()}`,
+  //       key: i
+  //     }
+  //   })
+  // }, 1000)
 })
 
 onUnmounted(() => {})
