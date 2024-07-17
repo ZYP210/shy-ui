@@ -41,6 +41,13 @@ const schema: any[] = [
     component: 'Input'
   },
   {
+    field: 'select',
+    label: '测试',
+    colProps: { span: 8 },
+    isForm: true,
+    component: 'Select'
+  },
+  {
     field: 'summary',
     label: '合计',
     colProps: { span: 8 }
