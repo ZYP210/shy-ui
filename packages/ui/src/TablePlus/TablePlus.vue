@@ -77,7 +77,6 @@
           <vxe-column
             v-else
             v-bind="column"
-            show-overflow="title"
             :edit-render="column?.editRender || undefined"
           >
             <template #default="config">

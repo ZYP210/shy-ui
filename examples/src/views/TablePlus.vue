@@ -87,7 +87,7 @@ const getList = (params) => {
   for (let i = 0; i < pageNumber.value; i++) {
     list.push({
       id: i,
-      a: i + 1,
+      a: '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111',
       b: i + 2,
       c: i + 3,
       d: i + 4
@@ -146,7 +146,9 @@ const [
   columnSeq: { fixed: 'left' },
   rowConfig: { keyField: 'id' },
   treeConfig: { expandRowKeys: [0] },
-  actionColumn: { width: 200 }
+  actionColumn: { width: 200 },
+  transDataAfterReload: (res) => res.records,
+  showOverflow: false
 })
 
 // onMounted(async () => {
