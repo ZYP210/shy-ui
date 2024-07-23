@@ -1,6 +1,6 @@
 {
   "name": "3h1-ui",
-  "version": "3.0.0-next.106",
+  "version": "3.0.0-next.107",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -49,6 +49,5 @@
     "inquirer": "^9.2.19",
     "vite-plugin-windicss": "^1.8.10",
     "windicss": "^3.5.6"
-  },
-  "version": "3.0.0-next.103"
+  }
 }
