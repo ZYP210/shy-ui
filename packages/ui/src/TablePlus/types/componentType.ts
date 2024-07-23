@@ -1,6 +1,7 @@
 export type ComponentType =
   | 'Input'
   | 'InputNumber'
+  | 'InputTextArea'
   | 'Select'
   | 'ApiSelect'
   | 'AutoComplete'

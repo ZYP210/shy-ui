@@ -22,6 +22,7 @@ const componentMap = new Map<ComponentType, Component>()
 
 componentMap.set('Input', Input)
 componentMap.set('InputNumber', InputNumber)
+componentMap.set('InputTextArea', Input.TextArea)
 componentMap.set('Select', Select)
 componentMap.set('ApiSelect', ApiSelect)
 componentMap.set('AutoComplete', AutoComplete)
