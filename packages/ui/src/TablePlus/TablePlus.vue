@@ -35,7 +35,6 @@
         @checkbox-all="handleCheckboxChange"
         @checkbox-change="handleCheckboxChange"
         @radio-change="handleRadioChange"
-        show-overflow
         :column-config="{ resizable: true }"
       >
         <vxe-column

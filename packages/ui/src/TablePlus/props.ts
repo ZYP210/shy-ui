@@ -23,6 +23,7 @@ export const basicProps: VxeTableProps = {
     fontSize: '12px',
     fontFeatureSetting: 'tnum'
   },
+  showOverflow: true,
   sortConfig: {
     showIcon: false
   }
