@@ -255,7 +255,6 @@ export default defineComponent({
         unref(getFieldNames)
       )
 
-
       if (expandOnSearch) {
         const expandKeys = treeToList(searchState.searchData).map((val) => {
           return val[keyField]

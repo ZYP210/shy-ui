@@ -1,5 +1,5 @@
 <template>
-  <div class="gantt-table">
+  <div class="gantt-table" :style="{ width: props.width + 'px' }">
     <vxe-table
       class="satellite-table"
       :border="true"
@@ -36,6 +36,7 @@ const props = withDefaults(
       columns: TableColumns[]
     }
     data: any[]
+    width: number
   }>(),
   {}
 )
@@ -61,7 +62,6 @@ const columns = computed(() => {
 .gantt-table {
   flex: none;
   overflow: hidden;
-  width: 200px;
 }
 
 .satellite-table {

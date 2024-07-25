@@ -1,7 +1,10 @@
 "use strict";
-Object.defineProperties(exports, { __esModule: { value: true }, [Symbol.toStringTag]: { value: "Module" } });
+Object.defineProperty(exports, Symbol.toStringTag, { value: "Module" });
 const vue = require("vue");
 var commonjsGlobal = typeof globalThis !== "undefined" ? globalThis : typeof window !== "undefined" ? window : typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : {};
+function getDefaultExportFromCjs(x) {
+  return x && x.__esModule && Object.prototype.hasOwnProperty.call(x, "default") ? x["default"] : x;
+}
 var setupDefaults$a = {
   cookies: {
     path: "/"
@@ -198,14 +201,14 @@ var arrayEach$a = arrayEach_1;
 var each$h = each_1;
 var isFunction$b = isFunction_1;
 var assign$a = assign_1;
-var XEUtils$1 = function() {
+var XEUtils$2 = function() {
 };
 function mixin() {
   arrayEach$a(arguments, function(methods) {
     each$h(methods, function(fn, name) {
-      XEUtils$1[name] = isFunction$b(fn) ? function() {
-        var result = fn.apply(XEUtils$1.$context, arguments);
-        XEUtils$1.$context = null;
+      XEUtils$2[name] = isFunction$b(fn) ? function() {
+        var result = fn.apply(XEUtils$2.$context, arguments);
+        XEUtils$2.$context = null;
         return result;
       } : fn;
     });
@@ -214,10 +217,10 @@ function mixin() {
 function setup$1(options) {
   return assign$a(setupDefaults$9, options);
 }
-XEUtils$1.VERSION = "3.5.7";
-XEUtils$1.mixin = mixin;
-XEUtils$1.setup = setup$1;
-var ctor = XEUtils$1;
+XEUtils$2.VERSION = "3.5.7";
+XEUtils$2.mixin = mixin;
+XEUtils$2.setup = setup$1;
+var ctor = XEUtils$2;
 function lastArrayEach$3(obj, iterate, context) {
   for (var len = obj.length - 1; len >= 0; len--) {
     iterate.call(context, obj[len], len, obj);
@@ -1327,7 +1330,7 @@ function parseTimeZone(resMaps) {
       return new Date(helperGetUTCDateTime(resMaps) - (matchRest[1] === "-" ? -1 : 1) * staticParseInt$4(matchRest[2]) * 36e5 + staticParseInt$4(matchRest[3]) * 6e4);
     }
   }
-  return new Date("");
+  return /* @__PURE__ */ new Date("");
 }
 function toStringDate$d(str, format) {
   if (str) {
@@ -1352,11 +1355,11 @@ function toStringDate$d(str, format) {
       }
     }
   }
-  return new Date("");
+  return /* @__PURE__ */ new Date("");
 }
 var toStringDate_1 = toStringDate$d;
 function helperNewDate$4() {
-  return new Date();
+  return /* @__PURE__ */ new Date();
 }
 var helperNewDate_1 = helperNewDate$4;
 var isDate$6 = isDate_1;
@@ -3535,11 +3538,13 @@ var locat = locat_1;
 var cookie = cookie_1;
 var browse$1 = browse_1;
 assign(XEUtils, {
+  // object
   assign,
   objectEach,
   lastObjectEach,
   objectMap,
   merge,
+  // array
   uniq,
   union,
   sortBy,
@@ -3577,6 +3582,7 @@ assign(XEUtils, {
   mapTree,
   filterTree,
   searchTree,
+  // base
   hasOwnProp,
   eqNull,
   isNaN: isNumberNaN,
@@ -3641,6 +3647,7 @@ assign(XEUtils, {
   remove,
   range,
   destructuring,
+  // number
   random,
   min,
   max,
@@ -3658,6 +3665,7 @@ assign(XEUtils, {
   divide,
   sum,
   mean,
+  // date
   now,
   timestamp,
   isValidDate,
@@ -3675,6 +3683,7 @@ assign(XEUtils, {
   getDayOfYear,
   getDayOfMonth,
   getDateDiff,
+  // string
   trim,
   trimLeft,
   trimRight,
@@ -3691,6 +3700,7 @@ assign(XEUtils, {
   toFormatString,
   toString: toValueString,
   toValueString,
+  // function
   noop,
   property,
   bind,
@@ -3700,31 +3710,55 @@ assign(XEUtils, {
   throttle,
   debounce,
   delay,
+  // url
   unserialize,
   serialize,
   parseUrl,
+  // web
   getBaseURL,
   locat,
   browse: browse$1,
   cookie
 });
 var xeUtils = XEUtils;
+const XEUtils$1 = /* @__PURE__ */ getDefaultExportFromCjs(xeUtils);
 var iconPrefix = "vxe-icon-";
 var GlobalConfig = {
   size: null,
   zIndex: 999,
   version: 0,
-  emptyCell: "\u3000",
+  // resizeInterval: 500,
+  emptyCell: "　",
+  // loadingText: null, // 自定义loading提示内容，如果为null则不显示文本
   table: {
     fit: true,
     showHeader: true,
     animat: true,
     delayHover: 250,
     autoResize: true,
+    // keepSource: false,
+    // showOverflow: null,
+    // showHeaderOverflow: null,
+    // showFooterOverflow: null,
+    // resizeInterval: 500,
+    // size: null,
+    // zIndex: null,
+    // stripe: false,
+    // border: false,
+    // round: false,
+    // emptyText: '暂无数据',
+    // emptyRender: {
+    //   name: ''
+    // },
+    // rowConfig: {
+    //   keyField: '_X_ROW_KEY' // 行数据的唯一主键字段名
+    // },
     radioConfig: {
+      // trigger: 'default'
       strict: true
     },
     checkboxConfig: {
+      // trigger: 'default',
       strict: true
     },
     tooltipConfig: {
@@ -3734,10 +3768,23 @@ var GlobalConfig = {
       showMessage: true,
       message: "default"
     },
+    // menuConfig: {
+    //   visibleMethod () {}
+    // },
+    // customConfig: {
+    //  storage: false,
+    //  checkMethod () {}
+    // },
     sortConfig: {
+      // remote: false,
+      // trigger: 'default',
+      // orders: ['asc', 'desc', null],
+      // sortMethod: null,
       showIcon: true
     },
     filterConfig: {
+      // remote: false,
+      // filterMethod: null,
       showIcon: true
     },
     treeConfig: {
@@ -3750,9 +3797,11 @@ var GlobalConfig = {
       showIcon: true
     },
     expandConfig: {
+      // trigger: 'default',
       showIcon: true
     },
     editConfig: {
+      // mode: 'cell',
       showIcon: true,
       showAsterisk: true
     },
@@ -3786,17 +3835,21 @@ var GlobalConfig = {
     scrollX: {
       enabled: true,
       gt: 60
+      // oSize: 0
     },
     scrollY: {
       enabled: true,
       gt: 100
+      // oSize: 0
     }
   },
   export: {
     types: {}
   },
   icon: {
+    // loading
     LOADING: iconPrefix + "spinner roll vxe-loading--default-icon",
+    // table
     TABLE_SORT_ASC: iconPrefix + "caret-up",
     TABLE_SORT_DESC: iconPrefix + "caret-down",
     TABLE_FILTER_NONE: iconPrefix + "funnel",
@@ -3814,16 +3867,20 @@ var GlobalConfig = {
     TABLE_CHECKBOX_INDETERMINATE: iconPrefix + "checkbox-indeterminate",
     TABLE_RADIO_CHECKED: iconPrefix + "radio-checked",
     TABLE_RADIO_UNCHECKED: iconPrefix + "radio-unchecked",
+    // button
     BUTTON_DROPDOWN: iconPrefix + "arrow-down",
     BUTTON_LOADING: iconPrefix + "spinner roll",
+    // select
     SELECT_LOADED: iconPrefix + "spinner roll",
     SELECT_OPEN: iconPrefix + "caret-down rotate180",
     SELECT_CLOSE: iconPrefix + "caret-down",
+    // pager
     PAGER_JUMP_PREV: iconPrefix + "arrow-double-left",
     PAGER_JUMP_NEXT: iconPrefix + "arrow-double-right",
     PAGER_PREV_PAGE: iconPrefix + "arrow-left",
     PAGER_NEXT_PAGE: iconPrefix + "arrow-right",
     PAGER_JUMP_MORE: iconPrefix + "ellipsis-h",
+    // input
     INPUT_CLEAR: iconPrefix + "error-circle-fill",
     INPUT_PWD: iconPrefix + "eye-fill",
     INPUT_SHOW_PWD: iconPrefix + "eye-fill-close",
@@ -3831,6 +3888,7 @@ var GlobalConfig = {
     INPUT_NEXT_NUM: iconPrefix + "caret-down",
     INPUT_DATE: iconPrefix + "calendar",
     INPUT_SEARCH: iconPrefix + "search",
+    // modal
     MODAL_ZOOM_IN: iconPrefix + "square",
     MODAL_ZOOM_OUT: iconPrefix + "maximize",
     MODAL_CLOSE: iconPrefix + "close",
@@ -3840,6 +3898,7 @@ var GlobalConfig = {
     MODAL_ERROR: iconPrefix + "error-circle-fill",
     MODAL_QUESTION: iconPrefix + "question-circle-fill",
     MODAL_LOADING: iconPrefix + "spinner roll",
+    // toolbar
     TOOLBAR_TOOLS_REFRESH: iconPrefix + "repeat",
     TOOLBAR_TOOLS_REFRESH_LOADING: iconPrefix + "repeat roll",
     TOOLBAR_TOOLS_IMPORT: iconPrefix + "upload",
@@ -3848,20 +3907,27 @@ var GlobalConfig = {
     TOOLBAR_TOOLS_FULLSCREEN: iconPrefix + "fullscreen",
     TOOLBAR_TOOLS_MINIMIZE: iconPrefix + "minimize",
     TOOLBAR_TOOLS_CUSTOM: iconPrefix + "custom-column",
+    // form
     FORM_PREFIX: iconPrefix + "question-circle-fill",
     FORM_SUFFIX: iconPrefix + "question-circle-fill",
     FORM_FOLDING: iconPrefix + "arrow-up rotate180",
     FORM_UNFOLDING: iconPrefix + "arrow-up"
   },
   grid: {
+    // size: null,
+    // zoomConfig: {
+    //   escRestore: true
+    // },
     formConfig: {
       enabled: true
     },
     pagerConfig: {
       enabled: true
+      // perfect: false
     },
     toolbarConfig: {
       enabled: true
+      // perfect: false
     },
     proxyConfig: {
       enabled: true,
@@ -3873,16 +3939,36 @@ var GlobalConfig = {
         total: "page.total",
         message: "message"
       }
+      // beforeItem: null,
+      // beforeColumn: null,
+      // beforeQuery: null,
+      // afterQuery: null,
+      // beforeDelete: null,
+      // afterDelete: null,
+      // beforeSave: null,
+      // afterSave: null
     }
   },
   tooltip: {
+    // size: null,
     trigger: "hover",
     theme: "dark",
     enterDelay: 500,
     leaveDelay: 300
   },
-  pager: {},
+  pager: {
+    // size: null,
+    // autoHidden: false,
+    // perfect: true,
+    // pageSize: 10,
+    // pagerCount: 7,
+    // pageSizes: [10, 15, 20, 50, 100],
+    // layouts: ['PrevJump', 'PrevPage', 'Jump', 'PageCount', 'NextPage', 'NextJump', 'Sizes', 'Total']
+  },
   form: {
+    // preventSubmit: false,
+    // size: null,
+    // colon: false,
     validConfig: {
       showMessage: true,
       autoPos: true
@@ -3893,6 +3979,11 @@ var GlobalConfig = {
     titleAsterisk: true
   },
   input: {
+    // size: null,
+    // transfer: false
+    // parseFormat: 'yyyy-MM-dd HH:mm:ss.SSS',
+    // labelFormat: '',
+    // valueFormat: '',
     startDate: new Date(1900, 0, 1),
     endDate: new Date(2100, 0, 1),
     startDay: 1,
@@ -3900,24 +3991,58 @@ var GlobalConfig = {
     digits: 2,
     controls: true
   },
-  textarea: {},
+  textarea: {
+    // size: null,
+    // autosize: {
+    //   minRows: 1,
+    //   maxRows: 10
+    // }
+  },
   select: {
+    // size: null,
+    // transfer: false,
+    // optionConfig: {
+    //   keyField: '_X_OPTION_KEY'
+    // },
     multiCharOverflow: 8
   },
-  toolbar: {},
-  button: {},
+  toolbar: {
+    // size: null,
+    // import: {
+    //   mode: 'covering'
+    // },
+    // export: {
+    //   types: ['csv', 'html', 'xml', 'txt']
+    // },
+    // custom: {
+    //   isFooter: true
+    // },
+    // buttons: []
+  },
+  button: {
+    // size: null,
+    // transfer: false
+  },
   radio: {
+    // size: null,
     strict: true
   },
   radioButton: {
+    // size: null,
     strict: true
   },
   radioGroup: {
+    // size: null,
     strict: true
   },
-  checkbox: {},
-  switch: {},
+  checkbox: {
+    // size: null
+  },
+  switch: {
+    // size: null
+  },
   modal: {
+    // size: null,
     top: 15,
     showHeader: true,
     minWidth: 340,
@@ -3931,12 +4056,15 @@ var GlobalConfig = {
     animat: true,
     showClose: true,
     draggable: true,
+    // storage: false,
     storageKey: "VXE_MODAL_POSITION"
   },
   list: {
+    // size: null,
     scrollY: {
       enabled: true,
       gt: 100
+      // oSize: 0
     }
   },
   i18n: function(key) {
@@ -3944,7 +4072,7 @@ var GlobalConfig = {
   }
 };
 function getLog(message, params) {
-  return "[vxe-table v".concat("4.3.9", "] ").concat(GlobalConfig.i18n(message, params));
+  return "[vxe-table v".concat("4.3.6-beta.0", "] ").concat(GlobalConfig.i18n(message, params));
 }
 function outLog(type) {
   return function(message, params) {
@@ -3958,7 +4086,7 @@ var errLog = outLog("error");
 var storeMap = {};
 var interceptor = {
   mixin: function(options) {
-    xeUtils.each(options, function(callback, type) {
+    XEUtils$1.each(options, function(callback, type) {
       return interceptor.add(type, callback);
     });
     return interceptor;
@@ -3991,7 +4119,7 @@ var interceptor = {
     var eList = storeMap[type];
     if (eList) {
       if (callback) {
-        xeUtils.remove(eList, function(fn) {
+        XEUtils$1.remove(eList, function(fn) {
           return fn === callback;
         });
       } else {
@@ -4010,7 +4138,7 @@ function isEmptyValue(cellValue) {
 }
 function parseFile(file) {
   var name = file.name;
-  var tIndex = xeUtils.lastIndexOf(name, ".");
+  var tIndex = XEUtils$1.lastIndexOf(name, ".");
   var type = name.substring(tIndex + 1, name.length);
   var filename = name.substring(0, tIndex);
   return { filename, type };
@@ -4026,149 +4154,157 @@ function hasChildrenList(item) {
   return item && item.children && item.children.length > 0;
 }
 function getFuncText(content) {
-  return content ? xeUtils.toValueString(GlobalConfig.translate ? GlobalConfig.translate("" + content) : content) : "";
+  return content ? XEUtils$1.toValueString(GlobalConfig.translate ? GlobalConfig.translate("" + content) : content) : "";
 }
 function formatText(value, placeholder) {
   return "" + (isEmptyValue(value) ? placeholder ? GlobalConfig.emptyCell : "" : value);
 }
 function eqEmptyValue(cellValue) {
-  return cellValue === "" || xeUtils.eqNull(cellValue);
+  return cellValue === "" || XEUtils$1.eqNull(cellValue);
 }
-var ColumnInfo = function() {
-  function ColumnInfo2($xetable, _vm, _a) {
-    var _b = _a === void 0 ? {} : _a, renderHeader = _b.renderHeader, renderCell = _b.renderCell, renderFooter = _b.renderFooter, renderData = _b.renderData;
-    var $xegrid = $xetable.xegrid;
-    var formatter = _vm.formatter;
-    var visible = xeUtils.isBoolean(_vm.visible) ? _vm.visible : true;
-    if (process.env.NODE_ENV === "development") {
-      var types = ["seq", "checkbox", "radio", "expand", "html"];
-      if (_vm.type && types.indexOf(_vm.type) === -1) {
-        warnLog("vxe.error.errProp", ["type=".concat(_vm.type), types.join(", ")]);
-      }
-      if (xeUtils.isBoolean(_vm.cellRender) || _vm.cellRender && !xeUtils.isObject(_vm.cellRender)) {
-        warnLog("vxe.error.errProp", ["column.cell-render=".concat(_vm.cellRender), "column.cell-render={}"]);
-      }
-      if (xeUtils.isBoolean(_vm.editRender) || _vm.editRender && !xeUtils.isObject(_vm.editRender)) {
-        warnLog("vxe.error.errProp", ["column.edit-render=".concat(_vm.editRender), "column.edit-render={}"]);
-      }
-      if (_vm.cellRender && _vm.editRender) {
-        warnLog("vxe.error.errConflicts", ["column.cell-render", "column.edit-render"]);
-      }
-      if (_vm.type === "expand") {
-        var tableProps2 = $xetable.props;
-        var treeConfig = tableProps2.treeConfig;
-        var computeTreeOpts = $xetable.getComputeMaps().computeTreeOpts;
-        var treeOpts = computeTreeOpts.value;
-        if (treeConfig && treeOpts.line) {
-          errLog("vxe.error.errConflicts", ["tree-config.line", "column.type=expand"]);
+var ColumnInfo = (
+  /** @class */
+  function() {
+    function ColumnInfo2($xetable, _vm, _a) {
+      var _b = _a === void 0 ? {} : _a, renderHeader = _b.renderHeader, renderCell = _b.renderCell, renderFooter = _b.renderFooter, renderData = _b.renderData;
+      var $xegrid = $xetable.xegrid;
+      var formatter = _vm.formatter;
+      var visible = XEUtils$1.isBoolean(_vm.visible) ? _vm.visible : true;
+      if (process.env.NODE_ENV === "development") {
+        var types = ["seq", "checkbox", "radio", "expand", "html"];
+        if (_vm.type && types.indexOf(_vm.type) === -1) {
+          warnLog("vxe.error.errProp", ["type=".concat(_vm.type), types.join(", ")]);
         }
-      }
-      if (formatter) {
-        if (xeUtils.isString(formatter)) {
-          var globalFunc = VXETable.formats.get(formatter) || xeUtils[formatter];
-          if (!xeUtils.isFunction(globalFunc)) {
-            errLog("vxe.error.notFunc", [formatter]);
-          }
-        } else if (xeUtils.isArray(formatter)) {
-          var globalFunc = VXETable.formats.get(formatter[0]) || xeUtils[formatter[0]];
-          if (!xeUtils.isFunction(globalFunc)) {
-            errLog("vxe.error.notFunc", [formatter[0]]);
+        if (XEUtils$1.isBoolean(_vm.cellRender) || _vm.cellRender && !XEUtils$1.isObject(_vm.cellRender)) {
+          warnLog("vxe.error.errProp", ["column.cell-render=".concat(_vm.cellRender), "column.cell-render={}"]);
+        }
+        if (XEUtils$1.isBoolean(_vm.editRender) || _vm.editRender && !XEUtils$1.isObject(_vm.editRender)) {
+          warnLog("vxe.error.errProp", ["column.edit-render=".concat(_vm.editRender), "column.edit-render={}"]);
+        }
+        if (_vm.cellRender && _vm.editRender) {
+          warnLog("vxe.error.errConflicts", ["column.cell-render", "column.edit-render"]);
+        }
+        if (_vm.type === "expand") {
+          var tableProps2 = $xetable.props;
+          var treeConfig = tableProps2.treeConfig;
+          var computeTreeOpts = $xetable.getComputeMaps().computeTreeOpts;
+          var treeOpts = computeTreeOpts.value;
+          if (treeConfig && treeOpts.line) {
+            errLog("vxe.error.errConflicts", ["tree-config.line", "column.type=expand"]);
           }
         }
+        if (formatter) {
+          if (XEUtils$1.isString(formatter)) {
+            var globalFunc = VXETable.formats.get(formatter) || XEUtils$1[formatter];
+            if (!XEUtils$1.isFunction(globalFunc)) {
+              errLog("vxe.error.notFunc", [formatter]);
+            }
+          } else if (XEUtils$1.isArray(formatter)) {
+            var globalFunc = VXETable.formats.get(formatter[0]) || XEUtils$1[formatter[0]];
+            if (!XEUtils$1.isFunction(globalFunc)) {
+              errLog("vxe.error.notFunc", [formatter[0]]);
+            }
+          }
+        }
+      }
+      Object.assign(this, {
+        // 基本属性
+        type: _vm.type,
+        property: _vm.field,
+        field: _vm.field,
+        title: _vm.title,
+        width: _vm.width,
+        minWidth: _vm.minWidth,
+        maxWidth: _vm.maxWidth,
+        resizable: _vm.resizable,
+        fixed: _vm.fixed,
+        align: _vm.align,
+        headerAlign: _vm.headerAlign,
+        footerAlign: _vm.footerAlign,
+        showOverflow: _vm.showOverflow,
+        showHeaderOverflow: _vm.showHeaderOverflow,
+        showFooterOverflow: _vm.showFooterOverflow,
+        className: _vm.className,
+        headerClassName: _vm.headerClassName,
+        footerClassName: _vm.footerClassName,
+        formatter,
+        sortable: _vm.sortable,
+        sortBy: _vm.sortBy,
+        sortType: _vm.sortType,
+        filters: toFilters(_vm.filters),
+        filterMultiple: XEUtils$1.isBoolean(_vm.filterMultiple) ? _vm.filterMultiple : true,
+        filterMethod: _vm.filterMethod,
+        filterResetMethod: _vm.filterResetMethod,
+        filterRecoverMethod: _vm.filterRecoverMethod,
+        filterRender: _vm.filterRender,
+        treeNode: _vm.treeNode,
+        cellType: _vm.cellType,
+        cellRender: _vm.cellRender,
+        editRender: _vm.editRender,
+        contentRender: _vm.contentRender,
+        exportMethod: _vm.exportMethod,
+        footerExportMethod: _vm.footerExportMethod,
+        titleHelp: _vm.titleHelp,
+        titlePrefix: _vm.titlePrefix,
+        // 自定义参数
+        params: _vm.params,
+        // 渲染属性
+        id: _vm.colId || XEUtils$1.uniqueId("col_"),
+        parentId: null,
+        visible,
+        // 内部属性（一旦被使用，将导致不可升级版本）
+        halfVisible: false,
+        defaultVisible: visible,
+        checked: false,
+        halfChecked: false,
+        disabled: false,
+        level: 1,
+        rowSpan: 1,
+        colSpan: 1,
+        order: null,
+        sortTime: 0,
+        renderWidth: 0,
+        renderHeight: 0,
+        resizeWidth: 0,
+        renderLeft: 0,
+        renderArgs: [],
+        model: {},
+        renderHeader: renderHeader || _vm.renderHeader,
+        renderCell: renderCell || _vm.renderCell,
+        renderFooter: renderFooter || _vm.renderFooter,
+        renderData,
+        // 单元格插槽，只对 grid 有效
+        slots: _vm.slots
+      });
+      if ($xegrid) {
+        var computeProxyOpts = $xegrid.getComputeMaps().computeProxyOpts;
+        var proxyOpts = computeProxyOpts.value;
+        if (proxyOpts.beforeColumn) {
+          proxyOpts.beforeColumn({ $grid: $xegrid, column: this });
+        }
       }
     }
-    Object.assign(this, {
-      type: _vm.type,
-      property: _vm.field,
-      field: _vm.field,
-      title: _vm.title,
-      width: _vm.width,
-      minWidth: _vm.minWidth,
-      maxWidth: _vm.maxWidth,
-      resizable: _vm.resizable,
-      fixed: _vm.fixed,
-      align: _vm.align,
-      headerAlign: _vm.headerAlign,
-      footerAlign: _vm.footerAlign,
-      showOverflow: _vm.showOverflow,
-      showHeaderOverflow: _vm.showHeaderOverflow,
-      showFooterOverflow: _vm.showFooterOverflow,
-      className: _vm.className,
-      headerClassName: _vm.headerClassName,
-      footerClassName: _vm.footerClassName,
-      formatter,
-      sortable: _vm.sortable,
-      sortBy: _vm.sortBy,
-      sortType: _vm.sortType,
-      filters: toFilters(_vm.filters),
-      filterMultiple: xeUtils.isBoolean(_vm.filterMultiple) ? _vm.filterMultiple : true,
-      filterMethod: _vm.filterMethod,
-      filterResetMethod: _vm.filterResetMethod,
-      filterRecoverMethod: _vm.filterRecoverMethod,
-      filterRender: _vm.filterRender,
-      treeNode: _vm.treeNode,
-      cellType: _vm.cellType,
-      cellRender: _vm.cellRender,
-      editRender: _vm.editRender,
-      contentRender: _vm.contentRender,
-      exportMethod: _vm.exportMethod,
-      footerExportMethod: _vm.footerExportMethod,
-      titleHelp: _vm.titleHelp,
-      titlePrefix: _vm.titlePrefix,
-      params: _vm.params,
-      id: _vm.colId || xeUtils.uniqueId("col_"),
-      parentId: null,
-      visible,
-      halfVisible: false,
-      defaultVisible: visible,
-      checked: false,
-      halfChecked: false,
-      disabled: false,
-      level: 1,
-      rowSpan: 1,
-      colSpan: 1,
-      order: null,
-      sortTime: 0,
-      renderWidth: 0,
-      renderHeight: 0,
-      resizeWidth: 0,
-      renderLeft: 0,
-      renderArgs: [],
-      model: {},
-      renderHeader: renderHeader || _vm.renderHeader,
-      renderCell: renderCell || _vm.renderCell,
-      renderFooter: renderFooter || _vm.renderFooter,
-      renderData,
-      slots: _vm.slots
-    });
-    if ($xegrid) {
-      var computeProxyOpts = $xegrid.getComputeMaps().computeProxyOpts;
-      var proxyOpts = computeProxyOpts.value;
-      if (proxyOpts.beforeColumn) {
-        proxyOpts.beforeColumn({ $grid: $xegrid, column: this });
+    ColumnInfo2.prototype.getTitle = function() {
+      return getFuncText(this.title || (this.type === "seq" ? GlobalConfig.i18n("vxe.table.seqTitle") : ""));
+    };
+    ColumnInfo2.prototype.getKey = function() {
+      return this.field || (this.type ? "type=".concat(this.type) : null);
+    };
+    ColumnInfo2.prototype.update = function(name, value) {
+      if (name !== "filters") {
+        if (name === "field") {
+          this.property = value;
+        }
+        this[name] = value;
       }
-    }
-  }
-  ColumnInfo2.prototype.getTitle = function() {
-    return getFuncText(this.title || (this.type === "seq" ? GlobalConfig.i18n("vxe.table.seqTitle") : ""));
-  };
-  ColumnInfo2.prototype.getKey = function() {
-    return this.field || (this.type ? "type=".concat(this.type) : null);
-  };
-  ColumnInfo2.prototype.update = function(name, value) {
-    if (name !== "filters") {
-      if (name === "field") {
-        this.property = value;
-      }
-      this[name] = value;
-    }
-  };
-  return ColumnInfo2;
-}();
+    };
+    return ColumnInfo2;
+  }()
+);
 var reClsMap = {};
-var browse = xeUtils.browse();
+var browse = XEUtils$1.browse();
 function getPropClass(property2, params) {
-  return property2 ? xeUtils.isFunction(property2) ? property2(params) : property2 : "";
+  return property2 ? XEUtils$1.isFunction(property2) ? property2(params) : property2 : "";
 }
 function getClsRE(cls) {
   if (!reClsMap[cls]) {
@@ -4227,8 +4363,8 @@ function getOffsetHeight(elem) {
 function getPaddingTopBottomSize(elem) {
   if (elem) {
     var computedStyle = getComputedStyle(elem);
-    var paddingTop = xeUtils.toNumber(computedStyle.paddingTop);
-    var paddingBottom = xeUtils.toNumber(computedStyle.paddingBottom);
+    var paddingTop = XEUtils$1.toNumber(computedStyle.paddingTop);
+    var paddingBottom = XEUtils$1.toNumber(computedStyle.paddingBottom);
     return paddingTop + paddingBottom;
   }
   return 0;
@@ -4307,7 +4443,7 @@ function restoreScrollListener(scrollElem) {
   }
 }
 function getRowUniqueId() {
-  return xeUtils.uniqueId("row_");
+  return XEUtils$1.uniqueId("row_");
 }
 function getRowkey($xetable) {
   var props = $xetable.props;
@@ -4317,20 +4453,20 @@ function getRowkey($xetable) {
   return rowId || rowOpts.keyField || "_X_ROW_KEY";
 }
 function getRowid($xetable, row) {
-  var rowid = xeUtils.get(row, getRowkey($xetable));
-  return xeUtils.eqNull(rowid) ? "" : encodeURIComponent(rowid);
+  var rowid = XEUtils$1.get(row, getRowkey($xetable));
+  return XEUtils$1.eqNull(rowid) ? "" : encodeURIComponent(rowid);
 }
 var handleFieldOrColumn = function($xetable, fieldOrColumn) {
   if (fieldOrColumn) {
-    return xeUtils.isString(fieldOrColumn) ? $xetable.getColumnByField(fieldOrColumn) : fieldOrColumn;
+    return XEUtils$1.isString(fieldOrColumn) ? $xetable.getColumnByField(fieldOrColumn) : fieldOrColumn;
   }
   return null;
 };
 function getPaddingLeftRightSize(elem) {
   if (elem) {
     var computedStyle = getComputedStyle(elem);
-    var paddingLeft = xeUtils.toNumber(computedStyle.paddingLeft);
-    var paddingRight = xeUtils.toNumber(computedStyle.paddingRight);
+    var paddingLeft = XEUtils$1.toNumber(computedStyle.paddingLeft);
+    var paddingRight = XEUtils$1.toNumber(computedStyle.paddingRight);
     return paddingLeft + paddingRight;
   }
   return 0;
@@ -4338,8 +4474,8 @@ function getPaddingLeftRightSize(elem) {
 function getElemenMarginWidth(elem) {
   if (elem) {
     var computedStyle = getComputedStyle(elem);
-    var marginLeft = xeUtils.toNumber(computedStyle.marginLeft);
-    var marginRight = xeUtils.toNumber(computedStyle.marginRight);
+    var marginLeft = XEUtils$1.toNumber(computedStyle.marginLeft);
+    var marginRight = XEUtils$1.toNumber(computedStyle.marginRight);
     return elem.offsetWidth + marginLeft + marginRight;
   }
   return 0;
@@ -4348,7 +4484,7 @@ function queryCellElement(cell, selector) {
   return cell.querySelector(".vxe-cell" + selector);
 }
 function toFilters(filters) {
-  if (filters && xeUtils.isArray(filters)) {
+  if (filters && XEUtils$1.isArray(filters)) {
     return filters.map(function(_a) {
       var label = _a.label, value = _a.value, data = _a.data, resetValue = _a.resetValue, checked = _a.checked;
       return { label, value, data, resetValue, checked: !!checked, _checked: !!checked };
@@ -4362,31 +4498,31 @@ function toTreePathSeq(path) {
   }).join("");
 }
 function getCellValue(row, column) {
-  return xeUtils.get(row, column.field);
+  return XEUtils$1.get(row, column.field);
 }
 function setCellValue(row, column, value) {
-  return xeUtils.set(row, column.field, value);
+  return XEUtils$1.set(row, column.field, value);
 }
-function getColReMinWidth(params) {
+function getColMinWidth(params) {
   var $table = params.$table, column = params.column, cell = params.cell;
   var tableProps2 = $table.props;
   var computeResizableOpts = $table.getComputeMaps().computeResizableOpts;
   var resizableOpts = computeResizableOpts.value;
   var reMinWidth = resizableOpts.minWidth;
   if (reMinWidth) {
-    var customMinWidth = xeUtils.isFunction(reMinWidth) ? reMinWidth(params) : reMinWidth;
+    var customMinWidth = XEUtils$1.isFunction(reMinWidth) ? reMinWidth(params) : reMinWidth;
     if (customMinWidth !== "auto") {
-      return Math.max(1, xeUtils.toNumber(customMinWidth));
+      return Math.max(1, XEUtils$1.toNumber(customMinWidth));
     }
   }
   var allColumnHeaderOverflow = tableProps2.showHeaderOverflow;
   var showHeaderOverflow = column.showHeaderOverflow, colMinWidth = column.minWidth;
-  var headOverflow = xeUtils.isUndefined(showHeaderOverflow) || xeUtils.isNull(showHeaderOverflow) ? allColumnHeaderOverflow : showHeaderOverflow;
+  var headOverflow = XEUtils$1.isUndefined(showHeaderOverflow) || XEUtils$1.isNull(showHeaderOverflow) ? allColumnHeaderOverflow : showHeaderOverflow;
   var showEllipsis = headOverflow === "ellipsis";
   var showTitle = headOverflow === "title";
   var showTooltip = headOverflow === true || headOverflow === "tooltip";
   var hasEllipsis = showTitle || showTooltip || showEllipsis;
-  var minTitleWidth = xeUtils.floor((xeUtils.toNumber(getComputedStyle(cell).fontSize) || 14) * 1.6);
+  var minTitleWidth = XEUtils$1.floor((XEUtils$1.toNumber(getComputedStyle(cell).fontSize) || 14) * 1.6);
   var paddingLeftRight = getPaddingLeftRightSize(cell) + getPaddingLeftRightSize(queryCellElement(cell, ""));
   var mWidth = minTitleWidth + paddingLeftRight;
   if (hasEllipsis) {
@@ -4406,9 +4542,9 @@ function getColReMinWidth(params) {
       if (isScale(colMinWidth)) {
         var bodyWidth = bodyElem.clientWidth - 1;
         var meanWidth = bodyWidth / 100;
-        return Math.max(mWidth, Math.floor(xeUtils.toInteger(colMinWidth) * meanWidth));
+        return Math.max(mWidth, Math.floor(XEUtils$1.toInteger(colMinWidth) * meanWidth));
       } else if (isPx(colMinWidth)) {
-        return Math.max(mWidth, xeUtils.toInteger(colMinWidth));
+        return Math.max(mWidth, XEUtils$1.toInteger(colMinWidth));
       }
     }
   }
@@ -4436,14 +4572,14 @@ function assemColumn($xetable, elem, column, colgroup) {
   var parentColumn = colgroup ? colgroup.column : null;
   var parentCols = parentColumn ? parentColumn.children : staticColumns;
   if (parentElem && parentCols) {
-    parentCols.splice(xeUtils.arrayIndexOf(parentElem.children, elem), 0, column);
+    parentCols.splice(XEUtils$1.arrayIndexOf(parentElem.children, elem), 0, column);
     reactData.staticColumns = staticColumns.slice(0);
   }
 }
 function destroyColumn($xetable, column) {
   var reactData = $xetable.reactData;
   var staticColumns = reactData.staticColumns;
-  var matchObj = xeUtils.findTree(staticColumns, function(item) {
+  var matchObj = XEUtils$1.findTree(staticColumns, function(item) {
     return item.id === column.id;
   }, { children: "children" });
   if (matchObj) {
@@ -4562,7 +4698,7 @@ function getOnName(type) {
   return "on" + type.substring(0, 1).toLocaleUpperCase() + type.substring(1);
 }
 function getSlotVNs(vns) {
-  if (xeUtils.isArray(vns)) {
+  if (XEUtils$1.isArray(vns)) {
     return vns;
   }
   return [vns];
@@ -4579,7 +4715,7 @@ var __assign$j = globalThis && globalThis.__assign || function() {
   };
   return __assign$j.apply(this, arguments);
 };
-var __spreadArray$5 = globalThis && globalThis.__spreadArray || function(to, from, pack) {
+var __spreadArray$4 = globalThis && globalThis.__spreadArray || function(to, from, pack) {
   if (pack || arguments.length === 2)
     for (var i = 0, l = from.length, ar; i < l; i++) {
       if (ar || !(i in from)) {
@@ -4611,11 +4747,11 @@ function getChangeEvent(renderOpts) {
   return "change";
 }
 function parseDate(value, props) {
-  return value && props.valueFormat ? xeUtils.toStringDate(value, props.valueFormat) : value;
+  return value && props.valueFormat ? XEUtils$1.toStringDate(value, props.valueFormat) : value;
 }
 function getFormatDate(value, props, defaultFormat) {
   var _a = props.dateConfig, dateConfig = _a === void 0 ? {} : _a;
-  return xeUtils.toDateString(parseDate(value, props), dateConfig.labelFormat || defaultFormat);
+  return XEUtils$1.toDateString(parseDate(value, props), dateConfig.labelFormat || defaultFormat);
 }
 function getLabelFormatDate(value, props) {
   return getFormatDate(value, props, GlobalConfig.i18n("vxe.input.date.labelFormat.".concat(props.type)));
@@ -4654,15 +4790,15 @@ function getInputImmediateModel(renderOpts) {
 }
 function getCellEditProps(renderOpts, params, value, defaultProps) {
   var _a;
-  return xeUtils.assign({ immediate: getInputImmediateModel(renderOpts) }, defaultCompProps, defaultProps, renderOpts.props, (_a = {}, _a[componentDefaultModelProp] = value, _a));
+  return XEUtils$1.assign({ immediate: getInputImmediateModel(renderOpts) }, defaultCompProps, defaultProps, renderOpts.props, (_a = {}, _a[componentDefaultModelProp] = value, _a));
 }
 function getCellEditFilterProps(renderOpts, params, value, defaultProps) {
   var _a;
-  return xeUtils.assign({}, defaultCompProps, defaultProps, renderOpts.props, (_a = {}, _a[componentDefaultModelProp] = value, _a));
+  return XEUtils$1.assign({}, defaultCompProps, defaultProps, renderOpts.props, (_a = {}, _a[componentDefaultModelProp] = value, _a));
 }
 function getComponentFormItemProps(renderOpts, params, value, defaultProps) {
   var _a;
-  return xeUtils.assign({}, defaultCompProps, defaultProps, renderOpts.props, (_a = {}, _a[componentDefaultModelProp] = value, _a));
+  return XEUtils$1.assign({}, defaultCompProps, defaultProps, renderOpts.props, (_a = {}, _a[componentDefaultModelProp] = value, _a));
 }
 function isImmediateCell(renderOpts, params) {
   return params.$type === "cell" || getInputImmediateModel(renderOpts);
@@ -4686,13 +4822,13 @@ function getElementOns(renderOpts, params, modelFunc, changeFunc) {
   var isSameEvent = changeEvent === modelEvent;
   var ons = {};
   if (events) {
-    xeUtils.objectEach(events, function(func, key) {
+    XEUtils$1.objectEach(events, function(func, key) {
       ons[getOnName(key)] = function() {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
           args[_i] = arguments[_i];
         }
-        func.apply(void 0, __spreadArray$5([params], args, false));
+        func.apply(void 0, __spreadArray$4([params], args, false));
       };
     });
   }
@@ -4715,7 +4851,7 @@ function getElementOns(renderOpts, params, modelFunc, changeFunc) {
       }
       changeFunc.apply(void 0, args);
       if (events && events[changeEvent]) {
-        events[changeEvent].apply(events, __spreadArray$5([params], args, false));
+        events[changeEvent].apply(events, __spreadArray$4([params], args, false));
       }
     };
   }
@@ -4726,13 +4862,13 @@ function getComponentOns(renderOpts, params, modelFunc, changeFunc) {
   var modelEvent = getModelEvent(renderOpts);
   var changeEvent = getChangeEvent(renderOpts);
   var ons = {};
-  xeUtils.objectEach(events, function(func, key) {
+  XEUtils$1.objectEach(events, function(func, key) {
     ons[getOnName(key)] = function() {
       var args = [];
       for (var _i = 0; _i < arguments.length; _i++) {
         args[_i] = arguments[_i];
       }
-      func.apply(void 0, __spreadArray$5([params], args, false));
+      func.apply(void 0, __spreadArray$4([params], args, false));
     };
   });
   if (modelFunc) {
@@ -4751,7 +4887,7 @@ function getComponentOns(renderOpts, params, modelFunc, changeFunc) {
       }
       changeFunc.apply(void 0, args);
       if (events && events[changeEvent]) {
-        events[changeEvent].apply(events, __spreadArray$5([params], args, false));
+        events[changeEvent].apply(events, __spreadArray$4([params], args, false));
       }
     };
   }
@@ -4784,13 +4920,13 @@ function getFilterOns(renderOpts, params, option) {
   return getComponentOns(renderOpts, params, function(value) {
     option.data = value;
   }, function() {
-    handleConfirmFilter(params, !xeUtils.eqNull(option.data), option);
+    handleConfirmFilter(params, !XEUtils$1.eqNull(option.data), option);
   });
 }
 function getItemOns(renderOpts, params) {
   var $form = params.$form, data = params.data, property2 = params.property;
   return getComponentOns(renderOpts, params, function(value) {
-    xeUtils.set(data, property2, value);
+    XEUtils$1.set(data, property2, value);
   }, function() {
     $form.updateStatus(params);
   });
@@ -4815,14 +4951,14 @@ function getNativeFilterOns(renderOpts, params, option) {
   return getElementOns(renderOpts, params, function(evnt) {
     option.data = evnt.target.value;
   }, function() {
-    handleConfirmFilter(params, !xeUtils.eqNull(option.data), option);
+    handleConfirmFilter(params, !XEUtils$1.eqNull(option.data), option);
   });
 }
 function getNativeItemOns(renderOpts, params) {
   var $form = params.$form, data = params.data, property2 = params.property;
   return getElementOns(renderOpts, params, function(evnt) {
     var itemValue = evnt.target.value;
-    xeUtils.set(data, property2, itemValue);
+    XEUtils$1.set(data, property2, itemValue);
   }, function() {
     $form.updateStatus(params);
   });
@@ -4875,6 +5011,7 @@ function renderNativeOptions(options, renderOpts, params) {
       key: oIndex,
       value: option[valueProp],
       disabled: option[disabledProp],
+      /* eslint-disable eqeqeq */
       selected: option[valueProp] == cellValue
     }, option[labelProp]);
   });
@@ -4897,7 +5034,7 @@ function defaultFilterRender(renderOpts, params) {
 function handleFilterMethod(_a) {
   var option = _a.option, row = _a.row, column = _a.column;
   var data = option.data;
-  var cellValue = xeUtils.get(row, column.property);
+  var cellValue = XEUtils$1.get(row, column.property);
   return cellValue == data;
 }
 function nativeSelectEditRender(renderOpts, params) {
@@ -4916,15 +5053,15 @@ function defaultSelectEditRender(renderOpts, params) {
 function getSelectCellValue(renderOpts, _a) {
   var row = _a.row, column = _a.column;
   var _b = renderOpts.props, props = _b === void 0 ? {} : _b, options = renderOpts.options, optionGroups = renderOpts.optionGroups, _c = renderOpts.optionProps, optionProps = _c === void 0 ? {} : _c, _d = renderOpts.optionGroupProps, optionGroupProps = _d === void 0 ? {} : _d;
-  var cellValue = xeUtils.get(row, column.property);
+  var cellValue = XEUtils$1.get(row, column.property);
   var selectItem;
   var labelProp = optionProps.label || "label";
   var valueProp = optionProps.value || "value";
   if (!isEmptyValue(cellValue)) {
-    return xeUtils.map(props.multiple ? cellValue : [cellValue], optionGroups ? function(value) {
+    return XEUtils$1.map(props.multiple ? cellValue : [cellValue], optionGroups ? function(value) {
       var groupOptions = optionGroupProps.options || "options";
       for (var index = 0; index < optionGroups.length; index++) {
-        selectItem = xeUtils.find(optionGroups[index][groupOptions], function(item) {
+        selectItem = XEUtils$1.find(optionGroups[index][groupOptions], function(item) {
           return item[valueProp] == value;
         });
         if (selectItem) {
@@ -4933,7 +5070,7 @@ function getSelectCellValue(renderOpts, _a) {
       }
       return selectItem ? selectItem[labelProp] : value;
     } : function(value) {
-      selectItem = xeUtils.find(options, function(item) {
+      selectItem = XEUtils$1.find(options, function(item) {
         return item[valueProp] == value;
       });
       return selectItem ? selectItem[labelProp] : value;
@@ -4945,14 +5082,14 @@ function nativeItemRender(renderOpts, params) {
   var data = params.data, property2 = params.property;
   var name = renderOpts.name;
   var attrs = getNativeAttrs(renderOpts);
-  var itemValue = xeUtils.get(data, property2);
+  var itemValue = XEUtils$1.get(data, property2);
   return [
     vue.h(name, __assign$j(__assign$j(__assign$j({ class: "vxe-default-".concat(name) }, attrs), { value: attrs && name === "input" && (attrs.type === "submit" || attrs.type === "reset") ? null : itemValue }), getNativeItemOns(renderOpts, params)))
   ];
 }
 function defaultItemRender(renderOpts, params) {
   var data = params.data, property2 = params.property;
-  var itemValue = xeUtils.get(data, property2);
+  var itemValue = XEUtils$1.get(data, property2);
   return [
     vue.h(getDefaultComponent(renderOpts), __assign$j(__assign$j({}, getComponentFormItemProps(renderOpts, params, itemValue)), getItemOns(renderOpts, params)))
   ];
@@ -4973,12 +5110,13 @@ function renderNativeFormOptions(options, renderOpts, params) {
   var labelProp = optionProps.label || "label";
   var valueProp = optionProps.value || "value";
   var disabledProp = optionProps.disabled || "disabled";
-  var cellValue = xeUtils.get(data, property2);
+  var cellValue = XEUtils$1.get(data, property2);
   return options.map(function(item, oIndex) {
     return vue.h("option", {
       key: oIndex,
       value: item[valueProp],
       disabled: item[disabledProp],
+      /* eslint-disable eqeqeq */
       selected: item[valueProp] == cellValue
     }, item[labelProp]);
   });
@@ -4993,7 +5131,7 @@ function defaultFormItemRadioAndCheckboxRender(renderOpts, params) {
   var labelProp = optionProps.label || "label";
   var valueProp = optionProps.value || "value";
   var disabledProp = optionProps.disabled || "disabled";
-  var itemValue = xeUtils.get(data, property2);
+  var itemValue = XEUtils$1.get(data, property2);
   var compName = getComponentName(name);
   if (options) {
     return [
@@ -5056,7 +5194,7 @@ var renderMap = {
       var _a = renderOpts.props, props = _a === void 0 ? {} : _a;
       var row = params.row, column = params.column;
       var digits = props.digits || GlobalConfig.input.digits;
-      var cellValue = xeUtils.get(row, column.property);
+      var cellValue = XEUtils$1.get(row, column.property);
       if (cellValue) {
         switch (props.type) {
           case "date":
@@ -5066,7 +5204,7 @@ var renderMap = {
             cellValue = getLabelFormatDate(cellValue, props);
             break;
           case "float":
-            cellValue = xeUtils.toFixed(xeUtils.floor(cellValue, digits), digits);
+            cellValue = XEUtils$1.toFixed(XEUtils$1.floor(cellValue, digits), digits);
             break;
         }
       }
@@ -5108,7 +5246,7 @@ var renderMap = {
     renderItemContent: function(renderOpts, params) {
       var data = params.data, property2 = params.property;
       var options = renderOpts.options, optionProps = renderOpts.optionProps, optionGroups = renderOpts.optionGroups, optionGroupProps = renderOpts.optionGroupProps;
-      var itemValue = xeUtils.get(data, property2);
+      var itemValue = XEUtils$1.get(data, property2);
       return [
         vue.h(getDefaultComponent(renderOpts), __assign$j(__assign$j({}, getComponentFormItemProps(renderOpts, params, itemValue, { options, optionProps, optionGroups, optionGroupProps })), getItemOns(renderOpts, params)))
       ];
@@ -5132,7 +5270,7 @@ var renderMap = {
 };
 var renderer = {
   mixin: function(opts) {
-    xeUtils.each(opts, function(options, name) {
+    XEUtils$1.each(opts, function(options, name) {
       return renderer.add(name, options);
     });
     return renderer;
@@ -5145,8 +5283,8 @@ var renderer = {
       var renders_1 = renderMap[name];
       if (renders_1) {
         if (process.env.NODE_ENV === "development") {
-          xeUtils.each(options, function(val, key) {
-            if (!xeUtils.eqNull(renders_1[key]) && renders_1[key] !== val) {
+          XEUtils$1.each(options, function(val, key) {
+            if (!XEUtils$1.eqNull(renders_1[key]) && renders_1[key] !== val) {
               warnLog("vxe.error.coverProp", ["Renderer.".concat(name), key]);
             }
           });
@@ -5163,41 +5301,44 @@ var renderer = {
     return renderer;
   }
 };
-var Store = function() {
-  function Store2() {
-    this.store = {};
-  }
-  Store2.prototype.mixin = function(options) {
-    Object.assign(this.store, options);
-    return this;
-  };
-  Store2.prototype.has = function(name) {
-    return !!this.get(name);
-  };
-  Store2.prototype.get = function(name) {
-    return this.store[name];
-  };
-  Store2.prototype.add = function(name, render) {
-    var conf = this.store[name];
-    if (process.env.NODE_ENV === "development") {
-      var confKeys_1 = xeUtils.keys(conf);
-      xeUtils.each(render, function(item, key) {
-        if (confKeys_1.includes(key)) {
-          warnLog("vxe.error.coverProp", [name, key]);
-        }
-      });
+var Store = (
+  /** @class */
+  function() {
+    function Store2() {
+      this.store = {};
     }
-    this.store[name] = conf ? xeUtils.merge(conf, render) : render;
-    return this;
-  };
-  Store2.prototype.delete = function(name) {
-    delete this.store[name];
-  };
-  Store2.prototype.forEach = function(callback) {
-    xeUtils.objectEach(this.store, callback);
-  };
-  return Store2;
-}();
+    Store2.prototype.mixin = function(options) {
+      Object.assign(this.store, options);
+      return this;
+    };
+    Store2.prototype.has = function(name) {
+      return !!this.get(name);
+    };
+    Store2.prototype.get = function(name) {
+      return this.store[name];
+    };
+    Store2.prototype.add = function(name, render) {
+      var conf = this.store[name];
+      if (process.env.NODE_ENV === "development") {
+        var confKeys_1 = XEUtils$1.keys(conf);
+        XEUtils$1.each(render, function(item, key) {
+          if (confKeys_1.includes(key)) {
+            warnLog("vxe.error.coverProp", [name, key]);
+          }
+        });
+      }
+      this.store[name] = conf ? XEUtils$1.merge(conf, render) : render;
+      return this;
+    };
+    Store2.prototype.delete = function(name) {
+      delete this.store[name];
+    };
+    Store2.prototype.forEach = function(callback) {
+      XEUtils$1.objectEach(this.store, callback);
+    };
+    return Store2;
+  }()
+);
 var commands = new Store();
 if (process.env.NODE_ENV === "development") {
   Object.assign(commands, { _name: "Commands" });
@@ -5212,11 +5353,11 @@ if (process.env.NODE_ENV === "development") {
 }
 var hooks = new Store();
 var setup = function(options) {
-  return xeUtils.merge(GlobalConfig, options);
+  return XEUtils$1.merge(GlobalConfig, options);
 };
 function getExportOrImpotType(types, flag) {
   var rest = [];
-  xeUtils.objectEach(types, function(val, type) {
+  XEUtils$1.objectEach(types, function(val, type) {
     if (val === 0 || val === flag) {
       rest.push(type);
     }
@@ -5237,46 +5378,61 @@ function t(key, args) {
   return GlobalConfig.i18n(key, args);
 }
 function _t(key, args) {
-  return key ? xeUtils.toValueString(GlobalConfig.translate ? GlobalConfig.translate(key, args) : key) : "";
+  return key ? XEUtils$1.toValueString(GlobalConfig.translate ? GlobalConfig.translate(key, args) : key) : "";
 }
-var VXETableConfig = function() {
-  function VXETableConfig2() {
-  }
-  Object.defineProperty(VXETableConfig2.prototype, "zIndex", {
-    get: function() {
-      return getLastZIndex();
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(VXETableConfig2.prototype, "nextZIndex", {
-    get: function() {
-      return nextZIndex();
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(VXETableConfig2.prototype, "exportTypes", {
-    get: function() {
-      return getExportOrImpotType(GlobalConfig.export.types, 1);
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(VXETableConfig2.prototype, "importTypes", {
-    get: function() {
-      return getExportOrImpotType(GlobalConfig.export.types, 2);
-    },
-    enumerable: false,
-    configurable: true
-  });
-  return VXETableConfig2;
-}();
+var VXETableConfig = (
+  /** @class */
+  function() {
+    function VXETableConfig2() {
+    }
+    Object.defineProperty(VXETableConfig2.prototype, "zIndex", {
+      /**
+       * 获取当前的 zIndex
+       */
+      get: function() {
+        return getLastZIndex();
+      },
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperty(VXETableConfig2.prototype, "nextZIndex", {
+      /**
+       * 获取下一个 zIndex
+       */
+      get: function() {
+        return nextZIndex();
+      },
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperty(VXETableConfig2.prototype, "exportTypes", {
+      /**
+       * 获取所有导出类型
+       */
+      get: function() {
+        return getExportOrImpotType(GlobalConfig.export.types, 1);
+      },
+      enumerable: false,
+      configurable: true
+    });
+    Object.defineProperty(VXETableConfig2.prototype, "importTypes", {
+      /**
+       * 获取所有导入类型
+       */
+      get: function() {
+        return getExportOrImpotType(GlobalConfig.export.types, 2);
+      },
+      enumerable: false,
+      configurable: true
+    });
+    return VXETableConfig2;
+  }()
+);
 var config = new VXETableConfig();
 var v = "v4";
 var VXETable = {
   v,
-  version: "4.3.9",
+  version: "4.3.6-beta.0",
   setup,
   interceptor,
   renderer,
@@ -5524,7 +5680,7 @@ dynamicApp.component(PanelComponent$1.name, PanelComponent$1);
 const PanelComponent = vue.defineComponent({
   name: "VxeTableContextMenu",
   setup: function(props, context) {
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var $xetable = vue.inject("$xetable", {});
     var tableReactData = $xetable.reactData;
     var refElem = vue.ref();
@@ -5685,7 +5841,7 @@ var GlobalEvent = {
     eventStore$1.push({ comp, type, cb });
   },
   off: function(comp, type) {
-    xeUtils.remove(eventStore$1, function(item) {
+    XEUtils$1.remove(eventStore$1, function(item) {
       return item.comp === comp && item.type === type;
     });
   },
@@ -5709,7 +5865,7 @@ if (browse.isDoc) {
   window.addEventListener("mousedown", triggerEvent, false);
   window.addEventListener("blur", triggerEvent, false);
   window.addEventListener("resize", triggerEvent, false);
-  window.addEventListener(wheelName, xeUtils.throttle(triggerEvent, 100, { leading: true, trailing: false }), { passive: true, capture: false });
+  window.addEventListener(wheelName, XEUtils$1.throttle(triggerEvent, 100, { leading: true, trailing: false }), { passive: true, capture: false });
 }
 var __assign$h = globalThis && globalThis.__assign || function() {
   __assign$h = Object.assign || function(t2) {
@@ -5758,21 +5914,60 @@ function useSize(props) {
 const VxeButtonComponent = vue.defineComponent({
   name: "VxeButton",
   props: {
+    /**
+     * 按钮类型
+     */
     type: String,
     className: String,
+    /**
+     * 按钮尺寸
+     */
     size: { type: String, default: function() {
       return GlobalConfig.button.size || GlobalConfig.size;
     } },
+    /**
+     * 用来标识这一项
+     */
     name: [String, Number],
+    /**
+     * 按钮内容
+     */
     content: String,
+    /**
+     * 固定显示下拉面板的方向
+     */
     placement: String,
+    /**
+     * 按钮状态
+     */
     status: String,
+    /**
+     * 按钮的图标
+     */
     icon: String,
+    /**
+     * 圆角边框
+     */
     round: Boolean,
+    /**
+     * 圆角按钮
+     */
     circle: Boolean,
+    /**
+     * 是否禁用
+     */
     disabled: Boolean,
+    /**
+     * 是否加载中
+     */
     loading: Boolean,
+    /**
+     * 在下拉面板关闭时销毁内容
+     */
     destroyOnClose: Boolean,
+    /**
+     * 是否将弹框容器插入于 body 内
+     */
     transfer: { type: Boolean, default: function() {
       return GlobalConfig.button.transfer;
     } }
@@ -5783,7 +5978,7 @@ const VxeButtonComponent = vue.defineComponent({
   ],
   setup: function(props, context) {
     var slots = context.slots, emit = context.emit;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       inited: false,
@@ -6101,8 +6296,7 @@ const VxeLoadingComponent = vue.defineComponent({
     icon: String,
     text: String
   },
-  setup: function(props, _a) {
-    var slots = _a.slots;
+  setup: function(props) {
     var computeLoadingIcon = vue.computed(function() {
       return props.icon || GlobalConfig.icon.LOADING;
     });
@@ -6117,11 +6311,7 @@ const VxeLoadingComponent = vue.defineComponent({
         class: ["vxe-loading", {
           "is--visible": props.modelValue
         }]
-      }, slots.default ? [
-        vue.h("div", {
-          class: "vxe-loading--warpper"
-        }, slots.default({}))
-      ] : [
+      }, [
         vue.h("div", {
           class: "vxe-loading--chunk"
         }, [
@@ -6267,7 +6457,7 @@ const VxeModalComponent = vue.defineComponent({
   ],
   setup: function(props, context) {
     var slots = context.slots, emit = context.emit;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       inited: false,
@@ -6321,12 +6511,12 @@ const VxeModalComponent = vue.defineComponent({
     var updatePosition = function() {
       return vue.nextTick().then(function() {
         var position = props.position;
-        var marginSize = xeUtils.toNumber(props.marginSize);
+        var marginSize = XEUtils$1.toNumber(props.marginSize);
         var boxElem = getBox();
         var clientVisibleWidth = document.documentElement.clientWidth || document.body.clientWidth;
         var clientVisibleHeight = document.documentElement.clientHeight || document.body.clientHeight;
         var isPosCenter = position === "center";
-        var _a = xeUtils.isString(position) ? { top: position, left: position } : Object.assign({}, position), top = _a.top, left = _a.left;
+        var _a = XEUtils$1.isString(position) ? { top: position, left: position } : Object.assign({}, position), top = _a.top, left = _a.left;
         var topCenter = isPosCenter || top === "center";
         var leftCenter = isPosCenter || left === "center";
         var posTop = "";
@@ -6350,7 +6540,7 @@ const VxeModalComponent = vue.defineComponent({
         var offsetTop = 0;
         msgQueue.forEach(function(comp) {
           var boxElem = comp.getBox();
-          offsetTop += xeUtils.toNumber(comp.props.top);
+          offsetTop += XEUtils$1.toNumber(comp.props.top);
           comp.reactData.modalTop = offsetTop;
           offsetTop += boxElem.clientHeight;
         });
@@ -6358,7 +6548,7 @@ const VxeModalComponent = vue.defineComponent({
     };
     var removeMsgQueue = function() {
       if (msgQueue.indexOf($xemodal) > -1) {
-        xeUtils.remove(msgQueue, function(comp) {
+        XEUtils$1.remove(msgQueue, function(comp) {
           return comp === $xemodal;
         });
       }
@@ -6371,7 +6561,7 @@ const VxeModalComponent = vue.defineComponent({
       var params = { type };
       if (visible) {
         Promise.resolve(beforeHideMethod ? beforeHideMethod(params) : null).then(function(rest) {
-          if (!xeUtils.isError(rest)) {
+          if (!XEUtils$1.isError(rest)) {
             if (isMsg) {
               removeMsgQueue();
             }
@@ -6379,7 +6569,7 @@ const VxeModalComponent = vue.defineComponent({
             if (!remember) {
               reactData.zoomLocat = null;
             }
-            xeUtils.remove(allActivedModals, function(item) {
+            XEUtils$1.remove(allActivedModals, function(item) {
               return item === $xemodal;
             });
             modalMethods.dispatchEvent("before-hide", params);
@@ -6412,7 +6602,7 @@ const VxeModalComponent = vue.defineComponent({
     };
     var getStorageMap = function(key) {
       var version = GlobalConfig.version;
-      var rest = xeUtils.toStringJSON(localStorage.getItem(key) || "");
+      var rest = XEUtils$1.toStringJSON(localStorage.getItem(key) || "");
       return rest && rest._v === version ? rest : { _v: version };
     };
     var hasPosStorage = function() {
@@ -6472,15 +6662,15 @@ const VxeModalComponent = vue.defineComponent({
           zoomLocat.width,
           zoomLocat.height
         ] : []).map(function(val) {
-          return val ? xeUtils.toNumber(val) : "";
+          return val ? XEUtils$1.toNumber(val) : "";
         }).join(",");
-        localStorage.setItem(storageKey, xeUtils.toJSONString(posStorageMap));
+        localStorage.setItem(storageKey, XEUtils$1.toJSONString(posStorageMap));
       }
     };
     var maximize = function() {
       return vue.nextTick().then(function() {
         if (!reactData.zoomLocat) {
-          var marginSize = Math.max(0, xeUtils.toNumber(props.marginSize));
+          var marginSize = Math.max(0, XEUtils$1.toNumber(props.marginSize));
           var boxElem = getBox();
           var _a = getDomNode(), visibleHeight = _a.visibleHeight, visibleWidth = _a.visibleWidth;
           reactData.zoomLocat = {
@@ -6536,7 +6726,7 @@ const VxeModalComponent = vue.defineComponent({
           if (duration !== -1) {
             setTimeout(function() {
               return closeModal2("close");
-            }, xeUtils.toNumber(duration));
+            }, XEUtils$1.toNumber(duration));
           }
         } else {
           vue.nextTick(function() {
@@ -6580,7 +6770,7 @@ const VxeModalComponent = vue.defineComponent({
     var handleGlobalKeydownEvent = function(evnt) {
       var isEsc = hasEventKey(evnt, EVENT_KEYS.ESCAPE);
       if (isEsc) {
-        var lastModal_1 = xeUtils.max(allActivedModals, function(item) {
+        var lastModal_1 = XEUtils$1.max(allActivedModals, function(item) {
           return item.reactData.modalZindex;
         });
         if (lastModal_1) {
@@ -6645,10 +6835,10 @@ const VxeModalComponent = vue.defineComponent({
       var isMsg = computeIsMsg.value;
       if (!isMsg) {
         var boxElem = getBox();
-        if (xeUtils.isNumber(top)) {
+        if (XEUtils$1.isNumber(top)) {
           boxElem.style.top = "".concat(top, "px");
         }
-        if (xeUtils.isNumber(left)) {
+        if (XEUtils$1.isNumber(left)) {
           boxElem.style.left = "".concat(left, "px");
         }
       }
@@ -6665,7 +6855,7 @@ const VxeModalComponent = vue.defineComponent({
     var mousedownEvent = function(evnt) {
       var remember = props.remember, storage = props.storage;
       var zoomLocat = reactData.zoomLocat;
-      var marginSize = xeUtils.toNumber(props.marginSize);
+      var marginSize = XEUtils$1.toNumber(props.marginSize);
       var boxElem = getBox();
       if (!zoomLocat && evnt.button === 0 && !getEventTargetNode(evnt, boxElem, "trigger--btn").flag) {
         evnt.preventDefault();
@@ -6718,11 +6908,11 @@ const VxeModalComponent = vue.defineComponent({
       evnt.preventDefault();
       var remember = props.remember, storage = props.storage;
       var _a = getDomNode(), visibleHeight = _a.visibleHeight, visibleWidth = _a.visibleWidth;
-      var marginSize = xeUtils.toNumber(props.marginSize);
+      var marginSize = XEUtils$1.toNumber(props.marginSize);
       var targetElem = evnt.target;
       var type = targetElem.getAttribute("type");
-      var minWidth = xeUtils.toNumber(props.minWidth);
-      var minHeight = xeUtils.toNumber(props.minHeight);
+      var minWidth = XEUtils$1.toNumber(props.minWidth);
+      var minHeight = XEUtils$1.toNumber(props.minHeight);
       var maxWidth = visibleWidth;
       var maxHeight = visibleHeight;
       var boxElem = getBox();
@@ -7075,21 +7265,21 @@ const VxeModalComponent = vue.defineComponent({
 });
 function toStringTimeDate(str) {
   if (str) {
-    var rest = new Date();
+    var rest = /* @__PURE__ */ new Date();
     var h = 0;
     var m = 0;
     var s = 0;
-    if (xeUtils.isDate(str)) {
+    if (XEUtils$1.isDate(str)) {
       h = str.getHours();
       m = str.getMinutes();
       s = str.getSeconds();
     } else {
-      str = xeUtils.toValueString(str);
+      str = XEUtils$1.toValueString(str);
       var parses = str.match(/^(\d{1,2})(:(\d{1,2}))?(:(\d{1,2}))?/);
       if (parses) {
-        h = xeUtils.toNumber(parses[1]);
-        m = xeUtils.toNumber(parses[3]);
-        s = xeUtils.toNumber(parses[5]);
+        h = XEUtils$1.toNumber(parses[1]);
+        m = XEUtils$1.toNumber(parses[3]);
+        s = XEUtils$1.toNumber(parses[5]);
       }
     }
     rest.setHours(h);
@@ -7097,7 +7287,7 @@ function toStringTimeDate(str) {
     rest.setSeconds(s);
     return rest;
   }
-  return new Date("");
+  return /* @__PURE__ */ new Date("");
 }
 function getDateQuarter(date) {
   var month = date.getMonth();
@@ -7111,25 +7301,14 @@ function getDateQuarter(date) {
   return 4;
 }
 function handleNumber(val) {
-  return xeUtils.isString(val) ? val.replace(/,/g, "") : val;
+  return XEUtils$1.isString(val) ? val.replace(/,/g, "") : val;
 }
 function toFloatValueFixed(inputValue, digitsValue) {
   if (/^-/.test("" + inputValue)) {
-    return xeUtils.toFixed(xeUtils.ceil(inputValue, digitsValue), digitsValue);
+    return XEUtils$1.toFixed(XEUtils$1.ceil(inputValue, digitsValue), digitsValue);
   }
-  return xeUtils.toFixed(xeUtils.floor(inputValue, digitsValue), digitsValue);
+  return XEUtils$1.toFixed(XEUtils$1.floor(inputValue, digitsValue), digitsValue);
 }
-var __spreadArray$4 = globalThis && globalThis.__spreadArray || function(to, from, pack) {
-  if (pack || arguments.length === 2)
-    for (var i = 0, l = from.length, ar; i < l; i++) {
-      if (ar || !(i in from)) {
-        if (!ar)
-          ar = Array.prototype.slice.call(from, 0, i);
-        ar[i] = from[i];
-      }
-    }
-  return to.concat(ar || Array.prototype.slice.call(from));
-};
 var yearSize = 12;
 var monthSize = 20;
 var quarterSize = 8;
@@ -7155,18 +7334,22 @@ const VxeInputConstructor = vue.defineComponent({
       return GlobalConfig.input.size || GlobalConfig.size;
     } },
     multiple: Boolean,
+    // number、integer、float
     min: { type: [String, Number], default: null },
     max: { type: [String, Number], default: null },
     step: [String, Number],
     exponential: { type: Boolean, default: function() {
       return GlobalConfig.input.exponential;
     } },
+    // number、integer、float、password
     controls: { type: Boolean, default: function() {
       return GlobalConfig.input.controls;
     } },
+    // float
     digits: { type: [String, Number], default: function() {
       return GlobalConfig.input.digits;
     } },
+    // date、week、month、quarter、year
     startDate: { type: [String, Number, Date], default: function() {
       return GlobalConfig.input.startDate;
     } },
@@ -7175,6 +7358,7 @@ const VxeInputConstructor = vue.defineComponent({
     } },
     minDate: [String, Number, Date],
     maxDate: [String, Number, Date],
+    // 已废弃 startWeek，被 startDay 替换
     startWeek: Number,
     startDay: { type: [String, Number], default: function() {
       return GlobalConfig.input.startDay;
@@ -7192,6 +7376,7 @@ const VxeInputConstructor = vue.defineComponent({
     disabledMethod: { type: Function, default: function() {
       return GlobalConfig.input.disabledMethod;
     } },
+    // week
     selectDay: { type: [String, Number], default: function() {
       return GlobalConfig.input.selectDay;
     } },
@@ -7227,7 +7412,7 @@ const VxeInputConstructor = vue.defineComponent({
     var slots = context.slots, emit = context.emit;
     var $xeform = vue.inject("$xeform", null);
     var $xeformiteminfo = vue.inject("$xeformiteminfo", null);
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       inited: false,
@@ -7269,7 +7454,7 @@ const VxeInputConstructor = vue.defineComponent({
       if (type === "time") {
         return toStringTimeDate(value);
       }
-      return xeUtils.toStringDate(value, format);
+      return XEUtils$1.toStringDate(value, format);
     };
     var computeIsDateTimeType = vue.computed(function() {
       var type = props.type;
@@ -7289,18 +7474,18 @@ const VxeInputConstructor = vue.defineComponent({
       return props.type === "search";
     });
     var computeDigitsValue = vue.computed(function() {
-      return xeUtils.toInteger(props.digits) || 1;
+      return XEUtils$1.toInteger(props.digits) || 1;
     });
     var computeStepValue = vue.computed(function() {
       var type = props.type;
       var digitsValue = computeDigitsValue.value;
       var step = props.step;
       if (type === "integer") {
-        return xeUtils.toInteger(step) || 1;
+        return XEUtils$1.toInteger(step) || 1;
       } else if (type === "float") {
-        return xeUtils.toNumber(step) || 1 / Math.pow(10, digitsValue);
+        return XEUtils$1.toNumber(step) || 1 / Math.pow(10, digitsValue);
       }
-      return xeUtils.toNumber(step) || 1;
+      return XEUtils$1.toNumber(step) || 1;
     });
     var computeIsClearable = vue.computed(function() {
       var type = props.type;
@@ -7310,10 +7495,10 @@ const VxeInputConstructor = vue.defineComponent({
       return props.clearable && (isPawdType || isNumType || isDatePickerType || type === "text" || type === "search");
     });
     var computeDateStartTime = vue.computed(function() {
-      return props.startDate ? xeUtils.toStringDate(props.startDate) : null;
+      return props.startDate ? XEUtils$1.toStringDate(props.startDate) : null;
     });
     var computeDateEndTime = vue.computed(function() {
-      return props.endDate ? xeUtils.toStringDate(props.endDate) : null;
+      return props.endDate ? XEUtils$1.toStringDate(props.endDate) : null;
     });
     var computeSupportMultiples = vue.computed(function() {
       return ["date", "week", "month", "quarter", "year"].includes(props.type);
@@ -7323,9 +7508,9 @@ const VxeInputConstructor = vue.defineComponent({
       var isDatePickerType = computeIsDatePickerType.value;
       var dateValueFormat = computeDateValueFormat.value;
       if (multiple && modelValue && isDatePickerType) {
-        return xeUtils.toValueString(modelValue).split(",").map(function(item) {
+        return XEUtils$1.toValueString(modelValue).split(",").map(function(item) {
           var date = parseDate2(item, dateValueFormat);
-          if (xeUtils.isValidDate(date)) {
+          if (XEUtils$1.isValidDate(date)) {
             return date;
           }
           return null;
@@ -7337,14 +7522,14 @@ const VxeInputConstructor = vue.defineComponent({
       var dateListValue = computeDateListValue.value;
       var dateValueFormat = computeDateValueFormat.value;
       return dateListValue.map(function(date) {
-        return xeUtils.toDateString(date, dateValueFormat);
+        return XEUtils$1.toDateString(date, dateValueFormat);
       });
     });
     var computeDateMultipleLabel = vue.computed(function() {
       var dateListValue = computeDateListValue.value;
       var dateLabelFormat = computeDateLabelFormat.value;
       return dateListValue.map(function(date) {
-        return xeUtils.toDateString(date, dateLabelFormat);
+        return XEUtils$1.toDateString(date, dateLabelFormat);
       }).join(", ");
     });
     var computeDateValueFormat = vue.computed(function() {
@@ -7358,7 +7543,7 @@ const VxeInputConstructor = vue.defineComponent({
       var val = null;
       if (modelValue && isDatePickerType) {
         var date = parseDate2(modelValue, dateValueFormat);
-        if (xeUtils.isValidDate(date)) {
+        if (XEUtils$1.isValidDate(date)) {
           val = date;
         }
       }
@@ -7383,7 +7568,7 @@ const VxeInputConstructor = vue.defineComponent({
     var computeDateTimeLabel = vue.computed(function() {
       var datetimePanelValue = reactData.datetimePanelValue;
       if (datetimePanelValue) {
-        return xeUtils.toDateString(datetimePanelValue, "HH:mm:ss");
+        return XEUtils$1.toDateString(datetimePanelValue, "HH:mm:ss");
       }
       return "";
     });
@@ -7407,7 +7592,7 @@ const VxeInputConstructor = vue.defineComponent({
         var selectFullYear = selectMonth.getFullYear();
         var startYearDate = new Date(selectFullYear - selectFullYear % yearSize, 0, 1);
         for (var index = -4; index < yearSize + 4; index++) {
-          var date = xeUtils.getWhatYear(startYearDate, index, "first");
+          var date = XEUtils$1.getWhatYear(startYearDate, index, "first");
           var itemFullYear = date.getFullYear();
           years.push({
             date,
@@ -7445,7 +7630,7 @@ const VxeInputConstructor = vue.defineComponent({
     });
     var computeFirstDayOfWeek = vue.computed(function() {
       var startDay = props.startDay, startWeek = props.startWeek;
-      return xeUtils.toNumber(xeUtils.isNumber(startDay) || xeUtils.isString(startDay) ? startDay : startWeek);
+      return XEUtils$1.toNumber(XEUtils$1.isNumber(startDay) || XEUtils$1.isString(startDay) ? startDay : startWeek);
     });
     var computeWeekDatas = vue.computed(function() {
       var weeks = [];
@@ -7487,7 +7672,7 @@ const VxeInputConstructor = vue.defineComponent({
     });
     var computeYearDatas = vue.computed(function() {
       var yearList = computeYearList.value;
-      return xeUtils.chunk(yearList, 4);
+      return XEUtils$1.chunk(yearList, 4);
     });
     var computeQuarterList = vue.computed(function() {
       var selectMonth = reactData.selectMonth, currentDate = reactData.currentDate;
@@ -7495,10 +7680,10 @@ const VxeInputConstructor = vue.defineComponent({
       if (selectMonth && currentDate) {
         var currFullYear = currentDate.getFullYear();
         var currQuarter = getDateQuarter(currentDate);
-        var firstYear = xeUtils.getWhatYear(selectMonth, 0, "first");
+        var firstYear = XEUtils$1.getWhatYear(selectMonth, 0, "first");
         var selFullYear = firstYear.getFullYear();
         for (var index = -2; index < quarterSize - 2; index++) {
-          var date = xeUtils.getWhatQuarter(firstYear, index);
+          var date = XEUtils$1.getWhatQuarter(firstYear, index);
           var itemFullYear = date.getFullYear();
           var itemQuarter = getDateQuarter(date);
           var isPrev = itemFullYear < selFullYear;
@@ -7516,7 +7701,7 @@ const VxeInputConstructor = vue.defineComponent({
     });
     var computeQuarterDatas = vue.computed(function() {
       var quarterList = computeQuarterList.value;
-      return xeUtils.chunk(quarterList, 2);
+      return XEUtils$1.chunk(quarterList, 2);
     });
     var computeMonthList = vue.computed(function() {
       var selectMonth = reactData.selectMonth, currentDate = reactData.currentDate;
@@ -7524,9 +7709,9 @@ const VxeInputConstructor = vue.defineComponent({
       if (selectMonth && currentDate) {
         var currFullYear = currentDate.getFullYear();
         var currMonth = currentDate.getMonth();
-        var selFullYear = xeUtils.getWhatYear(selectMonth, 0, "first").getFullYear();
+        var selFullYear = XEUtils$1.getWhatYear(selectMonth, 0, "first").getFullYear();
         for (var index = -4; index < monthSize - 4; index++) {
-          var date = xeUtils.getWhatYear(selectMonth, 0, index);
+          var date = XEUtils$1.getWhatYear(selectMonth, 0, index);
           var itemFullYear = date.getFullYear();
           var itemMonth = date.getMonth();
           var isPrev = itemFullYear < selFullYear;
@@ -7544,7 +7729,7 @@ const VxeInputConstructor = vue.defineComponent({
     });
     var computeMonthDatas = vue.computed(function() {
       var monthList = computeMonthList.value;
-      return xeUtils.chunk(monthList, 4);
+      return XEUtils$1.chunk(monthList, 4);
     });
     var computeDayList = vue.computed(function() {
       var selectMonth = reactData.selectMonth, currentDate = reactData.currentDate;
@@ -7559,9 +7744,9 @@ const VxeInputConstructor = vue.defineComponent({
         var selMonth = selectMonth.getMonth();
         var selDay = selectMonth.getDay();
         var prevOffsetDate = -weekDatas.indexOf(selDay);
-        var startDayDate = new Date(xeUtils.getWhatDay(selectMonth, prevOffsetDate).getTime() + dateHMSTime);
+        var startDayDate = new Date(XEUtils$1.getWhatDay(selectMonth, prevOffsetDate).getTime() + dateHMSTime);
         for (var index = 0; index < 42; index++) {
-          var date = xeUtils.getWhatDay(startDayDate, index);
+          var date = XEUtils$1.getWhatDay(startDayDate, index);
           var itemFullYear = date.getFullYear();
           var itemMonth = date.getMonth();
           var itemDate = date.getDate();
@@ -7580,7 +7765,7 @@ const VxeInputConstructor = vue.defineComponent({
     });
     var computeDayDatas = vue.computed(function() {
       var dayList = computeDayList.value;
-      return xeUtils.chunk(dayList, 7);
+      return XEUtils$1.chunk(dayList, 7);
     });
     var computeWeekDates = vue.computed(function() {
       var dayDatas = computeDayDatas.value;
@@ -7594,7 +7779,7 @@ const VxeInputConstructor = vue.defineComponent({
           isCurrent: false,
           isNow: false,
           isNext: false,
-          label: xeUtils.getYearWeek(firstItem.date, firstDayOfWeek)
+          label: XEUtils$1.getYearWeek(firstItem.date, firstDayOfWeek)
         };
         return [item].concat(list);
       });
@@ -7654,7 +7839,7 @@ const VxeInputConstructor = vue.defineComponent({
     var computeInpMaxlength = vue.computed(function() {
       var maxlength = props.maxlength;
       var isNumType = computeIsNumType.value;
-      return isNumType && !xeUtils.toNumber(maxlength) ? 16 : maxlength;
+      return isNumType && !XEUtils$1.toNumber(maxlength) ? 16 : maxlength;
     });
     var computeInpImmediate = vue.computed(function() {
       var type = props.type, immediate = props.immediate;
@@ -7665,7 +7850,7 @@ const VxeInputConstructor = vue.defineComponent({
       var inputValue = reactData.inputValue;
       var isNumType = computeIsNumType.value;
       if (isNumType) {
-        return type === "integer" ? xeUtils.toInteger(handleNumber(inputValue)) : xeUtils.toNumber(handleNumber(inputValue));
+        return type === "integer" ? XEUtils$1.toInteger(handleNumber(inputValue)) : XEUtils$1.toNumber(handleNumber(inputValue));
       }
       return 0;
     });
@@ -7675,7 +7860,7 @@ const VxeInputConstructor = vue.defineComponent({
       var isNumType = computeIsNumType.value;
       var numValue = computeNumValue.value;
       if ((inputValue || inputValue === 0) && isNumType && min2 !== null) {
-        return numValue <= xeUtils.toNumber(min2);
+        return numValue <= XEUtils$1.toNumber(min2);
       }
       return false;
     });
@@ -7685,7 +7870,7 @@ const VxeInputConstructor = vue.defineComponent({
       var isNumType = computeIsNumType.value;
       var numValue = computeNumValue.value;
       if ((inputValue || inputValue === 0) && isNumType && max2 !== null) {
-        return numValue >= xeUtils.toNumber(max2);
+        return numValue >= XEUtils$1.toNumber(max2);
       }
       return false;
     });
@@ -7693,8 +7878,8 @@ const VxeInputConstructor = vue.defineComponent({
       var type = props.type, exponential = props.exponential;
       var inpMaxlength = computeInpMaxlength.value;
       var digitsValue = computeDigitsValue.value;
-      var restVal = type === "float" ? toFloatValueFixed(val, digitsValue) : xeUtils.toValueString(val);
-      if (exponential && (val === restVal || xeUtils.toValueString(val).toLowerCase() === xeUtils.toNumber(restVal).toExponential())) {
+      var restVal = type === "float" ? toFloatValueFixed(val, digitsValue) : XEUtils$1.toValueString(val);
+      if (exponential && (val === restVal || XEUtils$1.toValueString(val).toLowerCase() === XEUtils$1.toNumber(restVal).toExponential())) {
         return val;
       }
       return restVal.slice(0, inpMaxlength);
@@ -7707,7 +7892,7 @@ const VxeInputConstructor = vue.defineComponent({
       reactData.inputValue = value;
       emit("update:modelValue", value);
       inputMethods.dispatchEvent("input", { value }, evnt);
-      if (xeUtils.toValueString(props.modelValue) !== value) {
+      if (XEUtils$1.toValueString(props.modelValue) !== value) {
         inputMethods.dispatchEvent("change", { value }, evnt);
         if ($xeform && $xeformiteminfo) {
           $xeform.triggerItemEvent(evnt, $xeformiteminfo.itemConfig.field, value);
@@ -7739,10 +7924,6 @@ const VxeInputConstructor = vue.defineComponent({
     };
     var focusEvent = function(evnt) {
       reactData.isActivated = true;
-      var isDatePickerType = computeIsDatePickerType.value;
-      if (isDatePickerType) {
-        datePickerOpenEvent(evnt);
-      }
       triggerEvent2(evnt);
     };
     var clickPrefixEvent = function(evnt) {
@@ -7796,10 +7977,10 @@ const VxeInputConstructor = vue.defineComponent({
       if (value) {
         dValue = parseDate2(value, valueFormat);
       }
-      if (xeUtils.isValidDate(dValue)) {
-        dLabel = xeUtils.toDateString(dValue, dateLabelFormat, { firstDay: firstDayOfWeek });
+      if (XEUtils$1.isValidDate(dValue)) {
+        dLabel = XEUtils$1.toDateString(dValue, dateLabelFormat, { firstDay: firstDayOfWeek });
         if (dateLabelFormat && type === "week") {
-          var firstWeekDate = xeUtils.getWhatWeek(dValue, 0, firstDayOfWeek, firstDayOfWeek);
+          var firstWeekDate = XEUtils$1.getWhatWeek(dValue, 0, firstDayOfWeek, firstDayOfWeek);
           if (firstWeekDate.getFullYear() < dValue.getFullYear()) {
             var yyIndex = dateLabelFormat.indexOf("yyyy");
             if (yyIndex > -1) {
@@ -7841,17 +8022,17 @@ const VxeInputConstructor = vue.defineComponent({
       }
     };
     var vaildMaxNum = function(num) {
-      return props.max === null || xeUtils.toNumber(num) <= xeUtils.toNumber(props.max);
+      return props.max === null || XEUtils$1.toNumber(num) <= XEUtils$1.toNumber(props.max);
     };
     var vaildMinNum = function(num) {
-      return props.min === null || xeUtils.toNumber(num) >= xeUtils.toNumber(props.min);
+      return props.min === null || XEUtils$1.toNumber(num) >= XEUtils$1.toNumber(props.min);
     };
     var dateRevert = function() {
       reactData.inputValue = props.multiple ? computeDateMultipleLabel.value : reactData.datePanelLabel;
     };
     var dateCheckMonth = function(date) {
-      var month = xeUtils.getWhatMonth(date, 0, "first");
-      if (!xeUtils.isEqual(month, reactData.selectMonth)) {
+      var month = XEUtils$1.getWhatMonth(date, 0, "first");
+      if (!XEUtils$1.isEqual(month, reactData.selectMonth)) {
         reactData.selectMonth = month;
       }
     };
@@ -7862,52 +8043,45 @@ const VxeInputConstructor = vue.defineComponent({
       var dateValueFormat = computeDateValueFormat.value;
       var firstDayOfWeek = computeFirstDayOfWeek.value;
       if (props.type === "week") {
-        var sWeek = xeUtils.toNumber(props.selectDay);
-        date = xeUtils.getWhatWeek(date, 0, sWeek, firstDayOfWeek);
+        var sWeek = XEUtils$1.toNumber(props.selectDay);
+        date = XEUtils$1.getWhatWeek(date, 0, sWeek, firstDayOfWeek);
       } else if (isDateTimeType) {
         date.setHours(datetimePanelValue.getHours());
         date.setMinutes(datetimePanelValue.getMinutes());
         date.setSeconds(datetimePanelValue.getSeconds());
       }
-      var inpVal = xeUtils.toDateString(date, dateValueFormat, { firstDay: firstDayOfWeek });
+      var inpVal = XEUtils$1.toDateString(date, dateValueFormat, { firstDay: firstDayOfWeek });
       dateCheckMonth(date);
       if (multiple) {
         var dateMultipleValue = computeDateMultipleValue.value;
         if (isDateTimeType) {
-          var dateListValue = __spreadArray$4([], computeDateListValue.value, true);
+          var dateListValue = computeDateListValue.value;
           var datetimeRest_1 = [];
-          var eqIndex = xeUtils.findIndexOf(dateListValue, function(val) {
-            return xeUtils.isDateSame(date, val, "yyyyMMdd");
-          });
-          if (eqIndex === -1) {
-            dateListValue.push(date);
-          } else {
-            dateListValue.splice(eqIndex, 1);
-          }
           dateListValue.forEach(function(item) {
-            if (item) {
+            if (item && !XEUtils$1.isDateSame(date, item, "yyyyMMdd")) {
               item.setHours(datetimePanelValue.getHours());
               item.setMinutes(datetimePanelValue.getMinutes());
               item.setSeconds(datetimePanelValue.getSeconds());
               datetimeRest_1.push(item);
             }
           });
+          datetimeRest_1.push(date);
           emitModel(datetimeRest_1.map(function(date2) {
-            return xeUtils.toDateString(date2, dateValueFormat);
+            return XEUtils$1.toDateString(date2, dateValueFormat);
           }).join(","), { type: "update" });
         } else {
           if (dateMultipleValue.some(function(val) {
-            return xeUtils.isEqual(val, inpVal);
+            return XEUtils$1.isEqual(val, inpVal);
           })) {
             emitModel(dateMultipleValue.filter(function(val) {
-              return !xeUtils.isEqual(val, inpVal);
+              return !XEUtils$1.isEqual(val, inpVal);
             }).join(","), { type: "update" });
           } else {
             emitModel(dateMultipleValue.concat([inpVal]).join(","), { type: "update" });
           }
         }
       } else {
-        if (!xeUtils.isEqual(modelValue, inpVal)) {
+        if (!XEUtils$1.isEqual(modelValue, inpVal)) {
           emitModel(inpVal, { type: "update" });
         }
       }
@@ -7922,15 +8096,15 @@ const VxeInputConstructor = vue.defineComponent({
       if (!inpReadonly) {
         if (isNumType) {
           if (inputValue) {
-            var inpNumVal = type === "integer" ? xeUtils.toInteger(handleNumber(inputValue)) : xeUtils.toNumber(handleNumber(inputValue));
+            var inpNumVal = type === "integer" ? XEUtils$1.toInteger(handleNumber(inputValue)) : XEUtils$1.toNumber(handleNumber(inputValue));
             if (!vaildMinNum(inpNumVal)) {
               inpNumVal = min2;
             } else if (!vaildMaxNum(inpNumVal)) {
               inpNumVal = max2;
             }
             if (exponential) {
-              var inpStringVal = xeUtils.toValueString(inputValue).toLowerCase();
-              if (inpStringVal === xeUtils.toNumber(inpNumVal).toExponential()) {
+              var inpStringVal = XEUtils$1.toValueString(inputValue).toLowerCase();
+              if (inpStringVal === XEUtils$1.toNumber(inpNumVal).toExponential()) {
                 inpNumVal = inpStringVal;
               }
             }
@@ -7939,9 +8113,9 @@ const VxeInputConstructor = vue.defineComponent({
         } else if (isDatePickerType) {
           if (inputValue) {
             var inpDateVal = parseDate2(inputValue, dateLabelFormat);
-            if (xeUtils.isValidDate(inpDateVal)) {
+            if (XEUtils$1.isValidDate(inpDateVal)) {
               if (type === "time") {
-                inpDateVal = xeUtils.toDateString(inpDateVal, dateLabelFormat);
+                inpDateVal = XEUtils$1.toDateString(inpDateVal, dateLabelFormat);
                 if (inputValue !== inpDateVal) {
                   emitModel(inpDateVal, { type: "check" });
                 }
@@ -7951,7 +8125,7 @@ const VxeInputConstructor = vue.defineComponent({
                 var firstDayOfWeek = computeFirstDayOfWeek.value;
                 if (type === "datetime") {
                   var dateValue = computeDateValue.value;
-                  if (inputValue !== xeUtils.toDateString(dateValue, dateLabelFormat) || inputValue !== xeUtils.toDateString(inpDateVal, dateLabelFormat)) {
+                  if (inputValue !== XEUtils$1.toDateString(dateValue, dateLabelFormat) || inputValue !== XEUtils$1.toDateString(inpDateVal, dateLabelFormat)) {
                     isChange = true;
                     datetimePanelValue.setHours(inpDateVal.getHours());
                     datetimePanelValue.setMinutes(inpDateVal.getMinutes());
@@ -7960,7 +8134,7 @@ const VxeInputConstructor = vue.defineComponent({
                 } else {
                   isChange = true;
                 }
-                reactData.inputValue = xeUtils.toDateString(inpDateVal, dateLabelFormat, { firstDay: firstDayOfWeek });
+                reactData.inputValue = XEUtils$1.toDateString(inpDateVal, dateLabelFormat, { firstDay: firstDayOfWeek });
                 if (isChange) {
                   dateChange(inpDateVal);
                 }
@@ -8001,8 +8175,8 @@ const VxeInputConstructor = vue.defineComponent({
       var min2 = props.min, max2 = props.max, type = props.type;
       var inputValue = reactData.inputValue;
       var stepValue = computeStepValue.value;
-      var numValue = type === "integer" ? xeUtils.toInteger(handleNumber(inputValue)) : xeUtils.toNumber(handleNumber(inputValue));
-      var newValue = isPlus ? xeUtils.add(numValue, stepValue) : xeUtils.subtract(numValue, stepValue);
+      var numValue = type === "integer" ? XEUtils$1.toInteger(handleNumber(inputValue)) : XEUtils$1.toNumber(handleNumber(inputValue));
+      var newValue = isPlus ? XEUtils$1.add(numValue, stepValue) : XEUtils$1.subtract(numValue, stepValue);
       var restNum;
       if (!vaildMinNum(newValue)) {
         restNum = min2;
@@ -8113,10 +8287,10 @@ const VxeInputConstructor = vue.defineComponent({
       triggerEvent2(evnt);
     };
     var dateMonthHandle = function(date, offsetMonth) {
-      reactData.selectMonth = xeUtils.getWhatMonth(date, offsetMonth, "first");
+      reactData.selectMonth = XEUtils$1.getWhatMonth(date, offsetMonth, "first");
     };
     var dateNowHandle = function() {
-      var currentDate = xeUtils.getWhatDay(Date.now(), 0, "first");
+      var currentDate = XEUtils$1.getWhatDay(Date.now(), 0, "first");
       reactData.currentDate = currentDate;
       dateMonthHandle(currentDate, 0);
     };
@@ -8135,20 +8309,20 @@ const VxeInputConstructor = vue.defineComponent({
       var isDisabledPrevDateBtn = computeIsDisabledPrevDateBtn.value;
       if (!isDisabledPrevDateBtn) {
         if (type === "year") {
-          reactData.selectMonth = xeUtils.getWhatYear(selectMonth, -yearSize, "first");
+          reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, -yearSize, "first");
         } else if (type === "month" || type === "quarter") {
           if (datePanelType === "year") {
-            reactData.selectMonth = xeUtils.getWhatYear(selectMonth, -yearSize, "first");
+            reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, -yearSize, "first");
           } else {
-            reactData.selectMonth = xeUtils.getWhatYear(selectMonth, -1, "first");
+            reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, -1, "first");
           }
         } else {
           if (datePanelType === "year") {
-            reactData.selectMonth = xeUtils.getWhatYear(selectMonth, -yearSize, "first");
+            reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, -yearSize, "first");
           } else if (datePanelType === "month") {
-            reactData.selectMonth = xeUtils.getWhatYear(selectMonth, -1, "first");
+            reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, -1, "first");
           } else {
-            reactData.selectMonth = xeUtils.getWhatMonth(selectMonth, -1, "first");
+            reactData.selectMonth = XEUtils$1.getWhatMonth(selectMonth, -1, "first");
           }
         }
         inputMethods.dispatchEvent("date-prev", { type }, evnt);
@@ -8168,20 +8342,20 @@ const VxeInputConstructor = vue.defineComponent({
       var isDisabledNextDateBtn = computeIsDisabledNextDateBtn.value;
       if (!isDisabledNextDateBtn) {
         if (type === "year") {
-          reactData.selectMonth = xeUtils.getWhatYear(selectMonth, yearSize, "first");
+          reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, yearSize, "first");
         } else if (type === "month" || type === "quarter") {
           if (datePanelType === "year") {
-            reactData.selectMonth = xeUtils.getWhatYear(selectMonth, yearSize, "first");
+            reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, yearSize, "first");
           } else {
-            reactData.selectMonth = xeUtils.getWhatYear(selectMonth, 1, "first");
+            reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, 1, "first");
           }
         } else {
           if (datePanelType === "year") {
-            reactData.selectMonth = xeUtils.getWhatYear(selectMonth, yearSize, "first");
+            reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, yearSize, "first");
           } else if (datePanelType === "month") {
-            reactData.selectMonth = xeUtils.getWhatYear(selectMonth, 1, "first");
+            reactData.selectMonth = XEUtils$1.getWhatYear(selectMonth, 1, "first");
           } else {
-            reactData.selectMonth = xeUtils.getWhatMonth(selectMonth, 1, "first");
+            reactData.selectMonth = XEUtils$1.getWhatMonth(selectMonth, 1, "first");
           }
         }
         inputMethods.dispatchEvent("date-next", { type }, evnt);
@@ -8244,7 +8418,7 @@ const VxeInputConstructor = vue.defineComponent({
       if (!isDateDisabled({ date: offsetDay })) {
         var dayList = computeDayList.value;
         if (!dayList.some(function(item) {
-          return xeUtils.isDateSame(item.date, offsetDay, "yyyyMMdd");
+          return XEUtils$1.isDateSame(item.date, offsetDay, "yyyyMMdd");
         })) {
           dateCheckMonth(offsetDay);
         }
@@ -8255,7 +8429,7 @@ const VxeInputConstructor = vue.defineComponent({
       if (!isDateDisabled({ date: offsetYear })) {
         var yearList = computeYearList.value;
         if (!yearList.some(function(item) {
-          return xeUtils.isDateSame(item.date, offsetYear, "yyyy");
+          return XEUtils$1.isDateSame(item.date, offsetYear, "yyyy");
         })) {
           dateCheckMonth(offsetYear);
         }
@@ -8266,7 +8440,7 @@ const VxeInputConstructor = vue.defineComponent({
       if (!isDateDisabled({ date: offsetQuarter })) {
         var quarterList = computeQuarterList.value;
         if (!quarterList.some(function(item) {
-          return xeUtils.isDateSame(item.date, offsetQuarter, "yyyyq");
+          return XEUtils$1.isDateSame(item.date, offsetQuarter, "yyyyq");
         })) {
           dateCheckMonth(offsetQuarter);
         }
@@ -8277,7 +8451,7 @@ const VxeInputConstructor = vue.defineComponent({
       if (!isDateDisabled({ date: offsetMonth })) {
         var monthList = computeMonthList.value;
         if (!monthList.some(function(item) {
-          return xeUtils.isDateSame(item.date, offsetMonth, "yyyyMM");
+          return XEUtils$1.isDateSame(item.date, offsetMonth, "yyyyMM");
         })) {
           dateCheckMonth(offsetMonth);
         }
@@ -8315,33 +8489,10 @@ const VxeInputConstructor = vue.defineComponent({
     };
     var dateConfirmEvent = function() {
       var multiple = props.multiple;
-      var datetimePanelValue = reactData.datetimePanelValue;
       var dateValue = computeDateValue.value;
       var isDateTimeType = computeIsDateTimeType.value;
-      if (isDateTimeType) {
-        var dateValueFormat_1 = computeDateValueFormat.value;
-        if (multiple) {
-          var dateMultipleValue = computeDateMultipleValue.value;
-          if (isDateTimeType) {
-            var dateListValue = __spreadArray$4([], computeDateListValue.value, true);
-            var datetimeRest_2 = [];
-            dateListValue.forEach(function(item) {
-              if (item) {
-                item.setHours(datetimePanelValue.getHours());
-                item.setMinutes(datetimePanelValue.getMinutes());
-                item.setSeconds(datetimePanelValue.getSeconds());
-                datetimeRest_2.push(item);
-              }
-            });
-            emitModel(datetimeRest_2.map(function(date) {
-              return xeUtils.toDateString(date, dateValueFormat_1);
-            }).join(","), { type: "update" });
-          } else {
-            emitModel(dateMultipleValue.join(","), { type: "update" });
-          }
-        } else {
-          dateChange(dateValue || reactData.currentDate);
-        }
+      if (isDateTimeType || multiple) {
+        dateChange(dateValue || reactData.currentDate);
       }
       hidePanel();
     };
@@ -8362,52 +8513,52 @@ const VxeInputConstructor = vue.defineComponent({
         var isRightArrow = hasEventKey(evnt, EVENT_KEYS.ARROW_RIGHT);
         var isDwArrow = hasEventKey(evnt, EVENT_KEYS.ARROW_DOWN);
         if (datePanelType === "year") {
-          var offsetYear = xeUtils.getWhatYear(datePanelValue || Date.now(), 0, "first");
+          var offsetYear = XEUtils$1.getWhatYear(datePanelValue || Date.now(), 0, "first");
           if (isLeftArrow) {
-            offsetYear = xeUtils.getWhatYear(offsetYear, -1);
+            offsetYear = XEUtils$1.getWhatYear(offsetYear, -1);
           } else if (isUpArrow) {
-            offsetYear = xeUtils.getWhatYear(offsetYear, -4);
+            offsetYear = XEUtils$1.getWhatYear(offsetYear, -4);
           } else if (isRightArrow) {
-            offsetYear = xeUtils.getWhatYear(offsetYear, 1);
+            offsetYear = XEUtils$1.getWhatYear(offsetYear, 1);
           } else if (isDwArrow) {
-            offsetYear = xeUtils.getWhatYear(offsetYear, 4);
+            offsetYear = XEUtils$1.getWhatYear(offsetYear, 4);
           }
           dateMoveYear(offsetYear);
         } else if (datePanelType === "quarter") {
-          var offsetQuarter = xeUtils.getWhatQuarter(datePanelValue || Date.now(), 0, "first");
+          var offsetQuarter = XEUtils$1.getWhatQuarter(datePanelValue || Date.now(), 0, "first");
           if (isLeftArrow) {
-            offsetQuarter = xeUtils.getWhatQuarter(offsetQuarter, -1);
+            offsetQuarter = XEUtils$1.getWhatQuarter(offsetQuarter, -1);
           } else if (isUpArrow) {
-            offsetQuarter = xeUtils.getWhatQuarter(offsetQuarter, -2);
+            offsetQuarter = XEUtils$1.getWhatQuarter(offsetQuarter, -2);
           } else if (isRightArrow) {
-            offsetQuarter = xeUtils.getWhatQuarter(offsetQuarter, 1);
+            offsetQuarter = XEUtils$1.getWhatQuarter(offsetQuarter, 1);
           } else if (isDwArrow) {
-            offsetQuarter = xeUtils.getWhatQuarter(offsetQuarter, 2);
+            offsetQuarter = XEUtils$1.getWhatQuarter(offsetQuarter, 2);
           }
           dateMoveQuarter(offsetQuarter);
         } else if (datePanelType === "month") {
-          var offsetMonth = xeUtils.getWhatMonth(datePanelValue || Date.now(), 0, "first");
+          var offsetMonth = XEUtils$1.getWhatMonth(datePanelValue || Date.now(), 0, "first");
           if (isLeftArrow) {
-            offsetMonth = xeUtils.getWhatMonth(offsetMonth, -1);
+            offsetMonth = XEUtils$1.getWhatMonth(offsetMonth, -1);
           } else if (isUpArrow) {
-            offsetMonth = xeUtils.getWhatMonth(offsetMonth, -4);
+            offsetMonth = XEUtils$1.getWhatMonth(offsetMonth, -4);
           } else if (isRightArrow) {
-            offsetMonth = xeUtils.getWhatMonth(offsetMonth, 1);
+            offsetMonth = XEUtils$1.getWhatMonth(offsetMonth, 1);
           } else if (isDwArrow) {
-            offsetMonth = xeUtils.getWhatMonth(offsetMonth, 4);
+            offsetMonth = XEUtils$1.getWhatMonth(offsetMonth, 4);
           }
           dateMoveMonth(offsetMonth);
         } else {
-          var offsetDay = datePanelValue || xeUtils.getWhatDay(Date.now(), 0, "first");
+          var offsetDay = datePanelValue || XEUtils$1.getWhatDay(Date.now(), 0, "first");
           var firstDayOfWeek = computeFirstDayOfWeek.value;
           if (isLeftArrow) {
-            offsetDay = xeUtils.getWhatDay(offsetDay, -1);
+            offsetDay = XEUtils$1.getWhatDay(offsetDay, -1);
           } else if (isUpArrow) {
-            offsetDay = xeUtils.getWhatWeek(offsetDay, -1, firstDayOfWeek);
+            offsetDay = XEUtils$1.getWhatWeek(offsetDay, -1, firstDayOfWeek);
           } else if (isRightArrow) {
-            offsetDay = xeUtils.getWhatDay(offsetDay, 1);
+            offsetDay = XEUtils$1.getWhatDay(offsetDay, 1);
           } else if (isDwArrow) {
-            offsetDay = xeUtils.getWhatWeek(offsetDay, 1, firstDayOfWeek);
+            offsetDay = XEUtils$1.getWhatWeek(offsetDay, 1, firstDayOfWeek);
           }
           dateMoveDay(offsetDay);
         }
@@ -8434,7 +8585,7 @@ const VxeInputConstructor = vue.defineComponent({
       } else {
         reactData.datePanelType = "day";
       }
-      reactData.currentDate = xeUtils.getWhatDay(Date.now(), 0, "first");
+      reactData.currentDate = XEUtils$1.getWhatDay(Date.now(), 0, "first");
       if (dateValue) {
         dateMonthHandle(dateValue, 0);
         dateParseValue(dateValue);
@@ -8442,10 +8593,10 @@ const VxeInputConstructor = vue.defineComponent({
         dateNowHandle();
       }
       if (isDateTimeType) {
-        reactData.datetimePanelValue = reactData.datePanelValue || xeUtils.getWhatDay(Date.now(), 0, "first");
+        reactData.datetimePanelValue = reactData.datePanelValue || XEUtils$1.getWhatDay(Date.now(), 0, "first");
         vue.nextTick(function() {
           var timeBodyElem = refInputTimeBody.value;
-          xeUtils.arrayEach(timeBodyElem.querySelectorAll("li.is--selected"), updateTimePos);
+          XEUtils$1.arrayEach(timeBodyElem.querySelectorAll("li.is--selected"), updateTimePos);
         });
       }
     };
@@ -8547,6 +8698,10 @@ const VxeInputConstructor = vue.defineComponent({
       }
     };
     var clickEvent = function(evnt) {
+      var isDatePickerType = computeIsDatePickerType.value;
+      if (isDatePickerType) {
+        datePickerOpenEvent(evnt);
+      }
       triggerEvent2(evnt);
     };
     var handleGlobalMousedownEvent = function(evnt) {
@@ -8661,8 +8816,8 @@ const VxeInputConstructor = vue.defineComponent({
       if (festivalMethod) {
         var datePanelType = reactData.datePanelType;
         var festivalRest = festivalMethod({ type: datePanelType, viewType: datePanelType, date: item.date, $input: $xeinput });
-        var festivalItem = festivalRest ? xeUtils.isString(festivalRest) ? { label: festivalRest } : festivalRest : {};
-        var extraItem = festivalItem.extra ? xeUtils.isString(festivalItem.extra) ? { label: festivalItem.extra } : festivalItem.extra : null;
+        var festivalItem = festivalRest ? XEUtils$1.isString(festivalRest) ? { label: festivalRest } : festivalRest : {};
+        var extraItem = festivalItem.extra ? XEUtils$1.isString(festivalItem.extra) ? { label: festivalItem.extra } : festivalItem.extra : null;
         var labels = [
           vue.h("span", {
             class: ["vxe-input--date-label", {
@@ -8673,12 +8828,12 @@ const VxeInputConstructor = vue.defineComponent({
             vue.h("span", {
               class: ["vxe-input--date-label--extra", extraItem.important ? "is-important" : "", extraItem.className],
               style: extraItem.style
-            }, xeUtils.toValueString(extraItem.label))
+            }, XEUtils$1.toValueString(extraItem.label))
           ] : label)
         ];
         var festivalLabel = festivalItem.label;
         if (festivalLabel) {
-          var festivalLabels = xeUtils.toValueString(festivalLabel).split(",");
+          var festivalLabels = XEUtils$1.toValueString(festivalLabel).split(",");
           labels.push(vue.h("span", {
             class: ["vxe-input--date-festival", festivalItem.important ? "is-important" : "", festivalItem.className],
             style: festivalItem.style
@@ -8726,9 +8881,9 @@ const VxeInputConstructor = vue.defineComponent({
                   "is--next": item.isNext,
                   "is--disabled": isDateDisabled(item),
                   "is--selected": multiple ? dateListValue.some(function(val) {
-                    return xeUtils.isDateSame(val, item.date, matchFormat);
-                  }) : xeUtils.isDateSame(dateValue, item.date, matchFormat),
-                  "is--hover": xeUtils.isDateSame(datePanelValue, item.date, matchFormat)
+                    return XEUtils$1.isDateSame(val, item.date, matchFormat);
+                  }) : XEUtils$1.isDateSame(dateValue, item.date, matchFormat),
+                  "is--hover": XEUtils$1.isDateSame(datePanelValue, item.date, matchFormat)
                 },
                 onClick: function() {
                   return dateSelectEvent(item);
@@ -8765,13 +8920,13 @@ const VxeInputConstructor = vue.defineComponent({
           vue.h("tbody", weekDates.map(function(rows) {
             var isSelected = multiple ? rows.some(function(item) {
               return dateListValue.some(function(val) {
-                return xeUtils.isDateSame(val, item.date, matchFormat);
+                return XEUtils$1.isDateSame(val, item.date, matchFormat);
               });
             }) : rows.some(function(item) {
-              return xeUtils.isDateSame(dateValue, item.date, matchFormat);
+              return XEUtils$1.isDateSame(dateValue, item.date, matchFormat);
             });
             var isHover = rows.some(function(item) {
-              return xeUtils.isDateSame(datePanelValue, item.date, matchFormat);
+              return XEUtils$1.isDateSame(datePanelValue, item.date, matchFormat);
             });
             return vue.h("tr", rows.map(function(item) {
               return vue.h("td", {
@@ -8784,6 +8939,7 @@ const VxeInputConstructor = vue.defineComponent({
                   "is--selected": isSelected,
                   "is--hover": isHover
                 },
+                // event
                 onClick: function() {
                   return dateSelectEvent(item);
                 },
@@ -8820,9 +8976,9 @@ const VxeInputConstructor = vue.defineComponent({
                   "is--next": item.isNext,
                   "is--disabled": isDateDisabled(item),
                   "is--selected": multiple ? dateListValue.some(function(val) {
-                    return xeUtils.isDateSame(val, item.date, matchFormat);
-                  }) : xeUtils.isDateSame(dateValue, item.date, matchFormat),
-                  "is--hover": xeUtils.isDateSame(datePanelValue, item.date, matchFormat)
+                    return XEUtils$1.isDateSame(val, item.date, matchFormat);
+                  }) : XEUtils$1.isDateSame(dateValue, item.date, matchFormat),
+                  "is--hover": XEUtils$1.isDateSame(datePanelValue, item.date, matchFormat)
                 },
                 onClick: function() {
                   return dateSelectEvent(item);
@@ -8860,9 +9016,9 @@ const VxeInputConstructor = vue.defineComponent({
                   "is--next": item.isNext,
                   "is--disabled": isDateDisabled(item),
                   "is--selected": multiple ? dateListValue.some(function(val) {
-                    return xeUtils.isDateSame(val, item.date, matchFormat);
-                  }) : xeUtils.isDateSame(dateValue, item.date, matchFormat),
-                  "is--hover": xeUtils.isDateSame(datePanelValue, item.date, matchFormat)
+                    return XEUtils$1.isDateSame(val, item.date, matchFormat);
+                  }) : XEUtils$1.isDateSame(dateValue, item.date, matchFormat),
+                  "is--hover": XEUtils$1.isDateSame(datePanelValue, item.date, matchFormat)
                 },
                 onClick: function() {
                   return dateSelectEvent(item);
@@ -8900,9 +9056,9 @@ const VxeInputConstructor = vue.defineComponent({
                   "is--next": item.isNext,
                   "is--disabled": isDateDisabled(item),
                   "is--selected": multiple ? dateListValue.some(function(val) {
-                    return xeUtils.isDateSame(val, item.date, matchFormat);
-                  }) : xeUtils.isDateSame(dateValue, item.date, matchFormat),
-                  "is--hover": xeUtils.isDateSame(datePanelValue, item.date, matchFormat)
+                    return XEUtils$1.isDateSame(val, item.date, matchFormat);
+                  }) : XEUtils$1.isDateSame(dateValue, item.date, matchFormat),
+                  "is--hover": XEUtils$1.isDateSame(datePanelValue, item.date, matchFormat)
                 },
                 onClick: function() {
                   return dateSelectEvent(item);
@@ -9207,7 +9363,7 @@ const VxeInputConstructor = vue.defineComponent({
       }
       return icons.length ? vue.h("span", {
         class: ["vxe-input--suffix", {
-          "is--clear": isClearable && !disabled && !(inputValue === "" || xeUtils.eqNull(inputValue))
+          "is--clear": isClearable && !disabled && !(inputValue === "" || XEUtils$1.eqNull(inputValue))
         }],
         onClick: clickSuffixEvent
       }, icons) : null;
@@ -9374,7 +9530,7 @@ const VxeCheckboxComponent = vue.defineComponent({
     var slots = context.slots, emit = context.emit;
     var $xeform = vue.inject("$xeform", null);
     var $xeformiteminfo = vue.inject("$xeformiteminfo", null);
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var $xecheckbox = {
       xID,
       props,
@@ -9385,7 +9541,7 @@ const VxeCheckboxComponent = vue.defineComponent({
     var $xecheckboxgroup = vue.inject("$xecheckboxgroup", null);
     var computeIsChecked = vue.computed(function() {
       if ($xecheckboxgroup) {
-        return xeUtils.includes($xecheckboxgroup.props.modelValue, props.label);
+        return XEUtils$1.includes($xecheckboxgroup.props.modelValue, props.label);
       }
       return props.modelValue === props.checkedValue;
     });
@@ -9462,7 +9618,7 @@ function isOptionVisible(option) {
   return option.visible !== false;
 }
 function getOptUniqueId() {
-  return xeUtils.uniqueId("opt_");
+  return XEUtils$1.uniqueId("opt_");
 }
 const VxeSelectComponent = vue.defineComponent({
   name: "VxeSelect",
@@ -9493,9 +9649,11 @@ const VxeSelectComponent = vue.defineComponent({
     remote: Boolean,
     remoteMethod: Function,
     emptyText: String,
+    // 已废弃，被 option-config.keyField 替换
     optionId: { type: String, default: function() {
       return GlobalConfig.select.optionId;
     } },
+    // 已废弃，被 option-config.useKey 替换
     optionKey: Boolean,
     transfer: { type: Boolean, default: function() {
       return GlobalConfig.select.transfer;
@@ -9510,7 +9668,7 @@ const VxeSelectComponent = vue.defineComponent({
     var slots = context.slots, emit = context.emit;
     var $xeform = vue.inject("$xeform", null);
     var $xeformiteminfo = vue.inject("$xeformiteminfo", null);
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       inited: false,
@@ -9574,7 +9732,7 @@ const VxeSelectComponent = vue.defineComponent({
     var computeIsMaximize = vue.computed(function() {
       var modelValue = props.modelValue, multiple = props.multiple, max2 = props.max;
       if (multiple && max2) {
-        return (modelValue ? modelValue.length : 0) >= xeUtils.toNumber(max2);
+        return (modelValue ? modelValue.length : 0) >= XEUtils$1.toNumber(max2);
       }
       return false;
     });
@@ -9587,14 +9745,14 @@ const VxeSelectComponent = vue.defineComponent({
       });
     });
     var computeMultiMaxCharNum = vue.computed(function() {
-      return xeUtils.toNumber(props.multiCharOverflow);
+      return XEUtils$1.toNumber(props.multiCharOverflow);
     });
     var callSlot = function(slotFunc, params) {
       if (slotFunc) {
-        if (xeUtils.isString(slotFunc)) {
+        if (XEUtils$1.isString(slotFunc)) {
           slotFunc = slots[slotFunc] || null;
         }
-        if (xeUtils.isFunction(slotFunc)) {
+        if (XEUtils$1.isFunction(slotFunc)) {
           return getSlotVNs(slotFunc(params));
         }
       }
@@ -9628,18 +9786,18 @@ const VxeSelectComponent = vue.defineComponent({
         return value === item2.key;
       });
       var item = remoteItem ? remoteItem.result : null;
-      return xeUtils.toValueString(item ? item[labelField] : value);
+      return XEUtils$1.toValueString(item ? item[labelField] : value);
     };
     var getSelectLabel = function(value) {
       var labelField = computeLabelField.value;
       var item = findOption(value);
-      return xeUtils.toValueString(item ? item[labelField] : value);
+      return XEUtils$1.toValueString(item ? item[labelField] : value);
     };
     var computeSelectLabel = vue.computed(function() {
       var modelValue = props.modelValue, multiple = props.multiple, remote = props.remote;
       var multiMaxCharNum = computeMultiMaxCharNum.value;
       if (modelValue && multiple) {
-        var vals = xeUtils.isArray(modelValue) ? modelValue : [modelValue];
+        var vals = XEUtils$1.isArray(modelValue) ? modelValue : [modelValue];
         if (remote) {
           return vals.map(function(val) {
             return getRemoteSelectLabel(val);
@@ -10077,7 +10235,7 @@ const VxeSelectComponent = vue.defineComponent({
         $event.stopPropagation();
       }
     };
-    var triggerSearchEvent = xeUtils.debounce(function() {
+    var triggerSearchEvent = XEUtils$1.debounce(function() {
       var remote = props.remote, remoteMethod = props.remoteMethod;
       var searchValue = reactData.searchValue;
       if (remote && remoteMethod) {
@@ -10134,12 +10292,14 @@ const VxeSelectComponent = vue.defineComponent({
         var defaultSlot = slots2 ? slots2.default : null;
         return isVisible ? vue.h("div", {
           key: useKey || optionKey ? optid : cIndex,
-          class: ["vxe-select-option", className ? xeUtils.isFunction(className) ? className({ option, $select: $xeselect }) : className : "", {
+          class: ["vxe-select-option", className ? XEUtils$1.isFunction(className) ? className({ option, $select: $xeselect }) : className : "", {
             "is--disabled": isDisabled,
             "is--selected": isSelected,
             "is--hover": currentValue === optionValue
           }],
+          // attrs
           optid,
+          // event
           onMousedown: function(evnt) {
             var isLeftBtn = evnt.button === 0;
             if (isLeftBtn) {
@@ -10173,9 +10333,10 @@ const VxeSelectComponent = vue.defineComponent({
         var defaultSlot = slots2 ? slots2.default : null;
         return vue.h("div", {
           key: useKey || optionKey ? optid : gIndex,
-          class: ["vxe-optgroup", className ? xeUtils.isFunction(className) ? className({ option: group, $select: $xeselect }) : className : "", {
+          class: ["vxe-optgroup", className ? XEUtils$1.isFunction(className) ? className({ option: group, $select: $xeselect }) : className : "", {
             "is--disabled": isGroupDisabled
           }],
+          // attrs
           optid
         }, [
           vue.h("div", {
@@ -10319,7 +10480,7 @@ const VxeSelectComponent = vue.defineComponent({
       var prefixSlot = slots.prefix;
       return vue.h("div", {
         ref: refElem,
-        class: ["vxe-select", className ? xeUtils.isFunction(className) ? className({ $select: $xeselect }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--visivle"] = visiblePanel, _a["is--disabled"] = disabled, _a["is--filter"] = filterable, _a["is--loading"] = loading, _a["is--active"] = isActivated, _a)]
+        class: ["vxe-select", className ? XEUtils$1.isFunction(className) ? className({ $select: $xeselect }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--visivle"] = visiblePanel, _a["is--disabled"] = disabled, _a["is--filter"] = filterable, _a["is--loading"] = loading, _a["is--active"] = isActivated, _a)]
       }, [
         vue.h("div", {
           class: "vxe-select-slots",
@@ -10425,7 +10586,7 @@ const ExportPanelComponent = vue.defineComponent({
     });
     var handleOptionCheck = function(column) {
       var storeData = props.storeData;
-      var matchObj = xeUtils.findTree(storeData.columns, function(item) {
+      var matchObj = XEUtils$1.findTree(storeData.columns, function(item) {
         return item === column;
       });
       if (matchObj && matchObj.parent) {
@@ -10453,7 +10614,7 @@ const ExportPanelComponent = vue.defineComponent({
     };
     var changeOption = function(column) {
       var isChecked = !column.checked;
-      xeUtils.eachTree([column], function(item) {
+      XEUtils$1.eachTree([column], function(item) {
         item.checked = isChecked;
         item.halfChecked = false;
       });
@@ -10463,7 +10624,7 @@ const ExportPanelComponent = vue.defineComponent({
     var allColumnEvent = function() {
       var storeData = props.storeData;
       var isAll = !reactData.isAll;
-      xeUtils.eachTree(storeData.columns, function(column) {
+      XEUtils$1.eachTree(storeData.columns, function(column) {
         if (!column.disabled) {
           column.checked = isAll;
           column.halfChecked = false;
@@ -10489,7 +10650,7 @@ const ExportPanelComponent = vue.defineComponent({
       var hasMerge = storeData.hasMerge, columns = storeData.columns;
       var checkedAll = computeCheckedAll.value;
       var supportMerge = computeSupportMerge.value;
-      var expColumns = xeUtils.searchTree(columns, function(column) {
+      var expColumns = XEUtils$1.searchTree(columns, function(column) {
         return column.checked;
       }, { children: "children", mapChildren: "childNodes", original: true });
       return Object.assign({}, defaultOptions, {
@@ -10536,7 +10697,7 @@ const ExportPanelComponent = vue.defineComponent({
       var showSheet = computeShowSheet.value;
       var supportMerge = computeSupportMerge.value;
       var supportStyle = computeSupportStyle.value;
-      xeUtils.eachTree(storeData.columns, function(column) {
+      XEUtils$1.eachTree(storeData.columns, function(column) {
         var colTitle = formatText(column.getTitle(), 1);
         var isColGroup = column.children && column.children.length;
         var isChecked = column.checked;
@@ -10802,12 +10963,12 @@ const VxeRadioGroupComponent = vue.defineComponent({
     var slots = context.slots, emit = context.emit;
     var $xeform = vue.inject("$xeform", null);
     var $xeformiteminfo = vue.inject("$xeformiteminfo", null);
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var $xeradiogroup = {
       xID,
       props,
       context,
-      name: xeUtils.uniqueId("xegroup_")
+      name: XEUtils$1.uniqueId("xegroup_")
     };
     var radioGroupMethods = {};
     useSize(props);
@@ -10862,7 +11023,7 @@ const VxeRadioComponent = vue.defineComponent({
     var slots = context.slots, emit = context.emit;
     var $xeform = vue.inject("$xeform", null);
     var $xeformiteminfo = vue.inject("$xeformiteminfo", null);
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var $xeradio = {
       xID,
       props,
@@ -10975,7 +11136,7 @@ const ImportPanelComponent = vue.defineComponent({
       var storeData = props.storeData;
       var type = storeData.type, typeList = storeData.typeList;
       if (type) {
-        var selectItem = xeUtils.find(typeList, function(item) {
+        var selectItem = XEUtils$1.find(typeList, function(item) {
           return type === item.value;
         });
         return selectItem ? GlobalConfig.i18n(selectItem.label) : "*.*";
@@ -11194,7 +11355,7 @@ function renderTitleContent(params, content) {
   var type = column.type, showHeaderOverflow = column.showHeaderOverflow;
   var tooltipOpts = computeTooltipOpts.value;
   var showAllTip = tooltipOpts.showAll;
-  var headOverflow = xeUtils.isUndefined(showHeaderOverflow) || xeUtils.isNull(showHeaderOverflow) ? allColumnHeaderOverflow : showHeaderOverflow;
+  var headOverflow = XEUtils$1.isUndefined(showHeaderOverflow) || XEUtils$1.isNull(showHeaderOverflow) ? allColumnHeaderOverflow : showHeaderOverflow;
   var showTitle = headOverflow === "title";
   var showTooltip = headOverflow === true || headOverflow === "tooltip";
   var ons = {};
@@ -11221,7 +11382,7 @@ function renderTitleContent(params, content) {
     };
   }
   return [
-    type === "html" && xeUtils.isString(content) ? vue.h("span", __assign$d({ class: "vxe-cell--title", innerHTML: content }, ons)) : vue.h("span", __assign$d({ class: "vxe-cell--title" }, ons), content)
+    type === "html" && XEUtils$1.isString(content) ? vue.h("span", __assign$d({ class: "vxe-cell--title", innerHTML: content }, ons)) : vue.h("span", __assign$d({ class: "vxe-cell--title" }, ons), content)
   ];
 }
 function getFooterContent(params) {
@@ -11298,6 +11459,9 @@ var Cell = {
     }
     return createColumn($xetable, columnOpts, renConfs);
   },
+  /**
+   * 单元格
+   */
   renderHeaderTitle: function(params) {
     var $table = params.$table, column = params.column;
     var slots = column.slots, editRender = column.editRender, cellRender = column.cellRender;
@@ -11312,7 +11476,7 @@ var Cell = {
         return renderTitleContent(params, getSlotVNs(compConf.renderHeader(renderOpts, params)));
       }
     }
-    return renderTitleContent(params, formatText(column.getTitle(), 1));
+    return renderTitleContent(params, [formatText(column.getTitle(), 1)]);
   },
   renderDefaultHeader: function(params) {
     return renderHelpIcon(params).concat(Cell.renderHeaderTitle(params));
@@ -11339,6 +11503,7 @@ var Cell = {
       vue.h("span", {
         class: "vxe-cell--label"
       }, editRender && eqEmptyValue(cellValue) ? [
+        // 如果设置占位符
         vue.h("span", {
           class: "vxe-cell--placeholder"
         }, formatText(getFuncText(cellPlaceholder), 1))
@@ -11355,6 +11520,9 @@ var Cell = {
       }, getFooterContent(params))
     ];
   },
+  /**
+   * 树节点
+   */
   renderTreeIcon: function(params, cellVNodes) {
     var $table = params.$table, isHidden = params.isHidden;
     var reactData = $table.reactData;
@@ -11407,11 +11575,14 @@ var Cell = {
       ])
     ];
   },
+  /**
+   * 索引
+   */
   renderSeqHeader: function(params) {
     var $table = params.$table, column = params.column;
     var slots = column.slots;
     var headerSlot = slots ? slots.header : null;
-    return renderTitleContent(params, headerSlot ? $table.callSlot(headerSlot, params) : formatText(column.getTitle(), 1));
+    return renderTitleContent(params, headerSlot ? $table.callSlot(headerSlot, params) : [formatText(column.getTitle(), 1)]);
   },
   renderSeqCell: function(params) {
     var $table = params.$table, column = params.column;
@@ -11431,6 +11602,9 @@ var Cell = {
   renderTreeIndexCell: function(params) {
     return Cell.renderTreeIcon(params, Cell.renderSeqCell(params));
   },
+  /**
+   * 单选
+   */
   renderRadioHeader: function(params) {
     var $table = params.$table, column = params.column;
     var slots = column.slots;
@@ -11482,7 +11656,7 @@ var Cell = {
     if (defaultSlot || labelField) {
       radioVNs.push(vue.h("span", {
         class: "vxe-radio--label"
-      }, defaultSlot ? $table.callSlot(defaultSlot, radioParams) : xeUtils.get(row, labelField)));
+      }, defaultSlot ? $table.callSlot(defaultSlot, radioParams) : XEUtils$1.get(row, labelField)));
     }
     return [
       vue.h("span", __assign$d({ class: ["vxe-cell--radio", {
@@ -11494,6 +11668,9 @@ var Cell = {
   renderTreeRadioCell: function(params) {
     return Cell.renderTreeIcon(params, Cell.renderRadioCell(params));
   },
+  /**
+   * 多选
+   */
   renderCheckboxHeader: function(params) {
     var $table = params.$table, column = params.column, isHidden = params.isHidden;
     var reactData = $table.reactData;
@@ -11587,7 +11764,7 @@ var Cell = {
     if (defaultSlot || labelField) {
       checkVNs.push(vue.h("span", {
         class: "vxe-checkbox--label"
-      }, defaultSlot ? $table.callSlot(defaultSlot, checkboxParams) : xeUtils.get(row, labelField)));
+      }, defaultSlot ? $table.callSlot(defaultSlot, checkboxParams) : XEUtils$1.get(row, labelField)));
     }
     return [
       vue.h("span", __assign$d({ class: ["vxe-cell--checkbox", {
@@ -11617,7 +11794,7 @@ var Cell = {
     var isDisabled = !!checkMethod;
     var ons;
     if (!isHidden) {
-      isChecked = xeUtils.get(row, checkField);
+      isChecked = XEUtils$1.get(row, checkField);
       ons = {
         onClick: function(evnt) {
           if (!isDisabled && isVisible) {
@@ -11644,7 +11821,7 @@ var Cell = {
       if (defaultSlot || labelField) {
         checkVNs.push(vue.h("span", {
           class: "vxe-checkbox--label"
-        }, defaultSlot ? $table.callSlot(defaultSlot, checkboxParams) : xeUtils.get(row, labelField)));
+        }, defaultSlot ? $table.callSlot(defaultSlot, checkboxParams) : XEUtils$1.get(row, labelField)));
       }
     }
     return [
@@ -11658,6 +11835,9 @@ var Cell = {
   renderTreeSelectionCellByProp: function(params) {
     return Cell.renderTreeIcon(params, Cell.renderCheckboxCellByProp(params));
   },
+  /**
+   * 展开行
+   */
   renderExpandCell: function(params) {
     var $table = params.$table, isHidden = params.isHidden, row = params.row, column = params.column;
     var reactData = $table.reactData;
@@ -11694,7 +11874,7 @@ var Cell = {
       ]) : null,
       defaultSlot || labelField ? vue.h("span", {
         class: "vxe-table--expand-label"
-      }, defaultSlot ? $table.callSlot(defaultSlot, params) : xeUtils.get(row, labelField)) : null
+      }, defaultSlot ? $table.callSlot(defaultSlot, params) : XEUtils$1.get(row, labelField)) : null
     ];
   },
   renderExpandData: function(params) {
@@ -11712,6 +11892,9 @@ var Cell = {
     }
     return [];
   },
+  /**
+   * HTML 标签
+   */
   renderHTMLCell: function(params) {
     var $table = params.$table, column = params.column;
     var slots = column.slots;
@@ -11729,9 +11912,15 @@ var Cell = {
   renderTreeHTMLCell: function(params) {
     return Cell.renderTreeIcon(params, Cell.renderHTMLCell(params));
   },
+  /**
+   * 排序和筛选
+   */
   renderSortAndFilterHeader: function(params) {
     return Cell.renderDefaultHeader(params).concat(Cell.renderSortIcon(params)).concat(Cell.renderFilterIcon(params));
   },
+  /**
+   * 排序
+   */
   renderSortHeader: function(params) {
     return Cell.renderDefaultHeader(params).concat(Cell.renderSortIcon(params));
   },
@@ -11766,6 +11955,9 @@ var Cell = {
       ])
     ] : [];
   },
+  /**
+   * 筛选
+   */
   renderFilterHeader: function(params) {
     return Cell.renderDefaultHeader(params).concat(Cell.renderFilterIcon(params));
   },
@@ -11792,6 +11984,9 @@ var Cell = {
       ])
     ] : [];
   },
+  /**
+   * 可编辑
+   */
   renderEditHeader: function(params) {
     var $table = params.$table, column = params.column;
     var props = $table.props;
@@ -11801,7 +11996,7 @@ var Cell = {
     var sortable = column.sortable, filters = column.filters, editRender = column.editRender;
     var isRequired = false;
     if (editRules) {
-      var columnRules = xeUtils.get(editRules, column.field);
+      var columnRules = XEUtils$1.get(editRules, column.field);
       if (columnRules) {
         isRequired = columnRules.some(function(rule) {
           return rule.required;
@@ -11817,6 +12012,7 @@ var Cell = {
       }) : null
     ] : []).concat(Cell.renderDefaultHeader(params)).concat(sortable ? Cell.renderSortIcon(params) : []).concat(filters ? Cell.renderFilterIcon(params) : []);
   },
+  // 行格编辑模式
   renderRowEdit: function(params) {
     var $table = params.$table, column = params.column;
     var reactData = $table.reactData;
@@ -11828,6 +12024,7 @@ var Cell = {
   renderTreeRowEdit: function(params) {
     return Cell.renderTreeIcon(params, Cell.renderRowEdit(params));
   },
+  // 单元格编辑模式
   renderCellEdit: function(params) {
     var $table = params.$table, column = params.column;
     var reactData = $table.reactData;
@@ -11868,44 +12065,83 @@ var Cell = {
   }
 };
 var columnProps = {
+  // 列唯一主键
   colId: [String, Number],
+  // 渲染类型 index,radio,checkbox,expand,html
   type: String,
+  // 列字段名
   field: String,
+  // 列标题
   title: String,
+  // 列宽度
   width: [Number, String],
+  // 列最小宽度，把剩余宽度按比例分配
   minWidth: [Number, String],
+  // 列最大宽度
   maxWidth: [Number, String],
+  // 是否允许拖动列宽调整大小
   resizable: { type: Boolean, default: null },
+  // 将列固定在左侧或者右侧
   fixed: String,
+  // 列对其方式
   align: String,
+  // 表头对齐方式
   headerAlign: String,
+  // 表尾列的对齐方式
   footerAlign: String,
+  // 当内容过长时显示为省略号
   showOverflow: { type: [Boolean, String], default: null },
+  // 当表头内容过长时显示为省略号
   showHeaderOverflow: { type: [Boolean, String], default: null },
+  // 当表尾内容过长时显示为省略号
   showFooterOverflow: { type: [Boolean, String], default: null },
+  // 给单元格附加 className
   className: [String, Function],
+  // 给表头单元格附加 className
   headerClassName: [String, Function],
+  // 给表尾单元格附加 className
   footerClassName: [String, Function],
+  // 格式化显示内容
   formatter: [Function, Array, String],
+  // 是否允许排序
   sortable: Boolean,
+  // 自定义排序的属性
   sortBy: [String, Function],
+  // 排序的字段类型，比如字符串转数值等
   sortType: String,
+  // 配置筛选条件数组
   filters: { type: Array, default: null },
+  // 筛选是否允许多选
   filterMultiple: { type: Boolean, default: true },
+  // 自定义筛选方法
   filterMethod: Function,
+  // 筛选重置方法
   filterResetMethod: Function,
+  // 筛选复原方法
   filterRecoverMethod: Function,
+  // 筛选模板配置项
   filterRender: Object,
+  // 指定为树节点
   treeNode: Boolean,
+  // 是否可视
   visible: { type: Boolean, default: null },
+  // 单元格数据导出方法
   exportMethod: Function,
+  // 表尾单元格数据导出方法
   footerExportMethod: Function,
+  // 已废弃，被 titlePrefix 替换
   titleHelp: Object,
+  // 标题帮助图标配置项
   titlePrefix: Object,
+  // 单元格值类型
   cellType: String,
+  // 单元格渲染配置项
   cellRender: Object,
+  // 单元格编辑渲染配置项
   editRender: Object,
+  // 内容渲染配置项
   contentRender: Object,
+  // 额外的参数
   params: Object
 };
 const VxeTableColumnComponent = vue.defineComponent({
@@ -11984,83 +12220,128 @@ Object.assign(VxeTableColgroupComponent, {
 dynamicApp.component(VxeTableColgroupComponent.name, VxeTableColgroupComponent);
 dynamicApp.component("VxeTableColgroup", VxeTableColgroupComponent);
 const tableProps = {
+  /** 基本属性 */
   id: String,
+  // 数据
   data: Array,
+  // 表格的高度
   height: [Number, String],
+  // 表格的最大高度
   maxHeight: [Number, String],
+  // 已废弃，被 column-config.resizable 替换
   resizable: { type: Boolean, default: function() {
     return GlobalConfig.table.resizable;
   } },
+  // 是否带有斑马纹
   stripe: { type: Boolean, default: function() {
     return GlobalConfig.table.stripe;
   } },
+  // 是否带有边框
   border: { type: [Boolean, String], default: function() {
     return GlobalConfig.table.border;
   } },
+  // 是否圆角边框
   round: { type: Boolean, default: function() {
     return GlobalConfig.table.round;
   } },
+  // 表格的尺寸
   size: { type: String, default: function() {
     return GlobalConfig.table.size || GlobalConfig.size;
   } },
+  // 列的宽度是否自撑开（可能会被废弃的参数，不要使用）
   fit: { type: Boolean, default: function() {
     return GlobalConfig.table.fit;
   } },
+  // 表格是否加载中
   loading: Boolean,
+  // 所有的列对其方式
   align: { type: String, default: function() {
     return GlobalConfig.table.align;
   } },
+  // 所有的表头列的对齐方式
   headerAlign: { type: String, default: function() {
     return GlobalConfig.table.headerAlign;
   } },
+  // 所有的表尾列的对齐方式
   footerAlign: { type: String, default: function() {
     return GlobalConfig.table.footerAlign;
   } },
+  // 是否显示表头
   showHeader: { type: Boolean, default: function() {
     return GlobalConfig.table.showHeader;
   } },
+  // （即将废弃）是否要高亮当前选中行
   highlightCurrentRow: { type: Boolean, default: function() {
     return GlobalConfig.table.highlightCurrentRow;
   } },
+  // （即将废弃）鼠标移到行是否要高亮显示
   highlightHoverRow: { type: Boolean, default: function() {
     return GlobalConfig.table.highlightHoverRow;
   } },
+  // （即将废弃）是否要高亮当前选中列
   highlightCurrentColumn: { type: Boolean, default: function() {
     return GlobalConfig.table.highlightCurrentColumn;
   } },
+  // （即将废弃）鼠标移到列是否要高亮显示
   highlightHoverColumn: { type: Boolean, default: function() {
     return GlobalConfig.table.highlightHoverColumn;
   } },
+  // （即将废弃）激活单元格编辑时是否高亮显示
   highlightCell: Boolean,
+  // 是否显示表尾合计
   showFooter: Boolean,
+  // 表尾合计的计算方法
   footerMethod: Function,
+  // 给行附加 className
   rowClassName: [String, Function],
+  // 给单元格附加 className
   cellClassName: [String, Function],
+  // 给表头的行附加 className
   headerRowClassName: [String, Function],
+  // 给表头的单元格附加 className
   headerCellClassName: [String, Function],
+  // 给表尾的行附加 className
   footerRowClassName: [String, Function],
+  // 给表尾的单元格附加 className
   footerCellClassName: [String, Function],
+  // 给单元格附加样式
   cellStyle: [Object, Function],
+  // 给表头单元格附加样式
   headerCellStyle: [Object, Function],
+  // 给表尾单元格附加样式
   footerCellStyle: [Object, Function],
+  // 给行附加样式
   rowStyle: [Object, Function],
+  // 给表头行附加样式
   headerRowStyle: [Object, Function],
+  // 给表尾行附加样式
   footerRowStyle: [Object, Function],
+  // 合并指定单元格
   mergeCells: Array,
+  // 合并指定的表尾
   mergeFooterItems: Array,
+  // 自定义合并行或列的方法
   spanMethod: Function,
+  // 表尾合并行或列
   footerSpanMethod: Function,
+  // 设置所有内容过长时显示为省略号
   showOverflow: { type: [Boolean, String], default: function() {
     return GlobalConfig.table.showOverflow;
   } },
+  // 设置表头所有内容过长时显示为省略号
   showHeaderOverflow: { type: [Boolean, String], default: function() {
     return GlobalConfig.table.showHeaderOverflow;
   } },
+  // 设置表尾所有内容过长时显示为省略号
   showFooterOverflow: { type: [Boolean, String], default: function() {
     return GlobalConfig.table.showFooterOverflow;
   } },
+  /** 高级属性 */
+  // （即将废弃）columnKey 已废弃，被 column-config.useKey 替换
   columnKey: Boolean,
+  // （即将废弃）rowKey 已废弃，被 row-config.useKey 替换
   rowKey: Boolean,
+  // （即将废弃）rowId 已废弃，被 row-config.keyField 替换
   rowId: { type: String, default: function() {
     return GlobalConfig.table.rowId;
   } },
@@ -12071,44 +12352,77 @@ const tableProps = {
   keepSource: { type: Boolean, default: function() {
     return GlobalConfig.table.keepSource;
   } },
+  // 是否自动监听父容器变化去更新响应式表格宽高
   autoResize: { type: Boolean, default: function() {
     return GlobalConfig.table.autoResize;
   } },
+  // 是否自动根据状态属性去更新响应式表格宽高
   syncResize: [Boolean, String, Number],
+  // 列配置信息
   columnConfig: Object,
+  // 行配置信息
   rowConfig: Object,
+  // 列调整配置项
   resizableConfig: Object,
+  // 序号配置项
   seqConfig: Object,
+  // 排序配置项
   sortConfig: Object,
+  // 筛选配置项
   filterConfig: Object,
+  // 单选框配置
   radioConfig: Object,
+  // 复选框配置项
   checkboxConfig: Object,
+  // tooltip 配置项
   tooltipConfig: Object,
+  // 导出配置项
   exportConfig: Object,
+  // 导入配置项
   importConfig: Object,
+  // 打印配置项
   printConfig: Object,
+  // 展开行配置项
   expandConfig: Object,
+  // 树形结构配置项
   treeConfig: Object,
+  // 快捷菜单配置项
   menuConfig: Object,
+  // 鼠标配置项
   mouseConfig: Object,
+  // 区域配置项
   areaConfig: Object,
+  // 按键配置项
   keyboardConfig: Object,
+  // 复制粘/贴配置项
   clipConfig: Object,
+  // 查找/替换配置项
   fnrConfig: Object,
+  // 编辑配置项
   editConfig: Object,
+  // 校验配置项
   validConfig: Object,
+  // 校验规则配置项
   editRules: Object,
+  // 加载中配置项
   loadingConfig: Object,
+  // 空内容渲染配置项
   emptyRender: Object,
+  // 自定义列配置项
   customConfig: Object,
+  // 横向虚拟滚动配置项
   scrollX: Object,
+  // 纵向虚拟滚动配置项
   scrollY: Object,
+  // （即将废弃）优化相关
   animat: { type: Boolean, default: function() {
     return GlobalConfig.table.animat;
   } },
+  // （可能会被废弃的参数，不要使用）
   delayHover: { type: Number, default: function() {
     return GlobalConfig.table.delayHover;
   } },
+  // 额外的参数
   params: Object
 };
 const tableEmits = [
@@ -12222,7 +12536,7 @@ const VxeGridComponent = vue.defineComponent({
   emits: gridComponentEmits,
   setup: function(props, context) {
     var slots = context.slots, emit = context.emit;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var instance = vue.getCurrentInstance();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
@@ -12260,9 +12574,7 @@ const VxeGridComponent = vue.defineComponent({
             args[_i] = arguments[_i];
           }
           var $xetable = refTable.value;
-          if ($xetable && $xetable[name]) {
-            return $xetable[name].apply($xetable, args);
-          }
+          return $xetable && $xetable[name].apply($xetable, args);
         };
       });
       return funcs;
@@ -12275,9 +12587,7 @@ const VxeGridComponent = vue.defineComponent({
           args[_i] = arguments[_i];
         }
         var $xetable = refTable.value;
-        if ($xetable && $xetable[name]) {
-          return $xetable && $xetable[name].apply($xetable, args);
-        }
+        return $xetable && $xetable[name].apply($xetable, args);
       };
     });
     var computeProxyOpts = vue.computed(function() {
@@ -12347,7 +12657,7 @@ const VxeGridComponent = vue.defineComponent({
       })) {
         clss.push("row--pending");
       }
-      clss.push(rowClassName ? xeUtils.isFunction(rowClassName) ? rowClassName(params) : rowClassName : "");
+      clss.push(rowClassName ? XEUtils$1.isFunction(rowClassName) ? rowClassName(params) : rowClassName : "");
       return clss;
     };
     var handleBeforeEditMethod = function(params) {
@@ -12450,7 +12760,7 @@ const VxeGridComponent = vue.defineComponent({
       var _a = proxyOpts.props, proxyProps = _a === void 0 ? {} : _a;
       var msg;
       if (rest && proxyProps.message) {
-        msg = xeUtils.get(rest, proxyProps.message);
+        msg = XEUtils$1.get(rest, proxyProps.message);
       }
       return msg || GlobalConfig.i18n(defaultMsg);
     };
@@ -12559,7 +12869,7 @@ const VxeGridComponent = vue.defineComponent({
     var getFuncSlot = function(optSlots, slotKey) {
       var funcSlot = optSlots[slotKey];
       if (funcSlot) {
-        if (xeUtils.isString(funcSlot)) {
+        if (XEUtils$1.isString(funcSlot)) {
           if (slots[funcSlot]) {
             return slots[funcSlot];
           } else {
@@ -12596,8 +12906,8 @@ const VxeGridComponent = vue.defineComponent({
               }
             }
             formOpts.items.forEach(function(item) {
-              xeUtils.each(item.slots, function(func) {
-                if (!xeUtils.isFunction(func)) {
+              XEUtils$1.each(item.slots, function(func) {
+                if (!XEUtils$1.isFunction(func)) {
                   if (slots[func]) {
                     formSlots_1[func] = slots[func];
                   }
@@ -12661,7 +12971,7 @@ const VxeGridComponent = vue.defineComponent({
     };
     var tableCompEvents = {};
     tableEmits.forEach(function(name) {
-      var type = xeUtils.camelCase("on-".concat(name));
+      var type = XEUtils$1.camelCase("on-".concat(name));
       tableCompEvents[type] = function() {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -12676,7 +12986,6 @@ const VxeGridComponent = vue.defineComponent({
       var proxyOpts = computeProxyOpts.value;
       var tableOns = Object.assign({}, tableCompEvents);
       var emptySlot = slots.empty;
-      var loadingSlot = slots.loading;
       if (proxyConfig) {
         if (proxyOpts.sort) {
           tableOns.onSortChange = sortChangeEvent;
@@ -12685,19 +12994,12 @@ const VxeGridComponent = vue.defineComponent({
           tableOns.onFilterChange = filterChangeEvent;
         }
       }
-      var slotObj = {};
-      if (emptySlot) {
-        slotObj.empty = function() {
-          return emptySlot({});
-        };
-      }
-      if (loadingSlot) {
-        slotObj.loading = function() {
-          return loadingSlot({});
-        };
-      }
       return [
-        vue.h(vue.resolveComponent("vxe-table"), __assign$c(__assign$c({ ref: refTable }, tableProps2), tableOns), slotObj)
+        vue.h(vue.resolveComponent("vxe-table"), __assign$c(__assign$c({ ref: refTable }, tableProps2), tableOns), emptySlot ? {
+          empty: function() {
+            return emptySlot({});
+          }
+        } : {})
       ];
     };
     var renderBottoms = function() {
@@ -12757,9 +13059,9 @@ const VxeGridComponent = vue.defineComponent({
               var itemValue = null;
               if (itemRender) {
                 var defaultValue = itemRender.defaultValue;
-                if (xeUtils.isFunction(defaultValue)) {
+                if (XEUtils$1.isFunction(defaultValue)) {
                   itemValue = defaultValue({ item });
-                } else if (!xeUtils.isUndefined(defaultValue)) {
+                } else if (!XEUtils$1.isUndefined(defaultValue)) {
                   itemValue = defaultValue;
                 }
               }
@@ -12782,6 +13084,10 @@ const VxeGridComponent = vue.defineComponent({
       dispatchEvent: function(type, params, evnt) {
         emit(type, Object.assign({ $grid: $xegrid, $event: evnt }, params));
       },
+      /**
+       * 提交指令，支持 code 或 button
+       * @param {String/Object} code 字符串或对象
+       */
       commitProxy: function(proxyTarget) {
         var args = [];
         for (var _i = 1; _i < arguments.length; _i++) {
@@ -12796,9 +13102,9 @@ const VxeGridComponent = vue.defineComponent({
         var $xetable = refTable.value;
         var button = null;
         var code = null;
-        if (xeUtils.isString(proxyTarget)) {
+        if (XEUtils$1.isString(proxyTarget)) {
           var buttons = toolbarOpts.buttons;
-          var matchObj = toolbarConfig && buttons ? xeUtils.findTree(buttons, function(item) {
+          var matchObj = toolbarConfig && buttons ? XEUtils$1.findTree(buttons, function(item) {
             return item.code === proxyTarget;
           }, { children: "dropdowns" }) : null;
           button = matchObj ? matchObj.item : null;
@@ -12863,7 +13169,7 @@ const VxeGridComponent = vue.defineComponent({
                 var sortOpts = computeSortOpts.value;
                 var defaultSort = sortOpts.defaultSort;
                 if (defaultSort) {
-                  if (!xeUtils.isArray(defaultSort)) {
+                  if (!XEUtils$1.isArray(defaultSort)) {
                     defaultSort = [defaultSort];
                   }
                   sortList = defaultSort.map(function(item) {
@@ -12905,15 +13211,15 @@ const VxeGridComponent = vue.defineComponent({
                 reactData.tableLoading = false;
                 if (rest) {
                   if (isEnableConf(pagerConfig)) {
-                    var total = xeUtils.get(rest, proxyProps.total || "page.total") || 0;
-                    tablePage.total = xeUtils.toNumber(total);
-                    reactData.tableData = xeUtils.get(rest, proxyProps.result || "result") || [];
+                    var total = XEUtils$1.get(rest, proxyProps.total || "page.total") || 0;
+                    tablePage.total = XEUtils$1.toNumber(total);
+                    reactData.tableData = XEUtils$1.get(rest, proxyProps.result || "result") || [];
                     var pageCount = Math.max(Math.ceil(total / tablePage.pageSize), 1);
                     if (tablePage.currentPage > pageCount) {
                       tablePage.currentPage = pageCount;
                     }
                   } else {
-                    reactData.tableData = (proxyProps.list ? xeUtils.get(rest, proxyProps.list) : rest) || [];
+                    reactData.tableData = (proxyProps.list ? XEUtils$1.get(rest, proxyProps.list) : rest) || [];
                   }
                 } else {
                   reactData.tableData = [];
@@ -13091,10 +13397,10 @@ const VxeGridComponent = vue.defineComponent({
         var formConfig = props.formConfig;
         var items = formOpts.items;
         var itemList = [];
-        xeUtils.eachTree(isEnableConf(formConfig) && items ? items : [], function(item) {
+        XEUtils$1.eachTree(isEnableConf(formConfig) && items ? items : [], function(item) {
           itemList.push(item);
         }, { children: "children" });
-        return xeUtils.isUndefined(itemIndex) ? itemList : itemList[itemIndex];
+        return XEUtils$1.isUndefined(itemIndex) ? itemList : itemList[itemIndex];
       },
       getPendingRecords: function() {
         return reactData.pendingRecords;
@@ -13118,10 +13424,10 @@ const VxeGridComponent = vue.defineComponent({
     if (process.env.NODE_ENV === "development") {
       gridMethods.loadColumn = function(columns) {
         var $xetable = refTable.value;
-        xeUtils.eachTree(columns, function(column) {
+        XEUtils$1.eachTree(columns, function(column) {
           if (column.slots) {
-            xeUtils.each(column.slots, function(func) {
-              if (!xeUtils.isFunction(func)) {
+            XEUtils$1.each(column.slots, function(func) {
+              if (!XEUtils$1.isFunction(func)) {
                 if (!slots[func]) {
                   errLog("vxe.error.notSlot", [func]);
                 }
@@ -13140,15 +13446,18 @@ const VxeGridComponent = vue.defineComponent({
       extendTableMethods,
       callSlot: function(slotFunc, params) {
         if (slotFunc) {
-          if (xeUtils.isString(slotFunc)) {
+          if (XEUtils$1.isString(slotFunc)) {
             slotFunc = slots[slotFunc] || null;
           }
-          if (xeUtils.isFunction(slotFunc)) {
+          if (XEUtils$1.isFunction(slotFunc)) {
             return getSlotVNs(slotFunc(params));
           }
         }
         return [];
       },
+      /**
+       * 获取需要排除的高度
+       */
       getExcludeHeight: function() {
         var height = props.height;
         var isZMax = reactData.isZMax;
@@ -13164,7 +13473,7 @@ const VxeGridComponent = vue.defineComponent({
       getParentHeight: function() {
         var el = refElem.value;
         if (el) {
-          return (reactData.isZMax ? getDomNode().visibleHeight : xeUtils.toNumber(getComputedStyle(el.parentNode).height)) - gridPrivateMethods.getExcludeHeight();
+          return (reactData.isZMax ? getDomNode().visibleHeight : XEUtils$1.toNumber(getComputedStyle(el.parentNode).height)) - gridPrivateMethods.getExcludeHeight();
         }
         return 0;
       },
@@ -13217,7 +13526,7 @@ const VxeGridComponent = vue.defineComponent({
       var setupGrid = options.setupGrid;
       if (setupGrid) {
         var hookRest = setupGrid($xegrid);
-        if (hookRest && xeUtils.isObject(hookRest)) {
+        if (hookRest && XEUtils$1.isObject(hookRest)) {
           Object.assign($xegrid, hookRest);
         }
       }
@@ -13310,7 +13619,7 @@ const VxeToolbarComponent = vue.defineComponent({
   ],
   setup: function(props, context) {
     var slots = context.slots, emit = context.emit;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       isRefresh: false,
@@ -13420,7 +13729,7 @@ const VxeToolbarComponent = vue.defineComponent({
       var computeTableCustomOpts = $xetable.getComputeMaps().computeCustomOpts;
       var tableCustomOpts = computeTableCustomOpts.value;
       var checkMethod = tableCustomOpts.checkMethod;
-      xeUtils.eachTree(columns, function(column) {
+      XEUtils$1.eachTree(columns, function(column) {
         if (!checkMethod || checkMethod({ column })) {
           column.visible = column.defaultVisible;
           column.halfVisible = false;
@@ -13433,7 +13742,7 @@ const VxeToolbarComponent = vue.defineComponent({
     };
     var handleOptionCheck = function(column) {
       var columns = reactData.columns;
-      var matchObj = xeUtils.findTree(columns, function(item) {
+      var matchObj = XEUtils$1.findTree(columns, function(item) {
         return item === column;
       });
       if (matchObj && matchObj.parent) {
@@ -13452,7 +13761,7 @@ const VxeToolbarComponent = vue.defineComponent({
     var changeCustomOption = function(column) {
       var isChecked = !column.visible;
       var customOpts = computeCustomOpts.value;
-      xeUtils.eachTree([column], function(item) {
+      XEUtils$1.eachTree([column], function(item) {
         item.visible = isChecked;
         item.halfVisible = false;
       });
@@ -13468,7 +13777,7 @@ const VxeToolbarComponent = vue.defineComponent({
       var tableCustomOpts = computeTableCustomOpts.value;
       var checkMethod = tableCustomOpts.checkMethod;
       var isAll = !customStore.isAll;
-      xeUtils.eachTree(columns, function(column) {
+      XEUtils$1.eachTree(columns, function(column) {
         if (!checkMethod || checkMethod({ column })) {
           column.visible = isAll;
           column.halfVisible = false;
@@ -13727,7 +14036,7 @@ const VxeToolbarComponent = vue.defineComponent({
       } else {
         customBtnOns.onClick = handleClickSettingEvent;
       }
-      xeUtils.eachTree(columns, function(column) {
+      XEUtils$1.eachTree(columns, function(column) {
         var colTitle = formatText(column.getTitle(), 1);
         var colKey = column.getKey();
         var isColGroup = column.children && column.children.length;
@@ -13843,7 +14152,7 @@ const VxeToolbarComponent = vue.defineComponent({
       var zoomOpts = computeZoomOpts.value;
       return vue.h("div", {
         ref: refElem,
-        class: ["vxe-toolbar", className ? xeUtils.isFunction(className) ? className({ $toolbar: $xetoolbar }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--perfect"] = perfect, _a["is--loading"] = loading, _a)]
+        class: ["vxe-toolbar", className ? XEUtils$1.isFunction(className) ? className({ $toolbar: $xetoolbar }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--perfect"] = perfect, _a["is--loading"] = loading, _a)]
       }, [
         vue.h("div", {
           class: "vxe-buttons--wrapper"
@@ -13919,33 +14228,45 @@ const VxePagerComponent = vue.defineComponent({
     size: { type: String, default: function() {
       return GlobalConfig.pager.size || GlobalConfig.size;
     } },
+    // 自定义布局
     layouts: { type: Array, default: function() {
       return GlobalConfig.pager.layouts || ["PrevJump", "PrevPage", "Jump", "PageCount", "NextPage", "NextJump", "Sizes", "Total"];
     } },
+    // 当前页
     currentPage: { type: Number, default: 1 },
+    // 加载中
     loading: Boolean,
+    // 每页大小
     pageSize: { type: Number, default: function() {
       return GlobalConfig.pager.pageSize || 10;
     } },
+    // 总条数
     total: { type: Number, default: 0 },
+    // 显示页码按钮的数量
     pagerCount: { type: Number, default: function() {
       return GlobalConfig.pager.pagerCount || 7;
     } },
+    // 每页大小选项列表
     pageSizes: { type: Array, default: function() {
       return GlobalConfig.pager.pageSizes || [10, 15, 20, 50, 100];
     } },
+    // 列对其方式
     align: { type: String, default: function() {
       return GlobalConfig.pager.align;
     } },
+    // 带边框
     border: { type: Boolean, default: function() {
       return GlobalConfig.pager.border;
     } },
+    // 带背景颜色
     background: { type: Boolean, default: function() {
       return GlobalConfig.pager.background;
     } },
+    // 配套的样式
     perfect: { type: Boolean, default: function() {
       return GlobalConfig.pager.perfect;
     } },
+    // 当只有一页时隐藏
     autoHidden: { type: Boolean, default: function() {
       return GlobalConfig.pager.autoHidden;
     } },
@@ -13953,6 +14274,7 @@ const VxePagerComponent = vue.defineComponent({
       return GlobalConfig.pager.transfer;
     } },
     className: [String, Function],
+    // 自定义图标
     iconPrevPage: String,
     iconJumpPrev: String,
     iconJumpNext: String,
@@ -13966,7 +14288,7 @@ const VxePagerComponent = vue.defineComponent({
   ],
   setup: function(props, context) {
     var slots = context.slots, emit = context.emit;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var $xegrid = vue.inject("$xegrid", null);
     var reactData = vue.reactive({
@@ -14006,10 +14328,10 @@ const VxePagerComponent = vue.defineComponent({
     };
     var triggerJumpEvent = function(evnt) {
       var inputElem = evnt.target;
-      var inpValue = xeUtils.toNumber(inputElem.value);
+      var inpValue = XEUtils$1.toNumber(inputElem.value);
       var pageCount = computePageCount.value;
       var current = inpValue <= 0 ? 1 : inpValue >= pageCount ? pageCount : inpValue;
-      inputElem.value = xeUtils.toValueString(current);
+      inputElem.value = XEUtils$1.toValueString(current);
       changeCurrentPage(current, evnt);
     };
     var computeNumList = vue.computed(function() {
@@ -14027,7 +14349,7 @@ const VxePagerComponent = vue.defineComponent({
     });
     var computeSizeList = vue.computed(function() {
       return props.pageSizes.map(function(item) {
-        if (xeUtils.isNumber(item)) {
+        if (XEUtils$1.isNumber(item)) {
           return {
             value: item,
             label: "".concat(GlobalConfig.i18n("vxe.pager.pagesize", [item]))
@@ -14061,15 +14383,9 @@ const VxePagerComponent = vue.defineComponent({
     };
     var pageSizeEvent = function(params) {
       var value = params.value;
-      var pageSize = xeUtils.toNumber(value);
-      var pageCount = getPageCount(props.total, pageSize);
-      var currentPage = props.currentPage;
-      if (currentPage > pageCount) {
-        currentPage = pageCount;
-        emit("update:currentPage", pageCount);
-      }
+      var pageSize = XEUtils$1.toNumber(value);
       emit("update:pageSize", pageSize);
-      pagerMethods.dispatchEvent("page-change", { type: "size", pageSize, currentPage });
+      pagerMethods.dispatchEvent("page-change", { type: "size", pageSize, currentPage: Math.min(props.currentPage, getPageCount(props.total, pageSize)) });
     };
     var jumpInputEvent = function(evnt) {
       var inputElem = evnt.target;
@@ -14352,7 +14668,7 @@ const VxePagerComponent = vue.defineComponent({
       }
       return vue.h("div", {
         ref: refElem,
-        class: ["vxe-pager", className ? xeUtils.isFunction(className) ? className({ $pager: $xepager }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["align--".concat(align)] = align, _a["is--border"] = props.border, _a["is--background"] = props.background, _a["is--perfect"] = props.perfect, _a["is--hidden"] = props.autoHidden && pageCount === 1, _a["is--loading"] = props.loading, _a)]
+        class: ["vxe-pager", className ? XEUtils$1.isFunction(className) ? className({ $pager: $xepager }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["align--".concat(align)] = align, _a["is--border"] = props.border, _a["is--background"] = props.background, _a["is--perfect"] = props.perfect, _a["is--hidden"] = props.autoHidden && pageCount === 1, _a["is--loading"] = props.loading, _a)]
       }, [
         vue.h("div", {
           class: "vxe-pager--wrapper"
@@ -14396,11 +14712,11 @@ const VxeCheckboxGroupComponent = vue.defineComponent({
     var slots = context.slots, emit = context.emit;
     var $xeform = vue.inject("$xeform", null);
     var $xeformiteminfo = vue.inject("$xeformiteminfo", null);
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeIsMaximize = vue.computed(function() {
       var modelValue = props.modelValue, max2 = props.max;
       if (max2) {
-        return (modelValue ? modelValue.length : 0) >= xeUtils.toNumber(max2);
+        return (modelValue ? modelValue.length : 0) >= XEUtils$1.toNumber(max2);
       }
       return false;
     });
@@ -14492,7 +14808,7 @@ const VxeRadioButtonComponent = vue.defineComponent({
     var slots = context.slots, emit = context.emit;
     var $xeform = vue.inject("$xeform", null);
     var $xeformiteminfo = vue.inject("$xeformiteminfo", null);
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var $xeradiobutton = {
       xID,
@@ -14628,7 +14944,7 @@ const VxeTextareaComponent = vue.defineComponent({
     var emit = context.emit;
     var $xeform = vue.inject("$xeform", null);
     var $xeformiteminfo = vue.inject("$xeformiteminfo", null);
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       inputValue: props.modelValue
@@ -14650,11 +14966,11 @@ const VxeTextareaComponent = vue.defineComponent({
     };
     var textareaMethods = {};
     var computeInputCount = vue.computed(function() {
-      return xeUtils.getSize(reactData.inputValue);
+      return XEUtils$1.getSize(reactData.inputValue);
     });
     var computeIsCountError = vue.computed(function() {
       var inputCount = computeInputCount.value;
-      return props.maxlength && inputCount > xeUtils.toNumber(props.maxlength);
+      return props.maxlength && inputCount > XEUtils$1.toNumber(props.maxlength);
     });
     var computeSizeOpts = vue.computed(function() {
       return Object.assign({ minRows: 1, maxRows: 10 }, GlobalConfig.textarea.autosize, props.autosize);
@@ -14674,7 +14990,7 @@ const VxeTextareaComponent = vue.defineComponent({
         autoTxtElem.className = ["vxe-textarea--autosize", size ? "size--".concat(size) : ""].join(" ");
         autoTxtElem.style.width = "".concat(textElem.clientWidth, "px");
         autoTxtElem.style.padding = textStyle.padding;
-        autoTxtElem.innerHTML = ("" + (inputValue || "\u3000")).replace(/\n$/, "\n\u3000");
+        autoTxtElem.innerHTML = ("" + (inputValue || "　")).replace(/\n$/, "\n　");
       }
     };
     var handleResize = function() {
@@ -14685,11 +15001,11 @@ const VxeTextareaComponent = vue.defineComponent({
           var textElem = refTextarea.value;
           var sizeHeight = autoTxtElem.clientHeight;
           var textStyle = getComputedStyle(textElem);
-          var lineHeight = xeUtils.toNumber(textStyle.lineHeight);
-          var paddingTop = xeUtils.toNumber(textStyle.paddingTop);
-          var paddingBottom = xeUtils.toNumber(textStyle.paddingBottom);
-          var borderTopWidth = xeUtils.toNumber(textStyle.borderTopWidth);
-          var borderBottomWidth = xeUtils.toNumber(textStyle.borderBottomWidth);
+          var lineHeight = XEUtils$1.toNumber(textStyle.lineHeight);
+          var paddingTop = XEUtils$1.toNumber(textStyle.paddingTop);
+          var paddingBottom = XEUtils$1.toNumber(textStyle.paddingBottom);
+          var borderTopWidth = XEUtils$1.toNumber(textStyle.borderTopWidth);
+          var borderBottomWidth = XEUtils$1.toNumber(textStyle.borderBottomWidth);
           var intervalHeight = paddingTop + paddingBottom + borderTopWidth + borderBottomWidth;
           var rowNum = (sizeHeight - intervalHeight) / lineHeight;
           var textRows = rowNum && /[0-9]/.test("" + rowNum) ? rowNum : Math.floor(rowNum) + 1;
@@ -14710,7 +15026,7 @@ const VxeTextareaComponent = vue.defineComponent({
     var emitUpdate = function(value, evnt) {
       reactData.inputValue = value;
       emit("update:modelValue", value);
-      if (xeUtils.toValueString(props.modelValue) !== value) {
+      if (XEUtils$1.toValueString(props.modelValue) !== value) {
         textareaMethods.dispatchEvent("change", { value }, evnt);
         if ($xeform && $xeformiteminfo) {
           $xeform.triggerItemEvent(evnt, $xeformiteminfo.itemConfig.field, value);
@@ -14782,7 +15098,7 @@ const VxeTextareaComponent = vue.defineComponent({
       var inputCount = computeInputCount.value;
       return vue.h("div", {
         ref: refElem,
-        class: ["vxe-textarea", className, (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--autosize"] = autosize, _a["is--disabled"] = disabled, _a["def--rows"] = !xeUtils.eqNull(rows), _a["def--cols"] = !xeUtils.eqNull(cols), _a)]
+        class: ["vxe-textarea", className, (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--autosize"] = autosize, _a["is--disabled"] = disabled, _a["def--rows"] = !XEUtils$1.eqNull(rows), _a["def--cols"] = !XEUtils$1.eqNull(cols), _a)]
       }, [
         vue.h("textarea", {
           ref: refTextarea,
@@ -14854,7 +15170,7 @@ function openModal(options) {
     } else {
       var _onHide_1 = options.onHide;
       var modalOpts_1 = Object.assign(options, {
-        key: xeUtils.uniqueId(),
+        key: XEUtils$1.uniqueId(),
         modelValue: true,
         onHide: function(params) {
           var modalList = dynamicStore.modals;
@@ -14872,7 +15188,7 @@ function openModal(options) {
   });
 }
 function getModal(id) {
-  return xeUtils.find(allActivedModals, function($modal) {
+  return XEUtils$1.find(allActivedModals, function($modal) {
     return $modal.props.id === id;
   });
 }
@@ -14888,10 +15204,10 @@ function closeModal(id) {
 }
 function handleOpen(defOpts, content, title, options) {
   var opts;
-  if (xeUtils.isObject(content)) {
+  if (XEUtils$1.isObject(content)) {
     opts = content;
   } else {
-    opts = { content: xeUtils.toValueString(content), title };
+    opts = { content: XEUtils$1.toValueString(content), title };
   }
   return openModal(__assign$9(__assign$9(__assign$9({}, defOpts), options), opts));
 }
@@ -14984,7 +15300,7 @@ const VxeTooltipComponent = vue.defineComponent({
   ],
   setup: function(props, context) {
     var slots = context.slots, emit = context.emit;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       target: null,
@@ -15103,7 +15419,7 @@ const VxeTooltipComponent = vue.defineComponent({
       tipStore.arrowStyle = { left: "50%" };
       return tooltipMethods.updatePlacement();
     };
-    var showDelayTip = xeUtils.debounce(function() {
+    var showDelayTip = XEUtils$1.debounce(function() {
       if (reactData.tipActive) {
         showTip();
       }
@@ -15185,7 +15501,7 @@ const VxeTooltipComponent = vue.defineComponent({
         if (parentNode) {
           reactData.tipContent = content;
           reactData.tipZindex = nextZIndex();
-          xeUtils.arrayEach(wrapperElem.children, function(elem, index) {
+          XEUtils$1.arrayEach(wrapperElem.children, function(elem, index) {
             if (index > 1) {
               parentNode.insertBefore(elem, wrapperElem);
               if (!reactData.target) {
@@ -15285,39 +15601,43 @@ Object.assign(VxeTooltipComponent, {
   }
 });
 dynamicApp.component(VxeTooltipComponent.name, VxeTooltipComponent);
-var ItemInfo = function() {
-  function ItemInfo2($xeform, item) {
-    Object.assign(this, {
-      id: xeUtils.uniqueId("item_"),
-      title: item.title,
-      field: item.field,
-      span: item.span,
-      align: item.align,
-      titleAlign: item.titleAlign,
-      titleWidth: item.titleWidth,
-      titleColon: item.titleColon,
-      titleAsterisk: item.titleAsterisk,
-      titlePrefix: item.titlePrefix,
-      titleSuffix: item.titleSuffix,
-      titleOverflow: item.titleOverflow,
-      resetValue: item.resetValue,
-      visibleMethod: item.visibleMethod,
-      visible: item.visible,
-      folding: item.folding,
-      collapseNode: item.collapseNode,
-      className: item.className,
-      itemRender: item.itemRender,
-      showError: false,
-      errRule: null,
-      slots: item.slots,
-      children: []
-    });
-  }
-  ItemInfo2.prototype.update = function(name, value) {
-    this[name] = value;
-  };
-  return ItemInfo2;
-}();
+var ItemInfo = (
+  /** @class */
+  function() {
+    function ItemInfo2($xeform, item) {
+      Object.assign(this, {
+        id: XEUtils$1.uniqueId("item_"),
+        title: item.title,
+        field: item.field,
+        span: item.span,
+        align: item.align,
+        titleAlign: item.titleAlign,
+        titleWidth: item.titleWidth,
+        titleColon: item.titleColon,
+        titleAsterisk: item.titleAsterisk,
+        titlePrefix: item.titlePrefix,
+        titleSuffix: item.titleSuffix,
+        titleOverflow: item.titleOverflow,
+        resetValue: item.resetValue,
+        visibleMethod: item.visibleMethod,
+        visible: item.visible,
+        folding: item.folding,
+        collapseNode: item.collapseNode,
+        className: item.className,
+        itemRender: item.itemRender,
+        // 渲染属性
+        showError: false,
+        errRule: null,
+        slots: item.slots,
+        children: []
+      });
+    }
+    ItemInfo2.prototype.update = function(name, value) {
+      this[name] = value;
+    };
+    return ItemInfo2;
+  }()
+);
 function isFormItem(item) {
   return item instanceof ItemInfo;
 }
@@ -15326,7 +15646,7 @@ function createItem($xeform, _vm) {
 }
 function handleFieldOrItem($xeform, fieldOrItem) {
   if (fieldOrItem) {
-    return xeUtils.isString(fieldOrItem) ? $xeform.getItemByField(fieldOrItem) : fieldOrItem;
+    return XEUtils$1.isString(fieldOrItem) ? $xeform.getItemByField(fieldOrItem) : fieldOrItem;
   }
   return null;
 }
@@ -15367,14 +15687,14 @@ function assemItem($xeform, el, formItem, formGather) {
   var parentItem = formGather ? formGather.formItem : null;
   var parentItems = parentItem ? parentItem.children : staticItems;
   if (parentElem) {
-    parentItems.splice(xeUtils.arrayIndexOf(parentElem.children, el), 0, formItem);
+    parentItems.splice(XEUtils$1.arrayIndexOf(parentElem.children, el), 0, formItem);
     reactData.staticItems = staticItems.slice(0);
   }
 }
 function destroyItem($xeform, formItem) {
   var reactData = $xeform.reactData;
   var staticItems = reactData.staticItems;
-  var index = xeUtils.findIndexOf(staticItems, function(item) {
+  var index = XEUtils$1.findIndexOf(staticItems, function(item) {
     return item.id === formItem.id;
   });
   if (index > -1) {
@@ -15485,11 +15805,11 @@ var VxeFormConfigItem = vue.defineComponent({
       var titleSlot = slots ? slots.title : null;
       var span = item.span || allSpan;
       var align = item.align || allAlign;
-      var titleAlign = xeUtils.eqNull(item.titleAlign) ? allTitleAlign : item.titleAlign;
-      var titleWidth = xeUtils.eqNull(item.titleWidth) ? allTitleWidth : item.titleWidth;
-      var titleColon = xeUtils.eqNull(item.titleColon) ? allTitleColon : item.titleColon;
-      var titleAsterisk = xeUtils.eqNull(item.titleAsterisk) ? allTitleAsterisk : item.titleAsterisk;
-      var itemOverflow = xeUtils.isUndefined(titleOverflow) || xeUtils.isNull(titleOverflow) ? allTitleOverflow : titleOverflow;
+      var titleAlign = XEUtils$1.eqNull(item.titleAlign) ? allTitleAlign : item.titleAlign;
+      var titleWidth = XEUtils$1.eqNull(item.titleWidth) ? allTitleWidth : item.titleWidth;
+      var titleColon = XEUtils$1.eqNull(item.titleColon) ? allTitleColon : item.titleColon;
+      var titleAsterisk = XEUtils$1.eqNull(item.titleAsterisk) ? allTitleAsterisk : item.titleAsterisk;
+      var itemOverflow = XEUtils$1.isUndefined(titleOverflow) || XEUtils$1.isNull(titleOverflow) ? allTitleOverflow : titleOverflow;
       var showEllipsis = itemOverflow === "ellipsis";
       var showTitle = itemOverflow === "title";
       var showTooltip = itemOverflow === true || itemOverflow === "tooltip";
@@ -15516,7 +15836,7 @@ var VxeFormConfigItem = vue.defineComponent({
           });
         });
         return childVNs.length ? vue.h("div", {
-          class: ["vxe-form--gather vxe-row", item.id, span ? "vxe-col--".concat(span, " is--span") : "", className ? xeUtils.isFunction(className) ? className(params) : className : ""]
+          class: ["vxe-form--gather vxe-row", item.id, span ? "vxe-col--".concat(span, " is--span") : "", className ? XEUtils$1.isFunction(className) ? className(params) : className : ""]
         }, childVNs) : vue.createCommentVNode();
       }
       var contentVNs = [];
@@ -15525,7 +15845,7 @@ var VxeFormConfigItem = vue.defineComponent({
       } else if (compConf && compConf.renderItemContent) {
         contentVNs = getSlotVNs(compConf.renderItemContent(itemRender, params));
       } else if (field) {
-        contentVNs = [xeUtils.toValueString(xeUtils.get(data, field))];
+        contentVNs = [XEUtils$1.toValueString(XEUtils$1.get(data, field))];
       }
       if (collapseNode) {
         contentVNs.push(vue.h("div", {
@@ -15559,8 +15879,8 @@ var VxeFormConfigItem = vue.defineComponent({
           "vxe-form--item",
           item.id,
           span ? "vxe-col--".concat(span, " is--span") : "",
-          className ? xeUtils.isFunction(className) ? className(params) : className : "",
-          itemClassName ? xeUtils.isFunction(itemClassName) ? itemClassName(params) : itemClassName : "",
+          className ? XEUtils$1.isFunction(className) ? className(params) : className : "",
+          itemClassName ? XEUtils$1.isFunction(itemClassName) ? itemClassName(params) : itemClassName : "",
           {
             "is--title": title,
             "is--colon": titleColon,
@@ -15609,56 +15929,59 @@ var __assign$5 = globalThis && globalThis.__assign || function() {
   };
   return __assign$5.apply(this, arguments);
 };
-var Rule = function() {
-  function Rule2(rule) {
-    Object.assign(this, {
-      $options: rule,
-      required: rule.required,
-      min: rule.min,
-      max: rule.min,
-      type: rule.type,
-      pattern: rule.pattern,
-      validator: rule.validator,
-      trigger: rule.trigger,
-      maxWidth: rule.maxWidth
+var Rule = (
+  /** @class */
+  function() {
+    function Rule2(rule) {
+      Object.assign(this, {
+        $options: rule,
+        required: rule.required,
+        min: rule.min,
+        max: rule.min,
+        type: rule.type,
+        pattern: rule.pattern,
+        validator: rule.validator,
+        trigger: rule.trigger,
+        maxWidth: rule.maxWidth
+      });
+    }
+    Object.defineProperty(Rule2.prototype, "content", {
+      get: function() {
+        return getFuncText(this.$options.content || this.$options.message);
+      },
+      enumerable: false,
+      configurable: true
     });
-  }
-  Object.defineProperty(Rule2.prototype, "content", {
-    get: function() {
-      return getFuncText(this.$options.content || this.$options.message);
-    },
-    enumerable: false,
-    configurable: true
-  });
-  Object.defineProperty(Rule2.prototype, "message", {
-    get: function() {
-      return this.content;
-    },
-    enumerable: false,
-    configurable: true
-  });
-  return Rule2;
-}();
+    Object.defineProperty(Rule2.prototype, "message", {
+      get: function() {
+        return this.content;
+      },
+      enumerable: false,
+      configurable: true
+    });
+    return Rule2;
+  }()
+);
 var validErrorRuleValue = function(rule, val) {
   var type = rule.type, min2 = rule.min, max2 = rule.max, pattern = rule.pattern;
   var isNumType = type === "number";
-  var numVal = isNumType ? xeUtils.toNumber(val) : xeUtils.getSize(val);
+  var numVal = isNumType ? XEUtils$1.toNumber(val) : XEUtils$1.getSize(val);
   if (isNumType && isNaN(val)) {
     return true;
   }
-  if (!xeUtils.eqNull(min2) && numVal < xeUtils.toNumber(min2)) {
+  if (!XEUtils$1.eqNull(min2) && numVal < XEUtils$1.toNumber(min2)) {
     return true;
   }
-  if (!xeUtils.eqNull(max2) && numVal > xeUtils.toNumber(max2)) {
+  if (!XEUtils$1.eqNull(max2) && numVal > XEUtils$1.toNumber(max2)) {
     return true;
   }
-  if (pattern && !(xeUtils.isRegExp(pattern) ? pattern : new RegExp(pattern)).test(val)) {
+  if (pattern && !(XEUtils$1.isRegExp(pattern) ? pattern : new RegExp(pattern)).test(val)) {
     return true;
   }
   return false;
 };
 function getResetValue(value, resetValue) {
-  if (xeUtils.isArray(value)) {
+  if (XEUtils$1.isArray(value)) {
     resetValue = [];
   }
   return resetValue;
@@ -15715,7 +16038,7 @@ const VxeFormComponent = vue.defineComponent({
   setup: function(props, context) {
     var hasUseTooltip = VXETable.tooltip;
     var slots = context.slots, emit = context.emit;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       collapseAll: props.collapseStatus,
@@ -15760,10 +16083,10 @@ const VxeFormComponent = vue.defineComponent({
     };
     var callSlot = function(slotFunc, params) {
       if (slotFunc) {
-        if (xeUtils.isString(slotFunc)) {
+        if (XEUtils$1.isString(slotFunc)) {
           slotFunc = slots[slotFunc] || null;
         }
-        if (xeUtils.isFunction(slotFunc)) {
+        if (XEUtils$1.isFunction(slotFunc)) {
           return getSlotVNs(slotFunc(params));
         }
       }
@@ -15774,8 +16097,8 @@ const VxeFormComponent = vue.defineComponent({
         if (process.env.NODE_ENV === "development") {
           list.forEach(function(item) {
             if (item.slots) {
-              xeUtils.each(item.slots, function(func) {
-                if (!xeUtils.isFunction(func)) {
+              XEUtils$1.each(item.slots, function(func) {
+                if (!XEUtils$1.isFunction(func)) {
                   if (!slots[func]) {
                     errLog("vxe.error.notSlot", [func]);
                   }
@@ -15784,7 +16107,7 @@ const VxeFormComponent = vue.defineComponent({
             }
           });
         }
-        reactData.staticItems = xeUtils.mapTree(list, function(item) {
+        reactData.staticItems = XEUtils$1.mapTree(list, function(item) {
           return createItem($xeform, item);
         }, { children: "children" });
       }
@@ -15792,13 +16115,13 @@ const VxeFormComponent = vue.defineComponent({
     };
     var getItems = function() {
       var itemList = [];
-      xeUtils.eachTree(reactData.formItems, function(item) {
+      XEUtils$1.eachTree(reactData.formItems, function(item) {
         itemList.push(item);
       }, { children: "children" });
       return itemList;
     };
     var getItemByField = function(field) {
-      var rest = xeUtils.findTree(reactData.formItems, function(item) {
+      var rest = XEUtils$1.findTree(reactData.formItems, function(item) {
         return item.field === field;
       }, { children: "children" });
       return rest ? rest.item : null;
@@ -15842,7 +16165,7 @@ const VxeFormComponent = vue.defineComponent({
             if (compConf && compConf.itemResetMethod) {
               compConf.itemResetMethod({ data, field, property: field, item, $form: $xeform });
             } else if (field) {
-              xeUtils.set(data, field, resetValue === null ? getResetValue(xeUtils.get(data, field), void 0) : xeUtils.clone(resetValue, true));
+              XEUtils$1.set(data, field, resetValue === null ? getResetValue(XEUtils$1.get(data, field), void 0) : XEUtils$1.clone(resetValue, true));
             }
           }
         });
@@ -15884,13 +16207,13 @@ const VxeFormComponent = vue.defineComponent({
       var errorRules = [];
       var syncVailds = [];
       if (property2 && formRules) {
-        var rules_1 = xeUtils.get(formRules, property2);
+        var rules_1 = XEUtils$1.get(formRules, property2);
         if (rules_1) {
-          var itemValue_1 = xeUtils.isUndefined(val) ? xeUtils.get(data, property2) : val;
+          var itemValue_1 = XEUtils$1.isUndefined(val) ? XEUtils$1.get(data, property2) : val;
           rules_1.forEach(function(rule) {
             var type = rule.type, trigger = rule.trigger, required = rule.required;
             if (validType === "all" || !trigger || validType === trigger) {
-              if (xeUtils.isFunction(rule.validator)) {
+              if (XEUtils$1.isFunction(rule.validator)) {
                 var customValid = rule.validator({
                   itemValue: itemValue_1,
                   rule,
@@ -15901,7 +16224,7 @@ const VxeFormComponent = vue.defineComponent({
                   $form: $xeform
                 });
                 if (customValid) {
-                  if (xeUtils.isError(customValid)) {
+                  if (XEUtils$1.isError(customValid)) {
                     errorRules.push(new Rule({ type: "custom", trigger, content: customValid.message, rule: new Rule(rule) }));
                   } else if (customValid.catch) {
                     syncVailds.push(customValid.catch(function(e) {
@@ -15911,7 +16234,7 @@ const VxeFormComponent = vue.defineComponent({
                 }
               } else {
                 var isArrType = type === "array";
-                var hasEmpty = isArrType || xeUtils.isArray(itemValue_1) ? !xeUtils.isArray(itemValue_1) || !itemValue_1.length : eqEmptyValue(itemValue_1);
+                var hasEmpty = isArrType || XEUtils$1.isArray(itemValue_1) ? !XEUtils$1.isArray(itemValue_1) || !itemValue_1.length : eqEmptyValue(itemValue_1);
                 if (required ? hasEmpty || validErrorRuleValue(rule, itemValue_1) : !hasEmpty && validErrorRuleValue(rule, itemValue_1)) {
                   errorRules.push(new Rule(rule));
                 }
@@ -16134,7 +16457,7 @@ const VxeFormComponent = vue.defineComponent({
       var defaultSlot = slots.default;
       return vue.h("form", {
         ref: refElem,
-        class: ["vxe-form", className ? xeUtils.isFunction(className) ? className({ items: formItems, data, $form: $xeform }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--loading"] = loading, _a)],
+        class: ["vxe-form", className ? XEUtils$1.isFunction(className) ? className({ items: formItems, data, $form: $xeform }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--loading"] = loading, _a)],
         onSubmit: submitEvent,
         onReset: resetEvent
       }, [
@@ -16151,10 +16474,16 @@ const VxeFormComponent = vue.defineComponent({
           class: "vxe-form-slots",
           ref: "hideItem"
         }, customLayout ? [] : defaultSlot ? defaultSlot({}) : []),
+        /**
+         * 加载中
+         */
         vue.h(VxeLoading, {
           class: "vxe-form--loading",
           modelValue: loading
         }),
+        /**
+         * 工具提示
+         */
         hasUseTooltip ? vue.h(vue.resolveComponent("vxe-tooltip"), __assign$5({ ref: refTooltip }, tooltipOpts)) : vue.createCommentVNode()
       ]);
     };
@@ -16257,11 +16586,11 @@ const VxeFormItemComponent = vue.defineComponent({
       var titleSlot = slots2 ? slots2.title : null;
       var span = item.span || props2.span;
       var align = item.align || props2.align;
-      var titleAlign = xeUtils.eqNull(item.titleAlign) ? allTitleAlign : item.titleAlign;
-      var titleWidth = xeUtils.eqNull(item.titleWidth) ? allTitleWidth : item.titleWidth;
-      var titleColon = xeUtils.eqNull(item.titleColon) ? allTitleColon : item.titleColon;
-      var titleAsterisk = xeUtils.eqNull(item.titleAsterisk) ? allTitleAsterisk : item.titleAsterisk;
-      var itemOverflow = xeUtils.isUndefined(titleOverflow) || xeUtils.isNull(titleOverflow) ? allTitleOverflow : titleOverflow;
+      var titleAlign = XEUtils$1.eqNull(item.titleAlign) ? allTitleAlign : item.titleAlign;
+      var titleWidth = XEUtils$1.eqNull(item.titleWidth) ? allTitleWidth : item.titleWidth;
+      var titleColon = XEUtils$1.eqNull(item.titleColon) ? allTitleColon : item.titleColon;
+      var titleAsterisk = XEUtils$1.eqNull(item.titleAsterisk) ? allTitleAsterisk : item.titleAsterisk;
+      var itemOverflow = XEUtils$1.isUndefined(titleOverflow) || XEUtils$1.isNull(titleOverflow) ? allTitleOverflow : titleOverflow;
       var showEllipsis = itemOverflow === "ellipsis";
       var showTitle = itemOverflow === "title";
       var showTooltip = itemOverflow === true || itemOverflow === "tooltip";
@@ -16285,7 +16614,7 @@ const VxeFormItemComponent = vue.defineComponent({
       } else if (compConf && compConf.renderItemContent) {
         contentVNs = getSlotVNs(compConf.renderItemContent(itemRender, params));
       } else if (field) {
-        contentVNs = ["".concat(xeUtils.get(data, field))];
+        contentVNs = ["".concat(XEUtils$1.get(data, field))];
       }
       if (collapseNode) {
         contentVNs.push(vue.h("div", {
@@ -16320,8 +16649,8 @@ const VxeFormItemComponent = vue.defineComponent({
           "vxe-form--item",
           item.id,
           span ? "vxe-col--".concat(span, " is--span") : "",
-          className ? xeUtils.isFunction(className) ? className(params) : className : "",
-          itemClassName ? xeUtils.isFunction(itemClassName) ? itemClassName(params) : itemClassName : "",
+          className ? XEUtils$1.isFunction(className) ? className(params) : className : "",
+          itemClassName ? XEUtils$1.isFunction(itemClassName) ? itemClassName(params) : itemClassName : "",
           {
             "is--title": title,
             "is--colon": titleColon,
@@ -16424,22 +16753,25 @@ Object.assign(VxeSelectComponent, {
   }
 });
 dynamicApp.component(VxeSelectComponent.name, VxeSelectComponent);
-var OptionInfo = function() {
-  function OptionInfo2($xeselect, _vm) {
-    Object.assign(this, {
-      id: xeUtils.uniqueId("option_"),
-      value: _vm.value,
-      label: _vm.label,
-      visible: _vm.visible,
-      className: _vm.className,
-      disabled: _vm.disabled
-    });
-  }
-  OptionInfo2.prototype.update = function(name, value) {
-    this[name] = value;
-  };
-  return OptionInfo2;
-}();
+var OptionInfo = (
+  /** @class */
+  function() {
+    function OptionInfo2($xeselect, _vm) {
+      Object.assign(this, {
+        id: XEUtils$1.uniqueId("option_"),
+        value: _vm.value,
+        label: _vm.label,
+        visible: _vm.visible,
+        className: _vm.className,
+        disabled: _vm.disabled
+      });
+    }
+    OptionInfo2.prototype.update = function(name, value) {
+      this[name] = value;
+    };
+    return OptionInfo2;
+  }()
+);
 function isOption(option) {
   return option instanceof OptionInfo;
 }
@@ -16462,14 +16794,14 @@ function assemOption($xeselect, el, option, optgroup) {
   var parentOption = optgroup ? optgroup.option : null;
   var parentCols = parentOption ? parentOption.options : staticOptions;
   if (parentElem && parentCols) {
-    parentCols.splice(xeUtils.arrayIndexOf(parentElem.children, el), 0, option);
+    parentCols.splice(XEUtils$1.arrayIndexOf(parentElem.children, el), 0, option);
     reactData.staticOptions = staticOptions.slice(0);
   }
 }
 function destroyOption($xeselect, option) {
   var reactData = $xeselect.reactData;
   var staticOptions = reactData.staticOptions;
-  var matchObj = xeUtils.findTree(staticOptions, function(item) {
+  var matchObj = XEUtils$1.findTree(staticOptions, function(item) {
     return item.id === option.id;
   }, { children: "options" });
   if (matchObj) {
@@ -16574,7 +16906,7 @@ const VxeSwitchComponent = vue.defineComponent({
     var emit = context.emit;
     var $xeform = vue.inject("$xeform", null);
     var $xeformiteminfo = vue.inject("$xeformiteminfo", null);
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       isActivated: false,
@@ -16721,49 +17053,52 @@ function eventListener() {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(eventHandle, GlobalConfig.resizeInterval || defaultInterval);
 }
-var XEResizeObserver = function() {
-  function XEResizeObserver2(callback) {
-    this.tarList = [];
-    this.callback = callback;
-  }
-  XEResizeObserver2.prototype.observe = function(target) {
-    var _this = this;
-    if (target) {
-      var tarList = this.tarList;
-      if (!tarList.some(function(observer) {
-        return observer.target === target;
-      })) {
-        tarList.push({
-          target,
-          width: target.clientWidth,
-          heighe: target.clientHeight
-        });
-      }
-      if (!eventStore.length) {
-        eventListener();
-      }
-      if (!eventStore.some(function(item) {
-        return item === _this;
-      })) {
-        eventStore.push(this);
-      }
+var XEResizeObserver = (
+  /** @class */
+  function() {
+    function XEResizeObserver2(callback) {
+      this.tarList = [];
+      this.callback = callback;
     }
-  };
-  XEResizeObserver2.prototype.unobserve = function(target) {
-    xeUtils.remove(eventStore, function(item) {
-      return item.tarList.some(function(observer) {
-        return observer.target === target;
+    XEResizeObserver2.prototype.observe = function(target) {
+      var _this = this;
+      if (target) {
+        var tarList = this.tarList;
+        if (!tarList.some(function(observer) {
+          return observer.target === target;
+        })) {
+          tarList.push({
+            target,
+            width: target.clientWidth,
+            heighe: target.clientHeight
+          });
+        }
+        if (!eventStore.length) {
+          eventListener();
+        }
+        if (!eventStore.some(function(item) {
+          return item === _this;
+        })) {
+          eventStore.push(this);
+        }
+      }
+    };
+    XEResizeObserver2.prototype.unobserve = function(target) {
+      XEUtils$1.remove(eventStore, function(item) {
+        return item.tarList.some(function(observer) {
+          return observer.target === target;
+        });
       });
-    });
-  };
-  XEResizeObserver2.prototype.disconnect = function() {
-    var _this = this;
-    xeUtils.remove(eventStore, function(item) {
-      return item === _this;
-    });
-  };
-  return XEResizeObserver2;
-}();
+    };
+    XEResizeObserver2.prototype.disconnect = function() {
+      var _this = this;
+      XEUtils$1.remove(eventStore, function(item) {
+        return item === _this;
+      });
+    };
+    return XEResizeObserver2;
+  }()
+);
 function createResizeEvent(callback) {
   if (window.ResizeObserver) {
     return new window.ResizeObserver(callback);
@@ -16792,7 +17127,7 @@ const VxeListComponent = vue.defineComponent({
   ],
   setup: function(props, context) {
     var slots = context.slots, emit = context.emit;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       scrollYLoad: false,
@@ -16884,7 +17219,7 @@ const VxeListComponent = vue.defineComponent({
         if (scrollYLoad) {
           var scrollBodyElem = refVirtualWrapper.value;
           var visibleYSize = Math.max(8, Math.ceil(scrollBodyElem.clientHeight / rowHeight));
-          var offsetYSize = sYOpts.oSize ? xeUtils.toNumber(sYOpts.oSize) : browse.edge ? 10 : 0;
+          var offsetYSize = sYOpts.oSize ? XEUtils$1.toNumber(sYOpts.oSize) : browse.edge ? 10 : 0;
           scrollYStore.offsetSize = offsetYSize;
           scrollYStore.visibleSize = visibleYSize;
           scrollYStore.endIndex = Math.max(scrollYStore.startIndex, visibleYSize + offsetYSize, scrollYStore.endIndex);
@@ -16904,10 +17239,10 @@ const VxeListComponent = vue.defineComponent({
     };
     var scrollTo = function(scrollLeft, scrollTop) {
       var scrollBodyElem = refVirtualWrapper.value;
-      if (xeUtils.isNumber(scrollLeft)) {
+      if (XEUtils$1.isNumber(scrollLeft)) {
         scrollBodyElem.scrollLeft = scrollLeft;
       }
-      if (xeUtils.isNumber(scrollTop)) {
+      if (XEUtils$1.isNumber(scrollTop)) {
         scrollBodyElem.scrollTop = scrollTop;
       }
       if (reactData.scrollYLoad) {
@@ -16971,6 +17306,10 @@ const VxeListComponent = vue.defineComponent({
       dispatchEvent: function(type, params, evnt) {
         emit(type, Object.assign({ $list: $xelist, $event: evnt }, params));
       },
+      /**
+       * 加载数据
+       * @param {Array} datas 数据
+       */
       loadData: function(datas) {
         var scrollYStore = internalData.scrollYStore;
         var sYOpts = computeSYOpts.value;
@@ -16987,6 +17326,10 @@ const VxeListComponent = vue.defineComponent({
           refreshScroll();
         });
       },
+      /**
+       * 重新加载数据
+       * @param {Array} datas 数据
+       */
       reloadData: function(datas) {
         clearScroll();
         return listMethods.loadData(datas);
@@ -17042,7 +17385,7 @@ const VxeListComponent = vue.defineComponent({
       var styles = computeStyles.value;
       return vue.h("div", {
         ref: refElem,
-        class: ["vxe-list", className ? xeUtils.isFunction(className) ? className({ $list: $xelist }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--loading"] = loading, _a)]
+        class: ["vxe-list", className ? XEUtils$1.isFunction(className) ? className({ $list: $xelist }) : className : "", (_a = {}, _a["size--".concat(vSize)] = vSize, _a["is--loading"] = loading, _a)]
       }, [
         vue.h("div", {
           ref: refVirtualWrapper,
@@ -17064,6 +17407,9 @@ const VxeListComponent = vue.defineComponent({
             }
           }, slots.default ? slots.default({ items, $list: $xelist }) : [])
         ]),
+        /**
+         * 加载中
+         */
         vue.h(VxeLoading, {
           class: "vxe-list--loading",
           modelValue: loading
@@ -17101,7 +17447,7 @@ const VxePulldownComponent = vue.defineComponent({
   ],
   setup: function(props, context) {
     var slots = context.slots, emit = context.emit;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var reactData = vue.reactive({
       inited: false,
@@ -17503,7 +17849,7 @@ const TableBodyComponent = vue.defineComponent({
       var _columnIndex = $xetable.getVTColumnIndex(column);
       var isEdit = isEnableConf(editRender);
       var fixedHiddenColumn = fixedType ? column.fixed !== fixedType : column.fixed && overflowX;
-      var cellOverflow = xeUtils.isUndefined(showOverflow) || xeUtils.isNull(showOverflow) ? allColumnOverflow : showOverflow;
+      var cellOverflow = XEUtils$1.isUndefined(showOverflow) || XEUtils$1.isNull(showOverflow) ? allColumnOverflow : showOverflow;
       var showEllipsis = cellOverflow === "ellipsis";
       var showTitle = cellOverflow === "title";
       var showTooltip = cellOverflow === true || cellOverflow === "tooltip";
@@ -17633,7 +17979,7 @@ const TableBodyComponent = vue.defineComponent({
         getPropClass(allCellClassName, params)
       ], key: columnKey || columnOpts.useKey ? column.id : $columnIndex }, attrs), { style: Object.assign({
         height: hasEllipsis && (scrollYRHeight || rowHeight) ? "".concat(scrollYRHeight || rowHeight, "px") : ""
-      }, cellStyle ? xeUtils.isFunction(cellStyle) ? cellStyle(params) : cellStyle : null) }), tdOns), tdVNs);
+      }, cellStyle ? XEUtils$1.isFunction(cellStyle) ? cellStyle(params) : cellStyle : null) }), tdOns), tdVNs);
     };
     var renderRows = function(fixedType, tableData, tableColumn) {
       var stripe = tableProps2.stripe, rowKey = tableProps2.rowKey, highlightHoverRow = tableProps2.highlightHoverRow, rowClassName = tableProps2.rowClassName, rowStyle = tableProps2.rowStyle, allColumnOverflow = tableProps2.showOverflow, editConfig = tableProps2.editConfig, treeConfig = tableProps2.treeConfig;
@@ -17699,7 +18045,7 @@ const TableBodyComponent = vue.defineComponent({
             "row--checked": checkboxOpts.highlight && $xetable.isCheckedByCheckboxRow(row)
           },
           getPropClass(rowClassName, params)
-        ], rowid, style: rowStyle ? xeUtils.isFunction(rowStyle) ? rowStyle(params) : rowStyle : null, key: rowKey || rowOpts.useKey || treeConfig ? rowid : $rowIndex }, trOn), tableColumn.map(function(column, $columnIndex) {
+        ], rowid, style: rowStyle ? XEUtils$1.isFunction(rowStyle) ? rowStyle(params) : rowStyle : null, key: rowKey || rowOpts.useKey || treeConfig ? rowid : $rowIndex }, trOn), tableColumn.map(function(column, $columnIndex) {
           return renderColumn(seq, rowid, fixedType, rowLevel, row, rowIndex, $rowIndex, _rowIndex, column, $columnIndex, tableColumn, tableData);
         })));
         if (isExpandRow) {
@@ -17713,9 +18059,9 @@ const TableBodyComponent = vue.defineComponent({
             cellStyle.paddingLeft = "".concat(rowLevel * treeOpts.indent + 30, "px");
           }
           var showOverflow = expandColumn.showOverflow;
-          var hasEllipsis = xeUtils.isUndefined(showOverflow) || xeUtils.isNull(showOverflow) ? allColumnOverflow : showOverflow;
+          var hasEllipsis = XEUtils$1.isUndefined(showOverflow) || XEUtils$1.isNull(showOverflow) ? allColumnOverflow : showOverflow;
           var expandParams = { $table: $xetable, seq, column: expandColumn, fixed: fixedType, type: renderType$2, level: rowLevel, row, rowIndex, $rowIndex, _rowIndex };
-          rows.push(vue.h("tr", __assign$3({ class: "vxe-body--expanded-row", key: "expand_".concat(rowid), style: rowStyle ? xeUtils.isFunction(rowStyle) ? rowStyle(expandParams) : rowStyle : null }, trOn), [
+          rows.push(vue.h("tr", __assign$3({ class: "vxe-body--expanded-row", key: "expand_".concat(rowid), style: rowStyle ? XEUtils$1.isFunction(rowStyle) ? rowStyle(expandParams) : rowStyle : null }, trOn), [
             vue.h("td", {
               class: {
                 "vxe-body--expanded-column": 1,
@@ -18021,6 +18367,9 @@ const TableBodyComponent = vue.defineComponent({
           cellpadding: 0,
           border: 0
         }, [
+          /**
+           * 列宽
+           */
           vue.h("colgroup", {
             ref: refBodyColgroup
           }, tableColumn.map(function(column, $columnIndex) {
@@ -18029,6 +18378,9 @@ const TableBodyComponent = vue.defineComponent({
               key: $columnIndex
             });
           })),
+          /**
+           * 内容
+           */
           vue.h("tbody", {
             ref: refBodyTBody
           }, renderRows(fixedType, tableData, tableColumn))
@@ -18191,7 +18543,7 @@ const VxeTableHeader = vue.defineComponent({
       var pos = getOffsetPos(dragBtnElem, wrapperElem);
       var dragBtnWidth = dragBtnElem.clientWidth;
       var dragBtnOffsetWidth = Math.floor(dragBtnWidth / 2);
-      var minInterval = getColReMinWidth(params) - dragBtnOffsetWidth;
+      var minInterval = getColMinWidth(params) - dragBtnOffsetWidth;
       var dragMinLeft = pos.left - cell.clientWidth + dragBtnWidth + minInterval;
       var dragPosLeft = pos.left + dragBtnOffsetWidth;
       var domMousemove = document.onmousemove;
@@ -18322,6 +18674,9 @@ const VxeTableHeader = vue.defineComponent({
           cellpadding: 0,
           border: 0
         }, [
+          /**
+           * 列宽
+           */
           vue.h("colgroup", {
             ref: refHeaderColgroup
           }, renderColumnList.map(function(column, $columnIndex) {
@@ -18334,18 +18689,21 @@ const VxeTableHeader = vue.defineComponent({
               name: "col_gutter"
             })
           ] : [])),
+          /**
+           * 头部
+           */
           vue.h("thead", {
             ref: refHeaderTHead
           }, headerGroups.map(function(cols, $rowIndex) {
             return vue.h("tr", {
-              class: ["vxe-header--row", headerRowClassName ? xeUtils.isFunction(headerRowClassName) ? headerRowClassName({ $table: $xetable, $rowIndex, fixed: fixedType, type: renderType$1 }) : headerRowClassName : ""],
-              style: headerRowStyle ? xeUtils.isFunction(headerRowStyle) ? headerRowStyle({ $table: $xetable, $rowIndex, fixed: fixedType, type: renderType$1 }) : headerRowStyle : null
+              class: ["vxe-header--row", headerRowClassName ? XEUtils$1.isFunction(headerRowClassName) ? headerRowClassName({ $table: $xetable, $rowIndex, fixed: fixedType, type: renderType$1 }) : headerRowClassName : ""],
+              style: headerRowStyle ? XEUtils$1.isFunction(headerRowStyle) ? headerRowStyle({ $table: $xetable, $rowIndex, fixed: fixedType, type: renderType$1 }) : headerRowStyle : null
             }, cols.map(function(column, $columnIndex) {
               var _a2;
               var type = column.type, showHeaderOverflow = column.showHeaderOverflow, headerAlign = column.headerAlign, align = column.align, headerClassName = column.headerClassName;
               var isColGroup = column.children && column.children.length;
               var fixedHiddenColumn = fixedType ? column.fixed !== fixedType && !isColGroup : !!column.fixed && overflowX;
-              var headOverflow = xeUtils.isUndefined(showHeaderOverflow) || xeUtils.isNull(showHeaderOverflow) ? allColumnHeaderOverflow : showHeaderOverflow;
+              var headOverflow = XEUtils$1.isUndefined(showHeaderOverflow) || XEUtils$1.isNull(showHeaderOverflow) ? allColumnHeaderOverflow : showHeaderOverflow;
               var headAlign = headerAlign || align || allHeaderAlign || allAlign;
               var showEllipsis = headOverflow === "ellipsis";
               var showTitle = headOverflow === "title";
@@ -18377,9 +18735,9 @@ const VxeTableHeader = vue.defineComponent({
                 "vxe-header--column",
                 column.id,
                 (_a2 = {}, _a2["col--".concat(headAlign)] = headAlign, _a2["col--".concat(type)] = type, _a2["col--last"] = $columnIndex === cols.length - 1, _a2["col--fixed"] = column.fixed, _a2["col--group"] = isColGroup, _a2["col--ellipsis"] = hasEllipsis, _a2["fixed--hidden"] = fixedHiddenColumn, _a2["is--sortable"] = column.sortable, _a2["col--filter"] = !!column.filters, _a2["is--filter-active"] = hasFilter, _a2["col--current"] = currentColumn === column, _a2),
-                headerClassName ? xeUtils.isFunction(headerClassName) ? headerClassName(params) : headerClassName : "",
-                headerCellClassName ? xeUtils.isFunction(headerCellClassName) ? headerCellClassName(params) : headerCellClassName : ""
-              ], colid: column.id, colspan: column.colSpan > 1 ? column.colSpan : null, rowspan: column.rowSpan > 1 ? column.rowSpan : null, style: headerCellStyle ? xeUtils.isFunction(headerCellStyle) ? headerCellStyle(params) : headerCellStyle : null }, thOns), { key: columnKey || columnOpts.useKey || isColGroup ? column.id : $columnIndex }), [
+                headerClassName ? XEUtils$1.isFunction(headerClassName) ? headerClassName(params) : headerClassName : "",
+                headerCellClassName ? XEUtils$1.isFunction(headerCellClassName) ? headerCellClassName(params) : headerCellClassName : ""
+              ], colid: column.id, colspan: column.colSpan > 1 ? column.colSpan : null, rowspan: column.rowSpan > 1 ? column.rowSpan : null, style: headerCellStyle ? XEUtils$1.isFunction(headerCellStyle) ? headerCellStyle(params) : headerCellStyle : null }, thOns), { key: columnKey || columnOpts.useKey || isColGroup ? column.id : $columnIndex }), [
                 vue.h("div", {
                   class: ["vxe-cell", {
                     "c--title": showTitle,
@@ -18387,7 +18745,10 @@ const VxeTableHeader = vue.defineComponent({
                     "c--ellipsis": showEllipsis
                   }]
                 }, column.renderHeader(params)),
-                !fixedHiddenColumn && !isColGroup && (xeUtils.isBoolean(column.resizable) ? column.resizable : columnOpts.resizable || resizable) ? vue.h("div", {
+                /**
+                 * 列宽拖动
+                 */
+                !fixedHiddenColumn && !isColGroup && (XEUtils$1.isBoolean(column.resizable) ? column.resizable : columnOpts.resizable || resizable) ? vue.h("div", {
                   class: ["vxe-resizable", {
                     "is--line": !border || border === "none"
                   }],
@@ -18403,6 +18764,9 @@ const VxeTableHeader = vue.defineComponent({
             ] : []));
           }))
         ]),
+        /**
+         * 其他
+         */
         vue.h("div", {
           ref: refHeaderBorderRepair,
           class: "vxe-table--header-border-line"
@@ -18554,6 +18918,9 @@ const VxeTableFooterComponent = vue.defineComponent({
           cellpadding: 0,
           border: 0
         }, [
+          /**
+           * 列宽
+           */
           vue.h("colgroup", {
             ref: refFooterColgroup
           }, tableColumn.map(function(column, $columnIndex) {
@@ -18566,20 +18933,23 @@ const VxeTableFooterComponent = vue.defineComponent({
               name: "col_gutter"
             })
           ] : [])),
+          /**
+           * 底部
+           */
           vue.h("tfoot", {
             ref: refFooterTFoot
           }, footerTableData.map(function(list, _rowIndex) {
             var $rowIndex = _rowIndex;
             return vue.h("tr", {
-              class: ["vxe-footer--row", footerRowClassName ? xeUtils.isFunction(footerRowClassName) ? footerRowClassName({ $table: $xetable, _rowIndex, $rowIndex, fixed: fixedType, type: renderType }) : footerRowClassName : ""],
-              style: footerRowStyle ? xeUtils.isFunction(footerRowStyle) ? footerRowStyle({ $table: $xetable, _rowIndex, $rowIndex, fixed: fixedType, type: renderType }) : footerRowStyle : null
+              class: ["vxe-footer--row", footerRowClassName ? XEUtils$1.isFunction(footerRowClassName) ? footerRowClassName({ $table: $xetable, _rowIndex, $rowIndex, fixed: fixedType, type: renderType }) : footerRowClassName : ""],
+              style: footerRowStyle ? XEUtils$1.isFunction(footerRowStyle) ? footerRowStyle({ $table: $xetable, _rowIndex, $rowIndex, fixed: fixedType, type: renderType }) : footerRowStyle : null
             }, tableColumn.map(function(column, $columnIndex) {
               var _a2;
               var type = column.type, showFooterOverflow = column.showFooterOverflow, footerAlign = column.footerAlign, align = column.align, footerClassName = column.footerClassName;
               var showAllTip = tooltipOpts.showAll;
               var isColGroup = column.children && column.children.length;
               var fixedHiddenColumn = fixedType ? column.fixed !== fixedType && !isColGroup : column.fixed && overflowX;
-              var footOverflow = xeUtils.isUndefined(showFooterOverflow) || xeUtils.isNull(showFooterOverflow) ? allColumnFooterOverflow : showFooterOverflow;
+              var footOverflow = XEUtils$1.isUndefined(showFooterOverflow) || XEUtils$1.isNull(showFooterOverflow) ? allColumnFooterOverflow : showFooterOverflow;
               var footAlign = footerAlign || align || allFooterAlign || allAlign;
               var showEllipsis = footOverflow === "ellipsis";
               var showTitle = footOverflow === "title";
@@ -18642,7 +19012,7 @@ const VxeTableFooterComponent = vue.defineComponent({
                   attrs.colspan = colspan;
                 }
               }
-              return vue.h("td", __assign$1(__assign$1(__assign$1(__assign$1({ class: ["vxe-footer--column", column.id, (_a2 = {}, _a2["col--".concat(footAlign)] = footAlign, _a2["col--".concat(type)] = type, _a2["col--last"] = $columnIndex === tableColumn.length - 1, _a2["fixed--hidden"] = fixedHiddenColumn, _a2["col--ellipsis"] = hasEllipsis, _a2["col--current"] = currentColumn === column, _a2), getPropClass(footerClassName, params), getPropClass(footerCellClassName, params)] }, attrs), { style: footerCellStyle ? xeUtils.isFunction(footerCellStyle) ? footerCellStyle(params) : footerCellStyle : null }), tfOns), { key: columnKey || columnOpts.useKey ? column.id : $columnIndex }), [
+              return vue.h("td", __assign$1(__assign$1(__assign$1(__assign$1({ class: ["vxe-footer--column", column.id, (_a2 = {}, _a2["col--".concat(footAlign)] = footAlign, _a2["col--".concat(type)] = type, _a2["col--last"] = $columnIndex === tableColumn.length - 1, _a2["fixed--hidden"] = fixedHiddenColumn, _a2["col--ellipsis"] = hasEllipsis, _a2["col--current"] = currentColumn === column, _a2), getPropClass(footerClassName, params), getPropClass(footerCellClassName, params)] }, attrs), { style: footerCellStyle ? XEUtils$1.isFunction(footerCellStyle) ? footerCellStyle(params) : footerCellStyle : null }), tfOns), { key: columnKey || columnOpts.useKey ? column.id : $columnIndex }), [
                 vue.h("div", {
                   class: ["vxe-cell", {
                     "c--title": showTitle,
@@ -18702,46 +19072,77 @@ const VxeTableComponent = vue.defineComponent({
   setup: function(props, context) {
     var slots = context.slots, emit = context.emit;
     var hasUseTooltip = VXETable.tooltip;
-    var xID = xeUtils.uniqueId();
+    var xID = XEUtils$1.uniqueId();
     var computeSize = useSize(props);
     var instance = vue.getCurrentInstance();
     var reactData = vue.reactive({
+      // 低性能的静态列
       staticColumns: [],
+      // 渲染的列分组
       tableGroupColumn: [],
+      // 可视区渲染的列
       tableColumn: [],
+      // 渲染中的数据
       tableData: [],
+      // 是否启用了横向 X 可视渲染方式加载
       scrollXLoad: false,
+      // 是否启用了纵向 Y 可视渲染方式加载
       scrollYLoad: false,
+      // 是否存在纵向滚动条
       overflowY: true,
+      // 是否存在横向滚动条
       overflowX: false,
+      // 纵向滚动条的宽度
       scrollbarWidth: 0,
+      // 横向滚动条的高度
       scrollbarHeight: 0,
+      // 行高
       rowHeight: 0,
+      // 表格父容器的高度
       parentHeight: 0,
+      // 是否使用分组表头
       isGroup: false,
       isAllOverflow: false,
+      // 复选框属性，是否全选
       isAllSelected: false,
+      // 复选框属性，有选中且非全选状态
       isIndeterminate: false,
+      // 复选框属性，已选中的行
       selection: [],
+      // 当前行
       currentRow: null,
+      // 单选框属性，选中列
       currentColumn: null,
+      // 单选框属性，选中行
       selectRow: null,
+      // 表尾合计数据
       footerTableData: [],
+      // 展开列信息
       expandColumn: null,
+      // 树节点列信息
       treeNodeColumn: null,
       hasFixedColumn: false,
+      // 已展开的行
       rowExpandeds: [],
+      // 懒加载中的展开行的列表
       expandLazyLoadeds: [],
+      // 已展开树节点
       treeExpandeds: [],
+      // 懒加载中的树节点的列表
       treeLazyLoadeds: [],
+      // 树节点不确定状态的列表
       treeIndeterminates: [],
+      // 合并单元格的对象集
       mergeList: [],
+      // 合并表尾数据的对象集
       mergeFooterList: [],
+      // 初始化标识
       initStore: {
         filter: false,
         import: false,
         export: false
       },
+      // 当前选中的筛选列
       filterStore: {
         isAllSelected: false,
         isIndeterminate: false,
@@ -18752,6 +19153,7 @@ const VxeTableComponent = vue.defineComponent({
         visible: false,
         maxHeight: null
       },
+      // 存放列相关的信息
       columnStore: {
         leftList: [],
         centerList: [],
@@ -18763,6 +19165,7 @@ const VxeTableComponent = vue.defineComponent({
         scaleMinList: [],
         autoList: []
       },
+      // 存放快捷菜单的信息
       ctxMenuStore: {
         selected: null,
         visible: false,
@@ -18771,6 +19174,7 @@ const VxeTableComponent = vue.defineComponent({
         list: [],
         style: null
       },
+      // 存放可编辑相关信息
       editStore: {
         indexs: {
           columns: []
@@ -18778,15 +19182,18 @@ const VxeTableComponent = vue.defineComponent({
         titles: {
           columns: []
         },
+        // 选中源
         selected: {
           row: null,
           column: null
         },
+        // 已复制源
         copyed: {
           cut: false,
           rows: [],
           columns: []
         },
+        // 激活
         actived: {
           row: null,
           column: null
@@ -18794,6 +19201,7 @@ const VxeTableComponent = vue.defineComponent({
         insertList: [],
         removeList: []
       },
+      // 存放 tooltip 相关信息
       tooltipStore: {
         row: null,
         column: null,
@@ -18801,6 +19209,7 @@ const VxeTableComponent = vue.defineComponent({
         visible: false,
         currOpts: null
       },
+      // 存放数据校验相关信息
       validStore: {
         visible: false,
         row: null,
@@ -18809,6 +19218,7 @@ const VxeTableComponent = vue.defineComponent({
         rule: null,
         isArrow: false
       },
+      // 导入相关信息
       importStore: {
         inited: false,
         file: null,
@@ -18823,6 +19233,7 @@ const VxeTableComponent = vue.defineComponent({
         types: null,
         message: true
       },
+      // 导出相关信息
       exportStore: {
         inited: false,
         name: "",
@@ -18854,12 +19265,14 @@ const VxeTableComponent = vue.defineComponent({
     var internalData = {
       tZindex: 0,
       elemStore: {},
+      // 存放横向 X 虚拟滚动相关的信息
       scrollXStore: {
         offsetSize: 0,
         visibleSize: 0,
         startIndex: 0,
         endIndex: 0
       },
+      // 存放纵向 Y 虚拟滚动相关信息
       scrollYStore: {
         rowHeight: 0,
         offsetSize: 0,
@@ -18867,30 +19280,47 @@ const VxeTableComponent = vue.defineComponent({
         startIndex: 0,
         endIndex: 0
       },
+      // 表格宽度
       tableWidth: 0,
+      // 表格高度
       tableHeight: 0,
+      // 表头高度
       headerHeight: 0,
+      // 表尾高度
       footerHeight: 0,
       customHeight: 0,
       customMaxHeight: 0,
+      // 当前 hover 行
       hoverRow: null,
+      // 最后滚动位置
       lastScrollLeft: 0,
       lastScrollTop: 0,
       lastScrollTime: 0,
+      // 单选框属性，已选中保留的行
       radioReserveRow: null,
+      // 复选框属性，已选中保留的行
       checkboxReserveRowMap: {},
+      // 行数据，已展开保留的行
       rowExpandedReserveRowMap: {},
+      // 树结构数据，已展开保留的行
       treeExpandedReserveRowMap: {},
+      // 列表完整数据、条件处理后
       tableFullData: [],
       afterFullData: [],
+      // 树结构完整数据、条件处理后
       tableFullTreeData: [],
       afterTreeFullData: [],
       tableSynchData: [],
       tableSourceData: [],
+      // 收集的列配置（带分组）
       collectColumn: [],
+      // 完整所有列（不带分组）
       tableFullColumn: [],
+      // 渲染所有列
       visibleColumn: [],
+      // 总的缓存数据集
       fullAllDataRowIdData: {},
+      // 渲染中缓存数据
       fullDataRowIdData: {},
       fullColumnIdData: {},
       fullColumnFieldData: {},
@@ -19155,15 +19585,15 @@ const VxeTableComponent = vue.defineComponent({
       xegrid: $xegrid
     };
     var eqCellValue = function(row1, row2, field) {
-      var val1 = xeUtils.get(row1, field);
-      var val2 = xeUtils.get(row2, field);
+      var val1 = XEUtils$1.get(row1, field);
+      var val2 = XEUtils$1.get(row2, field);
       if (eqEmptyValue(val1) && eqEmptyValue(val2)) {
         return true;
       }
-      if (xeUtils.isString(val1) || xeUtils.isNumber(val1)) {
+      if (XEUtils$1.isString(val1) || XEUtils$1.isNumber(val1)) {
         return "" + val1 === "" + val2;
       }
-      return xeUtils.isEqual(val1, val2);
+      return XEUtils$1.isEqual(val1, val2);
     };
     var getNextSortOrder = function(column) {
       var sortOpts = computeSortOpts.value;
@@ -19174,7 +19604,7 @@ const VxeTableComponent = vue.defineComponent({
     };
     var getCustomStorageMap = function(key) {
       var version = GlobalConfig.version;
-      var rest = xeUtils.toStringJSON(localStorage.getItem(key) || "");
+      var rest = XEUtils$1.toStringJSON(localStorage.getItem(key) || "");
       return rest && rest._v === version ? rest : { _v: version };
     };
     var getRecoverRow = function(list) {
@@ -19187,7 +19617,7 @@ const VxeTableComponent = vue.defineComponent({
     var handleReserveRow = function(reserveRowMap) {
       var fullDataRowIdData = internalData.fullDataRowIdData;
       var reserveList = [];
-      xeUtils.each(reserveRowMap, function(item, rowid) {
+      XEUtils$1.each(reserveRowMap, function(item, rowid) {
         if (fullDataRowIdData[rowid] && $xetable.findRowIndexOf(reserveList, fullDataRowIdData[rowid].row) === -1) {
           reserveList.push(fullDataRowIdData[rowid].row);
         }
@@ -19267,7 +19697,7 @@ const VxeTableComponent = vue.defineComponent({
       if (merges) {
         var treeConfig = props.treeConfig;
         var visibleColumn_1 = internalData.visibleColumn;
-        if (!xeUtils.isArray(merges)) {
+        if (!XEUtils$1.isArray(merges)) {
           merges = [merges];
         }
         if (treeConfig && merges.length) {
@@ -19275,17 +19705,17 @@ const VxeTableComponent = vue.defineComponent({
         }
         merges.forEach(function(item) {
           var row = item.row, col = item.col, rowspan = item.rowspan, colspan = item.colspan;
-          if (rowList && xeUtils.isNumber(row)) {
+          if (rowList && XEUtils$1.isNumber(row)) {
             row = rowList[row];
           }
-          if (xeUtils.isNumber(col)) {
+          if (XEUtils$1.isNumber(col)) {
             col = visibleColumn_1[col];
           }
-          if ((rowList ? row : xeUtils.isNumber(row)) && col && (rowspan || colspan)) {
-            rowspan = xeUtils.toNumber(rowspan) || 1;
-            colspan = xeUtils.toNumber(colspan) || 1;
+          if ((rowList ? row : XEUtils$1.isNumber(row)) && col && (rowspan || colspan)) {
+            rowspan = XEUtils$1.toNumber(rowspan) || 1;
+            colspan = XEUtils$1.toNumber(colspan) || 1;
             if (rowspan > 1 || colspan > 1) {
-              var mcIndex = xeUtils.findIndexOf(mList, function(item2) {
+              var mcIndex = XEUtils$1.findIndexOf(mList, function(item2) {
                 return (item2._row === row || getRowid($xetable, item2._row) === getRowid($xetable, row)) && (item2._col.id === col || item2._col.id === col.id);
               });
               var mergeItem = mList[mcIndex];
@@ -19318,7 +19748,7 @@ const VxeTableComponent = vue.defineComponent({
       if (merges) {
         var treeConfig = props.treeConfig;
         var visibleColumn_2 = internalData.visibleColumn;
-        if (!xeUtils.isArray(merges)) {
+        if (!XEUtils$1.isArray(merges)) {
           merges = [merges];
         }
         if (treeConfig && merges.length) {
@@ -19326,13 +19756,13 @@ const VxeTableComponent = vue.defineComponent({
         }
         merges.forEach(function(item) {
           var row = item.row, col = item.col;
-          if (rowList && xeUtils.isNumber(row)) {
+          if (rowList && XEUtils$1.isNumber(row)) {
             row = rowList[row];
           }
-          if (xeUtils.isNumber(col)) {
+          if (XEUtils$1.isNumber(col)) {
             col = visibleColumn_2[col];
           }
-          var mcIndex = xeUtils.findIndexOf(mList, function(item2) {
+          var mcIndex = XEUtils$1.findIndexOf(mList, function(item2) {
             return (item2._row === row || getRowid($xetable, item2._row) === getRowid($xetable, row)) && (item2._col.id === col || item2._col.id === col.id);
           });
           if (mcIndex > -1) {
@@ -19359,9 +19789,9 @@ const VxeTableComponent = vue.defineComponent({
         } else {
           var excludeHeight = $xetable.getExcludeHeight();
           if (isScale(val)) {
-            num = Math.floor((xeUtils.toInteger(val) || 1) / 100 * parentHeight);
+            num = Math.floor((XEUtils$1.toInteger(val) || 1) / 100 * parentHeight);
           } else {
-            num = xeUtils.toNumber(val);
+            num = XEUtils$1.toNumber(val);
           }
           num = Math.max(40, num - excludeHeight);
         }
@@ -19384,7 +19814,7 @@ const VxeTableComponent = vue.defineComponent({
         if (isResizable) {
           var columnWidthStorage = getCustomStorageMap(resizableStorageKey)[id];
           if (columnWidthStorage) {
-            xeUtils.each(columnWidthStorage, function(resizeWidth, field) {
+            XEUtils$1.each(columnWidthStorage, function(resizeWidth, field) {
               customMap_1[field] = { field, resizeWidth };
             });
           }
@@ -19412,20 +19842,20 @@ const VxeTableComponent = vue.defineComponent({
           }
         }
         var keyMap_1 = {};
-        xeUtils.eachTree(collectColumn, function(column) {
+        XEUtils$1.eachTree(collectColumn, function(column) {
           var colKey = column.getKey();
           if (colKey) {
             keyMap_1[colKey] = column;
           }
         });
-        xeUtils.each(customMap_1, function(_a, field) {
+        XEUtils$1.each(customMap_1, function(_a, field) {
           var visible = _a.visible, resizeWidth = _a.resizeWidth;
           var column = keyMap_1[field];
           if (column) {
-            if (xeUtils.isNumber(resizeWidth)) {
+            if (XEUtils$1.isNumber(resizeWidth)) {
               column.resizeWidth = resizeWidth;
             }
-            if (xeUtils.isBoolean(visible)) {
+            if (XEUtils$1.isBoolean(visible)) {
               column.visible = visible;
             }
           }
@@ -19501,7 +19931,7 @@ const VxeTableComponent = vue.defineComponent({
         fullColumnIdData[colid] = rest;
       };
       if (isGroup) {
-        xeUtils.eachTree(collectColumn, function(column, index, items, path, parent, nodes) {
+        XEUtils$1.eachTree(collectColumn, function(column, index, items, path, parent, nodes) {
           column.level = nodes.length;
           handleFunc(column, index, items, path, parent);
         });
@@ -19541,27 +19971,27 @@ const VxeTableComponent = vue.defineComponent({
       var columnStore = reactData.columnStore;
       var resizeList = columnStore.resizeList, pxMinList = columnStore.pxMinList, pxList = columnStore.pxList, scaleList = columnStore.scaleList, scaleMinList = columnStore.scaleMinList, autoList = columnStore.autoList;
       pxMinList.forEach(function(column) {
-        var minWidth = xeUtils.toInteger(column.minWidth);
+        var minWidth = XEUtils$1.toInteger(column.minWidth);
         tableWidth += minWidth;
         column.renderWidth = minWidth;
       });
       scaleMinList.forEach(function(column) {
-        var scaleWidth = Math.floor(xeUtils.toInteger(column.minWidth) * meanWidth);
+        var scaleWidth = Math.floor(XEUtils$1.toInteger(column.minWidth) * meanWidth);
         tableWidth += scaleWidth;
         column.renderWidth = scaleWidth;
       });
       scaleList.forEach(function(column) {
-        var scaleWidth = Math.floor(xeUtils.toInteger(column.width) * meanWidth);
+        var scaleWidth = Math.floor(XEUtils$1.toInteger(column.width) * meanWidth);
         tableWidth += scaleWidth;
         column.renderWidth = scaleWidth;
       });
       pxList.forEach(function(column) {
-        var width = xeUtils.toInteger(column.width);
+        var width = XEUtils$1.toInteger(column.width);
         tableWidth += width;
         column.renderWidth = width;
       });
       resizeList.forEach(function(column) {
-        var width = xeUtils.toInteger(column.resizeWidth);
+        var width = XEUtils$1.toInteger(column.resizeWidth);
         tableWidth += width;
         column.renderWidth = width;
       });
@@ -19645,16 +20075,16 @@ const VxeTableComponent = vue.defineComponent({
       return function(row) {
         var cellValue;
         if (sortBy2) {
-          cellValue = xeUtils.isFunction(sortBy2) ? sortBy2({ row, column }) : xeUtils.get(row, sortBy2);
+          cellValue = XEUtils$1.isFunction(sortBy2) ? sortBy2({ row, column }) : XEUtils$1.get(row, sortBy2);
         } else {
           cellValue = tablePrivateMethods.getCellLabel(row, column);
         }
         if (!sortType || sortType === "auto") {
-          return isNaN(cellValue) ? cellValue : xeUtils.toNumber(cellValue);
+          return isNaN(cellValue) ? cellValue : XEUtils$1.toNumber(cellValue);
         } else if (sortType === "number") {
-          return xeUtils.toNumber(cellValue);
+          return XEUtils$1.toNumber(cellValue);
         } else if (sortType === "string") {
-          return xeUtils.toValueString(cellValue);
+          return XEUtils$1.toValueString(cellValue);
         }
         return cellValue;
       };
@@ -19665,7 +20095,7 @@ const VxeTableComponent = vue.defineComponent({
       var afterTreeFullData = internalData.afterTreeFullData;
       var treeOpts = computeTreeOpts.value;
       if (treeConfig) {
-        xeUtils.eachTree(afterTreeFullData, function(row, index, items, path) {
+        XEUtils$1.eachTree(afterTreeFullData, function(row, index, items, path) {
           var rowid = getRowid($xetable, row);
           var allrest = fullAllDataRowIdData[rowid];
           var seq = path.map(function(num, i) {
@@ -19703,7 +20133,7 @@ const VxeTableComponent = vue.defineComponent({
       if (treeConfig && treeOpts.transform) {
         var fullData_1 = [];
         var expandMaps_1 = /* @__PURE__ */ new Map();
-        xeUtils.eachTree(internalData.afterTreeFullData, function(row, index, items, path, parent) {
+        XEUtils$1.eachTree(internalData.afterTreeFullData, function(row, index, items, path, parent) {
           if (!parent || expandMaps_1.has(parent) && $xetable.findRowIndexOf(treeExpandeds, parent) > -1) {
             expandMaps_1.set(row, 1);
             fullData_1.push(row);
@@ -19749,7 +20179,7 @@ const VxeTableComponent = vue.defineComponent({
           }
         });
         if (sortMultiple && chronological && orderColumns_1.length > 1) {
-          orderColumns_1 = xeUtils.orderBy(orderColumns_1, "sortTime");
+          orderColumns_1 = XEUtils$1.orderBy(orderColumns_1, "sortTime");
         }
         if (!allRemoteFilter && filterColumns_1.length) {
           var handleFilter = function(row) {
@@ -19775,11 +20205,11 @@ const VxeTableComponent = vue.defineComponent({
                   return defaultFilterMethod({ value: item.value, option: item, cellValue, row, column, $table: $xetable });
                 });
               }
-              return valueList.indexOf(xeUtils.get(row, column.field)) > -1;
+              return valueList.indexOf(XEUtils$1.get(row, column.field)) > -1;
             });
           };
           if (treeConfig && transform) {
-            tableTree = xeUtils.searchTree(tableFullTreeData, handleFilter, __assign(__assign({}, treeOpts), { original: true }));
+            tableTree = XEUtils$1.searchTree(tableFullTreeData, handleFilter, __assign(__assign({}, treeOpts), { original: true }));
             tableData = tableTree;
           } else {
             tableData = treeConfig ? tableFullTreeData.filter(handleFilter) : tableFullData.filter(handleFilter);
@@ -19787,7 +20217,7 @@ const VxeTableComponent = vue.defineComponent({
           }
         } else {
           if (treeConfig && transform) {
-            tableTree = xeUtils.searchTree(tableFullTreeData, function() {
+            tableTree = XEUtils$1.searchTree(tableFullTreeData, function() {
               return true;
             }, __assign(__assign({}, treeOpts), { original: true }));
             tableData = tableTree;
@@ -19800,9 +20230,9 @@ const VxeTableComponent = vue.defineComponent({
           if (treeConfig && transform) {
             if (allSortMethod) {
               var sortRests = allSortMethod({ data: tableTree, sortList: orderColumns_1, $table: $xetable });
-              tableTree = xeUtils.isArray(sortRests) ? sortRests : tableTree;
+              tableTree = XEUtils$1.isArray(sortRests) ? sortRests : tableTree;
             } else {
-              tableTree = xeUtils.orderBy(tableTree, orderColumns_1.map(function(_a) {
+              tableTree = XEUtils$1.orderBy(tableTree, orderColumns_1.map(function(_a) {
                 var column = _a.column, order = _a.order;
                 return [getOrderField(column), order];
               }));
@@ -19811,9 +20241,9 @@ const VxeTableComponent = vue.defineComponent({
           } else {
             if (allSortMethod) {
               var sortRests = allSortMethod({ data: tableData, sortList: orderColumns_1, $table: $xetable });
-              tableData = xeUtils.isArray(sortRests) ? sortRests : tableData;
+              tableData = XEUtils$1.isArray(sortRests) ? sortRests : tableData;
             } else {
-              tableData = xeUtils.orderBy(tableData, orderColumns_1.map(function(_a) {
+              tableData = XEUtils$1.orderBy(tableData, orderColumns_1.map(function(_a) {
                 var column = _a.column, order = _a.order;
                 return [getOrderField(column), order];
               }));
@@ -19823,7 +20253,7 @@ const VxeTableComponent = vue.defineComponent({
         }
       } else {
         if (treeConfig && transform) {
-          tableTree = xeUtils.searchTree(tableFullTreeData, function() {
+          tableTree = XEUtils$1.searchTree(tableFullTreeData, function() {
             return true;
           }, __assign(__assign({}, treeOpts), { original: true }));
           tableData = tableTree;
@@ -19897,12 +20327,12 @@ const VxeTableComponent = vue.defineComponent({
             var listRef = elemStore["".concat(name, "-").concat(layout, "-list")];
             var listElem = listRef ? listRef.value : null;
             if (isGroup && listElem) {
-              xeUtils.arrayEach(listElem.querySelectorAll(".col--group"), function(thElem) {
+              XEUtils$1.arrayEach(listElem.querySelectorAll(".col--group"), function(thElem) {
                 var colNode = tableMethods.getColumnNode(thElem);
                 if (colNode) {
                   var column_1 = colNode.item;
                   var showHeaderOverflow = column_1.showHeaderOverflow;
-                  var cellOverflow = xeUtils.isBoolean(showHeaderOverflow) ? showHeaderOverflow : allColumnHeaderOverflow;
+                  var cellOverflow = XEUtils$1.isBoolean(showHeaderOverflow) ? showHeaderOverflow : allColumnHeaderOverflow;
                   var showEllipsis = cellOverflow === "ellipsis";
                   var showTitle = cellOverflow === "title";
                   var showTooltip = cellOverflow === true || cellOverflow === "tooltip";
@@ -19910,7 +20340,7 @@ const VxeTableComponent = vue.defineComponent({
                   var childWidth_1 = 0;
                   var countChild_1 = 0;
                   if (hasEllipsis) {
-                    xeUtils.eachTree(column_1.children, function(item) {
+                    XEUtils$1.eachTree(column_1.children, function(item) {
                       if (!item.children || !column_1.children.length) {
                         countChild_1++;
                       }
@@ -19997,7 +20427,7 @@ const VxeTableComponent = vue.defineComponent({
           var colgroupRef = elemStore["".concat(name, "-").concat(layout, "-colgroup")];
           var colgroupElem = colgroupRef ? colgroupRef.value : null;
           if (colgroupElem) {
-            xeUtils.arrayEach(colgroupElem.children, function(colElem) {
+            XEUtils$1.arrayEach(colgroupElem.children, function(colElem) {
               var colid = colElem.getAttribute("name");
               if (colid === "col_gutter") {
                 colElem.style.width = "".concat(scrollbarWidth, "px");
@@ -20008,11 +20438,11 @@ const VxeTableComponent = vue.defineComponent({
                 var cellOverflow = void 0;
                 colElem.style.width = "".concat(column_2.renderWidth, "px");
                 if (layout === "header") {
-                  cellOverflow = xeUtils.isUndefined(showHeaderOverflow) || xeUtils.isNull(showHeaderOverflow) ? allColumnHeaderOverflow : showHeaderOverflow;
+                  cellOverflow = XEUtils$1.isUndefined(showHeaderOverflow) || XEUtils$1.isNull(showHeaderOverflow) ? allColumnHeaderOverflow : showHeaderOverflow;
                 } else if (layout === "footer") {
-                  cellOverflow = xeUtils.isUndefined(showFooterOverflow) || xeUtils.isNull(showFooterOverflow) ? allColumnFooterOverflow : showFooterOverflow;
+                  cellOverflow = XEUtils$1.isUndefined(showFooterOverflow) || XEUtils$1.isNull(showFooterOverflow) ? allColumnFooterOverflow : showFooterOverflow;
                 } else {
-                  cellOverflow = xeUtils.isUndefined(showOverflow) || xeUtils.isNull(showOverflow) ? allColumnOverflow : showOverflow;
+                  cellOverflow = XEUtils$1.isUndefined(showOverflow) || XEUtils$1.isNull(showOverflow) ? allColumnOverflow : showOverflow;
                 }
                 var showEllipsis = cellOverflow === "ellipsis";
                 var showTitle = cellOverflow === "title";
@@ -20024,7 +20454,7 @@ const VxeTableComponent = vue.defineComponent({
                   hasEllipsis_1 = true;
                 }
                 if (listElem2) {
-                  xeUtils.arrayEach(listElem2.querySelectorAll(".".concat(column_2.id)), function(elem) {
+                  XEUtils$1.arrayEach(listElem2.querySelectorAll(".".concat(column_2.id)), function(elem) {
                     var colspan = parseInt(elem.getAttribute("colspan") || 1);
                     var cellElem = elem.querySelector(".vxe-cell");
                     var colWidth = column_2.renderWidth;
@@ -20078,7 +20508,7 @@ const VxeTableComponent = vue.defineComponent({
         var sortOpts = computeSortOpts.value;
         var defaultSort = sortOpts.defaultSort;
         if (defaultSort) {
-          if (!xeUtils.isArray(defaultSort)) {
+          if (!XEUtils$1.isArray(defaultSort)) {
             defaultSort = [defaultSort];
           }
           if (defaultSort.length) {
@@ -20218,8 +20648,8 @@ const VxeTableComponent = vue.defineComponent({
           var defExpandeds_2 = [];
           var rowkey_1 = getRowkey($xetable);
           expandRowKeys.forEach(function(rowid) {
-            var matchObj = xeUtils.findTree(tableFullData_1, function(item) {
-              return rowid === xeUtils.get(item, rowkey_1);
+            var matchObj = XEUtils$1.findTree(tableFullData_1, function(item) {
+              return rowid === XEUtils$1.get(item, rowkey_1);
             }, treeOpts_1);
             if (matchObj) {
               defExpandeds_2.push(matchObj.item);
@@ -20242,10 +20672,10 @@ const VxeTableComponent = vue.defineComponent({
           treeLazyLoadeds.push(row);
           loadMethod({ $table: $xetable, row }).then(function(childRecords) {
             rest.treeLoaded = true;
-            xeUtils.remove(treeLazyLoadeds, function(item) {
+            XEUtils$1.remove(treeLazyLoadeds, function(item) {
               return $xetable.eqRow(item, row);
             });
-            if (!xeUtils.isArray(childRecords)) {
+            if (!XEUtils$1.isArray(childRecords)) {
               childRecords = [];
             }
             if (childRecords) {
@@ -20265,7 +20695,7 @@ const VxeTableComponent = vue.defineComponent({
             }
           }).catch(function() {
             rest.treeLoaded = false;
-            xeUtils.remove(treeLazyLoadeds, function(item) {
+            XEUtils$1.remove(treeLazyLoadeds, function(item) {
               return $xetable.eqRow(item, row);
             });
           }).finally(function() {
@@ -20306,7 +20736,7 @@ const VxeTableComponent = vue.defineComponent({
           }).catch(function() {
             rest_1.expandLoaded = false;
           }).finally(function() {
-            xeUtils.remove(reactData.expandLazyLoadeds, function(item) {
+            XEUtils$1.remove(reactData.expandLazyLoadeds, function(item) {
               return $xetable.eqRow(item, row);
             });
             resolve(vue.nextTick().then(function() {
@@ -20350,7 +20780,7 @@ const VxeTableComponent = vue.defineComponent({
         var sXOpts = computeSXOpts.value;
         if (scrollXLoad) {
           var visibleXSize = computeVirtualX().visibleSize;
-          var offsetXSize = sXOpts.oSize ? xeUtils.toNumber(sXOpts.oSize) : browse.edge ? 5 : 0;
+          var offsetXSize = sXOpts.oSize ? XEUtils$1.toNumber(sXOpts.oSize) : browse.edge ? 5 : 0;
           scrollXStore.offsetSize = offsetXSize;
           scrollXStore.visibleSize = visibleXSize;
           scrollXStore.endIndex = Math.max(scrollXStore.startIndex + scrollXStore.visibleSize + offsetXSize, scrollXStore.endIndex);
@@ -20361,7 +20791,7 @@ const VxeTableComponent = vue.defineComponent({
         var _a = computeVirtualY(), rowHeight = _a.rowHeight, visibleYSize = _a.visibleSize;
         scrollYStore.rowHeight = rowHeight;
         if (scrollYLoad) {
-          var offsetYSize = sYOpts.oSize ? xeUtils.toNumber(sYOpts.oSize) : browse.edge ? 10 : 0;
+          var offsetYSize = sYOpts.oSize ? XEUtils$1.toNumber(sYOpts.oSize) : browse.edge ? 10 : 0;
           scrollYStore.offsetSize = offsetYSize;
           scrollYStore.visibleSize = visibleYSize;
           scrollYStore.endIndex = Math.max(scrollYStore.startIndex + visibleYSize + offsetYSize, scrollYStore.endIndex);
@@ -20405,7 +20835,7 @@ const VxeTableComponent = vue.defineComponent({
               }
             });
           }
-          treeData = xeUtils.toArrayTree(fullData, {
+          treeData = XEUtils$1.toArrayTree(fullData, {
             key: treeOpts.rowField,
             parentKey: treeOpts.parentField,
             children: treeOpts.children,
@@ -20429,7 +20859,7 @@ const VxeTableComponent = vue.defineComponent({
       tablePrivateMethods.cacheRowMap(true);
       internalData.tableSynchData = datas;
       if (keepSource) {
-        internalData.tableSourceData = xeUtils.clone(fullData, true);
+        internalData.tableSourceData = XEUtils$1.clone(fullData, true);
       }
       if (process.env.NODE_ENV === "development") {
         if (sYLoad) {
@@ -20555,7 +20985,7 @@ const VxeTableComponent = vue.defineComponent({
         var leftGroupList_1 = [];
         var centerGroupList_1 = [];
         var rightGroupList_1 = [];
-        xeUtils.eachTree(collectColumn, function(column, index, items, path, parent) {
+        XEUtils$1.eachTree(collectColumn, function(column, index, items, path, parent) {
           var isColGroup = hasChildrenList(column);
           if (parent && parent.fixed) {
             column.fixed = parent.fixed;
@@ -20564,7 +20994,7 @@ const VxeTableComponent = vue.defineComponent({
             errLog("vxe.error.groupFixed");
           }
           if (isColGroup) {
-            column.visible = !!xeUtils.findTree(column.children, function(subColumn) {
+            column.visible = !!XEUtils$1.findTree(column.children, function(subColumn) {
               return hasChildrenList(subColumn) ? false : subColumn.visible;
             });
           } else if (column.visible) {
@@ -20697,11 +21127,11 @@ const VxeTableComponent = vue.defineComponent({
       }) : rows;
       if (accordion) {
         validRows = validRows.length ? [validRows[validRows.length - 1]] : [];
-        var matchObj_1 = xeUtils.findTree(tableFullData, function(item) {
+        var matchObj_1 = XEUtils$1.findTree(tableFullData, function(item) {
           return item === validRows[0];
         }, treeOpts);
         if (matchObj_1) {
-          xeUtils.remove(treeExpandeds, function(item) {
+          XEUtils$1.remove(treeExpandeds, function(item) {
             return matchObj_1.items.indexOf(item) > -1;
           });
         }
@@ -20721,7 +21151,7 @@ const VxeTableComponent = vue.defineComponent({
           }
         });
       } else {
-        xeUtils.remove(treeExpandeds, function(row) {
+        XEUtils$1.remove(treeExpandeds, function(row) {
           return $xetable.findRowIndexOf(validRows, row) > -1;
         });
       }
@@ -20788,7 +21218,7 @@ const VxeTableComponent = vue.defineComponent({
         return -1;
       };
     };
-    var debounceScrollY = xeUtils.debounce(function(evnt) {
+    var debounceScrollY = XEUtils$1.debounce(function(evnt) {
       loadScrollYData(evnt);
     }, 20, { leading: false, trailing: true });
     var keyCtxTimeout;
@@ -20796,9 +21226,17 @@ const VxeTableComponent = vue.defineComponent({
       dispatchEvent: function(type, params, evnt) {
         emit(type, Object.assign({ $table: $xetable, $event: evnt }, params));
       },
+      /**
+       * 重置表格的一切数据状态
+       */
       clearAll: function() {
         return clearTableAllStatus($xetable);
       },
+      /**
+       * 同步 data 数据（即将废弃）
+       * 如果用了该方法，那么组件将不再记录增删改的状态，只能自行实现对应逻辑
+       * 对于某些特殊的场景，比如深层树节点元素发生变动时可能会用到
+       */
       syncData: function() {
         return vue.nextTick().then(function() {
           reactData.tableData = [];
@@ -20806,6 +21244,10 @@ const VxeTableComponent = vue.defineComponent({
           return vue.nextTick();
         });
       },
+      /**
+       * 手动处理数据，用于手动排序与筛选
+       * 对于手动更改了排序、筛选...等条件后需要重新处理数据时可能会用到
+       */
       updateData: function() {
         var scrollXLoad = reactData.scrollXLoad, scrollYLoad = reactData.scrollYLoad;
         return tablePrivateMethods.handleTableData(true).then(function() {
@@ -20828,6 +21270,10 @@ const VxeTableComponent = vue.defineComponent({
           }, 50);
         });
       },
+      /**
+       * 重新加载数据，不会清空表格状态
+       * @param {Array} datas 数据
+       */
       loadData: function(datas) {
         var inited = internalData.inited, initStatus = internalData.initStatus;
         return loadTableData(datas).then(function() {
@@ -20842,6 +21288,10 @@ const VxeTableComponent = vue.defineComponent({
           return tableMethods.recalculate();
         });
       },
+      /**
+       * 重新加载数据，会清空表格状态
+       * @param {Array} datas 数据
+       */
       reloadData: function(datas) {
         var inited = internalData.inited;
         return tableMethods.clearAll().then(function() {
@@ -20856,6 +21306,13 @@ const VxeTableComponent = vue.defineComponent({
           return tableMethods.recalculate();
         });
       },
+      /**
+       * 局部加载行数据并恢复到初始状态
+       * 对于行数据需要局部更改的场景中可能会用到
+       * @param {Row} row 行对象
+       * @param {Object} record 新数据
+       * @param {String} field 字段名
+       */
       reloadRow: function(row, record, field) {
         var keepSource = props.keepSource;
         var tableData = reactData.tableData;
@@ -20865,12 +21322,12 @@ const VxeTableComponent = vue.defineComponent({
           var oRow = tableSourceData[rowIndex];
           if (oRow && row) {
             if (field) {
-              var newValue = xeUtils.get(record || row, field);
-              xeUtils.set(row, field, newValue);
-              xeUtils.set(oRow, field, newValue);
+              var newValue = XEUtils$1.get(record || row, field);
+              XEUtils$1.set(row, field, newValue);
+              XEUtils$1.set(oRow, field, newValue);
             } else {
-              var newRecord = xeUtils.clone(__assign({}, record), true);
-              xeUtils.destructuring(oRow, Object.assign(row, newRecord));
+              var newRecord = XEUtils$1.clone(__assign({}, record), true);
+              XEUtils$1.destructuring(oRow, Object.assign(row, newRecord));
             }
           }
           reactData.tableData = tableData.slice(0);
@@ -20881,6 +21338,9 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 用于树结构，给行数据加载子节点
+       */
       loadTreeChildren: function(row, childRecords) {
         var keepSource = props.keepSource;
         var tableSourceData = internalData.tableSourceData, fullDataRowIdData = internalData.fullDataRowIdData, fullAllDataRowIdData = internalData.fullAllDataRowIdData;
@@ -20891,14 +21351,14 @@ const VxeTableComponent = vue.defineComponent({
         return tableMethods.createData(childRecords).then(function(rows) {
           if (keepSource) {
             var rowid_1 = getRowid($xetable, row);
-            var matchObj = xeUtils.findTree(tableSourceData, function(item) {
+            var matchObj = XEUtils$1.findTree(tableSourceData, function(item) {
               return rowid_1 === getRowid($xetable, item);
             }, treeOpts);
             if (matchObj) {
-              matchObj.item[children] = xeUtils.clone(rows, true);
+              matchObj.item[children] = XEUtils$1.clone(rows, true);
             }
           }
-          xeUtils.eachTree(rows, function(childRow, index, items, path, parent, nodes) {
+          XEUtils$1.eachTree(rows, function(childRow, index, items, path, parent, nodes) {
             var rowid = getRowid($xetable, childRow);
             var rest = { row: childRow, rowid, seq: -1, index, _index: -1, $index: -1, items, parent, level: parentLevel + nodes.length };
             fullDataRowIdData[rowid] = rest;
@@ -20912,17 +21372,31 @@ const VxeTableComponent = vue.defineComponent({
           return rows;
         });
       },
+      /**
+       * 加载列配置
+       * 对于表格列需要重载、局部递增场景下可能会用到
+       * @param {ColumnInfo} columns 列配置
+       */
       loadColumn: function(columns) {
-        var collectColumn = xeUtils.mapTree(columns, function(column) {
+        var collectColumn = XEUtils$1.mapTree(columns, function(column) {
           return vue.reactive(Cell.createColumn($xetable, column));
         });
         return handleColumn(collectColumn);
       },
+      /**
+       * 加载列配置并恢复到初始状态
+       * 对于表格列需要重载、局部递增场景下可能会用到
+       * @param {ColumnInfo} columns 列配置
+       */
       reloadColumn: function(columns) {
         return tableMethods.clearAll().then(function() {
           return tableMethods.loadColumn(columns);
         });
       },
+      /**
+       * 根据 tr 元素获取对应的 row 信息
+       * @param {Element} tr 元素
+       */
       getRowNode: function(tr) {
         if (tr) {
           var fullAllDataRowIdData = internalData.fullAllDataRowIdData;
@@ -20936,6 +21410,10 @@ const VxeTableComponent = vue.defineComponent({
         }
         return null;
       },
+      /**
+       * 根据 th/td 元素获取对应的 column 信息
+       * @param {Element} cell 元素
+       */
       getColumnNode: function(cell) {
         if (cell) {
           var fullColumnIdData = internalData.fullColumnIdData;
@@ -20949,26 +21427,64 @@ const VxeTableComponent = vue.defineComponent({
         }
         return null;
       },
+      /**
+       * 根据 row 获取序号
+       * @param {Row} row 行对象
+       */
       getRowSeq: createGetRowCacheProp("seq"),
+      /**
+       * 根据 row 获取相对于 data 中的索引
+       * @param {Row} row 行对象
+       */
       getRowIndex: createGetRowCacheProp("index"),
+      /**
+       * 根据 row 获取相对于当前数据中的索引
+       * @param {Row} row 行对象
+       */
       getVTRowIndex: createGetRowCacheProp("_index"),
+      /**
+       * 根据 row 获取渲染中的虚拟索引
+       * @param {Row} row 行对象
+       */
       getVMRowIndex: createGetRowCacheProp("$index"),
+      /**
+       * 根据 column 获取相对于 columns 中的索引
+       * @param {ColumnInfo} column 列配置
+       */
       getColumnIndex: createGetColumnCacheProp("index"),
+      /**
+       * 根据 column 获取相对于当前表格列中的索引
+       * @param {ColumnInfo} column 列配置
+       */
       getVTColumnIndex: createGetColumnCacheProp("_index"),
+      /**
+       * 根据 column 获取渲染中的虚拟索引
+       * @param {ColumnInfo} column 列配置
+       */
       getVMColumnIndex: createGetColumnCacheProp("$index"),
+      /**
+       * 创建 data 对象
+       * 对于某些特殊场景可能会用到，会自动对数据的字段名进行检测，如果不存在就自动定义
+       * @param {Array} records 新数据
+       */
       createData: function(records) {
         var treeConfig = props.treeConfig;
         var treeOpts = computeTreeOpts.value;
         var handleRrecord = function(record) {
           return vue.reactive(tablePrivateMethods.defineField(record || {}));
         };
-        var rows = treeConfig ? xeUtils.mapTree(records, handleRrecord, treeOpts) : records.map(handleRrecord);
+        var rows = treeConfig ? XEUtils$1.mapTree(records, handleRrecord, treeOpts) : records.map(handleRrecord);
         return vue.nextTick().then(function() {
           return rows;
         });
       },
+      /**
+       * 创建 Row|Rows 对象
+       * 对于某些特殊场景需要对数据进行手动插入时可能会用到
+       * @param {Array/Object} records 新数据
+       */
       createRow: function(records) {
-        var isArr = xeUtils.isArray(records);
+        var isArr = XEUtils$1.isArray(records);
         if (!isArr) {
           records = [records];
         }
@@ -20978,6 +21494,13 @@ const VxeTableComponent = vue.defineComponent({
           });
         });
       },
+      /**
+       * 还原数据
+       * 如果不传任何参数，则还原整个表格
+       * 如果传 row 则还原一行
+       * 如果传 rows 则还原多行
+       * 如果还额外传了 field 则还原指定的单元格数据
+       */
       revertData: function(rows, field) {
         var keepSource = props.keepSource;
         var tableSourceData = internalData.tableSourceData, tableFullData = internalData.tableFullData;
@@ -20989,11 +21512,11 @@ const VxeTableComponent = vue.defineComponent({
         }
         var targetRows = rows;
         if (rows) {
-          if (!xeUtils.isArray(rows)) {
+          if (!XEUtils$1.isArray(rows)) {
             targetRows = [rows];
           }
         } else {
-          targetRows = xeUtils.toArray($xetable.getUpdateRecords());
+          targetRows = XEUtils$1.toArray($xetable.getUpdateRecords());
         }
         if (targetRows.length) {
           targetRows.forEach(function(row) {
@@ -21002,9 +21525,9 @@ const VxeTableComponent = vue.defineComponent({
               var oRow = tableSourceData[rowIndex];
               if (oRow && row) {
                 if (field) {
-                  xeUtils.set(row, field, xeUtils.clone(xeUtils.get(oRow, field), true));
+                  XEUtils$1.set(row, field, XEUtils$1.clone(XEUtils$1.get(oRow, field), true));
                 } else {
-                  xeUtils.destructuring(row, xeUtils.clone(oRow, true));
+                  XEUtils$1.destructuring(row, XEUtils$1.clone(oRow, true));
                 }
               }
             }
@@ -21015,16 +21538,25 @@ const VxeTableComponent = vue.defineComponent({
         }
         return tableMethods.reloadData(tableSourceData);
       },
+      /**
+       * 清空单元格内容
+       * 如果不创参数，则清空整个表格内容
+       * 如果传 row 则清空一行内容
+       * 如果传 rows 则清空多行内容
+       * 如果还额外传了 field 则清空指定单元格内容
+       * @param {Array/Row} rows 行数据
+       * @param {String} field 字段名
+       */
       clearData: function(rows, field) {
         var tableFullData = internalData.tableFullData, visibleColumn = internalData.visibleColumn;
         if (!arguments.length) {
           rows = tableFullData;
-        } else if (rows && !xeUtils.isArray(rows)) {
+        } else if (rows && !XEUtils$1.isArray(rows)) {
           rows = [rows];
         }
         if (field) {
           rows.forEach(function(row) {
-            return xeUtils.set(row, field, null);
+            return XEUtils$1.set(row, field, null);
           });
         } else {
           rows.forEach(function(row) {
@@ -21037,14 +21569,27 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 检查是否为临时行数据
+       * @param {Row} row 行对象
+       */
       isInsertByRow: function(row) {
         var editStore = reactData.editStore;
         return $xetable.findRowIndexOf(editStore.insertList, row) > -1;
       },
+      /**
+       * 删除所有新增的临时数据
+       * @returns
+       */
       removeInsertRow: function() {
         var editStore = reactData.editStore;
         return $xetable.remove(editStore.insertList);
       },
+      /**
+       * 检查行或列数据是否发生改变
+       * @param {Row} row 行对象
+       * @param {String} field 字段名
+       */
       isUpdateByRow: function(row, field) {
         var _a, _b;
         var keepSource = props.keepSource, treeConfig = props.treeConfig;
@@ -21058,7 +21603,7 @@ const VxeTableComponent = vue.defineComponent({
           }
           if (treeConfig) {
             var children = treeOpts.children;
-            var matchObj = xeUtils.findTree(tableSourceData, function(item) {
+            var matchObj = XEUtils$1.findTree(tableSourceData, function(item) {
               return rowid_2 === getRowid($xetable, item);
             }, treeOpts);
             row = Object.assign({}, row, (_a = {}, _a[children] = null, _a));
@@ -21083,18 +21628,34 @@ const VxeTableComponent = vue.defineComponent({
         }
         return false;
       },
+      /**
+       * 获取表格的可视列，也可以指定索引获取列
+       * @param {Number} columnIndex 索引
+       */
       getColumns: function(columnIndex) {
         var columns = internalData.visibleColumn;
-        return xeUtils.isUndefined(columnIndex) ? columns.slice(0) : columns[columnIndex];
+        return XEUtils$1.isUndefined(columnIndex) ? columns.slice(0) : columns[columnIndex];
       },
+      /**
+       * 根据列的唯一主键获取列
+       * @param {String} colid 列主键
+       */
       getColumnById: function(colid) {
         var fullColumnIdData = internalData.fullColumnIdData;
         return fullColumnIdData[colid] ? fullColumnIdData[colid].column : null;
       },
+      /**
+       * 根据列的字段名获取列
+       * @param {String} field 字段名
+       */
       getColumnByField: function(field) {
         var fullColumnFieldData = internalData.fullColumnFieldData;
         return fullColumnFieldData[field] ? fullColumnFieldData[field].column : null;
       },
+      /**
+       * 获取当前表格的列
+       * 收集到的全量列、全量表头列、处理条件之后的全量表头列、当前渲染中的表头列
+       */
       getTableColumn: function() {
         return {
           collectColumn: internalData.collectColumn.slice(0),
@@ -21103,10 +21664,16 @@ const VxeTableComponent = vue.defineComponent({
           tableColumn: reactData.tableColumn.slice(0)
         };
       },
+      /**
+       * 获取数据，和 data 的行为一致，也可以指定索引获取数据
+       */
       getData: function(rowIndex) {
         var tableSynchData = props.data || internalData.tableSynchData;
-        return xeUtils.isUndefined(rowIndex) ? tableSynchData.slice(0) : tableSynchData[rowIndex];
+        return XEUtils$1.isUndefined(rowIndex) ? tableSynchData.slice(0) : tableSynchData[rowIndex];
       },
+      /**
+       * 用于多选行，获取已选中的数据
+       */
       getCheckboxRecords: function(isFull) {
         var treeConfig = props.treeConfig;
         var tableFullData = internalData.tableFullData, afterFullData = internalData.afterFullData, afterTreeFullData = internalData.afterTreeFullData, tableFullTreeData = internalData.tableFullTreeData;
@@ -21118,18 +21685,18 @@ const VxeTableComponent = vue.defineComponent({
         var currTableData = isFull ? transform ? tableFullTreeData : tableFullData : transform ? afterTreeFullData : afterFullData;
         if (checkField) {
           if (treeConfig) {
-            rowList = xeUtils.filterTree(currTableData, function(row) {
-              return xeUtils.get(row, checkField);
+            rowList = XEUtils$1.filterTree(currTableData, function(row) {
+              return XEUtils$1.get(row, checkField);
             }, { children: transform ? mapChildren : children });
           } else {
             rowList = currTableData.filter(function(row) {
-              return xeUtils.get(row, checkField);
+              return XEUtils$1.get(row, checkField);
             });
           }
         } else {
           var selection_1 = reactData.selection;
           if (treeConfig) {
-            rowList = xeUtils.filterTree(currTableData, function(row) {
+            rowList = XEUtils$1.filterTree(currTableData, function(row) {
               return $xetable.findRowIndexOf(selection_1, row) > -1;
             }, { children: transform ? mapChildren : children });
           } else {
@@ -21140,12 +21707,15 @@ const VxeTableComponent = vue.defineComponent({
         }
         return rowList;
       },
+      /**
+       * 只对 tree-config 有效，获取行的父级
+       */
       getParentRow: function(rowOrRowid) {
         var treeConfig = props.treeConfig;
         var fullDataRowIdData = internalData.fullDataRowIdData;
         if (rowOrRowid && treeConfig) {
           var rowid = void 0;
-          if (xeUtils.isString(rowOrRowid)) {
+          if (XEUtils$1.isString(rowOrRowid)) {
             rowid = rowOrRowid;
           } else {
             rowid = getRowid($xetable, rowOrRowid);
@@ -21156,14 +21726,27 @@ const VxeTableComponent = vue.defineComponent({
         }
         return null;
       },
+      /**
+       * 根据行的唯一主键获取行
+       * @param {String/Number} rowid 行主键
+       */
       getRowById: function(cellValue) {
         var fullDataRowIdData = internalData.fullDataRowIdData;
-        var rowid = xeUtils.eqNull(cellValue) ? "" : encodeURIComponent(cellValue);
+        var rowid = XEUtils$1.eqNull(cellValue) ? "" : encodeURIComponent(cellValue);
         return fullDataRowIdData[rowid] ? fullDataRowIdData[rowid].row : null;
       },
+      /**
+       * 根据行获取行的唯一主键
+       * @param {Row} row 行对象
+       */
       getRowid: function(row) {
         return getRowid($xetable, row);
       },
+      /**
+       * 获取处理后的表格数据
+       * 如果存在筛选条件，继续处理
+       * 如果存在排序，继续处理
+       */
       getTableData: function() {
         var tableData = reactData.tableData, footerTableData = reactData.footerTableData;
         var tableFullData = internalData.tableFullData, afterFullData = internalData.afterFullData;
@@ -21174,6 +21757,9 @@ const VxeTableComponent = vue.defineComponent({
           footerData: footerTableData.slice(0)
         };
       },
+      /**
+       * 隐藏指定列
+       */
       hideColumn: function(fieldOrColumn) {
         var column = handleFieldOrColumn($xetable, fieldOrColumn);
         if (column) {
@@ -21181,6 +21767,9 @@ const VxeTableComponent = vue.defineComponent({
         }
         return tablePrivateMethods.handleCustom();
       },
+      /**
+       * 显示指定列
+       */
       showColumn: function(fieldOrColumn) {
         var column = handleFieldOrColumn($xetable, fieldOrColumn);
         if (column) {
@@ -21188,6 +21777,11 @@ const VxeTableComponent = vue.defineComponent({
         }
         return tablePrivateMethods.handleCustom();
       },
+      /**
+       * 手动重置列的显示隐藏、列宽拖动的状态；
+       * 如果为 true 则重置所有状态
+       * 如果已关联工具栏，则会同步更新
+       */
       resetColumn: function(options) {
         var tableFullColumn = internalData.tableFullColumn;
         var customOpts = computeCustomOpts.value;
@@ -21206,6 +21800,10 @@ const VxeTableComponent = vue.defineComponent({
         }
         return tablePrivateMethods.handleCustom();
       },
+      /**
+       * 刷新列信息
+       * 将固定的列左边、右边分别靠边
+       */
       refreshColumn: function() {
         return parseColumns().then(function() {
           return tableMethods.refreshScroll();
@@ -21213,6 +21811,9 @@ const VxeTableComponent = vue.defineComponent({
           return tableMethods.recalculate();
         });
       },
+      /**
+       * 刷新滚动操作，手动同步滚动相关位置（对于某些特殊的操作，比如滚动条错位、固定列不同步）
+       */
       refreshScroll: function() {
         var lastScrollLeft = internalData.lastScrollLeft, lastScrollTop = internalData.lastScrollTop;
         var tableBody = refTableBody.value;
@@ -21236,6 +21837,10 @@ const VxeTableComponent = vue.defineComponent({
           setTimeout(resolve, 30);
         });
       },
+      /**
+       * 计算单元格列宽，动态分配可用剩余空间
+       * 支持 width=? width=?px width=?% min-width=? min-width=?px min-width=?%
+       */
       recalculate: function(refull) {
         autoCellWidth();
         if (refull === true) {
@@ -21253,6 +21858,9 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 关闭 tooltip
+       */
       closeTooltip: function() {
         var tooltipStore = reactData.tooltipStore;
         var $tooltip = refTooltip.value;
@@ -21273,12 +21881,21 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 判断列头复选框是否被选中
+       */
       isAllCheckboxChecked: function() {
         return reactData.isAllSelected;
       },
+      /**
+       * 判断列头复选框是否被半选
+       */
       isAllCheckboxIndeterminate: function() {
         return !reactData.isAllSelected && reactData.isIndeterminate;
       },
+      /**
+       * 获取复选框半选状态的行数据
+       */
       getCheckboxIndeterminateRecords: function(isFull) {
         var treeConfig = props.treeConfig;
         var afterFullData = internalData.afterFullData;
@@ -21290,8 +21907,13 @@ const VxeTableComponent = vue.defineComponent({
         }
         return [];
       },
+      /**
+       * 用于多选行，设置行为选中状态，第二个参数为选中与否
+       * @param {Array/Row} rows 行数据
+       * @param {Boolean} value 是否选中
+       */
       setCheckboxRow: function(rows, value) {
-        if (rows && !xeUtils.isArray(rows)) {
+        if (rows && !XEUtils$1.isArray(rows)) {
           rows = [rows];
         }
         rows.forEach(function(row) {
@@ -21304,7 +21926,7 @@ const VxeTableComponent = vue.defineComponent({
         var checkboxOpts = computeCheckboxOpts.value;
         var checkField = checkboxOpts.checkField;
         if (checkField) {
-          return xeUtils.get(row, checkField);
+          return XEUtils$1.get(row, checkField);
         }
         return $xetable.findRowIndexOf(selection, row) > -1;
       },
@@ -21312,10 +21934,17 @@ const VxeTableComponent = vue.defineComponent({
         var treeIndeterminates = reactData.treeIndeterminates;
         return $xetable.findRowIndexOf(treeIndeterminates, row) > -1 && !tableMethods.isCheckedByCheckboxRow(row);
       },
+      /**
+       * 多选，切换某一行的选中状态
+       */
       toggleCheckboxRow: function(row) {
         tablePrivateMethods.handleToggleCheckRowEvent(null, { row });
         return vue.nextTick();
       },
+      /**
+       * 用于多选行，设置所有行的选中状态
+       * @param {Boolean} value 是否选中
+       */
       setAllCheckboxRow: function(value) {
         var treeConfig = props.treeConfig;
         var selection = reactData.selection;
@@ -21336,25 +21965,25 @@ const VxeTableComponent = vue.defineComponent({
                 if (value) {
                   selectRows.push(row);
                 }
-                xeUtils.set(row, checkField, value);
+                XEUtils$1.set(row, checkField, value);
               }
             };
             if (treeConfig) {
-              xeUtils.eachTree(afterFullData, checkValFn, treeOpts);
+              XEUtils$1.eachTree(afterFullData, checkValFn, treeOpts);
             } else {
               afterFullData.forEach(checkValFn);
             }
           } else {
             if (treeConfig) {
               if (value) {
-                xeUtils.eachTree(afterFullData, function(row) {
+                XEUtils$1.eachTree(afterFullData, function(row) {
                   if (!checkMethod || checkMethod({ row })) {
                     selectRows.push(row);
                   }
                 }, treeOpts);
               } else {
                 if (checkMethod) {
-                  xeUtils.eachTree(afterFullData, function(row) {
+                  XEUtils$1.eachTree(afterFullData, function(row) {
                     if (checkMethod({ row }) ? 0 : $xetable.findRowIndexOf(selection, row) > -1) {
                       selectRows.push(row);
                     }
@@ -21396,6 +22025,9 @@ const VxeTableComponent = vue.defineComponent({
         tablePrivateMethods.checkSelectionStatus();
         return vue.nextTick();
       },
+      /**
+       * 获取单选框保留选中的行
+       */
       getRadioReserveRecord: function(isFull) {
         var treeConfig = props.treeConfig;
         var fullDataRowIdData = internalData.fullDataRowIdData, radioReserveRow = internalData.radioReserveRow, afterFullData = internalData.afterFullData;
@@ -21410,15 +22042,15 @@ const VxeTableComponent = vue.defineComponent({
           } else {
             var rowkey_2 = getRowkey($xetable);
             if (treeConfig) {
-              var matchObj = xeUtils.findTree(afterFullData, function(row) {
-                return rowid_3 === xeUtils.get(row, rowkey_2);
+              var matchObj = XEUtils$1.findTree(afterFullData, function(row) {
+                return rowid_3 === XEUtils$1.get(row, rowkey_2);
               }, treeOpts);
               if (matchObj) {
                 return radioReserveRow;
               }
             } else {
               if (!afterFullData.some(function(row) {
-                return rowid_3 === xeUtils.get(row, rowkey_2);
+                return rowid_3 === XEUtils$1.get(row, rowkey_2);
               })) {
                 return radioReserveRow;
               }
@@ -21431,6 +22063,9 @@ const VxeTableComponent = vue.defineComponent({
         internalData.radioReserveRow = null;
         return vue.nextTick();
       },
+      /**
+       * 获取复选框保留选中的行
+       */
       getCheckboxReserveRecords: function(isFull) {
         var treeConfig = props.treeConfig;
         var afterFullData = internalData.afterFullData, fullDataRowIdData = internalData.fullDataRowIdData, checkboxReserveRowMap = internalData.checkboxReserveRowMap;
@@ -21440,7 +22075,7 @@ const VxeTableComponent = vue.defineComponent({
         if (checkboxOpts.reserve) {
           var afterFullIdMaps_1 = {};
           if (treeConfig) {
-            xeUtils.eachTree(afterFullData, function(row) {
+            XEUtils$1.eachTree(afterFullData, function(row) {
               afterFullIdMaps_1[getRowid($xetable, row)] = 1;
             }, treeOpts);
           } else {
@@ -21448,7 +22083,7 @@ const VxeTableComponent = vue.defineComponent({
               afterFullIdMaps_1[getRowid($xetable, row)] = 1;
             });
           }
-          xeUtils.each(checkboxReserveRowMap, function(oldRow, oldRowid) {
+          XEUtils$1.each(checkboxReserveRowMap, function(oldRow, oldRowid) {
             if (oldRow) {
               if (isFull) {
                 if (!fullDataRowIdData[oldRowid]) {
@@ -21468,10 +22103,17 @@ const VxeTableComponent = vue.defineComponent({
         internalData.checkboxReserveRowMap = {};
         return vue.nextTick();
       },
+      /**
+       * 多选，切换所有行的选中状态
+       */
       toggleAllCheckboxRow: function() {
         tablePrivateMethods.triggerCheckAllEvent(null, !reactData.isAllSelected);
         return vue.nextTick();
       },
+      /**
+       * 用于多选行，手动清空用户的选择
+       * 清空行为不管是否被禁用还是保留记录，都将彻底清空选中状态
+       */
       clearCheckboxRow: function() {
         var treeConfig = props.treeConfig;
         var tableFullData = internalData.tableFullData;
@@ -21480,12 +22122,12 @@ const VxeTableComponent = vue.defineComponent({
         var checkField = checkboxOpts.checkField, reserve = checkboxOpts.reserve;
         if (checkField) {
           if (treeConfig) {
-            xeUtils.eachTree(tableFullData, function(item) {
-              return xeUtils.set(item, checkField, false);
+            XEUtils$1.eachTree(tableFullData, function(item) {
+              return XEUtils$1.set(item, checkField, false);
             }, treeOpts);
           } else {
             tableFullData.forEach(function(item) {
-              return xeUtils.set(item, checkField, false);
+              return XEUtils$1.set(item, checkField, false);
             });
           }
         }
@@ -21500,6 +22142,10 @@ const VxeTableComponent = vue.defineComponent({
         reactData.treeIndeterminates = [];
         return vue.nextTick();
       },
+      /**
+       * 用于当前行，设置某一行为高亮状态
+       * @param {Row} row 行对象
+       */
       setCurrentRow: function(row) {
         var rowOpts = computeRowOpts.value;
         var el = refElem.value;
@@ -21508,7 +22154,7 @@ const VxeTableComponent = vue.defineComponent({
         reactData.currentRow = row;
         if (rowOpts.isCurrent || props.highlightCurrentRow) {
           if (el) {
-            xeUtils.arrayEach(el.querySelectorAll('[rowid="'.concat(getRowid($xetable, row), '"]')), function(elem) {
+            XEUtils$1.arrayEach(el.querySelectorAll('[rowid="'.concat(getRowid($xetable, row), '"]')), function(elem) {
               return addClass(elem, "row--current");
             });
           }
@@ -21518,6 +22164,10 @@ const VxeTableComponent = vue.defineComponent({
       isCheckedByRadioRow: function(row) {
         return $xetable.eqRow(reactData.selectRow, row);
       },
+      /**
+       * 用于单选行，设置某一行为选中状态
+       * @param {Row} row 行对象
+       */
       setRadioRow: function(row) {
         var radioOpts = computeRadioOpts.value;
         var checkMethod = radioOpts.checkMethod;
@@ -21527,25 +22177,37 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 用于当前行，手动清空当前高亮的状态
+       */
       clearCurrentRow: function() {
         var el = refElem.value;
         reactData.currentRow = null;
         internalData.hoverRow = null;
         if (el) {
-          xeUtils.arrayEach(el.querySelectorAll(".row--current"), function(elem) {
+          XEUtils$1.arrayEach(el.querySelectorAll(".row--current"), function(elem) {
             return removeClass(elem, "row--current");
           });
         }
         return vue.nextTick();
       },
+      /**
+       * 用于单选行，手动清空用户的选择
+       */
       clearRadioRow: function() {
         reactData.selectRow = null;
         return vue.nextTick();
       },
+      /**
+       * 用于当前行，获取当前行的数据
+       */
       getCurrentRecord: function() {
         var rowOpts = computeRowOpts.value;
         return rowOpts.isCurrent || props.highlightCurrentRow ? reactData.currentRow : null;
       },
+      /**
+       * 用于单选行，获取当已选中的数据
+       */
       getRadioRecord: function(isFull) {
         var treeConfig = props.treeConfig;
         var fullDataRowIdData = internalData.fullDataRowIdData, afterFullData = internalData.afterFullData;
@@ -21560,8 +22222,8 @@ const VxeTableComponent = vue.defineComponent({
           } else {
             if (treeConfig) {
               var rowkey_3 = getRowkey($xetable);
-              var matchObj = xeUtils.findTree(afterFullData, function(row) {
-                return rowid_4 === xeUtils.get(row, rowkey_3);
+              var matchObj = XEUtils$1.findTree(afterFullData, function(row) {
+                return rowid_4 === XEUtils$1.get(row, rowkey_3);
               }, treeOpts);
               if (matchObj) {
                 return selectRow;
@@ -21579,6 +22241,9 @@ const VxeTableComponent = vue.defineComponent({
         var columnOpts = computeColumnOpts.value;
         return columnOpts.isCurrent || props.highlightCurrentColumn ? reactData.currentColumn : null;
       },
+      /**
+       * 用于当前列，设置某列行为高亮状态
+       */
       setCurrentColumn: function(fieldOrColumn) {
         var column = handleFieldOrColumn($xetable, fieldOrColumn);
         if (column) {
@@ -21588,6 +22253,9 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 用于当前列，手动清空当前高亮的状态
+       */
       clearCurrentColumn: function() {
         reactData.currentColumn = null;
         return vue.nextTick();
@@ -21596,13 +22264,13 @@ const VxeTableComponent = vue.defineComponent({
         var sortOpts = computeSortOpts.value;
         var multiple = sortOpts.multiple, remote = sortOpts.remote, orders = sortOpts.orders;
         if (sortConfs) {
-          if (xeUtils.isString(sortConfs)) {
+          if (XEUtils$1.isString(sortConfs)) {
             sortConfs = [
               { field: sortConfs, order: sortOrder }
             ];
           }
         }
-        if (!xeUtils.isArray(sortConfs)) {
+        if (!XEUtils$1.isArray(sortConfs)) {
           sortConfs = [sortConfs];
         }
         if (sortConfs.length) {
@@ -21612,7 +22280,7 @@ const VxeTableComponent = vue.defineComponent({
           (multiple ? sortConfs : [sortConfs[0]]).forEach(function(confs, index) {
             var field = confs.field, order = confs.order;
             var column = field;
-            if (xeUtils.isString(field)) {
+            if (XEUtils$1.isString(field)) {
               column = tableMethods.getColumnByField(field);
             }
             if (column && column.sortable) {
@@ -21632,6 +22300,11 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 清空指定列的排序条件
+       * 如果为空则清空所有列的排序条件
+       * @param {String} fieldOrColumn 列或字段名
+       */
       clearSort: function(fieldOrColumn) {
         var sortOpts = computeSortOpts.value;
         if (fieldOrColumn) {
@@ -21666,10 +22339,14 @@ const VxeTableComponent = vue.defineComponent({
           }
         });
         if (multiple && chronological && sortList.length > 1) {
-          return xeUtils.orderBy(sortList, "sortTime");
+          return XEUtils$1.orderBy(sortList, "sortTime");
         }
         return sortList;
       },
+      /**
+       * 关闭筛选
+       * @param {Event} evnt 事件
+       */
       closeFilter: function() {
         var filterStore = reactData.filterStore;
         var column = filterStore.column, visible = filterStore.visible;
@@ -21684,6 +22361,10 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 判断指定列是否为筛选状态，如果为空则判断所有列
+       * @param {String} fieldOrColumn 字段名
+       */
       isFilter: function(fieldOrColumn) {
         var column = handleFieldOrColumn($xetable, fieldOrColumn);
         if (column) {
@@ -21693,6 +22374,10 @@ const VxeTableComponent = vue.defineComponent({
         }
         return $xetable.getCheckedFilters().length > 0;
       },
+      /**
+       * 判断展开行是否懒加载完成
+       * @param {Row} row 行对象
+       */
       isRowExpandLoaded: function(row) {
         var fullAllDataRowIdData = internalData.fullAllDataRowIdData;
         var rest = fullAllDataRowIdData[getRowid($xetable, row)];
@@ -21706,12 +22391,16 @@ const VxeTableComponent = vue.defineComponent({
         var rest = fullAllDataRowIdData[getRowid($xetable, row)];
         if (lazy && rest) {
           rest.expandLoaded = false;
-          xeUtils.remove(expandLazyLoadeds, function(item) {
+          XEUtils$1.remove(expandLazyLoadeds, function(item) {
             return $xetable.eqRow(item, row);
           });
         }
         return vue.nextTick();
       },
+      /**
+       * 重新懒加载展开行，并展开内容
+       * @param {Row} row 行对象
+       */
       reloadRowExpand: function(row) {
         var expandLazyLoadeds = reactData.expandLazyLoadeds;
         var expandOpts = computeExpandOpts.value;
@@ -21729,13 +22418,27 @@ const VxeTableComponent = vue.defineComponent({
         }
         return tableMethods.reloadRowExpand(row);
       },
+      /**
+       * 切换展开行
+       */
       toggleRowExpand: function(row) {
         return tableMethods.setRowExpand(row, !tableMethods.isExpandByRow(row));
       },
+      /**
+       * 设置所有行的展开与否
+       * @param {Boolean} expanded 是否展开
+       */
       setAllRowExpand: function(expanded) {
         var expandOpts = computeExpandOpts.value;
         return tableMethods.setRowExpand(expandOpts.lazy ? reactData.tableData : internalData.tableFullData, expanded);
       },
+      /**
+       * 设置展开行，二个参数设置这一行展开与否
+       * 支持单行
+       * 支持多行
+       * @param {Array/Row} rows 行数据
+       * @param {Boolean} expanded 是否展开
+       */
       setRowExpand: function(rows, expanded) {
         var rowExpandeds = reactData.rowExpandeds, expandLazyLoadeds = reactData.expandLazyLoadeds, column = reactData.expandColumn;
         var fullAllDataRowIdData = internalData.fullAllDataRowIdData;
@@ -21745,7 +22448,7 @@ const VxeTableComponent = vue.defineComponent({
         var columnIndex = tableMethods.getColumnIndex(column);
         var $columnIndex = tableMethods.getVMColumnIndex(column);
         if (rows) {
-          if (!xeUtils.isArray(rows)) {
+          if (!XEUtils$1.isArray(rows)) {
             rows = [rows];
           }
           if (accordion) {
@@ -21768,7 +22471,7 @@ const VxeTableComponent = vue.defineComponent({
               }
             });
           } else {
-            xeUtils.remove(rowExpandeds, function(row) {
+            XEUtils$1.remove(rowExpandeds, function(row) {
               return $xetable.findRowIndexOf(validRows_1, row) > -1;
             });
           }
@@ -21783,10 +22486,17 @@ const VxeTableComponent = vue.defineComponent({
           return tableMethods.recalculate();
         });
       },
+      /**
+       * 判断行是否为展开状态
+       * @param {Row} row 行对象
+       */
       isExpandByRow: function(row) {
         var rowExpandeds = reactData.rowExpandeds;
         return $xetable.findRowIndexOf(rowExpandeds, row) > -1;
       },
+      /**
+       * 手动清空展开行状态，数据会恢复成未展开的状态
+       */
       clearRowExpand: function() {
         var rowExpandeds = reactData.rowExpandeds;
         var tableFullData = internalData.tableFullData;
@@ -21815,6 +22525,10 @@ const VxeTableComponent = vue.defineComponent({
       getTreeExpandRecords: function() {
         return reactData.treeExpandeds.slice(0);
       },
+      /**
+       * 判断树节点是否懒加载完成
+       * @param {Row} row 行对象
+       */
       isTreeExpandLoaded: function(row) {
         var fullAllDataRowIdData = internalData.fullAllDataRowIdData;
         var rest = fullAllDataRowIdData[getRowid($xetable, row)];
@@ -21828,7 +22542,7 @@ const VxeTableComponent = vue.defineComponent({
         var rest = fullAllDataRowIdData[getRowid($xetable, row)];
         if (lazy && rest) {
           rest.treeLoaded = false;
-          xeUtils.remove(treeExpandeds, function(item) {
+          XEUtils$1.remove(treeExpandeds, function(item) {
             return $xetable.eqRow(item, row);
           });
         }
@@ -21838,6 +22552,10 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 重新懒加载树节点，并展开该节点
+       * @param {Row} row 行对象
+       */
       reloadTreeExpand: function(row) {
         var treeLazyLoadeds = reactData.treeLazyLoadeds;
         var treeOpts = computeTreeOpts.value;
@@ -21862,15 +22580,22 @@ const VxeTableComponent = vue.defineComponent({
         }
         return tableMethods.reloadTreeExpand(row);
       },
+      /**
+       * 切换/展开树节点
+       */
       toggleTreeExpand: function(row) {
         return tableMethods.setTreeExpand(row, !tableMethods.isTreeExpandByRow(row));
       },
+      /**
+       * 设置所有树节点的展开与否
+       * @param {Boolean} expanded 是否展开
+       */
       setAllTreeExpand: function(expanded) {
         var tableFullData = internalData.tableFullData;
         var treeOpts = computeTreeOpts.value;
         var transform = treeOpts.transform, lazy = treeOpts.lazy, children = treeOpts.children;
         var expandeds = [];
-        xeUtils.eachTree(tableFullData, function(row) {
+        XEUtils$1.eachTree(tableFullData, function(row) {
           var rowChildren = row[children];
           if (lazy || rowChildren && rowChildren.length) {
             expandeds.push(row);
@@ -21883,11 +22608,18 @@ const VxeTableComponent = vue.defineComponent({
           }
         });
       },
+      /**
+       * 设置展开树形节点，二个参数设置这一行展开与否
+       * 支持单行
+       * 支持多行
+       * @param {Array/Row} rows 行数据
+       * @param {Boolean} expanded 是否展开
+       */
       setTreeExpand: function(rows, expanded) {
         var treeOpts = computeTreeOpts.value;
         var transform = treeOpts.transform;
         if (rows) {
-          if (!xeUtils.isArray(rows)) {
+          if (!XEUtils$1.isArray(rows)) {
             rows = [rows];
           }
           if (rows.length) {
@@ -21900,10 +22632,17 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 判断行是否为树形节点展开状态
+       * @param {Row} row 行对象
+       */
       isTreeExpandByRow: function(row) {
         var treeExpandeds = reactData.treeExpandeds;
         return $xetable.findRowIndexOf(treeExpandeds, row) > -1;
       },
+      /**
+       * 手动清空树形节点的展开状态，数据会恢复成未展开的状态
+       */
       clearTreeExpand: function() {
         var treeExpandeds = reactData.treeExpandeds;
         var tableFullTreeData = internalData.tableFullTreeData;
@@ -21912,7 +22651,7 @@ const VxeTableComponent = vue.defineComponent({
         var isExists = treeExpandeds.length;
         reactData.treeExpandeds = [];
         if (reserve) {
-          xeUtils.eachTree(tableFullTreeData, function(row) {
+          XEUtils$1.eachTree(tableFullTreeData, function(row) {
             return handleTreeExpandReserve(row, false);
           }, treeOpts);
         }
@@ -21931,6 +22670,9 @@ const VxeTableComponent = vue.defineComponent({
         internalData.treeExpandedReserveRowMap = {};
         return vue.nextTick();
       },
+      /**
+       * 获取表格的滚动状态
+       */
       getScroll: function() {
         var scrollXLoad = reactData.scrollXLoad, scrollYLoad = reactData.scrollYLoad;
         var tableBody = refTableBody.value;
@@ -21942,6 +22684,11 @@ const VxeTableComponent = vue.defineComponent({
           scrollLeft: bodyElem.scrollLeft
         };
       },
+      /**
+       * 如果有滚动条，则滚动到对应的位置
+       * @param {Number} scrollLeft 左距离
+       * @param {Number} scrollTop 上距离
+       */
       scrollTo: function(scrollLeft, scrollTop) {
         var tableBody = refTableBody.value;
         var tableFooter = refTableFooter.value;
@@ -21949,10 +22696,10 @@ const VxeTableComponent = vue.defineComponent({
         var tableBodyElem = tableBody ? tableBody.$el : null;
         var rightBodyElem = rightBody ? rightBody.$el : null;
         var tableFooterElem = tableFooter ? tableFooter.$el : null;
-        if (xeUtils.isNumber(scrollLeft)) {
+        if (XEUtils$1.isNumber(scrollLeft)) {
           setScrollLeft(tableFooterElem || tableBodyElem, scrollLeft);
         }
-        if (xeUtils.isNumber(scrollTop)) {
+        if (XEUtils$1.isNumber(scrollTop)) {
           setScrollTop(rightBodyElem || tableBodyElem, scrollTop);
         }
         if (reactData.scrollXLoad || reactData.scrollYLoad) {
@@ -21966,6 +22713,11 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 如果有滚动条，则滚动到对应的行
+       * @param {Row} row 行对象
+       * @param {ColumnInfo} fieldOrColumn 列配置
+       */
       scrollToRow: function(row, fieldOrColumn) {
         var rest = [];
         if (row) {
@@ -21980,6 +22732,9 @@ const VxeTableComponent = vue.defineComponent({
         }
         return Promise.all(rest);
       },
+      /**
+       * 如果有滚动条，则滚动到对应的列
+       */
       scrollToColumn: function(fieldOrColumn) {
         var fullColumnIdData = internalData.fullColumnIdData;
         var column = handleFieldOrColumn($xetable, fieldOrColumn);
@@ -21988,6 +22743,9 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 手动清除滚动相关信息，还原到初始状态
+       */
       clearScroll: function() {
         var scrollXStore = internalData.scrollXStore, scrollYStore = internalData.scrollYStore;
         var tableBody = refTableBody.value;
@@ -22012,6 +22770,9 @@ const VxeTableComponent = vue.defineComponent({
         scrollYStore.startIndex = 0;
         return vue.nextTick();
       },
+      /**
+       * 更新表尾合计
+       */
       updateFooter: function() {
         var showFooter = props.showFooter, footerMethod = props.footerMethod;
         var visibleColumn = internalData.visibleColumn, afterFullData = internalData.afterFullData;
@@ -22020,8 +22781,13 @@ const VxeTableComponent = vue.defineComponent({
         }
         return vue.nextTick();
       },
+      /**
+       * 更新列状态
+       * 如果组件值 v-model 发生 change 时，调用改函数用于更新某一列编辑状态
+       * 如果单元格配置了校验规则，则会进行校验
+       */
       updateStatus: function(scope, cellValue) {
-        var customVal = !xeUtils.isUndefined(cellValue);
+        var customVal = !XEUtils$1.isUndefined(cellValue);
         return vue.nextTick().then(function() {
           var editRules = props.editRules;
           var validStore = reactData.validStore;
@@ -22051,6 +22817,10 @@ const VxeTableComponent = vue.defineComponent({
           }
         });
       },
+      /**
+       * 设置合并单元格
+       * @param {TableMergeConfig[]} merges { row: Row|number, column: ColumnInfo|number, rowspan: number, colspan: number }
+       */
       setMergeCells: function(merges) {
         if (props.spanMethod) {
           errLog("vxe.error.errConflicts", ["merge-cells", "span-method"]);
@@ -22060,6 +22830,10 @@ const VxeTableComponent = vue.defineComponent({
           return tablePrivateMethods.updateCellAreas();
         });
       },
+      /**
+       * 移除单元格合并
+       * @param {TableMergeConfig[]} merges 多个或数组 [{row:Row|number, col:ColumnInfo|number}]
+       */
       removeMergeCells: function(merges) {
         if (props.spanMethod) {
           errLog("vxe.error.errConflicts", ["merge-cells", "span-method"]);
@@ -22070,9 +22844,15 @@ const VxeTableComponent = vue.defineComponent({
           return rest;
         });
       },
+      /**
+       * 获取所有被合并的单元格
+       */
       getMergeCells: function() {
         return reactData.mergeList.slice(0);
       },
+      /**
+       * 清除所有单元格合并
+       */
       clearMergeCells: function() {
         reactData.mergeList = [];
         return vue.nextTick();
@@ -22096,9 +22876,15 @@ const VxeTableComponent = vue.defineComponent({
           return rest;
         });
       },
+      /**
+       * 获取所有被合并的表尾
+       */
       getMergeFooterItems: function() {
         return reactData.mergeFooterList.slice(0);
       },
+      /**
+       * 清除所有表尾合并
+       */
       clearMergeFooterItems: function() {
         reactData.mergeFooterList = [];
         return vue.nextTick();
@@ -22111,6 +22897,10 @@ const VxeTableComponent = vue.defineComponent({
         internalData.isActivated = false;
         return vue.nextTick();
       },
+      /**
+       * 连接工具栏
+       * @param $toolbar
+       */
       connect: function($toolbar) {
         if ($toolbar) {
           $xetoolbar = $toolbar;
@@ -22170,7 +22960,8 @@ const VxeTableComponent = vue.defineComponent({
                       isClear = evnt.offsetY < bodyWrapperElem.clientHeight;
                     }
                   }
-                  if (isClear || !getEventTargetNode(evnt, el).flag) {
+                  if (isClear || // 如果点击了当前表格之外
+                  !getEventTargetNode(evnt, el).flag) {
                     setTimeout(function() {
                       return $xetable.clearEdit(evnt);
                     });
@@ -22418,7 +23209,7 @@ const VxeTableComponent = vue.defineComponent({
                   tableMethods.updateFooter();
                 }
               } else if (isBack && keyboardOpts.isArrow && treeConfig && (rowOpts.isCurrent || highlightCurrentRow) && currentRow) {
-                var parentRow_1 = xeUtils.findTree(internalData.afterFullData, function(item) {
+                var parentRow_1 = XEUtils$1.findTree(internalData.afterFullData, function(item) {
                   return item === currentRow;
                 }, treeOpts).parent;
                 if (parentRow_1) {
@@ -22535,8 +23326,8 @@ const VxeTableComponent = vue.defineComponent({
       var column = params.column, row = params.row;
       var showAll = tooltipOpts.showAll, contentMethod = tooltipOpts.contentMethod;
       var customContent = contentMethod ? contentMethod(params) : null;
-      var useCustom = contentMethod && !xeUtils.eqNull(customContent);
-      var content = useCustom ? customContent : xeUtils.toString(column.type === "html" ? overflowElem.innerText : overflowElem.textContent).trim();
+      var useCustom = contentMethod && !XEUtils$1.eqNull(customContent);
+      var content = useCustom ? customContent : XEUtils$1.toString(column.type === "html" ? overflowElem.innerText : overflowElem.textContent).trim();
       var isCellOverflow = overflowElem.scrollWidth > overflowElem.clientWidth;
       if (content && (showAll || useCustom || isCellOverflow)) {
         Object.assign(tooltipStore, {
@@ -22564,12 +23355,15 @@ const VxeTableComponent = vue.defineComponent({
           if ($xegrid) {
             return $xegrid.callSlot(slotFunc, params);
           }
-          if (xeUtils.isFunction(slotFunc)) {
+          if (XEUtils$1.isFunction(slotFunc)) {
             return getSlotVNs(slotFunc(params));
           }
         }
         return [];
       },
+      /**
+       * 获取父容器元素
+       */
       getParentElem: function() {
         var el = refElem.value;
         if ($xegrid) {
@@ -22578,19 +23372,31 @@ const VxeTableComponent = vue.defineComponent({
         }
         return el ? el.parentNode : null;
       },
+      /**
+       * 获取父容器的高度
+       */
       getParentHeight: function() {
         var height = props.height;
         var el = refElem.value;
         if (el) {
           var parentElem = el.parentNode;
           var parentPaddingSize = height === "auto" ? getPaddingTopBottomSize(parentElem) : 0;
-          return Math.floor($xegrid ? $xegrid.getParentHeight() : xeUtils.toNumber(getComputedStyle(parentElem).height) - parentPaddingSize);
+          return Math.floor($xegrid ? $xegrid.getParentHeight() : XEUtils$1.toNumber(getComputedStyle(parentElem).height) - parentPaddingSize);
         }
         return 0;
       },
+      /**
+       * 获取需要排除的高度
+       * 但渲染表格高度时，需要排除工具栏或分页等相关组件的高度
+       * 如果存在表尾合计滚动条，则需要排除滚动条高度
+       */
       getExcludeHeight: function() {
         return $xegrid ? $xegrid.getExcludeHeight() : 0;
       },
+      /**
+       * 定义行数据中的列属性，如果不存在则定义
+       * @param {Row} record 行数据
+       */
       defineField: function(record) {
         var treeConfig = props.treeConfig;
         var expandOpts = computeExpandOpts.value;
@@ -22600,30 +23406,30 @@ const VxeTableComponent = vue.defineComponent({
         var rowkey = getRowkey($xetable);
         internalData.tableFullColumn.forEach(function(column) {
           var field = column.field, editRender = column.editRender;
-          if (field && !xeUtils.has(record, field) && !record[field]) {
+          if (field && !XEUtils$1.has(record, field) && !record[field]) {
             var cellValue = null;
             if (editRender) {
               var defaultValue = editRender.defaultValue;
-              if (xeUtils.isFunction(defaultValue)) {
+              if (XEUtils$1.isFunction(defaultValue)) {
                 cellValue = defaultValue({ column });
-              } else if (!xeUtils.isUndefined(defaultValue)) {
+              } else if (!XEUtils$1.isUndefined(defaultValue)) {
                 cellValue = defaultValue;
               }
             }
-            xeUtils.set(record, field, cellValue);
+            XEUtils$1.set(record, field, cellValue);
           }
         });
         var otherFields = [radioOpts.labelField, checkboxOpts.checkField, checkboxOpts.labelField, expandOpts.labelField];
         otherFields.forEach(function(key) {
-          if (key && eqEmptyValue(xeUtils.get(record, key))) {
-            xeUtils.set(record, key, null);
+          if (key && eqEmptyValue(XEUtils$1.get(record, key))) {
+            XEUtils$1.set(record, key, null);
           }
         });
-        if (treeConfig && treeOpts.lazy && xeUtils.isUndefined(record[treeOpts.children])) {
+        if (treeConfig && treeOpts.lazy && XEUtils$1.isUndefined(record[treeOpts.children])) {
           record[treeOpts.children] = null;
         }
-        if (eqEmptyValue(xeUtils.get(record, rowkey))) {
-          xeUtils.set(record, rowkey, getRowUniqueId());
+        if (eqEmptyValue(XEUtils$1.get(record, rowkey))) {
+          XEUtils$1.set(record, rowkey, getRowUniqueId());
         }
         return record;
       },
@@ -22646,6 +23452,10 @@ const VxeTableComponent = vue.defineComponent({
         reactData.tableData = tableData;
         return vue.nextTick();
       },
+      /**
+       * 更新数据行的 Map
+       * 牺牲数据组装的耗时，用来换取使用过程中的流畅
+       */
       cacheRowMap: function(isSource) {
         var treeConfig = props.treeConfig;
         var treeOpts = computeTreeOpts.value;
@@ -22658,9 +23468,9 @@ const VxeTableComponent = vue.defineComponent({
           var level = nodes ? nodes.length - 1 : 0;
           if (eqEmptyValue(rowid)) {
             rowid = getRowUniqueId();
-            xeUtils.set(row, rowkey, rowid);
+            XEUtils$1.set(row, rowkey, rowid);
           }
-          if (isLazy && row[treeOpts.hasChild] && xeUtils.isUndefined(row[treeOpts.children])) {
+          if (isLazy && row[treeOpts.hasChild] && XEUtils$1.isUndefined(row[treeOpts.children])) {
             row[treeOpts.children] = null;
           }
           var rest = { row, rowid, seq, index: treeConfig && parent ? -1 : index, _index: -1, $index: -1, items, parent, level };
@@ -22674,11 +23484,14 @@ const VxeTableComponent = vue.defineComponent({
         }
         fullAllDataRowIdData = internalData.fullAllDataRowIdData = {};
         if (treeConfig) {
-          xeUtils.eachTree(tableFullTreeData, handleCache, treeOpts);
+          XEUtils$1.eachTree(tableFullTreeData, handleCache, treeOpts);
         } else {
           tableFullData.forEach(handleCache);
         }
       },
+      /**
+       * 指定列宽的列进行拆分
+       */
       analyColumnWidth: function() {
         var tableFullColumn = internalData.tableFullColumn;
         var columnOpts = computeColumnOpts.value;
@@ -22728,8 +23541,8 @@ const VxeTableComponent = vue.defineComponent({
             return;
           }
           if (!isReset) {
-            columnWidthStorage_1 = xeUtils.isPlainObject(columnWidthStorageMap[id]) ? columnWidthStorageMap[id] : {};
-            xeUtils.eachTree(collectColumn, function(column) {
+            columnWidthStorage_1 = XEUtils$1.isPlainObject(columnWidthStorageMap[id]) ? columnWidthStorageMap[id] : {};
+            XEUtils$1.eachTree(collectColumn, function(column) {
               if (column.resizeWidth) {
                 var colKey = column.getKey();
                 if (colKey) {
@@ -22738,8 +23551,8 @@ const VxeTableComponent = vue.defineComponent({
               }
             });
           }
-          columnWidthStorageMap[id] = xeUtils.isEmpty(columnWidthStorage_1) ? void 0 : columnWidthStorage_1;
-          localStorage.setItem(resizableStorageKey, xeUtils.toJSONString(columnWidthStorageMap));
+          columnWidthStorageMap[id] = XEUtils$1.isEmpty(columnWidthStorage_1) ? void 0 : columnWidthStorage_1;
+          localStorage.setItem(resizableStorageKey, XEUtils$1.toJSONString(columnWidthStorageMap));
         }
       },
       saveCustomVisible: function() {
@@ -22756,7 +23569,7 @@ const VxeTableComponent = vue.defineComponent({
             errLog("vxe.error.reqProp", ["id"]);
             return;
           }
-          xeUtils.eachTree(collectColumn, function(column) {
+          XEUtils$1.eachTree(collectColumn, function(column) {
             if (!checkMethod || checkMethod({ column })) {
               if (!column.visible && column.defaultVisible) {
                 var colKey = column.getKey();
@@ -22772,7 +23585,7 @@ const VxeTableComponent = vue.defineComponent({
             }
           });
           columnVisibleStorageMap[id] = [colHides_1.join(",")].concat(colShows_1.length ? [colShows_1.join(",")] : []).join("|") || void 0;
-          localStorage.setItem(visibleStorageKey, xeUtils.toJSONString(columnVisibleStorageMap));
+          localStorage.setItem(visibleStorageKey, XEUtils$1.toJSONString(columnVisibleStorageMap));
         }
       },
       handleCustom: function() {
@@ -22813,33 +23626,33 @@ const VxeTableComponent = vue.defineComponent({
                 disableRows_1.push(row);
                 return true;
               }
-              if (xeUtils.get(row, checkField)) {
+              if (XEUtils$1.get(row, checkField)) {
                 checkRows_1.push(row);
                 return true;
               }
               return false;
             } : function(row) {
-              return xeUtils.get(row, checkField);
+              return XEUtils$1.get(row, checkField);
             });
             isAllSelected = isAllResolve && afterFullData.length !== disableRows_1.length;
             if (treeConfig) {
               if (halfField) {
                 isIndeterminate = !isAllSelected && afterFullData.some(function(row) {
-                  return xeUtils.get(row, checkField) || xeUtils.get(row, halfField) || $xetable.findRowIndexOf(treeIndeterminates, row) > -1;
+                  return XEUtils$1.get(row, checkField) || XEUtils$1.get(row, halfField) || $xetable.findRowIndexOf(treeIndeterminates, row) > -1;
                 });
               } else {
                 isIndeterminate = !isAllSelected && afterFullData.some(function(row) {
-                  return xeUtils.get(row, checkField) || $xetable.findRowIndexOf(treeIndeterminates, row) > -1;
+                  return XEUtils$1.get(row, checkField) || $xetable.findRowIndexOf(treeIndeterminates, row) > -1;
                 });
               }
             } else {
               if (halfField) {
                 isIndeterminate = !isAllSelected && afterFullData.some(function(row) {
-                  return xeUtils.get(row, checkField) || xeUtils.get(row, halfField);
+                  return XEUtils$1.get(row, checkField) || XEUtils$1.get(row, halfField);
                 });
               } else {
                 isIndeterminate = !isAllSelected && afterFullData.some(function(row) {
-                  return xeUtils.get(row, checkField);
+                  return XEUtils$1.get(row, checkField);
                 });
               }
             }
@@ -22872,6 +23685,10 @@ const VxeTableComponent = vue.defineComponent({
           reactData.isIndeterminate = isIndeterminate;
         }
       },
+      /**
+       * 多选，行选中事件
+       * value 选中true 不选false 半选-1
+       */
       handleSelectRow: function(_a, value) {
         var row = _a.row;
         var treeConfig = props.treeConfig;
@@ -22886,19 +23703,19 @@ const VxeTableComponent = vue.defineComponent({
               if ($xetable.findRowIndexOf(treeIndeterminates, row) === -1) {
                 treeIndeterminates.push(row);
               }
-              xeUtils.set(row, checkField, false);
+              XEUtils$1.set(row, checkField, false);
             } else {
-              xeUtils.eachTree([row], function(item) {
+              XEUtils$1.eachTree([row], function(item) {
                 if ($xetable.eqRow(item, row) || (!checkMethod || checkMethod({ row: item }))) {
-                  xeUtils.set(item, checkField, value);
-                  xeUtils.remove(treeIndeterminates, function(half) {
+                  XEUtils$1.set(item, checkField, value);
+                  XEUtils$1.remove(treeIndeterminates, function(half) {
                     return $xetable.eqRow(half, item);
                   });
                   handleCheckboxReserveRow(row, value);
                 }
               }, treeOpts);
             }
-            var matchObj = xeUtils.findTree(afterFullData, function(item) {
+            var matchObj = XEUtils$1.findTree(afterFullData, function(item) {
               return $xetable.eqRow(item, row);
             }, treeOpts);
             if (matchObj && matchObj.parent) {
@@ -22906,14 +23723,14 @@ const VxeTableComponent = vue.defineComponent({
               var vItems_1 = checkMethod ? matchObj.items.filter(function(item) {
                 return checkMethod({ row: item });
               }) : matchObj.items;
-              var indeterminatesItem = xeUtils.find(matchObj.items, function(item) {
+              var indeterminatesItem = XEUtils$1.find(matchObj.items, function(item) {
                 return $xetable.findRowIndexOf(treeIndeterminates, item) > -1;
               });
               if (indeterminatesItem) {
                 parentStatus = -1;
               } else {
                 var selectItems = matchObj.items.filter(function(item) {
-                  return xeUtils.get(item, checkField);
+                  return XEUtils$1.get(item, checkField);
                 });
                 parentStatus = selectItems.filter(function(item) {
                   return $xetable.findRowIndexOf(vItems_1, item) > -1;
@@ -22923,7 +23740,7 @@ const VxeTableComponent = vue.defineComponent({
             }
           } else {
             if (!checkMethod || checkMethod({ row })) {
-              xeUtils.set(row, checkField, value);
+              XEUtils$1.set(row, checkField, value);
               handleCheckboxReserveRow(row, value);
             }
           }
@@ -22933,27 +23750,27 @@ const VxeTableComponent = vue.defineComponent({
               if ($xetable.findRowIndexOf(treeIndeterminates, row) === -1) {
                 treeIndeterminates.push(row);
               }
-              xeUtils.remove(selection, function(item) {
+              XEUtils$1.remove(selection, function(item) {
                 return $xetable.eqRow(item, row);
               });
             } else {
-              xeUtils.eachTree([row], function(item) {
+              XEUtils$1.eachTree([row], function(item) {
                 if ($xetable.eqRow(item, row) || (!checkMethod || checkMethod({ row: item }))) {
                   if (value) {
                     selection.push(item);
                   } else {
-                    xeUtils.remove(selection, function(select) {
+                    XEUtils$1.remove(selection, function(select) {
                       return $xetable.eqRow(select, item);
                     });
                   }
-                  xeUtils.remove(treeIndeterminates, function(half) {
+                  XEUtils$1.remove(treeIndeterminates, function(half) {
                     return $xetable.eqRow(half, item);
                   });
                   handleCheckboxReserveRow(row, value);
                 }
               }, treeOpts);
             }
-            var matchObj = xeUtils.findTree(afterFullData, function(item) {
+            var matchObj = XEUtils$1.findTree(afterFullData, function(item) {
               return $xetable.eqRow(item, row);
             }, treeOpts);
             if (matchObj && matchObj.parent) {
@@ -22961,7 +23778,7 @@ const VxeTableComponent = vue.defineComponent({
               var vItems_2 = checkMethod ? matchObj.items.filter(function(item) {
                 return checkMethod({ row: item });
               }) : matchObj.items;
-              var indeterminatesItem = xeUtils.find(matchObj.items, function(item) {
+              var indeterminatesItem = XEUtils$1.find(matchObj.items, function(item) {
                 return $xetable.findRowIndexOf(treeIndeterminates, item) > -1;
               });
               if (indeterminatesItem) {
@@ -22983,7 +23800,7 @@ const VxeTableComponent = vue.defineComponent({
                   selection.push(row);
                 }
               } else {
-                xeUtils.remove(selection, function(item) {
+                XEUtils$1.remove(selection, function(item) {
                   return $xetable.eqRow(item, row);
                 });
               }
@@ -23010,6 +23827,9 @@ const VxeTableComponent = vue.defineComponent({
           });
         }
       },
+      /**
+       * 触发表头 tooltip 事件
+       */
       triggerHeaderTooltipEvent: function(evnt, params) {
         var tooltipStore = reactData.tooltipStore;
         var column = params.column;
@@ -23019,6 +23839,9 @@ const VxeTableComponent = vue.defineComponent({
           handleTooltip(evnt, titleElem, titleElem, null, params);
         }
       },
+      /**
+       * 触发单元格 tooltip 事件
+       */
       triggerBodyTooltipEvent: function(evnt, params) {
         var editConfig = props.editConfig;
         var editStore = reactData.editStore;
@@ -23028,11 +23851,8 @@ const VxeTableComponent = vue.defineComponent({
         var row = params.row, column = params.column;
         var cell = evnt.currentTarget;
         handleTargetEnterEvent(tooltipStore.column !== column || tooltipStore.row !== row);
-        if (column.editRender && isEnableConf(editConfig)) {
-          if (editOpts.mode === "row" && actived.row === row) {
-            return;
-          }
-          if (actived.row === row && actived.column === column) {
+        if (isEnableConf(editConfig)) {
+          if (editOpts.mode === "row" && actived.row === row || actived.row === row && actived.column === column) {
             return;
           }
         }
@@ -23050,6 +23870,9 @@ const VxeTableComponent = vue.defineComponent({
           handleTooltip(evnt, cell, overflowElem || cell.children[0], tipElem, params);
         }
       },
+      /**
+       * 触发表尾 tooltip 事件
+       */
       triggerFooterTooltipEvent: function(evnt, params) {
         var column = params.column;
         var tooltipStore = reactData.tooltipStore;
@@ -23096,6 +23919,11 @@ const VxeTableComponent = vue.defineComponent({
       triggerHeaderCellDblclickEvent: function(evnt, params) {
         tableMethods.dispatchEvent("header-cell-dblclick", Object.assign({ cell: evnt.currentTarget }, params), evnt);
       },
+      /**
+       * 列点击事件
+       * 如果是单击模式，则激活为编辑状态
+       * 如果是双击模式，则单击后选中状态
+       */
       triggerCellClickEvent: function(evnt, params) {
         var highlightCurrentRow = props.highlightCurrentRow, editConfig = props.editConfig;
         var editStore = reactData.editStore;
@@ -23157,6 +23985,10 @@ const VxeTableComponent = vue.defineComponent({
         }
         tableMethods.dispatchEvent("cell-click", params, evnt);
       },
+      /**
+       * 列双击点击事件
+       * 如果是双击模式，则激活为编辑状态
+       */
       triggerCellDblclickEvent: function(evnt, params) {
         var editConfig = props.editConfig;
         var editStore = reactData.editStore;
@@ -23192,7 +24024,7 @@ const VxeTableComponent = vue.defineComponent({
         var checkboxOpts = computeCheckboxOpts.value;
         var checkField = checkboxOpts.checkField;
         var row = params.row;
-        var value = checkField ? !xeUtils.get(row, checkField) : $xetable.findRowIndexOf(selection, row) === -1;
+        var value = checkField ? !XEUtils$1.get(row, checkField) : $xetable.findRowIndexOf(selection, row) === -1;
         if (evnt) {
           tablePrivateMethods.triggerCheckRowEvent(evnt, params, value);
         } else {
@@ -23212,6 +24044,9 @@ const VxeTableComponent = vue.defineComponent({
           }, params), evnt);
         }
       },
+      /**
+       * 多选，选中所有事件
+       */
       triggerCheckAllEvent: function(evnt, value) {
         tableMethods.setAllCheckboxRow(value);
         if (evnt) {
@@ -23223,6 +24058,9 @@ const VxeTableComponent = vue.defineComponent({
           }, evnt);
         }
       },
+      /**
+       * 单选，行选中事件
+       */
       triggerRadioRowEvent: function(evnt, params) {
         var oldValue = reactData.selectRow;
         var row = params.row;
@@ -23251,6 +24089,9 @@ const VxeTableComponent = vue.defineComponent({
           tableMethods.dispatchEvent("current-change", __assign({ oldValue, newValue }, params), evnt);
         }
       },
+      /**
+       * 展开行事件
+       */
       triggerRowExpandEvent: function(evnt, params) {
         var expandLazyLoadeds = reactData.expandLazyLoadeds, column = reactData.expandColumn;
         var expandOpts = computeExpandOpts.value;
@@ -23272,6 +24113,9 @@ const VxeTableComponent = vue.defineComponent({
           }, evnt);
         }
       },
+      /**
+       * 展开树节点事件
+       */
       triggerTreeExpandEvent: function(evnt, params) {
         var treeLazyLoadeds = reactData.treeLazyLoadeds;
         var treeOpts = computeTreeOpts.value;
@@ -23285,6 +24129,9 @@ const VxeTableComponent = vue.defineComponent({
           tableMethods.dispatchEvent("toggle-tree-expand", { expanded, column, columnIndex, $columnIndex, row }, evnt);
         }
       },
+      /**
+       * 点击排序事件
+       */
       triggerSortEvent: function(evnt, column, order) {
         var sortOpts = computeSortOpts.value;
         var field = column.field, sortable = column.sortable;
@@ -23298,9 +24145,15 @@ const VxeTableComponent = vue.defineComponent({
           tableMethods.dispatchEvent("sort-change", params, evnt);
         }
       },
+      /**
+       * 横向 X 可视渲染事件处理
+       */
       triggerScrollXEvent: function() {
         loadScrollXData();
       },
+      /**
+       * 纵向 Y 可视渲染事件处理
+       */
       triggerScrollYEvent: function(evnt) {
         var scrollYStore = internalData.scrollYStore;
         var adaptive = scrollYStore.adaptive, offsetSize = scrollYStore.offsetSize, visibleSize = scrollYStore.visibleSize;
@@ -23310,13 +24163,18 @@ const VxeTableComponent = vue.defineComponent({
           debounceScrollY(evnt);
         }
       },
+      /**
+       * 对于树形结构中，可以直接滚动到指定深层节点中
+       * 对于某些特定的场景可能会用到，比如定位到某一节点
+       * @param {Row} row 行对象
+       */
       scrollToTreeRow: function(row) {
         var treeConfig = props.treeConfig;
         var tableFullData = internalData.tableFullData;
         var rests = [];
         if (treeConfig) {
           var treeOpts = computeTreeOpts.value;
-          var matchObj = xeUtils.findTree(tableFullData, function(item) {
+          var matchObj = XEUtils$1.findTree(tableFullData, function(item) {
             return $xetable.eqRow(item, row);
           }, treeOpts);
           if (matchObj) {
@@ -23332,6 +24190,7 @@ const VxeTableComponent = vue.defineComponent({
           return rowToVisible($xetable, row);
         });
       },
+      // 更新横向 X 可视渲染上下剩余空间大小
       updateScrollXSpace: function() {
         var isGroup = reactData.isGroup, scrollXLoad = reactData.scrollXLoad, scrollbarWidth = reactData.scrollbarWidth;
         var visibleColumn = internalData.visibleColumn, scrollXStore = internalData.scrollXStore, elemStore = internalData.elemStore, tableWidth = internalData.tableWidth;
@@ -23373,6 +24232,7 @@ const VxeTableComponent = vue.defineComponent({
           vue.nextTick(updateStyle);
         }
       },
+      // 更新纵向 Y 可视渲染上下剩余空间大小
       updateScrollYSpace: function() {
         var scrollYLoad = reactData.scrollYLoad;
         var scrollYStore = internalData.scrollYStore, elemStore = internalData.elemStore, afterFullData = internalData.afterFullData;
@@ -23415,6 +24275,9 @@ const VxeTableComponent = vue.defineComponent({
           tablePrivateMethods.updateScrollYSpace();
         });
       },
+      /**
+       * 处理固定列的显示状态
+       */
       checkScrolling: function() {
         var leftContainerElem = refLeftContainer.value;
         var rightContainerElem = refRightContainer.value;
@@ -23451,6 +24314,9 @@ const VxeTableComponent = vue.defineComponent({
           $xetable.handleUpdateCellAreas();
         }
       },
+      /**
+       * 行 hover 事件
+       */
       triggerHoverEvent: function(evnt, _a) {
         var row = _a.row;
         tablePrivateMethods.setHoverRow(row);
@@ -23460,7 +24326,7 @@ const VxeTableComponent = vue.defineComponent({
         var el = refElem.value;
         tablePrivateMethods.clearHoverRow();
         if (el) {
-          xeUtils.arrayEach(el.querySelectorAll('[rowid="'.concat(rowid, '"]')), function(elem) {
+          XEUtils$1.arrayEach(el.querySelectorAll('[rowid="'.concat(rowid, '"]')), function(elem) {
             return addClass(elem, "row--hover");
           });
         }
@@ -23469,7 +24335,7 @@ const VxeTableComponent = vue.defineComponent({
       clearHoverRow: function() {
         var el = refElem.value;
         if (el) {
-          xeUtils.arrayEach(el.querySelectorAll(".vxe-body--row.row--hover"), function(elem) {
+          XEUtils$1.arrayEach(el.querySelectorAll(".vxe-body--row.row--hover"), function(elem) {
             return removeClass(elem, "row--hover");
           });
         }
@@ -23522,10 +24388,10 @@ const VxeTableComponent = vue.defineComponent({
             }
           }
           var formatParams = { cellValue, row, rowIndex: tableMethods.getRowIndex(row), column, columnIndex: tableMethods.getColumnIndex(column) };
-          if (xeUtils.isString(formatter)) {
+          if (XEUtils$1.isString(formatter)) {
             var globalFunc = VXETable.formats.get(formatter);
             cellLabel = globalFunc ? globalFunc(formatParams) : "";
-          } else if (xeUtils.isArray(formatter)) {
+          } else if (XEUtils$1.isArray(formatter)) {
             var globalFunc = VXETable.formats.get(formatter[0]);
             cellLabel = globalFunc ? globalFunc.apply(void 0, __spreadArray([formatParams], formatter.slice(1), false)) : "";
           } else {
@@ -23538,7 +24404,7 @@ const VxeTableComponent = vue.defineComponent({
         return cellLabel;
       },
       findRowIndexOf: function(list, row) {
-        return row ? xeUtils.findIndexOf(list, function(item) {
+        return row ? XEUtils$1.findIndexOf(list, function(item) {
           return $xetable.eqRow(item, row);
         }) : -1;
       },
@@ -23719,7 +24585,7 @@ const VxeTableComponent = vue.defineComponent({
       var setupTable = options.setupTable;
       if (setupTable) {
         var hookRest = setupTable($xetable);
-        if (hookRest && xeUtils.isObject(hookRest)) {
+        if (hookRest && XEUtils$1.isObject(hookRest)) {
           Object.assign($xetable, hookRest);
         }
       }
@@ -23766,14 +24632,14 @@ const VxeTableComponent = vue.defineComponent({
           var exportConfig = props.exportConfig, importConfig = props.importConfig;
           var exportOpts = computeExportOpts.value;
           var importOpts = computeImportOpts.value;
-          if (importConfig && importOpts.types && !importOpts.importMethod && !xeUtils.includeArrays(VXETable.config.importTypes, importOpts.types)) {
+          if (importConfig && importOpts.types && !importOpts.importMethod && !XEUtils$1.includeArrays(VXETable.config.importTypes, importOpts.types)) {
             warnLog("vxe.error.errProp", ["export-config.types=".concat(importOpts.types.join(",")), importOpts.types.filter(function(type) {
-              return xeUtils.includes(VXETable.config.importTypes, type);
+              return XEUtils$1.includes(VXETable.config.importTypes, type);
             }).join(",") || VXETable.config.importTypes.join(",")]);
           }
-          if (exportConfig && exportOpts.types && !exportOpts.exportMethod && !xeUtils.includeArrays(VXETable.config.exportTypes, exportOpts.types)) {
+          if (exportConfig && exportOpts.types && !exportOpts.exportMethod && !XEUtils$1.includeArrays(VXETable.config.exportTypes, exportOpts.types)) {
             warnLog("vxe.error.errProp", ["export-config.types=".concat(exportOpts.types.join(",")), exportOpts.types.filter(function(type) {
-              return xeUtils.includes(VXETable.config.exportTypes, type);
+              return XEUtils$1.includes(VXETable.config.exportTypes, type);
             }).join(",") || VXETable.config.exportTypes.join(",")]);
           }
         }
@@ -23902,7 +24768,6 @@ const VxeTableComponent = vue.defineComponent({
       var loading = props.loading, stripe = props.stripe, showHeader = props.showHeader, height = props.height, treeConfig = props.treeConfig, mouseConfig = props.mouseConfig, showFooter = props.showFooter, highlightCell = props.highlightCell, highlightHoverRow = props.highlightHoverRow, highlightHoverColumn = props.highlightHoverColumn, editConfig = props.editConfig;
       var isGroup = reactData.isGroup, overflowX = reactData.overflowX, overflowY = reactData.overflowY, scrollXLoad = reactData.scrollXLoad, scrollYLoad = reactData.scrollYLoad, scrollbarHeight = reactData.scrollbarHeight, tableData = reactData.tableData, tableColumn = reactData.tableColumn, tableGroupColumn = reactData.tableGroupColumn, footerTableData = reactData.footerTableData, initStore = reactData.initStore, columnStore = reactData.columnStore, filterStore = reactData.filterStore;
       var leftList = columnStore.leftList, rightList = columnStore.rightList;
-      var loadingSlot = slots.loading;
       var tipConfig = computeTipConfig.value;
       var treeOpts = computeTreeOpts.value;
       var rowOpts = computeRowOpts.value;
@@ -23919,6 +24784,9 @@ const VxeTableComponent = vue.defineComponent({
         class: ["vxe-table", "vxe-table--render-default", "tid_".concat(xID), "border--".concat(tableBorder), (_a = {}, _a["size--".concat(vSize)] = vSize, _a["vxe-editable"] = !!editConfig, _a["cell--highlight"] = highlightCell, _a["cell--selected"] = mouseConfig && mouseOpts.selected, _a["cell--area"] = mouseConfig && mouseOpts.area, _a["row--highlight"] = rowOpts.isHover || highlightHoverRow, _a["column--highlight"] = columnOpts.isHover || highlightHoverColumn, _a["is--header"] = showHeader, _a["is--footer"] = showFooter, _a["is--group"] = isGroup, _a["is--tree-line"] = treeConfig && treeOpts.line, _a["is--fixed-left"] = leftList.length, _a["is--fixed-right"] = rightList.length, _a["is--animat"] = !!props.animat, _a["is--round"] = props.round, _a["is--stripe"] = !treeConfig && stripe, _a["is--loading"] = loading, _a["is--empty"] = !loading && !tableData.length, _a["is--scroll-y"] = overflowY, _a["is--scroll-x"] = overflowX, _a["is--virtual-x"] = scrollXLoad, _a["is--virtual-y"] = scrollYLoad, _a)],
         onKeydown: keydownEvent
       }, [
+        /**
+         * 隐藏列
+         */
         vue.h("div", {
           class: "vxe-table-slots"
         }, slots.default ? slots.default({}) : []),
@@ -23928,17 +24796,26 @@ const VxeTableComponent = vue.defineComponent({
           vue.h("div", {
             class: "vxe-table--main-wrapper"
           }, [
+            /**
+             * 表头
+             */
             showHeader ? vue.h(Header, {
               ref: refTableHeader,
               tableData,
               tableColumn,
               tableGroupColumn
             }) : vue.createCommentVNode(),
+            /**
+             * 表体
+             */
             vue.h(TableBodyComponent, {
               ref: refTableBody,
               tableData,
               tableColumn
             }),
+            /**
+             * 表尾
+             */
             showFooter ? vue.h(Footer, {
               ref: refTableFooter,
               footerTableData,
@@ -23948,10 +24825,19 @@ const VxeTableComponent = vue.defineComponent({
           vue.h("div", {
             class: "vxe-table--fixed-wrapper"
           }, [
+            /**
+             * 左侧固定区域
+             */
             leftList && leftList.length && overflowX ? renderFixed("left") : vue.createCommentVNode(),
+            /**
+             * 右侧固定区域
+             */
             rightList && rightList.length && overflowX ? renderFixed("right") : vue.createCommentVNode()
           ])
         ]),
+        /**
+         * 空数据
+         */
         vue.h("div", {
           ref: refEmptyPlaceholder,
           class: "vxe-table--empty-placeholder"
@@ -23960,9 +24846,15 @@ const VxeTableComponent = vue.defineComponent({
             class: "vxe-table--empty-content"
           }, renderEmptyContenet())
         ]),
+        /**
+         * 边框线
+         */
         vue.h("div", {
           class: "vxe-table--border-line"
         }),
+        /**
+         * 列宽线
+         */
         vue.h("div", {
           ref: refCellResizeBar,
           class: "vxe-table--resizable-bar",
@@ -23970,37 +24862,57 @@ const VxeTableComponent = vue.defineComponent({
             "padding-bottom": "".concat(scrollbarHeight, "px")
           } : null
         }),
+        /**
+         * 加载中
+         */
         vue.h(VxeLoading, {
           class: "vxe-table--loading",
           modelValue: loading,
           icon: loadingOpts.icon,
           text: loadingOpts.text
-        }, loadingSlot ? {
-          default: function() {
-            return loadingSlot({});
-          }
-        } : {}),
+        }),
+        /**
+         * 筛选
+         */
         initStore.filter ? vue.h(vue.resolveComponent("vxe-table-filter"), {
           ref: refTableFilter,
           filterStore
         }) : vue.createCommentVNode(),
+        /**
+         * 导入
+         */
         initStore.import && props.importConfig ? vue.h(vue.resolveComponent("vxe-import-panel"), {
           defaultOptions: reactData.importParams,
           storeData: reactData.importStore
         }) : vue.createCommentVNode(),
+        /**
+         * 导出/导出
+         */
         initStore.export && (props.exportConfig || props.printConfig) ? vue.h(vue.resolveComponent("vxe-export-panel"), {
           defaultOptions: reactData.exportParams,
           storeData: reactData.exportStore
         }) : vue.createCommentVNode(),
+        /**
+         * 快捷菜单
+         */
         isMenu ? vue.h(vue.resolveComponent("vxe-table-context-menu"), {
           ref: refTableMenu
         }) : vue.createCommentVNode(),
+        /**
+         * 通用提示
+         */
         hasUseTooltip ? vue.h(vue.resolveComponent("vxe-tooltip"), {
           ref: refCommTooltip,
           isArrow: false,
           enterable: false
         }) : vue.createCommentVNode(),
+        /**
+         * 校验提示
+         */
         hasUseTooltip && props.editRules && validOpts.showMessage && (validOpts.message === "default" ? !height : validOpts.message === "tooltip") ? vue.h(vue.resolveComponent("vxe-tooltip"), __assign({ ref: refValidTooltip, class: "vxe-table--valid-error" }, validOpts.message === "tooltip" || tableData.length === 1 ? validTipOpts : {})) : vue.createCommentVNode(),
+        /**
+         * 工具提示
+         */
         hasUseTooltip ? vue.h(vue.resolveComponent("vxe-tooltip"), __assign({ ref: refTooltip }, tipConfig)) : vue.createCommentVNode()
       ]);
     };
@@ -24022,308 +24934,308 @@ dynamicApp.component(VxeTableComponent.name, VxeTableComponent);
 const zhCN = {
   vxe: {
     loading: {
-      text: "\u52A0\u8F7D\u4E2D..."
+      text: "加载中..."
     },
     error: {
-      groupFixed: "\u5982\u679C\u4F7F\u7528\u5206\u7EC4\u8868\u5934\uFF0C\u56FA\u5B9A\u5217\u5FC5\u987B\u6309\u7EC4\u8BBE\u7F6E",
-      groupMouseRange: '\u5206\u7EC4\u8868\u5934\u4E0E "{0}" \u4E0D\u80FD\u540C\u65F6\u4F7F\u7528\uFF0C\u8FD9\u53EF\u80FD\u4F1A\u51FA\u73B0\u9519\u8BEF',
-      groupTag: '\u5206\u7EC4\u5217\u5934\u5E94\u8BE5\u4F7F\u7528 "{0}" \u800C\u4E0D\u662F "{1}"\uFF0C\u8FD9\u53EF\u80FD\u4F1A\u51FA\u73B0\u9519\u8BEF',
-      scrollErrProp: '\u542F\u7528\u865A\u62DF\u6EDA\u52A8\u540E\u4E0D\u652F\u6301\u8BE5\u53C2\u6570 "{0}"',
-      errConflicts: '\u53C2\u6570 "{0}" \u4E0E "{1}" \u6709\u51B2\u7A81',
-      unableInsert: "\u65E0\u6CD5\u63D2\u5165\u5230\u6307\u5B9A\u4F4D\u7F6E\uFF0C\u8BF7\u68C0\u67E5\u53C2\u6570\u662F\u5426\u6B63\u786E",
-      useErr: '\u5B89\u88C5 "{0}" \u6A21\u5757\u65F6\u53D1\u751F\u9519\u8BEF\uFF0C\u53EF\u80FD\u987A\u5E8F\u4E0D\u6B63\u786E\uFF0C\u4F9D\u8D56\u7684\u6A21\u5757\u9700\u8981\u5728 Table \u4E4B\u524D\u5B89\u88C5',
-      barUnableLink: "\u5DE5\u5177\u680F\u65E0\u6CD5\u5173\u8054\u8868\u683C",
-      expandContent: '\u5C55\u5F00\u884C\u7684\u63D2\u69FD\u5E94\u8BE5\u662F "content"\uFF0C\u8BF7\u68C0\u67E5\u662F\u5426\u6B63\u786E',
-      reqModule: '\u7F3A\u5C11 "{0}" \u6A21\u5757',
-      reqProp: '\u7F3A\u5C11\u5FC5\u8981\u7684 "{0}" \u53C2\u6570\uFF0C\u8FD9\u53EF\u80FD\u4F1A\u5BFC\u81F4\u51FA\u73B0\u9519\u8BEF',
-      emptyProp: '\u53C2\u6570 "{0}" \u4E0D\u5141\u8BB8\u4E3A\u7A7A',
-      errProp: '\u4E0D\u652F\u6301\u7684\u53C2\u6570 "{0}"\uFF0C\u53EF\u80FD\u4E3A "{1}"',
-      colRepet: 'column.{0}="{1}" \u91CD\u590D\u4E86\uFF0C\u8FD9\u53EF\u80FD\u4F1A\u5BFC\u81F4\u67D0\u4E9B\u529F\u80FD\u65E0\u6CD5\u4F7F\u7528',
-      notFunc: '\u65B9\u6CD5 "{0}" \u4E0D\u5B58\u5728',
-      notSlot: '\u63D2\u69FD "{0}" \u4E0D\u5B58\u5728',
-      noTree: '\u6811\u7ED3\u6784\u4E0D\u652F\u6301 "{0}"',
-      notProp: '\u4E0D\u652F\u6301\u7684\u53C2\u6570 "{0}"',
-      coverProp: '"{0}" \u7684\u53C2\u6570 "{1}" \u88AB\u8986\u76D6\uFF0C\u8FD9\u53EF\u80FD\u4F1A\u51FA\u73B0\u9519\u8BEF',
-      delFunc: '\u65B9\u6CD5 "{0}" \u5DF2\u5E9F\u5F03\uFF0C\u8BF7\u4F7F\u7528 "{1}"',
-      delProp: '\u53C2\u6570 "{0}" \u5DF2\u5E9F\u5F03\uFF0C\u8BF7\u4F7F\u7528 "{1}"',
-      delEvent: '\u4E8B\u4EF6 "{0}" \u5DF2\u5E9F\u5F03\uFF0C\u8BF7\u4F7F\u7528 "{1}"',
-      removeProp: '\u53C2\u6570 "{0}" \u5DF2\u5E9F\u5F03\uFF0C\u4E0D\u5EFA\u8BAE\u4F7F\u7528\uFF0C\u8FD9\u53EF\u80FD\u4F1A\u5BFC\u81F4\u51FA\u73B0\u9519\u8BEF',
-      errFormat: '\u5168\u5C40\u7684\u683C\u5F0F\u5316\u5185\u5BB9\u5E94\u8BE5\u4F7F\u7528 "VXETable.formats" \u5B9A\u4E49\uFF0C\u6302\u8F7D "formatter={0}" \u7684\u65B9\u5F0F\u5DF2\u4E0D\u5EFA\u8BAE\u4F7F\u7528',
-      notType: '\u4E0D\u652F\u6301\u7684\u6587\u4EF6\u7C7B\u578B "{0}"',
-      notExp: "\u8BE5\u6D4F\u89C8\u5668\u4E0D\u652F\u6301\u5BFC\u5165/\u5BFC\u51FA\u529F\u80FD",
-      impFields: "\u5BFC\u5165\u5931\u8D25\uFF0C\u8BF7\u68C0\u67E5\u5B57\u6BB5\u540D\u548C\u6570\u636E\u683C\u5F0F\u662F\u5426\u6B63\u786E",
-      treeNotImp: "\u6811\u8868\u683C\u4E0D\u652F\u6301\u5BFC\u5165"
+      groupFixed: "如果使用分组表头，固定列必须按组设置",
+      groupMouseRange: '分组表头与 "{0}" 不能同时使用，这可能会出现错误',
+      groupTag: '分组列头应该使用 "{0}" 而不是 "{1}"，这可能会出现错误',
+      scrollErrProp: '启用虚拟滚动后不支持该参数 "{0}"',
+      errConflicts: '参数 "{0}" 与 "{1}" 有冲突',
+      unableInsert: "无法插入到指定位置，请检查参数是否正确",
+      useErr: '安装 "{0}" 模块时发生错误，可能顺序不正确，依赖的模块需要在 Table 之前安装',
+      barUnableLink: "工具栏无法关联表格",
+      expandContent: '展开行的插槽应该是 "content"，请检查是否正确',
+      reqModule: '缺少 "{0}" 模块',
+      reqProp: '缺少必要的 "{0}" 参数，这可能会导致出现错误',
+      emptyProp: '参数 "{0}" 不允许为空',
+      errProp: '不支持的参数 "{0}"，可能为 "{1}"',
+      colRepet: 'column.{0}="{1}" 重复了，这可能会导致某些功能无法使用',
+      notFunc: '方法 "{0}" 不存在',
+      notSlot: '插槽 "{0}" 不存在',
+      noTree: '树结构不支持 "{0}"',
+      notProp: '不支持的参数 "{0}"',
+      coverProp: '"{0}" 的参数 "{1}" 被覆盖，这可能会出现错误',
+      delFunc: '方法 "{0}" 已废弃，请使用 "{1}"',
+      delProp: '参数 "{0}" 已废弃，请使用 "{1}"',
+      delEvent: '事件 "{0}" 已废弃，请使用 "{1}"',
+      removeProp: '参数 "{0}" 已废弃，不建议使用，这可能会导致出现错误',
+      errFormat: '全局的格式化内容应该使用 "VXETable.formats" 定义，挂载 "formatter={0}" 的方式已不建议使用',
+      notType: '不支持的文件类型 "{0}"',
+      notExp: "该浏览器不支持导入/导出功能",
+      impFields: "导入失败，请检查字段名和数据格式是否正确",
+      treeNotImp: "树表格不支持导入"
     },
     renderer: {
-      search: "\u641C\u7D22",
+      search: "搜索",
       cases: {
-        equal: "\u7B49\u4E8E",
-        unequal: "\u4E0D\u7B49\u4E8E",
-        gt: "\u5927\u4E8E",
-        ge: "\u5927\u4E8E\u6216\u7B49\u4E8E",
-        lt: "\u5C0F\u4E8E",
-        le: "\u5C0F\u4E8E\u6216\u7B49\u4E8E",
-        begin: "\u5F00\u5934\u662F",
-        notbegin: "\u5F00\u5934\u4E0D\u662F",
-        endin: "\u7ED3\u5C3E\u662F",
-        notendin: "\u7ED3\u5C3E\u4E0D\u662F",
-        include: "\u5305\u542B",
-        exclude: "\u4E0D\u5305\u542B",
-        between: "\u4ECB\u4E8E",
-        custom: "\u81EA\u5B9A\u4E49\u7B5B\u9009",
-        insensitive: "\u4E0D\u533A\u5206\u5927\u5C0F\u5199",
-        isSensitive: "\u533A\u5206\u5927\u5C0F\u5199"
+        equal: "等于",
+        unequal: "不等于",
+        gt: "大于",
+        ge: "大于或等于",
+        lt: "小于",
+        le: "小于或等于",
+        begin: "开头是",
+        notbegin: "开头不是",
+        endin: "结尾是",
+        notendin: "结尾不是",
+        include: "包含",
+        exclude: "不包含",
+        between: "介于",
+        custom: "自定义筛选",
+        insensitive: "不区分大小写",
+        isSensitive: "区分大小写"
       },
       combination: {
         menus: {
-          clearSort: "\u6E05\u9664\u6392\u5E8F",
-          sortAsc: "\u5347\u5E8F",
-          sortDesc: "\u964D\u5E8F",
-          fixedColumn: "\u9501\u5B9A\u5217",
-          fixedGroup: "\u9501\u5B9A\u7EC4",
-          cancelFixed: "\u53D6\u6D88\u9501\u5B9A",
-          fixedLeft: "\u9501\u5B9A\u5DE6\u4FA7",
-          fixedRight: "\u9501\u5B9A\u53F3\u4FA7",
-          clearFilter: "\u6E05\u9664\u7B5B\u9009",
-          textOption: "\u6587\u672C\u7B5B\u9009",
-          numberOption: "\u6570\u503C\u7B5B\u9009"
+          clearSort: "清除排序",
+          sortAsc: "升序",
+          sortDesc: "降序",
+          fixedColumn: "锁定列",
+          fixedGroup: "锁定组",
+          cancelFixed: "取消锁定",
+          fixedLeft: "锁定左侧",
+          fixedRight: "锁定右侧",
+          clearFilter: "清除筛选",
+          textOption: "文本筛选",
+          numberOption: "数值筛选"
         },
         popup: {
-          title: "\u81EA\u5B9A\u4E49\u7B5B\u9009\u7684\u65B9\u5F0F",
-          currColumnTitle: "\u5F53\u524D\u5217\uFF1A",
-          and: "\u4E0E",
-          or: "\u6216",
-          describeHtml: "\u53EF\u7528 ? \u4EE3\u8868\u5355\u4E2A\u5B57\u7B26<br/>\u7528 * \u4EE3\u8868\u4EFB\u610F\u591A\u4E2A\u5B57\u7B26"
+          title: "自定义筛选的方式",
+          currColumnTitle: "当前列：",
+          and: "与",
+          or: "或",
+          describeHtml: "可用 ? 代表单个字符<br/>用 * 代表任意多个字符"
         },
-        empty: "(\u7A7A\u767D)",
-        notData: "\u65E0\u5339\u914D\u9879"
+        empty: "(空白)",
+        notData: "无匹配项"
       }
     },
     pro: {
       area: {
-        mergeErr: "\u65E0\u6CD5\u5BF9\u5408\u5E76\u5355\u5143\u683C\u8FDB\u884C\u8BE5\u64CD\u4F5C",
-        multiErr: "\u65E0\u6CD5\u5BF9\u591A\u91CD\u9009\u62E9\u533A\u57DF\u8FDB\u884C\u8BE5\u64CD\u4F5C",
-        extendErr: "\u5982\u679C\u5EF6\u4F38\u7684\u533A\u57DF\u5305\u542B\u88AB\u5408\u5E76\u7684\u5355\u5143\u683C\uFF0C\u6240\u6709\u5408\u5E76\u7684\u5355\u5143\u683C\u9700\u5927\u5C0F\u76F8\u540C",
-        pasteMultiErr: "\u65E0\u6CD5\u7C98\u8D34\uFF0C\u9700\u8981\u76F8\u540C\u5927\u5C0F\u7684\u590D\u5236\u7684\u533A\u57DF\u548C\u7C98\u8D34\u7684\u533A\u57DF\u624D\u80FD\u6267\u884C\u6B64\u64CD\u4F5C"
+        mergeErr: "无法对合并单元格进行该操作",
+        multiErr: "无法对多重选择区域进行该操作",
+        extendErr: "如果延伸的区域包含被合并的单元格，所有合并的单元格需大小相同",
+        pasteMultiErr: "无法粘贴，需要相同大小的复制的区域和粘贴的区域才能执行此操作"
       },
       fnr: {
-        title: "\u67E5\u627E\u548C\u66FF\u6362",
-        findLabel: "\u67E5\u627E",
-        replaceLabel: "\u66FF\u6362",
-        findTitle: "\u67E5\u627E\u5185\u5BB9\uFF1A",
-        replaceTitle: "\u66FF\u6362\u4E3A\uFF1A",
+        title: "查找和替换",
+        findLabel: "查找",
+        replaceLabel: "替换",
+        findTitle: "查找内容：",
+        replaceTitle: "替换为：",
         tabs: {
-          find: "\u67E5\u627E",
-          replace: "\u66FF\u6362"
+          find: "查找",
+          replace: "替换"
         },
         filter: {
-          re: "\u6B63\u5219\u8868\u8FBE\u5F0F",
-          whole: "\u5168\u8BCD\u5339\u914D",
-          sensitive: "\u533A\u5206\u5927\u5C0F\u5199"
+          re: "正则表达式",
+          whole: "全词匹配",
+          sensitive: "区分大小写"
         },
         btns: {
-          findNext: "\u67E5\u627E\u4E0B\u4E00\u4E2A",
-          findAll: "\u67E5\u627E\u5168\u90E8",
-          replace: "\u66FF\u6362",
-          replaceAll: "\u66FF\u6362\u5168\u90E8",
-          cancel: "\u53D6\u6D88"
+          findNext: "查找下一个",
+          findAll: "查找全部",
+          replace: "替换",
+          replaceAll: "替换全部",
+          cancel: "取消"
         },
         header: {
           seq: "#",
-          cell: "\u5355\u5143\u683C",
-          value: "\u503C"
+          cell: "单元格",
+          value: "值"
         },
-        empty: "(\u7A7A\u503C)",
-        reError: "\u65E0\u6548\u7684\u6B63\u5219\u8868\u8FBE\u5F0F",
-        recordCount: "\u5DF2\u627E\u5230 {0} \u4E2A\u5355\u5143\u683C",
-        notCell: "\u627E\u4E0D\u5230\u5339\u914D\u7684\u5355\u5143\u683C",
-        replaceSuccess: "\u6210\u529F\u66FF\u6362 {0} \u4E2A\u5355\u5143\u683C"
+        empty: "(空值)",
+        reError: "无效的正则表达式",
+        recordCount: "已找到 {0} 个单元格",
+        notCell: "找不到匹配的单元格",
+        replaceSuccess: "成功替换 {0} 个单元格"
       }
     },
     table: {
-      emptyText: "\u6682\u65E0\u6570\u636E",
-      allTitle: "\u5168\u9009/\u53D6\u6D88",
+      emptyText: "暂无数据",
+      allTitle: "全选/取消",
       seqTitle: "#",
-      confirmFilter: "\u7B5B\u9009",
-      resetFilter: "\u91CD\u7F6E",
-      allFilter: "\u5168\u90E8",
-      sortAsc: "\u5347\u5E8F\uFF1A\u6700\u4F4E\u5230\u6700\u9AD8",
-      sortDesc: "\u964D\u5E8F\uFF1A\u6700\u9AD8\u5230\u6700\u4F4E",
-      filter: "\u5BF9\u6240\u9009\u7684\u5217\u542F\u7528\u7B5B\u9009",
-      impSuccess: "\u6210\u529F\u5BFC\u5165 {0} \u6761\u8BB0\u5F55",
-      expLoading: "\u6B63\u5728\u5BFC\u51FA\u4E2D",
-      expSuccess: "\u5BFC\u51FA\u6210\u529F",
-      expFilename: "\u5BFC\u51FA_{0}",
-      expOriginFilename: "\u5BFC\u51FA_\u6E90_{0}",
-      customTitle: "\u5217\u8BBE\u7F6E",
-      customAll: "\u5168\u90E8",
-      customConfirm: "\u786E\u8BA4",
-      customRestore: "\u8FD8\u539F"
+      confirmFilter: "筛选",
+      resetFilter: "重置",
+      allFilter: "全部",
+      sortAsc: "升序：最低到最高",
+      sortDesc: "降序：最高到最低",
+      filter: "对所选的列启用筛选",
+      impSuccess: "成功导入 {0} 条记录",
+      expLoading: "正在导出中",
+      expSuccess: "导出成功",
+      expFilename: "导出_{0}",
+      expOriginFilename: "导出_源_{0}",
+      customTitle: "列设置",
+      customAll: "全部",
+      customConfirm: "确认",
+      customRestore: "还原"
     },
     grid: {
-      selectOneRecord: "\u8BF7\u81F3\u5C11\u9009\u62E9\u4E00\u6761\u8BB0\u5F55\uFF01",
-      deleteSelectRecord: "\u60A8\u786E\u5B9A\u8981\u5220\u9664\u6240\u9009\u8BB0\u5F55\u5417\uFF1F",
-      removeSelectRecord: "\u60A8\u786E\u5B9A\u8981\u79FB\u9664\u6240\u9009\u8BB0\u5F55\u5417\uFF1F",
-      dataUnchanged: "\u6570\u636E\u672A\u6539\u52A8\uFF01",
-      delSuccess: "\u6210\u529F\u5220\u9664\u6240\u9009\u8BB0\u5F55\uFF01",
-      saveSuccess: "\u4FDD\u5B58\u6210\u529F\uFF01",
-      operError: "\u53D1\u751F\u9519\u8BEF\uFF0C\u64CD\u4F5C\u5931\u8D25\uFF01"
+      selectOneRecord: "请至少选择一条记录！",
+      deleteSelectRecord: "您确定要删除所选记录吗？",
+      removeSelectRecord: "您确定要移除所选记录吗？",
+      dataUnchanged: "数据未改动！",
+      delSuccess: "成功删除所选记录！",
+      saveSuccess: "保存成功！",
+      operError: "发生错误，操作失败！"
     },
     select: {
-      search: "\u641C\u7D22",
-      loadingText: "\u52A0\u8F7D\u4E2D",
-      emptyText: "\u6682\u65E0\u6570\u636E"
+      search: "搜索",
+      loadingText: "加载中",
+      emptyText: "暂无数据"
     },
     pager: {
-      goto: "\u524D\u5F80",
-      pagesize: "{0}\u6761/\u9875",
-      total: "\u5171 {0} \u6761\u8BB0\u5F55",
-      pageClassifier: "\u9875",
-      prevPage: "\u4E0A\u4E00\u9875",
-      nextPage: "\u4E0B\u4E00\u9875",
-      prevJump: "\u5411\u4E0A\u8DF3\u9875",
-      nextJump: "\u5411\u4E0B\u8DF3\u9875"
+      goto: "前往",
+      pagesize: "{0}条/页",
+      total: "共 {0} 条记录",
+      pageClassifier: "页",
+      prevPage: "上一页",
+      nextPage: "下一页",
+      prevJump: "向上跳页",
+      nextJump: "向下跳页"
     },
     alert: {
-      title: "\u6D88\u606F\u63D0\u793A"
+      title: "消息提示"
     },
     button: {
-      confirm: "\u786E\u8BA4",
-      cancel: "\u53D6\u6D88"
+      confirm: "确认",
+      cancel: "取消"
     },
     import: {
       modes: {
-        covering: "\u8986\u76D6",
-        insert: "\u65B0\u589E"
+        covering: "覆盖",
+        insert: "新增"
       },
-      impTitle: "\u5BFC\u5165\u6570\u636E",
-      impFile: "\u6587\u4EF6\u540D",
-      impSelect: "\u9009\u62E9\u6587\u4EF6",
-      impType: "\u6587\u4EF6\u7C7B\u578B",
-      impOpts: "\u53C2\u6570\u8BBE\u7F6E",
-      impConfirm: "\u5BFC\u5165",
-      impCancel: "\u53D6\u6D88"
+      impTitle: "导入数据",
+      impFile: "文件名",
+      impSelect: "选择文件",
+      impType: "文件类型",
+      impOpts: "参数设置",
+      impConfirm: "导入",
+      impCancel: "取消"
     },
     export: {
       types: {
-        csv: "CSV (\u9017\u53F7\u5206\u9694)(*.csv)",
-        html: "\u7F51\u9875(*.html)",
-        xml: "XML \u6570\u636E(*.xml)",
-        txt: "\u6587\u672C\u6587\u4EF6(\u5236\u8868\u7B26\u5206\u9694)(*.txt)",
-        xls: "Excel 97-2003 \u5DE5\u4F5C\u7C3F(*.xls)",
-        xlsx: "Excel \u5DE5\u4F5C\u7C3F(*.xlsx)",
+        csv: "CSV (逗号分隔)(*.csv)",
+        html: "网页(*.html)",
+        xml: "XML 数据(*.xml)",
+        txt: "文本文件(制表符分隔)(*.txt)",
+        xls: "Excel 97-2003 工作簿(*.xls)",
+        xlsx: "Excel 工作簿(*.xlsx)",
         pdf: "PDF (*.pdf)"
       },
       modes: {
-        current: "\u5F53\u524D\u6570\u636E\uFF08\u5F53\u524D\u9875\u7684\u6570\u636E\uFF09",
-        selected: "\u9009\u4E2D\u6570\u636E\uFF08\u5F53\u524D\u9875\u9009\u4E2D\u7684\u6570\u636E\uFF09",
-        all: "\u5168\u91CF\u6570\u636E\uFF08\u5305\u62EC\u6240\u6709\u5206\u9875\u7684\u6570\u636E\uFF09"
+        current: "当前数据（当前页的数据）",
+        selected: "选中数据（当前页选中的数据）",
+        all: "全量数据（包括所有分页的数据）"
       },
-      printTitle: "\u6253\u5370\u6570\u636E",
-      expTitle: "\u5BFC\u51FA\u6570\u636E",
-      expName: "\u6587\u4EF6\u540D",
-      expNamePlaceholder: "\u8BF7\u8F93\u5165\u6587\u4EF6\u540D",
-      expSheetName: "\u6807\u9898",
-      expSheetNamePlaceholder: "\u8BF7\u8F93\u5165\u6807\u9898",
-      expType: "\u4FDD\u5B58\u7C7B\u578B",
-      expMode: "\u9009\u62E9\u6570\u636E",
-      expCurrentColumn: "\u5168\u90E8\u5B57\u6BB5",
-      expColumn: "\u9009\u62E9\u5B57\u6BB5",
-      expOpts: "\u53C2\u6570\u8BBE\u7F6E",
-      expOptHeader: "\u8868\u5934",
-      expHeaderTitle: "\u662F\u5426\u9700\u8981\u8868\u5934",
-      expOptFooter: "\u8868\u5C3E",
-      expFooterTitle: "\u662F\u5426\u9700\u8981\u8868\u5C3E",
-      expOptColgroup: "\u5206\u7EC4\u8868\u5934",
-      expColgroupTitle: "\u5982\u679C\u5B58\u5728\uFF0C\u5219\u652F\u6301\u5E26\u6709\u5206\u7EC4\u7ED3\u6784\u7684\u8868\u5934",
-      expOptMerge: "\u5408\u5E76",
-      expMergeTitle: "\u5982\u679C\u5B58\u5728\uFF0C\u5219\u652F\u6301\u5E26\u6709\u5408\u5E76\u7ED3\u6784\u7684\u5355\u5143\u683C",
-      expOptAllExpand: "\u5C55\u5F00\u5C42\u7EA7",
-      expAllExpandTitle: "\u5982\u679C\u5B58\u5728\uFF0C\u5219\u652F\u6301\u5C06\u5E26\u6709\u5C42\u7EA7\u7ED3\u6784\u7684\u6570\u636E\u5168\u90E8\u5C55\u5F00",
-      expOptUseStyle: "\u6837\u5F0F",
-      expUseStyleTitle: "\u5982\u679C\u5B58\u5728\uFF0C\u5219\u652F\u6301\u5E26\u6837\u5F0F\u7684\u5355\u5143\u683C",
-      expOptOriginal: "\u6E90\u6570\u636E",
-      expOriginalTitle: "\u5982\u679C\u4E3A\u6E90\u6570\u636E\uFF0C\u5219\u652F\u6301\u5BFC\u5165\u5230\u8868\u683C\u4E2D",
-      expPrint: "\u6253\u5370",
-      expConfirm: "\u5BFC\u51FA",
-      expCancel: "\u53D6\u6D88"
+      printTitle: "打印数据",
+      expTitle: "导出数据",
+      expName: "文件名",
+      expNamePlaceholder: "请输入文件名",
+      expSheetName: "标题",
+      expSheetNamePlaceholder: "请输入标题",
+      expType: "保存类型",
+      expMode: "选择数据",
+      expCurrentColumn: "全部字段",
+      expColumn: "选择字段",
+      expOpts: "参数设置",
+      expOptHeader: "表头",
+      expHeaderTitle: "是否需要表头",
+      expOptFooter: "表尾",
+      expFooterTitle: "是否需要表尾",
+      expOptColgroup: "分组表头",
+      expColgroupTitle: "如果存在，则支持带有分组结构的表头",
+      expOptMerge: "合并",
+      expMergeTitle: "如果存在，则支持带有合并结构的单元格",
+      expOptAllExpand: "展开层级",
+      expAllExpandTitle: "如果存在，则支持将带有层级结构的数据全部展开",
+      expOptUseStyle: "样式",
+      expUseStyleTitle: "如果存在，则支持带样式的单元格",
+      expOptOriginal: "源数据",
+      expOriginalTitle: "如果为源数据，则支持导入到表格中",
+      expPrint: "打印",
+      expConfirm: "导出",
+      expCancel: "取消"
     },
     modal: {
-      zoomIn: "\u6700\u5927\u5316",
-      zoomOut: "\u8FD8\u539F",
-      close: "\u5173\u95ED"
+      zoomIn: "最大化",
+      zoomOut: "还原",
+      close: "关闭"
     },
     form: {
-      folding: "\u6536\u8D77",
-      unfolding: "\u5C55\u5F00"
+      folding: "收起",
+      unfolding: "展开"
     },
     toolbar: {
-      import: "\u5BFC\u5165",
-      export: "\u5BFC\u51FA",
-      print: "\u6253\u5370",
-      refresh: "\u5237\u65B0",
-      zoomIn: "\u5168\u5C4F",
-      zoomOut: "\u8FD8\u539F",
-      custom: "\u5217\u8BBE\u7F6E",
-      customAll: "\u5168\u90E8",
-      customConfirm: "\u786E\u8BA4",
-      customRestore: "\u8FD8\u539F"
+      import: "导入",
+      export: "导出",
+      print: "打印",
+      refresh: "刷新",
+      zoomIn: "全屏",
+      zoomOut: "还原",
+      custom: "列设置",
+      customAll: "全部",
+      customConfirm: "确认",
+      customRestore: "还原"
     },
     input: {
       date: {
-        m1: "01 \u6708",
-        m2: "02 \u6708",
-        m3: "03 \u6708",
-        m4: "04 \u6708",
-        m5: "05 \u6708",
-        m6: "06 \u6708",
-        m7: "07 \u6708",
-        m8: "08 \u6708",
-        m9: "09 \u6708",
-        m10: "10 \u6708",
-        m11: "11 \u6708",
-        m12: "12 \u6708",
-        quarterLabel: "{0} \u5E74",
-        monthLabel: "{0} \u5E74",
-        dayLabel: "{0} \u5E74 {1}",
+        m1: "01 月",
+        m2: "02 月",
+        m3: "03 月",
+        m4: "04 月",
+        m5: "05 月",
+        m6: "06 月",
+        m7: "07 月",
+        m8: "08 月",
+        m9: "09 月",
+        m10: "10 月",
+        m11: "11 月",
+        m12: "12 月",
+        quarterLabel: "{0} 年",
+        monthLabel: "{0} 年",
+        dayLabel: "{0} 年 {1}",
         labelFormat: {
           date: "yyyy-MM-dd",
           time: "HH:mm:ss",
           datetime: "yyyy-MM-dd HH:mm:ss",
-          week: "yyyy \u5E74\u7B2C WW \u5468",
+          week: "yyyy 年第 WW 周",
           month: "yyyy-MM",
-          quarter: "yyyy \u5E74\u7B2C q \u5B63\u5EA6",
+          quarter: "yyyy 年第 q 季度",
           year: "yyyy"
         },
         weeks: {
-          w: "\u5468",
-          w0: "\u5468\u65E5",
-          w1: "\u5468\u4E00",
-          w2: "\u5468\u4E8C",
-          w3: "\u5468\u4E09",
-          w4: "\u5468\u56DB",
-          w5: "\u5468\u4E94",
-          w6: "\u5468\u516D"
+          w: "周",
+          w0: "周日",
+          w1: "周一",
+          w2: "周二",
+          w3: "周三",
+          w4: "周四",
+          w5: "周五",
+          w6: "周六"
         },
         months: {
-          m0: "\u4E00\u6708",
-          m1: "\u4E8C\u6708",
-          m2: "\u4E09\u6708",
-          m3: "\u56DB\u6708",
-          m4: "\u4E94\u6708",
-          m5: "\u516D\u6708",
-          m6: "\u4E03\u6708",
-          m7: "\u516B\u6708",
-          m8: "\u4E5D\u6708",
-          m9: "\u5341\u6708",
-          m10: "\u5341\u4E00\u6708",
-          m11: "\u5341\u4E8C\u6708"
+          m0: "一月",
+          m1: "二月",
+          m2: "三月",
+          m3: "四月",
+          m4: "五月",
+          m5: "六月",
+          m6: "七月",
+          m7: "八月",
+          m8: "九月",
+          m9: "十月",
+          m10: "十一月",
+          m11: "十二月"
         },
         quarters: {
-          q1: "\u7B2C\u4E00\u5B63\u5EA6",
-          q2: "\u7B2C\u4E8C\u5B63\u5EA6",
-          q3: "\u7B2C\u4E09\u5B63\u5EA6",
-          q4: "\u7B2C\u56DB\u5B63\u5EA6"
+          q1: "第一季度",
+          q2: "第二季度",
+          q3: "第三季度",
+          q4: "第四季度"
         }
       }
     }
@@ -24331,20 +25243,21 @@ const zhCN = {
 };
 setup({
   i18n: function(key, args) {
-    return xeUtils.toFormatString(xeUtils.get(zhCN, key), args);
+    return XEUtils$1.toFormatString(XEUtils$1.get(zhCN, key), args);
   }
 });
-const _hoisted_1$2 = { class: "gantt-table" };
 const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
   __name: "GanttTable",
   props: {
-    option: null,
-    data: null
+    option: {},
+    data: {},
+    width: {}
   },
   emits: ["scroll-y"],
-  setup(__props, { expose, emit }) {
+  setup(__props, { expose: __expose, emit: __emit }) {
     const props = __props;
     const tableRef = vue.ref();
+    const emit = __emit;
     const handleScrollEvent = () => {
       const dom = tableRef.value.$el.querySelector(".vxe-table--body-wrapper");
       emit("scroll-y", dom.scrollTop);
@@ -24353,12 +25266,15 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
       const dom = tableRef.value.$el.querySelector(".vxe-table--body-wrapper");
       dom.scrollTop = y;
     };
-    expose({ setScrollY });
+    __expose({ setScrollY });
     const columns = vue.computed(() => {
       return props.option.columns;
     });
     return (_ctx, _cache) => {
-      return vue.openBlock(), vue.createElementBlock("div", _hoisted_1$2, [
+      return vue.openBlock(), vue.createElementBlock("div", {
+        class: "gantt-table",
+        style: vue.normalizeStyle({ width: props.width + "px" })
+      }, [
         vue.createVNode(vue.unref(VxeTable), {
           class: "satellite-table",
           border: true,
@@ -24368,12 +25284,12 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
           height: "auto",
           "auto-resize": "",
           size: "small",
-          data: __props.data,
+          data: _ctx.data,
           "show-overflow": "",
           "row-config": { height: 40 }
         }, {
           default: vue.withCtx(() => [
-            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(vue.unref(columns), (column, index) => {
+            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(columns.value, (column, index) => {
               return vue.openBlock(), vue.createBlock(vue.unref(VxeColumn), {
                 key: index,
                 field: column.field,
@@ -24386,11 +25302,11 @@ const _sfc_main$2 = /* @__PURE__ */ vue.defineComponent({
           ]),
           _: 1
         }, 8, ["data"])
-      ]);
+      ], 4);
     };
   }
 });
-const GanttTable_vue_vue_type_style_index_0_scoped_c1db70b0_lang = "";
+const GanttTable_vue_vue_type_style_index_0_scoped_269069ba_lang = "";
 const _export_sfc = (sfc, props) => {
   const target = sfc.__vccOpts || sfc;
   for (const [key, val] of props) {
@@ -24398,13 +25314,13 @@ const _export_sfc = (sfc, props) => {
   }
   return target;
 };
-const GanttTable = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-c1db70b0"]]);
+const GanttTable = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-269069ba"]]);
 var dayjs_min = { exports: {} };
 (function(module2, exports2) {
   !function(t2, e) {
     module2.exports = e();
   }(commonjsGlobal, function() {
-    var t2 = 1e3, e = 6e4, n = 36e5, r = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", f = "month", h = "quarter", c = "year", d = "date", l = "Invalid Date", $ = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t3) {
+    var t2 = 1e3, e = 6e4, n = 36e5, r = "millisecond", i = "second", s = "minute", u = "hour", a = "day", o = "week", c = "month", f = "quarter", h = "year", d = "date", l = "Invalid Date", $ = /^(\d{4})[-/]?(\d{1,2})?[-/]?(\d{0,2})[Tt\s]*(\d{1,2})?:?(\d{1,2})?:?(\d{1,2})?[.:]?(\d+)?$/, y = /\[([^\]]+)]|Y{1,4}|M{1,4}|D{1,2}|d{1,4}|H{1,2}|h{1,2}|a|A|m{1,2}|s{1,2}|Z{1,2}|SSS/g, M = { name: "en", weekdays: "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_"), months: "January_February_March_April_May_June_July_August_September_October_November_December".split("_"), ordinal: function(t3) {
       var e2 = ["th", "st", "nd", "rd"], n2 = t3 % 100;
       return "[" + t3 + (e2[(n2 - 20) % 10] || e2[n2] || e2[0]) + "]";
     } }, m = function(t3, e2, n2) {
@@ -24416,19 +25332,19 @@ var dayjs_min = { exports: {} };
     }, m: function t3(e2, n2) {
       if (e2.date() < n2.date())
         return -t3(n2, e2);
-      var r2 = 12 * (n2.year() - e2.year()) + (n2.month() - e2.month()), i2 = e2.clone().add(r2, f), s2 = n2 - i2 < 0, u2 = e2.clone().add(r2 + (s2 ? -1 : 1), f);
+      var r2 = 12 * (n2.year() - e2.year()) + (n2.month() - e2.month()), i2 = e2.clone().add(r2, c), s2 = n2 - i2 < 0, u2 = e2.clone().add(r2 + (s2 ? -1 : 1), c);
       return +(-(r2 + (n2 - i2) / (s2 ? i2 - u2 : u2 - i2)) || 0);
     }, a: function(t3) {
       return t3 < 0 ? Math.ceil(t3) || 0 : Math.floor(t3);
     }, p: function(t3) {
-      return { M: f, y: c, w: o, d: a, D: d, h: u, m: s, s: i, ms: r, Q: h }[t3] || String(t3 || "").toLowerCase().replace(/s$/, "");
+      return { M: c, y: h, w: o, d: a, D: d, h: u, m: s, s: i, ms: r, Q: f }[t3] || String(t3 || "").toLowerCase().replace(/s$/, "");
     }, u: function(t3) {
       return void 0 === t3;
     } }, g = "en", D = {};
     D[g] = M;
-    var p = function(t3) {
-      return t3 instanceof _;
-    }, S = function t3(e2, n2, r2) {
+    var p = "$isDayjsObject", S = function(t3) {
+      return t3 instanceof _ || !(!t3 || !t3[p]);
+    }, w = function t3(e2, n2, r2) {
       var i2;
       if (!e2)
         return g;
@@ -24443,27 +25359,27 @@ var dayjs_min = { exports: {} };
         D[a2] = e2, i2 = a2;
       }
       return !r2 && i2 && (g = i2), i2 || !r2 && g;
-    }, w = function(t3, e2) {
-      if (p(t3))
+    }, O = function(t3, e2) {
+      if (S(t3))
         return t3.clone();
       var n2 = "object" == typeof e2 ? e2 : {};
       return n2.date = t3, n2.args = arguments, new _(n2);
-    }, O = v2;
-    O.l = S, O.i = p, O.w = function(t3, e2) {
-      return w(t3, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
+    }, b = v2;
+    b.l = w, b.i = S, b.w = function(t3, e2) {
+      return O(t3, { locale: e2.$L, utc: e2.$u, x: e2.$x, $offset: e2.$offset });
     };
     var _ = function() {
       function M2(t3) {
-        this.$L = S(t3.locale, null, true), this.parse(t3);
+        this.$L = w(t3.locale, null, true), this.parse(t3), this.$x = this.$x || t3.x || {}, this[p] = true;
       }
       var m2 = M2.prototype;
       return m2.parse = function(t3) {
         this.$d = function(t4) {
           var e2 = t4.date, n2 = t4.utc;
           if (null === e2)
-            return new Date(NaN);
-          if (O.u(e2))
-            return new Date();
+            return /* @__PURE__ */ new Date(NaN);
+          if (b.u(e2))
+            return /* @__PURE__ */ new Date();
           if (e2 instanceof Date)
             return new Date(e2);
           if ("string" == typeof e2 && !/Z$/i.test(e2)) {
@@ -24474,38 +25390,38 @@ var dayjs_min = { exports: {} };
             }
           }
           return new Date(e2);
-        }(t3), this.$x = t3.x || {}, this.init();
+        }(t3), this.init();
       }, m2.init = function() {
         var t3 = this.$d;
         this.$y = t3.getFullYear(), this.$M = t3.getMonth(), this.$D = t3.getDate(), this.$W = t3.getDay(), this.$H = t3.getHours(), this.$m = t3.getMinutes(), this.$s = t3.getSeconds(), this.$ms = t3.getMilliseconds();
       }, m2.$utils = function() {
-        return O;
+        return b;
       }, m2.isValid = function() {
         return !(this.$d.toString() === l);
       }, m2.isSame = function(t3, e2) {
-        var n2 = w(t3);
+        var n2 = O(t3);
         return this.startOf(e2) <= n2 && n2 <= this.endOf(e2);
       }, m2.isAfter = function(t3, e2) {
-        return w(t3) < this.startOf(e2);
+        return O(t3) < this.startOf(e2);
       }, m2.isBefore = function(t3, e2) {
-        return this.endOf(e2) < w(t3);
+        return this.endOf(e2) < O(t3);
       }, m2.$g = function(t3, e2, n2) {
-        return O.u(t3) ? this[e2] : this.set(n2, t3);
+        return b.u(t3) ? this[e2] : this.set(n2, t3);
       }, m2.unix = function() {
         return Math.floor(this.valueOf() / 1e3);
       }, m2.valueOf = function() {
         return this.$d.getTime();
       }, m2.startOf = function(t3, e2) {
-        var n2 = this, r2 = !!O.u(e2) || e2, h2 = O.p(t3), l2 = function(t4, e3) {
-          var i2 = O.w(n2.$u ? Date.UTC(n2.$y, e3, t4) : new Date(n2.$y, e3, t4), n2);
+        var n2 = this, r2 = !!b.u(e2) || e2, f2 = b.p(t3), l2 = function(t4, e3) {
+          var i2 = b.w(n2.$u ? Date.UTC(n2.$y, e3, t4) : new Date(n2.$y, e3, t4), n2);
           return r2 ? i2 : i2.endOf(a);
         }, $2 = function(t4, e3) {
-          return O.w(n2.toDate()[t4].apply(n2.toDate("s"), (r2 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n2);
+          return b.w(n2.toDate()[t4].apply(n2.toDate("s"), (r2 ? [0, 0, 0, 0] : [23, 59, 59, 999]).slice(e3)), n2);
         }, y2 = this.$W, M3 = this.$M, m3 = this.$D, v3 = "set" + (this.$u ? "UTC" : "");
-        switch (h2) {
-          case c:
+        switch (f2) {
+          case h:
             return r2 ? l2(1, 0) : l2(31, 11);
-          case f:
+          case c:
             return r2 ? l2(1, M3) : l2(0, M3 + 1);
           case o:
             var g2 = this.$locale().weekStart || 0, D2 = (y2 < g2 ? y2 + 7 : y2) - g2;
@@ -24525,8 +25441,8 @@ var dayjs_min = { exports: {} };
       }, m2.endOf = function(t3) {
         return this.startOf(t3, false);
       }, m2.$set = function(t3, e2) {
-        var n2, o2 = O.p(t3), h2 = "set" + (this.$u ? "UTC" : ""), l2 = (n2 = {}, n2[a] = h2 + "Date", n2[d] = h2 + "Date", n2[f] = h2 + "Month", n2[c] = h2 + "FullYear", n2[u] = h2 + "Hours", n2[s] = h2 + "Minutes", n2[i] = h2 + "Seconds", n2[r] = h2 + "Milliseconds", n2)[o2], $2 = o2 === a ? this.$D + (e2 - this.$W) : e2;
-        if (o2 === f || o2 === c) {
+        var n2, o2 = b.p(t3), f2 = "set" + (this.$u ? "UTC" : ""), l2 = (n2 = {}, n2[a] = f2 + "Date", n2[d] = f2 + "Date", n2[c] = f2 + "Month", n2[h] = f2 + "FullYear", n2[u] = f2 + "Hours", n2[s] = f2 + "Minutes", n2[i] = f2 + "Seconds", n2[r] = f2 + "Milliseconds", n2)[o2], $2 = o2 === a ? this.$D + (e2 - this.$W) : e2;
+        if (o2 === c || o2 === h) {
           var y2 = this.clone().set(d, 1);
           y2.$d[l2]($2), y2.init(), this.$d = y2.set(d, Math.min(this.$D, y2.daysInMonth())).$d;
         } else
@@ -24535,57 +25451,139 @@ var dayjs_min = { exports: {} };
       }, m2.set = function(t3, e2) {
         return this.clone().$set(t3, e2);
       }, m2.get = function(t3) {
-        return this[O.p(t3)]();
-      }, m2.add = function(r2, h2) {
+        return this[b.p(t3)]();
+      }, m2.add = function(r2, f2) {
         var d3, l2 = this;
         r2 = Number(r2);
-        var $2 = O.p(h2), y2 = function(t3) {
-          var e2 = w(l2);
-          return O.w(e2.date(e2.date() + Math.round(t3 * r2)), l2);
+        var $2 = b.p(f2), y2 = function(t3) {
+          var e2 = O(l2);
+          return b.w(e2.date(e2.date() + Math.round(t3 * r2)), l2);
         };
-        if ($2 === f)
-          return this.set(f, this.$M + r2);
         if ($2 === c)
-          return this.set(c, this.$y + r2);
+          return this.set(c, this.$M + r2);
+        if ($2 === h)
+          return this.set(h, this.$y + r2);
         if ($2 === a)
           return y2(1);
         if ($2 === o)
           return y2(7);
         var M3 = (d3 = {}, d3[s] = e, d3[u] = n, d3[i] = t2, d3)[$2] || 1, m3 = this.$d.getTime() + r2 * M3;
-        return O.w(m3, this);
+        return b.w(m3, this);
       }, m2.subtract = function(t3, e2) {
         return this.add(-1 * t3, e2);
       }, m2.format = function(t3) {
         var e2 = this, n2 = this.$locale();
         if (!this.isValid())
           return n2.invalidDate || l;
-        var r2 = t3 || "YYYY-MM-DDTHH:mm:ssZ", i2 = O.z(this), s2 = this.$H, u2 = this.$m, a2 = this.$M, o2 = n2.weekdays, f2 = n2.months, h2 = function(t4, n3, i3, s3) {
+        var r2 = t3 || "YYYY-MM-DDTHH:mm:ssZ", i2 = b.z(this), s2 = this.$H, u2 = this.$m, a2 = this.$M, o2 = n2.weekdays, c2 = n2.months, f2 = n2.meridiem, h2 = function(t4, n3, i3, s3) {
           return t4 && (t4[n3] || t4(e2, r2)) || i3[n3].slice(0, s3);
-        }, c2 = function(t4) {
-          return O.s(s2 % 12 || 12, t4, "0");
-        }, d3 = n2.meridiem || function(t4, e3, n3) {
+        }, d3 = function(t4) {
+          return b.s(s2 % 12 || 12, t4, "0");
+        }, $2 = f2 || function(t4, e3, n3) {
           var r3 = t4 < 12 ? "AM" : "PM";
           return n3 ? r3.toLowerCase() : r3;
-        }, $2 = { YY: String(this.$y).slice(-2), YYYY: this.$y, M: a2 + 1, MM: O.s(a2 + 1, 2, "0"), MMM: h2(n2.monthsShort, a2, f2, 3), MMMM: h2(f2, a2), D: this.$D, DD: O.s(this.$D, 2, "0"), d: String(this.$W), dd: h2(n2.weekdaysMin, this.$W, o2, 2), ddd: h2(n2.weekdaysShort, this.$W, o2, 3), dddd: o2[this.$W], H: String(s2), HH: O.s(s2, 2, "0"), h: c2(1), hh: c2(2), a: d3(s2, u2, true), A: d3(s2, u2, false), m: String(u2), mm: O.s(u2, 2, "0"), s: String(this.$s), ss: O.s(this.$s, 2, "0"), SSS: O.s(this.$ms, 3, "0"), Z: i2 };
-        return r2.replace(y, function(t4, e3) {
-          return e3 || $2[t4] || i2.replace(":", "");
+        };
+        return r2.replace(y, function(t4, r3) {
+          return r3 || function(t5) {
+            switch (t5) {
+              case "YY":
+                return String(e2.$y).slice(-2);
+              case "YYYY":
+                return b.s(e2.$y, 4, "0");
+              case "M":
+                return a2 + 1;
+              case "MM":
+                return b.s(a2 + 1, 2, "0");
+              case "MMM":
+                return h2(n2.monthsShort, a2, c2, 3);
+              case "MMMM":
+                return h2(c2, a2);
+              case "D":
+                return e2.$D;
+              case "DD":
+                return b.s(e2.$D, 2, "0");
+              case "d":
+                return String(e2.$W);
+              case "dd":
+                return h2(n2.weekdaysMin, e2.$W, o2, 2);
+              case "ddd":
+                return h2(n2.weekdaysShort, e2.$W, o2, 3);
+              case "dddd":
+                return o2[e2.$W];
+              case "H":
+                return String(s2);
+              case "HH":
+                return b.s(s2, 2, "0");
+              case "h":
+                return d3(1);
+              case "hh":
+                return d3(2);
+              case "a":
+                return $2(s2, u2, true);
+              case "A":
+                return $2(s2, u2, false);
+              case "m":
+                return String(u2);
+              case "mm":
+                return b.s(u2, 2, "0");
+              case "s":
+                return String(e2.$s);
+              case "ss":
+                return b.s(e2.$s, 2, "0");
+              case "SSS":
+                return b.s(e2.$ms, 3, "0");
+              case "Z":
+                return i2;
+            }
+            return null;
+          }(t4) || i2.replace(":", "");
         });
       }, m2.utcOffset = function() {
         return 15 * -Math.round(this.$d.getTimezoneOffset() / 15);
       }, m2.diff = function(r2, d3, l2) {
-        var $2, y2 = O.p(d3), M3 = w(r2), m3 = (M3.utcOffset() - this.utcOffset()) * e, v3 = this - M3, g2 = O.m(this, M3);
-        return g2 = ($2 = {}, $2[c] = g2 / 12, $2[f] = g2, $2[h] = g2 / 3, $2[o] = (v3 - m3) / 6048e5, $2[a] = (v3 - m3) / 864e5, $2[u] = v3 / n, $2[s] = v3 / e, $2[i] = v3 / t2, $2)[y2] || v3, l2 ? g2 : O.a(g2);
+        var $2, y2 = this, M3 = b.p(d3), m3 = O(r2), v3 = (m3.utcOffset() - this.utcOffset()) * e, g2 = this - m3, D2 = function() {
+          return b.m(y2, m3);
+        };
+        switch (M3) {
+          case h:
+            $2 = D2() / 12;
+            break;
+          case c:
+            $2 = D2();
+            break;
+          case f:
+            $2 = D2() / 3;
+            break;
+          case o:
+            $2 = (g2 - v3) / 6048e5;
+            break;
+          case a:
+            $2 = (g2 - v3) / 864e5;
+            break;
+          case u:
+            $2 = g2 / n;
+            break;
+          case s:
+            $2 = g2 / e;
+            break;
+          case i:
+            $2 = g2 / t2;
+            break;
+          default:
+            $2 = g2;
+        }
+        return l2 ? $2 : b.a($2);
       }, m2.daysInMonth = function() {
-        return this.endOf(f).$D;
+        return this.endOf(c).$D;
       }, m2.$locale = function() {
         return D[this.$L];
       }, m2.locale = function(t3, e2) {
         if (!t3)
           return this.$L;
-        var n2 = this.clone(), r2 = S(t3, e2, true);
+        var n2 = this.clone(), r2 = w(t3, e2, true);
         return r2 && (n2.$L = r2), n2;
       }, m2.clone = function() {
-        return O.w(this.$d, this);
+        return b.w(this.$d, this);
       }, m2.toDate = function() {
         return new Date(this.valueOf());
       }, m2.toJSON = function() {
@@ -24595,29 +25593,29 @@ var dayjs_min = { exports: {} };
       }, m2.toString = function() {
         return this.$d.toUTCString();
       }, M2;
-    }(), T = _.prototype;
-    return w.prototype = T, [["$ms", r], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", f], ["$y", c], ["$D", d]].forEach(function(t3) {
-      T[t3[1]] = function(e2) {
+    }(), k = _.prototype;
+    return O.prototype = k, [["$ms", r], ["$s", i], ["$m", s], ["$H", u], ["$W", a], ["$M", c], ["$y", h], ["$D", d]].forEach(function(t3) {
+      k[t3[1]] = function(e2) {
         return this.$g(e2, t3[0], t3[1]);
       };
-    }), w.extend = function(t3, e2) {
-      return t3.$i || (t3(e2, _, w), t3.$i = true), w;
-    }, w.locale = S, w.isDayjs = p, w.unix = function(t3) {
-      return w(1e3 * t3);
-    }, w.en = D[g], w.Ls = D, w.p = {}, w;
+    }), O.extend = function(t3, e2) {
+      return t3.$i || (t3(e2, _, O), t3.$i = true), O;
+    }, O.locale = w, O.isDayjs = S, O.unix = function(t3) {
+      return O(1e3 * t3);
+    }, O.en = D[g], O.Ls = D, O.p = {}, O;
   });
 })(dayjs_min);
-const dayjs = dayjs_min.exports;
+var dayjs_minExports = dayjs_min.exports;
+const dayjs = /* @__PURE__ */ getDefaultExportFromCjs(dayjs_minExports);
 const _hoisted_1$1 = { class: "gantt-chart" };
 const _hoisted_2 = { class: "svg-container" };
 const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
   __name: "GanttChart",
   props: {
-    data: null
+    data: {}
   },
   emits: ["scroll-y"],
-  setup(__props, { expose, emit }) {
-    const props = __props;
+  setup(__props, { expose: __expose, emit: __emit }) {
     const highLight = vue.reactive({});
     const rectRef = vue.ref();
     vue.watchEffect(() => {
@@ -24626,6 +25624,7 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
         rectRef.value[key].style.backgroundColor = color;
       });
     });
+    const props = __props;
     const formatTime = (unix) => {
       const day = dayjs.unix(unix);
       return day.format("YYYY-MM-DD HH:mm:ss");
@@ -24703,7 +25702,8 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
     const setScrollY = (y) => {
       ganttChartBodyRef.value.scrollTop = y;
     };
-    expose({ setScrollY });
+    __expose({ setScrollY });
+    const emit = __emit;
     const blocks = vue.computed(() => {
       const blocks2 = [];
       for (let i = 0; i < blockLength.value; i++) {
@@ -24740,7 +25740,7 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
             ref: ganttChartHeaderRef,
             style: vue.normalizeStyle(headerStyle)
           }, [
-            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(vue.unref(blocks), (block, index) => {
+            (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(blocks.value, (block, index) => {
               return vue.openBlock(), vue.createElementBlock("div", {
                 class: "header-block",
                 key: index
@@ -24755,13 +25755,13 @@ const _sfc_main$1 = /* @__PURE__ */ vue.defineComponent({
             style: vue.normalizeStyle(headerStyle)
           }, [
             vue.createElementVNode("div", _hoisted_2, [
-              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(vue.unref(svgList), (svg, index) => {
+              (vue.openBlock(true), vue.createElementBlock(vue.Fragment, null, vue.renderList(svgList.value, (svg, index) => {
                 return vue.openBlock(), vue.createElementBlock("div", {
                   key: index,
                   class: "gantt-chart-item"
                 }, [
                   vue.createVNode(_component_a_popover, {
-                    title: "\u4EFB\u52A1\u540D",
+                    title: "任务名",
                     placement: "right"
                   }, {
                     default: vue.withCtx(() => [
@@ -24794,8 +25794,9 @@ const _hoisted_1 = { class: "gantt-view" };
 const _sfc_main = /* @__PURE__ */ vue.defineComponent({
   __name: "GanttView",
   props: {
-    option: null,
-    data: null
+    option: {},
+    data: {},
+    tableWidth: { default: 200 }
   },
   setup(__props) {
     const props = __props;
@@ -24815,18 +25816,19 @@ const _sfc_main = /* @__PURE__ */ vue.defineComponent({
           ref: tableRef,
           option: props.option,
           data: props.data,
+          width: props.tableWidth,
           onScrollY: _cache[0] || (_cache[0] = ($event) => handleScrollYEvent($event, "table"))
-        }, null, 8, ["option", "data"]),
+        }, null, 8, ["option", "data", "width"]),
         vue.createVNode(GanttChart, {
           ref_key: "chartRef",
           ref: chartRef,
-          data: __props.data,
+          data: _ctx.data,
           onScrollY: _cache[1] || (_cache[1] = ($event) => handleScrollYEvent($event, "chart"))
         }, null, 8, ["data"])
       ]);
     };
   }
 });
-const GanttView_vue_vue_type_style_index_0_scoped_cdca8e73_lang = "";
-const GanttView = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-cdca8e73"]]);
+const GanttView_vue_vue_type_style_index_0_scoped_c179cdbd_lang = "";
+const GanttView = /* @__PURE__ */ _export_sfc(_sfc_main, [["__scopeId", "data-v-c179cdbd"]]);
 exports.Gantt = GanttView;

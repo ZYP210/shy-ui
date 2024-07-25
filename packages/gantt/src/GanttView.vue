@@ -4,6 +4,7 @@
       ref="tableRef"
       :option="props.option"
       :data="props.data"
+      :width="props.tableWidth"
       @scroll-y="handleScrollYEvent($event, 'table')"
     ></GanttTable>
     <GanttChart
@@ -26,8 +27,11 @@ const props = withDefaults(
   defineProps<{
     option: { columns: TableColumns[] }
     data: any
+    tableWidth: number
   }>(),
-  {}
+  {
+    tableWidth: 200
+  }
 )
 
 const tableRef = ref()
@@ -43,7 +47,7 @@ const handleScrollYEvent = (y, type) => {
 
 <style scoped lang="less">
 .gantt-view {
-  height: 300px;
+  height: 100%;
   display: flex;
   flex-flow: row nowrap;
   // background-color: transparent;
