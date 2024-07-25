@@ -18,7 +18,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { FormSchema } from '3h1-ui'
+import type { ShyFormSchema } from '3h1-ui'
 import { useShyForm, ApiModalSelect, ShyForm, BasicButton } from '3h1-ui'
 import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
@@ -43,7 +43,7 @@ const handlePush = () => {
   })
 }
 
-const schemas = ref<FormSchema[]>([
+const schemas = ref<ShyFormSchema[]>([
   {
     label: '分组表单',
     field: 'zzz',
@@ -51,6 +51,7 @@ const schemas = ref<FormSchema[]>([
     componentProps: ({ formModel }) => {
 
       return {
+        // groupType: 'Divider',
         extra: () => h('div', { class: 'flex-1' }, 111),
         expandIconPosition: 'end',
         schemas: [
