@@ -28,7 +28,7 @@
 
 <script lang="ts" setup>
 import { Button } from 'ant-design-vue'
-import { ShyContainer } from '3h1-ui'
+import { ShyContainer, BasicContainer } from '3h1-ui'
 import { ShyTable } from '3h1-ui'
 const loading = ref(false)
 

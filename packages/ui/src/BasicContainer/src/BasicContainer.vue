@@ -112,7 +112,7 @@ export default defineComponent({
     height: fit-content;
     align-items: center;
     padding-block: 10px;
-    border-bottom: 1px solid var(--gray-3);
+    border-bottom: 1px solid var(--gray-2);
     gap: 8px;
 
     &-title {
@@ -144,8 +144,8 @@ export default defineComponent({
     justify-content: flex-end;
     align-items: center;
     gap: 8px;
-    border-top: 1px solid var(--gray-3);
-    background-color: var(--gray-2);
+    border-top: 1px solid var(--gray-2);
+    background-color: var(--gray-0);
 
     &-buttons {
       display: flex;

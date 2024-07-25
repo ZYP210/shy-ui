@@ -1,4 +1,4 @@
-import { computed, defineComponent, unref } from 'vue'
+import { computed, defineComponent, shallowRef, unref } from 'vue'
 import { FormItemProps } from '../props'
 import { FormSchema } from '../types/form'
 import FormItem from './FormItem'
@@ -31,6 +31,8 @@ const Group = defineComponent({
     }
   },
   setup(props) {
+    const activeKey = shallowRef([props.schema.field])
+
     const { prefixCls } = useDesign('ant-form')
 
     const { contextBindValue } = useFormContext()
@@ -105,22 +107,40 @@ const Group = defineComponent({
       const { schema, tableAction, formModel, formActionType } = props
       let { componentProps, colProps } = props.schema
 
-      // if (isFunction(componentProps)) {
-      //   return null
-      // }
       if (isFunction(componentProps)) {
         componentProps =
-          componentProps({ schema, tableAction, formModel, formActionType: formActionType! }) ??
-          {}
+          componentProps({
+            schema,
+            tableAction,
+            formModel,
+            formActionType: formActionType!
+          }) ?? {}
       }
 
       switch (props.groupType) {
         case 'Divider':
-          return
+          return (
+            <>
+              <FormItem
+                {...pick(props, Object.keys(FormItemProps))}
+                style={{
+                  [`--col-span`]: `${
+                    ((colProps?.span ??
+                      unref(contextBindValue)?.baseColProps?.span) /
+                      (ROW_SLICE + ACTION_COL)) *
+                    100
+                  }%`
+                }}
+                schema={{ ...props.schema, component: 'Divider' }}
+              ></FormItem>
+              {renderFormItems()}
+            </>
+          )
         case 'Collapse':
           return (
             <Collapse
               {...componentProps}
+              v-model:activeKey={activeKey.value}
               class={`${prefixCls}-collapse`}
               style={{
                 [`--col-span`]: `${
@@ -133,6 +153,7 @@ const Group = defineComponent({
               bordered={false}
             >
               <CollapsePanel
+                key={props.schema.field}
                 v-slots={{
                   header: () => (
                     <FormItem
