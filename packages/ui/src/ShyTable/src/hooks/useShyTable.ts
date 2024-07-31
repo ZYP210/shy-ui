@@ -74,6 +74,7 @@ export function useShyTable(tableProps?: Props): [
     getForm: () => FormActionType
   } = {
     reload: async (opt?: FetchParams) => {
+      getTableInstance()?.clearSelectedRowKeys()
       return await getTableInstance()?.reload(opt)
     },
     setProps: (props: Partial<ShyTableProps>) => {
