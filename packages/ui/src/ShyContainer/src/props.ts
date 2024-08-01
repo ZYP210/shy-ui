@@ -6,7 +6,7 @@ export const shyContainerProps = reactive({
   },
   loading: {
     type: Boolean,
-    default: false
+    default: undefined
   },
   isShowHeader: {
     type: Boolean,
@@ -52,6 +52,9 @@ export const shyContainerProps = reactive({
     type: String as PropType<'left' | 'center' | 'right'>,
     default: 'center'
   },
+  onSubmit: { type: Function as PropType<(...args) => any>, default: null },
+  onSave: { type: Function as PropType<(...args) => any>, default: null },
+  onCancel: { type: Function as PropType<(...args) => any>, default: null },
   navBars: {
     type: Array,
     default: () => []

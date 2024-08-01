@@ -1,7 +1,9 @@
-const validColors = ['error', 'warning', 'success', ''] as const
-type ButtonColorType = (typeof validColors)[number]
+import { reactive } from 'vue'
 
-export const buttonProps = {
+const validColors = ['error', 'warning', 'success', ''] as const
+type ButtonColorType = typeof validColors[number]
+
+export const buttonProps = reactive({
   type: {
     type: String as PropType<
       | 'primary'
@@ -22,7 +24,7 @@ export const buttonProps = {
     validator: (v) => validColors.includes(v),
     default: ''
   },
-  loading: { type: Boolean },
+  loading: { type: Boolean, default: undefined },
   disabled: { type: Boolean },
   /**
    * Text before icon.
@@ -37,5 +39,9 @@ export const buttonProps = {
    * @default: 14
    */
   iconSize: { type: Number, default: 14 },
-  onClick: { type: Function as PropType<(...args) => any>, default: null }
-}
+  onClick: { type: Function as PropType<(...args) => any>, default: null },
+  isContinuousClicks: {
+    type: Boolean,
+    default: true
+  }
+})
