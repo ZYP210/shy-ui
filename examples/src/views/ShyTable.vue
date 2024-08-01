@@ -229,8 +229,7 @@ const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
           console.log(e, ages)
         }
       }
-    },
-    colProps: { span: 6 }
+    }
   }
 })
 
@@ -315,21 +314,18 @@ const [
       {
         label: '日期范围',
         component: 'RangePicker',
-        field: 'createTime',
-        colProps: { span: 6 }
+        field: 'createTime'
       },
       {
         label: '日期范围',
         component: 'RangePicker',
 
-        field: 'createTime',
-        colProps: { span: 6 }
+        field: 'createTime'
       },
       {
         label: '日期范围',
         component: 'RangePicker',
-        field: 'createTime',
-        colProps: { span: 6 }
+        field: 'createTime'
       },
       {
         label: '输入框',
@@ -337,50 +333,42 @@ const [
         componentProps: {
           placeholder: ''
         },
-        field: 'createTime',
-        colProps: { span: 4 }
+        field: 'createTime'
       },
       {
         label: '输入框',
         component: 'Input',
-        field: 'createTime',
-        colProps: { span: 4 }
+        field: 'createTime'
       },
       {
         label: '输入框',
         component: 'Input',
-        field: 'createTime',
-        colProps: { span: 4 }
+        field: 'createTime'
       },
       {
         label: '日期范围',
         component: 'RangePicker',
-        field: 'createTime',
-        colProps: { span: 6 }
+        field: 'createTime'
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime'
+      },
+      {
+        label: '输入框',
+        component: 'Input',
+        field: 'createTime'
       },
       {
         label: '输入框',
         component: 'Input',
         field: 'createTime',
-        colProps: { span: 4 }
       },
       {
         label: '输入框',
         component: 'Input',
         field: 'createTime',
-        colProps: { span: 4 }
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: 'createTime',
-        colProps: { span: 4 }
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: 'createTime',
-        colProps: { span: 4 }
       }
     ]
   },

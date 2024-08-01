@@ -1,5 +1,10 @@
-import type { FormActionType, FieldMapToTime, FormSchema, FormProps } from './types/form'
-import type { CSSProperties, PropType } from 'vue'
+import type {
+  FormActionType,
+  FieldMapToTime,
+  FormSchema,
+  FormProps
+} from './types/form'
+import { reactive, type CSSProperties, type PropType } from 'vue'
 import type { ColEx } from './types'
 import type { TableActionType } from '../../Table'
 import type { TableActionType as ShyTableActionType } from '../../ShyTable'
@@ -32,7 +37,23 @@ type ButtonProps = {
   onMousedown?: ((event: MouseEvent) => void) | undefined
 }
 
-export const [ROW_SLICE, RANGE_PICKER_COL, OTHER_COL, ACTION_COL] = [18, 6, 4, 6]
+export const [ROW_SLICE, RANGE_PICKER_COL, OTHER_COL, ACTION_COL] = [
+  18, 6, 4, 6
+]
+
+export const tableSearchColRef = reactive({
+  ROW_SLICE,
+  RANGE_PICKER_COL,
+  OTHER_COL,
+  ACTION_COL
+})
+
+export const tableSearchColKeys = [
+  'ROW_SLICE',
+  'RANGE_PICKER_COL',
+  'OTHER_COL',
+  'ACTION_COL'
+] as const
 
 export const basicProps = {
   formLabelInInput: {
