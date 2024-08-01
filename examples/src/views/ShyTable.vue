@@ -257,7 +257,7 @@ const getFooterActions = ({ rows, rowKeys, disabled }) => {
   ]
 }
 
-const length = ref(21)
+const length = ref(1)
 
 const [
   register,
@@ -293,7 +293,7 @@ const [
   },
   // isShowFooterSettings: false,
   // isShowHeader: false,
-  // isShowFooter: false,
+  isShowFooter: false,
   // headerAlign: 'left',
   onColumnsChange: (data) => {
     console.log(data)
@@ -382,7 +382,7 @@ const [
   },
   // clickToRowSelect: true,
   // useSearchForm: true,
-  // canResize: false,
+  canResize: false,
   actionColumn: {
     dataIndex: 'action',
     title: '操作'

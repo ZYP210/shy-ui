@@ -1,25 +1,43 @@
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { buttonProps } from './props'
 import { Button, ConfigProvider } from 'ant-design-vue'
 import { Icon } from '../../Icon'
 import { useTheme } from '@shy-plugins/use'
-
-
+import { isBoolean } from 'xe-utils'
+import { omit } from 'lodash-es'
 
 const BasicButton = defineComponent({
   props: buttonProps,
   setup(props, { attrs, slots }) {
-    const { getVarColor } = useTheme();
+    const { getVarColor } = useTheme()
 
+    const loading = ref(false)
+
+    const onClick = async (...args) => {
+      if (!props.isContinuousClicks) {
+        loading.value = true
+        await props.onClick?.(...args)
+        setTimeout(() => {
+          loading.value = false
+        }, 1000)
+        return
+      }
+
+      props.onClick?.(...args)
+    }
 
     const getBindValue = computed(() => {
-      return {
+      return omit({
         ...attrs,
         ...props,
+        loading:
+          isBoolean(props.loading) || props.isContinuousClicks
+            ? props.loading
+            : loading.value,
         type: ['danger', 'waring', 'success', 'message'].includes(props.type)
           ? 'primary'
           : props.type
-      }
+      }, 'onClick')
     })
 
     const renderButton = () => {
@@ -71,7 +89,7 @@ const BasicButton = defineComponent({
           <Button
             {...getBindValue.value}
             {...isDanger()}
-            onClick={props.onClick}
+            onClick={onClick}
             style={isLinkColorStyle()}
           >
             {{

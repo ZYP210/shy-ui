@@ -1,4 +1,4 @@
-import { BasicButton } from '../../Button/index'
+import { BasicButton } from '../../Button'
 import { FlagFilled } from '@ant-design/icons-vue'
 import { defineComponent, computed, unref } from 'vue'
 import { shyContainerProps } from './props'
@@ -57,11 +57,12 @@ export default defineComponent({
 
     const Button = (key: 'cancel' | 'save' | 'submit') => {
       if (typeof key !== 'string') return
+
       return props[`isShow${toUpper(key)}Btn`] ? (
         <BasicButton
           type={BtnTypeEnum[key]}
           loading={props.loading}
-          onClick={() => emit(key)}
+          onClick={props[`on${toUpper(key)}`]}
         >
           {props[`${key}BtnText`]}
         </BasicButton>

@@ -20,7 +20,8 @@ import {
   registerGlobalConfig,
   shyTableBasicProps,
   shyTableActionProps,
-  basicContainerProps
+  basicContainerProps,
+  buttonProps
 } from '3h1-ui'
 import { Plugin } from 'vue'
 import ShyFlowDingDing from '@shy-plugins/workflow-dingding'
@@ -39,6 +40,8 @@ shyTableBasicProps.actionColWidth.default = 110
 shyTableActionProps.showCount.default = 3
 
 basicContainerProps.isShowBack.default = false
+
+buttonProps.isContinuousClicks.default = false
 
 app
   .use(ShyFlowDingDing)

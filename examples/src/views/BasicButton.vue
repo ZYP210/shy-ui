@@ -2,7 +2,10 @@
   <div
     class="!w-[fit-content] h-full flex flex-col gap-8px p-16px overflow-hidden"
   >
-    <BasicButton type="primary" preIcon="tabler:square-rounded-plus">
+    <BasicButton
+      type="primary"
+      preIcon="tabler:square-rounded-plus"
+    >
       主要按钮
     </BasicButton>
     <BasicButton> 次要按钮 </BasicButton>
