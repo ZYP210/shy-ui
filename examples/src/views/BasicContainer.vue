@@ -2,6 +2,7 @@
   <ShyContainer
     footer-align="center"
     cancel-align="right"
+    @cancel="handleCancel"
     @submit="handleSubmit"
     @route-change="changePath"
   >
@@ -20,6 +21,8 @@
 import { Button } from 'ant-design-vue'
 import { ShyContainer, BasicContainer } from '3h1-ui'
 import { ShyTable } from '3h1-ui'
+
+const handleCancel = () => {}
 
 const handleSubmit = async () => {
   await new Promise((resolve) => {

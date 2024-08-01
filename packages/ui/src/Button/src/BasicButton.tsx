@@ -4,6 +4,7 @@ import { Button, ConfigProvider } from 'ant-design-vue'
 import { Icon } from '../../Icon'
 import { useTheme } from '@shy-plugins/use'
 import { isBoolean } from 'xe-utils'
+import { omit } from 'lodash-es'
 
 const BasicButton = defineComponent({
   props: buttonProps,
@@ -26,7 +27,7 @@ const BasicButton = defineComponent({
     }
 
     const getBindValue = computed(() => {
-      return {
+      return omit({
         ...attrs,
         ...props,
         loading:
@@ -36,7 +37,7 @@ const BasicButton = defineComponent({
         type: ['danger', 'waring', 'success', 'message'].includes(props.type)
           ? 'primary'
           : props.type
-      }
+      }, 'onClick')
     })
 
     const renderButton = () => {
