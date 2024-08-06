@@ -31,15 +31,17 @@ const { token } = useToken()
 
 const handlePush = () => {
   setFieldsValue({
-    Table: Array.from({ length: 200 }, (_, i) => {
-      return {
-        a: 1,
-        b: 2,
+    zzz: {
+      Table: Array.from({ length: 200 }, (_, i) => {
+        return {
+          a: 1,
+          b: 2,
 
-        d: 4,
-        e: 5
-      }
-    })
+          c: 4,
+          d: '21938120983129038129038129038120938120938asdjasdkasjdklasjdlkasjdasoiudasoiudasoidjhasiujodhsajkdsahdkjashdkjasdiopasduiaspoiduasioduasoiduasioduadoiasudoiasudiaosduasoiduioasduasio03890128390128309128301298312093812093812093812093812903812309128390128390128309128390128312903892103812821038219038120938129038'
+        }
+      })
+    }
   })
 }
 
@@ -49,7 +51,6 @@ const schemas = ref<ShyFormSchema[]>([
     field: 'zzz',
     component: 'Group',
     componentProps: ({ formModel }) => {
-
       return {
         // groupType: 'Divider',
         extra: () => h('div', { class: 'flex-1' }, 111),
@@ -61,20 +62,45 @@ const schemas = ref<ShyFormSchema[]>([
             required: true,
             colProps: { span: 24 },
             componentProps: {
+              isVirtual: false,
               columns: [
                 {
-                  title: '手机号',
-                  dataIndex: 'contactsPhone',
-                  required: true,
-                  type: 'DatePicker'
-                  // rules: [
-                  //   {
-                  //     pattern: /^1[3-9]\d{9}$/,
-                  //     message: '请输入正确的手机号码',
-                  //     trigger: 'blur'
-                  //   }
-                  // ]
+                  title: 'zzzz',
+                  dataIndex: 'a',
+                  width: 300,
+                  type: 'text'
+                },
+                {
+                  title: 'zzzzz',
+                  dataIndex: 'b',
+                  width: 300,
+                  type: 'text'
+                },
+                {
+                  title: 'zzzzzz',
+                  dataIndex: 'c',
+                  width: 300,
+                  type: 'text'
+                },
+                {
+                  title: 'zzzzz',
+                  dataIndex: 'd',
+                  type: 'text',
+                  // width: 300,
                 }
+                // {
+                //   title: '手机号',
+                //   dataIndex: 'contactsPhone',
+                //   required: true,
+                //   type: 'DatePicker'
+                //   // rules: [
+                //   //   {
+                //   //     pattern: /^1[3-9]\d{9}$/,
+                //   //     message: '请输入正确的手机号码',
+                //   //     trigger: 'blur'
+                //   //   }
+                //   // ]
+                // }
               ]
             }
           }
