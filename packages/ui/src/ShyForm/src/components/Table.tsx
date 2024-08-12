@@ -341,7 +341,7 @@ const ShyFormTable = defineComponent({
                   renderFormItem() ??
                   renderAction() ??
                   renderIndex() ?? (
-                    <td class="ant-table-cell" style={renderTdProps(column)}>
+                    <td class="ant-table-cell" width={column.width} style={renderTdProps(column)}>
                       {record[column.dataIndex]}
                     </td>
                   )
@@ -577,15 +577,22 @@ const ShyFormTable = defineComponent({
       ) : null
 
     const renderTdProps = (column): CSSProperties => {
-      switch (column.align) {
-        case 'center':
-          return { textAlign: 'center' }
-        case 'left':
-          return { textAlign: 'left' }
-        case 'right':
-          return { textAlign: 'right' }
-        default:
-          return { textAlign: 'left' }
+      console.log(column)
+      return {
+        ...(() => {
+          switch (column.align) {
+            case 'center':
+              return { textAlign: 'center' }
+            case 'left':
+              return { textAlign: 'left' }
+            case 'right':
+              return { textAlign: 'right' }
+            default:
+              return { textAlign: 'left' }
+          }
+        })(),
+        wordBreak: 'break-all',
+        wordWrap: 'break-word'
       }
     }
 

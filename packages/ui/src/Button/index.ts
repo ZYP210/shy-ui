@@ -3,6 +3,7 @@ import type { ExtractPropTypes } from 'vue'
 import BasicButton from './src/BasicButton'
 import PopConfirmButton from './src/PopConfirmButton'
 import { buttonProps } from './src/props'
+export { buttonProps } from './src/props'
 export const Button = withInstall(BasicButton)
 export { BasicButton, PopConfirmButton }
 

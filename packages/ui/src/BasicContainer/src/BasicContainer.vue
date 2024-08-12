@@ -26,31 +26,31 @@
         :class="`${prefixCls}-footer-buttons ${cancelAlignRef}`"
         v-if="isShowBtn"
       >
-        <Button
+        <BasicButton
           v-if="isShowCancelBtn"
           :class="`${prefixCls}-footer-cancel-button`"
           :loading="loading"
-          @click="emit('cancel')"
+          @click="onCancel"
         >
           {{ cancelBtnText }}
-        </Button>
+        </BasicButton>
         <div :class="`${prefixCls}-footer-fn-buttons`">
-          <Button
+          <BasicButton
             v-if="isShowSaveBtn"
             type="primary"
             :loading="loading"
-            @click="emit('save')"
+            @click="onSave"
           >
             {{ saveBtnText }}
-          </Button>
-          <Button
+          </BasicButton>
+          <BasicButton
             v-if="isShowSubmitBtn"
             type="primary"
             :loading="loading"
-            @click="emit('submit')"
+            @click="onSubmit"
           >
             {{ submitBtnText }}
-          </Button>
+          </BasicButton>
           <slot name="buttons"></slot>
         </div>
       </div>
@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts">
-import { Button } from 'ant-design-vue'
+import { BasicButton } from '../../Button'
 import { ArrowLeftOutlined, LoadingOutlined } from '@ant-design/icons-vue'
 import { defineComponent, computed } from 'vue'
 import { basicContainerProps } from './props'
@@ -68,7 +68,7 @@ import { useDesign } from '@shy-plugins/use'
 
 export default defineComponent({
   components: {
-    Button,
+    BasicButton,
     ArrowLeftOutlined,
     LoadingOutlined
   },

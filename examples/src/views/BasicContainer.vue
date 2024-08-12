@@ -2,17 +2,8 @@
   <ShyContainer
     footer-align="center"
     cancel-align="right"
-    :loading="loading"
-    :nav-bars="[
-    {
-      name: '客户管理',
-      path: '/opportunityManagement/customerManagement',
-    },
-    {
-      name: 'zzz',
-      path: '',
-    },
-    ]"
+    @cancel="handleCancel"
+    @submit="handleSubmit"
     @route-change="changePath"
   >
     <template #extra> 11111 </template>
@@ -30,7 +21,17 @@
 import { Button } from 'ant-design-vue'
 import { ShyContainer, BasicContainer } from '3h1-ui'
 import { ShyTable } from '3h1-ui'
-const loading = ref(false)
+
+const handleCancel = () => {}
+
+const handleSubmit = async () => {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(1)
+    }, 4000)
+  })
+  // console.log(888)
+}
 
 const changePath = (path: string) => {
   console.log(path)

@@ -12,7 +12,8 @@ import {
   watch,
   nextTick,
   provide,
-  withModifiers
+  withModifiers,
+  toRefs
 } from 'vue'
 import { Col, Form, Row } from 'ant-design-vue'
 import FormItem from './components/FormItem'
@@ -27,11 +28,9 @@ import { useModalContext } from '../../Modal'
 import { useDebounceFn } from '@vueuse/core'
 import {
   basicProps,
-  defaultAntConfig,
-  ROW_SLICE,
-  RANGE_PICKER_COL,
-  OTHER_COL,
-  ACTION_COL
+  tableSearchColKeys,
+  tableSearchColRef,
+  defaultAntConfig
 } from './props'
 import { cloneDeep, set } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
@@ -52,6 +51,9 @@ const ShyForm = defineComponent({
   setup(props, { emit, attrs, slots }) {
     const formModel = reactive<Recordable>({})
     const modalFn = useModalContext()
+
+    const { ROW_SLICE, RANGE_PICKER_COL, OTHER_COL, ACTION_COL } =
+      toRefs(tableSearchColRef)
 
     const advanceState = reactive<AdvanceState>({
       isAdvanced: true,
@@ -327,8 +329,23 @@ const ShyForm = defineComponent({
       return !!getBindValue.value.tableAction
     })
 
+    watch(
+      isTableForm,
+      (val) => {
+        if (val && !unref(getProps).formLabelInInput) {
+          const newCol = [20, 6, 6, 4]
+          tableSearchColKeys.forEach((key, index) => {
+            tableSearchColRef[key] = newCol[index]
+          })
+        }
+      },
+      {
+        immediate: true
+      }
+    )
+
     const COL_DIFF = (span) => {
-      return span * ((ROW_SLICE + ACTION_COL) / ROW_SLICE)
+      return span * ((unref(ROW_SLICE) + unref(ACTION_COL)) / unref(ROW_SLICE))
     }
     const allColSpanSum = computed(() => {
       return getSchema.value.reduce((pre, cur) => {
@@ -337,20 +354,20 @@ const ShyForm = defineComponent({
     })
     const isAutoShowFormItem = computed(() => {
       return !(
-        allColSpanSum.value / (ROW_SLICE + ACTION_COL) >
+        allColSpanSum.value / (unref(ROW_SLICE) + unref(ACTION_COL)) >
         getBindValue.value.autoAdvancedLine
       )
     })
     const isShowFormCollapse = computed(
-      () => allColSpanSum.value > ROW_SLICE + ACTION_COL
+      () => allColSpanSum.value > unref(ROW_SLICE) + unref(ACTION_COL)
     )
     const getCurColSpan = (cur) => {
       if (!cur?.colProps?.span) {
         switch (cur.component) {
           case 'RangePicker':
-            return COL_DIFF(RANGE_PICKER_COL)
+            return COL_DIFF(unref(RANGE_PICKER_COL))
           default:
-            return COL_DIFF(OTHER_COL)
+            return COL_DIFF(unref(OTHER_COL))
         }
       }
       return COL_DIFF(cur.colProps.span)
@@ -377,7 +394,7 @@ const ShyForm = defineComponent({
 
       const renderFormActon = () => {
         return getFormActionBindProps.value.showActionButtonGroup ? (
-          <Col class={`${prefixCls}-action-content`} span={ACTION_COL}>
+          <Col class={`${prefixCls}-action-content`} span={unref(ACTION_COL)}>
             <FormAction
               {...getFormActionBindProps.value}
               class={`${prefixCls}-action`}
@@ -420,7 +437,7 @@ const ShyForm = defineComponent({
               [`--col-span`]: `${
                 ((schema.colProps?.span ??
                   getBindValue.value?.baseColProps?.span) /
-                  (ROW_SLICE + ACTION_COL)) *
+                  (unref(ROW_SLICE) + unref(ACTION_COL))) *
                 100
               }%`
             }}
@@ -456,7 +473,8 @@ const ShyForm = defineComponent({
               }, 0)
 
             const isAlwaysShowLineCount =
-              colSpanSum <= alwaysShowLineCount * (ROW_SLICE + ACTION_COL)
+              colSpanSum <=
+              alwaysShowLineCount * (unref(ROW_SLICE) + unref(ACTION_COL))
             const isColShow = isShowFormInside.value || isAlwaysShowLineCount
 
             const renderColPropsItem = () => {
@@ -489,7 +507,11 @@ const ShyForm = defineComponent({
           >
             <Row class={`${prefixCls}-row`}>
               <Col
-                span={isTableForm.value ? ROW_SLICE : ROW_SLICE + ACTION_COL}
+                span={
+                  isTableForm.value
+                    ? unref(ROW_SLICE)
+                    : unref(ROW_SLICE) + unref(ACTION_COL)
+                }
                 class={`${prefixCls}-content-col`}
               >
                 <Row {...getRow.value} class={`${prefixCls}-input`}>

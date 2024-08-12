@@ -6,7 +6,7 @@ export const basicContainerProps = reactive({
   },
   loading: {
     type: Boolean,
-    default: false
+    default: undefined
   },
   isShowHeader: {
     type: Boolean,
@@ -52,6 +52,9 @@ export const basicContainerProps = reactive({
     type: String as PropType<'left' | 'right'>,
     default: 'left'
   },
+  onSubmit: { type: Function as PropType<(...args) => any>, default: null },
+  onSave: { type: Function as PropType<(...args) => any>, default: null },
+  onCancel: { type: Function as PropType<(...args) => any>, default: null },
   footerAlign: {
     type: String as PropType<'left' | 'center' | 'right'>,
     default: 'right'
