@@ -15,6 +15,7 @@ export interface Schema {
   helpMessage: string
   ifShow?: (data) => boolean | boolean
   isForm?: boolean
+  required?: boolean
 }
 export const basicColProps = 24
 

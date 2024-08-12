@@ -25625,7 +25625,7 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     const props = __props;
     const formatTime = (unix) => {
       const day = dayjs.unix(unix);
-      return day.format("YYYY-MM-DD HH:mm:ss");
+      return day.format("YYYY-MM-DD");
     };
     const addHour = (unix, hour) => {
       const day = dayjs.unix(unix);
@@ -25724,7 +25724,6 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
       });
     });
     return (_ctx, _cache) => {
-      const _component_a_popover = resolveComponent("a-popover");
       return openBlock(), createElementBlock("div", _hoisted_1$1, [
         createElementVNode("div", {
           class: "gantt-chart-container",
@@ -25758,24 +25757,16 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
                   key: index,
                   class: "gantt-chart-item"
                 }, [
-                  createVNode(_component_a_popover, {
-                    title: "任务名",
-                    placement: "right"
-                  }, {
-                    default: withCtx(() => [
-                      createElementVNode("div", {
-                        ref_for: true,
-                        ref_key: "rectRef",
-                        ref: rectRef,
-                        class: "gantt-chart-item-bar",
-                        style: normalizeStyle({
-                          width: `${svg.width}px`,
-                          left: `${svg.position}px`
-                        })
-                      }, null, 4)
-                    ]),
-                    _: 2
-                  }, 1024)
+                  createElementVNode("div", {
+                    ref_for: true,
+                    ref_key: "rectRef",
+                    ref: rectRef,
+                    class: "gantt-chart-item-bar",
+                    style: normalizeStyle({
+                      width: `${svg.width}px`,
+                      left: `${svg.position}px`
+                    })
+                  }, null, 4)
                 ]);
               }), 128))
             ])
@@ -25785,8 +25776,8 @@ const _sfc_main$1 = /* @__PURE__ */ defineComponent({
     };
   }
 });
-const GanttChart_vue_vue_type_style_index_0_scoped_c655e385_lang = "";
-const GanttChart = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-c655e385"]]);
+const GanttChart_vue_vue_type_style_index_0_scoped_ed826475_lang = "";
+const GanttChart = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-ed826475"]]);
 const style = "";
 const _hoisted_1 = { class: "gantt-view" };
 const _sfc_main = /* @__PURE__ */ defineComponent({

@@ -145,6 +145,8 @@ export default defineComponent({
                 : item.ifShow
               : true
 
+          const required = item?.required ? '*' : ''
+
           return ifShow ? (
             <div
               class={`${prefixCls}-row`}
@@ -171,6 +173,9 @@ export default defineComponent({
                   }}
                   class={`${prefixCls}-label`}
                 >
+                  <span style={{ color: 'red', width: '10px' }}>
+                    {required}
+                  </span>
                   {slots[`${item.field}Label`]
                     ? slots[`${item.field}Label`]?.({
                         model: getProps.value.data,

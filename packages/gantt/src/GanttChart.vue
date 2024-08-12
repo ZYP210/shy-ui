@@ -28,16 +28,15 @@
 
           <template v-for="(svg, index) in svgList" :key="index">
             <div class="gantt-chart-item">
-              <a-popover title="任务名" placement="right">
-                <div
-                  ref="rectRef"
-                  class="gantt-chart-item-bar"
-                  :style="{
-                    width: `${svg.width}px`,
-                    left: `${svg.position}px`
-                  }"
-                ></div>
-              </a-popover>
+              <!-- <a-popover title="任务名" placement="right"> </a-popover> -->
+              <div
+                ref="rectRef"
+                class="gantt-chart-item-bar"
+                :style="{
+                  width: `${svg.width}px`,
+                  left: `${svg.position}px`
+                }"
+              ></div>
             </div>
           </template>
         </div>
@@ -71,7 +70,7 @@ const props = withDefaults(defineProps<{ data: any }>(), {})
 
 const formatTime = (unix: number) => {
   const day = dayjs.unix(unix)
-  return day.format('YYYY-MM-DD HH:mm:ss')
+  return day.format('YYYY-MM-DD')
 }
 
 const addHour = (unix: number, hour: number) => {

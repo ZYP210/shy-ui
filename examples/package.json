@@ -13,6 +13,7 @@
     "@ant-design/icons-vue": "^6.1.0",
     "@iconify/iconify": "^3.0.1",
     "@shy-plugins/ai-map": "workspace:^",
+    "@shy-plugins/gantt": "workspace:^",
     "ant-design-vue": "^4.1.2",
     "axios": "^1.2.1",
     "chroma-js": "^2.4.2",
