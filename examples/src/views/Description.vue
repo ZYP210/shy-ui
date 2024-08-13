@@ -38,7 +38,26 @@ const schema: any[] = [
     label: '测试',
     colProps: { span: 8 },
     isForm: true,
-    component: 'Input',
+
+    componentProps: {
+      required: true,
+      columns: [
+        {
+          title: '123',
+          dataIndex: 'a',
+          required: true
+        },
+        {
+          title: '123',
+          dataIndex: 'b'
+        },
+        {
+          title: '123',
+          dataIndex: 'c'
+        }
+      ]
+    },
+    component: 'Table',
     required: true
   },
   {

@@ -8,6 +8,7 @@ import { BasicHelp } from '../../Basic/index'
 import { DescriptionProps } from './typing'
 import { isBoolean, isFunction, isNumber } from '@shy-plugins/utils'
 import FormItem from './components/formItem'
+import { Form } from 'ant-design-vue'
 
 export default defineComponent({
   name: 'Description',
@@ -238,7 +239,7 @@ export default defineComponent({
             : `${prefixCls}-wrapper`
         }
       >
-        {rows.value}
+        <Form model={formModel}>{rows.value}</Form>
       </div>
     )
   }

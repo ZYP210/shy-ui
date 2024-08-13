@@ -251,7 +251,8 @@ export default defineComponent({
         allowClear: true,
         getPopupContainer: (trigger: Element) => trigger.parentNode,
         size: 'small',
-        ...unref(getComponentsProps)
+        ...unref(getComponentsProps),
+        codeField: field
       }
 
       const bindValue: Recordable = {
