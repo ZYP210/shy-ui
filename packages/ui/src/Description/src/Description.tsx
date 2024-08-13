@@ -232,15 +232,17 @@ export default defineComponent({
 
     emit('register', { setDescProps, getFieldsValue, setFieldsValue })
     return () => (
-      <div
-        class={
-          isBordered.value
-            ? `${prefixCls}-wrapper ${prefixCls}-wrapper-bordered`
-            : `${prefixCls}-wrapper`
-        }
-      >
-        <Form model={formModel}>{rows.value}</Form>
-      </div>
+      <Form model={formModel}>
+        <div
+          class={
+            isBordered.value
+              ? `${prefixCls}-wrapper ${prefixCls}-wrapper-bordered`
+              : `${prefixCls}-wrapper`
+          }
+        >
+          {rows.value}
+        </div>
+      </Form>
     )
   }
 })
