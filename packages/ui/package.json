@@ -1,6 +1,6 @@
 {
   "name": "3h1-ui",
-  "version": "3.0.0-next.119",
+  "version": "3.0.0-next.120",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
