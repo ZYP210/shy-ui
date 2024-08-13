@@ -341,7 +341,11 @@ const ShyFormTable = defineComponent({
                   renderFormItem() ??
                   renderAction() ??
                   renderIndex() ?? (
-                    <td class="ant-table-cell" width={column.width} style={renderTdProps(column)}>
+                    <td
+                      class="ant-table-cell"
+                      width={column.width}
+                      style={renderTdProps(column)}
+                    >
                       {record[column.dataIndex]}
                     </td>
                   )
@@ -577,7 +581,6 @@ const ShyFormTable = defineComponent({
       ) : null
 
     const renderTdProps = (column): CSSProperties => {
-      console.log(column)
       return {
         ...(() => {
           switch (column.align) {
