@@ -50,6 +50,7 @@ export const URLData: MenuList[] = [
     title: '布局',
     urlAry: [
       'Page',
+      'ShyLayoutContainer',
       'BasicContainer',
       'ClickOutSide',
       'CollapseContainer',
