@@ -358,8 +358,20 @@ const ShyFormTable = defineComponent({
       )
     })
 
+    const defaultValuesRef = computed(() => {
+      return props.columns.reduce((acc, cur) => {
+        if (cur.defaultValue === undefined) return acc
+
+        acc[cur.dataIndex] = cur.defaultValue ?? ''
+        return acc
+      }, {})
+    })
+
     const create = () => {
-      state.value = [...toRaw(state.value), { [props.rowKey]: buildUUID() }]
+      state.value = [
+        ...toRaw(state.value),
+        { [props.rowKey]: buildUUID(), ...defaultValuesRef.value }
+      ]
       curIndex.value = 0
       if (props.isVirtual) {
         nextTick(() => {

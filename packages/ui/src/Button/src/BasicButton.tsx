@@ -27,17 +27,20 @@ const BasicButton = defineComponent({
     }
 
     const getBindValue = computed(() => {
-      return omit({
-        ...attrs,
-        ...props,
-        loading:
-          isBoolean(props.loading) || props.isContinuousClicks
-            ? props.loading
-            : loading.value,
-        type: ['danger', 'waring', 'success', 'message'].includes(props.type)
-          ? 'primary'
-          : props.type
-      }, 'onClick')
+      return omit(
+        {
+          ...attrs,
+          ...props,
+          loading:
+            isBoolean(props.loading) || props.isContinuousClicks
+              ? props.loading
+              : loading.value,
+          type: ['danger', 'waring', 'success', 'message'].includes(props.type)
+            ? 'primary'
+            : props.type
+        },
+        'onClick'
+      )
     })
 
     const renderButton = () => {
@@ -85,30 +88,32 @@ const BasicButton = defineComponent({
       }
 
       return (
-        <ConfigProvider theme={getTypeToken()}>
-          <Button
-            {...getBindValue.value}
-            {...isDanger()}
-            onClick={onClick}
-            style={isLinkColorStyle()}
-          >
-            {{
-              default: (data) => {
-                return (
-                  <>
-                    {props.preIcon ? (
-                      <Icon icon={props.preIcon} size={props.iconSize} />
-                    ) : null}
-                    {slots?.default?.(data)}
-                    {props.postIcon ? (
-                      <Icon icon={props.postIcon} size={props.iconSize} />
-                    ) : null}
-                  </>
-                )
-              }
-            }}
-          </Button>
-        </ConfigProvider>
+        <span>
+          <ConfigProvider theme={getTypeToken()}>
+            <Button
+              {...getBindValue.value}
+              {...isDanger()}
+              onClick={onClick}
+              style={isLinkColorStyle()}
+            >
+              {{
+                default: (data) => {
+                  return (
+                    <>
+                      {props.preIcon ? (
+                        <Icon icon={props.preIcon} size={props.iconSize} />
+                      ) : null}
+                      {slots?.default?.(data)}
+                      {props.postIcon ? (
+                        <Icon icon={props.postIcon} size={props.iconSize} />
+                      ) : null}
+                    </>
+                  )
+                }
+              }}
+            </Button>
+          </ConfigProvider>
+        </span>
       )
     }
 

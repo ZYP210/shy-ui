@@ -68,7 +68,7 @@ const schemas = ref<ShyFormSchema[]>([
                   title: 'zzzz',
                   dataIndex: 'a',
                   width: 300,
-                  type: 'text'
+                  defaultValue: 111
                 },
                 {
                   title: 'zzzzz',
