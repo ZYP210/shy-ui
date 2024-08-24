@@ -69,6 +69,10 @@ const ShyFormTable = defineComponent({
       type: Boolean,
       default: () => true
     },
+    isShowRemoveBtn: {
+      type: Boolean,
+      default: () => true
+    },
     tableAction: {
       type: Function,
       default: (res) => {
@@ -484,13 +488,17 @@ const ShyFormTable = defineComponent({
 
     const getActions = (record) => {
       return [
-        {
-          label: '删除',
-          popConfirm: {
-            title: '确定删除',
-            confirm: remove.bind(null, record[props.rowKey])
-          }
-        },
+        ...(props.isShowRemoveBtn
+          ? [
+              {
+                label: '删除',
+                popConfirm: {
+                  title: '确定删除',
+                  confirm: remove.bind(null, record[props.rowKey])
+                }
+              }
+            ]
+          : []),
         ...props.tableAction(record)
       ]
     }
@@ -630,7 +638,6 @@ const ShyFormTable = defineComponent({
     expose({ tableElRef })
 
     return () => {
-
       return (
         <>
           {renderTable.value}
