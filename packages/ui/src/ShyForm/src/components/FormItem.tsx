@@ -30,6 +30,7 @@ const FormItem = defineComponent({
     const getValues = computed(() => {
       const { allDefaultValues, formModel, schema } = props
       const { mergeDynamicData } = props.formProps
+
       return {
         field: schema.field,
         model: formModel,
@@ -426,6 +427,7 @@ const FormItem = defineComponent({
 
         const showSuffix = !!suffix
         const getSuffix = isFunction(suffix) ? suffix(unref(getValues)) : suffix
+
 
         return (
           <Form.Item

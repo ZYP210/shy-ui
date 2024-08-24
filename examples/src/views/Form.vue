@@ -31,17 +31,26 @@ const { token } = useToken()
 
 const handlePush = () => {
   setFieldsValue({
-    zzz: {
-      Table: Array.from({ length: 200 }, (_, i) => {
-        return {
-          a: 1,
-          b: 2,
+    // zzz: {
+    //   Table: Array.from({ length: 1 }, (_, i) => {
+    //     return {
+    //       a: 1,
+    //       b: 2,
 
-          c: 4,
-          d: ''
-        }
-      })
-    }
+    //       c: 4,
+    //       d: ''
+    //     }
+    //   })
+    // },
+    Table: Array.from({ length: 1 }, (_, i) => {
+      return {
+        a: 1,
+        b: 2,
+
+        c: 4,
+        d: ''
+      }
+    })
   })
 }
 
@@ -51,10 +60,11 @@ const schemas = ref<ShyFormSchema[]>([
     field: 'zzz',
     component: 'Group',
     componentProps: ({ formModel }) => {
-      return {
-        // groupType: 'Divider',
-        extra: () => h('div', { class: 'flex-1' }, 111),
 
+      return {
+        groupInObject: false,
+        groupType: 'Divider',
+        extra: () => h('div', { class: 'flex-1' }, 111),
         expandIconPosition: 'end',
         schemas: [
           {
@@ -68,10 +78,9 @@ const schemas = ref<ShyFormSchema[]>([
                   type: 'checkbox',
                   onChange: (selectedRowKeys, selectedRows) => {
                     console.log(selectedRowKeys, selectedRows)
-                  },
+                  }
                 },
-                useRef: (compRef) => {
-                },
+                useRef: (compRef) => {},
                 columns: [
                   {
                     title: 'zzzz',

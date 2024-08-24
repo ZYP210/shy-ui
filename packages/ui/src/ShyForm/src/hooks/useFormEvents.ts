@@ -71,7 +71,19 @@ export function useFormEvents({
    */
   async function setFieldsValue(values: Recordable): Promise<void> {
     const fields = unref(getSchema)
-      .map((item) => item.field)
+      .flatMap((item) => {
+        const { componentProps } = item || {}
+        let _props = componentProps as any
+        if (typeof componentProps === 'function') {
+          _props = _props({ formModel })
+        }
+
+        if (item.component === 'Group' && !_props.groupInObject) {
+          return _props.schemas.map((ele) => {
+            return ele.field
+          })
+        }
+      })
       .filter(Boolean)
 
     // key 支持 a.b.c 的嵌套写法
@@ -103,7 +115,7 @@ export function useFormEvents({
             if (typeof componentProps === 'function') {
               _props = _props({ formModel })
             }
-            if(typeof value !== 'string') value = dayjs(value)
+            if (typeof value !== 'string') value = dayjs(value)
             formModel[key] = value
               ? _props?.valueFormat
                 ? dayjs(value).format(_props?.valueFormat)
