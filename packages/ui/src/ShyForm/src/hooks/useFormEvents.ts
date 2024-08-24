@@ -83,6 +83,8 @@ export function useFormEvents({
             return ele.field
           })
         }
+
+        return item.field
       })
       .filter(Boolean)
 

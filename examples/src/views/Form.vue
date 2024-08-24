@@ -56,11 +56,17 @@ const handlePush = () => {
 
 const schemas = ref<ShyFormSchema[]>([
   {
+    label: '',
+    field: 'initTicketList',
+    component: 'Input',
+    // defaultValue: [],
+    show: false
+  },
+  {
     label: '分组表单',
     field: 'zzz',
     component: 'Group',
     componentProps: ({ formModel }) => {
-
       return {
         groupInObject: false,
         groupType: 'Divider',
