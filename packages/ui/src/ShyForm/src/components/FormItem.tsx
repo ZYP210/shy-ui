@@ -350,7 +350,13 @@ const FormItem = defineComponent({
       }
 
       if (!renderComponentContent) {
-        return <Comp {...compAttr} onInput={handleInput} />
+        return (
+          <Comp
+            ref={unref(getComponentsProps)?.useRef}
+            {...compAttr}
+            onInput={handleInput}
+          />
+        )
       }
       const compSlot = isFunction(renderComponentContent)
         ? { ...renderComponentContent(unref(getValues)) }
@@ -358,7 +364,11 @@ const FormItem = defineComponent({
             default: () => renderComponentContent
           }
 
-      return <Comp {...compAttr}>{compSlot}</Comp>
+      return (
+        <Comp ref={unref(getComponentsProps)?.useRef} {...compAttr}>
+          {compSlot}
+        </Comp>
+      )
     }
 
     function renderLabelHelpMessage() {

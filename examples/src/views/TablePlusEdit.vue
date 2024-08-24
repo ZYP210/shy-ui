@@ -45,20 +45,18 @@ const columns = [
 
 const getList = (params = {}) => {
   const list = []
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 40; i++) {
     list.push({
       id: i,
       a: 1,
       b: 1,
       c: 3,
-      d: 4
+      d: 4,
+      _isEdit: true
     })
   }
   return new Promise((resolve) => {
-    return resolve({
-      records: list,
-      total: list.length
-    })
+    return resolve(list)
   })
 }
 

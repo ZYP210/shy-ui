@@ -58,7 +58,7 @@ input:focus.ant-input {
   &::-webkit-scrollbar {
     position: absolute;
     height: 10px;
-    width: 0;
+    width: 10px;
   }
 
   &::-webkit-scrollbar-thumb {
@@ -101,6 +101,16 @@ input:focus.ant-input {
 
 .ant-table-cell-fix-right-last {
   right: -1px !important;
+
+  &::before {
+    content: unset !important;
+  }
+}
+
+.ant-table-cell-fix-right:nth-last-child(2) {
+  &::before {
+    content: unset !important;
+  }
 }
 
 .ant-table-body {
@@ -109,9 +119,9 @@ input:focus.ant-input {
   table:has(.ant-table-placeholder) {
     height: 100%;
 
-    .ant-table-expanded-row-fixed {
-      width: 100% !important;
-    }
+    // .ant-table-expanded-row-fixed {
+    //   width: 100% !important;
+    // }
   }
 }
 
@@ -123,6 +133,23 @@ input:focus.ant-input {
   .ant-table {
     overflow-x: hidden;
     width: 100%;
+
+    .ant-checkbox-inner {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .ant-checkbox-indeterminate .ant-checkbox-inner::after {
+      width: 5px;
+      height: 5px;
+    }
+
+    .ant-checkbox-checked .ant-checkbox-inner::after {
+      width: 4.2px;
+      height: 7px;
+      border-width: 1.5px;
+    }
 
     .ant-table-title {
       display: flex;

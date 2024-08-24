@@ -115,7 +115,7 @@ const columns: any[] = [
   {
     title: '菜单名称',
     dataIndex: 'name',
-    width: 120,
+    width: 1120,
     tag: true,
     // tagMode: 'tag',
     options: [
@@ -149,7 +149,7 @@ const columns: any[] = [
   {
     title: '菜单名称',
     dataIndex: 'name',
-    width: 120,
+    // width: 120,
     tag: true,
     tagMode: 'text',
     options: [
@@ -184,6 +184,7 @@ const columns: any[] = [
     title: '菜单名称',
     dataIndex: 'name',
     width: 120,
+    // fixed: 'right',
     options: [
       {
         label: '信息',
@@ -196,7 +197,7 @@ const columns: any[] = [
         colorType: 'var(--primary-5)'
       },
       {
-        label: '警告',
+        label: 'jdlksajdlkasjdklsajklasjaslkdjsakldjsalkdjaskldasjdaskljdaslkdjaslkjdalksjdlksajdklsadjaslkdjsalkdjoiuewoiwugchsadkjhadkysoiduwoiudhajdhaskjdhasiudhw9iuqhd',
         value: '2',
         colorType: 'var(--orange-5)'
       },
@@ -212,13 +213,13 @@ const columns: any[] = [
       }
     ]
   },
-  {
-    title: '数',
-    dataIndex: 'qualifiedNum'
-  }
+  // {
+  //   title: '数',
+  //   dataIndex: 'qualifiedNum'
+  // }
 ]
 
-const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
+const searchFormSchema = Array.from({ length: 1 }, (_, i) => {
   return {
     label: `demo${i}`,
     field: `demo${i}`,
@@ -257,7 +258,7 @@ const getFooterActions = ({ rows, rowKeys, disabled }) => {
   ]
 }
 
-const length = ref(1)
+const length = ref(10)
 
 const [
   register,
@@ -293,7 +294,7 @@ const [
   },
   // isShowFooterSettings: false,
   // isShowHeader: false,
-  isShowFooter: false,
+  // isShowFooter: false,
   // headerAlign: 'left',
   onColumnsChange: (data) => {
     console.log(data)
@@ -382,7 +383,7 @@ const [
   },
   // clickToRowSelect: true,
   // useSearchForm: true,
-  canResize: false,
+  // canResize: false,
   actionColumn: {
     dataIndex: 'action',
     title: '操作'

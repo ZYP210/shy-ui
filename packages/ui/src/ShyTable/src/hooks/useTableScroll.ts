@@ -80,11 +80,13 @@ export function useTableScroll(
     const hasScrollBarX = bodyEl.scrollWidth > bodyEl.clientWidth
 
     if (hasScrollBarY) {
-      tableEl.classList.contains('hide-scrollbar-y') &&
-        tableEl.classList.remove('hide-scrollbar-y')
+      !tableEl.classList.contains('no-hide-scrollbar-y') &&
+        tableEl.classList.add('no-hide-scrollbar-y')
+      tableEl.classList.remove('hide-scrollbar-y')
     } else {
       !tableEl.classList.contains('hide-scrollbar-y') &&
         tableEl.classList.add('hide-scrollbar-y')
+      tableEl.classList.remove('no-hide-scrollbar-y')
     }
 
     if (hasScrollBarX) {

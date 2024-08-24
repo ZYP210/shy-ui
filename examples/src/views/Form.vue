@@ -1,5 +1,5 @@
 <template>
-  <div class="p-16px w-full h-full overflow-auto">
+  <div class="p-16px w-full h-2000px overflow-auto">
     <div class="flex gap-8px">
       <Button @click="handleGetForm">获取form</Button>
       <Button @click="handlePush">push200条数据</Button>
@@ -38,7 +38,7 @@ const handlePush = () => {
           b: 2,
 
           c: 4,
-          d: '21938120983129038129038129038120938120938asdjasdkasjdklasjdlkasjdasoiudasoiudasoidjhasiujodhsajkdsahdkjashdkjasdiopasduiaspoiduasioduasoiduasioduadoiasudoiasudiaosduasoiduioasduasio03890128390128309128301298312093812093812093812093812903812309128390128390128309128390128312903892103812821038219038120938129038'
+          d: ''
         }
       })
     }
@@ -54,6 +54,7 @@ const schemas = ref<ShyFormSchema[]>([
       return {
         // groupType: 'Divider',
         extra: () => h('div', { class: 'flex-1' }, 111),
+
         expandIconPosition: 'end',
         schemas: [
           {
@@ -61,47 +62,62 @@ const schemas = ref<ShyFormSchema[]>([
             component: 'Table',
             required: true,
             colProps: { span: 24 },
-            componentProps: {
-              isVirtual: false,
-              columns: [
-                {
-                  title: 'zzzz',
-                  dataIndex: 'a',
-                  width: 300,
-                  defaultValue: 111
+            componentProps: ({ formModel }) => {
+              return {
+                rowSelection: {
+                  type: 'checkbox',
+                  onChange: (selectedRowKeys, selectedRows) => {
+                    console.log(selectedRowKeys, selectedRows)
+                  },
                 },
-                {
-                  title: 'zzzzz',
-                  dataIndex: 'b',
-                  width: 300,
-                  type: 'text'
+                useRef: (compRef) => {
                 },
-                {
-                  title: 'zzzzzz',
-                  dataIndex: 'c',
-                  width: 300,
-                  type: 'text'
-                },
-                {
-                  title: 'zzzzz',
-                  dataIndex: 'd',
-                  type: 'text',
-                  // width: 300,
-                }
-                // {
-                //   title: '手机号',
-                //   dataIndex: 'contactsPhone',
-                //   required: true,
-                //   type: 'DatePicker'
-                //   // rules: [
-                //   //   {
-                //   //     pattern: /^1[3-9]\d{9}$/,
-                //   //     message: '请输入正确的手机号码',
-                //   //     trigger: 'blur'
-                //   //   }
-                //   // ]
-                // }
-              ]
+                columns: [
+                  {
+                    title: 'zzzz',
+                    dataIndex: 'a',
+                    defaultValue: 111
+                  },
+                  {
+                    title: 'zzzz',
+                    dataIndex: 'a',
+                    defaultValue: 111
+                  },
+                  {
+                    title: 'zzzz',
+                    dataIndex: 'a',
+                    defaultValue: 111
+                  },
+                  {
+                    title: 'zzzz',
+                    dataIndex: 'a',
+                    defaultValue: 111
+                  },
+                  {
+                    title: 'zzzzz',
+                    dataIndex: 'b',
+                    type: 'text'
+                  },
+                  {
+                    title: 'zzzzzz',
+                    dataIndex: 'c',
+                    type: 'text'
+                  }
+                  // {
+                  //   title: '手机号',
+                  //   dataIndex: 'contactsPhone',
+                  //   required: true,
+                  //   type: 'DatePicker'
+                  //   // rules: [
+                  //   //   {
+                  //   //     pattern: /^1[3-9]\d{9}$/,
+                  //   //     message: '请输入正确的手机号码',
+                  //   //     trigger: 'blur'
+                  //   //   }
+                  //   // ]
+                  // }
+                ]
+              }
             }
           }
         ]
