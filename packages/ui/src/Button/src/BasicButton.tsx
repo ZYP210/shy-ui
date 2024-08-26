@@ -19,7 +19,7 @@ const BasicButton = defineComponent({
         await props.onClick?.(...args)
         setTimeout(() => {
           loading.value = false
-        }, 1000)
+        }, 500)
         return
       }
 

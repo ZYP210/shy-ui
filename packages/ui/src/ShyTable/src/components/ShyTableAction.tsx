@@ -43,7 +43,7 @@ export const shyTableActionProps = reactive({
   },
   stopButtonPropagation: {
     type: Boolean,
-    default: false
+    default: true
   },
   showCount: {
     type: Number,
@@ -209,7 +209,7 @@ const ShyTableAction = defineComponent({
       switch (props.type) {
         case 'action':
           return (
-            <BasicButton type="link" size="small">
+            <BasicButton type="link" size="small" isContinuousClicks={true}>
               <MoreOutlined />
             </BasicButton>
           )
