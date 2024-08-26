@@ -117,6 +117,31 @@ const schemas = ref<ShyFormSchema[]>([
                     title: 'zzzzzz',
                     dataIndex: 'c',
                     type: 'text'
+                  },
+                  {
+                    title: 'zzzzzz',
+                    dataIndex: 'c',
+                    type: 'text'
+                  },
+                  {
+                    title: 'zzzzzz',
+                    dataIndex: 'c',
+                    type: 'text'
+                  },
+                  {
+                    title: 'zzzzzz',
+                    dataIndex: 'c',
+                    type: 'text'
+                  },
+                  {
+                    title: 'zzzzzz',
+                    dataIndex: 'c',
+                    type: 'text'
+                  },
+                  {
+                    title: 'zzzzzz',
+                    dataIndex: 'c',
+                    type: 'text'
                   }
                   // {
                   //   title: '手机号',

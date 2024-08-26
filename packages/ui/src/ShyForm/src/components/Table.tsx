@@ -612,29 +612,24 @@ const ShyFormTable = defineComponent({
       ) : null
 
     const renderTd = (cell, { slots }) => {
-      const Td = defineComponent({
-        inheritAttrs: false,
-        setup() {
-          return () => {
-            return (
-              <td
-                {...omit(cell, ['onMouseenter', 'onMouseleave'])}
-                style={{
-                  ...cell.style,
-                  wordBreak: 'break-all',
-                  wordWrap: 'break-word'
-                }}
-              >
-                {slots.default()}
-              </td>
-            )
-          }
-        }
-      })
+      const Td = (
+        <td
+          style={{
+            ...cell.style,
+            wordBreak: 'break-all',
+            wordWrap: 'break-word'
+          }}
+        >
+          {slots?.default?.()}
+        </td>
+      )
 
-      return <Td />
+
+      Reflect.deleteProperty(Td.ctx.attrs, 'onMouseenter')
+      Reflect.deleteProperty(Td.ctx.attrs, 'onMouseleave')
+
+      return Td
     }
-
     expose({ tableElRef })
 
     return () => {
