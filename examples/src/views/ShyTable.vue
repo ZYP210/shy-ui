@@ -183,7 +183,7 @@ const columns: any[] = [
   {
     title: '菜单名称',
     dataIndex: 'name',
-    width: 120,
+    width: 1120,
     // fixed: 'right',
     options: [
       {
@@ -386,7 +386,8 @@ const [
   // canResize: false,
   actionColumn: {
     dataIndex: 'action',
-    title: '操作'
+    title: '操作',
+    width: 200
     // fixed: 'right'
   },
   showIndexColumn: true
