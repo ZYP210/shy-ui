@@ -115,7 +115,7 @@ const columns: any[] = [
   {
     title: '菜单名称',
     dataIndex: 'name',
-    width: 1120,
+    // width: 1120,
     tag: true,
     // tagMode: 'tag',
     options: [
@@ -216,7 +216,25 @@ const columns: any[] = [
   // {
   //   title: '数',
   //   dataIndex: 'qualifiedNum'
-  // }
+  // },
+  {
+    title: '收票时间',
+    dataIndex: 'receiptTime',
+    // customRender: ({ record }) => renderDate(record.receiptTime),
+  },
+  {
+    title: '收票金额',
+    dataIndex: 'amountPriceTaxSum',
+  },
+  {
+    title: '创建人',
+    dataIndex: 'creatorName',
+  },
+  {
+    title: '创建时间',
+    dataIndex: 'createTime',
+    // customRender: ({ record }) => renderDate(record.createTime),
+  },
 ]
 
 const searchFormSchema = Array.from({ length: 1 }, (_, i) => {
