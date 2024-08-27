@@ -59,111 +59,49 @@ const schemas = ref<ShyFormSchema[]>([
     label: '',
     field: 'initTicketList',
     component: 'Input',
+    componentProps: ({ formModel }) => {
+      return {}
+    },
     // defaultValue: [],
     show: false
   },
   {
-    label: '分组表单',
-    field: 'zzz',
+    label: '绑定明细',
+    field: '-',
     component: 'Group',
-    componentProps: ({ formModel }) => {
-      return {
-        groupInObject: false,
-        groupType: 'Divider',
-        extra: () => h('div', { class: 'flex-1' }, 111),
-        expandIconPosition: 'end',
-        schemas: [
-          {
-            field: 'Table',
-            component: 'Table',
-            required: true,
-            colProps: { span: 24 },
-            componentProps: ({ formModel }) => {
-              return {
-                rowSelection: {
-                  type: 'checkbox',
-                  onChange: (selectedRowKeys, selectedRows) => {
-                    console.log(selectedRowKeys, selectedRows)
+    componentProps: {
+      groupInObject: false,
+      groupType: 'Divider',
+      schemas: [
+        {
+          label: '入库单',
+          field: 'refReceiptTicketDetailIds',
+          helpMessage: ['请先选择合同编号'],
+          component: 'ApiSelect',
+          componentProps: ({ formModel }) => {
+
+            return {
+              api: async (params) => {
+                return [
+                  {
+                    label: '111',
+                    value: '111'
                   }
-                },
-                useRef: (compRef) => {},
-                columns: [
-                  {
-                    title: 'zzzz',
-                    dataIndex: 'a',
-                    defaultValue: 111
-                  },
-                  {
-                    title: 'zzzz',
-                    dataIndex: 'a',
-                    defaultValue: 111
-                  },
-                  {
-                    title: 'zzzz',
-                    dataIndex: 'a',
-                    defaultValue: 111
-                  },
-                  {
-                    title: 'zzzz',
-                    dataIndex: 'a',
-                    defaultValue: 111
-                  },
-                  {
-                    title: 'zzzzz',
-                    dataIndex: 'b',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  }
-                  // {
-                  //   title: '手机号',
-                  //   dataIndex: 'contactsPhone',
-                  //   required: true,
-                  //   type: 'DatePicker'
-                  //   // rules: [
-                  //   //   {
-                  //   //     pattern: /^1[3-9]\d{9}$/,
-                  //   //     message: '请输入正确的手机号码',
-                  //   //     trigger: 'blur'
-                  //   //   }
-                  //   // ]
-                  // }
                 ]
-              }
+              },
+              onChange: async (value) => {
+                formModel.initTicketList = [111]
+              },
+              getPopupContainer: () => document.body,
+              mode: 'multiple',
+              maxTagCount: 1,
+              params: { purchaseOrPreOrderId: formModel.refContractId }
             }
-          }
-        ]
-      }
-    },
-    colProps: { span: 24 }
+          },
+          colProps: { span: 6 }
+        }
+      ]
+    }
   }
   // {
   //   label: 'Input',

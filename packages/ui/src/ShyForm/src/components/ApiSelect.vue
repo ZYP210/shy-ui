@@ -23,12 +23,20 @@
   </Select>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, ref, computed, unref, watch } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  ref,
+  computed,
+  unref,
+  watch,
+} from 'vue'
 import { Select } from 'ant-design-vue'
 import { isFunction } from '@shy-plugins/utils'
 import { useRuleFormItem, useAttrs } from '@shy-plugins/use'
 import { get, omit } from 'lodash-es'
 import { LoadingOutlined } from '@ant-design/icons-vue'
+import { useDebounceFn } from '@vueuse/core'
 
 type OptionsItem = { label: string; value: string; disabled?: boolean }
 
@@ -105,11 +113,6 @@ export default defineComponent({
       }, [] as OptionsItem[])
     })
 
-    // watchEffect(() => {
-    //   // console.log(new Date().getTime())
-    //   // props.immediate && !props.alwaysLoad && fetch()
-    // })
-
     watch(
       () => props.immediate && !props.alwaysLoad,
       (val) => {
@@ -129,9 +132,9 @@ export default defineComponent({
 
     watch(
       () => props.params,
-      () => {
+      useDebounceFn(() => {
         fetch()
-      },
+      }, 1),
       { deep: true }
     )
 
