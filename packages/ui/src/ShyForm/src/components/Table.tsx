@@ -637,7 +637,7 @@ const ShyFormTable = defineComponent({
         <>
           {renderTable.value}
           {renderAddBtn()}
-          <div class={`${prefixCls}-footer`}>{props.footerRender()}</div>
+          {props.footerRender() && <div class={`${prefixCls}-footer`}>{props.footerRender()}</div>}
         </>
       )
     }
