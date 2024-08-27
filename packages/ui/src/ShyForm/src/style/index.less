@@ -36,8 +36,17 @@
   }
 
   .ant-form-item {
+    &-required {
+      padding-inline-start: 10px;
+    }
+
     &-label {
       padding: 0;
+
+      label::before {
+        position: absolute;
+        left: 0;
+      }
 
       label::after {
         margin: 0 6px 0 2px;
@@ -52,19 +61,8 @@
       margin-bottom: 0;
     }
 
-    &-control-input-content {
-      height: 100%;
-
-      & > div {
-        height: 100%;
-
-        & > div:not(.ant-input-number-handler-wrap) {
-          display: flex;
-          width: 100%;
-          height: 100%;
-          align-items: center;
-        }
-      }
+    &-control-input-content > div > div:not(.ant-input-number-handler-wrap) {
+      width: 100%;
     }
 
     &.suffix-item {
@@ -86,8 +84,8 @@
     }
 
     .ant-picker {
+      padding: 5px 12px;
       width: 100%;
-      height: 100%;
     }
   }
 

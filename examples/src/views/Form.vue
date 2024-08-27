@@ -1,5 +1,5 @@
 <template>
-  <div class="p-16px w-full h-2000px overflow-auto">
+  <div class="p-16px w-full overflow-auto">
     <div class="flex gap-8px">
       <Button @click="handleGetForm">获取form</Button>
       <Button @click="handlePush">push200条数据</Button>
@@ -53,8 +53,166 @@ const handlePush = () => {
     })
   })
 }
+const bindCol = [
+  {
+    title: '产品编号',
+    dataIndex: 'productCode',
+    width: 100,
+    type: 'text',
+  },
+  {
+    title: '产品名称',
+    dataIndex: 'productName',
+    width: 100,
+    type: 'text',
+  },
+
+  {
+    title: '单位',
+    dataIndex: 'unitName',
+    width: 50,
+    type: 'text',
+  },
+  {
+    title: '金额',
+    dataIndex: 'price',
+    width: 100,
+    type: 'text',
+  },
+  {
+    title: '数量',
+    dataIndex: 'storageNum',
+    width: 60,
+    type: 'text',
+  },
+  {
+    title: '单价',
+    dataIndex: 'unitPrice',
+    width: 100,
+    type: 'text',
+  },
+  {
+    title: '规格型号',
+    dataIndex: 'modelType',
+    width: 100,
+    type: 'text',
+  },
+];
 
 const schemas = ref<ShyFormSchema[]>([
+  {
+    label: '绑定明细',
+    field: '-',
+    component: 'Group',
+    componentProps: {
+      groupInObject: false,
+      groupType: 'Divider',
+      schemas: [
+        {
+          label: '入库单',
+          field: 'refReceiptTicketDetailIds',
+          helpMessage: ['请先选择合同编号'],
+          component: 'ApiSelect',
+          colProps: { span: 6 }
+        },
+        {
+          label: '',
+          field: '-',
+          component: 'Input',
+          render: () => {
+            return null
+          },
+          colProps: { span: 18 }
+        },
+        {
+          field: 'unBindSelection',
+          component: 'Input',
+          colProps: { span: 12 }
+        },
+        {
+          field: 'ticketDetailSelection',
+          component: 'Input',
+          colProps: { span: 12 }
+        },
+        {
+          label: '',
+          field: 'unBind',
+          component: 'Table',
+          defaultValue: [],
+          componentProps: ({ formModel }) => {
+            return {
+              rowKey: 'id',
+              rowSelection: {
+                type: 'checkbox',
+                onChange: (selectedRowKeys) => {
+                  formModel.unBindSelection = selectedRowKeys
+                },
+                selectedRowKeys: formModel.unBindSelection
+              },
+              isVirtual: false,
+              isShowAddBtn: false,
+              isShowRemoveBtn: false,
+              columns: bindCol,
+              tableAction: (record) => {
+                return [
+                  {
+                    label: '选择',
+                    onClick: ((record) => {
+                      formModel.unBind = formModel.unBind.filter(
+                        (item) => record.id !== item.id
+                      )
+                      formModel.ticketDetailDetailVOList = [
+                        ...(formModel.ticketDetailDetailVOList ?? []),
+                        record
+                      ]
+                    }).bind(null, record)
+                  }
+                ]
+              }
+            }
+          },
+          colProps: { span: 12 }
+        },
+        {
+          label: '',
+          field: 'ticketDetailDetailVOList',
+          component: 'Table',
+          componentProps: ({ formModel }) => {
+            return {
+              rowKey: 'id',
+              rowSelection: {
+                type: 'checkbox',
+                onChange: (selectedRowKeys) => {
+                  formModel.ticketDetailSelection = selectedRowKeys
+                },
+                selectedRowKeys: formModel.ticketDetailSelection
+              },
+              isVirtual: false,
+              isShowAddBtn: false,
+              isShowRemoveBtn: false,
+              columns: bindCol,
+              tableAction: (record) => {
+                return [
+                  {
+                    label: '移除',
+                    onClick: ((record) => {
+                      formModel.ticketDetailDetailVOList =
+                        formModel.ticketDetailDetailVOList.filter(
+                          (item) => record.id !== item.id
+                        )
+                      formModel.unBind = [...(formModel.unBind ?? []), record]
+                    }).bind(null, record)
+                  }
+                ]
+              }
+            }
+          },
+          colProps: { span: 12 }
+        }
+      ]
+    },
+    colProps: { span: 24 }
+  },
   {
     label: '',
     field: 'initTicketList',
@@ -167,8 +325,9 @@ const schemas = ref<ShyFormSchema[]>([
     colProps: { span: 24 }
   },
   {
-    label: 'Input',
+    label: '关联商机',
     field: 'Input',
+    required: true,
     defaultValue: '111',
     component: 'Input',
     componentProps: {
