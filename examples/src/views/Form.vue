@@ -89,6 +89,7 @@ const schemas = ref<ShyFormSchema[]>([
                   }
                 ]
               },
+              // useRef: (compRef) => console.log(compRef),
               onChange: async (value) => {
                 formModel.initTicketList = [111]
               },
