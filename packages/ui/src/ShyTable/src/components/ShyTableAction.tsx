@@ -43,7 +43,7 @@ export const shyTableActionProps = reactive({
   },
   stopButtonPropagation: {
     type: Boolean,
-    default: false
+    default: true
   },
   showCount: {
     type: Number,
@@ -214,8 +214,13 @@ const ShyTableAction = defineComponent({
       switch (props.type) {
         case 'action':
           return (
-            <BasicButton type="link" size="small">
-              <MoreOutlined rotate={rotate} />
+            <BasicButton
+              type="link"
+              size="small"
+              rotate={rotate}
+              isContinuousClicks={true}
+            >
+              <MoreOutlined />
             </BasicButton>
           )
         case 'footer':

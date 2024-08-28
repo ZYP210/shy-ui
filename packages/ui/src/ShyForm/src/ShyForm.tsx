@@ -32,7 +32,7 @@ import {
   tableSearchColRef,
   defaultAntConfig
 } from './props'
-import { cloneDeep, set } from 'lodash-es'
+import { cloneDeep, isNumber, set } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
 import { isEqual, omit, pick } from 'lodash-es'
 import { useDesign } from '@shy-plugins/use'
@@ -394,7 +394,16 @@ const ShyForm = defineComponent({
 
       const renderFormActon = () => {
         return getFormActionBindProps.value.showActionButtonGroup ? (
-          <Col class={`${prefixCls}-action-content`} span={unref(ACTION_COL)}>
+          <Col
+            class={`${prefixCls}-action-content`}
+            span={unref(ACTION_COL)}
+            style={{
+              [`--col-span`]: `${
+                (unref(ACTION_COL) / (unref(ROW_SLICE) + unref(ACTION_COL))) *
+                100
+              }%`
+            }}
+          >
             <FormAction
               {...getFormActionBindProps.value}
               class={`${prefixCls}-action`}
@@ -423,6 +432,10 @@ const ShyForm = defineComponent({
       }
 
       const renderItem = (schema) => {
+        const realSpan =
+          (schema.colProps?.span ?? getBindValue.value?.baseColProps?.span) /
+          (unref(ROW_SLICE) + unref(ACTION_COL))
+
         return (
           <FormItem
             tableAction={props.tableAction}
@@ -434,12 +447,8 @@ const ShyForm = defineComponent({
             setFormModel={setFormModel}
             class={{ [`${prefixCls}-table-form-item`]: isTableForm.value }}
             style={{
-              [`--col-span`]: `${
-                ((schema.colProps?.span ??
-                  getBindValue.value?.baseColProps?.span) /
-                  (unref(ROW_SLICE) + unref(ACTION_COL))) *
-                100
-              }%`
+              [`--col-span`]: `${realSpan * 100}%`,
+              [`--w-gap`]: `${realSpan * getBindValue.value.gap}px`
             }}
           >
             {{
@@ -503,6 +512,9 @@ const ShyForm = defineComponent({
             class={getFormClass.value}
             ref={formElRef}
             model={formModel}
+            style={{
+              '--gap': `${getBindValue.value.gap}px`
+            }}
             onKeypress={withModifiers(handleEnterPress, ['enter'])}
           >
             <Row class={`${prefixCls}-row`}>

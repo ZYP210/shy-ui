@@ -42,11 +42,11 @@ const handleRemove = (record) => {
 const getActions = (record) => {
   return [
     {
-      label: 777,
+      label: '777',
       onClick: handleClick.bind(null, record)
     },
     {
-      label: 888,
+      label: '888',
       popConfirm: {
         title: '确定删除吗？',
         confirm: handleRemove.bind(null, record)
@@ -59,7 +59,13 @@ onMounted(() => {
   treeData.value = Array.from({ length: 100 }, (_, i) => {
     return {
       title: `${Math.random()}`,
-      key: i
+      key: i,
+      children: Array.from({ length: 100 }, (_, j) => {
+        return {
+          title: `${Math.random()}`,
+          key: `${i}-${j}`
+        }
+      })
     }
   })
   // setInterval(() => {

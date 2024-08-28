@@ -56,6 +56,10 @@ export const tableSearchColKeys = [
 ] as const
 
 export const basicProps = {
+  gap: {
+    type: Number,
+    default: 8
+  },
   formLabelInInput: {
     type: Boolean,
     default: false

@@ -47,6 +47,7 @@ export default defineComponent({
       prefixCls,
       screenRef,
       currentScreenRef,
+      setScale,
       emit
     }
   }

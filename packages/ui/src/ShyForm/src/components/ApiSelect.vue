@@ -23,12 +23,21 @@
   </Select>
 </template>
 <script lang="ts">
-import { defineComponent, PropType, ref, computed, unref, watch } from 'vue'
+import {
+  defineComponent,
+  PropType,
+  ref,
+  computed,
+  unref,
+  watch,
+  toRaw
+} from 'vue'
 import { Select } from 'ant-design-vue'
 import { isFunction } from '@shy-plugins/utils'
 import { useRuleFormItem, useAttrs } from '@shy-plugins/use'
-import { get, omit } from 'lodash-es'
+import { get, isEqual, omit } from 'lodash-es'
 import { LoadingOutlined } from '@ant-design/icons-vue'
+import { useDebounceFn } from '@vueuse/core'
 
 type OptionsItem = { label: string; value: string; disabled?: boolean }
 
@@ -79,7 +88,7 @@ export default defineComponent({
     }
   },
   emits: ['options-change', 'change', 'update:value'],
-  setup(props, { emit }) {
+  setup(props, { emit, expose }) {
     const options = ref<OptionsItem[]>([])
     const loading = ref(false)
     const isFirstLoad = ref(true)
@@ -105,11 +114,6 @@ export default defineComponent({
       }, [] as OptionsItem[])
     })
 
-    // watchEffect(() => {
-    //   // console.log(new Date().getTime())
-    //   // props.immediate && !props.alwaysLoad && fetch()
-    // })
-
     watch(
       () => props.immediate && !props.alwaysLoad,
       (val) => {
@@ -127,11 +131,15 @@ export default defineComponent({
       }
     )
 
+    const tempParams = ref(props.params)
+
     watch(
       () => props.params,
-      () => {
+      useDebounceFn(() => {
+        if (isEqual(toRaw(tempParams.value), toRaw(props.params))) return
+        tempParams.value = toRaw(props.params)
         fetch()
-      },
+      }, 1),
       { deep: true }
     )
 
@@ -194,6 +202,8 @@ export default defineComponent({
       if (typeof option[label] === 'string')
         return option[label]?.toLowerCase().indexOf(input.toLowerCase()) >= 0
     }
+
+    expose({ fetch })
 
     return {
       state,

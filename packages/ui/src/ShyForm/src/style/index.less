@@ -6,11 +6,10 @@
   padding: 1px;
 
   &-collapse {
-    flex: var(--col-span);
-    width: var(--col-span);
-    max-width: var(--col-span);
+    flex: calc(var(--col-span) - var(--gap));
+    width: calc(var(--col-span) - var(--gap));
+    max-width: calc(var(--col-span) - var(--gap) + var(--w-gap));
     background: transparent;
-
 
     .ant-collapse-header.ant-collapse-header {
       align-items: center;
@@ -28,11 +27,30 @@
     width: 100%;
   }
 
-  .ant-form-item {
-    padding-right: 12px;
+  :is(.ant-row) {
+    gap: var(--gap);
+  }
 
-    &-label label::after {
-      margin: 0 6px 0 2px;
+  .@{namespace}-basic-title {
+    margin: 8px 0;
+  }
+
+  .ant-form-item {
+    &-required {
+      padding-inline-start: 10px;
+    }
+
+    &-label {
+      padding: 0;
+
+      label::before {
+        position: absolute;
+        left: 0;
+      }
+
+      label::after {
+        margin: 0 6px 0 2px;
+      }
     }
 
     &-with-help {
@@ -40,7 +58,7 @@
     }
 
     &:not(.ant-form-item-with-help) {
-      margin-bottom: 20px;
+      margin-bottom: 0;
     }
 
     &-control-input-content > div > div:not(.ant-input-number-handler-wrap) {
@@ -66,15 +84,16 @@
     }
 
     .ant-picker {
+      padding: 5px 12px;
       width: 100%;
     }
   }
 
   &-content-col {
     & > .ant-row > .ant-col {
-      flex: var(--col-span);
-      width: var(--col-span);
-      max-width: var(--col-span);
+      flex: calc(var(--col-span) - var(--gap));
+      width: calc(var(--col-span) - var(--gap));
+      max-width: calc(var(--col-span) - var(--gap) + var(--w-gap));
     }
 
     @media (width > 1920px) {
@@ -124,18 +143,18 @@
     width: 100%;
   }
 
+  &-action-content {
+    flex: calc(var(--col-span) - var(--gap));
+    width: calc(var(--col-span) - var(--gap));
+    max-width: calc(var(--col-span) - var(--gap) + var(--w-gap));
+  }
+
   &-action-content .ant-form-item {
     padding: 0;
   }
 
   .ant-form-explain {
     font-size: 14px;
-  }
-
-  &--compact {
-    .ant-form-item {
-      margin-bottom: 8px !important;
-    }
   }
 
   &-divider {

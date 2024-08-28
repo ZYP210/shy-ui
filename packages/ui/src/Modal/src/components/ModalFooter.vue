@@ -1,5 +1,4 @@
 <template>
-  <div>
     <slot name="insertFooter"></slot>
     <BasicButton
       type="default"
@@ -20,7 +19,6 @@
       {{ okText }}
     </BasicButton>
     <slot name="appendFooter"></slot>
-  </div>
 </template>
 <script lang="ts">
 import { BasicButton } from '../../../Button/index'

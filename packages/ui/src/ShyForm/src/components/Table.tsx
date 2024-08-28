@@ -1,4 +1,4 @@
-import { Table, FormItem } from 'ant-design-vue'
+import { Table, FormItem, Empty } from 'ant-design-vue'
 import {
   ref,
   computed,
@@ -8,14 +8,13 @@ import {
   VNode,
   unref,
   defineComponent,
-  CSSProperties,
   nextTick
 } from 'vue'
 import { useRuleFormItem } from '@shy-plugins/use'
 
 import { buildUUID, isFunction } from '@shy-plugins/utils'
 import { ShyComponentMap } from '../ShyComponentMap'
-import { cloneDeep, isArray, isEqual, isNil, upperFirst } from 'lodash-es'
+import { cloneDeep, isArray, isEqual, isNil, omit, upperFirst } from 'lodash-es'
 import { FormActionType } from '../types/form'
 import { Popover } from 'ant-design-vue'
 import { reactive } from 'vue'
@@ -27,6 +26,7 @@ import { JSXComponent } from 'vue'
 import { useDesign } from '@shy-plugins/use'
 
 import '../style/formTable.less'
+import { TableRowSelection } from 'ant-design-vue/es/table/interface'
 
 const SHOW_ROW_COUNT = 10
 const ROW_HEIGHT = 48.5
@@ -37,6 +37,9 @@ const ShyFormTable = defineComponent({
     rowKey: {
       type: String,
       default: () => 'uuid'
+    },
+    rowSelection: {
+      type: Object as PropType<TableRowSelection>
     },
     columns: {
       type: Array as PropType<Recordable[]>,
@@ -66,6 +69,10 @@ const ShyFormTable = defineComponent({
       type: Boolean,
       default: () => true
     },
+    isShowRemoveBtn: {
+      type: Boolean,
+      default: () => true
+    },
     tableAction: {
       type: Function,
       default: (res) => {
@@ -74,7 +81,7 @@ const ShyFormTable = defineComponent({
     }
   },
   emits: ['update:value', 'change', 'add', 'remove'],
-  setup(props, { emit, attrs }) {
+  setup(props, { emit, attrs, expose }) {
     const { prefixCls } = useDesign('ant-form-table-children')
 
     const formActionType: FormActionType = inject('formActionType')!
@@ -93,14 +100,16 @@ const ShyFormTable = defineComponent({
         dataIndex: 'index',
         width: 50,
         maxWidth: 50,
-        align: 'center'
+        align: 'center',
+        fixed: 'left'
       }
 
       const actionColumn = {
         title: '操作',
         dataIndex: '_action',
         width: 80,
-        align: 'left'
+        align: 'left',
+        fixed: 'right'
       }
 
       return [
@@ -166,6 +175,14 @@ const ShyFormTable = defineComponent({
       getPopupContainer: () => document.body
     }
 
+    const emptyText = () => {
+      return (
+        <div class="flex justify-center items-center">
+          <Empty />
+        </div>
+      )
+    }
+
     const renderTable = computed(() => {
       const renderVirtual = () => {
         return props.isVirtual ? (
@@ -185,18 +202,21 @@ const ShyFormTable = defineComponent({
         <div ref={tableWrapperRef} class={prefixCls}>
           <Table
             ref={tableElRef}
+            {...(props.rowSelection
+              ? { rowSelection: props.rowSelection }
+              : {})}
             columns={getColumns.value}
             scroll={{
-              x: state.value.length ? getScrollX.value : undefined,
-              y: props.isVirtual ? BODY_HEIGHT : undefined
+              x: getScrollX.value,
+              y: BODY_HEIGHT
             }}
             data-source={props.isVirtual ? dataSource.value : state.value}
             pagination={false}
             bordered={false}
+            rowKey={props.rowKey}
             size="small"
             class={`${prefixCls}-body`}
             align="center"
-            rowKey={props.rowKey}
             components={{
               body: {
                 cell: renderTd
@@ -204,6 +224,7 @@ const ShyFormTable = defineComponent({
             }}
           >
             {{
+              emptyText,
               headerCell: ({ column }) => {
                 const renderRequired = () => {
                   if (column.required || column?.rules?.length) {
@@ -276,80 +297,72 @@ const ShyFormTable = defineComponent({
                   return column.dataIndex !== 'index' &&
                     column.type !== 'text' &&
                     column.dataIndex !== '_action' ? (
-                    <td class="ant-table-cell" style={renderTdProps(column)}>
-                      <FormItem
-                        required={column.required}
-                        rules={getRules({ column, record, index, ...args })}
-                        name={[
-                          ...(isArray(attrs.codeField)
-                            ? attrs.codeField
-                            : [attrs.codeField]),
-                          index + curIndex.value,
-                          column.dataIndex
-                        ]}
+                    <FormItem
+                      required={column.required}
+                      rules={getRules({ column, record, index, ...args })}
+                      name={[
+                        ...(isArray(attrs.codeField)
+                          ? attrs.codeField
+                          : [attrs.codeField]),
+                        index + curIndex.value,
+                        column.dataIndex
+                      ]}
+                    >
+                      <Popover
+                        visible={
+                          !!rulesRef?.[
+                            `${column.dataIndex}-${record[props.rowKey]}Info`
+                          ]?.show && !isScroll.value
+                        }
                       >
-                        <Popover
-                          visible={
-                            !!rulesRef?.[
-                              `${column.dataIndex}-${record[props.rowKey]}Info`
-                            ]?.show && !isScroll.value
-                          }
-                        >
-                          {{
-                            content: () => (
-                              <span class="text-red-500">
-                                {
-                                  rulesRef[
-                                    `${column.dataIndex}-${
-                                      record[props.rowKey]
-                                    }Info`
-                                  ]?.msg
-                                }
-                              </span>
-                            ),
-                            default: () => {
-                              const Comp: JSXComponent = ShyComponentMap.get(
-                                getType(column.type)
-                              )!
+                        {{
+                          content: () => (
+                            <span class="text-red-500">
+                              {
+                                rulesRef[
+                                  `${column.dataIndex}-${
+                                    record[props.rowKey]
+                                  }Info`
+                                ]?.msg
+                              }
+                            </span>
+                          ),
+                          default: () => {
+                            const Comp: JSXComponent = ShyComponentMap.get(
+                              getType(column.type)
+                            )!
 
-                              return <Comp {...compAttr} />
-                            }
-                          }}
-                        </Popover>
-                      </FormItem>
-                    </td>
+                            return <Comp {...compAttr} />
+                          }
+                        }}
+                      </Popover>
+                    </FormItem>
                   ) : null
                 }
 
                 const renderAction = () => {
                   return column.dataIndex === '_action' ? (
-                    <td class="ant-table-cell" style={{ textAlign: 'center' }}>
-                      <ShyTableAction actions={getActions(record)} />
-                    </td>
+                    <ShyTableAction actions={getActions(record)} />
                   ) : null
                 }
 
                 const renderIndex = () => {
-                  return column.dataIndex === 'index' ? (
-                    <td class="ant-table-cell" style={{ textAlign: 'center' }}>
-                      {index + curIndex.value + 1}
-                    </td>
-                  ) : null
+                  return column.dataIndex === 'index'
+                    ? index + curIndex.value + 1
+                    : null
                 }
 
-                return (
-                  renderFormItem() ??
-                  renderAction() ??
-                  renderIndex() ?? (
-                    <td
-                      class="ant-table-cell"
-                      width={column.width}
-                      style={renderTdProps(column)}
-                    >
-                      {record[column.dataIndex]}
-                    </td>
-                  )
-                )
+                if (renderFormItem()) {
+                  return renderFormItem()
+                }
+
+                if (renderAction()) {
+                  return renderAction()
+                }
+
+                if (renderIndex()) {
+                  return renderIndex()
+                }
               }
             }}
           </Table>
@@ -358,8 +371,20 @@ const ShyFormTable = defineComponent({
       )
     })
 
+    const defaultValuesRef = computed(() => {
+      return props.columns.reduce((acc, cur) => {
+        if (cur.defaultValue === undefined) return acc
+
+        acc[cur.dataIndex] = cur.defaultValue ?? ''
+        return acc
+      }, {})
+    })
+
     const create = () => {
-      state.value = [...toRaw(state.value), { [props.rowKey]: buildUUID() }]
+      state.value = [
+        ...toRaw(state.value),
+        { [props.rowKey]: buildUUID(), ...defaultValuesRef.value }
+      ]
       curIndex.value = 0
       if (props.isVirtual) {
         nextTick(() => {
@@ -463,13 +488,17 @@ const ShyFormTable = defineComponent({
 
     const getActions = (record) => {
       return [
-        {
-          label: '删除',
-          popConfirm: {
-            title: '确定删除',
-            confirm: remove.bind(null, record[props.rowKey])
-          }
-        },
+        ...(props.isShowRemoveBtn
+          ? [
+              {
+                label: '删除',
+                popConfirm: {
+                  title: '确定删除',
+                  confirm: remove.bind(null, record[props.rowKey])
+                }
+              }
+            ]
+          : []),
         ...props.tableAction(record)
       ]
     }
@@ -517,23 +546,23 @@ const ShyFormTable = defineComponent({
     const isScroll = ref(false)
     const timer = ref<NodeJS.Timeout>()
     onMounted(() => {
+      window.addEventListener(
+        'scroll',
+        (e) => {
+          clearTimeout(timer.value)
+          timer.value = setTimeout(() => {
+            isScroll.value = false
+          }, 500)
+          if (isScroll.value) return
+          isScroll.value = true
+        },
+        true
+      )
+
       if (props.isVirtual) {
-        window.addEventListener(
-          'scroll',
-          (e) => {
-            clearTimeout(timer.value)
-            timer.value = setTimeout(() => {
-              isScroll.value = false
-            }, 500)
-            if (isScroll.value) return
-            isScroll.value = true
-          },
-          true
-        )
         tableWrapperRef.value.addEventListener(
           'wheel',
           (e) => {
-            e.preventDefault()
             if (state.value.length <= SHOW_ROW_COUNT) {
               return
             }
@@ -542,12 +571,14 @@ const ShyFormTable = defineComponent({
               e.deltaY > 0 &&
               curIndex.value + SHOW_ROW_COUNT < state.value.length
             ) {
+              e.preventDefault()
               dataSource.value = state.value.slice(
                 ++curIndex.value,
                 curIndex.value + SHOW_ROW_COUNT
               )
             }
             if (e.deltaY < 0 && curIndex.value > 0) {
+              e.preventDefault()
               dataSource.value = state.value.slice(
                 --curIndex.value,
                 curIndex.value + SHOW_ROW_COUNT
@@ -580,39 +611,33 @@ const ShyFormTable = defineComponent({
         </div>
       ) : null
 
-    const renderTdProps = (column): CSSProperties => {
-      return {
-        ...(() => {
-          switch (column.align) {
-            case 'center':
-              return { textAlign: 'center' }
-            case 'left':
-              return { textAlign: 'left' }
-            case 'right':
-              return { textAlign: 'right' }
-            default:
-              return { textAlign: 'left' }
-          }
-        })(),
-        wordBreak: 'break-all',
-        wordWrap: 'break-word'
-      }
-    }
-
     const renderTd = (cell, { slots }) => {
-      return cell.colSpan === props.columns.length + 2 ? (
-        <td {...cell}>{slots.default()}</td>
-      ) : (
-        slots.default()
+      const Td = (
+        <td
+          style={{
+            ...cell.style,
+            wordBreak: 'break-all',
+            wordWrap: 'break-word'
+          }}
+        >
+          {slots?.default?.()}
+        </td>
       )
+
+
+      Reflect.deleteProperty(Td.ctx.attrs, 'onMouseenter')
+      Reflect.deleteProperty(Td.ctx.attrs, 'onMouseleave')
+
+      return Td
     }
+    expose({ tableElRef })
 
     return () => {
       return (
         <>
           {renderTable.value}
           {renderAddBtn()}
-          <div class={`${prefixCls}-footer`}>{props.footerRender()}</div>
+          {props.footerRender() && <div class={`${prefixCls}-footer`}>{props.footerRender()}</div>}
         </>
       )
     }
