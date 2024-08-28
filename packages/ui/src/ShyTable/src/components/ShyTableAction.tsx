@@ -48,6 +48,10 @@ export const shyTableActionProps = reactive({
   showCount: {
     type: Number,
     default: 2
+  },
+  iconDirection: {
+    type: String,
+    default: () => 'vertical'
   }
 })
 
@@ -206,11 +210,12 @@ const ShyTableAction = defineComponent({
     })
 
     const renderDropdownBtn = () => {
+      const rotate = props?.iconDirection === 'vertical' ? 0 : 90
       switch (props.type) {
         case 'action':
           return (
             <BasicButton type="link" size="small">
-              <MoreOutlined />
+              <MoreOutlined rotate={rotate} />
             </BasicButton>
           )
         case 'footer':
