@@ -11,7 +11,7 @@
     >
       <template #bodyCell="{ column, record, index }">
         <template v-if="column.dataIndex === 'action'">
-          <TableAction
+          <ShyTableAction
             :actions="[
               {
                 label: '编辑',
@@ -151,7 +151,7 @@
       >
         <template #bodyCell="{ column, record, index }">
           <template v-if="column.dataIndex === 'action'">
-            <TableAction
+            <ShyTableAction
               :actions="[
                 {
                   label: '编辑',
@@ -232,7 +232,7 @@
 </template>
 <script lang="ts" setup>
   import { Button, Form, FormItem, Select, SelectOption, Input, Table } from 'ant-design-vue';
-  import { BasicDrawer, BasicModal, TableAction } from '3h1-ui';
+  import { BasicDrawer, BasicModal, ShyTableAction } from '3h1-ui';
   import { createListenerObject, updateElementExtensions } from '../../utils';
   import { initListenerType, initListenerForm, listenerType, fieldType } from './utilSelf';
   import { Icon } from '3h1-ui';

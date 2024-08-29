@@ -16,7 +16,7 @@
     >
       <!-- <template #bodyCell="{ column, record, index }">
         <template v-if="column.dataIndex === 'action'">
-          <TableAction
+          <ShyTableAction
             :actions="[
               {
                 label: '删除',
@@ -72,7 +72,7 @@
 <script lang="ts" setup>
   import { Button, Form, FormItem, Input, Table } from 'ant-design-vue';
   import type { FormInstance } from 'ant-design-vue';
-  import { BasicModal, Icon, TableAction } from '3h1-ui';
+  import { BasicModal, Icon, ShyTableAction } from '3h1-ui';
   import { useMessage } from '@shy-plugins/use';
   import { reactive,onMounted,computed ,ref} from 'vue';
   // defineOptions({ name: 'SignalAndMassage' });
