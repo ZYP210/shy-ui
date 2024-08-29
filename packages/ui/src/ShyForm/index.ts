@@ -5,7 +5,7 @@ export * from './src/types/index'
 export * from './src/ShyComponentMap'
 export type { FormSchema as ShyFormSchema } from './src/types/form'
 export { useComponentRegister as useShyComponentRegister } from './src/hooks/useComponentRegister'
-export { useShyForm } from './src/hooks/useShyForm'
+export { useShyForm, useShyForm as useForm } from './src/hooks/useShyForm'
 export { default as ShyFormItem } from './src/components/FormItem'
 export { default as ShyApiSelect } from './src/components/ApiSelect.vue'
 export { default as ShyRadioButtonGroup } from './src/components/RadioButtonGroup.vue'
@@ -18,4 +18,4 @@ export { ShyFormTable as ShyTableChildren } from './src/components/Table'
 export { default as ShyApiModalSelect } from './src/components/ApiModalSelect/ApiModalSelect.vue'
 export { default as ShyFormWrapper } from './src/components/FormWrapper.vue'
 
-export { ShyForm }
+export { ShyForm, ShyForm as BasicForm }

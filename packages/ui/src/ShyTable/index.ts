@@ -8,7 +8,7 @@ export { shyTableBasicProps } from './src/props'
 export * from './src/types/table'
 export * from './src/types/pagination'
 export * from './src/types/tableAction'
-export { useShyTable } from './src/hooks/useShyTable'
+export { useShyTable, useShyTable as useTable } from './src/hooks/useShyTable'
 
 const withInstall = <T>(component: T) => {
   const comp = component as any
@@ -22,4 +22,4 @@ const withInstall = <T>(component: T) => {
 }
 withInstall(ShyTable)
 
-export { ShyTable }
+export { ShyTable, ShyTable as BasicTable }
