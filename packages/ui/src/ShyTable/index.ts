@@ -9,7 +9,6 @@ export * from './src/types/table'
 export * from './src/types/pagination'
 export * from './src/types/tableAction'
 export { useShyTable } from './src/hooks/useShyTable'
-export type { FormSchema, FormProps } from '../Form'
 
 const withInstall = <T>(component: T) => {
   const comp = component as any

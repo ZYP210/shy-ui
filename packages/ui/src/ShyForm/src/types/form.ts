@@ -3,7 +3,6 @@ import type { VNode } from 'vue'
 import type { ButtonProps as AntdButtonProps } from '../../../Button'
 import type { FormItem } from './formItem'
 import type { ColEx, ComponentType } from './index'
-import type { TableActionType } from '../../../Table'
 import type { TableActionType as ShyTableActionType } from '../../../ShyTable'
 import type { CSSProperties } from 'vue'
 import type { RowProps } from 'ant-design-vue/lib/grid/Row'
@@ -25,7 +24,7 @@ export interface RenderCallbackParams {
   field: string
 }
 
-export interface ButtonProps extends AntdButtonProps {
+interface ButtonProps extends AntdButtonProps {
   text?: string
 }
 
@@ -53,9 +52,9 @@ export interface FormActionType {
   scrollToField: (name: NamePath, options?: ScrollOptions) => Promise<void>
 }
 
-export type RegisterFn = (formInstance: FormActionType) => void
+export type RegisterFormFn = (formInstance: FormActionType) => void
 
-export type UseFormReturnType = [RegisterFn, FormActionType]
+export type UseFormReturnType = [RegisterFormFn, FormActionType]
 
 export interface FormProps {
   formLabelInInput?: boolean, 
@@ -163,7 +162,7 @@ export interface FormSchema {
   componentProps?:
     | ((opt: {
         schema: FormSchema
-        tableAction: TableActionType | ShyTableActionType | undefined
+        tableAction: ShyTableActionType | ShyTableActionType | undefined
         formActionType: FormActionType
         formModel: Recordable
       }) => Recordable)

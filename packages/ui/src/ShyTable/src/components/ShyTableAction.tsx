@@ -23,8 +23,8 @@ import '../style/tableAction.less'
 
 export const shyTableActionProps = reactive({
   type: {
-    type: String as PropType<'action' | 'footer'>,
-    default: 'action'
+    type: String as PropType<'link' | 'button'>,
+    default: 'link'
   },
   actions: {
     type: Array as PropType<ActionItem[]>,
@@ -54,6 +54,11 @@ export const shyTableActionProps = reactive({
     default: () => 'vertical'
   }
 })
+
+export enum ActionType {
+  Link = 'link',
+  Button = 'button'
+}
 
 const ShyTableAction = defineComponent({
   props: shyTableActionProps,
@@ -93,27 +98,27 @@ const ShyTableAction = defineComponent({
 
     const getShowCount = computed(() => {
       switch (props.type) {
-        case 'action':
+        case ActionType.Link:
           return props.showCount
-        case 'footer':
+       case ActionType.Button:
           return props.showCount > 2 ? props.showCount : 3
       }
     })
 
     const getBtnSize = computed(() => {
       switch (props.type) {
-        case 'action':
+        case ActionType.Link:
           return 'small'
-        case 'footer':
+       case ActionType.Button:
           return 'middle'
       }
     })
 
     const getButtonTypeByPropsType = () => {
       switch (props.type) {
-        case 'action':
+        case ActionType.Link:
           return 'link'
-        case 'footer':
+       case ActionType.Button:
           return 'default'
       }
     }
@@ -187,7 +192,7 @@ const ShyTableAction = defineComponent({
         if (
           isIfShow(action) &&
           cacheActions.length <
-            getShowCount.value -
+            getShowCount.value! -
               (props.actions.length !== getShowCount.value ? 1 : 0)
         ) {
           cacheActions.push(action)
@@ -212,7 +217,7 @@ const ShyTableAction = defineComponent({
     const renderDropdownBtn = () => {
       const rotate = props?.iconDirection === 'vertical' ? 0 : 90
       switch (props.type) {
-        case 'action':
+        case ActionType.Link:
           return (
             <BasicButton
               type="link"
@@ -223,7 +228,7 @@ const ShyTableAction = defineComponent({
               <MoreOutlined />
             </BasicButton>
           )
-        case 'footer':
+       case ActionType.Button:
           return (
             <BasicButton class={`${prefixCls}-footer-more-btn`}>
               <div class={`${prefixCls}-footer-more-text`}>更多操作</div>
@@ -253,7 +258,7 @@ const ShyTableAction = defineComponent({
         if (
           isIfShow(action) &&
           cacheActions.length <
-            getShowCount.value -
+            getShowCount.value! -
               (props.actions.length !== getShowCount.value ? 1 : 0)
         ) {
           cacheActions.push(action)

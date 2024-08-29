@@ -1,4 +1,4 @@
-import type { BasicColumn, ActionItem } from '../../../Table'
+import type { ShyColumn, ActionItem } from '../../../ShyTable'
 import {
   FileBasicColumn,
   FileItem,
@@ -7,7 +7,7 @@ import {
 } from '../types/typing'
 import { isImgTypeByName } from '../helper'
 import { Progress, Tag } from 'ant-design-vue'
-import TableAction from '../../../Table/src/components/TableAction.vue'
+import ShyTableAction from '../../../ShyTable/src/components/ShyTableAction'
 import ThumbUrl from './ThumbUrl.vue'
 import { useI18n } from '@shy-plugins/use'
 
@@ -93,12 +93,12 @@ export function createActionColumn(handleRemove: Function): FileBasicColumn {
           onClick: handleRemove.bind(null, record)
         }
       ]
-      return <TableAction actions={actions} outside={true} />
+      return <ShyTableAction actions={actions} outside={true} />
     }
   }
 }
 // 文件预览列表
-export function createPreviewColumns(): BasicColumn[] {
+export function createPreviewColumns(): ShyColumn[] {
   return [
     {
       dataIndex: 'url',
@@ -123,7 +123,7 @@ export function createPreviewActionColumn({
 }: {
   handleRemove: Fn
   handleDownload: Fn
-}): BasicColumn {
+}): ShyColumn {
   return {
     width: 160,
     title: t('component.upload.operating'),
@@ -142,7 +142,7 @@ export function createPreviewActionColumn({
         }
       ]
 
-      return <TableAction actions={actions} outside={true} />
+      return <ShyTableAction actions={actions} outside={true} />
     }
   }
 }

@@ -16,7 +16,7 @@
 </template>
 <script lang="ts" setup>
 import { watch, ref } from 'vue'
-import FileList from './FileList.vue'
+import FileList from './FileList'
 import { BasicModal, useModalInner } from '../../../Modal'
 import { previewProps } from '../props'
 import { PreviewFileItem } from '../types/typing'

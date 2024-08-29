@@ -19,18 +19,24 @@ const ShyTableFooter = defineComponent({
   setup(props, { emit, slots }) {
     const { prefixCls } = useDesign('ant-table-footer')
 
-    const { getSelectRowKeys, getSelectRows } = useTableContext()
+    const { getSelectRowKeys, getSelectRows, getBindValues } = useTableContext()
 
     const getSelectTotal = computed(() => {
-      return getSelectRowKeys()?.length ? (
-        <>
-          已选中
-          <span class={`${prefixCls}-count`}>{getSelectRowKeys()?.length}</span>
-          条
-        </>
-      ) : (
-        <>选中激活</>
-      )
+      return unref(getBindValues).rowSelection ? (
+        <div class={`${prefixCls}-count-box`}>
+          {getSelectRowKeys()?.length ? (
+            <>
+              已选中
+              <span class={`${prefixCls}-count`}>
+                {getSelectRowKeys()?.length}
+              </span>
+              条
+            </>
+          ) : (
+            <>选中激活</>
+          )}
+        </div>
+      ) : null
     })
 
     const getSelections = computed(() => {
@@ -49,7 +55,7 @@ const ShyTableFooter = defineComponent({
       const isShowSettings = () => {
         return props.isShowFooterSettings ? (
           <>
-            <div class={`${prefixCls}-count-box`}>{getSelectTotal.value}</div>
+            {getSelectTotal.value}
             <div class={`${prefixCls}-settings-box`}>
               {slots.default?.(unref(getSelections))}
             </div>

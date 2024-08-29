@@ -183,8 +183,8 @@ import {
 } from './data'
 import { computed, reactive, ref } from 'vue'
 import { PlusCircleOutlined, MinusCircleTwoTone } from '@ant-design/icons-vue'
-import type { schemasAdvancedSearch } from '/@/Table/src/types/table'
-import ApiSelect from '../../Form/src/components/ApiSelect.vue'
+import type { schemasAdvancedSearch } from '../../ShyTable/src/types/table'
+import ApiSelect from '../../ShyForm/src/components/ApiSelect.vue'
 
 type Props = {
   schemas: schemasAdvancedSearch[]

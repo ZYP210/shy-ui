@@ -208,8 +208,7 @@ import TableColGroup from './TableColGroup.vue'
 import {
   createTableContext,
   Instance
-} from '../Table/src/hooks/useTableContext'
-import TableSetting from './components/settings/index.vue'
+} from '../ShyTable/src/hooks/useShyTableContext'
 import { deepMergeObjects } from '@shy-plugins/utils'
 import { useColumns } from './hooks/useColumns'
 import { useSort } from './hooks/useSort'

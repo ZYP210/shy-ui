@@ -9,12 +9,12 @@ export interface DescItem {
   isCopy?: boolean
   labelStyle?: CSSProperties
   contentStyle?: CSSProperties
-  helpMessage: string
+  helpMessage?: string
 }
 
 export interface DescriptionProps {
   schema: DescItem[]
-  data: Recordable
+  data: { [key: string]: any }
   summaryPrecision: number
   summaryTotalFields: string[]
   labelWidth?: number

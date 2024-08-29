@@ -9,6 +9,7 @@ export const useTableHeader = (
   slots: Slots,
   handlers: InnerHandlers
 ) => {
+
   const getHeaderProps = computed((): Recordable => {
     const {
       title = null,
@@ -41,7 +42,7 @@ export const useTableHeader = (
         : () => (
             <ShyTableHeader {...headerProps}>
               {{
-                toolbar: () => getSlot(slots, 'toolbar'),
+                toolbar: (data) => getSlot(slots, 'toolbar', data),
                 title: slots?.title ? () => slots?.title?.() : null
               }}
             </ShyTableHeader>

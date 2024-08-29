@@ -1,13 +1,13 @@
 <template>
-  <BasicTable @register="registerTable"> </BasicTable>
+  <ShyTable @register="registerTable"> </ShyTable>
 </template>
 <script lang="ts" setup>
 import { inject, unref } from 'vue'
-import { BasicTable, useTable } from '../../../../Table'
+import { ShyTable, useShyTable } from '../../../../ShyTable'
 
 const getTableProps: any = inject('getTableProps')
 
-const [registerTable, tableAction] = useTable({
+const [registerTable, tableAction] = useShyTable({
   api: () => {},
   title: '账号列表',
   rowKey: 'id',

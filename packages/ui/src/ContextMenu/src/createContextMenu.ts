@@ -1,4 +1,4 @@
-import contextMenuVue from './ContextMenu.vue'
+import contextMenuVue from './ContextMenu'
 import { isClient } from '@shy-plugins/utils'
 import { CreateContextOptions, ContextMenuProps } from './typing'
 import { createVNode, render } from 'vue'

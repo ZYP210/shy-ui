@@ -10,9 +10,9 @@
     "types": ["node", "csstype"]
   },
   "include": [
-    "packages/ui/types",
-    "packages/ui/config",
-    "packages/ui/src",
-    "packages/ui/src/**/*.vue"
+    // "packages/ui/types",
+    // "packages/ui/config",
+    // "packages/ui/src",
+    // "packages/ui/src/**/*.vue"
   ]
 }

@@ -1,3 +1,5 @@
+type Nullable<T> = T | null
+
 declare interface Fn<T = any, R = T> {
   (...arg: T[]): R
 }
@@ -26,6 +28,8 @@ declare type ComponentRef<T extends HTMLElement = HTMLDivElement> =
   ComponentElRef<T> | null
 
 declare type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>
+
+declare type Recordable = { [key: string]: any }
 
 // declare module 'vue-types' {
 //   // 这里添加 vue-types 模块的类型声明

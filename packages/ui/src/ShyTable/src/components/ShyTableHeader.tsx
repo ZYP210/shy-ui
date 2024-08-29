@@ -164,6 +164,16 @@ const ShyTableHeader = defineComponent({
   setup(props, { emit, slots }) {
     const { prefixCls } = useDesign('table-header')
 
+    const { getSelectRowKeys, getSelectRows } = useTableContext()
+
+    const getSelections = computed(() => {
+      return {
+        rowKeys: getSelectRowKeys(),
+        rows: getSelectRows(),
+        disabled: !getSelectRowKeys()?.length
+      }
+    })
+
     const handleColumnChange = (data: ColumnChangeParam[]) => {
       emit('columns-change', data)
     }
@@ -207,7 +217,9 @@ const ShyTableHeader = defineComponent({
         <div class={prefixCls}>
           <div class={getAlignClass.value}>
             {isShowTitle()}
-            <div class={`${prefixCls}-button`}>{slots?.toolbar?.()}</div>
+            <div class={`${prefixCls}-button`}>
+              {slots?.toolbar?.(unref(getSelections))}
+            </div>
           </div>
           <div class={`${prefixCls}-toolbar`}>
             <Divider type="vertical" class="action-divider" />

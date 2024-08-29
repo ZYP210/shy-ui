@@ -12,29 +12,29 @@ import {
 } from 'ant-design-vue'
 import type { ComponentType } from './types/componentType'
 import {
-  ApiSelect,
-  ApiTreeSelect,
-  RadioButtonGroup,
-  ApiRadioGroup,
-  ApiCascader
-} from '../../Form'
+  ShyApiSelect,
+  ShyApiTreeSelect,
+  ShyRadioButtonGroup,
+  ShyApiRadioGroup,
+  ShyApiCascader
+} from '../../ShyForm'
 
 const componentMap = new Map<ComponentType, Component>()
 
 componentMap.set('Input', Input)
 componentMap.set('InputNumber', InputNumber)
 componentMap.set('Select', Select)
-componentMap.set('ApiSelect', ApiSelect)
+componentMap.set('ApiSelect', ShyApiSelect)
 componentMap.set('AutoComplete', AutoComplete)
-componentMap.set('ApiTreeSelect', ApiTreeSelect)
+componentMap.set('ApiTreeSelect', ShyApiTreeSelect)
 componentMap.set('Switch', Switch)
 componentMap.set('Checkbox', Checkbox)
 componentMap.set('DatePicker', DatePicker)
 componentMap.set('TimePicker', TimePicker)
 componentMap.set('RadioGroup', Radio.Group)
-componentMap.set('RadioButtonGroup', RadioButtonGroup)
-componentMap.set('ApiRadioGroup', ApiRadioGroup)
-componentMap.set('ApiCascader', ApiCascader)
+componentMap.set('RadioButtonGroup', ShyRadioButtonGroup)
+componentMap.set('ApiRadioGroup', ShyApiRadioGroup)
+componentMap.set('ApiCascader', ShyApiCascader)
 
 export function add(compName: ComponentType, component: Component) {
   componentMap.set(compName, component)
