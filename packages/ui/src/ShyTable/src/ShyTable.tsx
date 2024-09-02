@@ -412,7 +412,7 @@ const ShyTable = defineComponent({
         ) : null
       }
 
-      const setColDebounceFn = useDebounceFn((width, col) => {
+      const setColDebounceFn = useDebounceFn((width:number, col) => {
         const columns = cloneDeep(getColumns())
         const tempColumns = columns.map((ele) => {
           if (ele.dataIndex !== col.dataIndex) return ele

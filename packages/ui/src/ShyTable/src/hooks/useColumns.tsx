@@ -65,15 +65,12 @@ const handleColumnResize = (
     [0, 0]
   )
   const length = columns.length
-
   columns.forEach((item) => {
     const minWidth = (item?.title + '').length * 14 + 16
-    const countWidth =
-      (tableWidth - sumWidth - selectWidth) / (length - sumLength)
-
+    const countWidth:number =
+      (tableWidth - sumWidth - selectWidth) / (length - sumLength) || 0
     if (item.flag) return
     const finallyWidth = minWidth > countWidth ? minWidth : countWidth
-
     if (propsRef.value.resizable) {
       item.width = item.width ? item.width : finallyWidth
       item.minWidth = minWidth
