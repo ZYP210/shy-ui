@@ -111,3 +111,7 @@
     height: 100%;
   }
 }
+// 临时解决antdv官方modal组件aria-hidden报错问题
+.ant-modal div[aria-hidden="true"] {
+  visibility: hidden !important;
+}
