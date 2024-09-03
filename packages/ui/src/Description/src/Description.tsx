@@ -84,6 +84,7 @@ export default defineComponent({
           schema={schema}
           formModel={formModel}
           setFormModel={setFormModel}
+          formActionType={{ setDescProps, setFieldsValue, getFieldsValue }}
         ></FormItem>
       )
     }
@@ -231,6 +232,7 @@ export default defineComponent({
     })
 
     emit('register', { setDescProps, getFieldsValue, setFieldsValue })
+
     return () => (
       <Form model={formModel}>
         <div

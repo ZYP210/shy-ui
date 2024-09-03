@@ -23,6 +23,10 @@ export default defineComponent({
     },
     schema: {
       type: Object
+    },
+    formActionType: {
+      type: Object,
+      default: () => ({})
     }
   },
   setup(props, { attrs, slots }) {

@@ -2,11 +2,6 @@
   <div class="p-16px">
     <a-button @click="handleClick"></a-button>
     <Description size="middle" title="基础示例" @register="register">
-      <template #phoneValue>
-        <div class="w-full h-300px">
-          <ShyTable @register="registerTable" />
-        </div>
-      </template>
     </Description>
   </div>
 </template>
@@ -29,7 +24,6 @@ const mockData: any = {
 
 const handleClick = async () => {
   const res = await getFieldsValue()
-  console.log('[ res ] >', res)
 }
 
 const schema: any[] = [
@@ -37,35 +31,12 @@ const schema: any[] = [
     field: 'username',
     label: '测试',
     colProps: { span: 8 },
-    isForm: true,
-
-    componentProps: {
-      required: true,
-      columns: [
-        {
-          title: '123',
-          dataIndex: 'a',
-          required: true
-        },
-        {
-          title: '123',
-          dataIndex: 'b'
-        },
-        {
-          title: '123',
-          dataIndex: 'c'
-        }
-      ]
-    },
-    component: 'Table',
     required: true
   },
   {
     field: 'select',
     label: '测试',
-    colProps: { span: 8 },
-    isForm: true,
-    component: 'Select'
+    colProps: { span: 8 }
   },
   {
     field: 'summary',
@@ -75,32 +46,14 @@ const schema: any[] = [
   {
     field: 'summary1',
     label: '合计1',
-    colProps: { span: 8 }
+    colProps: { span: 24 }
   },
-  // {
-  //   field: 'nickName',
-  //   label: '昵称',
-  //   colProps: { span: 16 },
-  //   isCopy: false,
-  //   customRender: (data) => {
-  //     return h(Tag, { color: 'success' }, data.phone)
-  //   },
-  //   ifShow: (data) => {
-  //     console.log(data)
-  //     return !!data.nickName
-  //   }
-  // },
   {
     field: 'phone',
-    label: '联系电话',
+    label: '联系电话1111111111',
     colProps: { span: 24 },
     helpMessage: '这是一个'
   },
-  // {
-  //   field: 'email',
-  //   label: '邮箱',
-  //   colProps: { span: 8 }
-  // },
 
   {
     field: 'addr',
