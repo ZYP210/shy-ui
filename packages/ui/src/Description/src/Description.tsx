@@ -84,14 +84,35 @@ export default defineComponent({
           schema={schema}
           formModel={formModel}
           setFormModel={setFormModel}
-          formActionType={{ setDescProps, setFieldsValue, getFieldsValue }}
+          formActionType={{
+            setDescProps,
+            setFieldsValue,
+            getFieldsValue,
+            updateSchemas
+          }}
         ></FormItem>
       )
     }
 
+    const innerSchemas = ref([])
+    const updateSchemas = (array) => {
+      innerSchemas.value = array
+    }
+    const getSchemas = computed(() => {
+      innerSchemas.value.forEach((innerSchema: { field: string }) => {
+        const schema = getProps.value.schema.find(
+          (item) => item.field === innerSchema.field
+        )
+        if (schema) {
+          Object.assign(schema, innerSchema)
+        }
+      })
+      return getProps.value.schema
+    })
+
     const rows = computed(() => {
       let element = null
-      return getProps.value.schema.map((item: Schema) => {
+      return getSchemas.value.map((item: Schema) => {
         if (item?.component === 'Divider') {
           return <Divider></Divider>
         } else if (item?.component === 'Group') {
@@ -231,7 +252,12 @@ export default defineComponent({
       })
     })
 
-    emit('register', { setDescProps, getFieldsValue, setFieldsValue })
+    emit('register', {
+      setDescProps,
+      getFieldsValue,
+      setFieldsValue,
+      updateSchemas
+    })
 
     return () => (
       <Form model={formModel}>

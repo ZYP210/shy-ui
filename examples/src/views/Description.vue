@@ -1,6 +1,6 @@
 <template>
   <div class="p-16px">
-    <a-button @click="handleClick"></a-button>
+    <a-button @click="handleClick">123</a-button>
     <Description size="middle" title="基础示例" @register="register">
     </Description>
   </div>
@@ -31,17 +31,44 @@ const schema: any[] = [
     field: 'username',
     label: '测试',
     colProps: { span: 8 },
-    required: true
+    isForm: true,
+    component: 'Select',
+    componentProps: ({ formActionType }) => {
+      console.log('[ formActionType ] >', formActionType)
+      return {
+        options: [
+          { label: '111', value: 0 },
+          { label: '222', value: 1 }
+        ],
+        onChange: (value) => {
+          if (value === 0) {
+            formActionType.updateSchemas([
+              { field: 'select', required: false, isForm: false }
+            ])
+          } else {
+            formActionType.updateSchemas([
+              { field: 'select', required: true, isForm: true }
+            ])
+          }
+        }
+      }
+    }
   },
   {
     field: 'select',
     label: '测试',
-    colProps: { span: 8 }
+    colProps: { span: 8 },
+    isForm: true,
+    component: 'Input',
+    componentProps: {},
+    required: true
   },
   {
     field: 'summary',
     label: '合计',
-    colProps: { span: 8 }
+    colProps: { span: 8 },
+    isForm: true,
+    componentProps: { component: 'Input' }
   },
   {
     field: 'summary1',
