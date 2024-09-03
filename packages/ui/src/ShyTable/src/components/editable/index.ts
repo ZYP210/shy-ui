@@ -2,7 +2,7 @@ import type { ShyColumn, TableActionType } from '../../types/table'
 
 import { h, Ref, toRaw, ref } from 'vue'
 
-import EditableCell from './EditableCell.vue'
+import EditableCell from './EditableCell'
 import { isArray } from '@shy-plugins/utils'
 import { buildUUID } from '@shy-plugins/utils'
 

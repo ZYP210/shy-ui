@@ -26,7 +26,7 @@
       >
         <template #bodyCell="{ column, record, index }">
           <template v-if="column.dataIndex === 'action'">
-            <TableAction
+            <ShyTableAction
               :actions="[
                 {
                   label: '编辑',
@@ -103,7 +103,7 @@
         >
           <template #bodyCell="{ column, record, index }">
             <template v-if="column.dataIndex === 'action'">
-              <TableAction
+              <ShyTableAction
                 :actions="[
                   {
                     label: '编辑',
@@ -137,7 +137,7 @@
       >
         <template #bodyCell="{ column, record, index }">
           <template v-if="column.dataIndex === 'action'">
-            <TableAction
+            <ShyTableAction
               :actions="[
                 {
                   label: '编辑',
@@ -167,7 +167,7 @@
       >
         <template #bodyCell="{ column, record, index }">
           <template v-if="column.dataIndex === 'action'">
-            <TableAction
+            <ShyTableAction
               :actions="[
                 {
                   label: '编辑',
@@ -228,7 +228,7 @@
     SelectOption,
     Divider,
   } from 'ant-design-vue';
-import { BasicModal, Icon, TableAction, BasicDrawer } from '3h1-ui';
+import { BasicModal, Icon, ShyTableAction, BasicDrawer } from '3h1-ui';
   import {ref,inject,toRaw,watch,nextTick} from 'vue'
   // defineOptions({ name: 'ElementForm' });
   const fieldPropertiesColumns = [

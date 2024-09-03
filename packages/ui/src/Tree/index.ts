@@ -1,4 +1,4 @@
-import BasicTree from './src/BasicTree.vue'
+import BasicTree from './src/BasicTree'
 import './style'
 
 export { BasicTree }

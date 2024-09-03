@@ -19,7 +19,7 @@
 <script lang="ts" setup>
 import type { PropType } from 'vue'
 import { useSlots, computed, h } from 'vue'
-import BasicHelp from './BasicHelp.vue'
+import BasicHelp from './BasicHelp'
 import { useDesign } from '@shy-plugins/use'
 import { isFunction } from '@shy-plugins/utils'
 

@@ -2,7 +2,8 @@
   <div class="w-full h-full flex flex-col p-16px overflow-hidden">
     <div class="flex-1 overflow-hidden">
       <ShyTable @register="register" @selection-change="handleSelectChange">
-        <template #toolbar>
+        <template #toolbar="data">
+          <ShyTableAction type="button" :actions="getHeaderActions(data)" />
           <BasicButton type="primary"> 主要 </BasicButton>
           <BasicButton type="danger" @click="pushApi">危险</BasicButton>
           <BasicButton type="success" @click="pushApi">完成</BasicButton>
@@ -51,7 +52,7 @@
         </template>
 
         <template #footer="data">
-          <ShyTableAction type="footer" :actions="getFooterActions(data)" />
+          <ShyTableAction type="button" :actions="getFooterActions(data)" />
         </template>
       </ShyTable>
     </div>
@@ -59,7 +60,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ShyTable, useShyTable, ShyTableAction, BasicButton } from '3h1-ui'
+import {
+  ShyTable,
+  useShyTable,
+  ShyTableAction,
+  BasicButton,
+  ActionItem
+} from '3h1-ui'
 import { useMessage } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
 const { createMessage, createConfirm } = useMessage()
@@ -197,7 +204,8 @@ const columns: any[] = [
         colorType: 'var(--primary-5)'
       },
       {
-        label: 'jdlksajdlkasjdklsajklasjaslkdjsakldjsalkdjaskldasjdaskljdaslkdjaslkjdalksjdlksajdklsadjaslkdjsalkdjoiuewoiwugchsadkjhadkysoiduwoiudhajdhaskjdhasiudhw9iuqhd',
+        label:
+          'jdlksajdlkasjdklsajklasjaslkdjsakldjsalkdjaskldasjdaskljdaslkdjaslkjdalksjdlksajdklsadjaslkdjsalkdjoiuewoiwugchsadkjhadkysoiduwoiudhajdhaskjdhasiudhw9iuqhd',
         value: '2',
         colorType: 'var(--orange-5)'
       },
@@ -219,22 +227,22 @@ const columns: any[] = [
   // },
   {
     title: '收票时间',
-    dataIndex: 'receiptTime',
+    dataIndex: 'receiptTime'
     // customRender: ({ record }) => renderDate(record.receiptTime),
   },
   {
     title: '收票金额',
-    dataIndex: 'amountPriceTaxSum',
+    dataIndex: 'amountPriceTaxSum'
   },
   {
     title: '创建人',
-    dataIndex: 'creatorName',
+    dataIndex: 'creatorName'
   },
   {
     title: '创建时间',
-    dataIndex: 'createTime',
+    dataIndex: 'createTime'
     // customRender: ({ record }) => renderDate(record.createTime),
-  },
+  }
 ]
 
 const searchFormSchema = Array.from({ length: 1 }, (_, i) => {
@@ -252,7 +260,31 @@ const searchFormSchema = Array.from({ length: 1 }, (_, i) => {
   }
 })
 
-const getFooterActions = ({ rows, rowKeys, disabled }) => {
+const getHeaderActions = ({ rows, rowKeys, disabled }): ActionItem[] => {
+  return [
+    {
+      tooltip: '777',
+      label: '删除',
+      type: 'danger',
+      disabled
+    },
+    {
+      label: '导出',
+      type: 'default',
+      disabled
+    },
+    {
+      label: '测试',
+      disabled
+    },
+    {
+      label: '取消',
+      disabled
+    }
+  ]
+}
+
+const getFooterActions = ({ rows, rowKeys, disabled }): ActionItem[] => {
   return [
     {
       tooltip: '777',
@@ -323,6 +355,9 @@ const [
   // summaryPrecision: 0,
   resizable: true,
   rowKey: 'id',
+  rowSelection: {
+    type: 'checkbox'
+  },
   columns,
   // isShowPagination: false,
   isSortFetch: false,
@@ -382,12 +417,12 @@ const [
       {
         label: '输入框',
         component: 'Input',
-        field: 'createTime',
+        field: 'createTime'
       },
       {
         label: '输入框',
         component: 'Input',
-        field: 'createTime',
+        field: 'createTime'
       }
     ]
   },
@@ -396,9 +431,6 @@ const [
   showTableSetting: true,
   // summaryPrecision: 2,
   // useAdvancedSearch: true,
-  rowSelection: {
-    type: 'checkbox'
-  },
   // clickToRowSelect: true,
   // useSearchForm: true,
   // canResize: false,

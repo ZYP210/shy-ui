@@ -4,7 +4,7 @@ import { RoleEnum } from './table'
 
 // import { RoleEnum } from '/@/enums/roleEnum'
 
-export interface ActionItem extends ButtonProps {
+export interface ActionItem extends Omit<ButtonProps, 'type'> {
   onClick?: Fn
   label?: string
   color?: 'success' | 'error' | 'warning'
@@ -17,9 +17,19 @@ export interface ActionItem extends ButtonProps {
   // 业务控制是否显示
   ifShow?: boolean | ((action: ActionItem) => boolean)
   tooltip?: string | TooltipProps
+  type?:
+    | 'primary'
+    | 'ghost'
+    | 'dashed'
+    | 'link'
+    | 'text'
+    | 'default'
+    | 'danger'
+    | 'waring'
+    | 'success'
+    | 'message'
 }
-
-export interface PopConfirm {
+interface PopConfirm {
   title: string
   okText?: string
   cancelText?: string

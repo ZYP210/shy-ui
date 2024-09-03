@@ -1,7 +1,7 @@
 import type {
   UseDrawerReturnType,
   DrawerInstance,
-  ReturnMethods,
+  ReturnDrawerMethods,
   DrawerProps,
   UseDrawerInnerReturnType
 } from './typing'
@@ -63,7 +63,7 @@ export function useDrawer(): UseDrawerReturnType {
     return instance
   }
 
-  const methods: ReturnMethods = {
+  const methods: ReturnDrawerMethods = {
     setDrawerProps: (props: Partial<DrawerProps>): void => {
       getInstance()?.setDrawerProps(props)
     },

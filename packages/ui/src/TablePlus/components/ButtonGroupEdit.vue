@@ -1,9 +1,9 @@
 <template>
-  <TableAction :actions="getActions" :show-count="4" :outside="true" />
+  <ShyTableAction :actions="getActions" :show-count="4" :outside="true" />
 </template>
 
 <script setup lang="ts">
-import TableAction from '../../Table/src/components/TableAction.vue'
+import ShyTableAction from '../../ShyTable/src/components/ShyTableAction'
 import { computed } from 'vue'
 
 const emit = defineEmits([

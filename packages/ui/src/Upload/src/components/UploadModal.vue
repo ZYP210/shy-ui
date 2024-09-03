@@ -66,7 +66,7 @@ import { createTableColumns, createActionColumn } from './data'
 // utils
 import { checkImgType, getBase64WithFile } from '../helper'
 import { buildUUID, isFunction, warn } from '@shy-plugins/utils'
-import FileList from './FileList.vue'
+import FileList from './FileList'
 import { useI18n, useMessage } from '@shy-plugins/use'
 
 const props = defineProps({

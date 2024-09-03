@@ -1,6 +1,6 @@
 {
   "name": "3h1-ui",
-  "version": "3.0.0-next.141",
+  "version": "3.0.0-next.146",
   "description": "",
   "main": "index.ts",
   "module": "",
@@ -10,7 +10,7 @@
     "minor": "npm version minor",
     "patch": "npm version patch",
     "deploy": "pnpm -v",
-    "build": "vite build",
+    "build": "cross-env NODE_OPTIONS=\"--max-old-space-size=12288\"  vite build",
     "build:less": "esno build/buildLess"
   },
   "files": [

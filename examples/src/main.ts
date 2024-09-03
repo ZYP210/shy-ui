@@ -16,7 +16,6 @@ import 'virtual:windi-utilities.css'
 import 'virtual:svg-icons-register'
 
 import {
-  BasicTable,
   registerGlobalConfig,
   shyTableBasicProps,
   shyTableActionProps,
@@ -46,5 +45,4 @@ buttonProps.isContinuousClicks.default = false
 app
   .use(ShyFlowDingDing)
   .use(router)
-  .use(BasicTable as unknown as Plugin, {})
   .mount('#app')
