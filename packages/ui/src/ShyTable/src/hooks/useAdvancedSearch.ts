@@ -23,7 +23,6 @@ export enum OperatorEnum {
 }
 
 export const useAdvancedSearch = ({ getProps, reload }) => {
-  const isVisibleAdvancedSearch = ref(false)
   const schemasAdvancedSearch = computed<schemasAdvancedSearch[]>(() => {
     return getProps.value.columns.map((column): schemasAdvancedSearch => {
       return {
@@ -52,27 +51,13 @@ export const useAdvancedSearch = ({ getProps, reload }) => {
     })
   })
 
-  const openAdvancedSearch = () => {
-    isVisibleAdvancedSearch.value = true
-  }
-  const closeAdvancedSearch = () => {
-    isVisibleAdvancedSearch.value = false
-  }
-
   const handleAdvancedEnsure = (form) => {
     setCurSearchParams(form)
     reload({ searchInfo: form })
   }
 
   const globalSearchType = ref(1)
-  const isVisibleGlobalSearch = ref(false)
 
-  const openGlobalSearch = () => {
-    isVisibleGlobalSearch.value = true
-  }
-  const closeGlobalSearch = () => {
-    isVisibleGlobalSearch.value = false
-  }
   const setGlobalSearchType = (value) => {
     globalSearchType.value = value
   }
@@ -105,16 +90,10 @@ export const useAdvancedSearch = ({ getProps, reload }) => {
     return curSearchParams.value
   }
   return {
-    isVisibleAdvancedSearch,
     schemasAdvancedSearch,
-    openAdvancedSearch,
-    closeAdvancedSearch,
     handleAdvancedEnsure,
     setGlobalSearchType,
     getGlobalSearchType,
-    openGlobalSearch,
-    closeGlobalSearch,
-    isVisibleGlobalSearch,
     curGlobalSearchValue,
     setGlobalSchemas,
     getGlobalSchemas,
@@ -129,16 +108,26 @@ export const useAdvancedSearch = ({ getProps, reload }) => {
 
 export const useAdvancedSearchKv = () => {
   const getKvOperator = () => {
-    const kvStringOperator = []
-    const kvNumberOperator = []
-    const kvDateOperator = []
+    const kvStringOperator: {}[] = []
+    const kvNumberOperator: {}[] = []
+    const kvDateOperator: {}[] = []
     Object.keys(OperatorEnum).forEach((key) => {
-      if (['eq', 'ne', 'gt', 'ge', 'lt', 'le'].includes(key)) {
-        kvNumberOperator.push({ label: OperatorEnum[key], value: key })
-      } else if (['bt', 'nb'].includes(key)) {
-        kvDateOperator.push({ label: OperatorEnum[key], value: key })
-      } else {
-        kvStringOperator.push({ label: OperatorEnum[key], value: key })
+
+      switch (key) {
+        case 'eq':
+        case 'ne':
+        case 'gt':
+        case 'ge':
+        case 'lt':
+        case 'le':
+          kvNumberOperator.push({ label: OperatorEnum[key], value: key })
+          break
+        case 'bt':
+        case 'nb':
+          kvDateOperator.push({ label: OperatorEnum[key], value: key })
+        default:
+          kvStringOperator.push({ label: OperatorEnum[key], value: key })
+          break
       }
     })
 

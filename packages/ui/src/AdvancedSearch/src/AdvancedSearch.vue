@@ -1,9 +1,13 @@
 <template>
   <div class="shy-ui-advanced-search" ref="advancedSearchRef">
-    <div class="shy-ui-advanced-search-add">
-      <PlusCircleOutlined></PlusCircleOutlined>
-      <div style="margin-left: 8px" @click="handleAdd">新增条件</div>
-    </div>
+    <BasicButton
+      type="link"
+      preIcon="tabler:circle-plus"
+      @click="handleAdd"
+      isContinuousClicks
+    >
+      新增条件
+    </BasicButton>
     <Form :model="schemasCurrent" ref="formRef">
       <Row>
         <template v-for="(schema, index) in schemasCurrent" :key="index">
@@ -129,26 +133,13 @@
                   ></Select>
                 </template>
               </FormItem>
-              <div
+              <BasicButton
                 v-if="schemasCurrent?.length !== 1"
-                style="margin-left: 8px; cursor: pointer; position: relative"
-                class="shy-ui-advanced-minus-icon"
-              >
-                <div
-                  style="
-                    position: absolute;
-                    width: 14px;
-                    height: 14px;
-                    left: 0;
-                    right: 0;
-                    top: 0;
-                    bottom: 0;
-                  "
-                  class="shy-basic-minus-icon"
-                  @click="handleMinus(index)"
-                ></div>
-                <MinusCircleTwoTone class="shy-ui-advanced-minus-icon" />
-              </div>
+                type="link"
+                preIcon="tabler:circle-minus"
+                @click="handleMinus(index)"
+                isContinuousClicks
+              />
             </div>
           </Col>
         </template>
@@ -182,9 +173,9 @@ import {
   stringSearchTypeSelect
 } from './data'
 import { computed, reactive, ref } from 'vue'
-import { PlusCircleOutlined, MinusCircleTwoTone } from '@ant-design/icons-vue'
 import type { schemasAdvancedSearch } from '../../ShyTable/src/types/table'
 import ApiSelect from '../../ShyForm/src/components/ApiSelect.vue'
+import { BasicButton } from '../../Button'
 
 type Props = {
   schemas: schemasAdvancedSearch[]
@@ -209,7 +200,7 @@ const advancedSearchRef = ref()
 
 const formRef = ref()
 
-const schemasCurrent = reactive([])
+const schemasCurrent = reactive<Recordable[]>([])
 
 //判断是否是字符串搜索
 const isStringSearch = (item: any) => {
@@ -218,7 +209,7 @@ const isStringSearch = (item: any) => {
 }
 
 const dicColumn = computed(() => {
-  const temp = []
+  const temp: Recordable[] = []
   props.schemas.forEach((schema) => {
     if (!schema.advancedShow) return
     const flag = schemasCurrent.find((item) => {
@@ -249,7 +240,7 @@ const handleAdd = () => {
   })
 
   const column = props.schemas.find((schema) => {
-    return schema.field === item.value
+    return schema.field === item?.value
   })
 
   const op = isStringSearch(column) ? 'ct' : 'eq'
@@ -361,5 +352,3 @@ defineExpose({
   advancedSearchRef
 })
 </script>
-
-<style scoped></style>

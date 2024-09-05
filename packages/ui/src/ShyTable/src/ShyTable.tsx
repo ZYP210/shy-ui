@@ -32,8 +32,6 @@ import { useTableHeader } from './hooks/useTableHeader'
 import { useColumns } from './hooks/useColumns'
 import { useTableScroll } from './hooks/useTableScroll'
 import { useTableScrollTo } from './hooks/useScrollTo'
-import TableAdvancedSearch from './components/TableAdvancedSearch.vue'
-import TableGlobalSearch from './components/TableGlobalSearch.vue'
 import HeaderCell from './components/HeaderCell.vue'
 import { isFunction, useDebounceFn } from '@vueuse/core'
 import ShyTableFooter from './components/ShyTableFooter'
@@ -168,13 +166,7 @@ const ShyTable = defineComponent({
     const {
       schemasAdvancedSearch,
       schemasAdvancedSearchGlobal,
-      isVisibleAdvancedSearch,
-      openAdvancedSearch,
-      closeAdvancedSearch,
       handleAdvancedEnsure,
-      openGlobalSearch,
-      closeGlobalSearch,
-      isVisibleGlobalSearch,
       setGlobalSearchType,
       getGlobalSearchType,
       setGlobalSchemas,
@@ -250,12 +242,9 @@ const ShyTable = defineComponent({
       ...tableAction,
       wrapRef,
       getBindValues,
-      openAdvancedSearch,
-      closeAdvancedSearch,
-      isVisibleAdvancedSearch,
-      openGlobalSearch,
-      closeGlobalSearch,
-      isVisibleGlobalSearch,
+      schemasAdvancedSearch,
+      schemasAdvancedSearchGlobal,
+      handleAdvancedEnsure,
       setGlobalSearchType,
       getGlobalSearchType,
       setGlobalSchemas,
@@ -343,23 +332,6 @@ const ShyTable = defineComponent({
         ) : null
       }
 
-      const isShowAdvancedSearch = () => {
-        return isVisibleAdvancedSearch.value ? (
-          <TableAdvancedSearch
-            schemasAdvancedSearch={schemasAdvancedSearch.value}
-            onEnsure={handleAdvancedEnsure}
-          />
-        ) : null
-      }
-
-      const isShowGlobalSearch = () => {
-        return isVisibleGlobalSearch.value ? (
-          <TableGlobalSearch
-            schemasAdvancedSearch={schemasAdvancedSearchGlobal.value}
-          />
-        ) : null
-      }
-
       const isShowSummary = () => {
         return getDataSourceRef.value?.length &&
           getProps.value?.showSummaryTotal
@@ -412,7 +384,7 @@ const ShyTable = defineComponent({
         ) : null
       }
 
-      const setColDebounceFn = useDebounceFn((width:number, col) => {
+      const setColDebounceFn = useDebounceFn((width: number, col) => {
         const columns = cloneDeep(getColumns())
         const tempColumns = columns.map((ele) => {
           if (ele.dataIndex !== col.dataIndex) return ele
@@ -450,8 +422,8 @@ const ShyTable = defineComponent({
       return (
         <div ref={wrapRef} class={getWrapperClass.value}>
           {isShowForm()}
-          {isShowAdvancedSearch()}
-          {isShowGlobalSearch()}
+          {/* {isShowAdvancedSearch.value}
+          {isShowGlobalSearch.value} */}
           <Table
             ref={tableElRef}
             {...getBindValues.value}

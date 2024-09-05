@@ -184,11 +184,12 @@ export interface TableSetting {
   size?: boolean
   setting?: boolean
   fullScreen?: boolean
+  advancedSearch?: boolean
 }
 
 export interface ShyTableProps<T = any> {
-  formLabelInInput?: boolean,
-  actionColWidth: number,
+  formLabelInInput?: boolean
+  actionColWidth: number
   summaryPrecision: number
   isShowTitle: boolean
   headerAlign: 'left' | 'right'
