@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="shy-basic-table-global-search"
-    :style="setStyle()"
-    ref="globalSearchWrapperRef"
-  >
+  <div class="shy-basic-table-global-search">
     <div
       class="shy-basic-table-global-search-item-global"
       :class="{ 'selected-bg': curSelected === 1 }"
@@ -39,7 +35,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch, onMounted, onUnmounted } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import { Checkbox, CheckboxGroup } from 'ant-design-vue'
 import { CheckOutlined } from '@ant-design/icons-vue'
 import { useTableContext } from '../hooks/useShyTableContext'
@@ -57,7 +53,6 @@ export default defineComponent({
   emits: ['ensure'],
   setup(props) {
     const table = useTableContext()
-    const advancedSearchRef = ref()
     const fieldList = ref([])
 
     const curSelected = ref(1)
@@ -104,43 +99,11 @@ export default defineComponent({
       table.setCurSearchParams(params)
     }
 
-    const handleReset = () => {
-      advancedSearchRef.value.resetFields()
-    }
-
-    const setStyle = () => {
-      const dom = document.querySelector<HTMLDivElement>('.table-settings')
-      if (dom) {
-        return { left: `${dom.offsetLeft}px` }
-      } else {
-        return {}
-      }
-    }
-
-    const globalSearchWrapperRef = ref()
-    const clickOutside = (e) => {
-      if (document.querySelector('.table-settings')?.contains(e.target)) return
-      if (globalSearchWrapperRef.value.contains(e.target)) return
-      table.closeGlobalSearch()
-    }
-
-    onMounted(() => {
-      document.addEventListener('click', clickOutside)
-    })
-
-    onUnmounted(() => {
-      document.removeEventListener('click', clickOutside)
-    })
-
     return {
-      handleReset,
-      advancedSearchRef,
       fieldList,
       curSelected,
       handleSelectedClick,
-      handleCheckboxChange,
-      setStyle,
-      globalSearchWrapperRef
+      handleCheckboxChange
     }
   }
 })
@@ -148,16 +111,10 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .shy-basic-table-global-search {
-  position: absolute;
-  top: 80px;
-  right: 131px;
   width: 200px;
   max-height: 800px;
   overflow: auto;
   background-color: var(--theme);
-  z-index: 1000;
-  border: 1px solid #ebebeb;
-  padding: 10px;
   &-item-global {
     height: 32px;
     line-height: 32px;
@@ -183,7 +140,11 @@ export default defineComponent({
   }
 
   &-checkbox-wrapper {
-    padding: 0 8px;
+    padding-inline: 8px;
+
+    .ant-checkbox-group {
+      justify-content: space-between;
+    }
   }
 
   .selected-bg {

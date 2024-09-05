@@ -426,9 +426,13 @@ const [
       }
     ]
   },
-  showSummaryTotal: true,
+  tableSetting: {
+    advancedSearch: true
+  },
+  // showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
+  useAdvancedSearch: true,
   // summaryPrecision: 2,
   // useAdvancedSearch: true,
   // clickToRowSelect: true,

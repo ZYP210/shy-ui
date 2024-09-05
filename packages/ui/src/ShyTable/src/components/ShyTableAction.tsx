@@ -282,7 +282,7 @@ const ShyTableAction = defineComponent({
     return () => {
       return (
         <>
-          <div class={[prefixCls, getAlign]} onClick={onCellClick}>
+          <div class={[prefixCls, getAlign.value]} onClick={onCellClick}>
             {getActions.value}
             {isShowDropdown()}
           </div>

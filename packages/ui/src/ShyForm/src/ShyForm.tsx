@@ -38,6 +38,7 @@ import { isEqual, omit, pick } from 'lodash-es'
 import { useDesign } from '@shy-plugins/use'
 import { UpOutlined } from '@ant-design/icons-vue'
 import './style/index.less'
+import { formProps } from 'ant-design-vue/es/form'
 
 const ShyForm = defineComponent({
   props: basicProps,
@@ -508,7 +509,7 @@ const ShyForm = defineComponent({
       return (
         <>
           <Form
-            {...getBindValue.value}
+            {...pick(getBindValue.value, Object.keys(formProps))}
             class={getFormClass.value}
             ref={formElRef}
             model={formModel}

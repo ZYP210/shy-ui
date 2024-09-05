@@ -1,21 +1,15 @@
 import { defineComponent, onMounted, ref } from 'vue'
-import { Input } from 'ant-design-vue'
+import { Input, Popover } from 'ant-design-vue'
 import { SearchOutlined, AlignCenterOutlined } from '@ant-design/icons-vue'
-import { useTableContext } from '../../hooks/useShyTableContext'
 import { getGlobalAdvancedType } from '../../../../AdvancedSearch'
+import TableGlobalSearch from '../TableGlobalSearch.vue'
+import { useTableContext } from '../../hooks/useShyTableContext'
 
 const ShyGlobalSearch = defineComponent({
   setup() {
     const table = useTableContext()
 
-    const handleClick = () => {
-      table.isVisibleGlobalSearch.value = !table.isVisibleGlobalSearch.value
-      table.closeAdvancedSearch()
-    }
-
-    const handleFocus = () => {
-      table.closeAdvancedSearch()
-    }
+    const isVisibleGlobalSearch = ref(false)
 
     const timer = ref()
     const globalSearchValue = ref('')
@@ -57,23 +51,37 @@ const ShyGlobalSearch = defineComponent({
       return (
         <span>
           <Input
-            style="width: 200px"
             placeholder="请输入数据"
-            onFocus={handleFocus}
             onInput={handleInput}
             v-model:value={globalSearchValue.value}
           >
             {{
-              prefix: () => <SearchOutlined style="color: #c8c8c8" />,
+              prefix: () => (
+                <SearchOutlined style={{ color: 'var(--gray-4)' }} />
+              ),
               suffix: () => (
-                <AlignCenterOutlined
-                  style={{
-                    color: table.isVisibleGlobalSearch.value
-                      ? '#498bf8'
-                      : '#c8c8c8'
+                <Popover
+                  v-model:open={isVisibleGlobalSearch.value}
+                  trigger="click"
+                  v-slots={{
+                    content: () => (
+                      <TableGlobalSearch
+                        schemasAdvancedSearch={
+                          table.schemasAdvancedSearchGlobal.value
+                        }
+                      />
+                    )
                   }}
-                  onClick={handleClick}
-                />
+                  placement="bottom"
+                >
+                  <AlignCenterOutlined
+                    style={{
+                      color: isVisibleGlobalSearch.value
+                        ? 'var(--blue-5)'
+                        : 'var(--gray-4)'
+                    }}
+                  />
+                </Popover>
               )
             }}
           </Input>

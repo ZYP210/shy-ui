@@ -35,6 +35,7 @@ const ShyTableSetting = defineComponent({
         size: true,
         setting: true,
         fullScreen: false,
+        advancedSearch: false,
         ...props.setting
       }
     })
@@ -52,7 +53,7 @@ const ShyTableSetting = defineComponent({
     }
 
     const renderGlobalSearch = computed(() => {
-      return getBindValues.value.useAdvancedSearch &&
+      return getSetting.value.advancedSearch &&
         getBindValues.value.columns.some((item) => {
           return (
             item.dataIndex !== 'action' &&
@@ -64,7 +65,7 @@ const ShyTableSetting = defineComponent({
     })
 
     const renderAdvancedSearch = computed(() => {
-      return getBindValues.value.useAdvancedSearch ? (
+      return getSetting.value.advancedSearch ? (
         <ShyAdvancedSearch getPopupContainer={getTableContainer} />
       ) : null
     })
@@ -114,7 +115,7 @@ const ShyTableSetting = defineComponent({
 })
 
 const ShyTableTitle = defineComponent({
-  setup(props, { slots }) {
+  setup(_, { slots }) {
     const route = useRoute()
 
     const { useToken } = theme
