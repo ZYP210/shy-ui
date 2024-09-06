@@ -32,7 +32,7 @@ import {
   tableSearchColRef,
   defaultAntConfig
 } from './props'
-import { cloneDeep, isNumber, set } from 'lodash-es'
+import { cloneDeep, set } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
 import { isEqual, omit, pick } from 'lodash-es'
 import { useDesign } from '@shy-plugins/use'
@@ -509,7 +509,7 @@ const ShyForm = defineComponent({
       return (
         <>
           <Form
-            {...pick(getBindValue.value, Object.keys(formProps))}
+            {...pick(getBindValue.value, Object.keys(formProps()))}
             class={getFormClass.value}
             ref={formElRef}
             model={formModel}

@@ -6,7 +6,6 @@ import type {
 } from './types/form'
 import { reactive, type CSSProperties, type PropType } from 'vue'
 import type { ColEx } from './types'
-import type { TableActionType } from '../../Table'
 import type { TableActionType as ShyTableActionType } from '../../ShyTable'
 import type { RowProps } from 'ant-design-vue/lib/grid/Row'
 
@@ -203,7 +202,7 @@ export const basicProps = {
     default: 'horizontal'
   },
   tableAction: {
-    type: Object as PropType<TableActionType | ShyTableActionType>
+    type: Object as PropType<ShyTableActionType>
   },
 
   wrapperCol: {
@@ -249,7 +248,7 @@ export const FormItemProps = {
     default: null
   },
   tableAction: {
-    type: Object as PropType<TableActionType | ShyTableActionType>
+    type: Object as PropType<ShyTableActionType>
   },
   formActionType: {
     type: Object as PropType<FormActionType>
