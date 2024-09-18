@@ -214,6 +214,9 @@ import { useColumns } from './hooks/useColumns'
 import { useSort } from './hooks/useSort'
 import IconSort from './components/Icon/Sort.vue'
 import { watchEffect } from 'vue'
+import { useGlobalConfig } from '../../config/'
+
+const { config } = useGlobalConfig('tablePlus')
 
 const emits = defineEmits([
   'register',
@@ -292,7 +295,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const innerProps = ref({})
 const getProps = computed(() => {
-  const tempProps: any = { ...props, ...innerProps.value }
+  const tempProps: any = { ...props, ...config, ...innerProps.value }
 
   if (tempProps.isCompatible) {
     tempProps.columns.forEach((column) => {

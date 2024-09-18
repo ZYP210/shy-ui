@@ -18,6 +18,7 @@ import { isBoolean, isFunction, isNumber, isString } from '@shy-plugins/utils'
 import { ACTION_COLUMN_FLAG } from '../const'
 import { MoreOutlined, DownOutlined } from '@ant-design/icons-vue'
 import { BasicButton } from '../../../Button'
+import { useGlobalConfig } from '../../../../config/'
 
 import '../style/tableAction.less'
 
@@ -50,8 +51,7 @@ export const shyTableActionProps = reactive({
     default: 2
   },
   iconDirection: {
-    type: String,
-    default: () => 'vertical'
+    type: String
   }
 })
 
@@ -63,6 +63,8 @@ export enum ActionType {
 const ShyTableAction = defineComponent({
   props: shyTableActionProps,
   setup(props, { slots }) {
+    const { config } = useGlobalConfig('ShyTableAction')
+
     const { prefixCls } = useDesign('ant-table-action')
     let table: Partial<TableActionType> = {}
     if (!props.outside) {
@@ -100,7 +102,7 @@ const ShyTableAction = defineComponent({
       switch (props.type) {
         case ActionType.Link:
           return props.showCount
-       case ActionType.Button:
+        case ActionType.Button:
           return props.showCount > 2 ? props.showCount : 3
       }
     })
@@ -109,7 +111,7 @@ const ShyTableAction = defineComponent({
       switch (props.type) {
         case ActionType.Link:
           return 'small'
-       case ActionType.Button:
+        case ActionType.Button:
           return 'middle'
       }
     })
@@ -118,7 +120,7 @@ const ShyTableAction = defineComponent({
       switch (props.type) {
         case ActionType.Link:
           return 'link'
-       case ActionType.Button:
+        case ActionType.Button:
           return 'default'
       }
     }
@@ -215,7 +217,13 @@ const ShyTableAction = defineComponent({
     })
 
     const renderDropdownBtn = () => {
-      const rotate = props?.iconDirection === 'vertical' ? 0 : 90
+      const getIconDirection = props?.iconDirection
+        ? props.iconDirection
+        : config?.iconDirection
+        ? config.iconDirection
+        : 'vertical'
+
+      const rotate = getIconDirection === 'vertical' ? 0 : 90
       switch (props.type) {
         case ActionType.Link:
           return (
@@ -228,7 +236,7 @@ const ShyTableAction = defineComponent({
               <MoreOutlined />
             </BasicButton>
           )
-       case ActionType.Button:
+        case ActionType.Button:
           return (
             <BasicButton class={`${prefixCls}-footer-more-btn`}>
               <div class={`${prefixCls}-footer-more-text`}>更多操作</div>

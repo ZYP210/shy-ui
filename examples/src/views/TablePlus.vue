@@ -55,7 +55,8 @@ const columns = [
   {
     title: '类型编号',
     field: 'a',
-    treeNode: true
+    treeNode: true,
+    showOverflow: false
   },
   {
     title: 'b',

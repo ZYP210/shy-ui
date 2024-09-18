@@ -8,11 +8,17 @@ export const useColumns = (getProps, tableRef) => {
     return getProps.value.columns.map((column) => {
       if (column?.children) {
         column.children = column.children.map((item) => {
-          return deepMergeObjects(basicColumn, item)
+          return deepMergeObjects(
+            { ...basicColumn, ...(getProps.value?.basicColumn || {}) },
+            item
+          )
         })
         return column
       } else {
-        return deepMergeObjects(basicColumn, column)
+        return deepMergeObjects(
+          { ...basicColumn, ...(getProps.value?.basicColumn || {}) },
+          column
+        )
       }
     })
   })

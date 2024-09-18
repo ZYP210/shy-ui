@@ -1,7 +1,9 @@
 const globalConfig = {
   form: {},
   table: {},
-  formInputNumber: {}
+  formInputNumber: {},
+  tablePlus: {},
+  tableAction: {}
 }
 
 export const registerGlobalConfig = (config: any) => {
