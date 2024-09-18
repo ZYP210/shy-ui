@@ -10,6 +10,8 @@
         <a-button>1</a-button>
       </template>
 
+      <template #name-c="{ row }"> 888 </template>
+
       <template #action="{ row, column }">
         <TableAction :actions="getActions(row)" :show-count="4" />
       </template>
@@ -62,9 +64,18 @@ const columns = [
     title: 'b',
     field: 'b'
   },
-  { title: 'c', field: 'c', width: 300 },
-  { title: 'd', field: 'd', width: 300 },
-  { title: 'e', field: 'e', width: 300 }
+  // {
+  //   title: '类型编号',
+  //   field: 'a',
+  //   treeNode: true
+  // },
+  // {
+  //   title: 'b',
+  //   field: 'b'
+  // },
+  { title: 'c', field: 'c', width: 300 }
+  // { title: 'd', field: 'd', width: 300 },
+  // { title: 'e', field: 'e', width: 300 }
   // { title: 'f', field: 'f', width: 300 },
   // { title: 'g', field: 'g', width: 300 },
   // {

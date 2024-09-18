@@ -7,7 +7,7 @@
     </div>
     <ShyForm :labelWidth="100" @register="registerForm" @submit="handleSubmit">
       <template #ApiModalSelect="{ model, field }">
-        <ApiModalSelect
+        <ShyApiModalSelect
           v-model:value="model[field]"
           :fieldNames="{ label: 'a', value: 'id' }"
           @modal-confirm="handleModalChange"
@@ -19,7 +19,7 @@
 </template>
 <script lang="ts" setup>
 import type { ShyFormSchema } from '3h1-ui'
-import { useShyForm, ApiModalSelect, ShyForm, BasicButton } from '3h1-ui'
+import { useShyForm, ShyApiModalSelect, ShyForm, BasicButton } from '3h1-ui'
 import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
 import { h, onMounted } from 'vue'

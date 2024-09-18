@@ -72,7 +72,15 @@
             v-if="column?.groupName"
             :column="column"
             @handleSortChange="handleSortChange"
-          />
+          >
+            <template
+              v-for="c in column.children"
+              #[`${column.field}-${c.field}`]="config"
+              :key="`${column.field}-${c.field}`"
+            >
+              <slot :name="`${column.field}-${c.field}`" v-bind="config" />
+            </template>
+          </TableColGroup>
 
           <vxe-column
             v-else

@@ -1,10 +1,14 @@
 import ShyTable from './src/ShyTable'
-export { default as ShyTableAction, default as TableAction } from './src/components/ShyTableAction'
+export {
+  default as ShyTableAction,
+  default as TableAction
+} from './src/components/ShyTableAction'
 export { shyTableActionProps } from './src/components/ShyTableAction'
 import type { App, Plugin } from 'vue'
 import { basicPropChange } from './src/props'
 import { setConstConfig } from './src/const'
 export { shyTableBasicProps } from './src/props'
+export { default as TableImg } from './src/components/TableImg.vue'
 export * from './src/types/table'
 export * from './src/types/pagination'
 export * from './src/types/tableAction'

@@ -8,7 +8,7 @@
       />
       <vxe-column v-else v-bind="c" :edit-render="c?.editRender || undefined">
         <template #default="config">
-          <slot :name="c.field" v-bind="config">
+          <slot :name="`${column.field}-${c.field}`" v-bind="config">
             <template v-if="config.row._isEdit && column?.isEdit">
               <template v-if="c?.editComponentProps?.component === 'Switch'">
                 <CellComponent
