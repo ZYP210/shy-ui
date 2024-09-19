@@ -1,8 +1,8 @@
 {
   "name": "@shy-plugins/shy-graph",
-  "private": false,
-  "version": "0.0.1",
+  "version": "0.0.3",
   "type": "module",
+  "module": "dist/index.es.js",
   "main": "dist/index.es.js",
   "scripts": {
     "dev": "vite",
