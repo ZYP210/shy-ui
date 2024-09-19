@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex flex-col p-16px overflow-hidden">
-    <div class="flex-1 overflow-hidden">
+    <div class="flex-1 overflow-auto">
       <ShyTable @register="register" @selection-change="handleSelectChange">
         <template #toolbar="data">
           <ShyTableAction type="button" :actions="getHeaderActions(data)" />
@@ -88,7 +88,7 @@ const columns: any[] = [
     dataIndex: 'name',
     // align: 'left',
     // align: 'center',
-    width: 120,
+    // width: 120,
     tag: true,
     tagMode: 'tag',
     options: [
@@ -190,7 +190,7 @@ const columns: any[] = [
   {
     title: '菜单名称',
     dataIndex: 'name',
-    width: 1120,
+    // width: 1120,
     // fixed: 'right',
     options: [
       {
@@ -308,7 +308,7 @@ const getFooterActions = ({ rows, rowKeys, disabled }): ActionItem[] => {
   ]
 }
 
-const length = ref(10)
+const length = ref(50)
 
 const [
   register,
@@ -352,6 +352,10 @@ const [
   onColumnsReset: () => {
     console.log('columns-reset')
   },
+  tableSetting: {
+    // advancedSearch: true,
+    showMore: true,
+  },
   // summaryPrecision: 0,
   resizable: true,
   rowKey: 'id',
@@ -362,6 +366,7 @@ const [
   // isShowPagination: false,
   isSortFetch: false,
   useSearchForm: true,
+  formLabelInInput: false,
   formConfig: {
     labelWidth: 60,
     schemas: [
@@ -426,13 +431,10 @@ const [
       }
     ]
   },
-  tableSetting: {
-    advancedSearch: true
-  },
   // showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
-  useAdvancedSearch: true,
+  // useAdvancedSearch: true,
   // summaryPrecision: 2,
   // useAdvancedSearch: true,
   // clickToRowSelect: true,
@@ -441,11 +443,10 @@ const [
   actionColumn: {
     dataIndex: 'action',
     title: '操作',
-    width: 200
-    // fixed: 'right'
+    width: 200,
   },
-  showIndexColumn: true
-  // canResize: false,
+  showIndexColumn: true,
+  canResize: false,
   // indexColumn: {}
 })
 

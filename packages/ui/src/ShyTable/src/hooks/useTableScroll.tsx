@@ -3,14 +3,16 @@ import type {
   TableRowSelection,
   ShyColumn
 } from '../types/table'
-import { Ref, ComputedRef, ref } from 'vue'
+import { Ref, ComputedRef, ref, onUnmounted, render } from 'vue'
 import { computed, unref, nextTick, watch } from 'vue'
 import { getViewportOffset, isBoolean } from '@shy-plugins/utils'
-import { useWindowSizeFn } from '@shy-plugins/use'
+import { useDesign, useWindowSizeFn } from '@shy-plugins/use'
 import { useModalContext } from '../../../Modal'
 import { onMountedOrActivated } from '@shy-plugins/use'
 import { useDebounceFn } from '@vueuse/core'
 import Sortable from 'sortablejs'
+import { BasicButton } from '../../../Button'
+import { SCROLL_WIDTH } from '../const'
 
 export function useTableScroll(
   propsRef: ComputedRef<ShyTableProps>,
@@ -18,10 +20,11 @@ export function useTableScroll(
   columnsRef: ComputedRef<ShyColumn[]>,
   rowSelectionRef: ComputedRef<TableRowSelection | null>,
   getDataSourceRef: ComputedRef<Recordable[]>,
-  wrapRef: Ref<HTMLElement | null>,
-  formRef: Ref<ComponentRef>
+  wrapRef: Ref<HTMLElement | null>
 ) {
-  const tableHeightRef: Ref<Nullable<number | string>> = ref(167)
+  const { prefixCls } = useDesign('ant-table-more-wrapper')
+
+  const tableHeightRef: Ref<Nullable<number>> = ref(400)
   const modalFn = useModalContext()
 
   // Greater than animation time 280
@@ -48,6 +51,42 @@ export function useTableScroll(
     })
   }
 
+  function handleShowMore() {
+    const allRow = bodyEl?.querySelectorAll('.ant-table-row')
+    let allRowHeight = 0
+    allRow?.forEach((row) => {
+      allRowHeight += row.clientHeight
+    })
+    const averageHeight = allRowHeight / (allRow?.length ?? 0)
+
+    if (
+      (tableHeightRef.value ?? 0) <= allRowHeight &&
+      (tableHeightRef.value ?? 0) + averageHeight * 10 > allRowHeight
+    ) {
+      tableHeightRef.value = allRowHeight
+    } else {
+      tableHeightRef.value = (tableHeightRef.value ?? 0) + averageHeight * 10
+    }
+
+    setTimeout(() => {
+      calcTableHeight()
+    }, 1000)
+  }
+
+  function showAll() {
+    const allRow = bodyEl?.querySelectorAll('.ant-table-row')
+    let allRowHeight = 0
+    allRow?.forEach((row) => {
+      allRowHeight += row.clientHeight
+    })
+
+    tableHeightRef.value = allRowHeight
+
+    setTimeout(() => {
+      calcTableHeight()
+    }, 1000)
+  }
+
   function setHeight(height: number) {
     tableHeightRef.value = height
     modalFn?.redoModalHeight?.()
@@ -56,13 +95,14 @@ export function useTableScroll(
   let bodyEl: HTMLElement | null
   async function calcTableHeight() {
     const {
-      canResize,
       isShowFooter,
       resizeHeightOffset,
       maxHeight,
       isCanResizeParent,
-      useSearchForm
+      useSearchForm,
+      tableSetting
     } = unref(propsRef)
+
     const tableData = unref(getDataSourceRef)
 
     const table = unref(tableElRef)
@@ -76,25 +116,45 @@ export function useTableScroll(
       if (!bodyEl) return
     }
 
+    const tableBodyEl = tableEl.querySelector('.ant-table-body') as HTMLElement
+
     const hasScrollBarY = bodyEl.scrollHeight > bodyEl.clientHeight
-    const hasScrollBarX = bodyEl.scrollWidth > bodyEl.clientWidth
+    const hasScrollBarX = bodyEl.scrollWidth > bodyEl.clientWidth + SCROLL_WIDTH
 
     if (hasScrollBarY) {
       !tableEl.classList.contains('no-hide-scrollbar-y') &&
         tableEl.classList.add('no-hide-scrollbar-y')
       tableEl.classList.remove('hide-scrollbar-y')
+
+      tableSetting?.showMore &&
+        render(
+          <div class={prefixCls}>
+            <BasicButton
+              type="link"
+              preIcon="tabler:layout-navbar-expand"
+              onClick={handleShowMore}
+            >
+              展开更多
+            </BasicButton>
+          </div>,
+          tableBodyEl
+        )
     } else {
       !tableEl.classList.contains('hide-scrollbar-y') &&
         tableEl.classList.add('hide-scrollbar-y')
       tableEl.classList.remove('no-hide-scrollbar-y')
+
+      tableSetting?.showMore && render(null, tableBodyEl)
     }
 
     if (hasScrollBarX) {
-      tableEl.classList.contains('hide-scrollbar-x') &&
-        tableEl.classList.remove('hide-scrollbar-x')
+      !tableEl.classList.contains('no-hide-scrollbar-x') &&
+        tableEl.classList.add('no-hide-scrollbar-x')
+      tableEl.classList.remove('hide-scrollbar-x')
     } else {
       !tableEl.classList.contains('hide-scrollbar-x') &&
         tableEl.classList.add('hide-scrollbar-x')
+      tableEl.classList.remove('no-hide-scrollbar-x')
     }
 
     bodyEl!.style.height = 'unset'
@@ -154,15 +214,15 @@ export function useTableScroll(
       paddingHeight -
       footerHeight -
       tableHeaderHeight -
-      headerHeight
-    height = height > maxHeight! ? (maxHeight as number) : height
-    height = canResize ? Math.floor(height) : Math.floor(height + 2)
+      headerHeight -
+      2
+    height = Math.floor(height > maxHeight! ? (maxHeight as number) : height)
 
     setHeight(height)
 
     bodyEl.style.height = `${height}px`
   }
-  useWindowSizeFn(calcTableHeight, 280)
+  useWindowSizeFn<void>(calcTableHeight, 280)
   onMountedOrActivated(() => {
     calcTableHeight()
     nextTick(() => {
@@ -180,6 +240,12 @@ export function useTableScroll(
       handle: '.ant-table-cell .ant-table-cell-index',
       draggable: '.ant-table-row'
     })
+
+    window.addEventListener('resize', calcTableHeight)
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', calcTableHeight)
   })
 
   const getScrollX = computed(() => {
@@ -193,7 +259,7 @@ export function useTableScroll(
 
     const columns = unref(columnsRef).filter((item) => !item.defaultHidden)
     columns.forEach((item) => {
-      width += Number.parseFloat(item.width as string) || 0
+      width += Number.parseFloat(item.width + '') || 0
     })
     const unsetWidthColumns = columns.filter(
       (item) => !Reflect.has(item, 'width')
@@ -211,16 +277,17 @@ export function useTableScroll(
   })
 
   const getScrollRef = computed(() => {
-    const tableHeight = tableHeightRef.value as number
-    const { canResize, scroll } = unref(propsRef)
+    const { scroll, canResize } = unref(propsRef)
+    const tableHeight =
+      (tableHeightRef.value as number) + (canResize ? 0 : SCROLL_WIDTH)
 
     return {
       x: unref(getScrollX),
-      y: canResize ? tableHeight : null,
+      y: tableHeight,
       scrollToFirstRowOnChange: false,
       ...scroll
     }
   })
 
-  return { getScrollRef, redoHeight }
+  return { getScrollRef, redoHeight, showAll }
 }

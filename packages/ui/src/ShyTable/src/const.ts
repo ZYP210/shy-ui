@@ -91,6 +91,8 @@ export const ACTION_COLUMN_FLAG = 'ACTION'
 
 export const ACTION_COLUMN_WIDTH = 65
 
+export const SCROLL_WIDTH = 10
+
 export const setConstConfig = (config) => {
   DEFAULT_ALIGN = config.align
 }

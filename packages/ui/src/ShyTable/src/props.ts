@@ -10,7 +10,7 @@ import type {
   TableRowSelection,
   SizeType
 } from './types/table'
-import type { FormProps } from '../../Form'
+import type { FormProps } from '../../ShyForm'
 import {
   DEFAULT_FILTER_FN,
   DEFAULT_SORT_FN,
@@ -22,6 +22,10 @@ import {
 } from './const'
 
 export const shyTableBasicProps = reactive({
+  formLayout: {
+    type: String as PropType<'horizontal' | 'vertical' | 'inline'>,
+    default: 'horizontal'
+  },
   formLabelInInput: { type: Boolean, default: true },
   actionColWidth: {
     type: Number,

@@ -1,5 +1,6 @@
 export * from './ShyAdvancedSearch'
 export * from './ShyGlobalSearch'
+export * from './ShyShowMore'
 export * from './ShyShowSearch'
 export * from './ShyTableSize'
 export * from './ShyTableColumn'

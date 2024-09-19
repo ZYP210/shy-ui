@@ -6,7 +6,7 @@ import type {
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 // import type { DynamicProps } from '/#/utils'
-import type { FormActionType } from '../../../Form'
+import type { FormActionType } from '../../../ShyForm'
 import type { WatchStopHandle } from 'vue'
 import { getDynamicProps } from '@shy-plugins/utils'
 import { ref, onUnmounted, unref, watch, toRaw } from 'vue'

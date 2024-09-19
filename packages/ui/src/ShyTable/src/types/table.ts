@@ -185,9 +185,11 @@ export interface TableSetting {
   setting?: boolean
   fullScreen?: boolean
   advancedSearch?: boolean
+  showMore?:boolean
 }
 
 export interface ShyTableProps<T = any> {
+  formLayout?: 'horizontal' | 'vertical' | 'inline',
   formLabelInInput?: boolean
   actionColWidth: number
   summaryPrecision: number

@@ -26,18 +26,18 @@ export function useTableForm(
     return temp
   })
   const getFormProps = computed((): Partial<FormProps> => {
-    const { formConfig } = unref(propsRef)
+    const { formConfig, formLayout } = unref(propsRef)
     const { submitButtonOptions } = formConfig || {}
 
     return {
       showAdvancedButton: true,
-      // rowProps: { gutter: 20 },
       ...getFormConfig.value,
       submitButtonOptions: {
         loading: unref(getLoading),
         ...submitButtonOptions
       },
-      compact: true
+      compact: true,
+      layout: formLayout
     }
   })
 
