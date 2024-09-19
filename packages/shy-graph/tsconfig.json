@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "useDefineForClassFields": true,
+    "declaration": true,
+    "types": [
+      "vite/client"
+    ],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "strict": true,
+    "noImplicitAny": false,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./",
+    "paths": {
+      "/@/*": [
+        "src/*"
+      ],
+      "/#/*": [
+        "/src/types/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "src/**/*.ts",
+    "types/**/*.d.ts",
+    "types/**/*.ts",
+    ".auto-imports.d.ts",
+    ".components.d.ts",
+  ],
+}

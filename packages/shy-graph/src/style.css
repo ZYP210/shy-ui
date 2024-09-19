@@ -1,0 +1,7 @@
+.shy-graph{
+  *{
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
