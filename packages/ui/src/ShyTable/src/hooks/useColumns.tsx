@@ -32,7 +32,7 @@ const handleItem = (item: ShyColumn, ellipsis: boolean) => {
   item.align = item.align || DEFAULT_ALIGN
   if (ellipsis) {
     if (!key) {
-      item.key = dataIndex
+      item.key = dataIndex! as string | number
     }
     if (!isBoolean(item.ellipsis)) {
       Object.assign(item, {
@@ -67,8 +67,8 @@ const handleColumnResize = (
   const length = columns.length
   columns.forEach((item) => {
     const minWidth = (item?.title + '').length * 14 + 16
-    const countWidth:number =
-      (tableWidth - sumWidth - selectWidth) / (length - sumLength) || 0
+    const countWidth: number =
+      (tableWidth - sumWidth - selectWidth - 10) / (length - sumLength) || 0
     if (item.flag) return
     const finallyWidth = minWidth > countWidth ? minWidth : countWidth
     if (propsRef.value.resizable) {

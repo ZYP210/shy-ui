@@ -19,6 +19,7 @@ import {
   registerGlobalConfig,
   shyTableBasicProps,
   shyTableActionProps,
+  shyFormBasicProps,
   basicContainerProps,
   buttonProps
 } from '3h1-ui'
@@ -37,7 +38,7 @@ shyTableBasicProps.headerAlign.default = 'right'
 shyTableBasicProps.isShowTitle.default = false
 shyTableBasicProps.actionColWidth.default = 110
 shyTableActionProps.showCount.default = 3
-
+shyFormBasicProps.layout.default = 'vertical'
 basicContainerProps.isShowBack.default = false
 
 buttonProps.isContinuousClicks.default = false

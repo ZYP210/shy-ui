@@ -17,5 +17,6 @@ export { default as ShyApiTransfer } from './src/components/ApiTransfer.vue'
 export { ShyFormTable as ShyTableChildren } from './src/components/Table'
 export { default as ShyApiModalSelect } from './src/components/ApiModalSelect/ApiModalSelect.vue'
 export { default as ShyFormWrapper } from './src/components/FormWrapper.vue'
+export { basicProps as shyFormBasicProps } from './src/props'
 
 export { ShyForm, ShyForm as BasicForm }

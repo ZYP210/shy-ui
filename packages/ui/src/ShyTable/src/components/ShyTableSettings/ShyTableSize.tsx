@@ -13,8 +13,22 @@ const ShyTableSize = defineComponent({
   setup() {
     const table = useTableContext()
     const selectedKeysRef = ref<SizeType[]>([table.getSize()!])
+    const menuItems = [
+      {
+        label: '默认',
+        key: 'default'
+      },
+      {
+        label: '中等',
+        key: 'middle'
+      },
+      {
+        label: '紧凑',
+        key: 'small'
+      }
+    ]
 
-    const handleTitleClick = ({ key }: { key: SizeType }) => {
+    const handleTitleClick = ({ key }) => {
       selectedKeysRef.value = [key]
       table.setProps({
         size: key
@@ -33,17 +47,8 @@ const ShyTableSize = defineComponent({
                   onClick={handleTitleClick}
                   selectable
                   v-model:selectedKeys={selectedKeysRef.value}
-                >
-                  <Menu.Item key="default">
-                    <span>默认</span>
-                  </Menu.Item>
-                  <Menu.Item key="middle">
-                    <span>中等</span>
-                  </Menu.Item>
-                  <Menu.Item key="small">
-                    <span>紧凑</span>
-                  </Menu.Item>
-                </Menu>
+                  items={menuItems}
+                ></Menu>
               )
             }}
           >

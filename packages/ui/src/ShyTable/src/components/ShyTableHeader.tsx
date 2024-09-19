@@ -5,6 +5,7 @@ import { useTableContext } from '../hooks/useShyTableContext'
 import {
   ShyAdvancedSearch,
   ShyGlobalSearch,
+  ShyShowMore,
   ShyShowSearch,
   ShyTableColumn,
   ShyTableFullScreen,
@@ -35,6 +36,7 @@ const ShyTableSetting = defineComponent({
         size: true,
         setting: true,
         fullScreen: false,
+        showMore: false,
         advancedSearch: false,
         ...props.setting
       }
@@ -67,6 +69,12 @@ const ShyTableSetting = defineComponent({
     const renderAdvancedSearch = computed(() => {
       return getSetting.value.advancedSearch ? (
         <ShyAdvancedSearch getPopupContainer={getTableContainer} />
+      ) : null
+    })
+
+    const renderShowMore = computed(() => {
+      return getSetting.value.showMore ? (
+        <ShyShowMore getPopupContainer={getTableContainer} />
       ) : null
     })
 
@@ -104,6 +112,7 @@ const ShyTableSetting = defineComponent({
         <div class={prefixCls}>
           {renderGlobalSearch.value}
           {renderAdvancedSearch.value}
+          {renderShowMore.value}
           {renderShowSearch.value}
           {renderTableSize.value}
           {renderTableColumn.value}

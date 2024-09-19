@@ -9,7 +9,8 @@ export type Instance = TableActionType & {
   getBindValues: ComputedRef<Recordable>
   schemasAdvancedSearch: ComputedRef<schemasAdvancedSearch[]>,
   schemasAdvancedSearchGlobal: ComputedRef<schemasAdvancedSearch[]>,
-  handleAdvancedEnsure: (form: any) => void
+  handleAdvancedEnsure: (form: any) => void,
+  showAll: () => void,
 }
 
 type RetInstance = Omit<Instance, 'getBindValues'> & {

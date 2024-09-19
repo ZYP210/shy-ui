@@ -29,7 +29,7 @@ declare type ComponentRef<T extends HTMLElement = HTMLDivElement> =
 
 declare type ElRef<T extends HTMLElement = HTMLDivElement> = Nullable<T>
 
-declare type Recordable = { [key: string]: any }
+declare type Recordable<T = any> = { [key: string]: T }
 
 // declare module 'vue-types' {
 //   // 这里添加 vue-types 模块的类型声明

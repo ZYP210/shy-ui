@@ -81,12 +81,12 @@ const ShyTable = defineComponent({
     const innerPropsRef = ref<Partial<ShyTableProps>>()
 
     const { config } = useGlobalConfig('table')
-    const getProps = computed(() => {
-      return { ...props, ...config, ...unref(innerPropsRef) } as ShyTableProps
+    const getProps = computed<ShyTableProps>(() => {
+      return { ...props, ...config, ...unref(innerPropsRef) }
     })
     const getBindValues = computed(() => {
       const dataSource = unref(getDataSourceRef)
-      let propsData: Recordable = {
+      const propsData: Recordable = {
         ...attrs,
         customRow,
         ...unref(getProps),
@@ -102,8 +102,7 @@ const ShyTable = defineComponent({
         showSorterTooltip: false
       }
 
-      propsData = omit(propsData, ['class', 'onChange', 'title'])
-      return propsData
+      return omit(propsData, ['class', 'onChange', 'title'])
     })
 
     const { getLoading, setLoading } = useLoading(getProps)
@@ -187,14 +186,14 @@ const ShyTable = defineComponent({
       getCacheColumns,
       getColumnsSummary
     } = useColumns(getProps, getPaginationInfo, tableActionRef, wrapRef)
-    const { getScrollRef, redoHeight } = useTableScroll(
+  
+    const { getScrollRef, redoHeight, showAll } = useTableScroll(
       getProps,
       tableElRef,
       getColumnsRef,
       getRowSelectionRef,
       getDataSourceRef,
       wrapRef,
-      formRef
     )
     const { scrollTo } = useTableScrollTo(tableElRef, getDataSourceRef)
 
@@ -252,7 +251,8 @@ const ShyTable = defineComponent({
       setGlobalSearchValue,
       getGlobalSearchValue,
       setCurSearchParams,
-      getCurSearchParams
+      getCurSearchParams,
+      showAll
     })
 
     const {
@@ -422,8 +422,6 @@ const ShyTable = defineComponent({
       return (
         <div ref={wrapRef} class={getWrapperClass.value}>
           {isShowForm()}
-          {/* {isShowAdvancedSearch.value}
-          {isShowGlobalSearch.value} */}
           <Table
             ref={tableElRef}
             {...getBindValues.value}
