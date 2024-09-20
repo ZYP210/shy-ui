@@ -100,7 +100,8 @@ export function useTableScroll(
       maxHeight,
       isCanResizeParent,
       useSearchForm,
-      tableSetting
+      tableSetting,
+      useInfo
     } = unref(propsRef)
 
     const tableData = unref(getDataSourceRef)
@@ -208,6 +209,11 @@ export function useTableScroll(
       bottomIncludeBody = getViewportOffset(tableHeadEl).bottomIncludeBody
     }
 
+    let infoHeight = 0
+    if (useInfo) {
+      infoHeight = 37
+    }
+
     let height =
       bottomIncludeBody -
       (resizeHeightOffset || 0) -
@@ -215,6 +221,7 @@ export function useTableScroll(
       footerHeight -
       tableHeaderHeight -
       headerHeight -
+      infoHeight -
       2
     height = Math.floor(height > maxHeight! ? (maxHeight as number) : height)
 
@@ -222,7 +229,7 @@ export function useTableScroll(
 
     bodyEl.style.height = `${height}px`
   }
-  useWindowSizeFn<void>(calcTableHeight, 280)
+  useWindowSizeFn<void>(calcTableHeight, 500)
   onMountedOrActivated(() => {
     calcTableHeight()
     nextTick(() => {

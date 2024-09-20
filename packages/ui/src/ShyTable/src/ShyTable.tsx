@@ -36,6 +36,7 @@ import HeaderCell from './components/HeaderCell.vue'
 import { isFunction, useDebounceFn } from '@vueuse/core'
 import ShyTableFooter from './components/ShyTableFooter'
 import './style/table.less'
+import { ShyInfo } from './components/ShyInfo'
 
 const ShyTable = defineComponent({
   name: 'ShyTable',
@@ -186,14 +187,14 @@ const ShyTable = defineComponent({
       getCacheColumns,
       getColumnsSummary
     } = useColumns(getProps, getPaginationInfo, tableActionRef, wrapRef)
-  
+
     const { getScrollRef, redoHeight, showAll } = useTableScroll(
       getProps,
       tableElRef,
       getColumnsRef,
       getRowSelectionRef,
       getDataSourceRef,
-      wrapRef,
+      wrapRef
     )
     const { scrollTo } = useTableScrollTo(tableElRef, getDataSourceRef)
 
@@ -367,6 +368,16 @@ const ShyTable = defineComponent({
         return getBindValues.value.isShowHeader ? getHeaderProps.value : {}
       }
 
+      const isShowInfo = () => {
+        return getBindValues.value.useInfo ? (
+          <ShyInfo {...getBindValues.value.infoConfig}>
+            {{
+              default: (data) => slots?.info?.(data) || null
+            }}
+          </ShyInfo>
+        ) : null
+      }
+
       const isShowFooter = () => {
         return getBindValues.value.isShowFooter ? (
           <ShyTableFooter
@@ -376,9 +387,7 @@ const ShyTable = defineComponent({
             onPageChange={handlePageChange}
           >
             {{
-              default: (data) => {
-                return slots?.footer?.(data) || null
-              }
+              default: (data) => slots?.footer?.(data) || null
             }}
           </ShyTableFooter>
         ) : null
@@ -393,6 +402,8 @@ const ShyTable = defineComponent({
             width
           }
         })
+        emit('columns-change', tempColumns)
+        unref(getProps).onColumnsChange?.(tempColumns)
         setColumns(tempColumns)
       }, 500)
 
@@ -402,7 +413,7 @@ const ShyTable = defineComponent({
       }
 
       const getAfterIgnoreSlots = (slots: Recordable) => {
-        const ignoreKeys = ['footer']
+        const ignoreKeys = ['footer', 'info']
 
         return Object.keys(slots)
           .filter((key) => !ignoreKeys.includes(key))
@@ -439,6 +450,7 @@ const ShyTable = defineComponent({
               ...getAfterIgnoreSlots(slots)
             }}
           </Table>
+          {isShowInfo()}
           {isShowFooter()}
         </div>
       )

@@ -185,11 +185,13 @@ export interface TableSetting {
   setting?: boolean
   fullScreen?: boolean
   advancedSearch?: boolean
-  showMore?:boolean
+  showMore?: boolean
 }
 
 export interface ShyTableProps<T = any> {
-  formLayout?: 'horizontal' | 'vertical' | 'inline',
+  useInfo: boolean
+  infoConfig: InfoConfig
+  formLayout?: 'horizontal' | 'vertical' | 'inline'
   formLabelInInput?: boolean
   actionColWidth: number
   summaryPrecision: number
@@ -282,7 +284,7 @@ export interface ShyTableProps<T = any> {
   // 是否显示边框
   bordered?: boolean
   // 分页配置
-  pagination?: PaginationProps | boolean
+  pagination?: PaginationProps
   // loading加载
   loading?: boolean
 
@@ -468,7 +470,7 @@ export interface ShyTableProps<T = any> {
    * @param expanded
    * @param record
    */
-  onExpand?: (expande: boolean, record: T) => void
+  onExpand?: (expanded: boolean, record: T) => void
 
   /**
    * Callback executed when the expanded rows change
@@ -476,7 +478,7 @@ export interface ShyTableProps<T = any> {
    */
   onExpandedRowsChange?: (expandedRows: string[] | number[]) => void
 
-  onColumnsChange?: (data: ColumnChangeParam[]) => void
+  onColumnsChange?: (data: (ColumnChangeParam | ShyColumn)[]) => void
 
   onColumnsReset?: () => void
 }
@@ -578,4 +580,14 @@ export type schemasAdvancedSearch = {
   sortShow?: boolean
   globalShow?: boolean
   advancedShow?: boolean
+}
+
+export type InfoSchema = {
+  label: string
+  field: string
+}
+
+export type InfoConfig = {
+  schemas?: InfoSchema[]
+  infoData?: Recordable
 }

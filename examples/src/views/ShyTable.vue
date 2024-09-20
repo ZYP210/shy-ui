@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex flex-col p-16px overflow-hidden">
-    <div class="flex-1 overflow-auto">
+    <div class="flex-1 overflow-hidden">
       <ShyTable @register="register" @selection-change="handleSelectChange">
         <template #toolbar="data">
           <ShyTableAction type="button" :actions="getHeaderActions(data)" />
@@ -308,7 +308,14 @@ const getFooterActions = ({ rows, rowKeys, disabled }): ActionItem[] => {
   ]
 }
 
-const length = ref(50)
+const length = ref(40)
+
+const amount = ref(Math.random())
+const infoData = computed(() => {
+  return {
+    amount: amount.value
+  }
+})
 
 const [
   register,
@@ -352,9 +359,19 @@ const [
   onColumnsReset: () => {
     console.log('columns-reset')
   },
+  useInfo: true,
+  infoConfig: {
+    schemas: [
+      {
+        label: '金额',
+        field: 'amount'
+      }
+    ],
+    infoData
+  },
   tableSetting: {
     // advancedSearch: true,
-    showMore: true,
+    showMore: true
   },
   // summaryPrecision: 0,
   resizable: true,
@@ -443,10 +460,10 @@ const [
   actionColumn: {
     dataIndex: 'action',
     title: '操作',
-    width: 200,
+    width: 200
   },
   showIndexColumn: true,
-  canResize: false,
+  // canResize: false
   // indexColumn: {}
 })
 
@@ -514,6 +531,10 @@ onMounted(() => {
     form.setFieldsValue({
       demo0: '123'
     })
+  }, 1000)
+
+  setInterval(() => {
+    amount.value = Math.random()
   }, 1000)
 })
 </script>

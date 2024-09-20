@@ -48,7 +48,7 @@ interface State {
 interface Options {
   title: string
   dataIndex: string
-  width?: string | number | undefined
+  width?: number | undefined
   fixed?: boolean | 'left' | 'right'
   defaultHidden?: boolean
 }
@@ -86,8 +86,14 @@ const ShyTableColumn = defineComponent({
 
     watch(
       () => table.getColumns(),
-      () => {
-        if (!state.isInit || inset) return
+      (val, oldVal) => {
+        if (
+          !state.isInit ||
+          inset ||
+          JSON.stringify(val.map((ele) => omit(ele, ['width']))) ===
+            JSON.stringify(oldVal.map((ele) => omit(ele, ['width'])))
+        )
+          return
         reInit()
       },
       {

@@ -7,7 +7,18 @@ import type {
 } from '../types/table'
 import type { PaginationProps } from '../types/pagination'
 import type { ComputedRef } from 'vue'
-import { computed, Ref, ref, reactive, toRaw, unref, watch, h } from 'vue'
+import {
+  computed,
+  Ref,
+  ref,
+  reactive,
+  toRaw,
+  unref,
+  watch,
+  h,
+  onMounted,
+  onUnmounted
+} from 'vue'
 import { renderEditCell } from '../components/editable'
 import { cloneDeep, isEqual, pick } from 'lodash-es'
 import {
@@ -26,6 +37,7 @@ import {
   PAGE_SIZE
 } from '../const'
 import { ShyTag, shyTagBasicProps } from '../../../ShyTag'
+import { useDebounceFn } from '@vueuse/core'
 
 const handleItem = (item: ShyColumn, ellipsis: boolean) => {
   const { key, dataIndex, children } = item
@@ -205,7 +217,21 @@ export const useColumns = (
           : !!ellipsis && !customRender && !slots
       )
     })
+
     return columns
+  })
+
+  onMounted(() => {
+    window.addEventListener(
+      'resize',
+      useDebounceFn(() => {
+        columnsRef.value = cloneDeep(unref(columnsRef))
+      }, 500)
+    )
+  })
+
+  onUnmounted(() => {
+    window.removeEventListener('resize', () => {})
   })
 
   const isIfShow = (column: ShyColumn): boolean => {
@@ -418,6 +444,7 @@ export const useColumns = (
 
     return columns
   }
+
   const getCacheColumns = () => {
     return cacheColumns
   }

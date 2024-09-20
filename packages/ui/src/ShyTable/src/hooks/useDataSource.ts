@@ -12,7 +12,7 @@ import {
   watchEffect
 } from 'vue'
 import { useTimeoutFn } from '@shy-plugins/use'
-import { buildUUID, isFunction, isBoolean } from '@shy-plugins/utils'
+import { buildUUID, isFunction } from '@shy-plugins/utils'
 import { get, cloneDeep, merge, eq } from 'lodash-es'
 import { FETCH_SETTING, ROW_KEY, PAGE_SIZE } from '../const'
 
@@ -292,7 +292,8 @@ export function useDataSource(
       beforeFetch,
       afterFetch,
       useSearchForm,
-      pagination
+      isShowFooter,
+      isShowPagination
     } = unref(propsRef)
     if (!api || !isFunction(api)) return
     try {
@@ -308,10 +309,7 @@ export function useDataSource(
         getPaginationInfo
       ) as PaginationProps
 
-      if (
-        (isBoolean(pagination) && !pagination) ||
-        isBoolean(getPaginationInfo)
-      ) {
+      if (!isShowFooter || !isShowPagination) {
         pageParams = {}
       } else {
         pageParams[pageField] = (opt && opt.page) || current || 1

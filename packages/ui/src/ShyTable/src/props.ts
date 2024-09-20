@@ -8,7 +8,8 @@ import type {
   SorterResult,
   TableCustomRecord,
   TableRowSelection,
-  SizeType
+  SizeType,
+  InfoConfig
 } from './types/table'
 import type { FormProps } from '../../ShyForm'
 import {
@@ -21,54 +22,20 @@ import {
   ACTION_COLUMN_WIDTH
 } from './const'
 
-export const shyTableBasicProps = reactive({
-  formLayout: {
-    type: String as PropType<'horizontal' | 'vertical' | 'inline'>,
-    default: 'horizontal'
+const searchProps = {
+  // 普通搜索
+  useSearchForm: {
+    type: Boolean
   },
-  formLabelInInput: { type: Boolean, default: true },
-  actionColWidth: {
-    type: Number,
-    default: ACTION_COLUMN_WIDTH
+  // 高级搜索
+  useAdvancedSearch: {
+    type: Boolean,
+    default: false
   },
-  summaryPrecision: {
-    type: Number,
-    default: 2
-  },
-  isShowTitle: {
+  isSortFetch: {
     type: Boolean,
     default: true
   },
-  headerAlign: {
-    type: String as PropType<'left' | 'right'>,
-    default: 'left'
-  },
-  isShowHeader: {
-    type: Boolean,
-    default: true
-  },
-  isShowPagination: {
-    type: Boolean,
-    default: true
-  },
-  isShowFooterSettings: {
-    type: Boolean,
-    default: true
-  },
-  isShowFooter: {
-    type: Boolean,
-    default: true
-  },
-  clickToRowSelect: { type: Boolean, default: true },
-  isTreeTable: Boolean,
-  tableSetting: {
-    type: Object as PropType<TableSetting>,
-    default: () => {
-      return {}
-    }
-  },
-  inset: Boolean,
-  isSortFetch: { type: Boolean, default: true },
   sortFn: {
     type: Function as PropType<(sortInfo: SorterResult) => any>,
     default: DEFAULT_SORT_FN
@@ -77,10 +44,54 @@ export const shyTableBasicProps = reactive({
     type: Function as PropType<(data: Partial<Recordable<string[]>>) => any>,
     default: DEFAULT_FILTER_FN
   },
-  showTableSetting: { type: Boolean, default: true },
-  autoCreateKey: { type: Boolean, default: true },
-  striped: { type: Boolean, default: false },
-  showSummary: Boolean,
+  // 额外的请求参数
+  searchInfo: {
+    type: Object as PropType<Recordable>,
+    default: null
+  },
+  // 默认的排序参数
+  defSort: {
+    type: Object as PropType<Recordable>,
+    default: null
+  },
+  handleSearchInfoFn: {
+    type: Function as PropType<Fn>,
+    default: null
+  }
+}
+
+const formProps = {
+  formLayout: {
+    type: String as PropType<'horizontal' | 'vertical' | 'inline'>,
+    default: 'horizontal'
+  },
+  formLabelInInput: {
+    type: Boolean,
+    default: true
+  },
+  // 表单配置
+  formConfig: {
+    type: Object as PropType<Partial<FormProps>>,
+    default: null
+  }
+}
+
+const infoProps = {
+  useInfo: {
+    type: Boolean,
+    default: false
+  },
+  infoConfig: {
+    type: Object as PropType<InfoConfig>,
+    default: () => ({}),
+  }
+}
+
+const summaryProps = {
+  showSummary: {
+    type: Boolean,
+    default: false
+  },
   summaryFunc: {
     type: [Function, Array] as PropType<(...arg: any[]) => any[]>,
     default: null
@@ -93,13 +104,51 @@ export const shyTableBasicProps = reactive({
     type: Array as PropType<string[]>,
     default: null
   },
-  showSummaryTotal: Boolean,
-
-  indentSize: {
-    type: Number,
-    default: 24
+  showSummaryTotal: {
+    type: Boolean,
+    default: false
   },
-  canColDrag: { type: Boolean, default: true },
+  summaryPrecision: {
+    type: Number,
+    default: 2
+  }
+}
+
+const columnsProps = {
+  actionColWidth: {
+    type: Number,
+    default: ACTION_COLUMN_WIDTH
+  },
+  showIndexColumn: {
+    type: Boolean,
+    default: false
+  },
+  indexColumnProps: {
+    type: Object as PropType<ShyColumn>,
+    default: null
+  },
+  actionColumn: {
+    type: Object as PropType<ShyColumn>,
+    default: null
+  },
+  ellipsis: {
+    type: Boolean,
+    default: true
+  },
+  resizable: {
+    type: Boolean,
+    default: false
+  },
+  columns: {
+    type: [Array] as PropType<ShyColumn[]>,
+    default: () => []
+  }
+}
+
+const fetchProps = {
+  loading: {
+    type: Boolean
+  },
   api: {
     type: Function as PropType<(...arg: any[]) => Promise<any>>,
     default: null
@@ -112,75 +161,50 @@ export const shyTableBasicProps = reactive({
     type: Function as PropType<Fn>,
     default: null
   },
-  handleSearchInfoFn: {
-    type: Function as PropType<Fn>,
-    default: null
-  },
   fetchSetting: {
     type: Object as PropType<FetchSetting>,
-    default: () => {
-      return FETCH_SETTING
-    }
+    default: () => FETCH_SETTING
   },
-  // 立即请求接口
-  immediate: { type: Boolean, default: true },
-  emptyDataIsShowTable: { type: Boolean, default: true },
-  // 额外的请求参数
-  searchInfo: {
-    type: Object as PropType<Recordable>,
-    default: null
-  },
-  // 默认的排序参数
-  defSort: {
-    type: Object as PropType<Recordable>,
-    default: null
-  },
-  // 使用搜索表单
-  useSearchForm: {
-    type: Boolean
-  },
-  //使用高级搜索
-  useAdvancedSearch: {
-    type: Boolean,
-    default: false
-  },
-  // 使用表格内边距
-  useTableWrapper: {
+  immediate: {
     type: Boolean,
     default: true
   },
-  // 表单配置
-  formConfig: {
-    type: Object as PropType<Partial<FormProps>>,
+  emptyDataIsShowTable: {
+    type: Boolean,
+    default: true
+  },
+  dataSource: {
+    type: Array as PropType<Recordable[]>,
     default: null
   },
-  columns: {
-    type: [Array] as PropType<ShyColumn[]>,
-    default: () => []
+  isTreeTable: {
+    type: Boolean,
+    default: false
   },
-  showIndexColumn: { type: Boolean, default: false },
-  indexColumnProps: {
-    type: Object as PropType<ShyColumn>,
-    default: null
+  beforeEditSubmit: {
+    type: Function as PropType<
+      (data: {
+        record: Recordable
+        index: number
+        key: string | number
+        value: any
+      }) => Promise<any>
+    >
+  }
+}
+
+const headerProps = {
+  isShowHeader: {
+    type: Boolean,
+    default: true
   },
-  actionColumn: {
-    type: Object as PropType<ShyColumn>,
-    default: null
+  headerAlign: {
+    type: String as PropType<'left' | 'right'>,
+    default: 'left'
   },
-  ellipsis: { type: Boolean, default: true },
-  resizable: { type: Boolean, default: false },
-  isCanResizeParent: { type: Boolean, default: true },
-  canResize: { type: Boolean, default: true },
-  clearSelectOnPageChange: {
-    type: Boolean
-  },
-  resizeHeightOffset: {
-    type: Number,
-    default: 0
-  },
-  rowSelection: {
-    type: Object as PropType<TableRowSelection | null>,
-    default: null
+  isShowTitle: {
+    type: Boolean,
+    default: true
   },
   title: {
     type: [Function, Object, String] as PropType<
@@ -192,29 +216,101 @@ export const shyTableBasicProps = reactive({
   titleHelpMessage: {
     type: [String, Array] as PropType<string | string[]>
   },
-  maxHeight: {
-    type: Number
+  showTableSetting: {
+    type: Boolean,
+    default: true
   },
-  dataSource: {
-    type: Array as PropType<Recordable[]>,
+  tableSetting: {
+    type: Object as PropType<TableSetting>,
+    default: () => {
+      return {}
+    }
+  }
+}
+
+const selectionProps = {
+  clickToRowSelect: {
+    type: Boolean,
+    default: true
+  },
+  autoCreateKey: {
+    type: Boolean,
+    default: true
+  },
+  rowSelection: {
+    type: Object as PropType<TableRowSelection | null>,
     default: null
+  },
+  clearSelectOnPageChange: {
+    type: Boolean
   },
   rowKey: {
     type: [String, Function] as PropType<
       string | ((record: Recordable) => string)
     >,
     default: ''
+  }
+}
+
+const footerProps = {
+  isShowPagination: {
+    type: Boolean,
+    default: true
+  },
+  isShowFooterSettings: {
+    type: Boolean,
+    default: true
+  },
+  isShowFooter: {
+    type: Boolean,
+    default: true
+  },
+  pagination: {
+    type: [Object] as PropType<PaginationProps>,
+    default: () => {}
+  }
+}
+
+const styleProps = {
+  inset: {
+    type: Boolean,
+    default: false
+  },
+  striped: {
+    type: Boolean,
+    default: false
+  },
+  indentSize: {
+    type: Number,
+    default: 24
+  },
+  canColDrag: {
+    type: Boolean,
+    default: true
+  },
+  // 使用表格内边距
+  useTableWrapper: {
+    type: Boolean,
+    default: true
+  },
+  isCanResizeParent: {
+    type: Boolean,
+    default: true
+  },
+  canResize: {
+    type: Boolean,
+    default: true
+  },
+  resizeHeightOffset: {
+    type: Number,
+    default: 0
+  },
+  maxHeight: {
+    type: Number
   },
   bordered: {
     type: Boolean,
     default: false
-  },
-  pagination: {
-    type: [Object, Boolean] as PropType<PaginationProps | boolean>,
-    default: true
-  },
-  loading: {
-    type: Boolean
   },
   rowClassName: {
     type: Function as PropType<
@@ -225,22 +321,25 @@ export const shyTableBasicProps = reactive({
     type: Object as PropType<{ x: number | true; y: number }>,
     default: null
   },
-  beforeEditSubmit: {
-    type: Function as PropType<
-      (data: {
-        record: Recordable
-        index: number
-        key: string | number
-        value: any
-      }) => Promise<any>
-    >
-  },
   size: {
     type: String as PropType<SizeType>,
     default: DEFAULT_SIZE
   }
+}
+
+export const shyTableBasicProps = reactive({
+  ...infoProps,
+  ...formProps,
+  ...searchProps,
+  ...summaryProps,
+  ...columnsProps,
+  ...fetchProps,
+  ...headerProps,
+  ...selectionProps,
+  ...footerProps,
+  ...styleProps
 })
-// 生成一个以ts类型PaginationProps的vue2选项式props
+
 export const paginationProps = reactive({
   type: Object as PropType<PaginationProps>,
   default: () => {
