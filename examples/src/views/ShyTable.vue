@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex flex-col p-16px overflow-hidden">
-    <div class="flex-1 overflow-hidden">
+    <!-- <div class="flex-1 overflow-hidden"> -->
       <ShyTable @register="register" @selection-change="handleSelectChange">
         <!-- <template #toolbar="data">
           <ShyTableAction type="button" :actions="getHeaderActions(data)" />
@@ -55,7 +55,7 @@
           <ShyTableAction type="button" :actions="getFooterActions(data)" />
         </template>
       </ShyTable>
-    </div>
+    <!-- </div> -->
   </div>
 </template>
 
@@ -359,7 +359,7 @@ const [
   onColumnsReset: () => {
     console.log('columns-reset')
   },
-  useInfo: true,
+  // useInfo: true,
   infoConfig: {
     schemas: [
       {
@@ -375,14 +375,14 @@ const [
   },
   // summaryPrecision: 0,
   resizable: true,
-  rowKey: 'id',
-  rowSelection: {
-    type: 'checkbox'
-  },
+  // rowKey: 'id',
+  // rowSelection: {
+  //   type: 'checkbox'
+  // },
   columns,
   // isShowPagination: false,
   isSortFetch: false,
-  // useSearchForm: true,
+  useSearchForm: true,
   // formLabelInInput: false,
   formConfig: {
     labelWidth: 60,
@@ -457,13 +457,13 @@ const [
   // clickToRowSelect: true,
   // useSearchForm: true,
   // canResize: false,
-  actionColumn: {
-    dataIndex: 'action',
-    title: '操作',
-    width: 200
-  },
+  // actionColumn: {
+  //   dataIndex: 'action',
+  //   title: '操作',
+  //   width: 200
+  // },
   showIndexColumn: true,
-  canResize: false
+  // canResize: false
   // indexColumn: {}
 })
 

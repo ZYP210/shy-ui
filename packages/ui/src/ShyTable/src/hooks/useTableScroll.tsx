@@ -100,7 +100,8 @@ export function useTableScroll(
       maxHeight,
       isCanResizeParent,
       useSearchForm,
-      tableSetting
+      tableSetting,
+      useInfo,
     } = unref(propsRef)
 
     const tableData = unref(getDataSourceRef)
@@ -194,7 +195,11 @@ export function useTableScroll(
       }
 
       if (isBoolean(useSearchForm) && !useSearchForm) {
-        paddingHeight = -8
+        paddingHeight += -9
+      }
+
+      if (isBoolean(useInfo) && !useInfo) {
+        paddingHeight += -37
       }
 
       const headerCellHeight =
