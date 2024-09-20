@@ -2,7 +2,7 @@
   <div class="w-full h-full flex flex-col p-16px overflow-hidden">
     <div class="flex-1 overflow-hidden">
       <ShyTable @register="register" @selection-change="handleSelectChange">
-        <template #toolbar="data">
+        <!-- <template #toolbar="data">
           <ShyTableAction type="button" :actions="getHeaderActions(data)" />
           <BasicButton type="primary"> 主要 </BasicButton>
           <BasicButton type="danger" @click="pushApi">危险</BasicButton>
@@ -10,7 +10,7 @@
           <BasicButton type="waring" @click="pushApi">警告</BasicButton>
           <BasicButton type="message" @click="pushApi">信息</BasicButton>
           <BasicButton> 默认 </BasicButton>
-        </template>
+        </template> -->
 
         <template #headerCell="{ column }">
           <div v-if="column.flag === 'INDEX'">111</div>
@@ -227,7 +227,7 @@ const columns: any[] = [
   // },
   {
     title: '收票时间',
-    dataIndex: 'receiptTime'
+    dataIndex: 'qualifiedNum'
     // customRender: ({ record }) => renderDate(record.receiptTime),
   },
   {
@@ -308,7 +308,7 @@ const getFooterActions = ({ rows, rowKeys, disabled }): ActionItem[] => {
   ]
 }
 
-const length = ref(40)
+const length = ref(10)
 
 const amount = ref(Math.random())
 const infoData = computed(() => {
@@ -327,7 +327,7 @@ const [
     getForm
   }
 ] = useShyTable({
-  isShowTitle: false,
+  // isShowTitle: false,
   api: (params): any => {
     const records = Array.from({ length: length.value }, (_, i) => {
       return {
@@ -382,8 +382,8 @@ const [
   columns,
   // isShowPagination: false,
   isSortFetch: false,
-  useSearchForm: true,
-  formLabelInInput: false,
+  // useSearchForm: true,
+  // formLabelInInput: false,
   formConfig: {
     labelWidth: 60,
     schemas: [
@@ -463,7 +463,7 @@ const [
     width: 200
   },
   showIndexColumn: true,
-  // canResize: false
+  canResize: false
   // indexColumn: {}
 })
 

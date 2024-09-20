@@ -13,9 +13,8 @@ import {
 } from './ShyTableSettings'
 import '../style/tableHeader.less'
 import { Divider } from 'ant-design-vue'
-import { BarChartOutlined } from '@ant-design/icons-vue'
-import { theme } from 'ant-design-vue'
 import { useRoute } from 'vue-router'
+import { BasicTitle } from '../../../Basic'
 
 const ShyTableSetting = defineComponent({
   props: {
@@ -26,7 +25,7 @@ const ShyTableSetting = defineComponent({
   },
   emits: ['columns-change', 'columns-reset'],
   setup(props, { emit }) {
-    const { prefixCls } = useDesign('table-header-settings')
+    const { prefixCls } = useDesign('ant-table-header-settings')
 
     const { getBindValues, ...table } = useTableContext()
 
@@ -127,18 +126,13 @@ const ShyTableTitle = defineComponent({
   setup(_, { slots }) {
     const route = useRoute()
 
-    const { useToken } = theme
-    const { token } = useToken()
-    const { prefixCls } = useDesign('table-header-title')
-
     return () => {
       return (
-        <div class={prefixCls}>
-          <BarChartOutlined style={{ color: token?.value?.colorPrimary }} />
+        <BasicTitle>
           {slots?.title
             ? slots?.title?.()
             : route?.meta?.title || route?.name || ''}
-        </div>
+        </BasicTitle>
       )
     }
   }
@@ -172,7 +166,7 @@ const ShyTableHeader = defineComponent({
   },
   emits: ['columns-change', 'columns-reset'],
   setup(props, { emit, slots }) {
-    const { prefixCls } = useDesign('table-header')
+    const { prefixCls } = useDesign('ant-table-header')
 
     const { getSelectRowKeys, getSelectRows } = useTableContext()
 

@@ -100,8 +100,7 @@ export function useTableScroll(
       maxHeight,
       isCanResizeParent,
       useSearchForm,
-      tableSetting,
-      useInfo
+      tableSetting
     } = unref(propsRef)
 
     const tableData = unref(getDataSourceRef)
@@ -170,7 +169,7 @@ export function useTableScroll(
 
     let paddingHeight = 0
 
-    const headerHeight = 32
+    const headerHeight = 48
     let footerHeight =
       (wrapRef.value?.querySelector('.shy-ant-table-footer') as HTMLElement)
         ?.offsetHeight ?? 0
@@ -182,7 +181,7 @@ export function useTableScroll(
 
     let bottomIncludeBody = 0
     if (unref(wrapRef) && isCanResizeParent) {
-      let paginationMargin = 6
+      let paginationMargin = 12
       const wrapHeight = unref(wrapRef)?.offsetHeight ?? 0
 
       let formHeight = isShowFooter
@@ -195,7 +194,7 @@ export function useTableScroll(
       }
 
       if (isBoolean(useSearchForm) && !useSearchForm) {
-        paddingHeight = -24
+        paddingHeight = -8
       }
 
       const headerCellHeight =
@@ -209,20 +208,13 @@ export function useTableScroll(
       bottomIncludeBody = getViewportOffset(tableHeadEl).bottomIncludeBody
     }
 
-    let infoHeight = 0
-    if (useInfo) {
-      infoHeight = 37
-    }
-
     let height =
       bottomIncludeBody -
       (resizeHeightOffset || 0) -
       paddingHeight -
       footerHeight -
       tableHeaderHeight -
-      headerHeight -
-      infoHeight -
-      2
+      headerHeight
     height = Math.floor(height > maxHeight! ? (maxHeight as number) : height)
 
     setHeight(height)

@@ -26,7 +26,11 @@
     border-start-end-radius: 4px;
   }
 
-  .shy-basic-form-input > .ant-col {
+  &:not(:has(&-header)) .@{namespace}-ant-form-split-line {
+    background-color: transparent;
+  }
+
+  .@{namespace}-basic-form-input > .ant-col {
     padding-left: 0;
     padding-right: 20px;
   }
@@ -34,17 +38,10 @@
   .ant-table-summary {
     position: sticky;
     left: 0;
-    bottom: 0;
+    bottom: -1px;
     td {
       border-top: 1px solid var(--gray-1);
-    }
-  }
-
-  .ant-table-body:has(.ant-table-summary) {
-    .ant-table-tbody tr:nth-last-child(1) {
-      td {
-        border-bottom: none;
-      }
+      border-bottom: none !important;
     }
   }
 
@@ -262,6 +259,14 @@
       z-index: 1;
     }
     padding-right: 10px;
+  }
+}
+
+.no-hide-scrollbar-y {
+  .ant-table-tbody.ant-table-tbody tr:nth-last-child(1) {
+    td {
+      border-bottom: none !important;
+    }
   }
 }
 
