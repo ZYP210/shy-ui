@@ -333,6 +333,7 @@ const [
 ] = useShyTable({
   // isShowTitle: false,
   api: (params): any => {
+    console.log('[ params ] >', params)
     const records = Array.from({ length: length.value }, (_, i) => {
       return {
         id: i,
@@ -390,65 +391,74 @@ const [
   // formLabelInInput: false,
   formConfig: {
     labelWidth: 60,
+    autoSubmitOnEnter: true,
     schemas: [
-      {
-        label: '日期范围',
-        component: 'RangePicker',
-        field: 'createTime'
-      },
-      {
-        label: '日期范围',
-        component: 'RangePicker',
+      // {
+      //   label: '日期范围',
+      //   component: 'RangePicker',
+      //   field: 'createTime'
+      // },
+      // {
+      //   label: '日期范围',
+      //   component: 'RangePicker',
 
-        field: 'createTime'
-      },
-      {
-        label: '日期范围',
-        component: 'RangePicker',
-        field: 'createTime'
-      },
+      //   field: 'createTime'
+      // },
+      // {
+      //   label: '日期范围',
+      //   component: 'RangePicker',
+      //   field: 'createTime'
+      // },
+      // {
+      //   label: '输入框',
+      //   component: 'Input',
+      //   componentProps: {
+      //     placeholder: ''
+      //   },
+      //   field: 'createTime'
+      // },
+      // {
+      //   label: '输入框',
+      //   component: 'Input',
+      //   field: 'createTime'
+      // },
+      // {
+      //   label: '输入框',
+      //   component: 'Input',
+      //   field: 'createTime'
+      // },
+      // {
+      //   label: '日期范围',
+      //   component: 'RangePicker',
+      //   field: 'createTime'
+      // },
+      // {
+      //   label: '输入框',
+      //   component: 'Input',
+      //   field: 'createTime'
+      // },
       {
         label: '输入框',
-        component: 'Input',
+        component: 'Select',
         componentProps: {
-          placeholder: ''
+          options: [
+            {
+              label: '1111',
+              value: '1111'
+            }
+          ]
         },
-        field: 'createTime'
+        field: '1'
       },
       {
         label: '输入框',
         component: 'Input',
-        field: 'createTime'
+        field: '2'
       },
       {
         label: '输入框',
         component: 'Input',
-        field: 'createTime'
-      },
-      {
-        label: '日期范围',
-        component: 'RangePicker',
-        field: 'createTime'
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: 'createTime'
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: 'createTime'
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: 'createTime'
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: 'createTime'
+        field: '3'
       }
     ]
   },

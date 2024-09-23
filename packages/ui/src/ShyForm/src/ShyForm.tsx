@@ -293,6 +293,7 @@ const ShyForm = defineComponent({
     function handleEnterPress(e: Event) {
       const { autoSubmitOnEnter } = unref(getProps)
       if (!autoSubmitOnEnter) return
+
       if (
         (e as KeyboardEvent).key === 'Enter' &&
         e.target &&
@@ -517,7 +518,7 @@ const ShyForm = defineComponent({
             style={{
               '--gap': `${getBindValue.value.gap}px`
             }}
-            onKeypress={withModifiers(handleEnterPress, ['enter'])}
+            onKeyup={withModifiers(handleEnterPress, ['enter'])}
           >
             <Row class={`${prefixCls}-row`}>
               <Col
