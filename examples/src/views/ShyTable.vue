@@ -1,8 +1,8 @@
 <template>
   <div class="w-full h-full flex flex-col p-16px overflow-hidden">
     <!-- <div class="flex-1 overflow-hidden"> -->
-      <ShyTable @register="register" @selection-change="handleSelectChange">
-        <!-- <template #toolbar="data">
+    <ShyTable @register="register" @selection-change="handleSelectChange">
+      <!-- <template #toolbar="data">
           <ShyTableAction type="button" :actions="getHeaderActions(data)" />
           <BasicButton type="primary"> 主要 </BasicButton>
           <BasicButton type="danger" @click="pushApi">危险</BasicButton>
@@ -12,49 +12,52 @@
           <BasicButton> 默认 </BasicButton>
         </template> -->
 
-        <template #headerCell="{ column }">
-          <div v-if="column.flag === 'INDEX'">111</div>
-          <div v-else>{{ column.customTitle }}</div>
-        </template>
+      <template #headerCell="{ column }">
+        <div v-if="column.flag === 'INDEX'">111</div>
+        <div v-else>{{ column.customTitle }}</div>
+      </template>
 
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex === 'action'">
-            <ShyTableAction
-              :actions="[
-                {
-                  label: '编辑',
-                  // ifShow: false,
-                  onClick: handleEdit.bind(null, record)
-                },
-                {
-                  label: '智能',
-                  // ifShow: false,
-                  popConfirm: {
-                    title: '确认保存?',
-                    confirm: handleSave.bind(null, record)
-                  }
-                },
-                {
-                  label: '测试',
-                  // ifShow: false,
-                  onClick: handleSave.bind(null, record)
-                },
-                {
-                  label: '删除',
-                  popConfirm: {
-                    title: '确认删除吗?',
-                    confirm: handleRemove.bind(null, record)
-                  }
+      <template #bodyCell="{ column, record }">
+        <template v-if="column.dataIndex === 'action'">
+          <ShyTableAction
+            :show-count="2"
+            :actions="[
+              {
+                label: '编辑',
+                // ifShow: false,
+                onClick: handleEdit.bind(null, record)
+              },
+              {
+                label: '测试',
+                // ifShow: false,
+                onClick: handleSave.bind(null, record)
+              },
+              {
+                label: '智能',
+                // ifShow: false,
+                popConfirm: {
+                  title: '确认保存?',
+                  confirm: handleSave.bind(null, record)
                 }
-              ]"
-            />
-          </template>
-        </template>
+              },
 
-        <template #footer="data">
-          <ShyTableAction type="button" :actions="getFooterActions(data)" />
+              {
+                label: '删除',
+                popConfirm: {
+                  title: '确认删除吗?',
+                  confirm: handleRemove.bind(null, record)
+                }
+              }
+            ]"
+            icon-direction="horizontal"
+          />
         </template>
-      </ShyTable>
+      </template>
+
+      <template #footer="data">
+        <!-- <ShyTableAction type="button" :actions="getFooterActions(data)" /> -->
+      </template>
+    </ShyTable>
     <!-- </div> -->
   </div>
 </template>
@@ -242,7 +245,8 @@ const columns: any[] = [
     title: '创建时间',
     dataIndex: 'createTime'
     // customRender: ({ record }) => renderDate(record.createTime),
-  }
+  },
+  { title: '操作', dataIndex: 'action' }
 ]
 
 const searchFormSchema = Array.from({ length: 1 }, (_, i) => {
@@ -371,10 +375,10 @@ const [
   },
   tableSetting: {
     // advancedSearch: true,
-    showMore: true
+    showMore: false
   },
   // summaryPrecision: 0,
-  resizable: true,
+  resizable: false,
   // rowKey: 'id',
   // rowSelection: {
   //   type: 'checkbox'
@@ -462,7 +466,7 @@ const [
   //   title: '操作',
   //   width: 200
   // },
-  showIndexColumn: true,
+  showIndexColumn: true
   // canResize: false
   // indexColumn: {}
 })
@@ -533,9 +537,9 @@ onMounted(() => {
     })
   }, 1000)
 
-  setInterval(() => {
-    amount.value = Math.random()
-  }, 1000)
+  // setInterval(() => {
+  //   amount.value = Math.random()
+  // }, 1000)
 })
 </script>
 

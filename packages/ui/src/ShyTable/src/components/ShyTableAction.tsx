@@ -48,7 +48,7 @@ export const shyTableActionProps = reactive({
   },
   showCount: {
     type: Number,
-    default: 2
+    default: () => 2
   },
   iconDirection: {
     type: String
@@ -184,7 +184,7 @@ const ShyTableAction = defineComponent({
       const isShow =
         props.divider &&
         index < length - +!getDropdownList.value.length &&
-        ['action'].includes(props.type)
+        ['link'].includes(props.type)
       return isShow ? <Divider type="vertical" class="action-divider" /> : null
     }
 
@@ -227,13 +227,8 @@ const ShyTableAction = defineComponent({
       switch (props.type) {
         case ActionType.Link:
           return (
-            <BasicButton
-              type="link"
-              size="small"
-              rotate={rotate}
-              isContinuousClicks={true}
-            >
-              <MoreOutlined />
+            <BasicButton type="link" size="small" isContinuousClicks={true}>
+              <MoreOutlined rotate={rotate} />
             </BasicButton>
           )
         case ActionType.Button:

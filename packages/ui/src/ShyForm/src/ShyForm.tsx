@@ -299,12 +299,13 @@ const ShyForm = defineComponent({
         e.target instanceof HTMLElement
       ) {
         const target: HTMLElement = e.target as HTMLElement
+        handleSubmit()
+
         if (
           target &&
           target.tagName &&
           target.tagName.toUpperCase() == 'INPUT'
         ) {
-          handleSubmit()
         }
       }
     }
