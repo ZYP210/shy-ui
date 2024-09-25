@@ -1,8 +1,8 @@
 <template>
-  <div class="w-full h-full flex flex-col p-16px overflow-hidden">
-    <!-- <div class="flex-1 overflow-hidden"> -->
-    <ShyTable @register="register" @selection-change="handleSelectChange">
-      <!-- <template #toolbar="data">
+  <div class="w-full h-full flex p-16px overflow-hidden">
+    <div class="flex-1 overflow-auto">
+      <ShyTable @register="register" @selection-change="handleSelectChange">
+        <!-- <template #toolbar="data">
           <ShyTableAction type="button" :actions="getHeaderActions(data)" />
           <BasicButton type="primary"> 主要 </BasicButton>
           <BasicButton type="danger" @click="pushApi">危险</BasicButton>
@@ -12,53 +12,54 @@
           <BasicButton> 默认 </BasicButton>
         </template> -->
 
-      <template #headerCell="{ column }">
-        <div v-if="column.flag === 'INDEX'">111</div>
-        <div v-else>{{ column.customTitle }}</div>
-      </template>
-
-      <template #bodyCell="{ column, record }">
-        <template v-if="column.dataIndex === 'action'">
-          <ShyTableAction
-            :show-count="2"
-            :actions="[
-              {
-                label: '编辑',
-                // ifShow: false,
-                onClick: handleEdit.bind(null, record)
-              },
-              {
-                label: '测试',
-                // ifShow: false,
-                onClick: handleSave.bind(null, record)
-              },
-              {
-                label: '智能',
-                // ifShow: false,
-                popConfirm: {
-                  title: '确认保存?',
-                  confirm: handleSave.bind(null, record)
-                }
-              },
-
-              {
-                label: '删除',
-                popConfirm: {
-                  title: '确认删除吗?',
-                  confirm: handleRemove.bind(null, record)
-                }
-              }
-            ]"
-            icon-direction="horizontal"
-          />
+        <template #headerCell="{ column }">
+          <div v-if="column.flag === 'INDEX'">111</div>
+          <div v-else>{{ column.customTitle }}</div>
         </template>
-      </template>
 
-      <template #footer="data">
-        <!-- <ShyTableAction type="button" :actions="getFooterActions(data)" /> -->
-      </template>
-    </ShyTable>
-    <!-- </div> -->
+        <template #bodyCell="{ column, record }">
+          <template v-if="column.dataIndex === 'action'">
+            <ShyTableAction
+              :show-count="2"
+              :actions="[
+                {
+                  label: '编辑',
+                  // ifShow: false,
+                  onClick: handleEdit.bind(null, record)
+                },
+                {
+                  label: '测试',
+                  // ifShow: false,
+                  onClick: handleSave.bind(null, record)
+                },
+                {
+                  label: '智能',
+                  // ifShow: false,
+                  popConfirm: {
+                    title: '确认保存?',
+                    confirm: handleSave.bind(null, record)
+                  }
+                },
+
+                {
+                  label: '删除',
+                  popConfirm: {
+                    title: '确认删除吗?',
+                    confirm: handleRemove.bind(null, record)
+                  }
+                }
+              ]"
+              icon-direction="horizontal"
+            />
+          </template>
+        </template>
+
+        <template #footer="data">
+          <!-- <ShyTableAction type="button" :actions="getFooterActions(data)" /> -->
+        </template>
+      </ShyTable>
+    </div>
+    <div v-if="isRender" class="min-w-300px"></div>
   </div>
 </template>
 
@@ -85,144 +86,146 @@ import { ref, onMounted, h } from 'vue'
 
 // console.log(zzz)
 
+const isRender = ref(false)
+
 const columns: any[] = [
   {
     title: '菜单名称',
-    dataIndex: 'name',
+    dataIndex: 'name'
     // align: 'left',
     // align: 'center',
     // width: 120,
-    tag: true,
-    tagMode: 'tag',
-    options: [
-      {
-        label: '信息',
-        value: '0',
-        colorType: 'var(--gray-5)'
-      },
-      {
-        label: '完成',
-        value: '1',
-        colorType: 'var(--primary-5)'
-      },
-      {
-        label: '警告',
-        value: '2',
-        colorType: 'var(--orange-5)'
-      },
-      {
-        label: '等待',
-        value: '3',
-        colorType: 'var(--blue-5)'
-      },
-      {
-        label: '危险',
-        value: '4',
-        colorType: 'var(--red-5)'
-      }
-    ]
-  },
-  {
-    title: '菜单名称',
-    dataIndex: 'name',
-    // width: 1120,
-    tag: true,
+    // tag: true,
     // tagMode: 'tag',
-    options: [
-      {
-        label: '信息',
-        value: '0',
-        colorType: 'var(--gray-5)'
-      },
-      {
-        label: '完成',
-        value: '1',
-        colorType: 'var(--primary-5)'
-      },
-      {
-        label: '警告',
-        value: '2',
-        colorType: 'var(--orange-5)'
-      },
-      {
-        label: '等待',
-        value: '3',
-        colorType: 'var(--blue-5)'
-      },
-      {
-        label: '危险',
-        value: '4',
-        colorType: 'var(--red-5)'
-      }
-    ]
+    // options: [
+    //   {
+    //     label: '信息',
+    //     value: '0',
+    //     colorType: 'var(--gray-5)'
+    //   },
+    //   {
+    //     label: '完成',
+    //     value: '1',
+    //     colorType: 'var(--primary-5)'
+    //   },
+    //   {
+    //     label: '警告',
+    //     value: '2',
+    //     colorType: 'var(--orange-5)'
+    //   },
+    //   {
+    //     label: '等待',
+    //     value: '3',
+    //     colorType: 'var(--blue-5)'
+    //   },
+    //   {
+    //     label: '危险',
+    //     value: '4',
+    //     colorType: 'var(--red-5)'
+    //   }
+    // ]
   },
   {
     title: '菜单名称',
-    dataIndex: 'name',
+    dataIndex: 'name'
+    // width: 1120,
+    // tag: true,
+    // // tagMode: 'tag',
+    // options: [
+    //   {
+    //     label: '信息',
+    //     value: '0',
+    //     colorType: 'var(--gray-5)'
+    //   },
+    //   {
+    //     label: '完成',
+    //     value: '1',
+    //     colorType: 'var(--primary-5)'
+    //   },
+    //   {
+    //     label: '警告',
+    //     value: '2',
+    //     colorType: 'var(--orange-5)'
+    //   },
+    //   {
+    //     label: '等待',
+    //     value: '3',
+    //     colorType: 'var(--blue-5)'
+    //   },
+    //   {
+    //     label: '危险',
+    //     value: '4',
+    //     colorType: 'var(--red-5)'
+    //   }
+    // ]
+  },
+  {
+    title: '菜单名称',
+    dataIndex: 'name'
     // width: 120,
-    tag: true,
-    tagMode: 'text',
-    options: [
-      {
-        label: '信息',
-        value: '0',
-        colorType: 'var(--gray-5)'
-      },
-      {
-        label: '完成',
-        value: '1',
-        colorType: 'var(--primary-5)'
-      },
-      {
-        label: '警告',
-        value: '2',
-        colorType: 'var(--orange-5)'
-      },
-      {
-        label: '等待',
-        value: '3',
-        colorType: 'var(--blue-5)'
-      },
-      {
-        label: '危险',
-        value: '4',
-        colorType: 'var(--red-5)'
-      }
-    ]
+    // tag: true,
+    // tagMode: 'text',
+    // options: [
+    //   {
+    //     label: '信息',
+    //     value: '0',
+    //     colorType: 'var(--gray-5)'
+    //   },
+    //   {
+    //     label: '完成',
+    //     value: '1',
+    //     colorType: 'var(--primary-5)'
+    //   },
+    //   {
+    //     label: '警告',
+    //     value: '2',
+    //     colorType: 'var(--orange-5)'
+    //   },
+    //   {
+    //     label: '等待',
+    //     value: '3',
+    //     colorType: 'var(--blue-5)'
+    //   },
+    //   {
+    //     label: '危险',
+    //     value: '4',
+    //     colorType: 'var(--red-5)'
+    //   }
+    // ]
   },
   {
     title: '菜单名称',
-    dataIndex: 'name',
+    dataIndex: 'name'
     // width: 1120,
     // fixed: 'right',
-    options: [
-      {
-        label: '信息',
-        value: '0',
-        colorType: 'var(--gray-5)'
-      },
-      {
-        label: '完成',
-        value: '1',
-        colorType: 'var(--primary-5)'
-      },
-      {
-        label:
-          'jdlksajdlkasjdklsajklasjaslkdjsakldjsalkdjaskldasjdaskljdaslkdjaslkjdalksjdlksajdklsadjaslkdjsalkdjoiuewoiwugchsadkjhadkysoiduwoiudhajdhaskjdhasiudhw9iuqhd',
-        value: '2',
-        colorType: 'var(--orange-5)'
-      },
-      {
-        label: '等待',
-        value: '3',
-        colorType: 'var(--blue-5)'
-      },
-      {
-        label: '危险',
-        value: '4',
-        colorType: 'var(--red-5)'
-      }
-    ]
+    // options: [
+    //   {
+    //     label: '信息',
+    //     value: '0',
+    //     colorType: 'var(--gray-5)'
+    //   },
+    //   {
+    //     label: '完成',
+    //     value: '1',
+    //     colorType: 'var(--primary-5)'
+    //   },
+    //   {
+    //     label:
+    //       'jdlksajdlkasjdklsajklasjaslkdjsakldjsalkdjaskldasjdaskljdaslkdjaslkjdalksjdlksajdklsadjaslkdjsalkdjoiuewoiwugchsadkjhadkysoiduwoiudhajdhaskjdhasiudhw9iuqhd',
+    //     value: '2',
+    //     colorType: 'var(--orange-5)'
+    //   },
+    //   {
+    //     label: '等待',
+    //     value: '3',
+    //     colorType: 'var(--blue-5)'
+    //   },
+    //   {
+    //     label: '危险',
+    //     value: '4',
+    //     colorType: 'var(--red-5)'
+    //   }
+    // ]
   },
   // {
   //   title: '数',
@@ -312,7 +315,7 @@ const getFooterActions = ({ rows, rowKeys, disabled }): ActionItem[] => {
   ]
 }
 
-const length = ref(10)
+const length = ref(30)
 
 const amount = ref(Math.random())
 const infoData = computed(() => {
@@ -376,11 +379,11 @@ const [
   },
   tableSetting: {
     // advancedSearch: true,
-    showMore: false
+    showMore: true
   },
   // summaryPrecision: 0,
-  resizable: false,
-  // rowKey: 'id',
+  resizable: true,
+  rowKey: 'id',
   // rowSelection: {
   //   type: 'checkbox'
   // },
@@ -462,7 +465,7 @@ const [
       }
     ]
   },
-  // showSummaryTotal: true,
+  showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
   // useAdvancedSearch: true,
@@ -476,7 +479,7 @@ const [
   //   title: '操作',
   //   width: 200
   // },
-  showIndexColumn: true
+  showIndexColumn: true,
   // canResize: false
   // indexColumn: {}
 })
@@ -546,6 +549,10 @@ onMounted(() => {
       demo0: '123'
     })
   }, 1000)
+
+  setTimeout(() => {
+    isRender.value = true
+  }, 2000)
 
   // setInterval(() => {
   //   amount.value = Math.random()

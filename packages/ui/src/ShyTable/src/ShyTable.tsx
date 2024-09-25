@@ -334,6 +334,7 @@ const ShyTable = defineComponent({
       }
 
       const isShowSummary = () => {
+
         return getDataSourceRef.value?.length &&
           getProps.value?.showSummaryTotal
           ? {
@@ -345,14 +346,14 @@ const ShyTable = defineComponent({
                         return (
                           <TableSummaryCell
                             class={`${prefixCls}-summary-cell-first`}
-                            align="center"
+                            align={item.align}
                             index={0}
                           >
                             总计
                           </TableSummaryCell>
                         )
                       return (
-                        <TableSummaryCell index={index}>
+                        <TableSummaryCell index={index} align={item.align} ellipsis>
                           {summaryTotalData.value[item.dataIndex]}
                         </TableSummaryCell>
                       )

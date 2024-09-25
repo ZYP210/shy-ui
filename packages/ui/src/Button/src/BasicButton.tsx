@@ -1,4 +1,4 @@
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, unref } from 'vue'
 import { buttonProps } from './props'
 import { Button, ConfigProvider } from 'ant-design-vue'
 import { Icon } from '../../Icon'
@@ -87,34 +87,42 @@ const BasicButton = defineComponent({
         return props.type === 'link' ? { color: getColor() } : {}
       }
 
-      return (
-        <span>
-          <ConfigProvider theme={getTypeToken()}>
-            <Button
-              {...getBindValue.value}
-              {...isDanger()}
-              onClick={onClick}
-              style={isLinkColorStyle()}
-            >
-              {{
-                default: (data) => {
-                  return (
-                    <>
-                      {props.preIcon ? (
-                        <Icon icon={props.preIcon} size={props.iconSize} />
-                      ) : null}
-                      {slots?.default?.(data)}
-                      {props.postIcon ? (
-                        <Icon icon={props.postIcon} size={props.iconSize} />
-                      ) : null}
-                    </>
-                  )
-                }
-              }}
-            </Button>
-          </ConfigProvider>
-        </span>
-      )
+      const renderBtn = () => {
+        const ShyButton = (
+          <Button
+            {...getBindValue.value}
+            {...isDanger()}
+            onClick={onClick}
+            style={isLinkColorStyle()}
+          >
+            {{
+              default: (data) => {
+                return (
+                  <>
+                    {props.preIcon ? (
+                      <Icon icon={props.preIcon} size={props.iconSize} />
+                    ) : null}
+                    {slots?.default?.(data)}
+                    {props.postIcon ? (
+                      <Icon icon={props.postIcon} size={props.iconSize} />
+                    ) : null}
+                  </>
+                )
+              }
+            }}
+          </Button>
+        )
+
+        if (unref(getBindValue).closeConfigProvide) {
+          return ShyButton
+        }
+
+        return (
+          <ConfigProvider theme={getTypeToken()}>{ShyButton}</ConfigProvider>
+        )
+      }
+
+      return <span>{renderBtn()}</span>
     }
 
     return () => {

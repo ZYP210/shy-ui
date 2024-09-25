@@ -102,8 +102,6 @@ export default defineComponent({
       moveKeys: string[]
     ) {
       _targetKeys.value = keys
-      console.log(direction)
-      console.log(moveKeys)
       emit('change', keys)
       emit('update:value', keys)
     }

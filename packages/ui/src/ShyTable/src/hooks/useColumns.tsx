@@ -37,7 +37,6 @@ import {
   PAGE_SIZE
 } from '../const'
 import { ShyTag, shyTagBasicProps } from '../../../ShyTag'
-import { useDebounceFn } from '@vueuse/core'
 
 const handleItem = (item: ShyColumn, ellipsis: boolean) => {
   const { key, dataIndex, children } = item
@@ -87,13 +86,12 @@ const handleColumnResize = (
       item.width = item.width ? item.width : finallyWidth
       item.minWidth = minWidth
       item.resizable = item.resizable === undefined ? true : item.resizable
-    } else {
-      if (item.resizable) {
-        item.width = item.width ? item.width : finallyWidth
-        item.minWidth = minWidth
-      }
+    } else if (item.resizable) {
+      item.width = item.width ? item.width : finallyWidth
+      item.minWidth = minWidth
     }
   })
+
 }
 
 const handleChildren = (
@@ -192,6 +190,9 @@ export const useColumns = (
   tableAction: ComputedRef<TableActionType>,
   wrapRef: Ref<ComponentRef>
 ) => {
+  const resizeObserver = new ResizeObserver(() => {
+    columnsRef.value = cloneDeep(unref(columnsRef))
+  })
   const columnsRef = ref(unref(propsRef).columns) as unknown as Ref<ShyColumn[]>
   let cacheColumns = unref(propsRef).columns
 
@@ -222,16 +223,15 @@ export const useColumns = (
   })
 
   onMounted(() => {
-    window.addEventListener(
-      'resize',
-      useDebounceFn(() => {
-        columnsRef.value = cloneDeep(unref(columnsRef))
-      }, 500)
-    )
+    const table = unref(wrapRef)
+    if (!table) return
+    const tableEl: Element = table
+
+    resizeObserver.observe(tableEl)
   })
 
   onUnmounted(() => {
-    window.removeEventListener('resize', () => {})
+    resizeObserver.disconnect()
   })
 
   const isIfShow = (column: ShyColumn): boolean => {
