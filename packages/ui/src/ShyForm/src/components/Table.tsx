@@ -539,7 +539,8 @@ const ShyFormTable = defineComponent({
         }
       },
       {
-        deep: true
+        deep: true,
+        immediate: true
       }
     )
 
@@ -624,7 +625,6 @@ const ShyFormTable = defineComponent({
         </td>
       )
 
-
       Reflect.deleteProperty(Td.ctx.attrs, 'onMouseenter')
       Reflect.deleteProperty(Td.ctx.attrs, 'onMouseleave')
 
@@ -637,7 +637,9 @@ const ShyFormTable = defineComponent({
         <>
           {renderTable.value}
           {renderAddBtn()}
-          {props.footerRender() && <div class={`${prefixCls}-footer`}>{props.footerRender()}</div>}
+          {props.footerRender() && (
+            <div class={`${prefixCls}-footer`}>{props.footerRender()}</div>
+          )}
         </>
       )
     }
