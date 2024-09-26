@@ -55,8 +55,19 @@ const getActions = (row) => {
 
 const columns = [
   {
+    groupName: 'a',
+    children: [
+      {
+        title: 'b',
+        field: 'b',
+        helpMessage: 'helpMessage'
+      }
+    ]
+  },
+  {
     title: '类型编号',
     field: 'a',
+    helpMessage: 'helpMessage',
     treeNode: true,
     showOverflow: false
   },

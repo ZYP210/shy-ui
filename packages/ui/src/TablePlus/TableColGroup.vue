@@ -64,8 +64,16 @@
             <div style="display: flex; justify-content: space-between">
               <div>{{ c.title }}</div>
               <IconSort
-                v-if="column?.sortable"
+                v-if="c?.sortable"
                 @change="(type) => handleSortChange(column.field, type)"
+              />
+              <BasicHelp
+                v-if="c?.helpMessage"
+                style="padding-left: 5px"
+                placement="bottom"
+                class="mx-1"
+                :text="c?.helpMessage"
+                iconSize="12px"
               />
             </div>
           </slot>
@@ -79,6 +87,7 @@
 import { VxeColumn, VxeColgroup } from 'vxe-table'
 import { CellComponent } from './components/editable/CellComponent'
 import IconSort from './components/Icon/Sort.vue'
+import BasicHelp from '../Basic/src/BasicHelp.tsx'
 
 type Props = {
   column?: any

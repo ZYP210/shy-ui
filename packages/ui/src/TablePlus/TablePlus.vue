@@ -150,6 +150,14 @@
                     v-if="column?.sortable"
                     @change="(type) => handleSortChange(column.field, type)"
                   />
+                  <BasicHelp
+                    v-if="column?.helpMessage"
+                    style="padding-left: 5px"
+                    placement="bottom"
+                    class="mx-1"
+                    :text="column?.helpMessage"
+                    iconSize="12px"
+                  />
                 </div>
               </slot>
             </template>
@@ -212,6 +220,7 @@ import { useTableData } from './hooks/useTableData'
 import { CellComponent } from './components/editable/CellComponent'
 import ButtonGroupEdit from './components/ButtonGroupEdit.vue'
 import TableColGroup from './TableColGroup.vue'
+import BasicHelp from '../Basic/src/BasicHelp.tsx'
 
 import {
   createTableContext,
