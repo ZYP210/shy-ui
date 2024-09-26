@@ -52,6 +52,9 @@ export function useTableScroll(
   }
 
   function handleShowMore() {
+    const { showSummaryTotal } = unref(propsRef)
+    const summaryHeight = showSummaryTotal ? 40 : 0
+
     const allRow = bodyEl?.querySelectorAll('.ant-table-row')
     let allRowHeight = 0
     allRow?.forEach((row) => {
@@ -63,7 +66,7 @@ export function useTableScroll(
       (tableHeightRef.value ?? 0) <= allRowHeight &&
       (tableHeightRef.value ?? 0) + averageHeight * 10 > allRowHeight
     ) {
-      setHeight(allRowHeight)
+      setHeight(allRowHeight + summaryHeight)
     } else {
       setHeight((tableHeightRef.value ?? 0) + averageHeight * 10)
     }
@@ -99,7 +102,8 @@ export function useTableScroll(
       isCanResizeParent,
       useSearchForm,
       tableSetting,
-      useInfo
+      useInfo,
+      showSummaryTotal
     } = unref(propsRef)
 
     const tableData = unref(getDataSourceRef)
@@ -115,15 +119,13 @@ export function useTableScroll(
       if (!bodyEl) return
     }
 
+    const summaryHeight = showSummaryTotal ? 40 : 0
+
     const allRow = bodyEl?.querySelectorAll('.ant-table-row')
     let allRowHeight = 0
     allRow?.forEach((row) => {
       allRowHeight += row.clientHeight
     })
-
-    // bodyEl.style.height = allRowHeight
-    //   ? `${allRowHeight + SCROLL_WIDTH + allRow.length * 0.5}px`
-    //   : 'unset'
 
     const tableBodyEl = tableEl.querySelector('.ant-table-body') as HTMLElement
 
@@ -166,9 +168,13 @@ export function useTableScroll(
       tableEl.classList.remove('no-hide-scrollbar-x')
     }
 
-    bodyEl.style.height = 'unset'
+    bodyEl.style.height = allRowHeight
+      ? `${allRowHeight + SCROLL_WIDTH + allRow.length * 0.5 + summaryHeight}px`
+      : 'unset'
 
     if (!unref(getCanResize) || !unref(tableData)) return
+
+    bodyEl.style.height = 'unset'
 
     await nextTick()
 
@@ -199,7 +205,7 @@ export function useTableScroll(
         : 0
 
       if (isBoolean(isShowFooter) && !isShowFooter) {
-        paginationMargin = 0
+        paddingHeight += 24
       }
 
       if (isBoolean(useSearchForm) && !useSearchForm) {

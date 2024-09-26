@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full flex p-16px overflow-hidden">
-    <div class="flex-1 overflow-auto">
+    <div class="flex-1 overflow-hidden">
       <ShyTable @register="register" @selection-change="handleSelectChange">
         <!-- <template #toolbar="data">
           <ShyTableAction type="button" :actions="getHeaderActions(data)" />
@@ -89,144 +89,144 @@ import { ref, onMounted, h } from 'vue'
 const isRender = ref(false)
 
 const columns: any[] = [
-  {
-    title: '菜单名称',
-    dataIndex: 'name'
-    // align: 'left',
-    // align: 'center',
-    // width: 120,
-    // tag: true,
-    // tagMode: 'tag',
-    // options: [
-    //   {
-    //     label: '信息',
-    //     value: '0',
-    //     colorType: 'var(--gray-5)'
-    //   },
-    //   {
-    //     label: '完成',
-    //     value: '1',
-    //     colorType: 'var(--primary-5)'
-    //   },
-    //   {
-    //     label: '警告',
-    //     value: '2',
-    //     colorType: 'var(--orange-5)'
-    //   },
-    //   {
-    //     label: '等待',
-    //     value: '3',
-    //     colorType: 'var(--blue-5)'
-    //   },
-    //   {
-    //     label: '危险',
-    //     value: '4',
-    //     colorType: 'var(--red-5)'
-    //   }
-    // ]
-  },
-  {
-    title: '菜单名称',
-    dataIndex: 'name'
-    // width: 1120,
-    // tag: true,
-    // // tagMode: 'tag',
-    // options: [
-    //   {
-    //     label: '信息',
-    //     value: '0',
-    //     colorType: 'var(--gray-5)'
-    //   },
-    //   {
-    //     label: '完成',
-    //     value: '1',
-    //     colorType: 'var(--primary-5)'
-    //   },
-    //   {
-    //     label: '警告',
-    //     value: '2',
-    //     colorType: 'var(--orange-5)'
-    //   },
-    //   {
-    //     label: '等待',
-    //     value: '3',
-    //     colorType: 'var(--blue-5)'
-    //   },
-    //   {
-    //     label: '危险',
-    //     value: '4',
-    //     colorType: 'var(--red-5)'
-    //   }
-    // ]
-  },
-  {
-    title: '菜单名称',
-    dataIndex: 'name'
-    // width: 120,
-    // tag: true,
-    // tagMode: 'text',
-    // options: [
-    //   {
-    //     label: '信息',
-    //     value: '0',
-    //     colorType: 'var(--gray-5)'
-    //   },
-    //   {
-    //     label: '完成',
-    //     value: '1',
-    //     colorType: 'var(--primary-5)'
-    //   },
-    //   {
-    //     label: '警告',
-    //     value: '2',
-    //     colorType: 'var(--orange-5)'
-    //   },
-    //   {
-    //     label: '等待',
-    //     value: '3',
-    //     colorType: 'var(--blue-5)'
-    //   },
-    //   {
-    //     label: '危险',
-    //     value: '4',
-    //     colorType: 'var(--red-5)'
-    //   }
-    // ]
-  },
-  {
-    title: '菜单名称',
-    dataIndex: 'name'
-    // width: 1120,
-    // fixed: 'right',
-    // options: [
-    //   {
-    //     label: '信息',
-    //     value: '0',
-    //     colorType: 'var(--gray-5)'
-    //   },
-    //   {
-    //     label: '完成',
-    //     value: '1',
-    //     colorType: 'var(--primary-5)'
-    //   },
-    //   {
-    //     label:
-    //       'jdlksajdlkasjdklsajklasjaslkdjsakldjsalkdjaskldasjdaskljdaslkdjaslkjdalksjdlksajdklsadjaslkdjsalkdjoiuewoiwugchsadkjhadkysoiduwoiudhajdhaskjdhasiudhw9iuqhd',
-    //     value: '2',
-    //     colorType: 'var(--orange-5)'
-    //   },
-    //   {
-    //     label: '等待',
-    //     value: '3',
-    //     colorType: 'var(--blue-5)'
-    //   },
-    //   {
-    //     label: '危险',
-    //     value: '4',
-    //     colorType: 'var(--red-5)'
-    //   }
-    // ]
-  },
+  // {
+  //   title: '菜单名称',
+  //   dataIndex: 'name'
+  //   // align: 'left',
+  //   // align: 'center',
+  //   // width: 120,
+  //   // tag: true,
+  //   // tagMode: 'tag',
+  //   // options: [
+  //   //   {
+  //   //     label: '信息',
+  //   //     value: '0',
+  //   //     colorType: 'var(--gray-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '完成',
+  //   //     value: '1',
+  //   //     colorType: 'var(--primary-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '警告',
+  //   //     value: '2',
+  //   //     colorType: 'var(--orange-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '等待',
+  //   //     value: '3',
+  //   //     colorType: 'var(--blue-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '危险',
+  //   //     value: '4',
+  //   //     colorType: 'var(--red-5)'
+  //   //   }
+  //   // ]
+  // },
+  // {
+  //   title: '菜单名称',
+  //   dataIndex: 'name'
+  //   // width: 1120,
+  //   // tag: true,
+  //   // // tagMode: 'tag',
+  //   // options: [
+  //   //   {
+  //   //     label: '信息',
+  //   //     value: '0',
+  //   //     colorType: 'var(--gray-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '完成',
+  //   //     value: '1',
+  //   //     colorType: 'var(--primary-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '警告',
+  //   //     value: '2',
+  //   //     colorType: 'var(--orange-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '等待',
+  //   //     value: '3',
+  //   //     colorType: 'var(--blue-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '危险',
+  //   //     value: '4',
+  //   //     colorType: 'var(--red-5)'
+  //   //   }
+  //   // ]
+  // },
+  // {
+  //   title: '菜单名称',
+  //   dataIndex: 'name'
+  //   // width: 120,
+  //   // tag: true,
+  //   // tagMode: 'text',
+  //   // options: [
+  //   //   {
+  //   //     label: '信息',
+  //   //     value: '0',
+  //   //     colorType: 'var(--gray-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '完成',
+  //   //     value: '1',
+  //   //     colorType: 'var(--primary-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '警告',
+  //   //     value: '2',
+  //   //     colorType: 'var(--orange-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '等待',
+  //   //     value: '3',
+  //   //     colorType: 'var(--blue-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '危险',
+  //   //     value: '4',
+  //   //     colorType: 'var(--red-5)'
+  //   //   }
+  //   // ]
+  // },
+  // {
+  //   title: '菜单名称',
+  //   dataIndex: 'name'
+  //   // width: 1120,
+  //   // fixed: 'right',
+  //   // options: [
+  //   //   {
+  //   //     label: '信息',
+  //   //     value: '0',
+  //   //     colorType: 'var(--gray-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '完成',
+  //   //     value: '1',
+  //   //     colorType: 'var(--primary-5)'
+  //   //   },
+  //   //   {
+  //   //     label:
+  //   //       'jdlksajdlkasjdklsajklasjaslkdjsakldjsalkdjaskldasjdaskljdaslkdjaslkjdalksjdlksajdklsadjaslkdjsalkdjoiuewoiwugchsadkjhadkysoiduwoiudhajdhaskjdhasiudhw9iuqhd',
+  //   //     value: '2',
+  //   //     colorType: 'var(--orange-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '等待',
+  //   //     value: '3',
+  //   //     colorType: 'var(--blue-5)'
+  //   //   },
+  //   //   {
+  //   //     label: '危险',
+  //   //     value: '4',
+  //   //     colorType: 'var(--red-5)'
+  //   //   }
+  //   // ]
+  // },
   // {
   //   title: '数',
   //   dataIndex: 'qualifiedNum'
@@ -315,7 +315,7 @@ const getFooterActions = ({ rows, rowKeys, disabled }): ActionItem[] => {
   ]
 }
 
-const length = ref(30)
+const length = ref(40)
 
 const amount = ref(Math.random())
 const infoData = computed(() => {
@@ -465,7 +465,7 @@ const [
       }
     ]
   },
-  showSummaryTotal: true,
+  // showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
   // useAdvancedSearch: true,
@@ -473,7 +473,6 @@ const [
   // useAdvancedSearch: true,
   // clickToRowSelect: true,
   // useSearchForm: true,
-  // canResize: false,
   // actionColumn: {
   //   dataIndex: 'action',
   //   title: '操作',
