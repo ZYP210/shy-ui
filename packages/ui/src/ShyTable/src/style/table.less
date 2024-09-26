@@ -38,11 +38,7 @@
   .ant-table-summary {
     position: sticky;
     left: 0;
-    bottom: -1px;
-    td {
-      border-top: 1px solid var(--gray-1);
-      border-bottom: none !important;
-    }
+    bottom: 0;
   }
 
   &-info {
@@ -138,16 +134,18 @@
     margin-right: 0;
   }
 
-  &-summary-cell-first {
-    padding: 0 !important;
-    font-size: 12px;
-    white-space: nowrap;
+  &:has(:not(.ant-table-summary)) &-more-wrapper {
+    --summary-height: 40px;
+  }
+
+  &:not(:has(.ant-table-summary)) &-more-wrapper {
+    --summary-height: 0px;
   }
 
   &-more-wrapper {
     position: absolute;
     left: 1px;
-    bottom: 1px;
+    bottom: calc(var(--summary-height) + 0.9px);
     z-index: 20;
     width: calc(100% - 10px);
     display: flex;
@@ -203,7 +201,7 @@
 
 .no-hide-scrollbar-x {
   .@{prefix-cls}-more-wrapper {
-    bottom: 10px;
+    bottom: calc(var(--summary-height) + 10px);
   }
 }
 
@@ -260,12 +258,25 @@
     }
     padding-right: 10px;
   }
+
+  .ant-table-summary {
+    td {
+      border-top: none;
+    }
+  }
 }
 
 .no-hide-scrollbar-y {
   .ant-table-tbody.ant-table-tbody tr:nth-last-child(1) {
     td {
       border-bottom: none !important;
+    }
+  }
+
+  .ant-table-summary {
+    td {
+      border-top: 1px solid var(--gray-1);
+      border-bottom: 1px solid transparent !important;
     }
   }
 }

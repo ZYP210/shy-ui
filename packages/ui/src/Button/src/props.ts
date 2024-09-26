@@ -43,5 +43,9 @@ export const buttonProps = reactive({
   isContinuousClicks: {
     type: Boolean,
     default: true
+  },
+  closeConfigProvide: {
+    type: Boolean,
+    default: false
   }
 })

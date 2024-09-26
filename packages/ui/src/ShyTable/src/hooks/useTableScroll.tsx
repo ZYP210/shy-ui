@@ -6,7 +6,7 @@ import type {
 import { Ref, ComputedRef, ref, onUnmounted, render } from 'vue'
 import { computed, unref, nextTick, watch } from 'vue'
 import { getViewportOffset, isBoolean } from '@shy-plugins/utils'
-import { useDesign, useWindowSizeFn } from '@shy-plugins/use'
+import { useDesign } from '@shy-plugins/use'
 import { useModalContext } from '../../../Modal'
 import { onMountedOrActivated } from '@shy-plugins/use'
 import { useDebounceFn } from '@vueuse/core'
@@ -52,6 +52,9 @@ export function useTableScroll(
   }
 
   function handleShowMore() {
+    const { showSummaryTotal } = unref(propsRef)
+    const summaryHeight = showSummaryTotal ? 40 : 0
+
     const allRow = bodyEl?.querySelectorAll('.ant-table-row')
     let allRowHeight = 0
     allRow?.forEach((row) => {
@@ -63,11 +66,10 @@ export function useTableScroll(
       (tableHeightRef.value ?? 0) <= allRowHeight &&
       (tableHeightRef.value ?? 0) + averageHeight * 10 > allRowHeight
     ) {
-      tableHeightRef.value = allRowHeight
+      setHeight(allRowHeight + summaryHeight)
     } else {
-      tableHeightRef.value = (tableHeightRef.value ?? 0) + averageHeight * 10
+      setHeight((tableHeightRef.value ?? 0) + averageHeight * 10)
     }
-
     setTimeout(() => {
       calcTableHeight()
     }, 1000)
@@ -80,8 +82,7 @@ export function useTableScroll(
       allRowHeight += row.clientHeight
     })
 
-    tableHeightRef.value = allRowHeight
-
+    setHeight(allRowHeight)
     setTimeout(() => {
       calcTableHeight()
     }, 1000)
@@ -102,6 +103,7 @@ export function useTableScroll(
       useSearchForm,
       tableSetting,
       useInfo,
+      showSummaryTotal
     } = unref(propsRef)
 
     const tableData = unref(getDataSourceRef)
@@ -117,11 +119,18 @@ export function useTableScroll(
       if (!bodyEl) return
     }
 
+    const summaryHeight = showSummaryTotal ? 40 : 0
+
+    const allRow = bodyEl?.querySelectorAll('.ant-table-row')
+    let allRowHeight = 0
+    allRow?.forEach((row) => {
+      allRowHeight += row.clientHeight
+    })
+
     const tableBodyEl = tableEl.querySelector('.ant-table-body') as HTMLElement
 
     const hasScrollBarY = bodyEl.scrollHeight > bodyEl.clientHeight
     const hasScrollBarX = bodyEl.scrollWidth > bodyEl.clientWidth + SCROLL_WIDTH
-
     if (hasScrollBarY) {
       !tableEl.classList.contains('no-hide-scrollbar-y') &&
         tableEl.classList.add('no-hide-scrollbar-y')
@@ -134,6 +143,7 @@ export function useTableScroll(
               type="link"
               preIcon="tabler:layout-navbar-expand"
               onClick={handleShowMore}
+              closeConfigProvide
             >
               展开更多
             </BasicButton>
@@ -158,9 +168,13 @@ export function useTableScroll(
       tableEl.classList.remove('no-hide-scrollbar-x')
     }
 
-    bodyEl!.style.height = 'unset'
+    bodyEl.style.height = allRowHeight
+      ? `${allRowHeight + SCROLL_WIDTH + allRow.length * 0.5 + summaryHeight}px`
+      : 'unset'
 
     if (!unref(getCanResize) || !unref(tableData)) return
+
+    bodyEl.style.height = 'unset'
 
     await nextTick()
 
@@ -191,7 +205,7 @@ export function useTableScroll(
         : 0
 
       if (isBoolean(isShowFooter) && !isShowFooter) {
-        paginationMargin = 0
+        paddingHeight += 24
       }
 
       if (isBoolean(useSearchForm) && !useSearchForm) {
@@ -199,7 +213,7 @@ export function useTableScroll(
       }
 
       if (isBoolean(useInfo) && !useInfo) {
-        paddingHeight += -37
+        paddingHeight += -36
       }
 
       const headerCellHeight =
@@ -226,7 +240,8 @@ export function useTableScroll(
 
     bodyEl.style.height = `${height}px`
   }
-  useWindowSizeFn<void>(calcTableHeight, 500)
+  const resizeObserver = new ResizeObserver(calcTableHeight)
+
   onMountedOrActivated(() => {
     calcTableHeight()
     nextTick(() => {
@@ -244,12 +259,11 @@ export function useTableScroll(
       handle: '.ant-table-cell .ant-table-cell-index',
       draggable: '.ant-table-row'
     })
-
-    window.addEventListener('resize', calcTableHeight)
+    resizeObserver.observe(tableEl)
   })
 
   onUnmounted(() => {
-    window.removeEventListener('resize', calcTableHeight)
+    resizeObserver.disconnect()
   })
 
   const getScrollX = computed(() => {
