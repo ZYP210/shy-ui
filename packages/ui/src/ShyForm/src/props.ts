@@ -54,7 +54,7 @@ export const tableSearchColKeys = [
   'ACTION_COL'
 ] as const
 
-export const basicProps = {
+export const shyFormBasicProps = reactive({
   gap: {
     type: Number,
     default: 8
@@ -224,7 +224,7 @@ export const basicProps = {
     type: Array,
     default: () => []
   }
-}
+})
 
 export const FormItemProps = {
   schema: {

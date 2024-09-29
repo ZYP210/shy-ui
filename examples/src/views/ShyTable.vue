@@ -59,7 +59,7 @@
         </template>
       </ShyTable>
     </div>
-    <div v-if="isRender" class="min-w-300px"></div>
+    <!-- <div v-if="isRender" class="min-w-300px"></div> -->
   </div>
 </template>
 

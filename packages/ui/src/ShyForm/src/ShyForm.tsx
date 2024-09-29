@@ -27,7 +27,7 @@ import { useAutoFocus } from './hooks/useAutoFocus'
 import { useModalContext } from '../../Modal'
 import { useDebounceFn } from '@vueuse/core'
 import {
-  basicProps,
+  shyFormBasicProps,
   tableSearchColKeys,
   tableSearchColRef,
   defaultAntConfig
@@ -41,7 +41,7 @@ import './style/index.less'
 import { formProps } from 'ant-design-vue/es/form'
 
 const ShyForm = defineComponent({
-  props: basicProps,
+  props: shyFormBasicProps,
   emits: [
     'advanced-change',
     'reset',
