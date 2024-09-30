@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full flex p-16px overflow-hidden shy-body">
+  <div class="w-full h-full flex p-16px overflow-hidden shy-body bg-[var(--theme)]">
     <div class="flex-1 overflow-hidden">
       <ConfigProvider :theme="getScopeAntColor['.shy-body']">
         <ShyTable @register="register" @selection-change="handleSelectChange">
@@ -390,9 +390,9 @@ const [
   // summaryPrecision: 0,
   resizable: true,
   rowKey: 'id',
-  // rowSelection: {
-  //   type: 'checkbox'
-  // },
+  rowSelection: {
+    type: 'checkbox'
+  },
   columns,
   // isShowPagination: false,
   isSortFetch: false,
