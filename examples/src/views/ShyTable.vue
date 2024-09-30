@@ -1,8 +1,9 @@
 <template>
-  <div class="w-full h-full flex p-16px overflow-hidden">
+  <div class="w-full h-full flex p-16px overflow-hidden shy-body">
     <div class="flex-1 overflow-hidden">
-      <ShyTable @register="register" @selection-change="handleSelectChange">
-        <!-- <template #toolbar="data">
+      <ConfigProvider :theme="getScopeAntColor['.shy-body']">
+        <ShyTable @register="register" @selection-change="handleSelectChange">
+          <!-- <template #toolbar="data">
           <ShyTableAction type="button" :actions="getHeaderActions(data)" />
           <BasicButton type="primary"> 主要 </BasicButton>
           <BasicButton type="danger" @click="pushApi">危险</BasicButton>
@@ -12,52 +13,53 @@
           <BasicButton> 默认 </BasicButton>
         </template> -->
 
-        <template #headerCell="{ column }">
-          <div v-if="column.flag === 'INDEX'">111</div>
-          <div v-else>{{ column.customTitle }}</div>
-        </template>
-
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex === 'action'">
-            <ShyTableAction
-              :show-count="2"
-              :actions="[
-                {
-                  label: '编辑',
-                  // ifShow: false,
-                  onClick: handleEdit.bind(null, record)
-                },
-                {
-                  label: '测试',
-                  // ifShow: false,
-                  onClick: handleSave.bind(null, record)
-                },
-                {
-                  label: '智能',
-                  // ifShow: false,
-                  popConfirm: {
-                    title: '确认保存?',
-                    confirm: handleSave.bind(null, record)
-                  }
-                },
-
-                {
-                  label: '删除',
-                  popConfirm: {
-                    title: '确认删除吗?',
-                    confirm: handleRemove.bind(null, record)
-                  }
-                }
-              ]"
-              icon-direction="horizontal"
-            />
+          <template #headerCell="{ column }">
+            <div v-if="column.flag === 'INDEX'">111</div>
+            <div v-else>{{ column.customTitle }}</div>
           </template>
-        </template>
 
-        <template #footer="data">
-          <!-- <ShyTableAction type="button" :actions="getFooterActions(data)" /> -->
-        </template>
-      </ShyTable>
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.dataIndex === 'action'">
+              <ShyTableAction
+                :show-count="2"
+                :actions="[
+                  {
+                    label: '编辑',
+                    // ifShow: false,
+                    onClick: handleEdit.bind(null, record)
+                  },
+                  {
+                    label: '测试',
+                    // ifShow: false,
+                    onClick: handleSave.bind(null, record)
+                  },
+                  {
+                    label: '智能',
+                    // ifShow: false,
+                    popConfirm: {
+                      title: '确认保存?',
+                      confirm: handleSave.bind(null, record)
+                    }
+                  },
+
+                  {
+                    label: '删除',
+                    popConfirm: {
+                      title: '确认删除吗?',
+                      confirm: handleRemove.bind(null, record)
+                    }
+                  }
+                ]"
+                icon-direction="horizontal"
+              />
+            </template>
+          </template>
+
+          <template #footer="data">
+            <!-- <ShyTableAction type="button" :actions="getFooterActions(data)" /> -->
+          </template>
+        </ShyTable>
+      </ConfigProvider>
     </div>
     <!-- <div v-if="isRender" class="min-w-300px"></div> -->
   </div>
@@ -71,10 +73,14 @@ import {
   BasicButton,
   ActionItem
 } from '3h1-ui'
-import { useMessage } from '@shy-plugins/use'
+import { useMessage, useTheme } from '@shy-plugins/use'
 import { cloneDeep } from 'lodash-es'
 const { createMessage, createConfirm } = useMessage()
 import { ref, onMounted, h } from 'vue'
+import { theme, ConfigProvider } from 'ant-design-vue'
+
+const { getScopeAntColor } = useTheme()
+
 // const schemas = [
 //   { label: 'a', field: 'a', component: 'Input', colProps: { span: 8 } },
 //   { label: 'a', field: 'b', component: 'Input', colProps: { span: 8 } },
@@ -84,7 +90,7 @@ import { ref, onMounted, h } from 'vue'
 
 // const zzz = useRender()
 
-// console.log(zzz)
+console.log(getScopeAntColor)
 
 const isRender = ref(false)
 
@@ -478,7 +484,7 @@ const [
   //   title: '操作',
   //   width: 200
   // },
-  showIndexColumn: true,
+  showIndexColumn: true
   // canResize: false
   // indexColumn: {}
 })

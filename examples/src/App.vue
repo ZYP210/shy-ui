@@ -56,9 +56,18 @@ import { ConfigProvider, FloatButtonGroup, FloatButton } from 'ant-design-vue'
 import { Icon, ColorPickerPopover } from '3h1-ui'
 import { URLData } from '/@/database/menu.data'
 import { ref, reactive } from 'vue'
-import { useTheme } from '@shy-plugins/use'
+import { useTheme, ThemeEnum } from '@shy-plugins/use'
 
-const { getThemeType, setThemeType, getAntTheme, setPrimaryColor } = useTheme()
+const {
+  getThemeType,
+  setThemeType,
+  getAntTheme,
+  setPrimaryColor,
+  setOtherScopes
+} = useTheme()
+setOtherScopes({
+  '.shy-body': ThemeEnum.DARK
+})
 
 const controlBoxStyle = reactive({
   top: '30px',
@@ -82,7 +91,9 @@ const handleColor = (value) => {
 }
 
 const handleTheme = () => {
-  setThemeType(getThemeType.value === 'dark' ? 'light' : 'dark')
+  setThemeType(
+    getThemeType.value === ThemeEnum.DARK ? ThemeEnum.LIGHT : ThemeEnum.DARK
+  )
 }
 
 // onMounted(() => {
