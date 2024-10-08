@@ -20,7 +20,7 @@ export function useTableScroll(
   columnsRef: ComputedRef<ShyColumn[]>,
   rowSelectionRef: ComputedRef<TableRowSelection | null>,
   getDataSourceRef: ComputedRef<Recordable[]>,
-  wrapRef: Ref<HTMLElement | null>
+  wrapRef: Ref<HTMLElement>
 ) {
   const { prefixCls } = useDesign('ant-table-more-wrapper')
 
@@ -259,7 +259,7 @@ export function useTableScroll(
       handle: '.ant-table-cell .ant-table-cell-index',
       draggable: '.ant-table-row'
     })
-    resizeObserver.observe(tableEl)
+    resizeObserver.observe(unref(wrapRef))
   })
 
   onUnmounted(() => {

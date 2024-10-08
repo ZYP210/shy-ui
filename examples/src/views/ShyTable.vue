@@ -21,7 +21,7 @@
           <template #bodyCell="{ column, record }">
             <template v-if="column.dataIndex === 'action'">
               <ShyTableAction
-                :show-count="2"
+                :show-count="100"
                 :actions="[
                   {
                     label: '编辑',
