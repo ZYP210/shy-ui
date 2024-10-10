@@ -1,4 +1,4 @@
-export * from './ShyAdvancedSearch'
+export * from './ShyTableAdvancedSearch'
 export * from './ShyGlobalSearch'
 export * from './ShyShowMore'
 export * from './ShyShowSearch'

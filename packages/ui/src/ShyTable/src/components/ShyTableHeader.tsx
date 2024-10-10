@@ -3,7 +3,7 @@ import { ColumnChangeParam, TableSetting } from '../types/table'
 import { useDesign } from '@shy-plugins/use'
 import { useTableContext } from '../hooks/useShyTableContext'
 import {
-  ShyAdvancedSearch,
+  ShyTableAdvancedSearch,
   ShyGlobalSearch,
   ShyShowMore,
   ShyShowSearch,
@@ -67,7 +67,7 @@ const ShyTableSetting = defineComponent({
 
     const renderAdvancedSearch = computed(() => {
       return getSetting.value.advancedSearch ? (
-        <ShyAdvancedSearch getPopupContainer={getTableContainer} />
+        <ShyTableAdvancedSearch getPopupContainer={getTableContainer} />
       ) : null
     })
 
@@ -109,7 +109,7 @@ const ShyTableSetting = defineComponent({
     return () => {
       return (
         <div class={prefixCls}>
-          {renderGlobalSearch.value}
+          {/* {renderGlobalSearch.value} */}
           {renderAdvancedSearch.value}
           {renderShowMore.value}
           {renderShowSearch.value}

@@ -2,7 +2,7 @@
   <div>
     <BasicTitle helpMessage="提示1" :expand="true">22222</BasicTitle>
     <BasicTitle :helpMessage="['提示1', '提示2']">标题</BasicTitle>
-
+    <slot></slot>
     <!-- // BasicArrow -->
     <!-- <BasicArrow :expand="true" /> -->
   </div>

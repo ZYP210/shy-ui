@@ -1,10 +1,8 @@
 import type { VNodeChild } from 'vue'
 import type { PaginationProps } from './pagination'
-import type { FormProps } from '../../../ShyForm'
+import type { ComponentProps, ComponentType, FormProps } from '../../../ShyForm'
 import type { TableRowSelection as ITableRowSelection } from 'ant-design-vue/lib/table/interface'
 import type { ColumnProps } from 'ant-design-vue/lib/table'
-
-import { ComponentType } from './componentType'
 import { VueNode } from '@shy-plugins/utils'
 //TODO enum
 // import { RoleEnum } from '/@/enums/roleEnum'
@@ -102,7 +100,7 @@ export interface TableActionType {
   getSelectRowKeys: () => string[] | undefined
   deleteSelectRowByKey: (key: string) => void
   setPagination: (info: Partial<PaginationProps>) => void
-  setTableData: <T = Recordable>(values: T[]) => void
+  setTableData: (values: Recordable[]) => void
   updateTableDataRecord: (
     rowKey: string,
     record: Recordable
@@ -115,8 +113,8 @@ export interface TableActionType {
   findTableDataRecord: (rowKey: string | number) => Recordable | void
   getColumns: (opt?: GetColumnsParams) => ShyColumn[]
   setColumns: (columns: ShyColumn[] | string[]) => void
-  getDataSource: <T = Recordable>() => T[] | undefined
-  getRawDataSource: <T = Recordable>() => T
+  getDataSource: () => Recordable[] | undefined
+  getRawDataSource: () => Recordable
   setLoading: (loading: boolean) => void
   setProps: (props: Partial<ShyTableProps>) => void
   redoHeight: () => void
@@ -137,6 +135,7 @@ export interface TableActionType {
     dataIndex: string | undefined,
     value: ShyColumn
   ) => void
+  showAll: () => void
   setEditByRow?: any
   cancelEditByRow?: any
   getTableData?: any
@@ -144,22 +143,7 @@ export interface TableActionType {
   setAllTreeExpand?: any
   clearTreeExpand?: any
   setTreeExpand?: any
-  getVxeTableRef?: any
   setSelectRowByKeys?: any
-  openAdvancedSearch?: any
-  closeAdvancedSearch?: any
-  isVisibleAdvancedSearch?: any
-  isVisibleGlobalSearch?: any
-  closeGlobalSearch?: any
-  openGlobalSearch?: any
-  setGlobalSearchType?: any
-  getGlobalSearchType?: any
-  getGlobalSchemas?: any
-  setGlobalSchemas?: any
-  setGlobalSearchValue?: any
-  getGlobalSearchValue?: any
-  setCurSearchParams?: any
-  getCurSearchParams?: any
   getProps?: any
   hideColumn?: any
   showColumn?: any
@@ -514,7 +498,17 @@ export type ShyColumn = {
 
   slots?: Recordable
 
+  advancedType: AdvancedSearchType
+
+  advancedComponent: ComponentType
+
+  advancedComponentProps: ComponentProps
+
+  sortShow?: boolean
+
   globalShow?: boolean
+
+  advancedShow?: boolean
 
   // Whether to hide the column by default, it can be displayed in the column configuration
   defaultHidden?: boolean
@@ -571,12 +565,14 @@ export interface InnerHandlers {
   onColumnsReset: () => void
 }
 
+export type AdvancedSearchType = 'number' | 'string' | 'date' | 'equal' | 'contain'
+
 export type schemasAdvancedSearch = {
   label: string
-  field: number | string
-  type?: 'number' | 'string' | 'date' | 'select'
-  component?: ComponentType
-  componentProps?: object
+  field: string
+  type: AdvancedSearchType,
+  component: ComponentType
+  componentProps?: ComponentProps
   sortShow?: boolean
   globalShow?: boolean
   advancedShow?: boolean

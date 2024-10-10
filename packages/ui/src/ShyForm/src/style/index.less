@@ -20,6 +20,9 @@
 
     .ant-collapse-content-box.ant-collapse-content-box {
       padding: 8px 0;
+      display: flex;
+      flex-flow: row wrap;
+      gap: var(--gap);
     }
   }
 
@@ -42,6 +45,7 @@
 
     &-label {
       padding: 0;
+      text-align: unset;
 
       label::before {
         position: absolute;
@@ -90,7 +94,8 @@
   }
 
   &-content-col {
-    & > .ant-row > .ant-col {
+    & > .ant-row,
+    .ant-collapse-content-box > .ant-col {
       flex: calc(var(--col-span) - var(--gap));
       width: calc(var(--col-span) - var(--gap));
       max-width: calc(var(--col-span) - var(--gap) + var(--w-gap));

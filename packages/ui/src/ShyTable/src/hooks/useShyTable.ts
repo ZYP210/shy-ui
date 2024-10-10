@@ -21,21 +21,31 @@ type Props = Partial<DynamicProps<ShyTableProps>>
 
 type UseTableMethod = TableActionType & {
   getForm: () => FormActionType
+  getAdvancedForm: () => FormActionType
 }
 
-export function useShyTable(tableProps?: Props): [
-  (instance: TableActionType, formInstance: UseTableMethod) => void,
-  TableActionType & {
-    getForm: () => FormActionType
-  }
+export function useShyTable(
+  tableProps?: Props
+): [
+  (
+    instance: TableActionType,
+    formInstance: UseTableMethod,
+    advancedInstance: UseTableMethod
+  ) => void,
+  UseTableMethod
 ] {
   const tableRef = ref<Nullable<TableActionType>>(null)
   const loadedRef = ref<Nullable<boolean>>(false)
   const formRef = ref<Nullable<UseTableMethod>>(null)
+  const advancedRef = ref<Nullable<UseTableMethod>>(null)
 
   let stopWatch: WatchStopHandle
 
-  function register(instance: TableActionType, formInstance: UseTableMethod) {
+  function register(
+    instance: TableActionType,
+    formInstance: UseTableMethod,
+    advancedInstance: UseTableMethod
+  ) {
     onUnmounted(() => {
       tableRef.value = null
       loadedRef.value = null
@@ -45,6 +55,7 @@ export function useShyTable(tableProps?: Props): [
 
     tableRef.value = instance
     formRef.value = formInstance
+    advancedRef.value = advancedInstance
     tableProps && instance.setProps(getDynamicProps(tableProps))
     loadedRef.value = true
 
@@ -70,9 +81,7 @@ export function useShyTable(tableProps?: Props): [
     return table as TableActionType
   }
 
-  const methods: TableActionType & {
-    getForm: () => FormActionType
-  } = {
+  const methods: UseTableMethod = {
     reload: async (opt?: FetchParams) => {
       getTableInstance()?.clearSelectedRowKeys()
       return await getTableInstance()?.reload(opt)
@@ -89,8 +98,8 @@ export function useShyTable(tableProps?: Props): [
     setLoading: (loading: boolean) => {
       getTableInstance()?.setLoading(loading)
     },
-    getDataSource: <T = Recordable>() => {
-      return getTableInstance()?.getDataSource<T>()
+    getDataSource: () => {
+      return getTableInstance()?.getDataSource()
     },
     getRawDataSource: () => {
       return getTableInstance()!.getRawDataSource()
@@ -156,6 +165,9 @@ export function useShyTable(tableProps?: Props): [
     getForm: () => {
       return unref(formRef) as unknown as FormActionType
     },
+    getAdvancedForm: () => {
+      return unref(advancedRef) as unknown as FormActionType
+    },
     setShowPagination: async (show: boolean) => {
       getTableInstance()?.setShowPagination(show)
     },
@@ -173,6 +185,9 @@ export function useShyTable(tableProps?: Props): [
     },
     scrollTo: (pos: string) => {
       getTableInstance()?.scrollTo(pos)
+    },
+    showAll: () => {
+      getTableInstance()?.showAll()
     }
   }
 

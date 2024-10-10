@@ -25,6 +25,7 @@ import { useMessage } from '@shy-plugins/use'
 import { h, onMounted } from 'vue'
 import { ref } from 'vue'
 import { theme } from 'ant-design-vue'
+import BasicTitle from './BasicTitle.vue'
 
 const { useToken } = theme
 const { token } = useToken()
@@ -105,8 +106,8 @@ const schemas = ref<ShyFormSchema[]>([
     field: '-',
     component: 'Group',
     componentProps: {
-      groupInObject: false,
-      groupType: 'Divider',
+      CustomGroupComp: BasicTitle,
+      groupType: 'Custom',
       schemas: [
         {
           label: '入库单',

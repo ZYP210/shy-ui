@@ -1,4 +1,4 @@
-import { computed, defineComponent, shallowRef, unref } from 'vue'
+import { computed, defineComponent, JSXComponent, shallowRef, unref } from 'vue'
 import { FormItemProps } from '../props'
 import { FormSchema } from '../types/form'
 import FormItem from './FormItem'
@@ -23,11 +23,14 @@ const Group = defineComponent({
       default: true
     },
     groupType: {
-      type: String as PropType<'Divider' | 'Collapse'>,
+      type: String as PropType<'Divider' | 'Collapse' | 'Origin' | 'Custom'>,
       default: 'Collapse'
     },
     baseColProps: {
       type: Object as PropType<Partial<ColEx>>
+    },
+    CustomGroupComp: {
+      type: Object as PropType<JSXComponent>
     }
   },
   setup(props) {
@@ -76,16 +79,16 @@ const Group = defineComponent({
     })
 
     const renderItem = (schema) => {
+      const realSpan =
+        (schema.colProps?.span ?? unref(contextBindValue)?.baseColProps?.span) /
+        (unref(ROW_SLICE) + unref(ACTION_COL))
+
       return (
         <FormItem
           {...pick(props, Object.keys(FormItemProps))}
           style={{
-            [`--col-span`]: `${
-              ((schema.colProps?.span ??
-                unref(contextBindValue)?.baseColProps?.span) /
-                (ROW_SLICE + ACTION_COL)) *
-              100
-            }%`
+            [`--col-span`]: `${realSpan * 100}%`,
+            [`--w-gap`]: `${realSpan * unref(contextBindValue).gap}px`
           }}
           schema={{
             ...schema,
@@ -117,6 +120,10 @@ const Group = defineComponent({
           }) ?? {}
       }
 
+      const realSpan =
+        (schema.colProps?.span ?? unref(contextBindValue)?.baseColProps?.span) /
+        (unref(ROW_SLICE) + unref(ACTION_COL))
+
       switch (props.groupType) {
         case 'Divider':
           return (
@@ -124,12 +131,8 @@ const Group = defineComponent({
               <FormItem
                 {...pick(props, Object.keys(FormItemProps))}
                 style={{
-                  [`--col-span`]: `${
-                    ((colProps?.span ??
-                      unref(contextBindValue)?.baseColProps?.span) /
-                      (ROW_SLICE + ACTION_COL)) *
-                    100
-                  }%`
+                  [`--col-span`]: `${realSpan * 100}%`,
+                  [`--w-gap`]: `${realSpan * unref(contextBindValue).gap}px`
                 }}
                 schema={{ ...props.schema, component: 'Divider' }}
               ></FormItem>
@@ -143,12 +146,8 @@ const Group = defineComponent({
               v-model:activeKey={activeKey.value}
               class={`${prefixCls}-collapse`}
               style={{
-                [`--col-span`]: `${
-                  ((colProps?.span ??
-                    unref(contextBindValue)?.baseColProps?.span) /
-                    (ROW_SLICE + ACTION_COL)) *
-                  100
-                }%`
+                [`--col-span`]: `${realSpan * 100}%`,
+                [`--w-gap`]: `${realSpan * unref(contextBindValue).gap}px`
               }}
               bordered={false}
             >
@@ -175,6 +174,19 @@ const Group = defineComponent({
               </CollapsePanel>
             </Collapse>
           )
+        case 'Origin':
+          return renderFormItems()
+        case 'Custom':
+          return (() => {
+            const { CustomGroupComp } = props
+            if (!CustomGroupComp) return
+
+            return (
+              <CustomGroupComp {...componentProps}>
+                {renderFormItems()}
+              </CustomGroupComp>
+            )
+          })()
       }
     }
 

@@ -288,6 +288,7 @@ const ShyForm = defineComponent({
         validateFields([key]).catch(() => {})
       }
       emit('field-value-change', key, value)
+      unref(getBindValue).onFieldValueChange?.(key, value)
     }
 
     function handleEnterPress(e: Event) {

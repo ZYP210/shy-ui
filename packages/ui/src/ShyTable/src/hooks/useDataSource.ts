@@ -23,7 +23,6 @@ interface ActionType {
   getFieldsValue: () => Recordable
   clearSelectedRowKeys: () => void
   tableData: Ref<Recordable[]>
-  getCurSearchParams?: any
 }
 
 interface SearchState {
@@ -38,8 +37,7 @@ export function useDataSource(
     setLoading,
     getFieldsValue,
     clearSelectedRowKeys,
-    tableData,
-    getCurSearchParams
+    tableData
   }: ActionType,
   emit: EmitType
 ) {
@@ -112,7 +110,6 @@ export function useDataSource(
       const sortInfo = sortFn(sorter)
       searchState.sortInfo = sortInfo
       params.sortInfo = sortInfo
-      params.searchInfo = getCurSearchParams()
     }
 
     if (filters && isFunction(filterFn)) {
@@ -393,16 +390,16 @@ export function useDataSource(
     }
   }
 
-  function setTableData<T = Recordable>(values: T[]) {
+  function setTableData(values: Recordable[]) {
     dataSourceRef.value = values
   }
 
-  function getDataSource<T = Recordable>() {
-    return getDataSourceRef.value as T[]
+  function getDataSource(): Recordable[] {
+    return getDataSourceRef.value
   }
 
-  function getRawDataSource<T = Recordable>() {
-    return rawDataSourceRef.value as T
+  function getRawDataSource(): Recordable {
+    return rawDataSourceRef.value
   }
 
   async function reload(opt?: FetchParams) {

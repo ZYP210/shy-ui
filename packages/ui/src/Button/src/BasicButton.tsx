@@ -84,7 +84,7 @@ const BasicButton = defineComponent({
       }
 
       const isLinkColorStyle = () => {
-        return props.type === 'link' ? { color: getColor() } : {}
+        return props.type === 'link' ? { color: 'var(--primary-5)' } : {}
       }
 
       const renderBtn = () => {

@@ -28,6 +28,15 @@ interface ButtonProps extends AntdButtonProps {
   text?: string
 }
 
+export type ComponentProps =
+  | ((opt: {
+      schema: FormSchema
+      tableAction: ShyTableActionType | ShyTableActionType | undefined
+      formActionType: FormActionType
+      formModel: Recordable
+    }) => Recordable)
+  | Recordable
+
 export interface FormActionType {
   submit: () => Promise<void>
   setFieldsValue: (values: Recordable) => Promise<void>
@@ -57,7 +66,7 @@ export type RegisterFormFn = (formInstance: FormActionType) => void
 export type UseFormReturnType = [RegisterFormFn, FormActionType]
 
 export interface FormProps {
-  formLabelInInput?: boolean, 
+  formLabelInInput?: boolean
   name?: string
   layout?: 'vertical' | 'inline' | 'horizontal'
   // Form value
@@ -132,7 +141,8 @@ export interface FormProps {
   submitFunc?: () => Promise<void>
   transformDateFunc?: (date: any) => string
   colon?: boolean
-  rangePickerField: any[]
+  rangePickerField: any[],
+  onFieldValueChange?: (key: string, value: any) => void
 }
 export interface FormSchema {
   // Field name
@@ -159,14 +169,7 @@ export interface FormSchema {
   // render component
   component: ComponentType
   // Component parameters
-  componentProps?:
-    | ((opt: {
-        schema: FormSchema
-        tableAction: ShyTableActionType | ShyTableActionType | undefined
-        formActionType: FormActionType
-        formModel: Recordable
-      }) => Recordable)
-    | Recordable
+  componentProps?: ComponentProps
   // Required
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean)
 

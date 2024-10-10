@@ -24,7 +24,7 @@ import { usePagination } from './hooks/usePagination'
 import { useRowSelection } from './hooks/useRowSelection'
 import { useDataSource } from './hooks/useDataSource'
 import { createTableContext } from './hooks/useShyTableContext'
-import { useAdvancedSearch } from './hooks/useAdvancedSearch'
+import { useAdvancedSearch } from '../../ShyAdvancedSearch/src/hooks/useAdvancedSearch'
 import { useCustomRow } from './hooks/useCustomRow'
 import { useTableStyle } from './hooks/useTableStyle'
 import { useTableExpand } from './hooks/useTableExpand'
@@ -109,6 +109,7 @@ const ShyTable = defineComponent({
     const { getLoading, setLoading } = useLoading(getProps)
 
     const [registerForm, formActions] = useShyForm()
+    const [registerAdvanced, advanceActions] = useAdvancedSearch(getProps, formActions)
 
     const setProps = (props: Partial<ShyTableProps>) => {
       innerPropsRef.value = { ...unref(innerPropsRef), ...props }
@@ -157,25 +158,10 @@ const ShyTable = defineComponent({
         setLoading,
         setPagination,
         getFieldsValue: formActions.getFieldsValue,
-        clearSelectedRowKeys,
-        getCurSearchParams
+        clearSelectedRowKeys
       },
       emit
     )
-
-    const {
-      schemasAdvancedSearch,
-      schemasAdvancedSearchGlobal,
-      handleAdvancedEnsure,
-      setGlobalSearchType,
-      getGlobalSearchType,
-      setGlobalSchemas,
-      getGlobalSchemas,
-      setGlobalSearchValue,
-      getGlobalSearchValue,
-      setCurSearchParams,
-      getCurSearchParams: getCurSearchParamsHooks
-    } = useAdvancedSearch({ getProps, reload })
 
     const tableActionRef = computed(() => tableAction)
     const {
@@ -236,24 +222,15 @@ const ShyTable = defineComponent({
       scrollTo: scrollTo,
       getSize: () => {
         return unref(getBindValues).size as SizeType
-      }
+      },
+      showAll
     }
     createTableContext({
       ...tableAction,
       wrapRef,
       getBindValues,
-      schemasAdvancedSearch,
-      schemasAdvancedSearchGlobal,
-      handleAdvancedEnsure,
-      setGlobalSearchType,
-      getGlobalSearchType,
-      setGlobalSchemas,
-      getGlobalSchemas,
-      setGlobalSearchValue,
-      getGlobalSearchValue,
-      setCurSearchParams,
-      getCurSearchParams,
-      showAll
+      registerAdvanced,
+      advanceActions
     })
 
     const {
@@ -287,10 +264,6 @@ const ShyTable = defineComponent({
 
     const { getHeaderProps } = useTableHeader(getProps, slots, handlers)
 
-    function getCurSearchParams() {
-      return getCurSearchParamsHooks()
-    }
-
     function handleTableChange(...args: [any, any, any, any]) {
       onTableChange.call(undefined, ...args)
       emit('change', ...args)
@@ -308,7 +281,7 @@ const ShyTable = defineComponent({
 
     expose(tableAction)
 
-    emit('register', tableAction, formActions)
+    emit('register', tableAction, formActions, advanceActions)
 
     return () => {
       const isShowForm = () => {
@@ -334,7 +307,6 @@ const ShyTable = defineComponent({
       }
 
       const isShowSummary = () => {
-
         return getDataSourceRef.value?.length &&
           getProps.value?.showSummaryTotal
           ? {
@@ -353,7 +325,11 @@ const ShyTable = defineComponent({
                           </TableSummaryCell>
                         )
                       return (
-                        <TableSummaryCell index={index} align={item.align} ellipsis>
+                        <TableSummaryCell
+                          index={index}
+                          align={item.align}
+                          ellipsis
+                        >
                           {summaryTotalData.value[item.dataIndex]}
                         </TableSummaryCell>
                       )

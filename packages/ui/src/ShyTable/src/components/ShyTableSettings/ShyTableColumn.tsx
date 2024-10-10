@@ -14,7 +14,6 @@ import {
   Popover,
   Checkbox,
   Divider,
-  Button,
   CheckboxGroup
 } from 'ant-design-vue'
 import type { CheckboxChangeEvent } from 'ant-design-vue/lib/checkbox/interface'
@@ -37,6 +36,7 @@ import { ScrollContainer } from '../../../../Container'
 import '../../style/tableSettingColumn.less'
 import { watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
+import { BasicButton } from '../../../../Button'
 
 interface State {
   checkAll: boolean
@@ -408,9 +408,9 @@ const ShyTableColumn = defineComponent({
                     勾选列
                   </Checkbox>
 
-                  <Button size="small" type="link" onClick={reset}>
+                  <BasicButton size="small" type="link" onClick={reset}>
                     重置
-                  </Button>
+                  </BasicButton>
                 </div>
               ),
               content: () => (

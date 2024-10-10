@@ -223,6 +223,9 @@ export const shyFormBasicProps = reactive({
   rangePickerField: {
     type: Array,
     default: () => []
+  },
+  onFieldValueChange: {
+    type: Function as PropType<(...args) => void>
   }
 })
 

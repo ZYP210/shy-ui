@@ -91,7 +91,7 @@ export function useShyForm(props?: Props): UseFormReturnType {
     },
 
     removeSchemaByField: async (field: string | string[]) => {
-      unref(formRef)?.removeSchemaByField(field)
+      await unref(formRef)?.removeSchemaByField(field)
     },
 
     // TODO promisify
@@ -99,18 +99,18 @@ export function useShyForm(props?: Props): UseFormReturnType {
       return unref(formRef)?.getFieldsValue() as T
     },
 
-    setFieldsValue: async <T>(values: T) => {
+    setFieldsValue: async (values: Recordable) => {
       const form = await getForm()
-      form.setFieldsValue<T>(values)
+      await form.setFieldsValue(values)
     },
 
     appendSchemaByField: async (
       schema: FormSchema,
       prefixField: string | undefined,
-      first: boolean
+      first: boolean | undefined
     ) => {
       const form = await getForm()
-      form.appendSchemaByField(schema, prefixField, first)
+      await form.appendSchemaByField(schema, prefixField, first)
     },
 
     submit: async (): Promise<any> => {

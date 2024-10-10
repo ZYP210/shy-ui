@@ -384,7 +384,7 @@ const [
     infoData
   },
   tableSetting: {
-    // advancedSearch: true,
+    advancedSearch: true,
     showMore: true
   },
   // summaryPrecision: 0,
@@ -474,7 +474,7 @@ const [
   // showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],
   showTableSetting: true,
-  // useAdvancedSearch: true,
+  useAdvancedSearch: true,
   // summaryPrecision: 2,
   // useAdvancedSearch: true,
   // clickToRowSelect: true,

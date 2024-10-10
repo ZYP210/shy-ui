@@ -66,7 +66,7 @@ const {
   setOtherScopes
 } = useTheme()
 setOtherScopes({
-  '.shy-body': ThemeEnum.DARK
+  '.shy-body': ThemeEnum.LIGHT
 })
 
 const controlBoxStyle = reactive({

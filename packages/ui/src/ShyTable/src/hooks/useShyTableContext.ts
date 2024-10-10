@@ -1,16 +1,15 @@
 import type { Ref } from 'vue'
-import type { schemasAdvancedSearch, ShyTableProps, TableActionType } from '../types/table'
+import type { ShyTableProps, TableActionType } from '../types/table'
 import { provide, inject, ComputedRef } from 'vue'
+import { FormActionType, RegisterFormFn } from '../../../ShyForm'
 
 const key = Symbol('basic-table')
 
 export type Instance = TableActionType & {
   wrapRef: Ref<Nullable<HTMLElement>>
   getBindValues: ComputedRef<Recordable>
-  schemasAdvancedSearch: ComputedRef<schemasAdvancedSearch[]>,
-  schemasAdvancedSearchGlobal: ComputedRef<schemasAdvancedSearch[]>,
-  handleAdvancedEnsure: (form: any) => void,
-  showAll: () => void,
+  registerAdvanced: RegisterFormFn,
+  advanceActions: FormActionType
 }
 
 type RetInstance = Omit<Instance, 'getBindValues'> & {
