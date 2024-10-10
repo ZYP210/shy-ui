@@ -106,8 +106,8 @@ const schemas = ref<ShyFormSchema[]>([
     field: '-',
     component: 'Group',
     componentProps: {
-      CustomGroupComp: BasicTitle,
-      groupType: 'Custom',
+      // CustomGroupComp: BasicTitle,
+      // groupType: 'Custom',
       schemas: [
         {
           label: '入库单',
