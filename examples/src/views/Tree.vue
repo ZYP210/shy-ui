@@ -4,19 +4,21 @@
     <Input v-model:value="searchValue" />
     <div class="w-288px h-full">
       <BasicTree
-        title="测试"
-        addable
         :treeData="treeData"
         @plusClick="handleClick"
-        :searchValue="searchValue"
         :filter-fn="() => true"
+        :search="false"
+        title="777"
       >
-        <template #searchExtra>
+        <template #appendHeader>
+          <BasicButton type="primary">搜索</BasicButton>
+        </template>
+        <!-- <template #searchExtra>
           <BasicButton type="primary">搜索</BasicButton>
         </template>
         <template #action="item">
           <ShyTableAction :showCount="0" :actions="getActions(item)" />
-        </template>
+        </template> -->
       </BasicTree>
     </div>
   </div>

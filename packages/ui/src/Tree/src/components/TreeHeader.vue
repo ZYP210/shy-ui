@@ -28,6 +28,8 @@
         <slot name="searchExtra" v-bind="{ search: searchText }"></slot>
       </div>
     </div>
+
+    <slot name="appendHeader"></slot>
   </div>
 </template>
 <script lang="ts" setup>
