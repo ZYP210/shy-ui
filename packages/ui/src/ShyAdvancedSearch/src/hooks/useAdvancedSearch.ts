@@ -1,10 +1,9 @@
 import { computed, ComputedRef, unref } from 'vue'
 import type {
   AdvancedSearchType,
-  schemasAdvancedSearch,
-  ShyTableProps
-} from '../../../ShyTable/src/types/table'
-import { isBoolean, omit } from 'lodash-es'
+  SchemasAdvancedSearch
+} from '../types'
+import { omit } from 'lodash-es'
 import {
   FormActionType,
   RegisterFormFn,
@@ -19,34 +18,12 @@ import {
   STRING_OPERATOR_OPTIONS
 } from '../constant'
 import { NamePath } from 'ant-design-vue/lib/form/interface'
-import { isFunction } from 'xe-utils'
+import { isFunction } from 'lodash-es'
 
 export const useAdvancedSearch = (
-  propsRef: ComputedRef<ShyTableProps>,
+  schemas: ComputedRef<SchemasAdvancedSearch[]>,
   formActionType: FormActionType
 ): [RegisterFormFn, FormActionType] => {
-  const advancedSearchSchemas = computed<schemasAdvancedSearch[]>(() => {
-    return unref(propsRef)
-      .columns.filter(
-        (column) =>
-          column.dataIndex && !['action'].includes(column.dataIndex as string)
-      )
-      .map((column): schemasAdvancedSearch => {
-        return {
-          label: (column.title || column.customTitle) as string,
-          field: column.dataIndex! as string,
-          type: column?.advancedType || 'string',
-          component: column?.advancedComponent || 'Input',
-          componentProps: column?.advancedComponentProps || {},
-          sortShow: isBoolean(column?.sortShow) ? column.sortShow : true,
-          globalShow: isBoolean(column?.globalShow) ? column.globalShow : true,
-          advancedShow: isBoolean(column?.advancedShow)
-            ? column.advancedShow
-            : true
-        }
-      })
-  })
-
   const getSchemaOptions = (type: AdvancedSearchType) => {
     switch (type) {
       case 'number':
@@ -63,7 +40,7 @@ export const useAdvancedSearch = (
   }
 
   const advancedSchemas = computed<ShyFormSchema[]>(() => {
-    return unref(advancedSearchSchemas)
+    return unref(schemas)
       .filter((schema) => schema.advancedShow)
       .map((schema) => {
         const options = getSchemaOptions(schema.type)
@@ -113,7 +90,7 @@ export const useAdvancedSearch = (
 
   const maxAdvancedLabelWidth = computed(() => {
     const maxLabelLength = Math.max(
-      ...unref(advancedSearchSchemas).map((schema) => schema.label.length)
+      ...unref(schemas).map((schema) => schema.label.length)
     )
 
     return maxLabelLength * 14
@@ -129,8 +106,6 @@ export const useAdvancedSearch = (
   function onFieldValueChange(key: NamePath, value: any) {
     const [groupField, childField] = key as [string, string]
 
-    if (childField == 'value') return
-
     const { componentProps, label } = unref(advancedSchemas).find(
       (schema) => schema.field === groupField
     )!
@@ -140,12 +115,20 @@ export const useAdvancedSearch = (
     const values = methods.getFieldsValue()
     if (!values[groupField].operator) return
 
-    const { appendSchemaByField, removeSchemaByField, updateSchema } =
-      formActionType
     const {
-      schemas: [operatorSchema, valueSchema, positionSchema]
+      appendSchemaByField,
+      removeSchemaByField,
+      updateSchema,
+      setFieldsValue
+    } = formActionType
+    const {
+      schemas: [operatorSchema, valueSchema]
     } = componentProps! as {
       schemas: [ShyFormSchema, ShyFormSchema, ShyFormSchema]
+    }
+
+    if (childField === field) {
+      setFieldsValue({ [field]: value })
     }
 
     if (childField === 'operator') {
@@ -162,7 +145,11 @@ export const useAdvancedSearch = (
       value
         ? (async () => {
             await appendSchemaByField(
-              { ...omit(valueSchema, 'colProps'), label },
+              {
+                ...omit(valueSchema, 'colProps'),
+                label,
+                defaultValue: values[groupField][field]
+              },
               field
             )
             await appendSchemaByField(
@@ -183,8 +170,6 @@ export const useAdvancedSearch = (
           })()
         : removeSchemaByField([field, `${field}-op`])
     }
-
-    console.log(operatorSchema, valueSchema, positionSchema)
   }
 
   return [register, methods]

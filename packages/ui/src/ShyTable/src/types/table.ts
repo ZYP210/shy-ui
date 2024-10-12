@@ -4,6 +4,7 @@ import type { ComponentProps, ComponentType, FormProps } from '../../../ShyForm'
 import type { TableRowSelection as ITableRowSelection } from 'ant-design-vue/lib/table/interface'
 import type { ColumnProps } from 'ant-design-vue/lib/table'
 import { VueNode } from '@shy-plugins/utils'
+import { AdvancedSearchType } from '../../../ShyAdvancedSearch'
 //TODO enum
 // import { RoleEnum } from '/@/enums/roleEnum'
 
@@ -169,6 +170,7 @@ export interface TableSetting {
   setting?: boolean
   fullScreen?: boolean
   advancedSearch?: boolean
+  globalSearch?: boolean
   showMore?: boolean
 }
 
@@ -236,7 +238,6 @@ export interface ShyTableProps<T = any> {
   defSort?: Recordable
   // 使用搜索表单
   useSearchForm?: boolean
-  useAdvancedSearch?: boolean
   // 表单配置
   formConfig?: Partial<FormProps>
   // 列配置
@@ -498,13 +499,11 @@ export type ShyColumn = {
 
   slots?: Recordable
 
-  advancedType: AdvancedSearchType
+  advancedType?: AdvancedSearchType
 
-  advancedComponent: ComponentType
+  advancedComponent?: ComponentType
 
-  advancedComponentProps: ComponentProps
-
-  sortShow?: boolean
+  advancedComponentProps?: ComponentProps
 
   globalShow?: boolean
 
@@ -565,18 +564,6 @@ export interface InnerHandlers {
   onColumnsReset: () => void
 }
 
-export type AdvancedSearchType = 'number' | 'string' | 'date' | 'equal' | 'contain'
-
-export type schemasAdvancedSearch = {
-  label: string
-  field: string
-  type: AdvancedSearchType,
-  component: ComponentType
-  componentProps?: ComponentProps
-  sortShow?: boolean
-  globalShow?: boolean
-  advancedShow?: boolean
-}
 
 export type InfoSchema = {
   label: string

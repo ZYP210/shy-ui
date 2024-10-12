@@ -19,7 +19,7 @@ import { Col, Form, Row } from 'ant-design-vue'
 import FormItem from './components/FormItem'
 import FormAction from './components/FormAction.vue'
 import { dateItemType } from './helper'
-import { dateUtil, deepMerge, isFunction } from '@shy-plugins/utils'
+import { dateUtil } from '@shy-plugins/utils'
 import { useFormValues } from './hooks/useFormValues'
 import { useFormEvents } from './hooks/useFormEvents'
 import { createFormContext } from './hooks/useFormContext'
@@ -32,13 +32,21 @@ import {
   tableSearchColRef,
   defaultAntConfig
 } from './props'
-import { cloneDeep, set } from 'lodash-es'
 import { useGlobalConfig } from '../../../config/index'
-import { isEqual, omit, pick } from 'lodash-es'
-import { useDesign } from '@shy-plugins/use'
+import {
+  cloneDeep,
+  isBoolean,
+  isEqual,
+  omit,
+  pick,
+  set,
+  isFunction,
+  merge
+} from 'lodash-es'
+import { useDesign } from '@shy-plugins/use/web/useDesign'
 import { UpOutlined } from '@ant-design/icons-vue'
-import './style/index.less'
 import { formProps } from 'ant-design-vue/es/form'
+import './style/index.less'
 
 const ShyForm = defineComponent({
   props: shyFormBasicProps,
@@ -278,7 +286,7 @@ const ShyForm = defineComponent({
     )
 
     async function setProps(formProps: Partial<FormProps>): Promise<void> {
-      propsRef.value = deepMerge(unref(propsRef) || {}, formProps)
+      propsRef.value = merge(unref(propsRef) || {}, formProps)
     }
 
     function setFormModel(key: string, value: any) {
@@ -365,7 +373,46 @@ const ShyForm = defineComponent({
     const isShowFormCollapse = computed(
       () => allColSpanSum.value > unref(ROW_SLICE) + unref(ACTION_COL)
     )
+
     const getCurColSpan = (cur) => {
+      const getValues = () => {
+        const { mergeDynamicData } = unref(getProps)
+
+        return {
+          field: cur.field,
+          model: formModel,
+          values: {
+            ...mergeDynamicData,
+            ...unref(defaultValueRef),
+            ...formModel
+          } as Recordable,
+          schema: cur
+        }
+      }
+
+      const findShow = () => {
+        const { show, ifShow } = cur
+
+        let isShow = true
+        let isIfShow = true
+
+        if (isBoolean(show)) {
+          isShow = show
+        }
+        if (isBoolean(ifShow)) {
+          isIfShow = ifShow
+        }
+        if (isFunction(show)) {
+          isShow = show(getValues())
+        }
+        if (isFunction(ifShow)) {
+          isIfShow = ifShow(getValues())
+        }
+        return { isShow, isIfShow }
+      }
+      const { isShow, isIfShow } = findShow()
+      if (!isShow || !isIfShow) return 0
+
       if (!cur?.colProps?.span) {
         switch (cur.component) {
           case 'RangePicker':
@@ -437,7 +484,7 @@ const ShyForm = defineComponent({
 
       const renderItem = (schema) => {
         const realSpan =
-          (schema.colProps?.span ?? getBindValue.value?.baseColProps?.span) /
+          (schema.colProps?.span ?? unref(getBindValue)?.baseColProps?.span) /
           (unref(ROW_SLICE) + unref(ACTION_COL))
 
         return (
@@ -452,7 +499,7 @@ const ShyForm = defineComponent({
             class={{ [`${prefixCls}-table-form-item`]: isTableForm.value }}
             style={{
               [`--col-span`]: `${realSpan * 100}%`,
-              [`--w-gap`]: `${realSpan * getBindValue.value.gap}px`
+              [`--w-gap`]: `${realSpan * unref(getBindValue).gap}px`
             }}
           >
             {{

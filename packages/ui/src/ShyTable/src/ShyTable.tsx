@@ -3,7 +3,7 @@ import type {
   TableActionType,
   SizeType,
   ColumnChangeParam,
-  InnerHandlers
+  InnerHandlers,
 } from './types/table'
 import {
   Empty,
@@ -15,7 +15,7 @@ import {
 import { computed, defineComponent, nextTick, ref, toRaw, unref } from 'vue'
 import { useDesign } from '@shy-plugins/use'
 import { shyTableBasicProps } from './props'
-import { cloneDeep, omit } from 'lodash-es'
+import { cloneDeep, isBoolean, omit } from 'lodash-es'
 import { ShyForm, useShyForm } from '../../ShyForm'
 import { useGlobalConfig } from '../../../config/index'
 import { useTableForm } from './hooks/useShyTableForm'
@@ -37,6 +37,7 @@ import { isFunction, useDebounceFn } from '@vueuse/core'
 import ShyTableFooter from './components/ShyTableFooter'
 import './style/table.less'
 import { ShyInfo } from './components/ShyInfo'
+import { SchemasAdvancedSearch } from '../../ShyAdvancedSearch'
 
 const ShyTable = defineComponent({
   name: 'ShyTable',
@@ -106,10 +107,31 @@ const ShyTable = defineComponent({
       return omit(propsData, ['class', 'onChange', 'title'])
     })
 
+    const advancedSearchSchemas = computed<SchemasAdvancedSearch[]>(() => {
+      return unref(getProps)
+        .columns.filter(
+          (column) =>
+            column.dataIndex && !['action'].includes(column.dataIndex as string)
+        )
+        .map((column): SchemasAdvancedSearch => {
+          return {
+            label: (column.title || column.customTitle) as string,
+            field: column.dataIndex! as string,
+            type: column?.advancedType || 'string',
+            component: column?.advancedComponent || 'Input',
+            componentProps: column?.advancedComponentProps || {},
+            globalShow: isBoolean(column?.globalShow) ? column.globalShow : true,
+            advancedShow: isBoolean(column?.advancedShow)
+              ? column.advancedShow
+              : true
+          }
+        })
+    })
+
     const { getLoading, setLoading } = useLoading(getProps)
 
     const [registerForm, formActions] = useShyForm()
-    const [registerAdvanced, advanceActions] = useAdvancedSearch(getProps, formActions)
+    const [registerAdvanced, advanceActions] = useAdvancedSearch(advancedSearchSchemas, formActions)
 
     const setProps = (props: Partial<ShyTableProps>) => {
       innerPropsRef.value = { ...unref(innerPropsRef), ...props }

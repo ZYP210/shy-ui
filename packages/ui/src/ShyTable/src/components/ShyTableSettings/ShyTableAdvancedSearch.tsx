@@ -8,7 +8,7 @@ import { useTableContext } from '../../hooks/useShyTableContext'
 
 const ShyTableAdvancedSearch = defineComponent({
   emits: ['submit', 'reset'],
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     const { prefixCls } = useDesign('ant-table-advanced-search')
 
     const {
