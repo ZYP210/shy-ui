@@ -9,7 +9,6 @@ import { useDesign } from '@shy-plugins/use'
 import { ShyTag } from '../../ShyTag'
 import './descriptions.less'
 import Descriptions from './CustomDescriptions'
-
 export default defineComponent({
   name: 'ShyDescriptions',
   props: basicProps,
@@ -166,8 +165,12 @@ export default defineComponent({
           )
         case 'Group':
           return (
-            <Collapse class={`${prefixCls}-collapse`}>
-              <Collapse.Panel>
+            <Collapse class={`${prefixCls}-collapse`} bordered={false}>
+              <Collapse.Panel
+                v-slots={{
+                  header: () => <Divider {...componentProps}>{label}</Divider>
+                }}
+              >
                 {renderGroup(componentProps?.schemas)}
               </Collapse.Panel>
             </Collapse>

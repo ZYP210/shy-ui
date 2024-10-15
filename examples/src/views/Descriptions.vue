@@ -90,7 +90,7 @@ const schemas = [
       schemas: [
         {
           field: 'summary1',
-          label: '摘要1',
+          label: '测试',
           component: 'Group',
           componentProps: {
             schemas: [
