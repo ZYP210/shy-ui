@@ -1,11 +1,19 @@
 import { defineComponent, ref } from 'vue'
 import { Input, Popover } from 'ant-design-vue'
 import { SearchOutlined, AlignCenterOutlined } from '@ant-design/icons-vue'
+import { useDesign } from '@shy-plugins/use'
+import { ShyGlobalSearch } from '../../../../ShyAdvancedSearch'
 import { useTableContext } from '../../hooks/useShyTableContext'
 
-const ShyGlobalSearch = defineComponent({
-  setup() {
-    const { getBindValues } = useTableContext()
+const ShyTableGlobalSearch = defineComponent({
+  emits: ['submit', 'reset'],
+  setup(_, { emit }) {
+    const { prefixCls } = useDesign('ant-table-advanced-search')
+
+    const {
+      registerAdvanced,
+      advanceActions: { validate, resetFields }
+    } = useTableContext()
 
     const isVisibleGlobalSearch = ref(false)
 
@@ -17,6 +25,16 @@ const ShyGlobalSearch = defineComponent({
       timer.value = setTimeout(() => {}, 500)
     }
 
+    const handleSubmit = async () => {
+      const values = await validate()
+      emit('submit', values)
+    }
+
+    const handleReset = () => {
+      resetFields()
+      emit('reset')
+    }
+
     return () => {
       return (
         <span>
@@ -24,7 +42,15 @@ const ShyGlobalSearch = defineComponent({
             v-model:open={isVisibleGlobalSearch.value}
             trigger="click"
             v-slots={{
-              content: () => <span></span>
+              content: () => (
+                <div class={prefixCls}>
+                  <ShyGlobalSearch
+                    onRegister={registerAdvanced}
+                    onSubmit={handleSubmit}
+                    onReset={handleReset}
+                  />
+                </div>
+              )
             }}
             placement="bottomRight"
           >
@@ -55,4 +81,4 @@ const ShyGlobalSearch = defineComponent({
   }
 })
 
-export { ShyGlobalSearch }
+export { ShyTableGlobalSearch }

@@ -91,7 +91,6 @@ const handleColumnResize = (
       item.minWidth = minWidth
     }
   })
-
 }
 
 const handleChildren = (
@@ -339,11 +338,11 @@ export const useColumns = (
         if ((edit || editRow) && !isDefaultAction) {
           column.customRender = renderEditCell(column, tableAction.value)
         }
-        if (propsRef.value.useAdvancedSearch) {
+        if (unref(propsRef).tableSetting?.advancedSearch) {
           if (column.flag === 'INDEX' || column.flag === 'ACTION') {
             column.sorter = false
           } else {
-            column.sorter = column?.sorter === undefined ? true : column.sorter
+            column.sorter = isBoolean(column?.sorter) ? column.sorter : true
           }
         }
         return reactive<ShyColumn>(column)

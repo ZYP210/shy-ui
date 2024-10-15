@@ -27,11 +27,6 @@ const searchProps = {
   useSearchForm: {
     type: Boolean
   },
-  // 高级搜索
-  useAdvancedSearch: {
-    type: Boolean,
-    default: false
-  },
   isSortFetch: {
     type: Boolean,
     default: true

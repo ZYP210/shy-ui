@@ -4,7 +4,7 @@ import { useDesign } from '@shy-plugins/use'
 import { useTableContext } from '../hooks/useShyTableContext'
 import {
   ShyTableAdvancedSearch,
-  ShyGlobalSearch,
+  ShyTableGlobalSearch,
   ShyShowMore,
   ShyShowSearch,
   ShyTableColumn,
@@ -37,6 +37,7 @@ const ShyTableSetting = defineComponent({
         fullScreen: false,
         showMore: false,
         advancedSearch: false,
+        globalSearch: false,
         ...props.setting
       }
     })
@@ -54,21 +55,11 @@ const ShyTableSetting = defineComponent({
     }
 
     const renderGlobalSearch = computed(() => {
-      return getSetting.value.advancedSearch &&
-        getBindValues.value.columns.some((item) => {
-          return (
-            item.dataIndex !== 'action' &&
-            [true, undefined].includes(item.globalShow)
-          )
-        }) ? (
-        <ShyGlobalSearch />
-      ) : null
+      return getSetting.value.globalSearch ? <ShyTableGlobalSearch /> : null
     })
 
     const renderAdvancedSearch = computed(() => {
-      return getSetting.value.advancedSearch ? (
-        <ShyTableAdvancedSearch getPopupContainer={getTableContainer} />
-      ) : null
+      return getSetting.value.advancedSearch ? <ShyTableAdvancedSearch /> : null
     })
 
     const renderShowMore = computed(() => {
