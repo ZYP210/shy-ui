@@ -37,6 +37,7 @@ export * from './src/ShyContainer'
 export * from './src/Process'
 export * from './src/ShyTag'
 export * from './src/ShyLayoutContainer'
+export * from './src/Descriptions'
 
 import { registerGlobalConfig } from './config/index'
 

@@ -1,0 +1,64 @@
+@prefix-cls: ~'shy-basic-descriptions';
+
+.@{prefix-cls} {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  .ant-descriptions .ant-descriptions-view {
+    border-radius: unset !important;
+  }
+
+  &-collapse {
+    width: 100%;
+    border: none !important;
+    min-height: 32px;
+    padding: 8px 0;
+    width: 100%;
+    background-color: transparent;
+  
+
+      .ant-descriptions.ant-descriptions-bordered .ant-descriptions-view{
+        border-bottom: unset !important;
+      }
+
+      .ant-collapse-content-box{
+        padding: unset !important;
+        border-bottom: unset !important;
+      }
+
+  
+      .ant-collapse-expand-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 100;
+      }
+  
+      .ant-collapse-header {
+        position: relative;
+        width: 100%;
+  
+        &::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 0;
+          width: 100%;
+          transform: translateY(-50%);
+          border-bottom: 1px dashed var(--primary-5);
+        }
+      }
+  
+      .ant-collapse-header {
+        background: transparent !important;
+      }
+  
+      .ant-collapse-content,
+      .ant-collapse-item {
+        border: none !important;
+      }
+  }
+}
+
