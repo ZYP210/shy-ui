@@ -142,21 +142,48 @@ export default defineComponent({
       )
     }
 
-    const showRef = computed(() => {
+    const getShow = (
+      item: DescItem
+    ): { isShow: boolean; isIfShow: boolean } => {
+      const { show, ifShow } = item
+
+      let isShow = true
+      let isIfShow = true
+
+      if (isBoolean(show)) {
+        isShow = show
+      }
+      if (isBoolean(ifShow)) {
+        isIfShow = ifShow
+      }
+      if (isFunction(show)) {
+        isShow = show(unref(getValues)(item))
+      }
+      if (isFunction(ifShow)) {
+        isIfShow = ifShow(unref(getValues)(item))
+      }
+      return { isShow, isIfShow }
+    }
+
+    const getValues = computed(() => {
       return (item: DescItem) => {
-        return isBoolean(item?.ifShow) || isFunction(item?.ifShow)
-          ? isFunction(item.ifShow)
-            ? item.ifShow(unref(getProps).data)
-            : item.ifShow
-          : true
+        const { data } = unref(getProps)
+        return {
+          field: item.field,
+          model: data,
+          values: data as Recordable,
+          schema: item
+        }
       }
     })
 
     const renderDescriptionsItem = (item: DescItem) => {
       const { colProps } = item
-      const ifShow = unref(showRef)(item)
-      return ifShow ? (
+      const { isShow, isIfShow } = getShow(item)
+      if (!isIfShow) return null
+      return (
         <Descriptions.Item
+          v-show={isShow}
           label={renderLabel(item)}
           span={
             colProps?.span ||
@@ -167,7 +194,7 @@ export default defineComponent({
         >
           {renderValue(item)}
         </Descriptions.Item>
-      ) : null
+      )
     }
 
     const renderSchema = (group: DescItem[] | DescItem) => {
@@ -178,8 +205,9 @@ export default defineComponent({
           </Descriptions>
         )
       }
-      const ifShow = unref(showRef)(group)
-      if (!ifShow) return null
+
+      const { isShow, isIfShow } = getShow(group)
+      if (!isIfShow) return null
 
       const { componentProps, label, colProps } = group
       const flexBasis = `${
@@ -193,7 +221,11 @@ export default defineComponent({
       switch (componentProps?.groupType) {
         case 'Divider':
           return (
-            <div style={{ flexBasis }} class={`${prefixCls}-divider`}>
+            <div
+              style={{ flexBasis }}
+              class={`${prefixCls}-divider`}
+              v-show={isShow}
+            >
               <Divider {...componentProps}>{label}</Divider>
               <div class={`${prefixCls}-divider-content`}>
                 {renderGroup(componentProps?.schemas)}
@@ -202,7 +234,11 @@ export default defineComponent({
           )
         case 'Group':
           return (
-            <div style={{ flexBasis }} class={`${prefixCls}-group`}>
+            <div
+              style={{ flexBasis }}
+              class={`${prefixCls}-group`}
+              v-show={isShow}
+            >
               <Collapse class={`${prefixCls}-group-collapse`} bordered={false}>
                 <Collapse.Panel
                   v-slots={{
@@ -217,7 +253,11 @@ export default defineComponent({
         case 'Custom':
           const { CustomGroupComp } = componentProps
           return (
-            <div style={{ flexBasis }} class={`${prefixCls}-custom`}>
+            <div
+              style={{ flexBasis }}
+              class={`${prefixCls}-custom`}
+              v-show={isShow}
+            >
               <CustomGroupComp {...componentProps}>
                 {renderGroup(componentProps?.schemas)}
               </CustomGroupComp>
@@ -225,7 +265,11 @@ export default defineComponent({
           )
         case 'Origin':
           return (
-            <div style={{ flexBasis }} class={`${prefixCls}-origin`}>
+            <div
+              style={{ flexBasis }}
+              class={`${prefixCls}-origin`}
+              v-show={isShow}
+            >
               {renderGroup(componentProps?.schemas)}
             </div>
           )

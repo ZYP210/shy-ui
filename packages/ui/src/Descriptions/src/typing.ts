@@ -12,7 +12,8 @@ export interface DescItem {
   labelStyle?: CSSProperties
   contentStyle?: CSSProperties
   helpMessage?: string
-  ifShow?: Function
+  ifShow?: Function | boolean
+  show?: boolean | Function
 }
 
 export interface DescriptionProps {

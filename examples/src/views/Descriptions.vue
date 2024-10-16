@@ -30,6 +30,7 @@ const schemas = [
     field: 'faultLocation',
     label: '故障地点',
     component: 'Select',
+    ifShow: false,
     required: true,
     render: () => h(Tag, { color: 'blue' }, '自定义'),
     helpMessage: '故障地点',
