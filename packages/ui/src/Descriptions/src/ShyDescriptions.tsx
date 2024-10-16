@@ -74,7 +74,7 @@ export default defineComponent({
           field: data[`${field}`]
         })
       } else if (render && isFunction(render)) {
-        return render(data)
+        return render(unref(getValues)(item))
       } else if (summaryTotalFields?.length) {
         return handleValuePrecision(item, data)
       } else if (componentProps?.options) {
