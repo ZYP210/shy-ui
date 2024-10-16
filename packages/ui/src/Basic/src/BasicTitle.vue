@@ -56,7 +56,7 @@ const getClass = computed(() => [
   font-family: PingFangSC, PingFang SC;
   font-weight: bold;
   font-size: 14px;
-  color: var(--gray-9);
+  color: var(--text-color);
   line-height: 20px;
   padding: 0 0 0 10px;
   margin: 10px 0;

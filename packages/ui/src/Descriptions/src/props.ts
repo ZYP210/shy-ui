@@ -1,7 +1,7 @@
 import { PropType, reactive } from 'vue'
 import { DescItem } from './typing'
 
-export const basicColProps = 12
+export const basicColProps = 6
 export const basicRowProps = 24
 
 export const basicProps = reactive({
@@ -23,7 +23,7 @@ export const basicProps = reactive({
   },
   labelWidth: {
     type: Number as PropType<number | string>,
-    default: 80
+    default: 100
   },
   isShowColon: {
     type: Boolean,
@@ -37,12 +37,18 @@ export const basicProps = reactive({
     type: Boolean,
     default: () => false
   },
-  customRender: {
+  render: {
     type: Object,
     default: () => null
   },
   mode: {
     type: String as PropType<'vertical| horizontal'>,
     default: () => 'horizontal'
+  },
+  baseColProps: {
+    type: Object,
+    default: () => ({
+      span: basicColProps
+    })
   }
 })

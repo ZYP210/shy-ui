@@ -6,7 +6,7 @@ import type {
 import { error, getDynamicProps } from '@shy-plugins/utils'
 import { ref, unref, onUnmounted, watch, nextTick } from 'vue'
 
-export function useDescription(
+export function useShyDescriptions(
   props?: Partial<DescriptionProps>
 ): UseDescReturnType {
   const descRef = ref<Nullable<DescInstance>>(null)
@@ -15,7 +15,7 @@ export function useDescription(
     const desc = unref(descRef)
     if (!desc) {
       error(
-        'useDescription() can only be used inside setup() or functional components!'
+        'useShyDescriptions() can only be used inside setup() or functional components!'
       )
     }
     await nextTick()
@@ -48,14 +48,6 @@ export function useDescription(
     setDescProps: async (descProps: Partial<DescriptionProps>) => {
       const desc = await getDescription()
       desc?.setDescProps(descProps)
-    },
-    getFieldsValue: async () => {
-      const desc = await getDescription()
-      return desc?.getFieldsValue()
-    },
-    setFieldsValue: async (form) => {
-      const desc = await getDescription()
-      return desc?.setFieldsValue(form)
     }
   }
 

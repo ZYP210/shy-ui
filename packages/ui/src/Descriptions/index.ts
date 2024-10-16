@@ -1,6 +1,6 @@
 import { withInstall } from '@shy-plugins/utils'
-import Descriptions from './src/Descriptions'
-import { useDescription as useShyDescriptions } from './src/useDescriptions'
+import Descriptions from './src/ShyDescriptions'
+import {useShyDescriptions } from './src/useShyDescriptions'
 
 export const ShyDescriptions = withInstall(Descriptions)
 export { useShyDescriptions }

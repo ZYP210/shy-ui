@@ -1,23 +1,125 @@
-@prefix-cls: ~'shy-basic-descriptions';
+@prefix-cls: ~'@{namespace}-basic-descriptions';
 
 .@{prefix-cls} {
   display: flex;
   flex-direction: column;
   gap: 8px;
 
-  &-collapse {
-    background: transparent;
+  .group {
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
+  }
 
-    .ant-collapse-header.ant-collapse-header {
-      align-items: center;
-      background: var(--gray-1);
-      padding: 0 8px;
-      border-radius: 4px !important;
-    }
-
-    .ant-collapse-content-box.ant-collapse-content-box {
-      padding: 8px 0;
+  &-divider {
+    .group;
+    flex-direction: column;
+    &-content {
+      display: flex;
+      width: 100%;
     }
   }
-}
 
+  &-group {
+    .group;
+    &-collapse {
+      background: transparent;
+      width: 100%;
+
+      .ant-collapse-header.ant-collapse-header {
+        align-items: center;
+        background: var(--gray-1);
+        padding: 0 8px;
+        border-radius: 4px !important;
+      }
+
+      .ant-collapse-content-box.ant-collapse-content-box {
+        padding: 8px 0;
+      }
+    }
+  }
+
+  &-custom {
+    .group;
+  }
+
+  &-origin {
+    .group;
+  }
+
+  &-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+    overflow: auto;
+    border-radius: 4px;
+    margin: 8px;
+    width: calc(100% - 16px);
+  }
+
+  &-wrapper-bordered {
+    border-top: 1px solid var(--gray-2);
+    border-left: 1px solid var(--gray-2);
+
+    .@{prefix-cls} {
+      &row:last-child {
+        border-bottom: 0 !important;
+      }
+
+      &-label {
+        align-items: center;
+        border-right: 1px solid var(--gray-2);
+        border-bottom: 1px solid var(--gray-2);
+        background: var(--gray-0);
+
+        &-help {
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+        }
+      }
+
+      &-value {
+        align-items: center;
+        background-color: var(--theme);
+        border-right: 1px solid var(--gray-2);
+        border-bottom: 1px solid var(--gray-2);
+      }
+    }
+  }
+
+  &-label {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+    flex: none;
+    font-family: PingFangSC, PingFang SC;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--text-color);
+    line-height: 20px;
+    font-style: normal;
+    padding: 10px 12px;
+    box-sizing: border-box;
+  }
+
+  &-value {
+    display: flex;
+    flex: auto;
+    overflow-wrap: anywhere;
+    font-family: PingFangSC, PingFang SC;
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--text-color);
+    line-height: 20px;
+    text-align: left;
+    font-style: normal;
+    padding: 10px 12px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  &-row {
+    .group;
+  }
+}

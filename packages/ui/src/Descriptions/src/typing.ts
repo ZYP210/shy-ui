@@ -5,7 +5,8 @@ export interface DescItem {
   colProps?: {
     span: number
   }
-  component?: 'Divider' | 'Group' | 'Custom'
+  groupType?: 'Divider' | 'Group' | 'Custom' | 'Origin'
+  component?: string
   componentProps: Recordable
   isCopy?: boolean
   labelStyle?: CSSProperties
@@ -30,8 +31,6 @@ export interface DescriptionProps {
 
 export interface DescInstance {
   setDescProps(descProps: Partial<DescriptionProps>): void
-  getFieldsValue(): void
-  setFieldsValue(form): void
 }
 
 export type Register = (descInstance: DescInstance) => void

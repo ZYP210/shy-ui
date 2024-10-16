@@ -60,7 +60,7 @@ export default defineComponent({
           if (getProps.value.bordered) {
             return { justifyContent: 'center' }
           } else {
-            return { justifyContent: 'flex-end' }
+            return { justifyContent: 'flex-start' }
           }
       }
     })
