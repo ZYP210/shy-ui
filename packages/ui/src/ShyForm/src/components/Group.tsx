@@ -4,7 +4,7 @@ import { FormSchema } from '../types/form'
 import FormItem from './FormItem'
 import { dateItemType } from '../helper'
 import { dateUtil } from '@shy-plugins/utils'
-import { cloneDeep, isFunction, pick } from 'lodash-es'
+import { cloneDeep, isArray, isFunction, pick } from 'lodash-es'
 import { Col, Row, Collapse, CollapsePanel } from 'ant-design-vue'
 import { useDesign } from '@shy-plugins/use'
 import { ROW_SLICE, ACTION_COL } from '../props'
@@ -93,7 +93,12 @@ const Group = defineComponent({
           schema={{
             ...schema,
             field: props.groupInObject
-              ? [props.schema.field, schema.field]
+              ? [
+                  ...(isArray(props.schema.field)
+                    ? props.schema.field
+                    : [props.schema.field]),
+                  schema.field
+                ]
               : schema.field
           }}
         ></FormItem>

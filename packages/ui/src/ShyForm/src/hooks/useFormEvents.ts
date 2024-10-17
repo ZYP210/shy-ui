@@ -70,23 +70,25 @@ export function useFormEvents({
    * @description: Set form value
    */
   async function setFieldsValue(values: Recordable): Promise<void> {
-    const fields = unref(getSchema)
-      .flatMap((item) => {
-        const { componentProps } = item || {}
-        let _props = componentProps as any
-        if (typeof componentProps === 'function') {
-          _props = _props({ formModel })
-        }
+    const treeExpandField = (schemas: FormSchema[]) => {
+      return schemas
+        .flatMap((item) => {
+          const { componentProps } = item || {}
+          let _props = componentProps as any
+          if (typeof componentProps === 'function') {
+            _props = _props({ formModel })
+          }
 
-        if (item.component === 'Group' && !_props.groupInObject) {
-          return _props.schemas.map((ele) => {
-            return ele.field
-          })
-        }
+          if (item.component === 'Group' && !_props.groupInObject) {
+            return treeExpandField(_props.schemas)
+          }
 
-        return item.field
-      })
-      .filter(Boolean)
+          return item.field
+        })
+        .filter(Boolean)
+    }
+
+    const fields = treeExpandField(unref(getSchema))
 
     // key 支持 a.b.c 的嵌套写法
     const delimiter = '.'

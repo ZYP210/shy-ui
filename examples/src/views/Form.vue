@@ -59,46 +59,46 @@ const bindCol = [
     title: '产品编号',
     dataIndex: 'productCode',
     width: 100,
-    type: 'text',
+    type: 'text'
   },
   {
     title: '产品名称',
     dataIndex: 'productName',
     width: 100,
-    type: 'text',
+    type: 'text'
   },
 
   {
     title: '单位',
     dataIndex: 'unitName',
     width: 50,
-    type: 'text',
+    type: 'text'
   },
   {
     title: '金额',
     dataIndex: 'price',
     width: 100,
-    type: 'text',
+    type: 'text'
   },
   {
     title: '数量',
     dataIndex: 'storageNum',
     width: 60,
-    type: 'text',
+    type: 'text'
   },
   {
     title: '单价',
     dataIndex: 'unitPrice',
     width: 100,
-    type: 'text',
+    type: 'text'
   },
   {
     title: '规格型号',
     dataIndex: 'modelType',
     width: 100,
-    type: 'text',
-  },
-];
+    type: 'text'
+  }
+]
 
 const schemas = ref<ShyFormSchema[]>([
   {
@@ -106,15 +106,30 @@ const schemas = ref<ShyFormSchema[]>([
     field: '-',
     component: 'Group',
     componentProps: {
+      // groupInObject: false,
       // CustomGroupComp: BasicTitle,
       // groupType: 'Custom',
       schemas: [
         {
-          label: '入库单',
-          field: 'refReceiptTicketDetailIds',
-          helpMessage: ['请先选择合同编号'],
-          component: 'ApiSelect',
-          colProps: { span: 6 }
+          field: '---',
+          label: '1111',
+          component: 'Group',
+          componentProps: ({ formModel }) => {
+            // console.log('formModel', formModel)
+
+            return {
+              // groupInObject: false,
+              schemas: [
+                {
+                  label: '入库单',
+                  field: 'refReceiptTicketDetailIds',
+                  helpMessage: ['请先选择合同编号'],
+                  component: 'ApiSelect',
+                  colProps: { span: 24 }
+                }
+              ]
+            }
+          }
         },
         {
           label: '',
@@ -705,7 +720,13 @@ const handleReset = () => {
 
 onMounted(() => {
   setFieldsValue({
-    Table: [{ c: 1, d: 2, e: 3 }]
+    Table: [{ c: 1, d: 2, e: 3 }],
+    '-': {
+      '---': {
+        refReceiptTicketDetailIds: 127128917298
+      }
+    },
+    refReceiptTicketDetailIds: 127128917298
   })
   // setTimeout(() => {
   //   setFieldsValue({
