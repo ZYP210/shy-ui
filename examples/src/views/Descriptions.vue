@@ -7,9 +7,7 @@
 <script lang="ts" setup>
 import { ShyDescriptions, useShyDescriptions } from '3h1-ui'
 import BasicTitle from './BasicTitle.vue'
-
 import { h, render } from 'vue'
-import { Tag } from 'ant-design-vue'
 import { colProps } from 'ant-design-vue/es/grid/Col'
 import { commentProps } from 'ant-design-vue/es/comment'
 const mockData: any = {
@@ -27,24 +25,15 @@ const mockData: any = {
 
 const schemas = [
   {
-    field: 'faultLocation',
-    label: '故障地点',
-    component: 'Select',
-    ifShow: false,
-    required: true,
-    render: () => h(Tag, { color: 'blue' }, '自定义'),
-    helpMessage: '故障地点',
-    componentProps: {
-      // options: getDictOptions(DICT_TYPE.FAULT_LOCATION)
-    }
-  },
-  {
     field: 'faultType',
     label: '故障类型',
     component: 'Select',
     required: true,
+    colProps: {
+      span: 8
+    },
     componentProps: {
-      // options: getDictOptions(DICT_TYPE.FAULT_TYPE)
+      options: [{ label: '22', value: 22 }]
     }
   },
   {
@@ -52,8 +41,11 @@ const schemas = [
     label: '故障层级',
     component: 'Select',
     required: true,
+    colProps: {
+      span: 8
+    },
     componentProps: {
-      // options: getDictOptions(DICT_TYPE.BIZ_FAULT_LEVEL)
+      options: [{ label: '22', value: 22 }]
     }
   },
   {
@@ -61,8 +53,11 @@ const schemas = [
     label: '任务大类',
     component: 'Select',
     required: true,
+    colProps: {
+      span: 8
+    },
     componentProps: {
-      // options: getDictOptions(DICT_TYPE.TASK_TYPE)
+      options: [{ label: '22', value: 22 }]
     }
   },
   {
@@ -248,7 +243,7 @@ const schemas = [
     component: 'Input',
     required: true,
     colProps: {
-      span: 6
+      span: 4
     }
   },
   {
@@ -257,7 +252,7 @@ const schemas = [
     component: 'Input',
     required: true,
     colProps: {
-      span: 6
+      span: 4
     }
   },
   {
@@ -266,15 +261,31 @@ const schemas = [
     component: 'Input',
     required: true,
     colProps: {
-      span: 6
+      span: 4
     }
   },
   {
     field: 'faultHandleUser',
-    label: '故障处理人',
+    label: '故障处理人1',
     component: 'Input',
     colProps: {
-      span: 6
+      span: 4
+    }
+  },
+  {
+    field: 'faultHandleUser',
+    label: '故障处理人2',
+    component: 'Input',
+    colProps: {
+      span: 4
+    }
+  },
+  {
+    field: 'faultHandleUser',
+    label: '故障处理人3',
+    component: 'Input',
+    colProps: {
+      span: 4
     }
   },
   {
@@ -359,8 +370,7 @@ const schemas = [
           component: 'Input',
           colProps: {
             span: 6
-          },
-          labelStyle: { width: '250px' }
+          }
         },
         {
           field: 'systemEffect',
@@ -373,7 +383,21 @@ const schemas = [
       ]
     }
   },
-
+  // {
+  //   field: 'fileUrl',
+  //   label: '故障维修附件',
+  //   component: 'Input',
+  //   render: ({ model, field }) => {
+  //     return h(ImgUpload, {
+  //       isView: model.isView,
+  //       value: model[field],
+  //       'onUpdate:value': (val) => {
+  //         model[field] = val;
+  //       },
+  //     });
+  //   },
+  //   colProps: { span: 24 },
+  // },
   {
     label: '故障详细信息',
     field: 'field3',
@@ -396,14 +420,6 @@ const schemas = [
             groupType: 'Origin',
             groupInObject: false,
             schemas: [
-              {
-                field: 'zzz',
-                label: '222',
-                component: 'Input',
-                colProps: {
-                  span: 24
-                }
-              },
               {
                 field: 'faultPhenomenonDescription',
                 label: '故障现象描述',
@@ -441,28 +457,6 @@ const schemas = [
                 field: 'faultImproveStep',
                 label: '故障改进措施',
                 component: 'InputTextArea',
-                colProps: {
-                  span: 24
-                }
-              }
-            ]
-          }
-        },
-        {
-          label: '',
-          field: 'rightGroup',
-          component: 'Group',
-          colProps: {
-            span: 8
-          },
-          componentProps: {
-            groupInObject: false,
-            groupType: 'Origin',
-            schemas: [
-              {
-                field: 'autoFill',
-                label: '',
-                component: 'Input',
                 colProps: {
                   span: 24
                 }

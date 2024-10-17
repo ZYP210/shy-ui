@@ -4,7 +4,7 @@ import { basicProps, basicRowProps, basicColProps } from './props'
 import { Collapse } from 'ant-design-vue'
 import type { CSSProperties } from 'vue'
 import { BasicTitle as Divider, BasicHelp } from '../../Basic'
-
+import { pick } from 'lodash-es'
 import {
   isBoolean,
   isFunction,
@@ -199,8 +199,9 @@ export default defineComponent({
 
     const renderSchema = (group: DescItem[] | DescItem) => {
       if (isArray(group)) {
+        const props = pick(unref(getProps), ['bordered'])
         return (
-          <Descriptions {...unref(getProps)}>
+          <Descriptions {...props}>
             {group.map((schema: DescItem) => renderDescriptionsItem(schema))}
           </Descriptions>
         )

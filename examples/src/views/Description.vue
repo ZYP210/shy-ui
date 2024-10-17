@@ -64,6 +64,57 @@ const schema: any[] = [
     required: true
   },
   {
+    field: 'faultModel',
+    label: '故障模式',
+    component: 'Input',
+    required: true,
+    colProps: {
+      span: 4
+    }
+  },
+  {
+    field: 'faultReason',
+    label: '故障原因',
+    component: 'Input',
+    required: true,
+    colProps: {
+      span: 4
+    }
+  },
+  {
+    field: 'faultExcludeWay',
+    label: '故障排除方式',
+    component: 'Input',
+    required: true,
+    colProps: {
+      span: 4
+    }
+  },
+  {
+    field: 'faultHandleUser',
+    label: '故障处理人1',
+    component: 'Input',
+    colProps: {
+      span: 4
+    }
+  },
+  {
+    field: 'faultHandleUser',
+    label: '故障处理人2',
+    component: 'Input',
+    colProps: {
+      span: 4
+    }
+  },
+  {
+    field: 'faultHandleUser',
+    label: '故障处理人3',
+    component: 'Input',
+    colProps: {
+      span: 4
+    }
+  },
+  {
     field: 'summary',
     label: '合计',
     colProps: { span: 8 },

@@ -1,4 +1,4 @@
-import { defineComponent, SlotsType } from 'vue'
+import { defineComponent, SlotsType, VNode } from 'vue'
 import type { App } from 'vue'
 import { basicRowProps } from './props'
 import { useDesign } from '@shy-plugins/use'
@@ -7,7 +7,7 @@ const { prefixCls } = useDesign('basic-descriptions')
 const DescriptionsItem = defineComponent({
   name: 'DescriptionsItem',
   props: {
-    label: String,
+    label: Object as PropType<VNode | string>,
     span: Number,
     mode: String
   },
