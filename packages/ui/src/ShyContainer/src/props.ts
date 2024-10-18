@@ -58,6 +58,10 @@ export const shyContainerProps = reactive({
   navBars: {
     type: Array,
     default: () => []
+  },
+  pageHeader: {
+    type: String as PropType<'flag' | 'arrow'>,
+    default: 'flag'
   }
 })
 

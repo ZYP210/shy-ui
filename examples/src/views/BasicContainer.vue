@@ -5,6 +5,12 @@
     @cancel="handleCancel"
     @submit="handleSubmit"
     @route-change="changePath"
+    title="zzz"
+    :navBars="[
+      { name: '的饭卡手机号', path: '111' },
+      { name: '速度速度', path: '111' }
+    ]"
+    pageHeader="arrow"
   >
     <template #extra> 11111 </template>
     <div>
@@ -21,8 +27,9 @@
 import { Button } from 'ant-design-vue'
 import { ShyContainer, BasicContainer } from '3h1-ui'
 import { ShyTable } from '3h1-ui'
-
-const handleCancel = () => {}
+const handleCancel = () => {
+  console.log('333s')
+}
 
 const handleSubmit = async () => {
   await new Promise((resolve) => {

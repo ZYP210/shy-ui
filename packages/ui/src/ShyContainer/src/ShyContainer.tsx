@@ -4,7 +4,7 @@ import { defineComponent, computed, unref } from 'vue'
 import { shyContainerProps } from './props'
 import { useDesign } from '@shy-plugins/use'
 import './style/container.less'
-import { Breadcrumb } from 'ant-design-vue'
+import { Breadcrumb, PageHeader } from 'ant-design-vue'
 const BreadcrumbItem = Breadcrumb.Item
 
 export default defineComponent({
@@ -31,16 +31,60 @@ export default defineComponent({
       return str[0].toUpperCase() + str.slice(1)
     }
 
-    const getHeader = () => {
+    const getNavBar = () => {
       return (
-        <div class={`${prefixCls}-header`}>
-          <div class={`${prefixCls}-header-title`}>
-            <FlagFilled class={`${prefixCls}-header-title-icon`} />
-            <div class={`${prefixCls}-header-title-text`}>{props.title}</div>
-          </div>
-          <div class={`${prefixCls}-header-extra`}>{slots?.extra?.()}</div>
-        </div>
+        <Breadcrumb class={`${prefixCls}-nav`}>
+          {props.navBars.map((item: any) => {
+            return (
+              <BreadcrumbItem>
+                {item.path ? (
+                  <router-link
+                    to={item.path}
+                    onClick={() => emit('route-change', item)}
+                  >
+                    {item.name}
+                  </router-link>
+                ) : (
+                  <span>{item.name}</span>
+                )}
+              </BreadcrumbItem>
+            )
+          })}
+        </Breadcrumb>
       )
+    }
+
+    const flagHeader = () => {
+      return (
+        <>
+          {props.navBars.length ? getNavBar() : null}
+          <div class={`${prefixCls}-header`}>
+            <div class={`${prefixCls}-header-title`}>
+              <FlagFilled class={`${prefixCls}-header-title-icon`} />
+              <div class={`${prefixCls}-header-title-text`}>{props.title}</div>
+            </div>
+            <div class={`${prefixCls}-header-extra`}>{slots?.extra?.()}</div>
+          </div>
+        </>
+      )
+    }
+
+    const getHeader = () => {
+      if (slots?.header) return slots?.header()
+      switch (props.pageHeader) {
+        case 'flag':
+          return flagHeader()
+        case 'arrow':
+          return (
+            <PageHeader
+              {...props}
+              onBack={props.onCancel}
+              v-slots={slots}
+            ></PageHeader>
+          )
+        default:
+          return null
+      }
     }
 
     const getContent = () => {
@@ -86,33 +130,9 @@ export default defineComponent({
       )
     }
 
-    const getNavBar = () => {
-      return props.navBars.length ? (
-        <Breadcrumb class={`${prefixCls}-nav`}>
-          {props.navBars.map((item: any) => {
-            return (
-              <BreadcrumbItem>
-                {item.path ? (
-                  <router-link
-                    to={item.path}
-                    onClick={() => emit('route-change', item)}
-                  >
-                    {item.name}
-                  </router-link>
-                ) : (
-                  <span>{item.name}</span>
-                )}
-              </BreadcrumbItem>
-            )
-          })}
-        </Breadcrumb>
-      ) : null
-    }
-
     return () => {
       return (
         <div class={prefixCls}>
-          {getNavBar()}
           {props.isShowHeader && props.title ? getHeader() : null}
           {getContent()}
           {props.isShowFooter ? getFooter() : null}

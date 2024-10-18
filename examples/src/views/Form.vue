@@ -26,34 +26,36 @@ import { h, onMounted } from 'vue'
 import { ref } from 'vue'
 import { theme } from 'ant-design-vue'
 import BasicTitle from './BasicTitle.vue'
+import { commentProps } from 'ant-design-vue/es/comment'
 
 const { useToken } = theme
 const { token } = useToken()
 
-const handlePush = () => {
-  setFieldsValue({
-    // zzz: {
-    //   Table: Array.from({ length: 1 }, (_, i) => {
-    //     return {
-    //       a: 1,
-    //       b: 2,
+// const handlePush = () => {
+//   setFieldsValue({
+//     faultDate: '2021-09-01',
+//     // zzz: {
+//     //   Table: Array.from({ length: 1 }, (_, i) => {
+//     //     return {
+//     //       a: 1,
+//     //       b: 2,
 
-    //       c: 4,
-    //       d: ''
-    //     }
-    //   })
-    // },
-    Table: Array.from({ length: 1 }, (_, i) => {
-      return {
-        a: 1,
-        b: 2,
+//     //       c: 4,
+//     //       d: ''
+//     //     }
+//     //   })
+//     // },
+//     Table: Array.from({ length: 1 }, (_, i) => {
+//       return {
+//         a: 1,
+//         b: 2,
 
-        c: 4,
-        d: ''
-      }
-    })
-  })
-}
+//         c: 4,
+//         d: ''
+//       }
+//     })
+//   })
+// }
 const bindCol = [
   {
     title: '产品编号',
@@ -106,30 +108,27 @@ const schemas = ref<ShyFormSchema[]>([
     field: '-',
     component: 'Group',
     componentProps: {
-      // groupInObject: false,
+      groupInObject: false,
       // CustomGroupComp: BasicTitle,
       // groupType: 'Custom',
       schemas: [
         {
-          field: '---',
-          label: '1111',
-          component: 'Group',
-          componentProps: ({ formModel }) => {
-            // console.log('formModel', formModel)
-
-            return {
-              // groupInObject: false,
-              schemas: [
-                {
-                  label: '入库单',
-                  field: 'refReceiptTicketDetailIds',
-                  helpMessage: ['请先选择合同编号'],
-                  component: 'ApiSelect',
-                  colProps: { span: 24 }
-                }
-              ]
-            }
+          field: 'faultDate',
+          label: '故障通知日期',
+          component: 'DatePicker',
+          componentProps: {
+            valueFormat: 'YYYY-MM-DD'
+          },
+          colProps: {
+            span: 6
           }
+        },
+        {
+          label: '入库单',
+          field: 'refReceiptTicketDetailIds',
+          helpMessage: ['请先选择合同编号'],
+          component: 'ApiSelect',
+          colProps: { span: 6 }
         },
         {
           label: '',
@@ -339,6 +338,11 @@ const schemas = ref<ShyFormSchema[]>([
       }
     },
     colProps: { span: 24 }
+  },
+  {
+    label: 'zyp',
+    field: 'zyp',
+    component: 'DatePicker'
   },
   {
     label: '关联商机',
@@ -720,13 +724,8 @@ const handleReset = () => {
 
 onMounted(() => {
   setFieldsValue({
-    Table: [{ c: 1, d: 2, e: 3 }],
-    '-': {
-      '---': {
-        refReceiptTicketDetailIds: 127128917298
-      }
-    },
-    refReceiptTicketDetailIds: 127128917298
+    faultDate: '2024-01-01',
+    Table: [{ c: 1, d: 2, e: 3 }]
   })
   // setTimeout(() => {
   //   setFieldsValue({
