@@ -58,13 +58,17 @@ export default defineComponent({
       return (
         <>
           {props.navBars.length ? getNavBar() : null}
-          <div class={`${prefixCls}-header`}>
-            <div class={`${prefixCls}-header-title`}>
-              <FlagFilled class={`${prefixCls}-header-title-icon`} />
-              <div class={`${prefixCls}-header-title-text`}>{props.title}</div>
+          {props.title ? (
+            <div class={`${prefixCls}-header`}>
+              <div class={`${prefixCls}-header-title`}>
+                <FlagFilled class={`${prefixCls}-header-title-icon`} />
+                <div class={`${prefixCls}-header-title-text`}>
+                  {props.title}
+                </div>
+              </div>
+              <div class={`${prefixCls}-header-extra`}>{slots?.extra?.()}</div>
             </div>
-            <div class={`${prefixCls}-header-extra`}>{slots?.extra?.()}</div>
-          </div>
+          ) : null}
         </>
       )
     }
@@ -133,7 +137,7 @@ export default defineComponent({
     return () => {
       return (
         <div class={prefixCls}>
-          {props.isShowHeader && props.title ? getHeader() : null}
+          {props.isShowHeader ? getHeader() : null}
           {getContent()}
           {props.isShowFooter ? getFooter() : null}
         </div>

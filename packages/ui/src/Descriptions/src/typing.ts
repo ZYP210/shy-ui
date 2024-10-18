@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'vue'
+import { ComponentType } from '../../ShyForm'
 export interface DescItem {
   label: string
   field: string
@@ -6,7 +7,7 @@ export interface DescItem {
     span: number
   }
   groupType?: 'Divider' | 'Group' | 'Custom' | 'Origin'
-  component?: string
+  component?: ComponentType
   componentProps: Recordable
   isCopy?: boolean
   labelStyle?: CSSProperties

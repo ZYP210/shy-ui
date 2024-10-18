@@ -96,7 +96,22 @@ export function useFormEvents({
 
     const validKeys: string[] = []
     Object.keys(values).forEach((key) => {
-      const schema = unref(getSchema).find((item) => item.field === key)
+      const treeExpandSchema = (schemas: FormSchema[]) => {
+        return schemas.flatMap((item) => {
+          const { componentProps } = item || {}
+          let _props = componentProps as any
+          if (typeof componentProps === 'function') {
+            _props = _props({ formModel })
+          }
+
+          if (item.component === 'Group' && !_props.groupInObject) {
+            return treeExpandSchema(_props.schemas)
+          }
+          return item
+        })
+      }
+      const schemas = treeExpandSchema(unref(getSchema))
+      const schema = schemas.find((item) => item.field === key)
       let value = values[key]
 
       const hasKey = Reflect.has(values, key)
@@ -105,7 +120,7 @@ export function useFormEvents({
       // 0| '' is allow
       if (hasKey && fields.includes(key)) {
         // time type
-        if (itemIsDateType(key)) {
+        if (itemIsDateType(key, schemas)) {
           if (Array.isArray(value)) {
             const arr: any[] = []
             for (const ele of value) {
@@ -317,8 +332,11 @@ export function useFormEvents({
   /**
    * @description: Is it time
    */
-  function itemIsDateType(key: string) {
-    return unref(getSchema).some((item) => {
+  function itemIsDateType(
+    key: string,
+    schema: FormSchema[] = unref(getSchema)
+  ) {
+    return schema.some((item) => {
       return item.field === key ? dateItemType.includes(item.component) : false
     })
   }

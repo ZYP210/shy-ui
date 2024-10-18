@@ -724,7 +724,7 @@ const handleReset = () => {
 
 onMounted(() => {
   setFieldsValue({
-    faultDate: '2024-01-01',
+    faultDate: new Date().getTime(),
     Table: [{ c: 1, d: 2, e: 3 }]
   })
   // setTimeout(() => {

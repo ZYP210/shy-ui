@@ -5,12 +5,12 @@
     @cancel="handleCancel"
     @submit="handleSubmit"
     @route-change="changePath"
+    pageHeader="arrow"
     title="zzz"
     :navBars="[
       { name: '的饭卡手机号', path: '111' },
       { name: '速度速度', path: '111' }
     ]"
-    pageHeader="arrow"
   >
     <template #extra> 11111 </template>
     <div>

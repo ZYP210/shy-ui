@@ -11,6 +11,7 @@ import { h, render } from 'vue'
 import { colProps } from 'ant-design-vue/es/grid/Col'
 import { commentProps } from 'ant-design-vue/es/comment'
 const mockData: any = {
+  zyp: new Date().getTime(),
   username: 'test',
   summary: '1111',
   summary1: 888888,
@@ -20,21 +21,15 @@ const mockData: any = {
   addr: '1',
   sex: '男',
   certy: '2',
-  tag: 'orange'
+  tag: 'orange',
+  faultDiscoveryProcess: '3333'
 }
 
 const schemas = [
   {
-    field: 'faultType',
+    field: 'zyp',
     label: '故障类型',
-    component: 'Select',
-    required: true,
-    colProps: {
-      span: 8
-    },
-    componentProps: {
-      options: [{ label: '22', value: 22 }]
-    }
+    component: 'DatePicker'
   },
   {
     field: 'faultLevel',
@@ -469,7 +464,7 @@ const schemas = [
   }
 ]
 
-const [register] = useShyDescriptions({
+const [register, { setDescProps }] = useShyDescriptions({
   data: mockData,
   schemas,
   isShowColon: true,
@@ -480,6 +475,6 @@ const [register] = useShyDescriptions({
   bordered: true
 })
 onMounted(() => {
-  // setDescProps({ data: mockData, labelWidth: 110 })
+  setDescProps({ data: mockData, labelWidth: 110 })
 })
 </script>

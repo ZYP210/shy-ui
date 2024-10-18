@@ -5,12 +5,14 @@ import { Collapse } from 'ant-design-vue'
 import type { CSSProperties } from 'vue'
 import { BasicTitle as Divider, BasicHelp } from '../../Basic'
 import { pick } from 'lodash-es'
+import dayjs from 'dayjs'
 import {
   isBoolean,
   isFunction,
   isNumber,
   isArray,
-  isEmpty
+  isEmpty,
+  dateUtil
 } from '@shy-plugins/utils'
 import { useDesign } from '@shy-plugins/use'
 import { ShyTag } from '../../ShyTag'
@@ -63,10 +65,32 @@ export default defineComponent({
       setDescProps
     })
 
-    const renderValue = (item) => {
-      const { contentStyle, field, render, componentProps } = item
-
+    const transformValue = (item) => {
+      const { field, componentProps, component } = item
       const { data, summaryTotalFields } = unref(getProps)
+      if (summaryTotalFields?.length) {
+        return handleValuePrecision(item, data)
+      } else if (componentProps?.options) {
+        return <ShyTag value={data[`${field}`]} {...componentProps}></ShyTag>
+      } else if (
+        [
+          'DatePicker',
+          'MonthPicker',
+          'RangePicker',
+          'WeekPicker',
+          'TimePicker'
+        ].includes(component)
+      ) {
+        return dayjs(data[`${field}`]).format(
+          componentProps?.valueFormat || 'YYYY-MM-DD'
+        )
+      } else return data[`${field}`]
+    }
+
+    const renderValue = (item) => {
+      const { contentStyle, field, render } = item
+
+      const { data } = unref(getProps)
       if (!data || isEmpty(data)) return null
       if (slots[`${field}Value`]) {
         return slots[`${field}Value`]?.({
@@ -75,16 +99,12 @@ export default defineComponent({
         })
       } else if (render && isFunction(render)) {
         return render(unref(getValues)(item))
-      } else if (summaryTotalFields?.length) {
-        return handleValuePrecision(item, data)
-      } else if (componentProps?.options) {
-        return <ShyTag value={data[`${field}`]} {...componentProps}></ShyTag>
       } else {
         const contentStyles: CSSProperties = {
           ...unref(getProps).contentStyle,
           ...contentStyle
         }
-        return <div style={contentStyles}>{data[`${field}`]}</div>
+        return <div style={contentStyles}>{transformValue(item)}</div>
       }
     }
 
