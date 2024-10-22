@@ -4,6 +4,7 @@ import { defineComponent, computed, unref } from 'vue'
 import { shyContainerProps } from './props'
 import { useDesign } from '@shy-plugins/use'
 import './style/container.less'
+import { omit } from 'lodash-es'
 import { Breadcrumb, PageHeader } from 'ant-design-vue'
 const BreadcrumbItem = Breadcrumb.Item
 
@@ -83,7 +84,7 @@ export default defineComponent({
             <PageHeader
               {...props}
               onBack={props.onCancel}
-              v-slots={slots}
+              v-slots={omit(slots, ['default', 'footer'])}
             ></PageHeader>
           )
         default:

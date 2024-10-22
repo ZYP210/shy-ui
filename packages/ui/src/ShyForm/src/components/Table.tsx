@@ -28,10 +28,6 @@ import { useDesign } from '@shy-plugins/use'
 import '../style/formTable.less'
 import { TableRowSelection } from 'ant-design-vue/es/table/interface'
 
-const SHOW_ROW_COUNT = 10
-const ROW_HEIGHT = 48.5
-const BODY_HEIGHT = ROW_HEIGHT * SHOW_ROW_COUNT
-
 const ShyFormTable = defineComponent({
   props: {
     rowKey: {
@@ -78,10 +74,27 @@ const ShyFormTable = defineComponent({
       default: (res) => {
         return []
       }
+    },
+    showRowCount: {
+      type: Number,
+      default: 10
+    },
+    addBtnConf: {
+      type: Object,
+      default: () => {
+        return {
+          text: '新增',
+          type: 'dashed'
+        }
+      }
     }
   },
   emits: ['update:value', 'change', 'add', 'remove'],
   setup(props, { emit, attrs, expose }) {
+    const SHOW_ROW_COUNT = props?.showRowCount
+    const ROW_HEIGHT = 48.5
+    const BODY_HEIGHT = ROW_HEIGHT * SHOW_ROW_COUNT
+
     const { prefixCls } = useDesign('ant-form-table-children')
 
     const formActionType: FormActionType = inject('formActionType')!
@@ -606,8 +619,8 @@ const ShyFormTable = defineComponent({
     const renderAddBtn = () =>
       props.isShowAddBtn ? (
         <div class={`${prefixCls}-add-btn`}>
-          <BasicButton onClick={create} type="dashed">
-            新增
+          <BasicButton onClick={create} {...props.addBtnConf}>
+            {props.addBtnConf.text}
           </BasicButton>
         </div>
       ) : null

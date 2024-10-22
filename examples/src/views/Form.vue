@@ -253,6 +253,11 @@ const schemas = ref<ShyFormSchema[]>([
             colProps: { span: 24 },
             componentProps: ({ formModel }) => {
               return {
+                showRowCount: 5,
+                addBtnConf: {
+                  text: '新增222',
+                  type: 'dashed'
+                },
                 rowSelection: {
                   type: 'checkbox',
                   onChange: (selectedRowKeys, selectedRows) => {
