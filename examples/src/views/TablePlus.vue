@@ -55,15 +55,53 @@ const getActions = (row) => {
 
 const columns = [
   {
-    groupName: 'a',
+    groupName: '日产出',
+    align: 'center',
     children: [
-      {
-        title: 'b',
-        field: 'b',
-        helpMessage: 'helpMessage'
-      }
+      // {
+      //   groupName: '套/万只',
+      //   align: 'center',
+      //   children: [
+      //     {
+      //       title: '计划',
+      //       field: 'dayOutputPlan',
+      //       headerAlign: 'center',
+      //       align: 'center',
+      //       minWidth: 100,
+      //       showHeaderOverflow: 'title'
+      //     },
+      //     {
+      //       title: '实际',
+      //       field: 'dayOutputReal',
+      //       headerAlign: 'center',
+      //       align: 'center',
+      //       minWidth: 100,
+      //       showHeaderOverflow: 'title'
+      //     }
+      //   ]
+      // },
+
+      { title: '生产完成率/%', field: 'dayOutputRate', minWidth: 100 }
     ]
   },
+  // {
+  //   groupName: 'a',
+  //   children: [
+  //     {
+  //       groupName: 'a1',
+  //       children: [
+  //         {
+  //           title: 'a3',
+  //           field: 'a3'
+  //         },
+  //         {
+  //           title: 'a4',
+  //           field: 'a4'
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   {
     title: '类型编号',
     field: 'a',
@@ -110,10 +148,12 @@ const getList = (params) => {
   for (let i = 0; i < pageNumber.value; i++) {
     list.push({
       id: i,
-      a: '1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111',
       b: i + 2,
       c: i + 3,
-      d: i + 4
+      d: i + 4,
+      dayOutputPlan: 1,
+      dayOutputReal: 1,
+      dayOutputRate: 1
     })
   }
 

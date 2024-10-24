@@ -1,5 +1,5 @@
 <template>
-  <VxeColgroup :title="column.groupName" v-bind="column">
+  <VxeColgroup :title="column.groupName" v-bind="filterColumn(column)">
     <template v-for="c in column.children" :key="c.field">
       <TableColGroup
         v-if="c?.groupName"
@@ -116,6 +116,11 @@ const getSwitchShowText = (column: any, row: any) => {
 
 const handleSortChange = (field, type) => {
   emits('handleSortChange', { field, type })
+}
+
+const filterColumn = (column) => {
+  const { children, ...rest } = column
+  return rest
 }
 </script>
 
