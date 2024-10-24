@@ -77,6 +77,8 @@ const ShyForm = defineComponent({
     const schemaRef = ref<Nullable<FormSchema[]>>(null)
     const formElRef = ref<Nullable<FormActionType>>()
 
+    console.log(defaultValueRef)
+
     const { prefixCls } = useDesign('ant-form')
 
     const { config } = useGlobalConfig('form')
@@ -114,45 +116,81 @@ const ShyForm = defineComponent({
     }))
 
     const getSchema = computed((): FormSchema[] => {
-      const schemas: FormSchema[] =
-        unref(schemaRef) || (unref(getProps).schemas as any)
-      for (const schema of schemas) {
-        const {
-          defaultValue,
-          component,
-          componentProps,
-          isHandleDateDefaultValue = true
-        } = schema
-        if (
-          isHandleDateDefaultValue &&
-          defaultValue &&
-          component &&
-          dateItemType.includes(component)
-        ) {
-          const valueFormat = componentProps
-            ? componentProps['valueFormat']
-            : null
-          if (!Array.isArray(defaultValue)) {
-            schema.defaultValue = valueFormat
-              ? dateUtil(defaultValue).format(valueFormat)
-              : dateUtil(defaultValue)
-          } else {
-            const def: any[] = []
-            defaultValue.forEach((item) => {
-              def.push(
-                valueFormat
-                  ? dateUtil(item).format(valueFormat)
-                  : dateUtil(item)
-              )
-            })
-            schema.defaultValue = def
-          }
-        }
+      const treeExpandField = (schemas: FormSchema[]) => {
+        return schemas.map((schema) => {
+          const {
+            defaultValue,
+            component,
+            componentProps = {},
+            isHandleDateDefaultValue = true
+          } = schema
 
-        if (component === 'Group') {
-          schema.defaultValue = schema.defaultValue ?? {}
-        }
+          let _props: Recordable = {}
+          if (typeof componentProps === 'function') {
+            _props =
+              componentProps({
+                formModel,
+                schema,
+                formActionType,
+                tableAction: props.tableAction
+              }) || {}
+          } else {
+            _props = componentProps
+          }
+
+          if (
+            isHandleDateDefaultValue &&
+            defaultValue &&
+            component &&
+            dateItemType.includes(component)
+          ) {
+            const valueFormat = _props ? _props['valueFormat'] : null
+            if (!Array.isArray(defaultValue)) {
+              schema.defaultValue = valueFormat
+                ? dateUtil(defaultValue).format(valueFormat)
+                : dateUtil(defaultValue)
+            } else {
+              const def: any[] = []
+              defaultValue.forEach((item) => {
+                def.push(
+                  valueFormat
+                    ? dateUtil(item).format(valueFormat)
+                    : dateUtil(item)
+                )
+              })
+              schema.defaultValue = def
+            }
+          }
+
+          if (schema.component === 'Group') {
+            schema.defaultValue = schema.defaultValue || reactive({})
+
+            return {
+              ...schema,
+              componentProps: (...args) => {
+                let _c_props: Recordable = {}
+                if (typeof componentProps === 'function') {
+                  _c_props = componentProps(args) || {}
+                } else {
+                  _c_props = componentProps
+                }
+
+                return {
+                  ..._c_props,
+                  schemas: treeExpandField(_c_props.schemas)
+                }
+              }
+            }
+          }
+
+          return schema
+        })
       }
+
+      const schemas: FormSchema[] = treeExpandField(
+        unref(schemaRef) || (unref(getProps).schemas as any)
+      )
+
       if (unref(getProps).showAdvancedButton) {
         return cloneDeep(
           schemas.filter(

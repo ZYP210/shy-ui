@@ -18,7 +18,7 @@ import {
   handleInputNumberValue,
   defaultValueComponents
 } from '../helper'
-import { cloneDeep, uniqBy } from 'lodash-es'
+import { cloneDeep, get, has, isBoolean, set, uniqBy } from 'lodash-es'
 import dayjs from 'dayjs'
 
 interface UseFormActionContext {
@@ -70,101 +70,117 @@ export function useFormEvents({
    * @description: Set form value
    */
   async function setFieldsValue(values: Recordable): Promise<void> {
-    const treeExpandField = (schemas: FormSchema[]) => {
-      return schemas
-        .flatMap((item) => {
-          const { componentProps } = item || {}
-          let _props = componentProps as any
-          if (typeof componentProps === 'function') {
-            _props = _props({ formModel })
-          }
+    const treeExpandSchema = (
+      schemas: FormSchema[],
+      link = false,
+      linkField?: string | number
+    ) => {
+      return schemas.flatMap((item) => {
+        const { componentProps } = item || {}
+        let _props = componentProps as any
+        if (typeof componentProps === 'function') {
+          _props = _props({ formModel })
+        }
 
-          if (item.component === 'Group' && !_props.groupInObject) {
-            return treeExpandField(_props.schemas)
-          }
+        const isGroup = item.component === 'Group'
+        const isGroupInObj =
+          !isBoolean(_props?.groupInObject) ||
+          (isBoolean(_props.groupInObject) && _props.groupInObject)
 
-          return item.field
-        })
-        .filter(Boolean)
+        if (isGroup && !isGroupInObj) {
+          return treeExpandSchema(_props.schemas)
+        }
+
+        if (isGroup && isGroupInObj && link) {
+          return treeExpandSchema(
+            _props.schemas,
+            true,
+            [linkField, item.field].join('.')
+          )
+        }
+
+        if (isGroup && isGroupInObj) {
+          return treeExpandSchema(_props.schemas, true, item.field)
+        }
+
+        if (link) {
+          item.field = [linkField, item.field].join('.')
+        }
+
+        return item
+      })
     }
 
-    const fields = treeExpandField(unref(getSchema))
-
-    // key 支持 a.b.c 的嵌套写法
-    const delimiter = '.'
-    const nestKeyArray = fields.filter((item) => item.indexOf(delimiter) >= 0)
-
-    const validKeys: string[] = []
-    Object.keys(values).forEach((key) => {
-      const treeExpandSchema = (schemas: FormSchema[]) => {
-        return schemas.flatMap((item) => {
-          const { componentProps } = item || {}
+    const setFormModel = (key, value, schemas, schema) => {
+      if (itemIsDateType(key, schemas)) {
+        if (Array.isArray(value)) {
+          const arr: any[] = []
+          for (const ele of value) {
+            arr.push(ele ? ele : null)
+          }
+          set(formModel, key, arr)
+        } else {
+          const { componentProps } = schema || {}
           let _props = componentProps as any
           if (typeof componentProps === 'function') {
             _props = _props({ formModel })
           }
+          if (typeof value !== 'string') value = dayjs(value)
 
-          if (item.component === 'Group' && !_props.groupInObject) {
-            return treeExpandSchema(_props.schemas)
-          }
-          return item
-        })
-      }
-      const schemas = treeExpandSchema(unref(getSchema))
-      const schema = schemas.find((item) => item.field === key)
-      let value = values[key]
-
-      const hasKey = Reflect.has(values, key)
-
-      value = handleInputNumberValue(schema?.component, value)
-      // 0| '' is allow
-      if (hasKey && fields.includes(key)) {
-        // time type
-        if (itemIsDateType(key, schemas)) {
-          if (Array.isArray(value)) {
-            const arr: any[] = []
-            for (const ele of value) {
-              arr.push(ele ? ele : null)
-            }
-
-            formModel[key] = arr
-          } else {
-            const { componentProps } = schema || {}
-            let _props = componentProps as any
-            if (typeof componentProps === 'function') {
-              _props = _props({ formModel })
-            }
-            if (typeof value !== 'string') value = dayjs(value)
-            formModel[key] = value
+          set(
+            formModel,
+            key,
+            value
               ? _props?.valueFormat
                 ? dayjs(value).format(_props?.valueFormat)
                 : dateUtil(value)
               : null
-          }
-        } else {
-          formModel[key] = value
+          )
         }
-        validKeys.push(key)
       } else {
-        nestKeyArray.forEach((nestKey: string) => {
-          try {
-            const value = nestKey
-              .split('.')
-              .reduce((out, item) => out[item], values)
-            if (isDef(value)) {
-              formModel[nestKey] = value
-              validKeys.push(nestKey)
-            }
-          } catch (e) {
-            // key not exist
-            if (isDef(defaultValueRef.value[nestKey])) {
-              formModel[nestKey] = cloneDeep(defaultValueRef.value[nestKey])
-            }
-          }
-        })
+        set(formModel, key, value)
       }
+      validKeys.push(key)
+    }
+
+    const schemas = treeExpandSchema(unref(getSchema))
+    const fields = schemas.map((item) => item.field).filter(Boolean)
+
+    // key 支持 a.b.c 的嵌套写法
+    const delimiter = '.'
+    const nestKeyArray = fields.filter((item) => item.indexOf(delimiter) >= 0)
+    const validKeys: string[] = []
+
+    Object.keys(values).forEach((key) => {
+      const schema = schemas.find((item) => item.field === key)
+      let value = values[key]
+      const hasKey = has(values, key)
+      value = handleInputNumberValue(schema?.component, value)
+      // 0| '' is allow
+      if (hasKey && fields.includes(key)) {
+        // time type
+        setFormModel(key, value, schemas, schema)
+        validateFields(validKeys).catch(() => {})
+        return
+      }
+
+      nestKeyArray.forEach((nestKey: string) => {
+        try {
+          const value = get(values, nestKey)
+          if (isDef(value)) {
+            setFormModel(nestKey, value, schemas, schema)
+          }
+        } catch (e) {
+          const defaultValue = get(unref(defaultValueRef), nestKey)
+          // key not exist
+          if (isDef(defaultValue)) {
+            setFormModel(nestKey, defaultValue, schemas, schema)
+          }
+        }
+      })
+      validateFields(validKeys).catch(() => {})
+      return
     })
-    validateFields(validKeys).catch(() => {})
   }
   /**
    * @description: Delete based on field name
@@ -180,7 +196,7 @@ export function useFormEvents({
       fieldList = [fields]
     }
     for (const field of fieldList) {
-      _removeSchemaByFeild(field, schemaList)
+      _removeSchemaByField(field, schemaList)
     }
     schemaRef.value = schemaList
   }
@@ -188,7 +204,7 @@ export function useFormEvents({
   /**
    * @description: Delete based on field name
    */
-  function _removeSchemaByFeild(field: string, schemaList: FormSchema[]): void {
+  function _removeSchemaByField(field: string, schemaList: FormSchema[]): void {
     if (isString(field)) {
       const index = schemaList.findIndex((schema) => schema.field === field)
       if (index !== -1) {

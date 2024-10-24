@@ -9,7 +9,7 @@ import {
 import { unref } from 'vue'
 import type { Ref, ComputedRef } from 'vue'
 import type { FormProps, FormSchema } from '../types/form'
-import { cloneDeep, set } from 'lodash-es'
+import { cloneDeep, isBoolean, set } from 'lodash-es'
 import dayjs from 'dayjs'
 
 interface UseFormValuesContext {
@@ -154,17 +154,55 @@ export function useFormValues({
   }
 
   function initDefault() {
-    const schemas = unref(getSchema)
+    const treeExpandSchema = (
+      schemas: FormSchema[],
+      link = false,
+      linkField?: string | number
+    ) => {
+      return schemas.flatMap((item) => {
+        const { componentProps } = item || {}
+        let _props = componentProps as any
+        if (typeof componentProps === 'function') {
+          _props = _props({ formModel })
+        }
+
+        const isGroup = item.component === 'Group'
+        const isGroupInObj =
+          !isBoolean(_props?.groupInObject) ||
+          (isBoolean(_props.groupInObject) && _props.groupInObject)
+
+        if (isGroup && !isGroupInObj) {
+          return treeExpandSchema(_props.schemas)
+        }
+
+        if (isGroup && isGroupInObj && link) {
+          return treeExpandSchema(
+            _props.schemas,
+            true,
+            [linkField, item.field].join('.')
+          )
+        }
+
+        if (isGroup && isGroupInObj) {
+          return treeExpandSchema(_props.schemas, true, item.field)
+        }
+
+        if (link) {
+          item.field = [linkField, item.field].join('.')
+        }
+
+        return item
+      })
+    }
+
+    const schemas = treeExpandSchema(unref(getSchema))
     const obj: Recordable = {}
     schemas.forEach((item) => {
       const { defaultValue } = item
-      if (!isNullOrUnDef(defaultValue)) {
-        obj[item.field] = defaultValue
-
-        if (formModel[item.field] === undefined) {
-          formModel[item.field] = defaultValue
-        }
-      }
+      if (isNullOrUnDef(defaultValue)) return
+      set(obj, item.field, defaultValue)
+      if (!isNullOrUnDef(formModel[item.field])) return
+      set(formModel, item.field, defaultValue)
     })
     defaultValueRef.value = cloneDeep(obj)
   }

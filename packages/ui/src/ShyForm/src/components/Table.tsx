@@ -14,7 +14,7 @@ import { useRuleFormItem } from '@shy-plugins/use'
 
 import { buildUUID, isFunction } from '@shy-plugins/utils'
 import { ShyComponentMap } from '../ShyComponentMap'
-import { cloneDeep, isArray, isEqual, isNil, omit, upperFirst } from 'lodash-es'
+import { cloneDeep, isArray, isEqual, isNil, upperFirst } from 'lodash-es'
 import { FormActionType } from '../types/form'
 import { Popover } from 'ant-design-vue'
 import { reactive } from 'vue'
@@ -87,9 +87,6 @@ const ShyFormTable = defineComponent({
           type: 'dashed'
         }
       }
-    },
-    setFormModel: {
-      type: Function
     }
   },
   emits: ['update:value', 'change', 'add', 'remove'],
@@ -281,6 +278,7 @@ const ShyFormTable = defineComponent({
                   const on = {
                     [eventKey]: (...args: Nullable<Recordable>[]) => {
                       const [e] = args
+
                       if (componentProps[eventKey] && args.length >= 1) {
                         componentProps[eventKey](...args)
                       }
@@ -296,16 +294,15 @@ const ShyFormTable = defineComponent({
                       )
 
                       currValue![column.dataIndex] = value
-                      props.setFormModel!(
-                        [
+                      formActionType.setFieldsValue({
+                        [[
                           ...(isArray(attrs.codeField)
                             ? attrs.codeField
                             : [attrs.codeField]),
                           index + curIndex.value,
                           column.dataIndex
-                        ],
-                        value
-                      )
+                        ].join('.')]: value
+                      })
                     }
                   }
 
@@ -547,11 +544,18 @@ const ShyFormTable = defineComponent({
       () => state.value,
       (v, old) => {
         if (!isEqual(toRaw(v), toRaw(old))) {
-          state.value = toRaw(v).map((ele: any) => {
+          const value = toRaw(v).map((ele: any) => {
             return {
               ...ele,
               [props.rowKey]: ele[props.rowKey] || buildUUID()
             }
+          })
+          formActionType.setFieldsValue({
+            [[
+              ...(isArray(attrs.codeField)
+                ? attrs.codeField
+                : [attrs.codeField])
+            ].join('.')]: value
           })
           if (props.isVirtual) {
             sourceHeight.value = v.length * ROW_HEIGHT

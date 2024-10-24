@@ -1,10 +1,8 @@
-import { computed, defineComponent, JSXComponent, shallowRef, unref } from 'vue'
+import { defineComponent, JSXComponent, shallowRef, unref } from 'vue'
 import { FormItemProps } from '../props'
 import { FormSchema } from '../types/form'
 import FormItem from './FormItem'
-import { dateItemType } from '../helper'
-import { dateUtil } from '@shy-plugins/utils'
-import { cloneDeep, isArray, isFunction, pick } from 'lodash-es'
+import { isArray, isFunction, pick } from 'lodash-es'
 import { Col, Row, Collapse, CollapsePanel } from 'ant-design-vue'
 import { useDesign } from '@shy-plugins/use'
 import { ROW_SLICE, ACTION_COL } from '../props'
@@ -40,44 +38,6 @@ const Group = defineComponent({
 
     const { contextBindValue } = useFormContext()
 
-    const getSchema = computed((): FormSchema[] => {
-      const schemas: FormSchema[] = props.schemas as any
-      for (const schema of schemas) {
-        const {
-          defaultValue,
-          component,
-          componentProps,
-          isHandleDateDefaultValue = true
-        } = schema
-        if (
-          isHandleDateDefaultValue &&
-          defaultValue &&
-          component &&
-          dateItemType.includes(component)
-        ) {
-          const valueFormat = componentProps
-            ? componentProps['valueFormat']
-            : null
-          if (!Array.isArray(defaultValue)) {
-            schema.defaultValue = valueFormat
-              ? dateUtil(defaultValue).format(valueFormat)
-              : dateUtil(defaultValue)
-          } else {
-            const def: any[] = []
-            defaultValue.forEach((item) => {
-              def.push(
-                valueFormat
-                  ? dateUtil(item).format(valueFormat)
-                  : dateUtil(item)
-              )
-            })
-            schema.defaultValue = def
-          }
-        }
-      }
-      return cloneDeep(schemas as FormSchema[])
-    })
-
     const renderItem = (schema) => {
       const realSpan =
         (schema.colProps?.span ?? unref(contextBindValue)?.baseColProps?.span) /
@@ -106,7 +66,7 @@ const Group = defineComponent({
     }
 
     const renderFormItems = () => {
-      return getSchema.value.map((schema) => {
+      return props.schemas.map((schema) => {
         return renderItem(schema)
       })
     }
