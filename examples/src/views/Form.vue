@@ -104,6 +104,101 @@ const bindCol = [
 
 const schemas = ref<ShyFormSchema[]>([
   {
+    label: '合同编号zzzz',
+    field: 'Tablezzz',
+    component: 'Table',
+    required: true,
+    colProps: { span: 24 },
+    componentProps: ({ formModel }) => {
+      console.log('formModel1', formModel)
+      return {
+        showRowCount: 5,
+        addBtnConf: {
+          text: '新增222',
+          type: 'dashed'
+        },
+        rowSelection: {
+          type: 'checkbox',
+          onChange: (selectedRowKeys, selectedRows) => {
+            console.log(selectedRowKeys, selectedRows)
+          }
+        },
+        useRef: (compRef) => {},
+        // footerRender: () => '777',
+        columns: [
+          {
+            title: 'zzzz',
+            dataIndex: 'a',
+            defaultValue: 111
+          },
+          {
+            title: 'zzzz',
+            dataIndex: 'a',
+            defaultValue: 111
+          },
+          {
+            title: 'zzzz',
+            dataIndex: 'a',
+            defaultValue: 111
+          },
+          {
+            title: 'zzzz',
+            dataIndex: 'a',
+            defaultValue: 111
+          },
+          {
+            title: 'zzzzz',
+            dataIndex: 'b',
+            type: 'text'
+          },
+          {
+            title: 'zzzzzz',
+            dataIndex: 'c',
+            type: 'text'
+          },
+          {
+            title: 'zzzzzz',
+            dataIndex: 'c',
+            type: 'text'
+          },
+          {
+            title: 'zzzzzz',
+            dataIndex: 'c',
+            type: 'text'
+          },
+          {
+            title: 'zzzzzz',
+            dataIndex: 'c',
+            type: 'text'
+          },
+          {
+            title: 'zzzzzz',
+            dataIndex: 'c',
+            type: 'text'
+          },
+          {
+            title: 'zzzzzz',
+            dataIndex: 'c',
+            type: 'text'
+          }
+          // {
+          //   title: '手机号',
+          //   dataIndex: 'contactsPhone',
+          //   required: true,
+          //   type: 'DatePicker'
+          //   // rules: [
+          //   //   {
+          //   //     pattern: /^1[3-9]\d{9}$/,
+          //   //     message: '请输入正确的手机号码',
+          //   //     trigger: 'blur'
+          //   //   }
+          //   // ]
+          // }
+        ]
+      }
+    }
+  },
+  {
     label: '绑定明细',
     field: '-',
     component: 'Group',
@@ -252,6 +347,8 @@ const schemas = ref<ShyFormSchema[]>([
             required: true,
             colProps: { span: 24 },
             componentProps: ({ formModel }) => {
+              console.log('formModel2', formModel)
+
               return {
                 showRowCount: 5,
                 addBtnConf: {
@@ -719,7 +816,10 @@ const [
   schemas: schemas as any,
   // formLabelInInput: true,
   layout: 'vertical',
-  baseColProps: { span: 8 }
+  baseColProps: { span: 8 },
+  onFieldValueChange: (field, value) => {
+    // console.log('field', field, value)
+  }
   // showActionButtonGroup: true
 })
 

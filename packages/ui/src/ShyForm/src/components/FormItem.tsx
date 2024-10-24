@@ -297,7 +297,7 @@ const FormItem = defineComponent({
       const on = {
         [eventKey]: (...args: Nullable<Recordable>[]) => {
           const [e] = args
-
+          flag.value += 1
           if (propsData[eventKey] && args.length >= 1) {
             propsData[eventKey](...args)
           }
@@ -343,7 +343,8 @@ const FormItem = defineComponent({
       const compAttr: Recordable = {
         ...propsData,
         ...(component === 'Group' ? {} : on),
-        ...bindValue
+        ...bindValue,
+        setFormModel: props.setFormModel
       }
 
       const handleInput = (e) => {
