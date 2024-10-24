@@ -87,6 +87,9 @@ const ShyFormTable = defineComponent({
           type: 'dashed'
         }
       }
+    },
+    setFormModel: {
+      type: Function
     }
   },
   emits: ['update:value', 'change', 'add', 'remove'],
@@ -303,6 +306,16 @@ const ShyFormTable = defineComponent({
                           column.dataIndex
                         ].join('.')]: value
                       })
+                      props.setFormModel!(
+                        [
+                          ...(isArray(attrs.codeField)
+                            ? attrs.codeField
+                            : [attrs.codeField]),
+                          index + curIndex.value,
+                          column.dataIndex
+                        ],
+                        value
+                      )
                     }
                   }
 
