@@ -170,7 +170,7 @@ const ShyForm = defineComponent({
               componentProps: (...args) => {
                 let _c_props: Recordable = {}
                 if (typeof componentProps === 'function') {
-                  _c_props = componentProps(args) || {}
+                  _c_props = componentProps(...args) || {}
                 } else {
                   _c_props = componentProps
                 }
