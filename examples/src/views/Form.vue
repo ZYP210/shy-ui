@@ -108,7 +108,7 @@ const schemas = ref<ShyFormSchema[]>([
     label: '',
     field: 'activeKey',
     component: 'Group',
-    defaultValue: '1', 
+    defaultValue: '1',
     componentProps: ({ formModel }) => {
       return {
         groupType: 'Custom',
@@ -250,7 +250,7 @@ const handleReset = () => {
 onMounted(() => {
   setFieldsValue({
     // activeKey: { addPurchaseCost: { zzzzz: new Date().getTime() } },
-    addPurchaseCost: { zzzzz: new Date().getTime() }
+    addPurchaseCost: { projectSupplierSaveList: [{ a: '222' }] }
   })
   // setTimeout(() => {
   //   setFieldsValue({

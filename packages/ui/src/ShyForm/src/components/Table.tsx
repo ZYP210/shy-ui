@@ -571,12 +571,12 @@ const ShyFormTable = defineComponent({
             ].join('.')]: value
           })
           if (props.isVirtual) {
-            sourceHeight.value = v.length * ROW_HEIGHT
+            sourceHeight.value = value.length * ROW_HEIGHT
 
             dataSource.value =
-              v.length > SHOW_ROW_COUNT
-                ? v.slice(curIndex.value, curIndex.value + SHOW_ROW_COUNT)
-                : v.slice(0, SHOW_ROW_COUNT)
+              value.length > SHOW_ROW_COUNT
+                ? value.slice(curIndex.value, curIndex.value + SHOW_ROW_COUNT)
+                : value.slice(0, SHOW_ROW_COUNT)
           }
         }
       },
