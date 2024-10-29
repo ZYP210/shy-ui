@@ -77,8 +77,6 @@ const ShyForm = defineComponent({
     const schemaRef = ref<Nullable<FormSchema[]>>(null)
     const formElRef = ref<Nullable<FormActionType>>()
 
-    console.log(defaultValueRef)
-
     const { prefixCls } = useDesign('ant-form')
 
     const { config } = useGlobalConfig('form')
@@ -108,12 +106,15 @@ const ShyForm = defineComponent({
       }
     })
 
-    const getBindValue = computed(() => ({
-      ...attrs,
-      ...props,
-      ...defaultAntConfig,
-      ...unref(getProps)
-    }))
+    const getBindValue = computed(
+      () =>
+        ({
+          ...attrs,
+          ...props,
+          ...defaultAntConfig,
+          ...unref(getProps)
+        } as any)
+    )
 
     const getSchema = computed((): FormSchema[] => {
       const treeExpandField = (schemas: FormSchema[]) => {
@@ -160,6 +161,14 @@ const ShyForm = defineComponent({
               })
               schema.defaultValue = def
             }
+          }
+
+          if (schema.component === 'Input') {
+            schema.defaultValue = schema.defaultValue || ''
+          }
+
+          if (schema.component === 'Table') {
+            schema.defaultValue = schema.defaultValue || reactive([])
           }
 
           if (schema.component === 'Group') {
@@ -376,7 +385,7 @@ const ShyForm = defineComponent({
     provide('formActionType', formActionType)
 
     const isTableForm = computed(() => {
-      return !!getBindValue.value.tableAction
+      return !!unref(getBindValue).tableAction
     })
 
     watch(
@@ -404,8 +413,8 @@ const ShyForm = defineComponent({
     })
     const isAutoShowFormItem = computed(() => {
       return !(
-        allColSpanSum.value / (unref(ROW_SLICE) + unref(ACTION_COL)) >
-        getBindValue.value.autoAdvancedLine
+        unref(allColSpanSum) / (unref(ROW_SLICE) + unref(ACTION_COL)) >
+        unref(getBindValue).autoAdvancedLine
       )
     })
     const isShowFormCollapse = computed(

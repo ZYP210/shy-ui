@@ -278,6 +278,12 @@ const ShyFormTable = defineComponent({
                     getType(column.type)
                   )
 
+                  const parentKey = isArray(attrs.codeField)
+                    ? attrs.codeField
+                    : [attrs.codeField]
+
+                  const indexKey = index + curIndex.value
+
                   const on = {
                     [eventKey]: (...args: Nullable<Recordable>[]) => {
                       const [e] = args
@@ -292,35 +298,16 @@ const ShyFormTable = defineComponent({
                           ? target.checked
                           : target.value
                         : e
-                      const currValue = state.value.find(
-                        (item) => item[props.rowKey] === record[props.rowKey]
-                      )
 
-                      currValue![column.dataIndex] = value
-                      formActionType.setFieldsValue({
-                        [[
-                          ...(isArray(attrs.codeField)
-                            ? attrs.codeField
-                            : [attrs.codeField]),
-                          index + curIndex.value,
-                          column.dataIndex
-                        ].join('.')]: value
-                      })
-                      props.setFormModel!(
-                        [
-                          ...(isArray(attrs.codeField)
-                            ? attrs.codeField
-                            : [attrs.codeField]),
-                          index + curIndex.value,
-                          column.dataIndex
-                        ],
-                        value
-                      )
+                      state.value[indexKey][column.dataIndex] = value
+
+                      emit('change', state.value, indexKey, column.dataIndex)
                     }
                   }
 
                   const bindValue: Recordable = {
-                    [isCheck ? 'checked' : 'value']: record[column.dataIndex]
+                    [isCheck ? 'checked' : 'value']:
+                      state.value[index][column.dataIndex]
                   }
 
                   const compAttr: Recordable = {
@@ -335,16 +322,10 @@ const ShyFormTable = defineComponent({
                     <FormItem
                       required={column.required}
                       rules={getRules({ column, record, index, ...args })}
-                      name={[
-                        ...(isArray(attrs.codeField)
-                          ? attrs.codeField
-                          : [attrs.codeField]),
-                        index + curIndex.value,
-                        column.dataIndex
-                      ]}
+                      name={[...parentKey, indexKey, column.dataIndex]}
                     >
                       <Popover
-                        visible={
+                        open={
                           !!rulesRef?.[
                             `${column.dataIndex}-${record[props.rowKey]}Info`
                           ]?.show && !isScroll.value
@@ -418,7 +399,7 @@ const ShyFormTable = defineComponent({
     const create = () => {
       state.value = [
         ...toRaw(state.value),
-        { [props.rowKey]: buildUUID(), ...defaultValuesRef.value }
+        { [props.rowKey]: buildUUID(), ...unref(defaultValuesRef) }
       ]
       curIndex.value = 0
       if (props.isVirtual) {
@@ -562,13 +543,6 @@ const ShyFormTable = defineComponent({
               ...ele,
               [props.rowKey]: ele[props.rowKey] || buildUUID()
             }
-          })
-          formActionType.setFieldsValue({
-            [[
-              ...(isArray(attrs.codeField)
-                ? attrs.codeField
-                : [attrs.codeField])
-            ].join('.')]: value
           })
           if (props.isVirtual) {
             sourceHeight.value = value.length * ROW_HEIGHT
