@@ -105,119 +105,83 @@ const bindCol = [
 
 const schemas = ref<ShyFormSchema[]>([
   {
-    label: '',
-    field: 'activeKey',
+    label: '111',
+    field: 'group',
     component: 'Group',
-    defaultValue: '1', 
     componentProps: ({ formModel }) => {
+      // console.log('group', formModel)
       return {
-        groupType: 'Custom',
-        CustomGroupComp: customComp,
-        groupInObject: false,
         schemas: [
           {
-            label: '',
-            field: 'saleAmountChange',
-            component: 'Group',
-            componentProps: {
-              groupType: 'Origin',
-              schemas: [
-                {
-                  label: '原销售预测总金额(元)',
-                  field: 'oldAmount',
-                  component: 'InputNumber',
-                  colProps: { span: 8 }
+            label: 'Table',
+            field: 'table',
+            component: 'Table',
+            componentProps: ({ formModel }) => {
+              // console.log('111', formModel)
+
+              return {
+                onChange: (...args) => {
+                  // console.log(args)
                 },
-                {
-                  label: '变更后销售预测总金额(元)',
-                  field: 'changeAmount',
-                  component: 'InputNumber',
-                  colProps: { span: 8 }
-                },
-                {
-                  label: '销售清单',
-                  field: 'projectSaleSaveList',
-                  component: 'Table',
-                  componentProps: {
-                    columns: []
+                columns: [
+                  {
+                    title: 'input',
+                    dataIndex: 'zzz'
                   },
-                  colProps: { span: 24 }
-                },
-                {
-                  label: '变更说明',
-                  field: 'changeExplain',
-                  component: 'InputTextArea',
-                  colProps: { span: 24 }
-                }
-              ]
-            },
-            colProps: { span: 24 }
-          },
-          {
-            label: '是否追加采购成本',
-            field: 'isAddPurchaseCost',
-            defaultValue: 1,
-            component: 'Switch',
-            componentProps: {
-              checkedChildren: '是',
-              unCheckedChildren: '否',
-              checkedValue: 1,
-              unCheckedValue: 0
-            },
-            colProps: { span: 24 }
-          },
-          {
-            label: '',
-            field: 'addPurchaseCost',
-            component: 'Group',
-            componentProps: {
-              groupType: 'Origin',
-              schemas: [
-                {
-                  label: '原采购预测总金额(元)',
-                  field: 'addBudgetAmount',
-                  component: 'InputNumber',
-                  colProps: { span: 8 }
-                },
-                {
-                  label: '追加后采购预测总金额(元)',
-                  field: 'addResultAmount',
-                  component: 'InputNumber',
-                  colProps: { span: 8 }
-                },
-                {
-                  label: '采购清单',
-                  field: 'projectSupplierSaveList',
-                  component: 'Table',
-                  componentProps: ({ formModel }) => {
-                    console.log(formModel)
-                    return {
-                      columns: [
+                  {
+                    title: '税率',
+                    dataIndex: 'taxRate',
+                    type: 'Select',
+                    defaultValue: 0,
+                    componentProps: {
+                      options: [
                         {
-                          title: '111',
-                          dataIndex: 'a'
+                          value: 0,
+                          label: '0',
+                          colorType: 'default',
+                          cssClass: ''
+                        },
+                        {
+                          value: 1,
+                          label: '1',
+                          colorType: 'default',
+                          cssClass: ''
+                        },
+                        {
+                          value: 3,
+                          label: '3',
+                          colorType: 'default',
+                          cssClass: ''
+                        },
+                        {
+                          value: 6,
+                          label: '6',
+                          colorType: 'default',
+                          cssClass: ''
+                        },
+                        {
+                          value: 9,
+                          label: '9',
+                          colorType: 'default',
+                          cssClass: ''
+                        },
+                        {
+                          value: 11,
+                          label: '11',
+                          colorType: 'default',
+                          cssClass: ''
+                        },
+                        {
+                          value: 13,
+                          label: '13',
+                          colorType: 'default',
+                          cssClass: ''
                         }
                       ]
                     }
-                  },
-                  colProps: { span: 24 }
-                },
-                {
-                  label: '追加说明',
-                  field: 'addExplain',
-                  component: 'InputTextArea',
-                  colProps: { span: 24 }
-                },
-                {
-                  label: '追加说明',
-                  field: 'zzzzz',
-                  component: 'DatePicker',
-                  componentProps: {
-                    valueFormat: 'YYYY-MM-DD'
-                  },
-                  colProps: { span: 24 }
-                }
-              ]
+                  }
+                ]
+              }
             },
             colProps: { span: 24 }
           }
@@ -226,6 +190,75 @@ const schemas = ref<ShyFormSchema[]>([
     },
     colProps: { span: 24 }
   }
+  // {
+  //   label: 'Table',
+  //   field: 'table',
+  //   component: 'Table',
+  //   componentProps: ({ formModel }) => {
+  //     console.log('table', formModel)
+
+  //     return {
+  //       onChange: (...args) => {
+  //         console.log(args)
+  //       },
+  //       columns: [
+  //         {
+  //           title: '税率',
+  //           dataIndex: 'taxRate',
+  //           type: 'Select',
+  //           defaultValue: 0,
+  //           componentProps: {
+  //             options: [
+  //               {
+  //                 value: 0,
+  //                 label: '0',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 1,
+  //                 label: '1',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 3,
+  //                 label: '3',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 6,
+  //                 label: '6',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 9,
+  //                 label: '9',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 11,
+  //                 label: '11',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 13,
+  //                 label: '13',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               }
+  //             ]
+  //           }
+  //         }
+  //       ]
+  //     }
+  //   },
+  //   colProps: { span: 24 }
+  // }
 ])
 const { createMessage } = useMessage()
 const [
@@ -238,7 +271,7 @@ const [
   layout: 'vertical',
   baseColProps: { span: 8 },
   onFieldValueChange: (field, value) => {
-    // console.log('field', field, value)
+    console.log('field', field, value)
   }
   // showActionButtonGroup: true
 })
@@ -250,7 +283,7 @@ const handleReset = () => {
 onMounted(() => {
   setFieldsValue({
     // activeKey: { addPurchaseCost: { zzzzz: new Date().getTime() } },
-    addPurchaseCost: { zzzzz: new Date().getTime() }
+    addPurchaseCost: { projectSupplierSaveList: [{ a: '222' }] }
   })
   // setTimeout(() => {
   //   setFieldsValue({
