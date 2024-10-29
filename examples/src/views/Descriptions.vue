@@ -10,6 +10,7 @@ import BasicTitle from './BasicTitle.vue'
 import { h, render } from 'vue'
 import { colProps } from 'ant-design-vue/es/grid/Col'
 import { commentProps } from 'ant-design-vue/es/comment'
+import { descriptions } from './data'
 const mockData: any = {
   zyp: new Date().getTime(),
   username: 'test',
@@ -466,12 +467,10 @@ const schemas = [
 
 const [register, { setDescProps }] = useShyDescriptions({
   data: mockData,
-  schemas,
+  schemas: descriptions,
   isShowColon: true,
   labelWidth: 120,
-  baseColProps: {
-    span: 6
-  },
+
   bordered: true
 })
 onMounted(() => {
