@@ -83,17 +83,12 @@ const BasicButton = defineComponent({
         }
       }
 
-      const isLinkColorStyle = () => {
-        return props.type === 'link' ? { color: 'var(--primary-5)' } : {}
-      }
-
       const renderBtn = () => {
         const ShyButton = (
           <Button
             {...getBindValue.value}
             {...isDanger()}
             onClick={onClick}
-            style={isLinkColorStyle()}
           >
             {{
               default: (data) => {
