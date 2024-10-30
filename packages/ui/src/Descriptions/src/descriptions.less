@@ -2,13 +2,17 @@
 
 .@{prefix-cls} {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  flex-wrap: wrap;
+  flex-grow: 0;
+  flex-shrink: 0;
+  gap: var(--gap);
 
   .group {
     display: flex;
     flex-grow: 0;
     flex-shrink: 0;
+    overflow: hidden;
+    width: 100%;
   }
 
   &-divider {
@@ -91,8 +95,6 @@
   &-label {
     display: flex;
     justify-content: flex-end;
-    font-size: 14px;
-    flex: none;
     font-family: PingFangSC, PingFang SC;
     font-weight: 400;
     font-size: 14px;
@@ -107,9 +109,6 @@
     display: flex;
     flex: auto;
     overflow-wrap: anywhere;
-    font-family: PingFangSC, PingFang SC;
-    font-weight: 400;
-    font-size: 14px;
     color: var(--text-color);
     line-height: 20px;
     text-align: left;

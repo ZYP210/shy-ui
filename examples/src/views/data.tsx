@@ -3,6 +3,7 @@ import { get } from 'lodash-es'
 import { ShyTable, BasicTitle, useShyTable } from '3h1-ui'
 import { Collapse } from 'ant-design-vue'
 import dayjs from 'dayjs'
+
 export const infoSchemas = [
   {
     label: '不含税金额',
@@ -272,6 +273,13 @@ export const descriptions: any[] = [
       ]
     }
   },
+  {
+    label: '111',
+    component: 'Input',
+    field: 'fileIds',
+    colProps: { span: 4 }
+  },
+
   {
     label: '',
     field: '-',

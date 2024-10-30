@@ -3,6 +3,7 @@ import { DescItem } from './typing'
 
 export const basicColProps = 6
 export const basicRowProps = 24
+export const basicGap = 8
 
 export const basicProps = reactive({
   schemas: {

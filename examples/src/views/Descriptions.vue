@@ -469,8 +469,6 @@ const [register, { setDescProps }] = useShyDescriptions({
   data: mockData,
   schemas: descriptions,
   isShowColon: true,
-  labelWidth: 120,
-
   bordered: true
 })
 onMounted(() => {

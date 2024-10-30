@@ -1,6 +1,6 @@
 import { defineComponent, computed, ref, unref } from 'vue'
 import { DescriptionProps, DescItem } from './typing'
-import { basicProps, basicRowProps, basicColProps } from './props'
+import { basicProps, basicRowProps, basicColProps, basicGap } from './props'
 import { Collapse } from 'ant-design-vue'
 import type { CSSProperties } from 'vue'
 import { BasicTitle as Divider, BasicHelp } from '../../Basic'
@@ -230,13 +230,13 @@ export default defineComponent({
       if (!isIfShow) return null
 
       const { componentProps, label, colProps } = group
-      const flexBasis = `${
+      const flexBasis = `calc(${
         ((colProps?.span ||
           unref(getProps)?.baseColProps?.span ||
           basicColProps) /
           basicRowProps) *
         100
-      }%`
+      }% - ${basicGap}px)`
 
       switch (componentProps?.groupType) {
         case 'Divider':
@@ -317,7 +317,9 @@ export default defineComponent({
     }
 
     return () => (
-      <div class={prefixCls}>{renderGroup(unref(getProps).schemas)}</div>
+      <div class={prefixCls} style={{ '--gap': `${basicGap}px` }}>
+        {renderGroup(unref(getProps).schemas)}
+      </div>
     )
   }
 })
