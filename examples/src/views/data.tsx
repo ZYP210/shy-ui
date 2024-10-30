@@ -100,6 +100,78 @@ const CollapseComp = defineComponent({
 })
 export const descriptions: any[] = [
   {
+    label: '销售金额变更',
+    field: '-',
+    component: 'Group',
+    componentProps: {
+      groupType: 'Divider',
+      schemas: [
+        {
+          label: '原销售预测总金额(元)',
+          field: 'oldAmount',
+          colProps: { span: 8 }
+        },
+        {
+          label: '变更后销售预测总金额(元)',
+          field: 'changeAmount',
+          colProps: { span: 16 }
+        },
+        {
+          label: '销售清单',
+          field: 'projectSaleSaveList',
+          render: ({ model }) => {
+            return (
+              <ShyTable
+                dataSource={get(model, 'projectSaleSaveList', [])}
+                columns={[
+                  {
+                    title: '客户名称',
+                    dataIndex: 'customName'
+                  },
+                  {
+                    title: '销售内容',
+                    dataIndex: 'saleInfo'
+                  },
+                  {
+                    title: '客户联系人',
+                    dataIndex: 'customContractName'
+                  },
+                  {
+                    title: '销售金额',
+                    dataIndex: 'saleAmount'
+                  },
+                  {
+                    title: '税率',
+                    dataIndex: 'taxRate'
+                  },
+                  {
+                    title: '税额',
+                    dataIndex: 'taxAmount'
+                  },
+                  {
+                    title: '备注',
+                    dataIndex: 'remark'
+                  }
+                ]}
+                canResize={false}
+                isShowFooter={false}
+                showTableSetting={false}
+                summaryTotalFields={['saleAmount', 'taxAmount']}
+              />
+            )
+          },
+          colProps: { span: 24 }
+        },
+        {
+          label: '变更说明',
+          field: 'changeExplain',
+          colProps: { span: 24 }
+        }
+      ]
+    },
+    colProps: { span: 24 }
+  },
+  {
     label: '',
     field: '-',
     component: 'Group',
