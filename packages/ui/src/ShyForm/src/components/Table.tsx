@@ -417,7 +417,6 @@ const ShyFormTable = defineComponent({
       const tempState = state.value.filter((item: any) => {
         return item[props.rowKey] !== index
       })
-      tempState.forEach((item: any) => (item[props.rowKey] = buildUUID()))
       state.value = [...tempState]
       emit('remove', state.value, index)
     }
@@ -544,13 +543,19 @@ const ShyFormTable = defineComponent({
               [props.rowKey]: ele[props.rowKey] || buildUUID()
             }
           })
+
+          state.value = value
+
           if (props.isVirtual) {
-            sourceHeight.value = value.length * ROW_HEIGHT
+            sourceHeight.value = unref(state).length * ROW_HEIGHT
 
             dataSource.value =
-              value.length > SHOW_ROW_COUNT
-                ? value.slice(curIndex.value, curIndex.value + SHOW_ROW_COUNT)
-                : value.slice(0, SHOW_ROW_COUNT)
+              unref(state).length > SHOW_ROW_COUNT
+                ? unref(state).slice(
+                    curIndex.value,
+                    curIndex.value + SHOW_ROW_COUNT
+                  )
+                : unref(state).slice(0, SHOW_ROW_COUNT)
           }
         }
       },
