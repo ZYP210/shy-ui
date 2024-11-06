@@ -28,16 +28,16 @@ export default defineComponent({
 
     const designWidth = computed(() => `${props.designWidth}px`)
     const designHeight = computed(() => `${props.designHeight}px`)
+    const resizeObserver = ref()
 
     onMounted(() => {
-      window.addEventListener('resize', setScale)
-      setTimeout(() => {
-        setScale()
-      }, 100)
+      resizeObserver.value = new ResizeObserver(setScale)
+      // 开始观察元素
+      resizeObserver.value.observe(parentScreenRef.value)
     })
 
     onUnmounted(() => {
-      window.removeEventListener('resize', setScale)
+      resizeObserver.value.disconnect()
     })
 
     return {
