@@ -112,6 +112,7 @@ const schemas = ref<ShyFormSchema[]>([
       console.log('111', formModel)
 
       return {
+        dynamicShowRemove: () => true,
         onChange: (...args) => {
           // console.log(args)
         },
