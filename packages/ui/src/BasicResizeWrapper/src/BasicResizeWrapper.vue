@@ -1,5 +1,5 @@
 <template>
-  <div :class="prefixCls" ref="currentScreenRef">
+  <div :class="prefixCls" ref="parentScreenRef">
     <div :class="`${prefixCls}-view`" ref="screenRef">
       <slot></slot>
     </div>
@@ -17,24 +17,23 @@ export default defineComponent({
     const { prefixCls } = useDesign('basic-resize-wrapper')
 
     function setScale() {
-      screenRef.value.style.transform = `scale(${
-        currentScreenRef.value.offsetWidth / props.designWidth
-      },${currentScreenRef.value.offsetHeight / props.designHeight})`
-
-      // screenRef.value.style.left = '50%';
-      // screenRef.value.style.translateX = '-50%';
+      const { width, height } = parentScreenRef.value.getBoundingClientRect()
+      screenRef.value.style.transform = `scale(${width / props.designWidth},${
+        height / props.designHeight
+      })`
     }
 
     const screenRef = ref()
-    const currentScreenRef = ref()
+    const parentScreenRef = ref()
 
     const designWidth = computed(() => `${props.designWidth}px`)
     const designHeight = computed(() => `${props.designHeight}px`)
 
-    window.addEventListener('resize', setScale)
-
     onMounted(() => {
-      setScale()
+      window.addEventListener('resize', setScale)
+      setTimeout(() => {
+        setScale()
+      }, 100)
     })
 
     onUnmounted(() => {
@@ -46,7 +45,7 @@ export default defineComponent({
       designHeight,
       prefixCls,
       screenRef,
-      currentScreenRef,
+      parentScreenRef,
       setScale,
       emit
     }
@@ -60,6 +59,11 @@ export default defineComponent({
 .@{prefix-cls} {
   --design-width: v-bind(designWidth);
   --design-height: v-bind(designHeight);
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 
   &-view {
     position: absolute;
