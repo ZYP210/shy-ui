@@ -1,5 +1,7 @@
 <template>
-  <div class="w-full h-full flex p-16px overflow-hidden shy-body bg-[var(--theme)]">
+  <div
+    class="w-full h-full flex p-16px overflow-hidden shy-body bg-[var(--theme)]"
+  >
     <div class="flex-1 overflow-hidden">
       <ConfigProvider :theme="getScopeAntColor['.shy-body']">
         <ShyTable @register="register" @selection-change="handleSelectChange">
@@ -258,20 +260,48 @@ const columns: any[] = [
   { title: '操作', dataIndex: 'action' }
 ]
 
-const searchFormSchema = Array.from({ length: 1 }, (_, i) => {
-  return {
-    label: `demo${i}`,
-    field: `demo${i}`,
-    component: 'Input',
-    componentProps: ({ ...ages }) => {
+const searchFormSchema = [
+  {
+    label: '',
+    field: 'mode',
+    defaultValue: 'year',
+    component: 'RadioButtonGroup',
+    componentProps: {
+      options: [
+        {
+          label: '月度',
+          value: 'month'
+        },
+        {
+          label: '季度',
+          value: 'quarter'
+        },
+        {
+          label: '年度',
+          value: 'year'
+        }
+      ],
+      onChange: (val) => {
+        // now.mode = val;
+      }
+    }
+  },
+  {
+    label: '年份',
+    field: 'year',
+    // defaultValue: now.date,
+    component: 'DatePicker',
+    componentProps: ({ formModel }) => {
       return {
-        onModelChange: (e) => {
-          console.log(e, ages)
+        picker: formModel.mode,
+        allowClear: false,
+        onChange: (val) => {
+          // now.date = val;
         }
       }
     }
   }
-})
+]
 
 const getHeaderActions = ({ rows, rowKeys, disabled }): ActionItem[] => {
   return [
@@ -402,75 +432,7 @@ const [
   formConfig: {
     labelWidth: 60,
     autoSubmitOnEnter: true,
-    schemas: [
-      // {
-      //   label: '日期范围',
-      //   component: 'RangePicker',
-      //   field: 'createTime'
-      // },
-      // {
-      //   label: '日期范围',
-      //   component: 'RangePicker',
-
-      //   field: 'createTime'
-      // },
-      // {
-      //   label: '日期范围',
-      //   component: 'RangePicker',
-      //   field: 'createTime'
-      // },
-      // {
-      //   label: '输入框',
-      //   component: 'Input',
-      //   componentProps: {
-      //     placeholder: ''
-      //   },
-      //   field: 'createTime'
-      // },
-      // {
-      //   label: '输入框',
-      //   component: 'Input',
-      //   field: 'createTime'
-      // },
-      // {
-      //   label: '输入框',
-      //   component: 'Input',
-      //   field: 'createTime'
-      // },
-      // {
-      //   label: '日期范围',
-      //   component: 'RangePicker',
-      //   field: 'createTime'
-      // },
-      // {
-      //   label: '输入框',
-      //   component: 'Input',
-      //   field: 'createTime'
-      // },
-      {
-        label: '输入框',
-        component: 'Select',
-        componentProps: {
-          options: [
-            {
-              label: '1111',
-              value: '1111'
-            }
-          ]
-        },
-        field: '1'
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: '2'
-      },
-      {
-        label: '输入框',
-        component: 'Input',
-        field: '3'
-      }
-    ]
+    schemas: searchFormSchema
   },
   // showSummaryTotal: true,
   summaryTotalFields: ['qualifiedNum'],

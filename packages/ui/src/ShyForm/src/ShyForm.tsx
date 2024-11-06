@@ -132,7 +132,21 @@ const ShyForm = defineComponent({
               componentProps({
                 formModel,
                 schema,
-                formActionType,
+                formActionType: {
+                  getFieldsValue,
+                  setFieldsValue,
+                  resetFields,
+                  updateSchema,
+                  resetSchema,
+                  setProps,
+                  removeSchemaByField,
+                  appendSchemaByField,
+                  clearValidate,
+                  submit: handleSubmit,
+                  validateFields,
+                  validate,
+                  scrollToField
+                },
                 tableAction: props.tableAction
               }) || {}
           } else {
@@ -407,7 +421,7 @@ const ShyForm = defineComponent({
       return span * ((unref(ROW_SLICE) + unref(ACTION_COL)) / unref(ROW_SLICE))
     }
     const allColSpanSum = computed(() => {
-      return getSchema.value.reduce((pre, cur) => {
+      return unref(getSchema).reduce((pre, cur) => {
         return (pre += getCurColSpan(cur))
       }, 0)
     })
@@ -418,7 +432,7 @@ const ShyForm = defineComponent({
       )
     })
     const isShowFormCollapse = computed(
-      () => allColSpanSum.value > unref(ROW_SLICE) + unref(ACTION_COL)
+      () => unref(allColSpanSum) > unref(ROW_SLICE) + unref(ACTION_COL)
     )
 
     const getCurColSpan = (cur) => {

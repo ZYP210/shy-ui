@@ -105,91 +105,92 @@ const bindCol = [
 
 const schemas = ref<ShyFormSchema[]>([
   {
-    label: '111',
-    field: 'group',
-    component: 'Group',
+    label: 'Table',
+    field: 'table',
+    component: 'Table',
     componentProps: ({ formModel }) => {
-      // console.log('group', formModel)
-      return {
-        schemas: [
-          {
-            label: 'Table',
-            field: 'table',
-            component: 'Table',
-            componentProps: ({ formModel }) => {
-              // console.log('111', formModel)
+      console.log('111', formModel)
 
-              return {
-                onChange: (...args) => {
-                  // console.log(args)
+      return {
+        onChange: (...args) => {
+          // console.log(args)
+        },
+        columns: [
+          {
+            title: 'input',
+            dataIndex: 'zzz'
+          },
+          {
+            title: '税率',
+            dataIndex: 'taxRate',
+            type: 'Select',
+            defaultValue: 0,
+            componentProps: {
+              options: [
+                {
+                  value: 0,
+                  label: '0',
+                  colorType: 'default',
+                  cssClass: ''
                 },
-                columns: [
-                  {
-                    title: 'input',
-                    dataIndex: 'zzz'
-                  },
-                  {
-                    title: '税率',
-                    dataIndex: 'taxRate',
-                    type: 'Select',
-                    defaultValue: 0,
-                    componentProps: {
-                      options: [
-                        {
-                          value: 0,
-                          label: '0',
-                          colorType: 'default',
-                          cssClass: ''
-                        },
-                        {
-                          value: 1,
-                          label: '1',
-                          colorType: 'default',
-                          cssClass: ''
-                        },
-                        {
-                          value: 3,
-                          label: '3',
-                          colorType: 'default',
-                          cssClass: ''
-                        },
-                        {
-                          value: 6,
-                          label: '6',
-                          colorType: 'default',
-                          cssClass: ''
-                        },
-                        {
-                          value: 9,
-                          label: '9',
-                          colorType: 'default',
-                          cssClass: ''
-                        },
-                        {
-                          value: 11,
-                          label: '11',
-                          colorType: 'default',
-                          cssClass: ''
-                        },
-                        {
-                          value: 13,
-                          label: '13',
-                          colorType: 'default',
-                          cssClass: ''
-                        }
-                      ]
-                    }
-                  }
-                ]
-              }
-            },
-            colProps: { span: 24 }
+                {
+                  value: 1,
+                  label: '1',
+                  colorType: 'default',
+                  cssClass: ''
+                },
+                {
+                  value: 3,
+                  label: '3',
+                  colorType: 'default',
+                  cssClass: ''
+                },
+                {
+                  value: 6,
+                  label: '6',
+                  colorType: 'default',
+                  cssClass: ''
+                },
+                {
+                  value: 9,
+                  label: '9',
+                  colorType: 'default',
+                  cssClass: ''
+                },
+                {
+                  value: 11,
+                  label: '11',
+                  colorType: 'default',
+                  cssClass: ''
+                },
+                {
+                  value: 13,
+                  label: '13',
+                  colorType: 'default',
+                  cssClass: ''
+                }
+              ]
+            }
           }
         ]
       }
     },
     colProps: { span: 24 }
   }
+  // {
+  //   label: '111',
+  //   field: 'group',
+  //   component: 'Group',
+  //   componentProps: ({ formModel }) => {
+  //     // console.log('group', formModel)
+  //     return {
+  //       schemas: [
+
+  //       ]
+  //     }
+  //   },
+  //   colProps: { span: 24 }
+  // }
   // {
   //   label: 'Table',
   //   field: 'table',
@@ -283,7 +284,8 @@ const handleReset = () => {
 onMounted(() => {
   setFieldsValue({
     // activeKey: { addPurchaseCost: { zzzzz: new Date().getTime() } },
-    addPurchaseCost: { projectSupplierSaveList: [{ a: '222' }] }
+    // addPurchaseCost: { projectSupplierSaveList: [{ a: '222' }] }
+    table: [{}]
   })
   // setTimeout(() => {
   //   setFieldsValue({
