@@ -311,7 +311,7 @@ const ShyFormTable = defineComponent({
 
                   const bindValue: Recordable = {
                     [isCheck ? 'checked' : 'value']:
-                      state.value[index][column.dataIndex]
+                      state.value[indexKey][column.dataIndex]
                   }
 
                   const compAttr: Recordable = {
