@@ -29,6 +29,7 @@ export interface DescriptionProps {
   contentStyle?: CSSProperties
   bordered?: boolean
   mode?: 'horizontal' | 'vertical'
+  [key: string]: any
 }
 
 export interface DescInstance {

@@ -67,7 +67,7 @@ export default defineComponent({
     const transformValue = (item) => {
       const { field, componentProps, component } = item
       const { data, summaryTotalFields } = unref(getProps)
-      if (summaryTotalFields?.length) {
+      if (summaryTotalFields?.length && summaryTotalFields.includes(field)) {
         return handleValuePrecision(item, data)
       } else if (componentProps?.options) {
         return <ShyTag value={data[`${field}`]} {...componentProps}></ShyTag>
