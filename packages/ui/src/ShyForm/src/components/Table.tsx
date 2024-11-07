@@ -88,6 +88,10 @@ const ShyFormTable = defineComponent({
         }
       }
     },
+    dynamicShowRemove: {
+      type: Function as PropType<(record: Recordable) => boolean>,
+      default: () => (record) => true
+    },
     setFormModel: {
       type: Function
     }
@@ -507,6 +511,7 @@ const ShyFormTable = defineComponent({
           ? [
               {
                 label: '删除',
+                ifShow: () => props.dynamicShowRemove(record),
                 popConfirm: {
                   title: '确定删除',
                   confirm: remove.bind(null, record[props.rowKey])
