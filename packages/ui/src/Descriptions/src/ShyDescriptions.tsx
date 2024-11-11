@@ -65,7 +65,9 @@ export default defineComponent({
     })
 
     const transformValue = (item) => {
-      const { field, componentProps, component } = item
+      const { field, componentProps: comProps, component } = item
+      const componentProps = isFunction(comProps) ? comProps() : comProps
+
       const { data, summaryTotalFields } = unref(getProps)
       if (summaryTotalFields?.length && summaryTotalFields.includes(field)) {
         return handleValuePrecision(item, data)
@@ -80,6 +82,7 @@ export default defineComponent({
           'TimePicker'
         ].includes(component)
       ) {
+        if (!data[`${field}`]) return ''
         return dayjs(data[`${field}`]).format(
           componentProps?.valueFormat || 'YYYY-MM-DD'
         )
@@ -216,6 +219,8 @@ export default defineComponent({
       )
     }
 
+    const collapseActiveKey = ref<string[]>(['1'])
+
     const renderSchema = (group: DescItem[] | DescItem) => {
       if (isArray(group)) {
         const props = pick(unref(getProps), ['bordered'])
@@ -230,37 +235,38 @@ export default defineComponent({
       if (!isIfShow) return null
 
       const { componentProps, label, colProps } = group
-      const flexBasis = `calc(${
-        ((colProps?.span ||
+
+      const realSpan =
+        (colProps?.span ||
           unref(getProps)?.baseColProps?.span ||
-          basicColProps) /
-          basicRowProps) *
-        100
-      }% - ${basicGap}px)`
+          basicColProps) / basicRowProps
+
+      const style = {
+        [`--col-span`]: `${realSpan * 100}%`,
+        [`--w-gap`]: `${realSpan * basicGap}px`
+      }
 
       switch (componentProps?.groupType) {
         case 'Divider':
           return (
-            <div
-              style={{ flexBasis }}
-              class={`${prefixCls}-divider`}
-              v-show={isShow}
-            >
+            <div style={style} class={`${prefixCls}-divider`} v-show={isShow}>
               <Divider {...componentProps}>{label}</Divider>
               <div class={`${prefixCls}-divider-content`}>
                 {renderGroup(componentProps?.schemas)}
               </div>
             </div>
           )
-        case 'Group':
+        case 'Collapse':
+        default:
           return (
-            <div
-              style={{ flexBasis }}
-              class={`${prefixCls}-group`}
-              v-show={isShow}
-            >
-              <Collapse class={`${prefixCls}-group-collapse`} bordered={false}>
+            <div style={style} class={`${prefixCls}-group`} v-show={isShow}>
+              <Collapse
+                class={`${prefixCls}-group-collapse`}
+                bordered={false}
+                v-model:activeKey={collapseActiveKey.value}
+              >
                 <Collapse.Panel
+                  key="1"
                   v-slots={{
                     header: () => <Divider {...componentProps}>{label}</Divider>
                   }}
@@ -273,11 +279,7 @@ export default defineComponent({
         case 'Custom':
           const { CustomGroupComp } = componentProps
           return (
-            <div
-              style={{ flexBasis }}
-              class={`${prefixCls}-custom`}
-              v-show={isShow}
-            >
+            <div style={style} class={`${prefixCls}-custom`} v-show={isShow}>
               <CustomGroupComp {...componentProps}>
                 {renderGroup(componentProps?.schemas)}
               </CustomGroupComp>
@@ -285,11 +287,7 @@ export default defineComponent({
           )
         case 'Origin':
           return (
-            <div
-              style={{ flexBasis }}
-              class={`${prefixCls}-origin`}
-              v-show={isShow}
-            >
+            <div style={style} class={`${prefixCls}-origin`} v-show={isShow}>
               {renderGroup(componentProps?.schemas)}
             </div>
           )

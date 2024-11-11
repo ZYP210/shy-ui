@@ -208,7 +208,7 @@ export const descriptions: any[] = [
         {
           label: '',
           field: '',
-          render: () => <span></span>,
+          render: () => <span>222</span>,
           colProps: { span: 8 }
         },
         {
@@ -256,13 +256,12 @@ export const descriptions: any[] = [
     }
   },
   {
-    label: '',
+    label: '财务信息',
     field: '-',
     component: 'Group',
     componentProps: {
-      label: '财务信息',
-      groupType: 'Custom',
       CustomGroupComp: CollapseComp,
+      isExpand: true,
       schemas: [
         {
           label: '合同额/元',

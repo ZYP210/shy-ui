@@ -12,7 +12,9 @@
     flex-grow: 0;
     flex-shrink: 0;
     overflow: hidden;
-    width: 100%;
+    flex: calc(var(--col-span) - var(--gap));
+    width: calc(var(--col-span) - var(--gap));
+    max-width: calc(var(--col-span) - var(--gap) + var(--w-gap));
   }
 
   &-divider {
@@ -120,7 +122,10 @@
   }
 
   &-row {
-    .group;
+    display: flex;
+    flex-grow: 0;
+    flex-shrink: 0;
     overflow: hidden;
+    width: 100%;
   }
 }

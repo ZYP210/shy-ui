@@ -28,11 +28,6 @@ const mockData: any = {
 
 const schemas = [
   {
-    field: 'zyp',
-    label: '故障类型',
-    component: 'DatePicker'
-  },
-  {
     field: 'faultLevel',
     label: '故障层级',
     component: 'Select',

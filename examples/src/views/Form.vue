@@ -119,8 +119,27 @@ const schemas = ref<ShyFormSchema[]>([
         columns: [
           {
             title: 'input',
+            dataIndex: 'zzz',
+            width: 500
+          },
+          {
+            title: 'input',
+            dataIndex: 'zzz',
+            type: 'Switch',
+            componentProps: {
+              checkedChildren: '开',
+              unCheckedChildren: '关'
+            }
+          },
+          {
+            title: 'input',
             dataIndex: 'zzz'
           },
+          {
+            title: 'input',
+            dataIndex: 'zzz'
+          },
+
           {
             title: '税率',
             dataIndex: 'taxRate',
@@ -283,11 +302,11 @@ const handleReset = () => {
 }
 
 onMounted(() => {
-  setFieldsValue({
-    // activeKey: { addPurchaseCost: { zzzzz: new Date().getTime() } },
-    // addPurchaseCost: { projectSupplierSaveList: [{ a: '222' }] }
-    table: [{}]
-  })
+  // setFieldsValue({
+  //   // activeKey: { addPurchaseCost: { zzzzz: new Date().getTime() } },
+  //   // addPurchaseCost: { projectSupplierSaveList: [{ a: '222' }] }
+  //   table: [{}]
+  // })
   // setTimeout(() => {
   //   setFieldsValue({
   //     table: [{ a: 9, b: 10, c: 11 }],
