@@ -301,7 +301,10 @@ export default defineComponent({
           const { CustomGroupComp } = componentProps
           return (
             <div style={style} class={`${prefixCls}-custom`} v-show={isShow}>
-              <CustomGroupComp {...componentProps}>
+              <CustomGroupComp
+                {...componentProps}
+                v-slots={{ ...componentProps?.slots }}
+              >
                 {renderGroup(componentProps?.schemas)}
               </CustomGroupComp>
             </div>
