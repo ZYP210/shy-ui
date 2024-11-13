@@ -95,11 +95,11 @@
     padding-bottom: 8px;
   }
 
-  // &-header:not(:has(.@{prefix-cls}-header-title)) .shy-search {
-  //   margin-top: 8px;
-  // }
-  
-  &-header:has(.@{prefix-cls}-header-title)  {
+  &-header:not(:has(.@{prefix-cls}-header-title)) .shy-search {
+    margin-top: 8px;
+  }
+
+  &-header:has(.@{prefix-cls}-header-title) {
     .@{namespace}-basic-title {
       margin-bottom: 0;
     }
@@ -109,5 +109,3 @@
     margin-bottom: 8px !important;
   }
 }
-
-

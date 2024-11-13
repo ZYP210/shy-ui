@@ -18,6 +18,42 @@ import { ShyTag } from '../../ShyTag'
 import './descriptions.less'
 import Descriptions from './Descriptions'
 
+const CustomCollapse = defineComponent({
+  name: 'CustomCollapse',
+  props: {
+    schema: {
+      type: Object,
+      default: () => {}
+    },
+    renderGroup: {
+      type: Function,
+      default: () => {}
+    }
+  },
+  setup(props) {
+    const { prefixCls } = useDesign('basic-descriptions')
+    const { field, componentProps, label } = props.schema
+    const collapseActiveKey = ref<string[]>([field])
+
+    return () => (
+      <Collapse
+        class={`${prefixCls}-group-collapse`}
+        bordered={false}
+        v-model:activeKey={collapseActiveKey.value}
+      >
+        <Collapse.Panel
+          key={field}
+          v-slots={{
+            header: () => <Divider {...componentProps}>{label}</Divider>
+          }}
+        >
+          {props?.renderGroup(componentProps?.schemas)}
+        </Collapse.Panel>
+      </Collapse>
+    )
+  }
+})
+
 export default defineComponent({
   name: 'ShyDescriptions',
   props: basicProps,
@@ -219,8 +255,6 @@ export default defineComponent({
       )
     }
 
-    const collapseActiveKey = ref<string[]>(['1'])
-
     const renderSchema = (group: DescItem[] | DescItem) => {
       if (isArray(group)) {
         const props = pick(unref(getProps), ['bordered'])
@@ -260,20 +294,7 @@ export default defineComponent({
         default:
           return (
             <div style={style} class={`${prefixCls}-group`} v-show={isShow}>
-              <Collapse
-                class={`${prefixCls}-group-collapse`}
-                bordered={false}
-                v-model:activeKey={collapseActiveKey.value}
-              >
-                <Collapse.Panel
-                  key="1"
-                  v-slots={{
-                    header: () => <Divider {...componentProps}>{label}</Divider>
-                  }}
-                >
-                  {renderGroup(componentProps?.schemas)}
-                </Collapse.Panel>
-              </Collapse>
+              <CustomCollapse schema={group} renderGroup={renderGroup} />
             </div>
           )
         case 'Custom':
