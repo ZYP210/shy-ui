@@ -1,4 +1,4 @@
-import { defineComponent, computed, ref, unref } from 'vue'
+import { defineComponent, computed, ref, unref, provide } from 'vue'
 import { DescriptionProps, DescItem } from './typing'
 import { basicProps, basicRowProps, basicColProps, basicGap } from './props'
 import { Collapse } from 'ant-design-vue'
@@ -59,6 +59,8 @@ export default defineComponent({
   props: basicProps,
   emits: ['register'],
   setup(props, { emit, slots }) {
+    provide('parentEmit', emit)
+
     const innerProps = ref<DescriptionProps | null>(null)
     const { prefixCls } = useDesign('basic-descriptions')
 

@@ -1,6 +1,6 @@
 <template>
   <div class="p-16px">
-    <ShyDescriptions size="middle" title="基础示例" @register="register">
+    <ShyDescriptions size="middle" title="基础示例" @register="register" @zzz="handleCustomFn">
     </ShyDescriptions>
   </div>
 </template>
@@ -24,6 +24,10 @@ const mockData: any = {
   certy: '2',
   tag: 'orange',
   faultDiscoveryProcess: '3333'
+}
+
+const handleCustomFn = () => {
+  console.log(111)
 }
 
 const schemas = [

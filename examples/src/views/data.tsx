@@ -1,8 +1,9 @@
 import { RouterLink } from 'vue-router'
 import { get } from 'lodash-es'
-import { ShyTable, BasicTitle, useShyTable } from '3h1-ui'
+import { ShyTable, BasicTitle, useShyTable, BasicButton } from '3h1-ui'
 import { Collapse } from 'ant-design-vue'
 import dayjs from 'dayjs'
+import { withModifiers } from 'vue'
 export const CollapseComp = defineComponent({
   inheritAttrs: false,
   props: {
@@ -10,6 +11,8 @@ export const CollapseComp = defineComponent({
   },
   emits: ['expand'],
   setup(props, { slots, emit }) {
+    const parentEmit = inject('parentEmit')
+
     const activeKey = ref(['1'])
 
     watch(
@@ -18,8 +21,6 @@ export const CollapseComp = defineComponent({
         emit('expand', !!val.length)
       }
     )
-
-    console.log(slots)
 
     return () => (
       <Collapse
@@ -34,7 +35,7 @@ export const CollapseComp = defineComponent({
               <BasicTitle>
                 {{
                   default: () => props.label,
-                  extra: () => slots?.extra?.(emit)
+                  extra: () => slots?.extra?.(parentEmit)
                 }}
               </BasicTitle>
             )
@@ -47,7 +48,6 @@ export const CollapseComp = defineComponent({
   }
 })
 
-export const record = ref<Recordable>({})
 
 export const projectFn = ref(() => {})
 export const infoSchemas = [
@@ -60,7 +60,7 @@ export const infoSchemas = [
       groupType: 'Custom',
       CustomGroupComp: CollapseComp,
       slots: {
-        extra: () => <span>222</span>
+        extra: (emit) => <BasicButton onClick={withModifiers(() => emit('zzz', 'zzz'), ['stop'])}>ppp</BasicButton>
       },
       onExpand: (val) => {
         console.log(val)
