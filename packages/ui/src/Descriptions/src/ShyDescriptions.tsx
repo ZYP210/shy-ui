@@ -189,6 +189,7 @@ export default defineComponent({
                 field: label
               })
             : label}
+          {getProps.value.isShowColon ? '：' : null}
           {item?.helpMessage ? (
             <BasicHelp
               class={`${prefixCls}-label-help`}
@@ -197,7 +198,6 @@ export default defineComponent({
               iconSize="9px"
             />
           ) : null}
-          {getProps.value.isShowColon ? '：' : null}
         </div>
       )
     }

@@ -48,7 +48,6 @@ export const CollapseComp = defineComponent({
   }
 })
 
-
 export const projectFn = ref(() => {})
 export const infoSchemas = [
   {
@@ -60,7 +59,13 @@ export const infoSchemas = [
       groupType: 'Custom',
       CustomGroupComp: CollapseComp,
       slots: {
-        extra: (emit) => <BasicButton onClick={withModifiers(() => emit('zzz', 'zzz'), ['stop'])}>ppp</BasicButton>
+        extra: (emit) => (
+          <BasicButton
+            onClick={withModifiers(() => emit('zzz', 'zzz'), ['stop'])}
+          >
+            ppp
+          </BasicButton>
+        )
       },
       onExpand: (val) => {
         console.log(val)
@@ -69,7 +74,12 @@ export const infoSchemas = [
         {
           label: '项目编号',
           field: 'projectCode',
-          colProps: { span: 8 }
+          colProps: { span: 8 },
+          helpMessage: (
+            <div>
+              <RouterLink to="/project">查看项目</RouterLink>
+            </div>
+          )
         },
         {
           label: '项目名称',
