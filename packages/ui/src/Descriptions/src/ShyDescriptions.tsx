@@ -196,6 +196,7 @@ export default defineComponent({
               placement="top"
               text={item?.helpMessage}
               iconSize="9px"
+              {...item?.helpComponentProps}
             />
           ) : null}
         </div>
