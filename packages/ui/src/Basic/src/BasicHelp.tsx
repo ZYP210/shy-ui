@@ -58,7 +58,7 @@ export default defineComponent({
     const prefixCls = 'shy-basic-help'
 
     const getTooltipStyle = computed(
-      (): CSSProperties => ({ color: props.color, fontSize: props.fontSize })
+      (): CSSProperties => ({ fontSize: props.fontSize })
     )
 
     const getOverlayStyle = computed(
