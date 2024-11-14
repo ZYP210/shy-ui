@@ -7,6 +7,7 @@ import { isString, isArray } from '@shy-plugins/utils'
 import { getSlot } from '@shy-plugins/utils'
 import '../style/index.less'
 import { TooltipPlacement } from 'ant-design-vue/es/tooltip'
+import { isFunction } from 'lodash-es'
 
 const props = {
   /**
@@ -83,6 +84,11 @@ export default defineComponent({
           )
         })
       }
+
+      if(isFunction(textList)) {
+        return textList()
+      }
+
       return textList
     }
 

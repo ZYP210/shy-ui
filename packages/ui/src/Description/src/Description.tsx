@@ -213,6 +213,7 @@ export default defineComponent({
                       class="mx-1"
                       text={item?.helpMessage}
                       iconSize="9px"
+                      {...item?.helpComponentProps}
                     />
                   ) : (
                     ''

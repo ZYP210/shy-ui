@@ -69,6 +69,74 @@ export const infoSchemas = [
         {
           label: '项目编号',
           field: 'projectCode',
+          helpMessage: () => (
+            <ShyTable
+              isShowHeader={false}
+              canResize={false}
+              isShowFooter={false}
+              columns={[
+                {
+                  title: '类型',
+                  dataIndex: 'a',
+                  width: 100,
+                  align: 'center',
+                },
+                {
+                  title: '一类',
+                  dataIndex: 'b',
+                  width: 100,
+                  align: 'center',
+                },
+                {
+                  title: '二类',
+                  dataIndex: 'c',
+                  width: 100,
+                  align: 'center',
+                },
+                {
+                  title: '三类',
+                  dataIndex: 'd',
+                  width: 100,
+                  align: 'center',
+                },
+                {
+                  title: '备注',
+                  dataIndex: 'e',
+                  ellipsis: false,
+                  width: 350,
+                  customCell: (_, index) => {
+                    if (!index) {
+                      return { rowSpan: 2, style: { 'white-space': 'pre-wrap' } }
+                    }
+                    return { rowSpan: 0 }
+                  }
+                }
+              ]}
+              dataSource={[
+                {
+                  a: '标准',
+                  b: '300/晚',
+                  c: '250/晚',
+                  d: '180/晚',
+                  e: `一类：北京、上海、广州、深圳；\n二类：省会城市及天津、重庆、大连、厦门、青岛、无锡、苏州；\n三类：其他城市、县城及乡镇。\n\n高层管理人员（副总及以上）不超以上标准的1.5倍。`
+                },
+                {
+                  a: '同性别同住',
+                  b: '350/晚',
+                  c: '280/晚',
+                  d: '200/晚',
+                  e: ''
+                }
+              ]}
+            />
+          ),
+          helpComponentProps: {
+            overlayInnerStyle: {
+              width: '800px'
+            },
+            color: 'var(--theme)',
+            placement: 'rightBottom'
+          },
           colProps: { span: 8 }
         },
         {
