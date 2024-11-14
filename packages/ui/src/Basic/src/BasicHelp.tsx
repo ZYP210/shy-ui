@@ -1,4 +1,4 @@
-import type { CSSProperties, PropType } from 'vue'
+import type { CSSProperties, JSXComponent, PropType } from 'vue'
 import { defineComponent, computed, unref } from 'vue'
 import { Tooltip } from 'ant-design-vue'
 import { QuestionCircleOutlined } from '@ant-design/icons-vue'
@@ -6,6 +6,7 @@ import { getPopupContainer } from '@shy-plugins/utils'
 import { isString, isArray } from '@shy-plugins/utils'
 import { getSlot } from '@shy-plugins/utils'
 import '../style/index.less'
+import { TooltipPlacement } from 'ant-design-vue/es/tooltip'
 
 const props = {
   /**
@@ -31,11 +32,15 @@ const props = {
   /**
    * Help text list
    */
-  placement: { type: String, default: 'right' },
+  placement: { type: String as PropType<TooltipPlacement>, default: 'right' },
   /**
    * Help text list
    */
-  text: { type: [Array, String] as PropType<string[] | string> },
+  text: {
+    type: [Array, String, Function] as PropType<
+      string | string[] | JSXComponent | JSX.Element
+    >
+  },
   /**
    * Help text font size
    * @default: 14px
@@ -78,17 +83,18 @@ export default defineComponent({
           )
         })
       }
-      return null
+      return textList
     }
 
     return () => {
       return (
         <Tooltip
+          {...props}
           overlayClassName={`${prefixCls}__wrap`}
           title={<div style={unref(getTooltipStyle)}>{renderTitle()}</div>}
           autoAdjustOverflow={true}
           overlayStyle={unref(getOverlayStyle)}
-          placement={props.placement as 'right'}
+          placement={props.placement}
           getPopupContainer={() => getPopupContainer()}
         >
           <span class={prefixCls}>

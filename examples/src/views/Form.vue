@@ -16,10 +16,17 @@
     </ShyForm>
     <!-- <div class="h-2000px"></div> -->
   </div>
+  x
 </template>
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type { ShyFormSchema } from '3h1-ui'
-import { useShyForm, ShyApiModalSelect, ShyForm, BasicButton } from '3h1-ui'
+import {
+  useShyForm,
+  ShyApiModalSelect,
+  ShyForm,
+  ShyTable,
+  BasicButton
+} from '3h1-ui'
 import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
 import { h, onMounted } from 'vue'
@@ -105,98 +112,172 @@ const bindCol = [
 
 const schemas = ref<ShyFormSchema[]>([
   {
-    label: 'Table',
-    field: 'table',
-    component: 'Table',
-    componentProps: ({ formModel }) => {
-      console.log('111', formModel)
-
-      return {
-        dynamicShowRemove: () => true,
-        onChange: (...args) => {
-          // console.log(args)
-        },
-        columns: [
+    label: '111',
+    field: 'group',
+    helpMessage: () => (
+      <ShyTable
+        isShowHeader={false}
+        canResize={false}
+        isShowFooter={false}
+        columns={[
           {
-            title: 'input',
-            dataIndex: 'zzz',
-            width: 500
+            title: '类型',
+            dataIndex: 'a',
+            width: 100,
+            align: 'center',
           },
           {
-            title: 'input',
-            dataIndex: 'zzz',
-            type: 'Switch',
-            componentProps: {
-              checkedChildren: '开',
-              unCheckedChildren: '关'
-            }
+            title: '一类',
+            dataIndex: 'b',
+            width: 100,
+            align: 'center',
           },
           {
-            title: 'input',
-            dataIndex: 'zzz'
+            title: '二类',
+            dataIndex: 'c',
+            width: 100,
+            align: 'center',
           },
           {
-            title: 'input',
-            dataIndex: 'zzz'
+            title: '三类',
+            dataIndex: 'd',
+            width: 100,
+            align: 'center',
           },
-
           {
-            title: '税率',
-            dataIndex: 'taxRate',
-            type: 'Select',
-            defaultValue: 0,
-            componentProps: {
-              options: [
-                {
-                  value: 0,
-                  label: '0',
-                  colorType: 'default',
-                  cssClass: ''
-                },
-                {
-                  value: 1,
-                  label: '1',
-                  colorType: 'default',
-                  cssClass: ''
-                },
-                {
-                  value: 3,
-                  label: '3',
-                  colorType: 'default',
-                  cssClass: ''
-                },
-                {
-                  value: 6,
-                  label: '6',
-                  colorType: 'default',
-                  cssClass: ''
-                },
-                {
-                  value: 9,
-                  label: '9',
-                  colorType: 'default',
-                  cssClass: ''
-                },
-                {
-                  value: 11,
-                  label: '11',
-                  colorType: 'default',
-                  cssClass: ''
-                },
-                {
-                  value: 13,
-                  label: '13',
-                  colorType: 'default',
-                  cssClass: ''
-                }
-              ]
+            title: '备注',
+            dataIndex: 'e',
+            ellipsis: false,
+            width: 350,
+            customCell: (_, index) => {
+              if (!index) {
+                return { rowSpan: 2, style: { 'white-space': 'pre-wrap' } }
+              }
+              return { rowSpan: 0 }
             }
           }
-        ]
-      }
+        ]}
+        dataSource={[
+          {
+            a: '标准',
+            b: '300/晚',
+            c: '250/晚',
+            d: '180/晚',
+            e: `一类：北京、上海、广州、深圳；\n二类：省会城市及天津、重庆、大连、厦门、青岛、无锡、苏州；\n三类：其他城市、县城及乡镇。\n\n高层管理人员（副总及以上）不超以上标准的1.5倍。`
+          },
+          {
+            a: '同性别同住',
+            b: '350/晚',
+            c: '280/晚',
+            d: '200/晚',
+            e: ''
+          }
+        ]}
+      />
+    ),
+    helpComponentProps: {
+      overlayInnerStyle: {
+        width: '800px'
+      },
+      color: 'var(--theme)',
+      placement: 'rightBottom'
     },
+    component: 'Input',
     colProps: { span: 24 }
   }
+  // {/*  */
+  //   label: 'Table',
+  //   field: 'table',
+  //   component: 'Table',
+  //   componentProps: ({ formModel }) => {
+  //     console.log('111', formModel)
+
+  //     return {
+  //       dynamicShowRemove: () => true,
+  //       onChange: (...args) => {
+  //         // console.log(args)
+  //       },
+  //       columns: [
+  //         {
+  //           title: 'input',
+  //           dataIndex: 'zzz',
+  //           width: 500
+  //         },
+  //         {
+  //           title: 'input',
+  //           dataIndex: 'zzz',
+  //           type: 'Switch',
+  //           componentProps: {
+  //             checkedChildren: '开',
+  //             unCheckedChildren: '关'
+  //           }
+  //         },
+  //         {
+  //           title: 'input',
+  //           dataIndex: 'zzz'
+  //         },
+  //         {
+  //           title: 'input',
+  //           dataIndex: 'zzz'
+  //         },
+
+  //         {
+  //           title: '税率',
+  //           dataIndex: 'taxRate',
+  //           type: 'Select',
+  //           defaultValue: 0,
+  //           componentProps: {
+  //             options: [
+  //               {
+  //                 value: 0,
+  //                 label: '0',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 1,
+  //                 label: '1',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 3,
+  //                 label: '3',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 6,
+  //                 label: '6',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 9,
+  //                 label: '9',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 11,
+  //                 label: '11',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               },
+  //               {
+  //                 value: 13,
+  //                 label: '13',
+  //                 colorType: 'default',
+  //                 cssClass: ''
+  //               }
+  //             ]
+  //           }
+  //         }
+  //       ]
+  //     }
+  //   },
+  //   colProps: { span: 24 }
+  // }
   // {
   //   label: '111',
   //   field: 'group',
