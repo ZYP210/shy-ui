@@ -58,6 +58,8 @@ const ShyForm = defineComponent({
     'field-value-change'
   ],
   setup(props, { emit, attrs, slots }) {
+    provide('parentEmit', emit)
+
     const formModel = reactive<Recordable>({})
     const modalFn = useModalContext()
 

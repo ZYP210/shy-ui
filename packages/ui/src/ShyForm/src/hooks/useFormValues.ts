@@ -9,7 +9,7 @@ import {
 import { unref } from 'vue'
 import type { Ref, ComputedRef } from 'vue'
 import type { FormProps, FormSchema } from '../types/form'
-import { cloneDeep, isBoolean, set } from 'lodash-es'
+import { cloneDeep, isBoolean, isNumber, set } from 'lodash-es'
 import dayjs from 'dayjs'
 
 interface UseFormValuesContext {
@@ -171,6 +171,20 @@ export function useFormValues({
           !isBoolean(_props?.groupInObject) ||
           (isBoolean(_props.groupInObject) && _props.groupInObject)
 
+        const isDeconstruct =
+          !isNumber(_props?.deconstructLevel) ||
+          (isNumber(_props.deconstructLevel) && _props.deconstructLevel)
+
+        if (isGroup && !isGroupInObj && isDeconstruct && link) {
+          treeExpandSchema(
+            _props.schemas,
+            true,
+            [...`${linkField}`!.split('.'), item.field]
+              .slice(0, -_props.deconstructLevel)
+              .join('.')
+          )
+        }
+
         if (isGroup && !isGroupInObj) {
           return treeExpandSchema(_props.schemas)
         }
@@ -191,11 +205,14 @@ export function useFormValues({
           item.field = [linkField, item.field].join('.')
         }
 
+        item.field.startsWith('.') && (item.field = item.field.slice(1))
+
         return item
       })
     }
 
     const schemas = treeExpandSchema(unref(getSchema))
+    console.log(schemas)
     const obj: Recordable = {}
     schemas.forEach((item) => {
       const { defaultValue } = item

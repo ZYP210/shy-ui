@@ -5,7 +5,12 @@
       <!-- <Button @click="handlePush">push200条数据</Button> -->
       <Button @click="handleReset">reset</Button>
     </div>
-    <ShyForm :labelWidth="100" @register="registerForm" @submit="handleSubmit">
+    <ShyForm
+      :labelWidth="100"
+      @register="registerForm"
+      @submit="handleSubmit"
+      @zzz="handleCustomFn"
+    >
       <template #ApiModalSelect="{ model, field }">
         <ShyApiModalSelect
           v-model:value="model[field]"
@@ -16,7 +21,6 @@
     </ShyForm>
     <!-- <div class="h-2000px"></div> -->
   </div>
-  x
 </template>
 <script lang="tsx" setup>
 import type { ShyFormSchema } from '3h1-ui'
@@ -38,6 +42,10 @@ import customComp from '../components/customComp'
 
 const { useToken } = theme
 const { token } = useToken()
+
+const handleCustomFn = (...args) => {
+  console.log(args)
+}
 
 // const handlePush = () => {
 //   setFieldsValue({
@@ -124,25 +132,25 @@ const schemas = ref<ShyFormSchema[]>([
             title: '类型',
             dataIndex: 'a',
             width: 100,
-            align: 'center',
+            align: 'center'
           },
           {
             title: '一类',
             dataIndex: 'b',
             width: 100,
-            align: 'center',
+            align: 'center'
           },
           {
             title: '二类',
             dataIndex: 'c',
             width: 100,
-            align: 'center',
+            align: 'center'
           },
           {
             title: '三类',
             dataIndex: 'd',
             width: 100,
-            align: 'center',
+            align: 'center'
           },
           {
             title: '备注',
@@ -182,6 +190,54 @@ const schemas = ref<ShyFormSchema[]>([
       color: 'var(--theme)',
       placement: 'rightBottom'
     },
+    component: 'Group',
+    componentProps: {
+      schemas: [
+        {
+          label: '777',
+          field: 'c-group',
+          component: 'Group',
+          componentProps: {
+            groupType: 'Custom',
+            groupInObject: false,
+            CustomGroupComp: defineComponent({
+              setup(_, { slots }) {
+                const parentEmit = inject('parentEmit')
+
+                return () => (
+                  <div>
+                    {11111}
+                    {slots?.extra?.(parentEmit)}
+                    {222222}
+                    {slots?.default?.()}
+                  </div>
+                )
+              }
+            }),
+            // deconstructLevel: 1,
+            slots: {
+              extra: (emit) => (
+                <div onClick={() => emit('zzz', 1111)}>extra</div>
+              )
+            },
+            schemas: [
+              {
+                label: '999',
+                field: 'c-input',
+                component: 'Input',
+                colProps: { span: 24 }
+              }
+            ]
+          },
+          colProps: { span: 24 }
+        }
+      ]
+    },
+    colProps: { span: 24 }
+  },
+  {
+    label: '999',
+    field: 'c-input',
     component: 'Input',
     colProps: { span: 24 }
   }
@@ -383,11 +439,11 @@ const handleReset = () => {
 }
 
 onMounted(() => {
-  // setFieldsValue({
-  //   // activeKey: { addPurchaseCost: { zzzzz: new Date().getTime() } },
-  //   // addPurchaseCost: { projectSupplierSaveList: [{ a: '222' }] }
-  //   table: [{}]
-  // })
+  setFieldsValue({
+    // activeKey: { addPurchaseCost: { zzzzz: new Date().getTime() } },
+    // addPurchaseCost: { projectSupplierSaveList: [{ a: '222' }] }
+    'c-input': 8888
+  })
   // setTimeout(() => {
   //   setFieldsValue({
   //     table: [{ a: 9, b: 10, c: 11 }],

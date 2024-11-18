@@ -29,6 +29,13 @@ const Group = defineComponent({
     },
     CustomGroupComp: {
       type: Object as PropType<JSXComponent>
+    },
+    slots: {
+      type: Object as PropType<Record<string, JSXComponent>>
+    },
+    deconstructLevel: {
+      type: Number,
+      default: 0
     }
   },
   setup(props) {
@@ -73,8 +80,8 @@ const Group = defineComponent({
 
     const renderGroup = () => {
       const { schema, tableAction, formModel, formActionType } = props
-      let { componentProps, colProps } = props.schema
-
+      let { componentProps: _componentProps, colProps } = props.schema
+      let componentProps: any = _componentProps
       if (isFunction(componentProps)) {
         componentProps =
           componentProps({
@@ -147,7 +154,10 @@ const Group = defineComponent({
             if (!CustomGroupComp) return
 
             return (
-              <CustomGroupComp {...componentProps}>
+              <CustomGroupComp
+                {...componentProps}
+                v-slots={{ ...componentProps?.slots }}
+              >
                 {renderFormItems()}
               </CustomGroupComp>
             )
