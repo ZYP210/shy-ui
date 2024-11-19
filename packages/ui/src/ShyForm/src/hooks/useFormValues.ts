@@ -176,7 +176,7 @@ export function useFormValues({
           (isNumber(_props.deconstructLevel) && _props.deconstructLevel)
 
         if (isGroup && !isGroupInObj && isDeconstruct && link) {
-          treeExpandSchema(
+          return treeExpandSchema(
             _props.schemas,
             true,
             [...`${linkField}`!.split('.'), item.field]
@@ -212,7 +212,6 @@ export function useFormValues({
     }
 
     const schemas = treeExpandSchema(unref(getSchema))
-    console.log(schemas)
     const obj: Recordable = {}
     schemas.forEach((item) => {
       const { defaultValue } = item

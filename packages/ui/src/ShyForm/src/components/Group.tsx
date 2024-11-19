@@ -39,6 +39,7 @@ const Group = defineComponent({
     }
   },
   setup(props) {
+    const { CustomGroupComp } = props
     const activeKey = shallowRef([props.schema.field])
 
     const { prefixCls } = useDesign('ant-form')
@@ -66,7 +67,13 @@ const Group = defineComponent({
                     : [props.schema.field]),
                   schema.field
                 ]
-              : schema.field
+              : [
+                  ...(isArray(props.schema.field)
+                    ? props.schema.field
+                    : [props.schema.field]
+                  ).slice(0, -props.deconstructLevel),
+                  schema.field
+                ]
           }}
         ></FormItem>
       )
@@ -150,7 +157,6 @@ const Group = defineComponent({
           return renderFormItems()
         case 'Custom':
           return (() => {
-            const { CustomGroupComp } = props
             if (!CustomGroupComp) return
 
             return (

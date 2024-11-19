@@ -23,6 +23,7 @@ import {
   get,
   has,
   isBoolean,
+  isNumber,
   set,
   uniqBy
 } from 'lodash-es'
@@ -93,6 +94,20 @@ export function useFormEvents({
         const isGroupInObj =
           !isBoolean(_props?.groupInObject) ||
           (isBoolean(_props.groupInObject) && _props.groupInObject)
+
+        const isDeconstruct =
+          !isNumber(_props?.deconstructLevel) ||
+          (isNumber(_props.deconstructLevel) && _props.deconstructLevel)
+
+        if (isGroup && !isGroupInObj && isDeconstruct && link) {
+          return treeExpandSchema(
+            _props.schemas,
+            true,
+            [...`${linkField}`!.split('.'), item.field]
+              .slice(0, -_props.deconstructLevel)
+              .join('.')
+          )
+        }
 
         if (isGroup && !isGroupInObj) {
           return treeExpandSchema(_props.schemas)

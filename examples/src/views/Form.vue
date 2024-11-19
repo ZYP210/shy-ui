@@ -44,7 +44,7 @@ const { useToken } = theme
 const { token } = useToken()
 
 const handleCustomFn = (...args) => {
-  console.log(args)
+  // console.log(args)
 }
 
 // const handlePush = () => {
@@ -120,303 +120,118 @@ const bindCol = [
 
 const schemas = ref<ShyFormSchema[]>([
   {
-    label: '111',
-    field: 'group',
-    helpMessage: () => (
-      <ShyTable
-        isShowHeader={false}
-        canResize={false}
-        isShowFooter={false}
-        columns={[
-          {
-            title: '类型',
-            dataIndex: 'a',
-            width: 100,
-            align: 'center'
-          },
-          {
-            title: '一类',
-            dataIndex: 'b',
-            width: 100,
-            align: 'center'
-          },
-          {
-            title: '二类',
-            dataIndex: 'c',
-            width: 100,
-            align: 'center'
-          },
-          {
-            title: '三类',
-            dataIndex: 'd',
-            width: 100,
-            align: 'center'
-          },
-          {
-            title: '备注',
-            dataIndex: 'e',
-            ellipsis: false,
-            width: 350,
-            customCell: (_, index) => {
-              if (!index) {
-                return { rowSpan: 2, style: { 'white-space': 'pre-wrap' } }
-              }
-              return { rowSpan: 0 }
-            }
-          }
-        ]}
-        dataSource={[
-          {
-            a: '标准',
-            b: '300/晚',
-            c: '250/晚',
-            d: '180/晚',
-            e: `一类：北京、上海、广州、深圳；\n二类：省会城市及天津、重庆、大连、厦门、青岛、无锡、苏州；\n三类：其他城市、县城及乡镇。\n\n高层管理人员（副总及以上）不超以上标准的1.5倍。`
-          },
-          {
-            a: '同性别同住',
-            b: '350/晚',
-            c: '280/晚',
-            d: '200/晚',
-            e: ''
-          }
-        ]}
-      />
-    ),
-    helpComponentProps: {
-      overlayInnerStyle: {
-        width: '800px'
-      },
-      color: 'var(--theme)',
-      placement: 'rightBottom'
-    },
+    label: '',
+    field: 'xzz',
     component: 'Group',
     componentProps: {
+      groupType: 'Origin',
       schemas: [
         {
-          label: '777',
-          field: 'c-group',
+          label: '',
+          field: 'xzz-time',
           component: 'Group',
           componentProps: {
-            groupType: 'Custom',
             groupInObject: false,
-            CustomGroupComp: defineComponent({
-              setup(_, { slots }) {
-                const parentEmit = inject('parentEmit')
-
-                return () => (
-                  <div>
-                    {11111}
-                    {slots?.extra?.(parentEmit)}
-                    {222222}
-                    {slots?.default?.()}
-                  </div>
-                )
-              }
-            }),
-            // deconstructLevel: 1,
-            slots: {
-              extra: (emit) => (
-                <div onClick={() => emit('zzz', 1111)}>extra</div>
-              )
-            },
+            deconstructLevel: 1,
+            slots: {},
             schemas: [
               {
-                label: '999',
-                field: 'c-input',
-                component: 'Input',
-                colProps: { span: 24 }
+                label: '',
+                field: 'date',
+                component: 'DatePicker',
+                colProps: {
+                  span: 6
+                }
               }
             ]
           },
-          colProps: { span: 24 }
+          colProps: {
+            span: 24
+          }
+        },
+        {
+          label: '',
+          field: 'xzz',
+          component: 'Group',
+          componentProps: {
+            parentField: 'xzz',
+            groupType: 'Custom',
+            CustomGroupComp: defineComponent({
+              setup(_, { slots }) {
+                return () => <div>{slots?.default?.()}</div>
+              }
+            }),
+            slots: {},
+            schemas: [
+              {
+                label: '',
+                field: 'text',
+                component: 'InputTextArea',
+                componentProps: {
+                  autoSize: true
+                },
+                colProps: {
+                  span: 24
+                }
+              }
+            ]
+          },
+          colProps: {
+            span: 24
+          }
+        },
+        {
+          label: '新增功能🌟',
+          field: 'zzz',
+          component: 'Group',
+          componentProps: {
+            title: '新增功能🌟',
+            parentField: 'xzz',
+            slots: {},
+            schemas: [
+              {
+                label: '',
+                field: 'title',
+                component: 'Input',
+                show: false
+              },
+              {
+                label: '',
+                field: 'zzz',
+                component: 'Group',
+                componentProps: {
+                  parentField: 'zzz',
+                  slots: {},
+                  schemas: [
+                    {
+                      label: '',
+                      field: 'text',
+                      component: 'InputTextArea',
+                      componentProps: {
+                        autoSize: true
+                      },
+                      colProps: {
+                        span: 24
+                      }
+                    }
+                  ]
+                },
+                colProps: {
+                  span: 24
+                }
+              }
+            ]
+          },
+          colProps: {
+            span: 24
+          }
         }
       ]
     },
-    colProps: { span: 24 }
-  },
-  {
-    label: '999',
-    field: 'c-input',
-    component: 'Input',
-    colProps: { span: 24 }
+    colProps: {
+      span: 24
+    }
   }
-  // {/*  */
-  //   label: 'Table',
-  //   field: 'table',
-  //   component: 'Table',
-  //   componentProps: ({ formModel }) => {
-  //     console.log('111', formModel)
-
-  //     return {
-  //       dynamicShowRemove: () => true,
-  //       onChange: (...args) => {
-  //         // console.log(args)
-  //       },
-  //       columns: [
-  //         {
-  //           title: 'input',
-  //           dataIndex: 'zzz',
-  //           width: 500
-  //         },
-  //         {
-  //           title: 'input',
-  //           dataIndex: 'zzz',
-  //           type: 'Switch',
-  //           componentProps: {
-  //             checkedChildren: '开',
-  //             unCheckedChildren: '关'
-  //           }
-  //         },
-  //         {
-  //           title: 'input',
-  //           dataIndex: 'zzz'
-  //         },
-  //         {
-  //           title: 'input',
-  //           dataIndex: 'zzz'
-  //         },
-
-  //         {
-  //           title: '税率',
-  //           dataIndex: 'taxRate',
-  //           type: 'Select',
-  //           defaultValue: 0,
-  //           componentProps: {
-  //             options: [
-  //               {
-  //                 value: 0,
-  //                 label: '0',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 1,
-  //                 label: '1',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 3,
-  //                 label: '3',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 6,
-  //                 label: '6',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 9,
-  //                 label: '9',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 11,
-  //                 label: '11',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 13,
-  //                 label: '13',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               }
-  //             ]
-  //           }
-  //         }
-  //       ]
-  //     }
-  //   },
-  //   colProps: { span: 24 }
-  // }
-  // {
-  //   label: '111',
-  //   field: 'group',
-  //   component: 'Group',
-  //   componentProps: ({ formModel }) => {
-  //     // console.log('group', formModel)
-  //     return {
-  //       schemas: [
-
-  //       ]
-  //     }
-  //   },
-  //   colProps: { span: 24 }
-  // }
-  // {
-  //   label: 'Table',
-  //   field: 'table',
-  //   component: 'Table',
-  //   componentProps: ({ formModel }) => {
-  //     console.log('table', formModel)
-
-  //     return {
-  //       onChange: (...args) => {
-  //         console.log(args)
-  //       },
-  //       columns: [
-  //         {
-  //           title: '税率',
-  //           dataIndex: 'taxRate',
-  //           type: 'Select',
-  //           defaultValue: 0,
-  //           componentProps: {
-  //             options: [
-  //               {
-  //                 value: 0,
-  //                 label: '0',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 1,
-  //                 label: '1',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 3,
-  //                 label: '3',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 6,
-  //                 label: '6',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 9,
-  //                 label: '9',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 11,
-  //                 label: '11',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               },
-  //               {
-  //                 value: 13,
-  //                 label: '13',
-  //                 colorType: 'default',
-  //                 cssClass: ''
-  //               }
-  //             ]
-  //           }
-  //         }
-  //       ]
-  //     }
-  //   },
-  //   colProps: { span: 24 }
-  // }
 ])
 const { createMessage } = useMessage()
 const [
@@ -429,7 +244,7 @@ const [
   layout: 'vertical',
   baseColProps: { span: 8 },
   onFieldValueChange: (field, value) => {
-    console.log('field', field, value)
+    // console.log('field', field, value)
   }
   // showActionButtonGroup: true
 })
@@ -440,9 +255,18 @@ const handleReset = () => {
 
 onMounted(() => {
   setFieldsValue({
-    // activeKey: { addPurchaseCost: { zzzzz: new Date().getTime() } },
-    // addPurchaseCost: { projectSupplierSaveList: [{ a: '222' }] }
-    'c-input': 8888
+    xzz: {
+      date: '2024-11-14T01:51:36.695Z',
+      xzz: {
+        text: '💥💥 重要提醒 💥💥\n今晚对禾管家二期系统进行升级，当前版本为V2.0.9,更新内容如下：'
+      },
+      zzz: {
+        title: '新增功能🌟',
+        zzz: {
+          text: '入库管理：在带入库单模块中添加直发功能'
+        }
+      }
+    }
   })
   // setTimeout(() => {
   //   setFieldsValue({

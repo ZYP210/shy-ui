@@ -179,7 +179,7 @@ const ShyForm = defineComponent({
             }
           }
 
-          if (schema.component === 'Input') {
+          if (schema.component.includes('Input')) {
             schema.defaultValue = schema.defaultValue || ''
           }
 
@@ -187,8 +187,8 @@ const ShyForm = defineComponent({
             schema.defaultValue = schema.defaultValue || reactive([])
           }
 
-          if (schema.component === 'Group') {
-            schema.defaultValue = schema.defaultValue || reactive({})
+          if (schema.component === 'Group' && componentProps) {
+            // schema.defaultValue = schema.defaultValue || reactive({})
 
             return {
               ...schema,
@@ -202,7 +202,7 @@ const ShyForm = defineComponent({
 
                 return {
                   ..._c_props,
-                  schemas: treeExpandField(_c_props.schemas)
+                  schemas: treeExpandField(cloneDeep(_c_props.schemas))
                 }
               }
             }
