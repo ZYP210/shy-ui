@@ -233,7 +233,8 @@ export default defineComponent({
           field: item.field,
           model: data,
           values: data as Recordable,
-          schema: item
+          schema: item,
+          transformValue
         }
       }
     })
