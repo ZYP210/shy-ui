@@ -179,7 +179,7 @@ const ShyForm = defineComponent({
             }
           }
 
-          if (schema.component.includes('Input')) {
+          if (schema?.component?.includes?.('Input')) {
             schema.defaultValue = schema.defaultValue || ''
           }
 
