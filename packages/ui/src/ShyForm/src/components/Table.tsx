@@ -30,6 +30,10 @@ import { TableRowSelection } from 'ant-design-vue/es/table/interface'
 
 const ShyFormTable = defineComponent({
   props: {
+    isShowIndex: {
+      type: Boolean,
+      default: true
+    },
     rowKey: {
       type: String,
       default: () => 'uuid'
@@ -133,7 +137,7 @@ const ShyFormTable = defineComponent({
       }
 
       return [
-        indexColumn,
+        ...(props?.isShowIndex ? [indexColumn] : []),
         ...props.columns.map((item: any) => ({
           ...item,
           type: item.type ? item.type : 'input'
