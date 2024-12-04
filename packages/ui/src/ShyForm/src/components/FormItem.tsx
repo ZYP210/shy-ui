@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import { computed, defineComponent, toRefs, unref, ref } from 'vue'
+import { computed, defineComponent, toRefs, unref, ref, watch } from 'vue'
 import type { FormProps, FormSchema } from '../types/form'
 import type { Rule as ValidationRule } from 'ant-design-vue/lib/form/interface'
 
@@ -45,105 +45,116 @@ const FormItem = defineComponent({
 
     const isTableForm = computed(() => !!formProps.value.formLabelInInput)
 
-    const flag = ref(0)
+    const componentsPropsRef = ref<Recordable>({})
 
-    const getComponentsProps = computed(() => {
-      const { schema, tableAction, formModel, formActionType } = props
+    watch(
+      () => props.formModel,
+      () => {
+        const { schema, tableAction, formModel, formActionType } = props
 
-      let { componentProps = {} as any } = schema
-      if (isFunction(componentProps)) {
-        componentProps =
-          componentProps({ schema, tableAction, formModel, formActionType }) ??
-          {}
-      }
+        let { componentProps = {} as any } = schema
+        if (isFunction(componentProps)) {
+          componentProps =
+            componentProps({
+              schema,
+              tableAction,
+              formModel,
+              formActionType
+            }) ?? {}
+        }
 
-      if (schema.component === 'Divider') {
-        componentProps = Object.assign({ type: 'horizontal' }, componentProps, {
-          orientation: 'left',
-          plain: true,
-          label: schema?.label || ''
-        })
-      }
+        if (schema.component === 'Divider') {
+          componentProps = Object.assign(
+            { type: 'horizontal' },
+            componentProps,
+            {
+              orientation: 'left',
+              plain: true,
+              label: schema?.label || ''
+            }
+          )
+        }
 
-      if (schema.component === 'Group') {
-        componentProps = Object.assign(componentProps, {
-          ...props
-        })
-      }
+        if (schema.component === 'Group') {
+          componentProps = Object.assign(componentProps, {
+            ...props
+          })
+        }
 
-      if (
-        schema.component.includes('Picker') ||
-        schema.component.includes('Select')
-      ) {
-        componentProps.getPopupContainer = () => document.body
-      }
+        if (
+          schema.component.includes('Picker') ||
+          schema.component.includes('Select')
+        ) {
+          componentProps.getPopupContainer = () => document.body
+        }
 
-      if (['RangePicker', 'DatePicker'].includes(schema.component)) {
-        componentProps.monthCellRender = ({ current }) => {
-          if (current.month() === new Date().getMonth()) {
+        if (['RangePicker', 'DatePicker'].includes(schema.component)) {
+          componentProps.monthCellRender = ({ current }) => {
+            if (current.month() === new Date().getMonth()) {
+              return (
+                <div class="ant-picker-cell-inner ant-picker-cell-now">
+                  {`${current.month() + 1}月`}
+                </div>
+              )
+            }
             return (
-              <div class="ant-picker-cell-inner ant-picker-cell-now">
+              <div class="ant-picker-cell-inner">
                 {`${current.month() + 1}月`}
               </div>
             )
           }
-          return (
-            <div class="ant-picker-cell-inner">
-              {`${current.month() + 1}月`}
-            </div>
-          )
         }
-      }
 
-      if (
-        schema.component === 'Input' ||
-        schema.component === 'InputTextArea'
-      ) {
-        const maxlength =
-          componentProps?.maxlength === undefined
-            ? 100
-            : componentProps.maxlength
-        componentProps = Object.assign({}, componentProps, {
-          maxlength
-        })
-        componentProps.onInputEvent = (e) => {
-          flag.value += 1
-
-          componentProps.maxlength =
+        if (
+          schema.component === 'Input' ||
+          schema.component === 'InputTextArea'
+        ) {
+          const maxlength =
             componentProps?.maxlength === undefined
               ? 100
               : componentProps.maxlength
+          componentProps = Object.assign({}, componentProps, {
+            maxlength
+          })
+          componentProps.onInputEvent = (e) => {
+            componentProps.maxlength =
+              componentProps?.maxlength === undefined
+                ? 100
+                : componentProps.maxlength
 
-          if (!get(getValues.value.model, getValues.value.schema.field)) {
-            componentProps.showCount = true
-          } else {
-            componentProps.showCount = false
+            if (!get(getValues.value.model, getValues.value.schema.field)) {
+              componentProps.showCount = true
+            } else {
+              componentProps.showCount = false
+            }
           }
         }
-        flag.value
-      }
 
-      if (schema.component === 'Select') {
-        const label = componentProps?.fieldNames?.label || 'label'
-        componentProps = Object.assign({}, componentProps, {
-          showSearch: true,
-          filterOption: (input: string, option: any) => {
-            return option[label].toLowerCase().indexOf(input.toLowerCase()) >= 0
-          },
-          getPopupContainer: () => document.body
-        })
-      }
+        if (schema.component === 'Select') {
+          const label = componentProps?.fieldNames?.label || 'label'
+          componentProps = Object.assign({}, componentProps, {
+            showSearch: true,
+            filterOption: (input: string, option: any) => {
+              return (
+                option[label].toLowerCase().indexOf(input.toLowerCase()) >= 0
+              )
+            },
+            getPopupContainer: () => document.body
+          })
+        }
 
-      return {
-        ...(config[schema?.component] || {}),
-        ...componentProps
-      } as Recordable
-    })
+        componentsPropsRef.value = {
+          ...(config[schema?.component] || {}),
+          ...componentProps
+        }
+      },
+      { deep: true, immediate: true }
+    )
 
     const getDisable = computed(() => {
       const { disabled: globDisabled } = props.formProps
       const { dynamicDisabled } = props.schema
-      const { disabled: itemDisabled = false } = unref(getComponentsProps)
+      const { disabled: itemDisabled = false } = unref(componentsPropsRef)
       let disabled = !!globDisabled || itemDisabled
       if (isBoolean(dynamicDisabled)) {
         disabled = dynamicDisabled
@@ -269,7 +280,7 @@ const FormItem = defineComponent({
           if (component.includes('Input') || component.includes('Textarea')) {
             rule.whitespace = true
           }
-          const valueFormat = unref(getComponentsProps)?.valueFormat
+          const valueFormat = unref(componentsPropsRef)?.valueFormat
           setComponentRuleType(rule, component, valueFormat)
         }
       }
@@ -300,7 +311,6 @@ const FormItem = defineComponent({
       const on = {
         [eventKey]: (...args: Nullable<Recordable>[]) => {
           const [e] = args
-
           if (propsData[eventKey] && args.length >= 1) {
             propsData[eventKey](...args)
           }
@@ -320,14 +330,14 @@ const FormItem = defineComponent({
         allowClear: true,
         getPopupContainer: (trigger: Element) => trigger.parentNode,
         size,
-        ...unref(getComponentsProps),
+        ...unref(componentsPropsRef),
         disabled: unref(getDisable)
       }
 
       const isCreatePlaceholder = !propsData.disabled && autoSetPlaceHolder
       if (isCreatePlaceholder && component !== 'RangePicker' && component) {
         propsData.placeholder =
-          unref(getComponentsProps)?.placeholder ||
+          unref(componentsPropsRef)?.placeholder ||
           createPlaceholderMessage(
             component,
             isTableForm.value ? (label as string) : ''
@@ -346,7 +356,8 @@ const FormItem = defineComponent({
       const compAttr: Recordable = {
         ...propsData,
         ...(component === 'Group' ? {} : on),
-        ...bindValue
+        ...bindValue,
+        setFormModel: props.setFormModel
       }
 
       const handleInput = (e) => {
@@ -356,7 +367,7 @@ const FormItem = defineComponent({
       if (!renderComponentContent) {
         return (
           <Comp
-            ref={unref(getComponentsProps)?.useRef}
+            ref={unref(componentsPropsRef)?.useRef}
             {...compAttr}
             onInput={handleInput}
           />
@@ -369,7 +380,7 @@ const FormItem = defineComponent({
           }
 
       return (
-        <Comp ref={unref(getComponentsProps)?.useRef} {...compAttr}>
+        <Comp ref={unref(componentsPropsRef)?.useRef} {...compAttr}>
           {compSlot}
         </Comp>
       )
@@ -414,7 +425,7 @@ const FormItem = defineComponent({
       if (component === 'Divider') {
         return (
           <Col span={24}>
-            <Divider {...unref(getComponentsProps)}>
+            <Divider {...unref(componentsPropsRef)}>
               {renderLabelHelpMessage()}
             </Divider>
           </Col>

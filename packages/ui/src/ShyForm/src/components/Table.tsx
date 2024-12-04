@@ -14,7 +14,7 @@ import { useRuleFormItem } from '@shy-plugins/use'
 
 import { buildUUID, isFunction } from '@shy-plugins/utils'
 import { ShyComponentMap } from '../ShyComponentMap'
-import { cloneDeep, isArray, isEqual, isNil, omit, upperFirst } from 'lodash-es'
+import { cloneDeep, isArray, isEqual, isNil, upperFirst } from 'lodash-es'
 import { FormActionType } from '../types/form'
 import { Popover } from 'ant-design-vue'
 import { reactive } from 'vue'
@@ -30,6 +30,10 @@ import { TableRowSelection } from 'ant-design-vue/es/table/interface'
 
 const ShyFormTable = defineComponent({
   props: {
+    isShowIndex: {
+      type: Boolean,
+      default: true
+    },
     rowKey: {
       type: String,
       default: () => 'uuid'
@@ -87,6 +91,13 @@ const ShyFormTable = defineComponent({
           type: 'dashed'
         }
       }
+    },
+    dynamicShowRemove: {
+      type: Function as PropType<(record: Recordable) => boolean>,
+      default: () => (record) => true
+    },
+    setFormModel: {
+      type: Function
     }
   },
   emits: ['update:value', 'change', 'add', 'remove'],
@@ -126,7 +137,7 @@ const ShyFormTable = defineComponent({
       }
 
       return [
-        indexColumn,
+        ...(props?.isShowIndex ? [indexColumn] : []),
         ...props.columns.map((item: any) => ({
           ...item,
           type: item.type ? item.type : 'input'
@@ -275,6 +286,12 @@ const ShyFormTable = defineComponent({
                     getType(column.type)
                   )
 
+                  const parentKey = isArray(attrs.codeField)
+                    ? attrs.codeField
+                    : [attrs.codeField]
+
+                  const indexKey = index + curIndex.value
+
                   const on = {
                     [eventKey]: (...args: Nullable<Recordable>[]) => {
                       const [e] = args
@@ -289,16 +306,16 @@ const ShyFormTable = defineComponent({
                           ? target.checked
                           : target.value
                         : e
-                      const currValue = state.value.find(
-                        (item) => item[props.rowKey] === record[props.rowKey]
-                      )
 
-                      currValue![column.dataIndex] = value
+                      state.value[indexKey][column.dataIndex] = value
+
+                      emit('change', state.value, indexKey, column.dataIndex)
                     }
                   }
 
                   const bindValue: Recordable = {
-                    [isCheck ? 'checked' : 'value']: record[column.dataIndex]
+                    [isCheck ? 'checked' : 'value']:
+                      state.value[indexKey][column.dataIndex]
                   }
 
                   const compAttr: Recordable = {
@@ -313,16 +330,10 @@ const ShyFormTable = defineComponent({
                     <FormItem
                       required={column.required}
                       rules={getRules({ column, record, index, ...args })}
-                      name={[
-                        ...(isArray(attrs.codeField)
-                          ? attrs.codeField
-                          : [attrs.codeField]),
-                        index + curIndex.value,
-                        column.dataIndex
-                      ]}
+                      name={[...parentKey, indexKey, column.dataIndex]}
                     >
                       <Popover
-                        visible={
+                        open={
                           !!rulesRef?.[
                             `${column.dataIndex}-${record[props.rowKey]}Info`
                           ]?.show && !isScroll.value
@@ -396,7 +407,7 @@ const ShyFormTable = defineComponent({
     const create = () => {
       state.value = [
         ...toRaw(state.value),
-        { [props.rowKey]: buildUUID(), ...defaultValuesRef.value }
+        { [props.rowKey]: buildUUID(), ...unref(defaultValuesRef) }
       ]
       curIndex.value = 0
       if (props.isVirtual) {
@@ -414,7 +425,6 @@ const ShyFormTable = defineComponent({
       const tempState = state.value.filter((item: any) => {
         return item[props.rowKey] !== index
       })
-      tempState.forEach((item: any) => (item[props.rowKey] = buildUUID()))
       state.value = [...tempState]
       emit('remove', state.value, index)
     }
@@ -505,6 +515,7 @@ const ShyFormTable = defineComponent({
           ? [
               {
                 label: '删除',
+                ifShow: () => props.dynamicShowRemove(record),
                 popConfirm: {
                   title: '确定删除',
                   confirm: remove.bind(null, record[props.rowKey])
@@ -535,19 +546,25 @@ const ShyFormTable = defineComponent({
       () => state.value,
       (v, old) => {
         if (!isEqual(toRaw(v), toRaw(old))) {
-          state.value = toRaw(v).map((ele: any) => {
+          const value = toRaw(v).map((ele: any) => {
             return {
               ...ele,
               [props.rowKey]: ele[props.rowKey] || buildUUID()
             }
           })
+
+          state.value = value
+
           if (props.isVirtual) {
-            sourceHeight.value = v.length * ROW_HEIGHT
+            sourceHeight.value = unref(state).length * ROW_HEIGHT
 
             dataSource.value =
-              v.length > SHOW_ROW_COUNT
-                ? v.slice(curIndex.value, curIndex.value + SHOW_ROW_COUNT)
-                : v.slice(0, SHOW_ROW_COUNT)
+              unref(state).length > SHOW_ROW_COUNT
+                ? unref(state).slice(
+                    curIndex.value,
+                    curIndex.value + SHOW_ROW_COUNT
+                  )
+                : unref(state).slice(0, SHOW_ROW_COUNT)
           }
         }
       },

@@ -1,6 +1,6 @@
-import { defineComponent, computed, ref, unref } from 'vue'
+import { defineComponent, computed, ref, unref, provide } from 'vue'
 import { DescriptionProps, DescItem } from './typing'
-import { basicProps, basicRowProps, basicColProps } from './props'
+import { basicProps, basicRowProps, basicColProps, basicGap } from './props'
 import { Collapse } from 'ant-design-vue'
 import type { CSSProperties } from 'vue'
 import { BasicTitle as Divider, BasicHelp } from '../../Basic'
@@ -11,19 +11,56 @@ import {
   isFunction,
   isNumber,
   isArray,
-  isEmpty,
-  dateUtil
+  isEmpty
 } from '@shy-plugins/utils'
 import { useDesign } from '@shy-plugins/use'
 import { ShyTag } from '../../ShyTag'
 import './descriptions.less'
 import Descriptions from './Descriptions'
 
+const CustomCollapse = defineComponent({
+  name: 'CustomCollapse',
+  props: {
+    schema: {
+      type: Object,
+      default: () => {}
+    },
+    renderGroup: {
+      type: Function,
+      default: () => {}
+    }
+  },
+  setup(props) {
+    const { prefixCls } = useDesign('basic-descriptions')
+    const { field, componentProps, label } = props.schema
+    const collapseActiveKey = ref<string[]>([field])
+
+    return () => (
+      <Collapse
+        class={`${prefixCls}-group-collapse`}
+        bordered={false}
+        v-model:activeKey={collapseActiveKey.value}
+      >
+        <Collapse.Panel
+          key={field}
+          v-slots={{
+            header: () => <Divider {...componentProps}>{label}</Divider>
+          }}
+        >
+          {props?.renderGroup(componentProps?.schemas)}
+        </Collapse.Panel>
+      </Collapse>
+    )
+  }
+})
+
 export default defineComponent({
   name: 'ShyDescriptions',
   props: basicProps,
   emits: ['register'],
   setup(props, { emit, slots }) {
+    provide('parentEmit', emit)
+
     const innerProps = ref<DescriptionProps | null>(null)
     const { prefixCls } = useDesign('basic-descriptions')
 
@@ -66,9 +103,11 @@ export default defineComponent({
     })
 
     const transformValue = (item) => {
-      const { field, componentProps, component } = item
+      const { field, componentProps: comProps, component } = item
+      const componentProps = isFunction(comProps) ? comProps() : comProps
+
       const { data, summaryTotalFields } = unref(getProps)
-      if (summaryTotalFields?.length) {
+      if (summaryTotalFields?.length && summaryTotalFields.includes(field)) {
         return handleValuePrecision(item, data)
       } else if (componentProps?.options) {
         return <ShyTag value={data[`${field}`]} {...componentProps}></ShyTag>
@@ -81,6 +120,7 @@ export default defineComponent({
           'TimePicker'
         ].includes(component)
       ) {
+        if (!data[`${field}`]) return ''
         return dayjs(data[`${field}`]).format(
           componentProps?.valueFormat || 'YYYY-MM-DD'
         )
@@ -149,15 +189,16 @@ export default defineComponent({
                 field: label
               })
             : label}
+          {getProps.value.isShowColon ? '：' : null}
           {item?.helpMessage ? (
             <BasicHelp
               class={`${prefixCls}-label-help`}
               placement="top"
               text={item?.helpMessage}
               iconSize="9px"
+              {...item?.helpComponentProps}
             />
           ) : null}
-          {getProps.value.isShowColon ? '：' : null}
         </div>
       )
     }
@@ -192,7 +233,8 @@ export default defineComponent({
           field: item.field,
           model: data,
           values: data as Recordable,
-          schema: item
+          schema: item,
+          transformValue
         }
       }
     })
@@ -231,66 +273,49 @@ export default defineComponent({
       if (!isIfShow) return null
 
       const { componentProps, label, colProps } = group
-      const flexBasis = `${
-        ((colProps?.span ||
+
+      const realSpan =
+        (colProps?.span ||
           unref(getProps)?.baseColProps?.span ||
-          basicColProps) /
-          basicRowProps) *
-        100
-      }%`
+          basicColProps) / basicRowProps
+
+      const style = {
+        [`--col-span`]: `${realSpan * 100}%`,
+        [`--w-gap`]: `${realSpan * basicGap}px`
+      }
 
       switch (componentProps?.groupType) {
         case 'Divider':
           return (
-            <div
-              style={{ flexBasis }}
-              class={`${prefixCls}-divider`}
-              v-show={isShow}
-            >
+            <div style={style} class={`${prefixCls}-divider`} v-show={isShow}>
               <Divider {...componentProps}>{label}</Divider>
               <div class={`${prefixCls}-divider-content`}>
                 {renderGroup(componentProps?.schemas)}
               </div>
             </div>
           )
-        case 'Group':
+        case 'Collapse':
+        default:
           return (
-            <div
-              style={{ flexBasis }}
-              class={`${prefixCls}-group`}
-              v-show={isShow}
-            >
-              <Collapse class={`${prefixCls}-group-collapse`} bordered={false}>
-                <Collapse.Panel
-                  v-slots={{
-                    header: () => <Divider {...componentProps}>{label}</Divider>
-                  }}
-                >
-                  {renderGroup(componentProps?.schemas)}
-                </Collapse.Panel>
-              </Collapse>
+            <div style={style} class={`${prefixCls}-group`} v-show={isShow}>
+              <CustomCollapse schema={group} renderGroup={renderGroup} />
             </div>
           )
         case 'Custom':
           const { CustomGroupComp } = componentProps
           return (
-            <div
-              style={{ flexBasis }}
-              class={`${prefixCls}-custom`}
-              v-show={isShow}
-            >
-              <CustomGroupComp {...componentProps}>
+            <div style={style} class={`${prefixCls}-custom`} v-show={isShow}>
+              <CustomGroupComp
+                {...componentProps}
+                v-slots={{ ...componentProps?.slots }}
+              >
                 {renderGroup(componentProps?.schemas)}
               </CustomGroupComp>
             </div>
           )
         case 'Origin':
           return (
-            <div
-              style={{ flexBasis }}
-              class={`${prefixCls}-origin`}
-              v-show={isShow}
-            >
+            <div style={style} class={`${prefixCls}-origin`} v-show={isShow}>
               {renderGroup(componentProps?.schemas)}
             </div>
           )
@@ -318,7 +343,9 @@ export default defineComponent({
     }
 
     return () => (
-      <div class={prefixCls}>{renderGroup(unref(getProps).schemas)}</div>
+      <div class={prefixCls} style={{ '--gap': `${basicGap}px` }}>
+        {renderGroup(unref(getProps).schemas)}
+      </div>
     )
   }
 })

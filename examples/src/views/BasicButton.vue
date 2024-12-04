@@ -14,6 +14,7 @@
     </div>
     <BasicButton type="dashed">虚线按钮</BasicButton>
     <BasicButton type="danger">危险按钮</BasicButton>
+    <BasicButton type="link" disabled>链接按钮</BasicButton>
   </div>
 </template>
 

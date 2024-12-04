@@ -58,6 +58,8 @@ const ShyForm = defineComponent({
     'field-value-change'
   ],
   setup(props, { emit, attrs, slots }) {
+    provide('parentEmit', emit)
+
     const formModel = reactive<Recordable>({})
     const modalFn = useModalContext()
 
@@ -106,53 +108,114 @@ const ShyForm = defineComponent({
       }
     })
 
-    const getBindValue = computed(() => ({
-      ...attrs,
-      ...props,
-      ...defaultAntConfig,
-      ...unref(getProps)
-    }))
+    const getBindValue = computed(
+      () =>
+        ({
+          ...attrs,
+          ...props,
+          ...defaultAntConfig,
+          ...unref(getProps)
+        } as any)
+    )
 
     const getSchema = computed((): FormSchema[] => {
-      const schemas: FormSchema[] =
-        unref(schemaRef) || (unref(getProps).schemas as any)
-      for (const schema of schemas) {
-        const {
-          defaultValue,
-          component,
-          componentProps,
-          isHandleDateDefaultValue = true
-        } = schema
-        if (
-          isHandleDateDefaultValue &&
-          defaultValue &&
-          component &&
-          dateItemType.includes(component)
-        ) {
-          const valueFormat = componentProps
-            ? componentProps['valueFormat']
-            : null
-          if (!Array.isArray(defaultValue)) {
-            schema.defaultValue = valueFormat
-              ? dateUtil(defaultValue).format(valueFormat)
-              : dateUtil(defaultValue)
-          } else {
-            const def: any[] = []
-            defaultValue.forEach((item) => {
-              def.push(
-                valueFormat
-                  ? dateUtil(item).format(valueFormat)
-                  : dateUtil(item)
-              )
-            })
-            schema.defaultValue = def
-          }
-        }
+      const treeExpandField = (schemas: FormSchema[]) => {
+        return schemas.map((schema) => {
+          const {
+            defaultValue,
+            component,
+            componentProps = {},
+            isHandleDateDefaultValue = true
+          } = schema
 
-        if (component === 'Group') {
-          schema.defaultValue = schema.defaultValue ?? {}
-        }
+          let _props: Recordable = {}
+          if (typeof componentProps === 'function') {
+            _props =
+              componentProps({
+                formModel,
+                schema,
+                formActionType: {
+                  getFieldsValue,
+                  setFieldsValue,
+                  resetFields,
+                  updateSchema,
+                  resetSchema,
+                  setProps,
+                  removeSchemaByField,
+                  appendSchemaByField,
+                  clearValidate,
+                  submit: handleSubmit,
+                  validateFields,
+                  validate,
+                  scrollToField
+                },
+                tableAction: props.tableAction
+              }) || {}
+          } else {
+            _props = componentProps
+          }
+
+          if (
+            isHandleDateDefaultValue &&
+            defaultValue &&
+            component &&
+            dateItemType.includes(component)
+          ) {
+            const valueFormat = _props ? _props['valueFormat'] : null
+            if (!Array.isArray(defaultValue)) {
+              schema.defaultValue = valueFormat
+                ? dateUtil(defaultValue).format(valueFormat)
+                : dateUtil(defaultValue)
+            } else {
+              const def: any[] = []
+              defaultValue.forEach((item) => {
+                def.push(
+                  valueFormat
+                    ? dateUtil(item).format(valueFormat)
+                    : dateUtil(item)
+                )
+              })
+              schema.defaultValue = def
+            }
+          }
+
+          if (schema?.component?.includes?.('Input')) {
+            schema.defaultValue = schema.defaultValue || ''
+          }
+
+          if (schema.component === 'Table') {
+            schema.defaultValue = schema.defaultValue || reactive([])
+          }
+
+          if (schema.component === 'Group' && componentProps) {
+            // schema.defaultValue = schema.defaultValue || reactive({})
+
+            return {
+              ...schema,
+              componentProps: (...args) => {
+                let _c_props: Recordable = {}
+                if (typeof componentProps === 'function') {
+                  _c_props = componentProps(...args) || {}
+                } else {
+                  _c_props = componentProps
+                }
+
+                return {
+                  ..._c_props,
+                  schemas: treeExpandField(cloneDeep(_c_props.schemas))
+                }
+              }
+            }
+          }
+
+          return schema
+        })
       }
+
+      const schemas: FormSchema[] = treeExpandField(
+        unref(schemaRef) || (unref(getProps).schemas as any)
+      )
+
       if (unref(getProps).showAdvancedButton) {
         return cloneDeep(
           schemas.filter(
@@ -338,7 +401,7 @@ const ShyForm = defineComponent({
     provide('formActionType', formActionType)
 
     const isTableForm = computed(() => {
-      return !!getBindValue.value.tableAction
+      return !!unref(getBindValue).tableAction
     })
 
     watch(
@@ -360,18 +423,18 @@ const ShyForm = defineComponent({
       return span * ((unref(ROW_SLICE) + unref(ACTION_COL)) / unref(ROW_SLICE))
     }
     const allColSpanSum = computed(() => {
-      return getSchema.value.reduce((pre, cur) => {
+      return unref(getSchema).reduce((pre, cur) => {
         return (pre += getCurColSpan(cur))
       }, 0)
     })
     const isAutoShowFormItem = computed(() => {
       return !(
-        allColSpanSum.value / (unref(ROW_SLICE) + unref(ACTION_COL)) >
-        getBindValue.value.autoAdvancedLine
+        unref(allColSpanSum) / (unref(ROW_SLICE) + unref(ACTION_COL)) >
+        unref(getBindValue).autoAdvancedLine
       )
     })
     const isShowFormCollapse = computed(
-      () => allColSpanSum.value > unref(ROW_SLICE) + unref(ACTION_COL)
+      () => unref(allColSpanSum) > unref(ROW_SLICE) + unref(ACTION_COL)
     )
 
     const getCurColSpan = (cur) => {

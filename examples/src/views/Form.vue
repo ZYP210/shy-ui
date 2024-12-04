@@ -2,10 +2,15 @@
   <div class="p-16px w-full overflow-auto">
     <div class="flex gap-8px">
       <Button @click="handleGetForm">获取form</Button>
-      <Button @click="handlePush">push200条数据</Button>
+      <!-- <Button @click="handlePush">push200条数据</Button> -->
       <Button @click="handleReset">reset</Button>
     </div>
-    <ShyForm :labelWidth="100" @register="registerForm" @submit="handleSubmit">
+    <ShyForm
+      :labelWidth="100"
+      @register="registerForm"
+      @submit="handleSubmit"
+      @zzz="handleCustomFn"
+    >
       <template #ApiModalSelect="{ model, field }">
         <ShyApiModalSelect
           v-model:value="model[field]"
@@ -17,9 +22,15 @@
     <!-- <div class="h-2000px"></div> -->
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import type { ShyFormSchema } from '3h1-ui'
-import { useShyForm, ShyApiModalSelect, ShyForm, BasicButton } from '3h1-ui'
+import {
+  useShyForm,
+  ShyApiModalSelect,
+  ShyForm,
+  ShyTable,
+  BasicButton
+} from '3h1-ui'
 import { Button } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
 import { h, onMounted } from 'vue'
@@ -27,9 +38,14 @@ import { ref } from 'vue'
 import { theme } from 'ant-design-vue'
 import BasicTitle from './BasicTitle.vue'
 import { commentProps } from 'ant-design-vue/es/comment'
+import customComp from '../components/customComp'
 
 const { useToken } = theme
 const { token } = useToken()
+
+const handleCustomFn = (...args) => {
+  // console.log(args)
+}
 
 // const handlePush = () => {
 //   setFieldsValue({
@@ -104,610 +120,116 @@ const bindCol = [
 
 const schemas = ref<ShyFormSchema[]>([
   {
-    label: '绑定明细',
-    field: '-',
+    label: '',
+    field: 'xzz',
     component: 'Group',
     componentProps: {
-      groupInObject: false,
-      // CustomGroupComp: BasicTitle,
-      // groupType: 'Custom',
+      groupType: 'Origin',
       schemas: [
         {
-          field: 'faultDate',
-          label: '故障通知日期',
-          component: 'DatePicker',
+          label: '',
+          field: 'xzz-time',
+          component: 'Group',
           componentProps: {
-            valueFormat: 'YYYY-MM-DD'
-          },
-          colProps: {
-            span: 6
-          }
-        },
-        {
-          label: '入库单',
-          field: 'refReceiptTicketDetailIds',
-          helpMessage: ['请先选择合同编号'],
-          component: 'ApiSelect',
-          colProps: { span: 6 }
-        },
-        {
-          label: '',
-          field: '-',
-          component: 'Input',
-          render: () => {
-            return null
-          },
-          colProps: { span: 18 }
-        },
-        {
-          field: 'unBindSelection',
-          component: 'Input',
-          colProps: { span: 12 }
-        },
-        {
-          field: 'ticketDetailSelection',
-          component: 'Input',
-          colProps: { span: 12 }
-        },
-        {
-          label: '',
-          field: 'unBind',
-          component: 'Table',
-          defaultValue: [],
-          componentProps: ({ formModel }) => {
-            return {
-              rowKey: 'id',
-              rowSelection: {
-                type: 'checkbox',
-                onChange: (selectedRowKeys) => {
-                  formModel.unBindSelection = selectedRowKeys
-                },
-                selectedRowKeys: formModel.unBindSelection
-              },
-              isVirtual: false,
-              isShowAddBtn: false,
-              isShowRemoveBtn: false,
-              columns: bindCol,
-              tableAction: (record) => {
-                return [
-                  {
-                    label: '选择',
-                    onClick: ((record) => {
-                      formModel.unBind = formModel.unBind.filter(
-                        (item) => record.id !== item.id
-                      )
-                      formModel.ticketDetailDetailVOList = [
-                        ...(formModel.ticketDetailDetailVOList ?? []),
-                        record
-                      ]
-                    }).bind(null, record)
-                  }
-                ]
-              }
-            }
-          },
-          colProps: { span: 12 }
-        },
-        {
-          label: '',
-          field: 'ticketDetailDetailVOList',
-          component: 'Table',
-          componentProps: ({ formModel }) => {
-            return {
-              rowKey: 'id',
-              rowSelection: {
-                type: 'checkbox',
-                onChange: (selectedRowKeys) => {
-                  formModel.ticketDetailSelection = selectedRowKeys
-                },
-                selectedRowKeys: formModel.ticketDetailSelection
-              },
-              isVirtual: false,
-              isShowAddBtn: false,
-              isShowRemoveBtn: false,
-              columns: bindCol,
-              tableAction: (record) => {
-                return [
-                  {
-                    label: '移除',
-                    onClick: ((record) => {
-                      formModel.ticketDetailDetailVOList =
-                        formModel.ticketDetailDetailVOList.filter(
-                          (item) => record.id !== item.id
-                        )
-                      formModel.unBind = [...(formModel.unBind ?? []), record]
-                    }).bind(null, record)
-                  }
-                ]
-              }
-            }
-          },
-          colProps: { span: 12 }
-        }
-      ]
-    },
-    colProps: { span: 24 }
-  },
-  {
-    label: '',
-    field: 'initTicketList',
-    component: 'Input',
-    // defaultValue: [],
-    show: false
-  },
-  {
-    label: '分组表单',
-    field: 'zzz',
-    component: 'Group',
-    componentProps: ({ formModel }) => {
-      return {
-        groupInObject: false,
-        groupType: 'Divider',
-        extra: () => h('div', { class: 'flex-1' }, 111),
-        expandIconPosition: 'end',
-        schemas: [
-          {
-            field: 'Table',
-            component: 'Table',
-            required: true,
-            colProps: { span: 24 },
-            componentProps: ({ formModel }) => {
-              return {
-                showRowCount: 5,
-                addBtnConf: {
-                  text: '新增222',
-                  type: 'dashed'
-                },
-                rowSelection: {
-                  type: 'checkbox',
-                  onChange: (selectedRowKeys, selectedRows) => {
-                    console.log(selectedRowKeys, selectedRows)
-                  }
-                },
-                useRef: (compRef) => {},
-                // footerRender: () => '777',
-                columns: [
-                  {
-                    title: 'zzzz',
-                    dataIndex: 'a',
-                    defaultValue: 111
-                  },
-                  {
-                    title: 'zzzz',
-                    dataIndex: 'a',
-                    defaultValue: 111
-                  },
-                  {
-                    title: 'zzzz',
-                    dataIndex: 'a',
-                    defaultValue: 111
-                  },
-                  {
-                    title: 'zzzz',
-                    dataIndex: 'a',
-                    defaultValue: 111
-                  },
-                  {
-                    title: 'zzzzz',
-                    dataIndex: 'b',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  },
-                  {
-                    title: 'zzzzzz',
-                    dataIndex: 'c',
-                    type: 'text'
-                  }
-                  // {
-                  //   title: '手机号',
-                  //   dataIndex: 'contactsPhone',
-                  //   required: true,
-                  //   type: 'DatePicker'
-                  //   // rules: [
-                  //   //   {
-                  //   //     pattern: /^1[3-9]\d{9}$/,
-                  //   //     message: '请输入正确的手机号码',
-                  //   //     trigger: 'blur'
-                  //   //   }
-                  //   // ]
-                  // }
-                ]
-              }
-            }
-          }
-        ]
-      }
-    },
-    colProps: { span: 24 }
-  },
-  {
-    label: 'zyp',
-    field: 'zyp',
-    component: 'DatePicker'
-  },
-  {
-    label: '关联商机',
-    field: 'Input',
-    required: true,
-    defaultValue: '111',
-    component: 'Input',
-    componentProps: {
-      // disabled: true
-    }
-  },
-  {
-    label: 'InputTextArea',
-    field: 'InputTextArea',
-    defaultValue: '111',
-    component: 'InputTextArea',
-    componentProps: {
-      // disabled: true
-    }
-  },
-  {
-    label: 'InputNumber',
-    field: 'InputNumber',
-    component: 'InputNumber'
-  },
-  {
-    label: 'InputPassword',
-    field: 'InputPassword',
-    component: 'InputPassword'
-  },
-  {
-    label: 'InputSearch',
-    field: 'InputSearch',
-    component: 'InputSearch'
-  },
-  {
-    label: 'AutoComplete',
-    field: 'AutoComplete',
-    component: 'AutoComplete'
-  },
-  {
-    label: 'ApiSelect',
-    field: 'ApiSelect',
-    required: true,
-    component: 'ApiSelect',
-    componentProps: ({ formModel }) => {
-      return {
-        api: async (ppp) => {
-          return [
-            {
-              label:
-                'a11111111111111asKLHDSAKJDHSAJKDHSADJKHSADKJSAHDASJDHSADKJASHDKJASHDKJSAHDASKJHD',
-              value: 'a'
-            },
-            {
-              label: 'b',
-              value: 'b'
-            }
-          ]
-        },
-        params: { c: formModel.b }
-      }
-    }
-  },
-  {
-    label: 'ApiTree',
-    field: 'ApiTree',
-    component: 'ApiTree',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            title: '1111'
-          }
-        ]
-      }
-    }
-  },
-  {
-    label: 'TreeSelect',
-    field: 'TreeSelect',
-    component: 'TreeSelect',
-    componentProps: {
-      treeData: [
-        {
-          label: '111',
-          value: '1'
-        }
-      ]
-    }
-  },
-  {
-    label: 'ApiTreeSelect',
-    field: 'ApiTreeSelect',
-    component: 'ApiTreeSelect',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            label: '1',
-            value: '1'
-          }
-        ]
-      }
-    }
-  },
-  {
-    label: 'ApiRadioGroup',
-    field: 'ApiRadioGroup',
-    component: 'ApiRadioGroup',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            label: '111',
-            value: '888'
-          },
-          {
-            label: '222',
-            value: '333'
-          }
-        ]
-      }
-    }
-  },
-  {
-    label: 'Switch',
-    field: 'Switch',
-    component: 'Switch'
-  },
-  {
-    label: 'RadioButtonGroup',
-    field: 'RadioButtonGroup',
-    component: 'RadioButtonGroup',
-    componentProps: {
-      options: [
-        {
-          label: '111',
-          value: '888'
-        },
-        {
-          label: '222',
-          value: '333'
-        }
-      ]
-    }
-  },
-  {
-    label: 'RadioGroup',
-    field: 'RadioGroup',
-    component: 'RadioGroup',
-    componentProps: {
-      options: [
-        {
-          label: '111',
-          value: '888'
-        },
-        {
-          label: '222',
-          value: '333'
-        }
-      ]
-    }
-  },
-  {
-    label: 'Checkbox',
-    field: 'Checkbox',
-    component: 'Checkbox'
-  },
-  {
-    label: 'CheckboxGroup',
-    field: 'CheckboxGroup',
-    component: 'CheckboxGroup',
-    componentProps: {
-      options: [
-        {
-          label: '111',
-          value: '888'
-        },
-        {
-          label: '222',
-          value: '333'
-        }
-      ]
-    }
-  },
-  {
-    label: 'ApiCascader',
-    field: 'ApiCascader',
-    component: 'ApiCascader',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            label: '111',
-            value: '888'
-          },
-          {
-            label: '222',
-            value: '333'
-          }
-        ]
-      }
-    }
-  },
-  {
-    label: 'Cascader',
-    field: 'Cascader',
-    component: 'Cascader',
-    componentProps: {
-      options: [
-        {
-          label: '111',
-          value: '888'
-        },
-        {
-          label: '222',
-          value: '333'
-        }
-      ]
-    }
-  },
-  {
-    label: 'Slider',
-    field: 'Slider',
-    component: 'Slider'
-  },
-  {
-    label: 'Rate',
-    field: 'Rate',
-    component: 'Rate'
-  },
-  {
-    label: 'ApiTransfer',
-    field: 'ApiTransfer',
-    component: 'ApiTransfer',
-    componentProps: {
-      api: () => {
-        return [
-          {
-            title: '1111',
-            key: '888'
-          },
-          {
-            title: '222',
-            key: '333'
-          }
-        ]
-      }
-    }
-  },
-  {
-    label: 'Upload',
-    field: 'Upload',
-    component: 'Upload',
-    componentProps: {
-      api: () => {}
-    }
-  },
-  {
-    label: 'DatePicker',
-    field: 'DatePicker',
-    component: 'DatePicker',
-    componentProps: {
-      picker: 'month'
-    }
-  },
-  {
-    label: 'MonthPicker',
-    field: 'MonthPicker',
-    component: 'MonthPicker'
-  },
-  {
-    label: 'RangePicker',
-    field: 'RangePicker',
-    component: 'RangePicker',
-    componentProps: {
-      picker: 'month'
-    }
-  },
-  {
-    label: 'WeekPicker',
-    field: 'WeekPicker',
-    component: 'WeekPicker'
-  },
-  {
-    label: 'TimePicker',
-    field: 'TimePicker',
-    component: 'TimePicker'
-  },
-  {
-    label: 'StrengthMeter',
-    field: 'StrengthMeter',
-    component: 'StrengthMeter'
-  },
-  {
-    label: 'IconPicker',
-    field: 'IconPicker',
-    component: 'IconPicker'
-  },
-  {
-    label: 'ColorPicker',
-    field: 'ColorPicker',
-    component: 'ColorPicker',
-    componentProps: {
-      onChange: (val) => {
-        token.value.colorPrimary = val
-      }
-    }
-  },
-  {
-    label: 'Tinymce',
-    field: 'Tinymce',
-    component: 'Tinymce',
-    colProps: { span: 24 }
-  },
-  {
-    label: '111',
-    field: '',
-    component: 'Divider',
-    componentProps: {
-      extra: h(BasicButton, null, 1111)
-    },
-    colProps: { span: 24 }
-  },
-  {
-    label: '111',
-    field: 'ddd',
-    required: true,
-    component: 'Input'
-  },
-  {
-    label: 'Table',
-    field: 'Table',
-    component: 'Table',
-    ifShow: ({ values }) => values.ddd === '111',
-    required: true,
-    colProps: { span: 24 },
-    componentProps: ({ formModel }) => {
-      return {
-        columns: [
-          {
-            title: '手机号',
-            dataIndex: 'contactsPhone',
-            required: true,
-            rules: [
+            groupInObject: false,
+            deconstructLevel: 1,
+            slots: {},
+            schemas: [
               {
-                pattern: /^1[3-9]\d{9}$/,
-                message: '请输入正确的手机号码',
-                trigger: 'blur'
+                label: '',
+                field: 'date',
+                component: 'DatePicker',
+                colProps: {
+                  span: 6
+                }
               }
             ]
+          },
+          colProps: {
+            span: 24
           }
-        ],
-        footerRender: () => [
-          h('span', null, `不含税金额: 1`),
-          h('span', null, `税额: 1`),
-          h('span', null, `含税总价: 1`)
-        ]
-      }
+        },
+        {
+          label: '',
+          field: 'xzz',
+          component: 'Group',
+          componentProps: {
+            parentField: 'xzz',
+            groupType: 'Custom',
+            CustomGroupComp: defineComponent({
+              setup(_, { slots }) {
+                return () => <div>{slots?.default?.()}</div>
+              }
+            }),
+            slots: {},
+            schemas: [
+              {
+                label: '',
+                field: 'text',
+                component: 'InputTextArea',
+                componentProps: {
+                  autoSize: true
+                },
+                colProps: {
+                  span: 24
+                }
+              }
+            ]
+          },
+          colProps: {
+            span: 24
+          }
+        },
+        {
+          label: '新增功能🌟',
+          field: 'zzz',
+          component: 'Group',
+          componentProps: {
+            title: '新增功能🌟',
+            parentField: 'xzz',
+            slots: {},
+            schemas: [
+              {
+                label: '',
+                field: 'title',
+                component: 'Input',
+                show: false
+              },
+              {
+                label: '',
+                field: 'zzz',
+                component: 'Group',
+                componentProps: {
+                  parentField: 'zzz',
+                  slots: {},
+                  schemas: [
+                    {
+                      label: '',
+                      field: 'text',
+                      component: 'InputTextArea',
+                      componentProps: {
+                        autoSize: true
+                      },
+                      colProps: {
+                        span: 24
+                      }
+                    }
+                  ]
+                },
+                colProps: {
+                  span: 24
+                }
+              }
+            ]
+          },
+          colProps: {
+            span: 24
+          }
+        }
+      ]
+    },
+    colProps: {
+      span: 24
     }
   }
 ])
@@ -716,10 +238,14 @@ const [
   registerForm,
   { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useShyForm({
+  labelWidth: 200,
   schemas: schemas as any,
   // formLabelInInput: true,
   layout: 'vertical',
-  baseColProps: { span: 8 }
+  baseColProps: { span: 8 },
+  onFieldValueChange: (field, value) => {
+    // console.log('field', field, value)
+  }
   // showActionButtonGroup: true
 })
 
@@ -729,8 +255,18 @@ const handleReset = () => {
 
 onMounted(() => {
   setFieldsValue({
-    faultDate: new Date().getTime(),
-    Table: [{ c: 1, d: 2, e: 3 }]
+    xzz: {
+      date: '2024-11-14T01:51:36.695Z',
+      xzz: {
+        text: '💥💥 重要提醒 💥💥\n今晚对禾管家二期系统进行升级，当前版本为V2.0.9,更新内容如下：'
+      },
+      zzz: {
+        title: '新增功能🌟',
+        zzz: {
+          text: '入库管理：在带入库单模块中添加直发功能'
+        }
+      }
+    }
   })
   // setTimeout(() => {
   //   setFieldsValue({

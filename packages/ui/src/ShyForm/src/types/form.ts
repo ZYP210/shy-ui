@@ -1,11 +1,12 @@
 import type { NamePath, RuleObject } from 'ant-design-vue/lib/form/interface'
-import type { VNode } from 'vue'
+import type { JSXComponent, VNode } from 'vue'
 import type { ButtonProps as AntdButtonProps } from '../../../Button'
 import type { FormItem } from './formItem'
 import type { ColEx, ComponentType } from './index'
 import type { TableActionType as ShyTableActionType } from '../../../ShyTable'
 import type { CSSProperties } from 'vue'
 import type { RowProps } from 'ant-design-vue/lib/grid/Row'
+import { TooltipProps } from 'ant-design-vue'
 
 export type FieldMapToTime = [
   string,
@@ -141,7 +142,7 @@ export interface FormProps {
   submitFunc?: () => Promise<void>
   transformDateFunc?: (date: any) => string
   colon?: boolean
-  rangePickerField: any[],
+  rangePickerField: any[]
   onFieldValueChange?: (key: string, value: any) => void
 }
 export interface FormSchema {
@@ -159,7 +160,10 @@ export interface FormSchema {
   helpMessage?:
     | string
     | string[]
-    | ((renderCallbackParams: RenderCallbackParams) => string | string[])
+    | ((
+        renderCallbackParams: RenderCallbackParams
+      ) => string | string[] | JSXComponent | JSX.Element)
+
   // BaseHelp component props
   helpComponentProps?: Partial<HelpComponentProps>
   // Label width, if it is passed, the labelCol and WrapperCol configured by itemProps will be invalid
@@ -232,18 +236,4 @@ export interface FormSchema {
 
   dynamicRules?: (renderCallbackParams: RenderCallbackParams) => Rule[]
 }
-export interface HelpComponentProps {
-  maxWidth: string
-  // Whether to display the serial number
-  showIndex: boolean
-  // Text list
-  text: any
-  // colour
-  color: string
-  // font size
-  fontSize: string
-  icon: string
-  absolute: boolean
-  // Positioning
-  position: any
-}
+export type HelpComponentProps = TooltipProps
