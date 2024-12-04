@@ -105,7 +105,10 @@ const FormItem = defineComponent({
           }
         }
 
-        if (schema.component === 'Input') {
+        if (
+          schema.component === 'Input' ||
+          schema.component === 'InputTextArea'
+        ) {
           const maxlength =
             componentProps?.maxlength === undefined
               ? 100
