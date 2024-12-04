@@ -420,13 +420,14 @@ const ShyFormTable = defineComponent({
       emit('add', state.value)
     }
 
-    const remove = (index) => {
+    const remove = (record: Recordable) => {
+      const index = record[props.rowKey]
       curIndex.value -= curIndex.value === 0 ? 0 : 1
       const tempState = state.value.filter((item: any) => {
         return item[props.rowKey] !== index
       })
       state.value = [...tempState]
-      emit('remove', state.value, index)
+      emit('remove', state.value, index, record)
     }
 
     const rulesRef = reactive({})
@@ -518,7 +519,7 @@ const ShyFormTable = defineComponent({
                 ifShow: () => props.dynamicShowRemove(record),
                 popConfirm: {
                   title: '确定删除',
-                  confirm: remove.bind(null, record[props.rowKey])
+                  confirm: remove.bind(null, record)
                 }
               }
             ]

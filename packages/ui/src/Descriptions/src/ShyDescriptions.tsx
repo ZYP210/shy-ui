@@ -104,7 +104,7 @@ export default defineComponent({
 
     const transformValue = (item) => {
       const { field, componentProps: comProps, component } = item
-      const componentProps = isFunction(comProps) ? comProps() : comProps
+      const componentProps = isFunction(comProps) ? comProps({}) : comProps
 
       const { data, summaryTotalFields } = unref(getProps)
       if (summaryTotalFields?.length && summaryTotalFields.includes(field)) {
@@ -272,7 +272,8 @@ export default defineComponent({
       const { isShow, isIfShow } = getShow(group)
       if (!isIfShow) return null
 
-      const { componentProps, label, colProps } = group
+      const { componentProps: comProps, label, colProps } = group
+      const componentProps = isFunction(comProps) ? comProps({}) : comProps
 
       const realSpan =
         (colProps?.span ||
