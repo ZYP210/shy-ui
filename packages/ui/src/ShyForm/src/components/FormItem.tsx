@@ -8,7 +8,7 @@ import { ShyComponentMap } from '../ShyComponentMap'
 import { BasicHelp } from '../../..//Basic'
 import { isBoolean, isFunction, isNull, getSlot } from '@shy-plugins/utils'
 import { createPlaceholderMessage, setComponentRuleType } from '../helper'
-import { cloneDeep, get, upperFirst } from 'lodash-es'
+import { cloneDeep, get, upperFirst, pick, omit } from 'lodash-es'
 import { useItemLabelWidth } from '../hooks/useLabelWidth'
 import { BasicTitle as Divider } from '../../../Basic/'
 import { useGlobalConfig } from '../../../../config/index'
@@ -106,8 +106,8 @@ const FormItem = defineComponent({
         }
 
         if (
-          schema.component === 'Input' /* ||
-          // schema.component === 'InputTextArea' */
+          schema.component === 'Input' ||
+          schema.component === 'InputTextArea'
         ) {
           const maxlength =
             componentProps?.maxlength === undefined
@@ -368,7 +368,8 @@ const FormItem = defineComponent({
         return (
           <Comp
             ref={unref(componentsPropsRef)?.useRef}
-            {...compAttr}
+            {...omit(compAttr, 'slots')}
+            v-slots={{ ...(pick(compAttr, 'slots') ?? {}) }}
             onInput={handleInput}
           />
         )
