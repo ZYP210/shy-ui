@@ -5,18 +5,10 @@
       <!-- <Button @click="handlePush">push200条数据</Button> -->
       <Button @click="handleReset">reset</Button>
     </div>
-    <ShyForm
-      :labelWidth="100"
-      @register="registerForm"
-      @submit="handleSubmit"
-      @zzz="handleCustomFn"
-    >
+    <ShyForm :labelWidth="100" @register="registerForm" @submit="handleSubmit" @zzz="handleCustomFn">
       <template #ApiModalSelect="{ model, field }">
-        <ShyApiModalSelect
-          v-model:value="model[field]"
-          :fieldNames="{ label: 'a', value: 'id' }"
-          @modal-confirm="handleModalChange"
-        />
+        <ShyApiModalSelect v-model:value="model[field]" :fieldNames="{ label: 'a', value: 'id' }"
+          @modal-confirm="handleModalChange" />
       </template>
     </ShyForm>
     <!-- <div class="h-2000px"></div> -->
@@ -31,7 +23,7 @@ import {
   ShyTable,
   BasicButton
 } from '3h1-ui'
-import { Button } from 'ant-design-vue'
+import { Button, Select } from 'ant-design-vue'
 import { useMessage } from '@shy-plugins/use'
 import { h, onMounted } from 'vue'
 import { ref } from 'vue'
@@ -120,118 +112,19 @@ const bindCol = [
 
 const schemas = ref<ShyFormSchema[]>([
   {
-    label: '',
-    field: 'xzz',
-    component: 'Group',
+    field: 'sss',
+    label: 'sss',
+    component: 'Select',
     componentProps: {
-      groupType: 'Origin',
-      schemas: [
-        {
-          label: '',
-          field: 'xzz-time',
-          component: 'Group',
-          componentProps: {
-            groupInObject: false,
-            deconstructLevel: 1,
-            slots: {},
-            schemas: [
-              {
-                label: '',
-                field: 'date',
-                component: 'DatePicker',
-                colProps: {
-                  span: 6
-                }
-              }
-            ]
-          },
-          colProps: {
-            span: 24
-          }
-        },
-        {
-          label: '',
-          field: 'xzz',
-          component: 'Group',
-          componentProps: {
-            parentField: 'xzz',
-            groupType: 'Custom',
-            CustomGroupComp: defineComponent({
-              setup(_, { slots }) {
-                return () => <div>{slots?.default?.()}</div>
-              }
-            }),
-            slots: {},
-            schemas: [
-              {
-                label: '',
-                field: 'text',
-                component: 'InputTextArea',
-                componentProps: {
-                  autoSize: true
-                },
-                colProps: {
-                  span: 24
-                }
-              }
-            ]
-          },
-          colProps: {
-            span: 24
-          }
-        },
-        {
-          label: '新增功能🌟',
-          field: 'zzz',
-          component: 'Group',
-          componentProps: {
-            title: '新增功能🌟',
-            parentField: 'xzz',
-            slots: {},
-            schemas: [
-              {
-                label: '',
-                field: 'title',
-                component: 'Input',
-                show: false
-              },
-              {
-                label: '',
-                field: 'zzz',
-                component: 'Group',
-                componentProps: {
-                  parentField: 'zzz',
-                  slots: {},
-                  schemas: [
-                    {
-                      label: '',
-                      field: 'text',
-                      component: 'InputTextArea',
-                      componentProps: {
-                        autoSize: true
-                      },
-                      colProps: {
-                        span: 24
-                      }
-                    }
-                  ]
-                },
-                colProps: {
-                  span: 24
-                }
-              }
-            ]
-          },
-          colProps: {
-            span: 24
-          }
+      slots: {
+        default: () => {
+          return <Select.Option value={2}>sss</Select.Option>
         }
-      ]
-    },
-    colProps: {
-      span: 24
+      },
+
     }
   }
+
 ])
 const { createMessage } = useMessage()
 const [

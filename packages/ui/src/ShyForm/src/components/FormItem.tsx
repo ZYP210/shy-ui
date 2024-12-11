@@ -369,7 +369,7 @@ const FormItem = defineComponent({
           <Comp
             ref={unref(componentsPropsRef)?.useRef}
             {...omit(compAttr, 'slots')}
-            v-slots={{ ...(pick(compAttr, 'slots') ?? {}) }}
+            v-slots={{ ...(compAttr?.slots ?? {}) }}
             onInput={handleInput}
           />
         )
