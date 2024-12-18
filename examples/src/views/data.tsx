@@ -52,6 +52,23 @@ export const CollapseComp = defineComponent({
 export const projectFn = ref(() => {})
 export const infoSchemas = [
   {
+    label: 'abc',
+    field: 'abc',
+    component: 'Select',
+    componentProps: {
+      options: [
+        {
+          label: 'abc',
+          value: '1'
+        },
+        {
+          label: 'def',
+          value: '2'
+        }
+      ]
+    }
+  },
+  {
     label: '故障详细信息',
     field: 'field3',
     component: 'Group',
@@ -74,6 +91,31 @@ export const infoSchemas = [
               groupType: 'Divider',
               groupInObject: false,
               schemas: [
+                {
+                  label: 'zzzyy',
+                  field: 'zzz',
+                  component: 'ApiSelect',
+                  colProps: {
+                    span: 24
+                  },
+                  componentProps: {
+                    api: async () => {
+                      const list = await new Promise((resolve) => {
+                        resolve([
+                          {
+                            label: 'zzz',
+                            value: '1'
+                          },
+                          {
+                            label: '999',
+                            value: '2'
+                          }
+                        ])
+                      })
+                      return list
+                    }
+                  }
+                },
                 {
                   field: 'callbackIds',
                   label: '',
@@ -126,9 +168,7 @@ export const infoSchemas = [
                   colProps: {
                     span: 24
                   },
-                  render: ({ model, field }) => {
-                    return 222
-                  },
+
                   componentProps: {
                     rows: 4
                   }

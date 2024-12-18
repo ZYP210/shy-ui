@@ -1,4 +1,4 @@
-import { computed, defineComponent, unref } from 'vue'
+import { computed, defineComponent, unref, ref, watch, onMounted } from 'vue'
 import { useDesign } from '@shy-plugins/use'
 import './style/tag.css'
 import { Tag } from 'ant-design-vue'
@@ -9,6 +9,8 @@ const ShyTag = defineComponent({
   setup(props) {
     const { prefixCls } = useDesign('tag')
 
+    const optionsRef = ref<Recordable[]>([])
+
     const fieldNames = computed(() => ({
       label: 'label',
       value: 'value',
@@ -17,9 +19,31 @@ const ShyTag = defineComponent({
       ...props.fieldNames
     }))
 
+    watch(
+      () => props.options,
+      (val) => {
+        optionsRef.value = unref(val)
+      },
+      {
+        immediate: true,
+        deep: true
+      }
+    )
+
+    watch(
+      () => props.params,
+      async (val) => {
+        if (!props.api) return
+        optionsRef.value = await props.api(val)
+      },
+      {
+        immediate: true
+      }
+    )
+
     const tag = computed(
       () =>
-        props.options.find(
+        unref(optionsRef).find(
           (item) => item[unref(fieldNames).value] == props.value
         ) ?? {
           [unref(fieldNames).label]: '-',

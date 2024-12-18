@@ -6,6 +6,13 @@ export const shyTagBasicProps = reactive({
     type: Array as PropType<Recordable[]>,
     default: () => []
   },
+  api: {
+    type: Function
+  },
+  params: {
+    type: Object as PropType<Recordable>,
+    default: () => ({})
+  },
   value: {
     type: [String, Number]
   },

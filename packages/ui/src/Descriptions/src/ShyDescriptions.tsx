@@ -1,11 +1,12 @@
 import { defineComponent, computed, ref, unref, provide } from 'vue'
-import { DescriptionProps, DescItem } from './typing'
+import { DescriptionsProps, DescriptionsItem } from './typing'
 import { basicProps, basicRowProps, basicColProps, basicGap } from './props'
 import { Collapse } from 'ant-design-vue'
 import type { CSSProperties } from 'vue'
 import { BasicTitle as Divider, BasicHelp } from '../../Basic'
 import { pick } from 'lodash-es'
 import dayjs from 'dayjs'
+import { treeToList } from '@shy-plugins/utils/'
 import {
   isBoolean,
   isFunction,
@@ -61,7 +62,7 @@ export default defineComponent({
   setup(props, { emit, slots }) {
     provide('parentEmit', emit)
 
-    const innerProps = ref<DescriptionProps | null>(null)
+    const innerProps = ref<DescriptionsProps | null>(null)
     const { prefixCls } = useDesign('basic-descriptions')
 
     const setDescProps = (props) => {
@@ -69,6 +70,7 @@ export default defineComponent({
     }
 
     const getProps = computed(() => {
+      // @ts-ignore
       return {
         ...props,
         ...innerProps.value
@@ -104,13 +106,27 @@ export default defineComponent({
 
     const transformValue = (item) => {
       const { field, componentProps: comProps, component } = item
-      const componentProps = isFunction(comProps) ? comProps({}) : comProps
+      const componentProps = isFunction(comProps)
+        ? comProps({
+            formModel: unref(getValues)
+          })
+        : comProps
 
       const { data, summaryTotalFields } = unref(getProps)
       if (summaryTotalFields?.length && summaryTotalFields.includes(field)) {
         return handleValuePrecision(item, data)
-      } else if (componentProps?.options) {
-        return <ShyTag value={data[`${field}`]} {...componentProps}></ShyTag>
+      } else if (componentProps?.options || componentProps?.api) {
+        let options = []
+        if (Array.isArray(componentProps.options)) {
+          options = treeToList(componentProps.options)
+        }
+        return (
+          <ShyTag
+            value={data[`${field}`]}
+            {...componentProps}
+            options={options}
+          ></ShyTag>
+        )
       } else if (
         [
           'DatePicker',
@@ -168,7 +184,7 @@ export default defineComponent({
       }
     })
 
-    const renderLabel = (item: DescItem) => {
+    const renderLabel = (item: DescriptionsItem) => {
       const { label, labelStyle, field } = item
       const labelStyles: CSSProperties = {
         width:
@@ -204,7 +220,7 @@ export default defineComponent({
     }
 
     const getShow = (
-      item: DescItem
+      item: DescriptionsItem
     ): { isShow: boolean; isIfShow: boolean } => {
       const { show, ifShow } = item
 
@@ -227,7 +243,7 @@ export default defineComponent({
     }
 
     const getValues = computed(() => {
-      return (item: DescItem) => {
+      return (item: DescriptionsItem) => {
         const { data } = unref(getProps)
         return {
           field: item.field,
@@ -239,7 +255,7 @@ export default defineComponent({
       }
     })
 
-    const renderDescriptionsItem = (item: DescItem) => {
+    const renderDescriptionsItem = (item: DescriptionsItem) => {
       const { colProps } = item
       const { isShow, isIfShow } = getShow(item)
       if (!isIfShow) return null
@@ -259,12 +275,14 @@ export default defineComponent({
       )
     }
 
-    const renderSchema = (group: DescItem[] | DescItem) => {
+    const renderSchema = (group: DescriptionsItem[] | DescriptionsItem) => {
       if (isArray(group)) {
         const props = pick(unref(getProps), ['bordered'])
         return (
           <Descriptions {...props}>
-            {group.map((schema: DescItem) => renderDescriptionsItem(schema))}
+            {group.map((schema: DescriptionsItem) =>
+              renderDescriptionsItem(schema)
+            )}
           </Descriptions>
         )
       }
@@ -273,7 +291,12 @@ export default defineComponent({
       if (!isIfShow) return null
 
       const { componentProps: comProps, label, colProps } = group
-      const componentProps = isFunction(comProps) ? comProps({}) : comProps
+      const componentProps = isFunction(comProps)
+        ? // @ts-ignore
+          comProps({
+            formModel: unref(getValues)
+          })
+        : comProps
 
       const realSpan =
         (colProps?.span ||
@@ -323,7 +346,7 @@ export default defineComponent({
       }
     }
 
-    const getGroup = (schemas: DescItem[]) => {
+    const getGroup = (schemas: DescriptionsItem[]) => {
       if (!isArray(schemas)) return []
       return schemas.reduce<any>((prev, curr) => {
         if (curr.component && curr.component === 'Group') {

@@ -1,5 +1,5 @@
 import { PropType, reactive } from 'vue'
-import { DescItem } from './typing'
+import { DescriptionsItem } from './typing'
 
 export const basicColProps = 6
 export const basicRowProps = 24
@@ -7,7 +7,7 @@ export const basicGap = 8
 
 export const basicProps = reactive({
   schemas: {
-    type: Array as PropType<DescItem[]>,
+    type: Array as PropType<DescriptionsItem[]>,
     default: () => []
   },
   summaryPrecision: {
