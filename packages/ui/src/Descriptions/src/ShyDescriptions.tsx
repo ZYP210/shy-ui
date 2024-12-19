@@ -43,6 +43,7 @@ const CustomCollapse = defineComponent({
         v-model:activeKey={collapseActiveKey.value}
       >
         <Collapse.Panel
+          forceRender={true}
           key={field}
           v-slots={{
             header: () => <Divider {...componentProps}>{label}</Divider>
@@ -289,7 +290,6 @@ export default defineComponent({
 
       const { isShow, isIfShow } = getShow(group)
       if (!isIfShow) return null
-
       const { componentProps: comProps, label, colProps } = group
       const componentProps = isFunction(comProps)
         ? // @ts-ignore
@@ -297,7 +297,6 @@ export default defineComponent({
             formModel: unref(getValues)
           })
         : comProps
-
       const realSpan =
         (colProps?.span ||
           unref(getProps)?.baseColProps?.span ||
@@ -322,7 +321,10 @@ export default defineComponent({
         default:
           return (
             <div style={style} class={`${prefixCls}-group`} v-show={isShow}>
-              <CustomCollapse schema={group} renderGroup={renderGroup} />
+              <CustomCollapse
+                schema={{ ...group, componentProps }}
+                renderGroup={renderGroup}
+              />
             </div>
           )
         case 'Custom':

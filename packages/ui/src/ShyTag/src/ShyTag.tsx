@@ -22,6 +22,7 @@ const ShyTag = defineComponent({
     watch(
       () => props.options,
       (val) => {
+        if (!val?.length) return
         optionsRef.value = unref(val)
       },
       {
@@ -41,8 +42,8 @@ const ShyTag = defineComponent({
       }
     )
 
-    const tag = computed(
-      () =>
+    const tag = computed(() => {
+      return (
         unref(optionsRef).find(
           (item) => item[unref(fieldNames).value] == props.value
         ) ?? {
@@ -50,7 +51,8 @@ const ShyTag = defineComponent({
           [unref(fieldNames).color]: 'var(--gray-5)',
           [unref(fieldNames).css]: ''
         }
-    )
+      )
+    })
 
     const renderTag = computed(() => {
       const [isTag, tagMode] = [props.isTag, props.tagMode]

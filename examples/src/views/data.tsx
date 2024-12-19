@@ -75,166 +75,139 @@ export const infoSchemas = [
     colProps: {
       span: 24
     },
-    componentProps: ({ formActionType }) => {
+    componentProps: () => {
       return {
-        groupType: 'Origin',
+        groupType: 'Collapse',
         groupInObject: false,
         schemas: [
           {
-            label: '故障详细信息',
-            field: 'leftGroup',
-            component: 'Group',
+            label: 'systemCode',
+            field: 'systemCode',
+            component: 'ApiSelect',
             colProps: {
-              span: 16
+              span: 24
             },
             componentProps: {
-              groupType: 'Divider',
-              groupInObject: false,
-              schemas: [
-                {
-                  label: 'zzzyy',
-                  field: 'zzz',
-                  component: 'ApiSelect',
-                  colProps: {
-                    span: 24
-                  },
-                  componentProps: {
-                    api: async () => {
-                      const list = await new Promise((resolve) => {
-                        resolve([
-                          {
-                            label: 'zzz',
-                            value: '1'
-                          },
-                          {
-                            label: '999',
-                            value: '2'
-                          }
-                        ])
-                      })
-                      return list
-                    }
-                  }
-                },
-                {
-                  field: 'callbackIds',
-                  label: '',
-                  component: 'Input',
-                  show: false
-                },
-                {
-                  field: 'faultDetail',
-                  label: '',
-                  component: 'Input',
-                  ifShow: ({ model }) => !model.isView,
-                  render: ({ model }) => {
-                    return h(
-                      'div',
-                      { class: 'flex justify-end w-full', style: 'gap:8px' },
-                      [
-                        h(
-                          Button,
-                          {
-                            type: 'primary',
-                            class: 'flex gap-5px items-center',
-                            onClick: async () => {}
-                          },
-                          {
-                            default: () => '智能识别'
-                          }
-                        ),
-                        h(
-                          Button,
-                          {
-                            class: 'flex gap-5px items-center',
-                            type: 'primary',
-                            onClick: async () => {}
-                          },
-                          {
-                            default: () => '智能推荐'
-                          }
-                        )
-                      ]
-                    )
-                  },
-                  colProps: {
-                    span: 24
-                  }
-                },
-                {
-                  field: 'faultPhenomenonDescription',
-                  label: '故障现象描述',
-                  component: 'InputTextArea',
-                  colProps: {
-                    span: 24
-                  },
-
-                  componentProps: {
-                    rows: 4
-                  }
-                },
-                {
-                  field: 'faultReasonAnalyze',
-                  label: '故障原因分析',
-                  component: 'InputTextArea',
-                  colProps: {
-                    span: 24
-                  },
-                  render: ({ model, field }) => {
-                    return 222
-                  },
-                  componentProps: {
-                    rows: 4
-                  }
-                },
-                {
-                  field: 'faultRepairContent',
-                  label: '故障维修内容',
-                  component: 'InputTextArea',
-                  colProps: {
-                    span: 24
-                  },
-                  render: ({ model, field }) => {
-                    return 222
-                  },
-                  componentProps: {
-                    rows: 4
-                  }
-                },
-                {
-                  field: 'faultImproveStep',
-                  label: '故障改进措施',
-                  component: 'InputTextArea',
-                  colProps: {
-                    span: 24
-                  }
-                }
-              ]
+              params: {
+                type: '6'
+              },
+              api: async (params) => {
+                return new Promise((resolve) => {
+                  setTimeout(() => {
+                    resolve([
+                      {
+                        label: '照明系统',
+                        value: '1858691188553420802'
+                      },
+                      {
+                        label: '控制系统',
+                        value: '1858691230051864578'
+                      },
+                      {
+                        label: '动力系统',
+                        value: '1858691258849955842'
+                      },
+                      {
+                        label: '武器系统',
+                        value: '1858691284049334273'
+                      }
+                    ])
+                  }, 1000)
+                })
+              }
             }
           },
           {
+            field: 'callbackIds',
             label: '',
-            field: 'rightGroup',
-            component: 'Group',
-            colProps: {
-              span: 8
-            },
+            component: 'Input',
+            show: false
+          },
+          {
+            field: 'faultDetail',
+            label: '',
+            component: 'Input',
             ifShow: ({ model }) => !model.isView,
-            componentProps: ({ formModel }) => {
-              return {
-                groupInObject: false,
-                groupType: 'Origin',
-                schemas: [
-                  {
-                    field: 'autoFill',
-                    label: '',
-                    component: 'Input',
-                    colProps: {
-                      span: 24
+            render: ({ model }) => {
+              return h(
+                'div',
+                { class: 'flex justify-end w-full', style: 'gap:8px' },
+                [
+                  h(
+                    Button,
+                    {
+                      type: 'primary',
+                      class: 'flex gap-5px items-center',
+                      onClick: async () => {}
+                    },
+                    {
+                      default: () => '智能识别'
                     }
-                  }
+                  ),
+                  h(
+                    Button,
+                    {
+                      class: 'flex gap-5px items-center',
+                      type: 'primary',
+                      onClick: async () => {}
+                    },
+                    {
+                      default: () => '智能推荐'
+                    }
+                  )
                 ]
-              }
+              )
+            },
+            colProps: {
+              span: 24
+            }
+          },
+          {
+            field: 'faultPhenomenonDescription',
+            label: '故障现象描述',
+            component: 'InputTextArea',
+            colProps: {
+              span: 24
+            },
+
+            componentProps: {
+              rows: 4
+            }
+          },
+          {
+            field: 'faultReasonAnalyze',
+            label: '故障原因分析',
+            component: 'InputTextArea',
+            colProps: {
+              span: 24
+            },
+            render: ({ model, field }) => {
+              return 222
+            },
+            componentProps: {
+              rows: 4
+            }
+          },
+          {
+            field: 'faultRepairContent',
+            label: '故障维修内容',
+            component: 'InputTextArea',
+            colProps: {
+              span: 24
+            },
+            render: ({ model, field }) => {
+              return 222
+            },
+            componentProps: {
+              rows: 4
+            }
+          },
+          {
+            field: 'faultImproveStep',
+            label: '故障改进措施',
+            component: 'InputTextArea',
+            colProps: {
+              span: 24
             }
           }
         ]

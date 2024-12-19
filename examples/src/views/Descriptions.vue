@@ -17,6 +17,7 @@ import { colProps } from 'ant-design-vue/es/grid/Col'
 import { commentProps } from 'ant-design-vue/es/comment'
 import { infoSchemas } from './data'
 const mockData: any = {
+  systemCode: '1858691188553420802',
   faultPhenomenonDescription: '3333',
   abc: '1',
   zzz: '2',
