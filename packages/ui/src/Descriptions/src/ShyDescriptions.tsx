@@ -4,7 +4,8 @@ import { basicProps, basicRowProps, basicColProps, basicGap } from './props'
 import { Collapse } from 'ant-design-vue'
 import type { CSSProperties } from 'vue'
 import { BasicTitle as Divider, BasicHelp } from '../../Basic'
-import { pick } from 'lodash-es'
+import { ShyTableChildren } from '../../ShyForm'
+import { pick, merge } from 'lodash-es'
 import dayjs from 'dayjs'
 import { treeToList } from '@shy-plugins/utils/'
 import {
@@ -79,14 +80,9 @@ export default defineComponent({
     })
 
     const handleValuePrecision = (item, data) => {
-      return slots[`${item.field}Value`]
-        ? slots[`${item.field}Value`]?.({
-            model: data,
-            field: data[`${item.field}`]
-          })
-        : getProps.value.summaryTotalFields.includes(item.field!) &&
-          isNumber(+data[`${item.field}`]) &&
-          !isNaN(+data[`${item.field}`])
+      return getProps.value.summaryTotalFields.includes(item.field!) &&
+        isNumber(+data[`${item.field}`]) &&
+        !isNaN(+data[`${item.field}`])
         ? (+data[`${item.field}`])
             .toFixed(getProps.value.summaryPrecision)
             .replace(/\d(?=(?:\d{3})+(?:\.|$))/g, (match, offset, string) => {
@@ -105,44 +101,69 @@ export default defineComponent({
       setDescProps
     })
 
-    const transformValue = (item) => {
-      const { field, componentProps: comProps, component } = item
-      const componentProps = isFunction(comProps)
-        ? comProps({
-            formModel: unref(getValues)
-          })
-        : comProps
+    const transformValue = computed(() => {
+      return (item) => {
+        const { field, componentProps: comProps, component, label } = item
+        const { data, summaryTotalFields } = unref(getProps)
+        const componentProps = isFunction(comProps)
+          ? // @ts-ignore
+            comProps({
+              formModel: data
+            })
+          : comProps
 
-      const { data, summaryTotalFields } = unref(getProps)
-      if (summaryTotalFields?.length && summaryTotalFields.includes(field)) {
-        return handleValuePrecision(item, data)
-      } else if (componentProps?.options || componentProps?.api) {
-        let options = []
-        if (Array.isArray(componentProps.options)) {
-          options = treeToList(componentProps.options)
+        if (slots[`${item.field}Value`]) {
+          return slots[`${item.field}Value`]?.({
+            model: data,
+            field: data[`${item.field}`]
+          })
         }
-        return (
-          <ShyTag
-            value={data[`${field}`]}
-            {...componentProps}
-            options={options}
-          ></ShyTag>
-        )
-      } else if (
-        [
-          'DatePicker',
-          'MonthPicker',
-          'RangePicker',
-          'WeekPicker',
-          'TimePicker'
-        ].includes(component)
-      ) {
-        if (!data[`${field}`]) return ''
-        return dayjs(data[`${field}`]).format(
-          componentProps?.valueFormat || 'YYYY-MM-DD'
-        )
-      } else return data[`${field}`]
-    }
+        if (summaryTotalFields?.length && summaryTotalFields.includes(field)) {
+          return handleValuePrecision(item, data)
+        }
+        if (componentProps?.options || componentProps?.api) {
+          let options = []
+          if (Array.isArray(componentProps.options)) {
+            options = treeToList(componentProps.options)
+          }
+          return (
+            <ShyTag
+              value={data[`${field}`]}
+              {...componentProps}
+              options={options}
+            ></ShyTag>
+          )
+        }
+        if (
+          [
+            'DatePicker',
+            'MonthPicker',
+            'RangePicker',
+            'WeekPicker',
+            'TimePicker'
+          ].includes(component)
+        ) {
+          if (!data[`${field}`]) return ''
+          return dayjs(data[`${field}`]).format(
+            componentProps?.valueFormat || 'YYYY-MM-DD'
+          )
+        }
+        if (component === 'Table') {
+          return (
+            <ShyTableChildren
+              {...componentProps}
+              isShowAddBtn={false}
+              isShowAction={false}
+              value={data[`${field}`]}
+            ></ShyTableChildren>
+          )
+        }
+        if (component === 'Divider') {
+          return <Divider {...componentProps}>{label}</Divider>
+        }
+        return data[`${field}`]
+      }
+    })
 
     const renderValue = (item) => {
       const { contentStyle, field, render } = item
@@ -158,10 +179,11 @@ export default defineComponent({
         return render(unref(getValues)(item))
       } else {
         const contentStyles: CSSProperties = {
+          overflow: 'hidden',
           ...unref(getProps).contentStyle,
           ...contentStyle
         }
-        return <div style={contentStyles}>{transformValue(item)}</div>
+        return <div style={contentStyles}>{unref(transformValue)(item)}</div>
       }
     }
 
@@ -294,9 +316,10 @@ export default defineComponent({
       const componentProps = isFunction(comProps)
         ? // @ts-ignore
           comProps({
-            formModel: unref(getValues)
+            formModel: unref(getProps)?.data
           })
         : comProps
+
       const realSpan =
         (colProps?.span ||
           unref(getProps)?.baseColProps?.span ||
@@ -351,8 +374,12 @@ export default defineComponent({
     const getGroup = (schemas: DescriptionsItem[]) => {
       if (!isArray(schemas)) return []
       return schemas.reduce<any>((prev, curr) => {
-        if (curr.component && curr.component === 'Group') {
+        if (curr?.component === 'Group') {
           prev.push(curr)
+          return prev
+        }
+        if (curr?.component === 'Divider') {
+          prev.push(merge(curr, { componentProps: { groupType: 'Divider' } }))
           return prev
         }
         if (!isArray(prev[prev.length - 1])) {

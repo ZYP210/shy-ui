@@ -82,8 +82,8 @@ const FormItem = defineComponent({
         }
 
         if (
-          schema.component.includes('Picker') ||
-          schema.component.includes('Select')
+          schema.component?.includes?.('Picker') ||
+          schema.component?.includes?.('Select')
         ) {
           componentProps.getPopupContainer = () => document.body
         }

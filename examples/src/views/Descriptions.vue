@@ -17,22 +17,7 @@ import { colProps } from 'ant-design-vue/es/grid/Col'
 import { commentProps } from 'ant-design-vue/es/comment'
 import { infoSchemas } from './data'
 const mockData: any = {
-  systemCode: '1858691188553420802',
-  faultPhenomenonDescription: '3333',
-  abc: '1',
-  zzz: '2',
-  zyp: new Date().getTime(),
-  username: 'test',
-  summary: '1111',
-  summary1: 888888,
-  age: 123,
-  phone: '15695909xxx',
-  email: '190848757@qq.com',
-  addr: '1',
-  sex: '男',
-  certy: '2',
-  tag: 'orange',
-  faultDiscoveryProcess: '3333'
+  taskType: '1'
 }
 
 const handleCustomFn = () => {

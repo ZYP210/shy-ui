@@ -52,162 +52,145 @@ export const CollapseComp = defineComponent({
 export const projectFn = ref(() => {})
 export const infoSchemas = [
   {
-    label: 'abc',
-    field: 'abc',
-    component: 'Select',
-    componentProps: {
-      options: [
-        {
-          label: 'abc',
-          value: '1'
-        },
-        {
-          label: 'def',
-          value: '2'
-        }
-      ]
-    }
+    label: '基本信息',
+    field: 'sss',
+    component: 'Divider'
   },
   {
-    label: '故障详细信息',
-    field: 'field3',
+    label: '标注内容设置',
+    field: 'field2',
     component: 'Group',
     colProps: {
       span: 24
     },
-    componentProps: () => {
+    componentProps: ({ formModel }) => {
       return {
-        groupType: 'Collapse',
+        extra: () => (
+          <div class="text-[#bfbfbf] text-12px">
+            注意添加标注内容即添加本次任务需要识别的文本对象，支持标注多个实体或关系对象。
+          </div>
+        ),
+        groupType: 'Divider',
         groupInObject: false,
         schemas: [
           {
-            label: 'systemCode',
-            field: 'systemCode',
-            component: 'ApiSelect',
+            field: 'tableTitle',
+            label: '',
+            component: 'Input',
             colProps: {
               span: 24
             },
-            componentProps: {
-              params: {
-                type: '6'
-              },
-              api: async (params) => {
-                return new Promise((resolve) => {
-                  setTimeout(() => {
-                    resolve([
-                      {
-                        label: '照明系统',
-                        value: '1858691188553420802'
-                      },
-                      {
-                        label: '控制系统',
-                        value: '1858691230051864578'
-                      },
-                      {
-                        label: '动力系统',
-                        value: '1858691258849955842'
-                      },
-                      {
-                        label: '武器系统',
-                        value: '1858691284049334273'
-                      }
-                    ])
-                  }, 1000)
-                })
-              }
-            }
-          },
-          {
-            field: 'callbackIds',
-            label: '',
-            component: 'Input',
-            show: false
-          },
-          {
-            field: 'faultDetail',
-            label: '',
-            component: 'Input',
-            ifShow: ({ model }) => !model.isView,
-            render: ({ model }) => {
-              return h(
-                'div',
-                { class: 'flex justify-end w-full', style: 'gap:8px' },
-                [
-                  h(
-                    Button,
-                    {
-                      type: 'primary',
-                      class: 'flex gap-5px items-center',
-                      onClick: async () => {}
-                    },
-                    {
-                      default: () => '智能识别'
-                    }
-                  ),
-                  h(
-                    Button,
-                    {
-                      class: 'flex gap-5px items-center',
-                      type: 'primary',
-                      onClick: async () => {}
-                    },
-                    {
-                      default: () => '智能推荐'
-                    }
-                  )
-                ]
+            render: () => {
+              return (
+                <div class="w-full flex justify-between items-center px-10px">
+                  <div>数据预览</div>
+                  <div class="text-[var(--primary-color)]">
+                    共计{formModel?.labelSaveDTOList?.length || 0}条数据
+                  </div>
+                </div>
               )
-            },
-            colProps: {
-              span: 24
             }
           },
           {
-            field: 'faultPhenomenonDescription',
-            label: '故障现象描述',
-            component: 'InputTextArea',
+            field: 'labelSaveDTOList',
+            label: '',
+            component: 'Table',
+            ifShow: formModel.taskType == 2,
             colProps: {
               span: 24
             },
+            componentProps: {
+              isShowAddBtn: formModel?.taskType == 1,
+              isShowAction: formModel?.taskType == 1,
 
-            componentProps: {
-              rows: 4
+              columns: [
+                {
+                  title: '标注内容',
+                  dataIndex: 'labelTarget',
+                  align: 'center',
+                  width: 400
+                },
+                {
+                  title: '颜色设置',
+                  dataIndex: 'labelColor',
+                  type: 'ColorPicker',
+                  align: 'center',
+                  width: 75
+                },
+                {
+                  title: '',
+                  dataIndex: ' ',
+                  type: 'text',
+                  customRender: () => {
+                    return ' '
+                  }
+                }
+              ]
             }
           },
+
           {
-            field: 'faultReasonAnalyze',
-            label: '故障原因分析',
-            component: 'InputTextArea',
+            field: 'labelSaveDTOList',
+            label: '',
+            component: 'Table',
+            ifShow: formModel.taskType == 1,
             colProps: {
               span: 24
             },
-            render: ({ model, field }) => {
-              return 222
-            },
             componentProps: {
-              rows: 4
-            }
-          },
-          {
-            field: 'faultRepairContent',
-            label: '故障维修内容',
-            component: 'InputTextArea',
-            colProps: {
-              span: 24
-            },
-            render: ({ model, field }) => {
-              return 222
-            },
-            componentProps: {
-              rows: 4
-            }
-          },
-          {
-            field: 'faultImproveStep',
-            label: '故障改进措施',
-            component: 'InputTextArea',
-            colProps: {
-              span: 24
+              isShowAddBtn: formModel.taskType == 1,
+              isShowAction: formModel.taskType == 1,
+              columns: [
+                {
+                  title: '目标类型',
+                  dataIndex: 'targetType',
+                  align: 'center',
+                  width: 400,
+                  type: 'select',
+                  componentProps: {}
+                },
+                {
+                  title: '标注内容',
+                  dataIndex: 'labelTarget',
+                  align: 'center',
+                  width: 400,
+                  type: 'ApiSelect',
+                  componentProps: ({ record }) => {
+                    return {
+                      onChange: (_, options) => {
+                        if (!options) return
+                        record.noumenonId = options.id
+                      },
+                      params: {
+                        targetType: record.targetType
+                      },
+                      fieldNames: {
+                        value: 'name',
+                        label: 'name'
+                      },
+                      api: async (params) => {
+                        if (!params?.targetType) return []
+                      }
+                    }
+                  }
+                },
+                {
+                  title: '颜色设置',
+                  dataIndex: 'labelColor',
+                  type: 'ColorPicker',
+                  align: 'center',
+                  width: 75,
+                  defaultValue: '#2991FF'
+                },
+                {
+                  title: '',
+                  dataIndex: ' ',
+                  type: 'text',
+                  customRender: () => {
+                    return ' '
+                  }
+                }
+              ]
             }
           }
         ]
