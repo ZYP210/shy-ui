@@ -7,6 +7,8 @@ import { HexColorPicker, RgbaColorPicker } from './vue-colorful'
 import tinycolor from 'tinycolor2'
 import makeStyle from './utils/makeStyle'
 import { useDebounceFn } from '@vueuse/core'
+import { useDesign } from '@shy-plugins/use'
+const { prefixCls } = useDesign('color-picker')
 
 const { useToken } = theme
 
@@ -428,6 +430,7 @@ const ColorPickerPanel = defineComponent({
           }}
         >
           <div
+            class={prefixCls}
             style={{
               backgroundColor: props.value,
               width: '48px',
