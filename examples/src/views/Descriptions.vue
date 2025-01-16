@@ -15,9 +15,10 @@ import BasicTitle from './BasicTitle.vue'
 import { h, render } from 'vue'
 import { colProps } from 'ant-design-vue/es/grid/Col'
 import { commentProps } from 'ant-design-vue/es/comment'
-import { infoSchemas } from './data'
+import { formSchema } from './data'
 const mockData: any = {
-  taskType: '1'
+  taskType: '1',
+  modelCode: 'TP001'
 }
 
 const handleCustomFn = () => {
@@ -25,7 +26,7 @@ const handleCustomFn = () => {
 }
 
 const [register, { setDescProps }] = useShyDescriptions({
-  schemas: infoSchemas,
+  schemas: formSchema,
   isShowColon: true,
   bordered: true
 })

@@ -28,78 +28,80 @@ import { useDesign } from '@shy-plugins/use'
 import '../style/formTable.less'
 import { TableRowSelection } from 'ant-design-vue/es/table/interface'
 
-const ShyFormTable = defineComponent({
-  props: {
-    isShowIndex: {
-      type: Boolean,
-      default: true
-    },
-    rowKey: {
-      type: String,
-      default: () => 'uuid'
-    },
-    rowSelection: {
-      type: Object as PropType<TableRowSelection>
-    },
-    columns: {
-      type: Array as PropType<Recordable[]>,
-      default: () => []
-    },
-    value: {
-      type: Array as PropType<Recordable[]>,
-      default: () => []
-    },
-    isShowFooter: {
-      type: Boolean,
-      default: () => false
-    },
-    footerRender: {
-      type: Function as PropType<() => VNode | VNode[] | string | number>,
-      default: () => ''
-    },
-    isShowAddBtn: {
-      type: Boolean,
-      default: () => true
-    },
-    isShowAction: {
-      type: Boolean,
-      default: () => true
-    },
-    isVirtual: {
-      type: Boolean,
-      default: () => true
-    },
-    isShowRemoveBtn: {
-      type: Boolean,
-      default: () => true
-    },
-    tableAction: {
-      type: Function,
-      default: (res) => {
-        return []
-      }
-    },
-    showRowCount: {
-      type: Number,
-      default: 10
-    },
-    addBtnConf: {
-      type: Object,
-      default: () => {
-        return {
-          text: '新增',
-          type: 'dashed'
-        }
-      }
-    },
-    dynamicShowRemove: {
-      type: Function as PropType<(record: Recordable) => boolean>,
-      default: () => (record) => true
-    },
-    setFormModel: {
-      type: Function
+export const shyFormTableProps = reactive({
+  isShowIndex: {
+    type: Boolean,
+    default: true
+  },
+  rowKey: {
+    type: String,
+    default: () => 'uuid'
+  },
+  rowSelection: {
+    type: Object as PropType<TableRowSelection>
+  },
+  columns: {
+    type: Array as PropType<Recordable[]>,
+    default: () => []
+  },
+  value: {
+    type: Array as PropType<Recordable[]>,
+    default: () => []
+  },
+  isShowFooter: {
+    type: Boolean,
+    default: () => false
+  },
+  footerRender: {
+    type: Function as PropType<() => VNode | VNode[] | string | number>,
+    default: () => ''
+  },
+  isShowAddBtn: {
+    type: Boolean,
+    default: () => true
+  },
+  isShowAction: {
+    type: Boolean,
+    default: () => true
+  },
+  isVirtual: {
+    type: Boolean,
+    default: () => true
+  },
+  isShowRemoveBtn: {
+    type: Boolean,
+    default: () => true
+  },
+  tableAction: {
+    type: Function,
+    default: (res) => {
+      return []
     }
   },
+  showRowCount: {
+    type: Number,
+    default: 10
+  },
+  addBtnConf: {
+    type: Object,
+    default: () => {
+      return {
+        text: '新增',
+        type: 'dashed'
+      }
+    }
+  },
+  dynamicShowRemove: {
+    type: Function as PropType<(record: Recordable) => boolean>,
+    default: () => (record) => true
+  },
+  setFormModel: {
+    type: Function
+  }
+})
+
+const ShyFormTable = defineComponent({
+  props: shyFormTableProps,
   emits: ['update:value', 'change', 'add', 'remove'],
   setup(props, { emit, attrs, expose }) {
     const SHOW_ROW_COUNT = props?.showRowCount

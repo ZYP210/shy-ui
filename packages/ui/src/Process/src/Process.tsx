@@ -109,7 +109,7 @@ const Process = defineComponent({
       }
     )
 
-    const renderColumns = (record) => {
+    const renderColumns = (record, index) => {
       const getTreeData = (data, deep = 0) => {
         const renderTime = (record) =>
           record[props.fieldNames.time] ? (
@@ -129,39 +129,46 @@ const Process = defineComponent({
           })
         }
 
-        const columns = props.columns.map((item) => {
-          const { labelWidth = props.labelWidth, customRender } = item
+        const columns = props.columns
+          .filter(({ ifShow }) => {
+            if (typeof ifShow === 'function') {
+              return ifShow(data, index)
+            }
+            return ifShow !== false
+          })
+          .map((item) => {
+            const { labelWidth = props.labelWidth, customRender } = item
 
-          return (
-            <div class={`${prefixCls}-body-item`}>
-              <div
-                class={`${prefixCls}-body-item-label`}
-                style={{
-                  '--label-width':
-                    typeof labelWidth === 'number'
-                      ? `${labelWidth}px`
-                      : labelWidth
-                }}
-              >
-                {item.title}
+            return (
+              <div class={`${prefixCls}-body-item`}>
+                <div
+                  class={`${prefixCls}-body-item-label`}
+                  style={{
+                    '--label-width':
+                      typeof labelWidth === 'number'
+                        ? `${labelWidth}px`
+                        : labelWidth
+                  }}
+                >
+                  {item.title}
+                </div>
+                <div class={`${prefixCls}-body-item-value`}>
+                  {item.tag ? (
+                    <ShyTag
+                      isTag={true}
+                      tagMode="text"
+                      value={data[item.dataIndex]}
+                      options={item.options ?? props.options}
+                    ></ShyTag>
+                  ) : customRender ? (
+                    customRender(data)
+                  ) : (
+                    data[item.dataIndex]
+                  )}
+                </div>
               </div>
-              <div class={`${prefixCls}-body-item-value`}>
-                {item.tag ? (
-                  <ShyTag
-                    isTag={true}
-                    tagMode='text'
-                    value={data[item.dataIndex]}
-                    options={item.options ?? props.options}
-                  ></ShyTag>
-                ) : customRender ? (
-                  customRender(data)
-                ) : (
-                  data[item.dataIndex]
-                )}
-              </div>
-            </div>
-          )
-        })
+            )
+          })
 
         return !deep ? (
           <div class={`${prefixCls}-body-group`}>
@@ -177,7 +184,7 @@ const Process = defineComponent({
     }
 
     const renderCollapsePanel = () => {
-      return props.data.map((item) => {
+      return props.data.map((item, index) => {
         return (
           <CollapsePanel
             key={item[props.fieldNames.key]}
@@ -188,12 +195,12 @@ const Process = defineComponent({
               extra: () => (
                 <ShyTag
                   isTag
-                  tagMode='tag'
+                  tagMode="tag"
                   value={item[props.fieldNames.status]}
                   options={props.options}
                 />
               ),
-              default: () => renderColumns(item)
+              default: () => renderColumns(item, index)
             }}
           </CollapsePanel>
         )
