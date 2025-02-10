@@ -3,6 +3,7 @@ import { useDesign } from '@shy-plugins/use'
 import './style/tag.css'
 import { Tag } from 'ant-design-vue'
 import { shyTagBasicProps } from './props'
+import { treeToList } from '@shy-plugins/utils'
 
 const ShyTag = defineComponent({
   props: shyTagBasicProps,
@@ -44,7 +45,7 @@ const ShyTag = defineComponent({
 
     const tag = computed(() => {
       return (
-        unref(optionsRef).find(
+        treeToList(unref(optionsRef)).find(
           (item) => item[unref(fieldNames).value] == props.value
         ) ?? {
           [unref(fieldNames).label]: '-',

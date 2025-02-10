@@ -18,7 +18,8 @@ import { commentProps } from 'ant-design-vue/es/comment'
 import { formSchema } from './data'
 const mockData: any = {
   taskType: '1',
-  modelCode: 'TP001'
+  modelCode: 'TP001',
+  faultDiscoveryProcess: 2
 }
 
 const handleCustomFn = () => {

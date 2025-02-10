@@ -79,12 +79,26 @@ export const formSchema: FormSchema[] = [
         groupInObject: false,
         schemas: [
           {
-            field: 'taskName',
-            label: '任务名称',
-            component: 'Input',
+            field: 'faultDiscoveryProcess',
+            label: '故障发现工序',
+            component: 'ApiTreeSelect',
             required: true,
             colProps: {
-              span: 8
+              span: 6
+            },
+            componentProps: {
+              api: () => {
+                return new Promise((resolve) => {
+                  resolve([
+                    {
+                      id: 1,
+                      processTypeName: '故障发现工序2',
+                      children: [{ id: 2, processTypeName: '故障发现工序1' }]
+                    }
+                  ])
+                })
+              },
+              fieldNames: { value: 'id', label: 'processTypeName' }
             }
           },
           {
