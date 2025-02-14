@@ -1,5 +1,6 @@
 import type { PropType, CSSProperties } from 'vue'
 import type { ModalWrapperProps } from './typing'
+import { reactive } from 'vue'
 // import type { ButtonProps } from 'ant-design-vue'
 
 export const modalProps = {
@@ -12,11 +13,11 @@ export const modalProps = {
   centered: { type: Boolean },
   cancelText: { type: String, default: '取消' },
   okText: { type: String, default: '确定' },
-
   closeFunc: Function as PropType<() => Promise<boolean>>
 }
 
-export const basicProps = Object.assign({}, modalProps, {
+export const basicProps = reactive({
+  ...modalProps,
   defaultFullscreen: { type: Boolean },
   // Can it be full screen
   canFullscreen: { type: Boolean, default: true },

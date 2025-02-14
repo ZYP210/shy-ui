@@ -5,10 +5,18 @@
       <!-- <Button @click="handlePush">push200条数据</Button> -->
       <Button @click="handleReset">reset</Button>
     </div>
-    <ShyForm :labelWidth="100" @register="registerForm" @submit="handleSubmit" @zzz="handleCustomFn">
+    <ShyForm
+      :labelWidth="100"
+      @register="registerForm"
+      @submit="handleSubmit"
+      @zzz="handleCustomFn"
+    >
       <template #ApiModalSelect="{ model, field }">
-        <ShyApiModalSelect v-model:value="model[field]" :fieldNames="{ label: 'a', value: 'id' }"
-          @modal-confirm="handleModalChange" />
+        <ShyApiModalSelect
+          v-model:value="model[field]"
+          :fieldNames="{ label: 'a', value: 'id' }"
+          @modal-confirm="handleModalChange"
+        />
       </template>
     </ShyForm>
     <!-- <div class="h-2000px"></div> -->
@@ -114,17 +122,20 @@ const schemas = ref<ShyFormSchema[]>([
   {
     field: 'sss',
     label: 'sss',
-    component: 'Select',
+    component: 'ApiSelect',
     componentProps: {
-      slots: {
-        default: () => {
-          return <Select.Option value={2}>sss</Select.Option>
-        }
-      },
-
+      api: (arg) => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            resolve([
+              { label: '1', value: '1' },
+              { label: '2', value: '2' }
+            ])
+          }, 1000)
+        })
+      }
     }
   }
-
 ])
 const { createMessage } = useMessage()
 const [
