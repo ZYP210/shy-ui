@@ -301,6 +301,12 @@ export default defineComponent({
     const renderSchema = (group: DescriptionsItem[] | DescriptionsItem) => {
       if (isArray(group)) {
         const props = pick(unref(getProps), ['bordered'])
+        const isAllShowFalse = group.every((schema: DescriptionsItem) => {
+          const { isShow, isIfShow } = getShow(schema)
+          return !isShow || !isIfShow
+        })
+        if (isAllShowFalse) return null
+
         return (
           <Descriptions {...props}>
             {group.map((schema: DescriptionsItem) =>

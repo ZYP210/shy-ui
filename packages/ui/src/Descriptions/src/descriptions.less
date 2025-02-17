@@ -9,8 +9,9 @@
 
   .group {
     display: flex;
-    flex-grow: 0;
-    flex-shrink: 0;
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;
+    flex-wrap: wrap !important;
     overflow: hidden;
     flex: calc(var(--col-span) - var(--gap));
     width: calc(var(--col-span) - var(--gap));

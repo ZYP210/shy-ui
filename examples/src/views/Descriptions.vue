@@ -1,12 +1,6 @@
 <template>
   <div class="p-16px">
-    <ShyDescriptions
-      size="middle"
-      title="基础示例"
-      @register="register"
-      @zzz="handleCustomFn"
-    >
-    </ShyDescriptions>
+    <ShyDescriptions size="middle" @register="register"> </ShyDescriptions>
   </div>
 </template>
 <script lang="ts" setup>
@@ -17,6 +11,7 @@ import { colProps } from 'ant-design-vue/es/grid/Col'
 import { commentProps } from 'ant-design-vue/es/comment'
 import { formSchema } from './data'
 const mockData: any = {
+  isView: true,
   taskType: '1',
   modelCode: 'TP001',
   faultDiscoveryProcess: 2
@@ -29,7 +24,7 @@ const handleCustomFn = () => {
 const [register, { setDescProps }] = useShyDescriptions({
   schemas: formSchema,
   isShowColon: true,
-  bordered: true
+  bordered: false
 })
 onMounted(() => {
   setDescProps({ data: mockData, labelWidth: 110 })
