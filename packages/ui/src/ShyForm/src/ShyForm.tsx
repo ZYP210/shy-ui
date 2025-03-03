@@ -19,7 +19,7 @@ import { Col, Form, Row } from 'ant-design-vue'
 import FormItem from './components/FormItem'
 import FormAction from './components/FormAction.vue'
 import { dateItemType } from './helper'
-import { dateUtil } from '@shy-plugins/utils'
+import { dateUtil, isEmpty } from '@shy-plugins/utils'
 import { useFormValues } from './hooks/useFormValues'
 import { useFormEvents } from './hooks/useFormEvents'
 import { createFormContext } from './hooks/useFormContext'
@@ -180,7 +180,9 @@ const ShyForm = defineComponent({
           }
 
           if (schema?.component?.includes?.('Input')) {
-            schema.defaultValue = schema.defaultValue || ''
+            schema.defaultValue = !isEmpty(schema.defaultValue)
+              ? schema.defaultValue
+              : ''
           }
 
           if (schema.component === 'Table') {

@@ -122,19 +122,8 @@ const schemas = ref<ShyFormSchema[]>([
   {
     field: 'sss',
     label: 'sss',
-    component: 'ApiSelect',
-    componentProps: {
-      api: (arg) => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            resolve([
-              { label: '1', value: '1' },
-              { label: '2', value: '2' }
-            ])
-          }, 1000)
-        })
-      }
-    }
+    component: 'Input',
+    defaultValue: 0
   }
 ])
 const { createMessage } = useMessage()

@@ -400,7 +400,6 @@ const ShyFormTable = defineComponent({
     const defaultValuesRef = computed(() => {
       return props.columns.reduce((acc, cur) => {
         if (cur.defaultValue === undefined) return acc
-
         acc[cur.dataIndex] = cur.defaultValue ?? ''
         return acc
       }, {})
