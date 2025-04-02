@@ -110,17 +110,13 @@ const FormItem = defineComponent({
           schema.component === 'InputTextArea'
         ) {
           const maxlength =
-            componentProps?.maxlength === undefined
-              ? 100
-              : componentProps.maxlength
+            componentProps?.maxlength || config?.Input?.maxlength || 100
           componentProps = Object.assign({}, componentProps, {
             maxlength
           })
           componentProps.onInputEvent = (e) => {
             componentProps.maxlength =
-              componentProps?.maxlength === undefined
-                ? 100
-                : componentProps.maxlength
+              componentProps?.maxlength || config?.Input?.maxlength || 100
 
             if (!get(getValues.value.model, getValues.value.schema.field)) {
               componentProps.showCount = true

@@ -31,7 +31,12 @@ import 'ant-design-vue/dist/reset.css'
 // import '3h1-ui/es/style.css'
 const app = createApp(App)
 
-registerGlobalConfig({ form: { rangePickerField: [['createTime']] } })
+registerGlobalConfig({
+  form: {
+    rangePickerField: [['createTime']],
+    Input: { maxlength: Number.MAX_SAFE_INTEGER }
+  }
+})
 
 shyTableBasicProps.headerAlign.default = 'left'
 // shyTableBasicProps.formLabelInInput.default = false
