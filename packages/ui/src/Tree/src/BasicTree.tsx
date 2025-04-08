@@ -392,8 +392,9 @@ export default defineComponent({
             </span>
           </span>
         ) : (
-          title
+          <span title={title}>{title}</span>
         )
+
         item[titleField] = (
           <>
             <span
