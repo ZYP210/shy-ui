@@ -1,6 +1,6 @@
 {
   "name": "3h1-ui",
-  "version": "3.0.0-next.238",
+  "version": "3.0.0-next.239",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -39,7 +39,7 @@
     "vite-plugin-purge-icons": "^0.9.2",
     "vue-i18n": "^9.2.2",
     "vue-json-pretty": "^2.2.3",
-    "vxe-table": "^4.3.6",
+    "vxe-table": "4.3.6",
     "xe-utils": "^3.5.7"
   },
   "types": "es/ui/index.d.ts",
