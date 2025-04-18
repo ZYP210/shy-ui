@@ -173,7 +173,7 @@ export interface FormSchema {
   // render component
   component: ComponentType
   // Component parameters
-  componentProps?: ComponentProps
+  componentProps?: Recordable
   // Required
   required?: boolean | ((renderCallbackParams: RenderCallbackParams) => boolean)
 

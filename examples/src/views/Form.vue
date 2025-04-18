@@ -39,7 +39,57 @@ import { theme } from 'ant-design-vue'
 import BasicTitle from './BasicTitle.vue'
 import { commentProps } from 'ant-design-vue/es/comment'
 import customComp from '../components/customComp'
+import { isNumber } from 'lodash-es'
+function numToChinese(num: number) {
+  const rmb_num = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
+  const big_unit = ['', '万', '亿', '兆']
+  const middle_unit = ['', '拾', '佰', '仟']
+  const small_unit = ['角', '分', '毫', '厘']
+  let int
+  let float
+  let nums
+  let rmb = ''
+  if (!isNumber(num)) return ''
+  if ((num = parseFloat(num)) >= 1e15) return alert('超出最大处理数字'), ''
+  if (num === 0) return rmb_num[0] + '圆整'
 
+  const isNegative = num < 0
+  let tempNumber: string | number = Math.abs(num)
+
+  if (
+    ((tempNumber = tempNumber.toString()).indexOf('.') === -1
+      ? ((int = tempNumber), (float = ''))
+      : ((int = (nums = tempNumber.split('.'))[0]),
+        (float = nums[1].substr(0, 4))),
+    parseInt(int, 10) > 0)
+  ) {
+    const length = int.length
+    let count = 0
+    for (let i = 0; i < length; i++) {
+      const p = length - i - 1,
+        h = p / 4,
+        f = p % 4,
+        num = int.substr(i, 1)
+      num === '0'
+        ? count++
+        : (count > 0 && (rmb += rmb_num[0]),
+          (count = 0),
+          (rmb += rmb_num[parseInt(num)] + middle_unit[f])),
+        f === 0 && count < 4 && (rmb += big_unit[h])
+    }
+    rmb += '圆'
+  }
+  if (float !== '')
+    for (let f = float.length, i = 0; i < f; i++) {
+      const num = float.substr(i, 1)
+      num !== '0' && (rmb += rmb_num[Number(num)] + small_unit[i])
+    }
+  return (
+    (isNegative ? '负' : '') +
+    (rmb === '' ? (rmb += rmb_num[0] + '圆整') : float === '' && (rmb += '整'),
+    rmb)
+  )
+}
 const { useToken } = theme
 const { token } = useToken()
 
@@ -120,10 +170,47 @@ const bindCol = [
 
 const schemas = ref<ShyFormSchema[]>([
   {
-    field: 'sss',
-    label: 'sss',
-    component: 'Input',
-    defaultValue: 0
+    label: 'offline',
+    field: 'offline',
+    component: 'Group',
+    colProps: { span: 24 },
+    componentProps: {
+      groupType: 'Origin',
+      groupInObject: false,
+      schemas: [
+        {
+          label: '金额小写',
+          field: 'amountSmall',
+          component: 'InputNumber',
+          defaultValue: 20,
+          colProps: { span: 12 },
+          componentProps: ({ formActionType }) => {
+            return {
+              onModelChange(value) {
+                if (value) {
+                  formActionType.setFieldsValue({
+                    amountBig: numToChinese(value)
+                  })
+                } else {
+                  formActionType.setFieldsValue({
+                    amountBig: ''
+                  })
+                }
+              }
+            }
+          }
+        },
+        {
+          label: '金额大写',
+          field: 'amountBig',
+          component: 'Input',
+          colProps: { span: 12 },
+          componentProps: {
+            disabled: true
+          }
+        }
+      ]
+    }
   }
 ])
 const { createMessage } = useMessage()

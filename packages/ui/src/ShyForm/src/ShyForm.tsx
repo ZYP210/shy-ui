@@ -321,26 +321,38 @@ const ShyForm = defineComponent({
         if (isEqual(toRaw(val), toRaw(tempFormModel))) return
         for (const key in val) {
           if (isEqual(toRaw(val[key]), toRaw(tempFormModel[key]))) continue
-          unref(getProps).schemas?.forEach((item) => {
-            const isComponentProps = item.field === key && item.componentProps
-            if (
-              isComponentProps &&
-              !isFunction(item.componentProps) &&
-              item.componentProps?.onModelChange
-            ) {
-              item.componentProps.onModelChange(val[key])
-            } else if (isComponentProps && isFunction(item.componentProps)) {
-              const modelProps = item.componentProps({
-                schema: item,
-                formModel: formModel,
-                formActionType: formActionType as FormActionType,
-                tableAction: props.tableAction
-              })
-              if (modelProps.onModelChange) {
-                modelProps.onModelChange(val[key])
+
+          function handleSchemas(schemas: FormSchema[] = []) {
+            schemas.forEach((item) => {
+              const isComponentProps = item.field === key && item.componentProps
+
+              // 如果匹配了当前字段，处理 onModelChange
+              if (
+                isComponentProps &&
+                !isFunction(item.componentProps) &&
+                item.componentProps?.onModelChange
+              ) {
+                item.componentProps.onModelChange(val[key])
+              } else if (isComponentProps && isFunction(item.componentProps)) {
+                const modelProps = item.componentProps({
+                  schema: item,
+                  formModel: formModel,
+                  formActionType: formActionType as FormActionType,
+                  tableAction: props.tableAction
+                })
+                if (modelProps.onModelChange) {
+                  modelProps.onModelChange(val[key])
+                }
               }
-            }
-          })
+
+              // 如果是 Group 类型，递归处理其子 schemas
+              if (item.component === 'Group' && item.componentProps?.schemas) {
+                handleSchemas(item.componentProps.schemas)
+              }
+            })
+          }
+
+          handleSchemas(unref(getProps).schemas)
         }
         Object.assign(tempFormModel, cloneDeep(formModel))
         unref(getProps).submitOnChange && handleSubmit()
