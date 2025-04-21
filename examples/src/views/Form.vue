@@ -182,7 +182,6 @@ const schemas = ref<ShyFormSchema[]>([
           label: '金额小写',
           field: 'amountSmall',
           component: 'InputNumber',
-          defaultValue: 20,
           colProps: { span: 12 },
           componentProps: ({ formActionType }) => {
             return {

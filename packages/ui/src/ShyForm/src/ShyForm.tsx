@@ -183,6 +183,13 @@ const ShyForm = defineComponent({
             schema.defaultValue = schema.defaultValue ?? ''
           }
 
+          if (
+            schema?.component == 'InputNumber' &&
+            !(schema.defaultValue || schema.defaultValue == 0)
+          ) {
+            delete schema.defaultValue
+          }
+
           if (schema.component === 'Table') {
             schema.defaultValue = schema.defaultValue || reactive([])
           }
