@@ -1,5 +1,5 @@
 import type {
-  DescriptionProps,
+  DescriptionsProps,
   DescInstance,
   UseDescReturnType
 } from './typing'
@@ -7,7 +7,7 @@ import { error, getDynamicProps } from '@shy-plugins/utils'
 import { ref, unref, onUnmounted, watch, nextTick } from 'vue'
 
 export function useShyDescriptions(
-  props?: Partial<DescriptionProps>
+  props?: Partial<DescriptionsProps>
 ): UseDescReturnType {
   const descRef = ref<Nullable<DescInstance>>(null)
   const loaded = ref(false)
@@ -45,7 +45,7 @@ export function useShyDescriptions(
   }
 
   const methods: DescInstance = {
-    setDescProps: async (descProps: Partial<DescriptionProps>) => {
+    setDescProps: async (descProps: Partial<DescriptionsProps>) => {
       const desc = await getDescription()
       desc?.setDescProps(descProps)
     }

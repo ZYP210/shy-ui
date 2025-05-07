@@ -40,6 +40,7 @@ import BasicTitle from './BasicTitle.vue'
 import { commentProps } from 'ant-design-vue/es/comment'
 import customComp from '../components/customComp'
 import { isNumber } from 'lodash-es'
+import { formSchema } from './form.tsx'
 function numToChinese(num: number) {
   const rmb_num = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
   const big_unit = ['', '万', '亿', '兆']
@@ -179,6 +180,36 @@ const schemas = ref<ShyFormSchema[]>([
       groupInObject: false,
       schemas: [
         {
+          label: '测试',
+          field: 'zyp',
+          component: 'Select',
+          componentProps: ({ formActionType }) => {
+            return {
+              onModelChange(value) {
+                console.log('value', value)
+              },
+              onChange(e) {
+                formActionType?.updateSchema([
+                  {
+                    field: 'amountSmall',
+                    label: e
+                  }
+                ])
+              },
+              options: [
+                {
+                  label: 'a',
+                  value: 'a'
+                },
+                {
+                  label: 'b',
+                  value: 'b'
+                }
+              ]
+            }
+          }
+        },
+        {
           label: '金额小写',
           field: 'amountSmall',
           component: 'InputNumber',
@@ -210,6 +241,24 @@ const schemas = ref<ShyFormSchema[]>([
         }
       ]
     }
+  },
+  {
+    label: 'a',
+    field: 'a',
+    component: 'Table',
+    colProps: { span: 24 },
+    componentProps: {
+      columns: [
+        {
+          title: '产品编号',
+          dataIndex: 'productCode'
+        },
+        {
+          title: '产品名称',
+          dataIndex: 'productName'
+        }
+      ]
+    }
   }
 ])
 const { createMessage } = useMessage()
@@ -218,7 +267,7 @@ const [
   { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useShyForm({
   labelWidth: 200,
-  schemas: schemas as any,
+  schemas: formSchema as any,
   // formLabelInInput: true,
   layout: 'vertical',
   baseColProps: { span: 8 },

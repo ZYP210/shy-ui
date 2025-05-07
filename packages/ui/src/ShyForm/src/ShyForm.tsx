@@ -275,7 +275,8 @@ const ShyForm = defineComponent({
       formElRef: formElRef as Ref<FormActionType>,
       //@ts-ignore
       schemaRef: schemaRef as Ref<FormSchema[]>,
-      handleFormValues
+      handleFormValues,
+      tableAction: props.tableAction
     })
 
     createFormContext({
@@ -329,32 +330,38 @@ const ShyForm = defineComponent({
         for (const key in val) {
           if (isEqual(toRaw(val[key]), toRaw(tempFormModel[key]))) continue
 
+          // 构建上下文，只构造一次，保留原参数逻辑
+          const context = {
+            schema: {}, // 每次赋值
+            formModel: formModel,
+            formActionType: formActionType as FormActionType,
+            tableAction: props.tableAction
+          }
+
           function handleSchemas(schemas: FormSchema[] = []) {
             schemas.forEach((item) => {
-              const isComponentProps = item.field === key && item.componentProps
+              const isTargetField = item.field === key
+              context.schema = item
 
-              // 如果匹配了当前字段，处理 onModelChange
-              if (
-                isComponentProps &&
-                !isFunction(item.componentProps) &&
-                item.componentProps?.onModelChange
-              ) {
-                item.componentProps.onModelChange(val[key])
-              } else if (isComponentProps && isFunction(item.componentProps)) {
-                const modelProps = item.componentProps({
-                  schema: item,
-                  formModel: formModel,
-                  formActionType: formActionType as FormActionType,
-                  tableAction: props.tableAction
-                })
-                if (modelProps.onModelChange) {
-                  modelProps.onModelChange(val[key])
-                }
+              const rawComponentProps = item.componentProps
+
+              // 统一处理 props，无论是函数还是对象
+              const resolvedProps = isFunction(rawComponentProps)
+                ? rawComponentProps(context)
+                : rawComponentProps
+
+              // 处理字段匹配时的 onModelChange
+              if (isTargetField && resolvedProps?.onModelChange) {
+                resolvedProps.onModelChange(val[key])
               }
 
-              // 如果是 Group 类型，递归处理其子 schemas
-              if (item.component === 'Group' && item.componentProps?.schemas) {
-                handleSchemas(item.componentProps.schemas)
+              // 递归处理 Group 子 schema（无论 componentProps 是函数还是对象）
+              if (
+                item.component === 'Group' &&
+                resolvedProps &&
+                Array.isArray(resolvedProps.schemas)
+              ) {
+                handleSchemas(resolvedProps.schemas)
               }
             })
           }

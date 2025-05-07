@@ -308,7 +308,7 @@ const searchFormSchema = Array.from({ length: 20 }, (_, i) => {
           console.log(e, ages)
         }
       }
-    },
+    }
   }
 })
 
@@ -346,50 +346,50 @@ const [
     // rangePickerField: [['createTime']],
     schemas: [
       {
-        label: '日期范围',
-        component: 'RangePicker',
-        field: 'createTime',
-        componentProps: ({ ...ages }) => {
-          return {}
-        },
-        colProps: { span: 6 }
+        label: '项目编号',
+        field: 'projectCode',
+        component: 'Input'
       },
       {
-        label: '日期范围',
-        component: 'RangePicker',
-        field: 'createTime',
-        componentProps: ({ ...ages }) => {
-          return {}
-        },
-        colProps: { span: 6 }
+        label: '合同编号',
+        field: 'purchaseCode',
+        component: 'Input'
       },
       {
-        label: '日期范围',
-        component: 'RangePicker',
-        field: 'createTime',
-        componentProps: ({ ...ages }) => {
-          return {}
-        },
-        colProps: { span: 6 }
+        label: '供应商名称',
+        field: 'supplierName',
+        component: 'Input'
       },
       {
-        label: '日期范围',
-        component: 'RangePicker',
-        field: 'createTime',
-        componentProps: ({ ...ages }) => {
-          return {}
-        },
-        colProps: { span: 6 }
+        label: '发票号码',
+        field: 'invoiceNumber',
+        component: 'Input'
       },
       {
-        label: '日期范围',
-        component: 'RangePicker',
-        field: 'createTime',
-        componentProps: ({ ...ages }) => {
-          return {}
-        },
-        colProps: { span: 6 }
+        label: '发票种类',
+        field: 'invoiceType',
+        component: 'Select',
+        componentProps: {}
       },
+      {
+        label: '价税合计',
+        field: 'amountPriceTaxSum',
+        component: 'InputNumber'
+      },
+      {
+        label: '收票日期',
+        field: 'receiptTime',
+        component: 'RangePicker',
+        componentProps: {
+          style: { width: '100%' }
+        }
+      },
+      {
+        label: '创建人',
+        field: 'creator',
+        component: 'ApiSelect',
+        componentProps: {}
+      }
     ]
   },
   resizable: false,
