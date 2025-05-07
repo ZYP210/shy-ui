@@ -1,3 +1,135 @@
+const zzz = [
+  {
+    field: 'faultType',
+    required: true
+  },
+  {
+    field: 'faultLocation',
+    required: true
+  },
+  {
+    field: 'faultLevel',
+    required: true
+  },
+  {
+    field: 'faultModel',
+    required: true
+  },
+  {
+    field: 'taskCode',
+    required: false
+  },
+  {
+    field: 'systemCode',
+    required: false
+  },
+  {
+    field: 'faultReason',
+    required: false
+  },
+  {
+    field: 'faultExcludeWay',
+    required: false
+  },
+  {
+    field: 'taskType',
+    required: false
+  },
+  {
+    field: 'faultDiscoveryProcess',
+    required: false
+  },
+  {
+    field: 'faultDate',
+    required: false
+  },
+  {
+    field: 'faultHandleDept',
+    required: false
+  },
+  {
+    field: 'faultExcludeDate',
+    required: false
+  },
+  {
+    field: 'faultPhenomenonDescription',
+    required: false
+  },
+  {
+    field: 'faultReasonAnalyze',
+    required: false
+  },
+  {
+    field: 'faultRepairContent',
+    required: false
+  }
+]
+
+const zzz1 = [
+  {
+    field: 'faultType',
+    required: false
+  },
+  {
+    field: 'faultLocation',
+    required: false
+  },
+  {
+    field: 'faultLevel',
+    required: false
+  },
+  {
+    field: 'faultModel',
+    required: false
+  },
+  {
+    field: 'taskCode',
+    required: true
+  },
+  {
+    field: 'systemCode',
+    required: false
+  },
+  {
+    field: 'faultReason',
+    required: true
+  },
+  {
+    field: 'faultExcludeWay',
+    required: true
+  },
+  {
+    field: 'taskType',
+    required: false
+  },
+  {
+    field: 'faultDiscoveryProcess',
+    required: true
+  },
+  {
+    field: 'faultDate',
+    required: true
+  },
+  {
+    required: true
+  },
+  {
+    field: 'faultExcludeDate',
+    required: false
+  },
+  {
+    field: 'faultPhenomenonDescription',
+    required: true
+  },
+  {
+    field: 'faultReasonAnalyze',
+    required: true
+  },
+  {
+    field: 'faultRepairContent',
+    required: true
+  }
+]
 export const formSchema: any[] = [
   {
     field: 'isView',
@@ -46,19 +178,9 @@ export const formSchema: any[] = [
                     }
                   ])
                 } else if (val === '2') {
-                  formActionType?.updateSchema?.([
-                    {
-                      field: 'faultLocation',
-                      required: false
-                    }
-                  ])
+                  formActionType?.updateSchema?.(zzz)
                 } else if (val === '3') {
-                  formActionType?.updateSchema?.([
-                    {
-                      field: 'faultLocation',
-                      required: false
-                    }
-                  ])
+                  formActionType?.updateSchema?.(zzz1)
                 }
               }
             }
