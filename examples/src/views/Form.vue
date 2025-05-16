@@ -40,7 +40,6 @@ import BasicTitle from './BasicTitle.vue'
 import { commentProps } from 'ant-design-vue/es/comment'
 import customComp from '../components/customComp'
 import { isNumber } from 'lodash-es'
-import { formSchema } from './form.tsx'
 function numToChinese(num: number) {
   const rmb_num = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖']
   const big_unit = ['', '万', '亿', '兆']
@@ -267,7 +266,7 @@ const [
   { setFieldsValue, getFieldsValue, validate, updateSchema, resetFields }
 ] = useShyForm({
   labelWidth: 200,
-  schemas: formSchema as any,
+  schemas: schemas as any,
   // formLabelInInput: true,
   layout: 'vertical',
   baseColProps: { span: 8 },

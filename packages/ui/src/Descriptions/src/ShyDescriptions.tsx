@@ -273,7 +273,7 @@ export default defineComponent({
           model: data,
           values: data as Recordable,
           schema: item,
-          transformValue
+          transformValue: unref(transformValue)
         }
       }
     })

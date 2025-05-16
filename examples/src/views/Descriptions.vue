@@ -3,7 +3,7 @@
     <ShyDescriptions size="middle" @register="register"> </ShyDescriptions>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { ShyDescriptions, useShyDescriptions } from '3h1-ui'
 import BasicTitle from './BasicTitle.vue'
 import { h, render } from 'vue'
@@ -14,7 +14,8 @@ const mockData: any = {
   isView: true,
   taskType: '1',
   modelCode: 'TP001',
-  faultDiscoveryProcess: 2
+  faultDiscoveryProcess: 2,
+  remittanceForm: 555
 }
 
 const descriptions = [
@@ -31,7 +32,9 @@ const descriptions = [
           label: '汇款形式',
           field: 'remittanceForm',
           colProps: { span: 24 },
-          component: 'Select'
+          render: ({ transformValue, schema }) => (
+            <h1>{transformValue(schema)}</h1>
+          )
         },
         {
           label: 'offline',

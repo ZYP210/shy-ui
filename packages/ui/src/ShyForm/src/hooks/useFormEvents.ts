@@ -1,7 +1,7 @@
 import type { ComputedRef, Ref } from 'vue'
 import type { FormProps, FormSchema, FormActionType } from '../types/form'
 import type { NamePath } from 'ant-design-vue/lib/form/interface'
-import { unref, toRaw, nextTick, inject } from 'vue'
+import { unref, toRaw, nextTick } from 'vue'
 import {
   isArray,
   isFunction,
@@ -28,7 +28,6 @@ import {
   uniqBy
 } from 'lodash-es'
 import dayjs from 'dayjs'
-const formActionType: FormActionType = inject('formActionType')!
 
 interface UseFormActionContext {
   emit: EmitType
@@ -39,7 +38,6 @@ interface UseFormActionContext {
   formElRef: Ref<FormActionType>
   schemaRef: Ref<FormSchema[]>
   handleFormValues: Fn
-  tableAction?: any
 }
 export function useFormEvents({
   emit,
@@ -49,8 +47,7 @@ export function useFormEvents({
   defaultValueRef,
   formElRef,
   schemaRef,
-  handleFormValues,
-  tableAction
+  handleFormValues
 }: UseFormActionContext) {
   async function resetFields(): Promise<void> {
     const { resetFunc, submitOnReset } = unref(getProps)
@@ -321,64 +318,20 @@ export function useFormEvents({
       return
     }
     const schema: FormSchema[] = []
-
-    function processSchemas(
-      schemas: FormSchema[],
-      context: Record<string, any> = {}
-    ): FormSchema[] {
-      return schemas.map((schemaItem) => {
-        const matched = updateData.find(
-          (item) => item.field === schemaItem.field
-        )
-        const merged: FormSchema = matched
-          ? deepMerge(schemaItem, matched)
-          : { ...schemaItem }
-
-        const rawComponentProps = merged.componentProps
-
-        // ✅ 如果是函数，重新定义包装，确保每次都是最新 updateData
-        if (
-          typeof rawComponentProps === 'function' &&
-          merged.component === 'Group'
-        ) {
-          merged.componentProps = (ctx: any) => {
-            const originalResult = rawComponentProps(ctx)
-            const rawSchemas = originalResult.schemas || []
-            const updatedSchemas = processSchemas(rawSchemas, ctx) // 🔁 递归中重新 merge
-
-            return {
-              ...originalResult,
-              schemas: updatedSchemas
-            }
-          }
+    unref(getSchema).forEach((val) => {
+      let _val
+      updateData.forEach((item) => {
+        if (val.field === item.field) {
+          _val = item
         }
-
-        // ✅ 如果是对象，处理嵌套 schemas
-        if (
-          typeof rawComponentProps === 'object' &&
-          merged.component === 'Group' &&
-          Array.isArray(rawComponentProps?.schemas)
-        ) {
-          merged.componentProps = {
-            ...rawComponentProps,
-            schemas: processSchemas(rawComponentProps.schemas, context)
-          }
-        }
-
-        return merged
       })
-    }
-
-    // 执行处理
-    const rawSchemas = unref(getSchema)
-    schema.push(
-      ...processSchemas(rawSchemas, {
-        formModel,
-        formActionType,
-        tableAction
-      })
-    )
-
+      if (_val !== undefined && val.field === _val.field) {
+        const newSchema = deepMerge(val, _val)
+        schema.push(newSchema as FormSchema)
+      } else {
+        schema.push(val)
+      }
+    })
     _setDefaultValue(schema)
     schemaRef.value = uniqBy(schema, 'field')
   }
